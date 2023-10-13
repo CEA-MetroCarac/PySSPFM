@@ -13,7 +13,7 @@ from PySSPFM.utils.hyst_to_map.file import extract_measures
 from PySSPFM.utils.map.interpolate import remove_val
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
-from settings import FIGSIZE
+from PySSPFM.settings import FIGSIZE
 
 
 def cross_corr_table(arr, map_label=None, add_txt=''):
