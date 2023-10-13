@@ -14,7 +14,7 @@ import numpy as np
 
 from PySSPFM.utils.raw_extraction import data_extraction
 
-from settings import DELIMITER, KEY_MEASUREMENT_EXTRACTION
+from PySSPFM.settings import DELIMITER, KEY_MEASUREMENT_EXTRACTION
 
 
 def single_script(dir_path_out, file_path_in, extension='txt', mode='classic',
