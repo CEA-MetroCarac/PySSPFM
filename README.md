@@ -1,7 +1,7 @@
-<div style="text-align:center">
-  <img src=(https://github.com/yudgugger/PySSPFM/blob/main/resources/logoPySSPFM_white.PNG) alt="Description de l'image">
-</div>
-
+<p align="center" width="100%">
+    <img align="center" width="30%" src=https://github.com/yudgugger/PySSPFM/blob/main/resources/logoPySSPFM_white.PNG> <br>
+    <em>Example of fitspy 2D-map frame interacting with the main GUI.</em> 
+  
 # PySSPFM
 
 **PySSFPM** is a specific tool devloped in **Py**thon dedicated to perform data analysis on **SSPFM** (Switching Spectroscopy Piezoresponse Force Microscopy) measurements
