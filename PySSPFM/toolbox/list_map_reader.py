@@ -20,7 +20,7 @@ from PySSPFM.utils.map.matrix_formatting import formatting_measure
 from PySSPFM.toolbox.map_correlation import cross_corr_arr, cross_corr_table
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
-from settings import FIGSIZE
+from PySSPFM.settings import FIGSIZE
 
 
 def main_list_map_reader(user_pars, dir_path_in, verbose=False):
