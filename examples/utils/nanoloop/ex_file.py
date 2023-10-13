@@ -12,8 +12,8 @@ from PySSPFM.utils.signal_bias import sspfm_generator
 from PySSPFM.utils.nanoloop.gen_datas import gen_loops
 from PySSPFM.utils.nanoloop.file import sort_loop, txt_loop, extract_loop
 
-from settings import \
-    EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT, FIGSIZE
+from PySSPFM import EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT
+from PySSPFM.settings import FIGSIZE
 
 
 def example_file(make_plots=False, verbose=False):
