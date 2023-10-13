@@ -40,7 +40,7 @@ See the [documentation](https://github.com/CEA-MetroCarac/fitspy/tree/main/doc) 
 ### Installation
 
 ```
-pip install fitspy
+pip install PySSPFM
 ```
 
 
