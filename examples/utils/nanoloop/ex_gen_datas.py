@@ -9,7 +9,7 @@ from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import plot_graph, print_plots
 from PySSPFM.utils.nanoloop.gen_datas import gen_loops
 
-from settings import FIGSIZE
+from PySSPFM.settings import FIGSIZE
 
 
 def ex_gen_loops(mode, make_plots=False):
