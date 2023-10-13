@@ -3,7 +3,7 @@ Module used to generate sspfm maps
     - Map annotation
 """
 
-from settings import COLOR_SSPFM_MAP_PIXEL, COLOR_SSPFM_MAP_HIGHLIGHTED_PIXEL
+from PySSPFM.settings import COLOR_SSPFM_MAP_PIXEL, COLOR_SSPFM_MAP_HIGHLIGHTED_PIXEL
 
 
 def annotate(ax, dim_pix, dim_fact=None, tab_all_index=None,
