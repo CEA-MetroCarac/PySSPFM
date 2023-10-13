@@ -14,7 +14,7 @@ from PySSPFM.utils.map.matrix_formatting import \
 from PySSPFM.utils.map.interpolate import interp_2d_treated
 from PySSPFM.utils.map.annotate import annotate
 
-from settings import COLOR_SSPFM_MAP, FIGSIZE
+from PySSPFM.settings import COLOR_SSPFM_MAP, FIGSIZE
 
 
 def main_mapping(measurements, dim_pix, dim_mic=None, dict_interp=None,
