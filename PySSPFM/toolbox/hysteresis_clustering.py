@@ -22,7 +22,7 @@ from PySSPFM.utils.hyst_to_map.file import extract_measures
 from PySSPFM.utils.map.main import main_mapping
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
-from settings import FIGSIZE, ELECTROSTATIC_OFFSET, COLOR_HYSTERESIS_CLUSTERING
+from PySSPFM.settings import FIGSIZE, ELECTROSTATIC_OFFSET, COLOR_HYSTERESIS_CLUSTERING
 
 
 def hyst_2d(datas):
