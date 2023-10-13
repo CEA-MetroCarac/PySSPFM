@@ -8,7 +8,7 @@ from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.toolbox.mean_loop import main_mean_loop
 
-from settings import EXAMPLE_ROOT_PATH_IN
+from PySSPFM import EXAMPLE_ROOT_PATH_IN
 
 
 def example_mean_loop(phase='1', mode='off', verbose=False, make_plots=False):
