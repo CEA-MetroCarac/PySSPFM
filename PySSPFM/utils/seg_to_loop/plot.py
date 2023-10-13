@@ -10,7 +10,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 from PySSPFM.utils.core.figure import plot_graph, plot_map
 
-from settings import COLOR_AMP_PHA_MAP, FIGSIZE
+from PySSPFM.settings import COLOR_AMP_PHA_MAP, FIGSIZE
 
 
 def amp_pha_map(seg_tab, dict_meas, index_hold, freq_range=None,
