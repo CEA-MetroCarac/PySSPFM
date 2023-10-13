@@ -10,7 +10,7 @@ from PySSPFM.utils.core.basic_func import linear
 from PySSPFM.utils.core.figure import plot_graph, ax_formating
 from PySSPFM.utils.nanoloop.plot import add_txt
 
-from settings import FIGSIZE
+from PySSPFM.settings import FIGSIZE
 
 
 def plot_btfly_analysis(write, amp, mini, imprint, dict_str=None):
