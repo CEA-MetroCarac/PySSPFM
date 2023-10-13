@@ -8,7 +8,7 @@ from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.toolbox.list_map_reader import main_list_map_reader
 
-from settings import EXAMPLE_ROOT_PATH_IN
+from PySSPFM import EXAMPLE_ROOT_PATH_IN
 
 
 def ex_list_map_reader(verbose=False):
