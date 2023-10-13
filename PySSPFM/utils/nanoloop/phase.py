@@ -9,7 +9,7 @@ from PySSPFM.utils.core.figure import plot_graph
 from PySSPFM.utils.core.peak import find_main_peaks
 from PySSPFM.utils.core.fitting import GaussianPeakFit
 
-from settings import HISTO_PHASE_METHOD, FIGSIZE
+from PySSPFM.settings import HISTO_PHASE_METHOD, FIGSIZE
 
 
 def phase_calibration(phase, write_voltage, dict_pha, dict_str=None,
