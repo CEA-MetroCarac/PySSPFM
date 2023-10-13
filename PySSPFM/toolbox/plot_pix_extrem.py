@@ -29,7 +29,7 @@ from PySSPFM.toolbox.mean_loop import single_script
 from PySSPFM.toolbox.loop_file_reader import main_loop_file_reader
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
-from settings import FIGSIZE, ELECTROSTATIC_OFFSET
+from PySSPFM.settings import FIGSIZE, ELECTROSTATIC_OFFSET
 DEFAULT_LIMIT = {'min': -8., 'max': 8.}
 
 
