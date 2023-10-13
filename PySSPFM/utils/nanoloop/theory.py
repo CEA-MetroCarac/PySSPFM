@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from PySSPFM.utils.core.figure import plot_graph
 from PySSPFM.utils.core.basic_func import sigmoid
 
-from settings import FIGSIZE
+from PySSPFM.settings import FIGSIZE
 
 
 def analysis(write_voltage, pr_elec, pr_ferro, mode='off field', pha_val=None):
