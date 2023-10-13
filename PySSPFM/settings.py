@@ -123,9 +123,9 @@ EXAMPLE_ROOT_PATH_OUT = os.path.join(
 DEFAULT_DATA_PATH_OUT = os.path.join(
     current_root, "examples", "datas", "PySSPFM_data_out")
 DEFAULT_LOGO_PATH = os.path.join(
-    current_root, "resources", "logoPySSPFM.png")
+    current_root, "logo_icon", "logoPySSPFM.png")
 DEFAULT_ICON_PATH = os.path.join(
-    current_root, "resources", "iconPySSPFM.png")
+    current_root, "logo_icon", "iconPySSPFM.png")
 SAVE_TEST_EXAMPLE = True
 KEY_MEASUREMENT_EXTRACTION = {
     'spm': {
