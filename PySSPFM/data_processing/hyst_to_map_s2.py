@@ -24,7 +24,7 @@ from PySSPFM.utils.hyst_to_map.gen_datas import gen_datas_dict
 from PySSPFM.utils.hyst_to_map.analysis import \
     gen_analysis_mode, find_best_loop, hyst_analysis, electrostatic_analysis
 
-from settings import ELECTROSTATIC_OFFSET
+from PySSPFM.settings import ELECTROSTATIC_OFFSET
 DEFAULT_LIMIT = {'min': -5., 'max': 5.}
 DEFAULT_FRACTION_LIMIT = 4
 
