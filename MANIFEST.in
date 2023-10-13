@@ -1,0 +1,4 @@
+graft examples
+graft doc
+graft tests
+global-exclude *.pyc __pycache__
