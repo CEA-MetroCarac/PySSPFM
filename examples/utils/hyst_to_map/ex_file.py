@@ -15,8 +15,9 @@ from PySSPFM.utils.hyst_to_map.file import \
     (generate_file_paths, read_plot_parameters, complete_txt_file,
      save_measurement, extract_measures)
 
-from settings import \
-    EXAMPLE_ROOT_PATH_IN, EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT, FIGSIZE
+from PySSPFM import \
+    EXAMPLE_ROOT_PATH_IN, EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT
+from PySSPFM.settings import FIGSIZE
 
 
 def example_file(make_plots=False, verbose=False):
