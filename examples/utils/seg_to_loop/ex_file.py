@@ -10,7 +10,7 @@ from examples.utils.seg_to_loop.ex_gen_datas import pars_segment
 from PySSPFM.utils.raw_extraction import csv_meas_sheet_extract
 from PySSPFM.utils.seg_to_loop.file import print_pars, save_txt_file
 
-from settings import \
+from PySSPFM import \
     EXAMPLE_ROOT_PATH_IN, EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT
 
 
