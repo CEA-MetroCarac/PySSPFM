@@ -1,4 +1,6 @@
-![](https://github.com/yudgugger/PySSPFM/blob/main/resources/logoPySSPFM_white.PNG)
+<div style="text-align:center">
+  <img src=(https://github.com/yudgugger/PySSPFM/blob/main/resources/logoPySSPFM_white.PNG) alt="Description de l'image">
+</div>
 
 # PySSPFM
 
