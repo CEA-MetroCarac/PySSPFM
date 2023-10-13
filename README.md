@@ -1,5 +1,3 @@
-# PySSPFM
-
 <p align="center" width="100%">
     <img align="center" width="30%" src=https://github.com/yudgugger/PySSPFM/blob/main/resources/logoPySSPFM_white.PNG> <br>
     
