@@ -1,8 +1,8 @@
 ![](https://cea-metrocarac.github.io/fitspy/fitspy.png)
 
-# Fitspy
+# PySSPFM
 
-**Fitspy** is a generic tool dedicated to **fit** **sp**ectra in **py**thon
+**PySSFPM** is a specific tool devloped in **Py**thon dedicated to perform data analysis on **SSPFM** (Switching Spectroscopy Piezoresponse Force Microscopy) measurements
 with a GUI that aims to be as simple and intuitive to use as possible.
 
 Processed spectra may be independent of each other or may result from 2D-maps
