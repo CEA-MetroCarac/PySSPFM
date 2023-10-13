@@ -10,7 +10,7 @@ from PySSPFM.utils.core.peak import width_peak
 from PySSPFM.utils.seg_to_loop.plot import plt_seg
 from PySSPFM.utils.core.fitting import ShoPeakFit, ShoPhaseFit
 
-from settings import DETECT_BUG_SEGMENTS
+from PySSPFM.settings import DETECT_BUG_SEGMENTS
 
 
 class Segment:
