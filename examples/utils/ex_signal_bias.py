@@ -9,7 +9,7 @@ from PySSPFM.utils.signal_bias import \
     (sspfm_generator, sspfm_time, dynamic_generator, ckpfm_generator,
      extract_sspfm_bias_pars)
 
-from settings import FIGSIZE
+from PySSPFM.settings import FIGSIZE
 
 
 def example_sspfm_bias(open_mode=False, verbose=False, make_plots=False):
