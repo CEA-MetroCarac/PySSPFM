@@ -11,7 +11,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from PySSPFM.utils.core.figure import plot_graph
 from PySSPFM.utils.nanoloop.analysis import MeanLoop
 
-from settings import FIGSIZE
+from PySSPFM.settings import FIGSIZE
 
 
 def plot_ckpfm(loop_dict, dict_str=None):
