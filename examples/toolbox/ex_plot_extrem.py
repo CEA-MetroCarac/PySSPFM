@@ -6,7 +6,7 @@ import os
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.toolbox.plot_pix_extrem import main_plot_pix_extrem
 
-from settings import EXAMPLE_ROOT_PATH_IN
+from PySSPFM import EXAMPLE_ROOT_PATH_IN
 
 
 def example_plot_extrem(verbose=False, make_plots=False):
