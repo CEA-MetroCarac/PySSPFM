@@ -9,7 +9,7 @@ from PySSPFM.utils.core.basic_func import \
     linear, gaussian, sho, sho_phase, sho_phase_switch
 from PySSPFM.utils.core.peak import width_peak
 
-from settings import FIT_METHOD
+from PySSPFM.settings import FIT_METHOD
 
 
 class CurveFit:
