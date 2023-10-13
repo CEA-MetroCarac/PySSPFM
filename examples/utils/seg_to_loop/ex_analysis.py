@@ -13,7 +13,7 @@ from PySSPFM.utils.seg_to_loop.plot import \
 from PySSPFM.utils.seg_to_loop.analysis import \
     Segment, zi_calib, init_parameters
 
-from settings import FIGSIZE
+from PySSPFM.settings import FIGSIZE
 
 
 def list_segs(mode, nb_seg_str='all'):
