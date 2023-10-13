@@ -1,38 +1,29 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="pysspfm",
+    name="PySSPFM",
     version='2023.10',
     license='GPL v3',
     include_package_data=False,
     zip_safe=False,
     python_requires='>=3.7',
     install_requires=[
-        "os",
-        "shutil",
-        "collections",
-        "time",
-        "datetime",
-        "tkinter",
         "numpy",
         "pandas",
         "matplotlib",
-        "mpl_toolkits",
-        "PIL",
         "scipy",
         "lmfit",
-        "sklearn",
+        "scikit-learn",
         "pywin32; platform_system == 'Windows'",
     ],
-    packages=find_packages(where='.', include=['pyssfm*']),
+    packages=find_packages(where='.', include=['PySSPFM*']),
 
-    description="PySSPFM (A generic tool to SSPFM data processing)",
+    description="PySSPFM (A specific tool to perform Switching Spectroscopy Piezoresponse Force Microscopy (SSPFM) data processing)",
 
-    url="https://github.com/CEA-MetroCarac/pysspfm",
+    url="https://github.com/CEA-MetroCarac/PySSPFM",
     author_email="hugovalloire@gmail.com",
     author="Hugo Valloire",
-    keywords="PySSPFM, SS-PFM, piezoelectric, ferroelectric, map, 1D, 2D, "
-             "decomposition, Gaussian, Lorentzian, Pseudovoigt, GUI",
+    keywords="PySSPFM, Switching Spectroscopy, SSPFM, PFM, piezoelectric, ferroelectric, map, hysteresis, "
     classifiers=[
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.7',
@@ -49,7 +40,7 @@ setup(
 
     entry_points={
         'gui_scripts': [
-            'fitspy = fitspy.app.gui:fitspy_launcher',
+            'PySSPFM = PySSPFM.gui.main',
         ]
     }
 
