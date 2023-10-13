@@ -8,7 +8,7 @@ from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.toolbox.map_correlation import main_map_correlation
 
-from settings import EXAMPLE_ROOT_PATH_IN
+from PySSPFM import EXAMPLE_ROOT_PATH_IN
 
 
 def ex_map_correlation(verbose=False, make_plots=False):
