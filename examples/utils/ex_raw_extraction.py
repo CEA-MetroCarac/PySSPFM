@@ -8,7 +8,7 @@ from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.seg_to_loop.plot import plt_signals
 from PySSPFM.utils.raw_extraction import data_extraction, csv_meas_sheet_extract
 
-from settings import EXAMPLE_ROOT_PATH_IN
+from PySSPFM import EXAMPLE_ROOT_PATH_IN
 
 
 def ex_data_extraction(ext, make_plots=False, verbose=False):
