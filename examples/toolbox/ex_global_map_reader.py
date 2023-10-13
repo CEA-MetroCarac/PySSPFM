@@ -6,7 +6,7 @@ import os
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.toolbox.global_map_reader import main_global_map_reader
 
-from settings import EXAMPLE_ROOT_PATH_IN
+from PySSPFM import EXAMPLE_ROOT_PATH_IN
 
 
 def ex_global_map_reader(verbose=False, make_plots=False):
