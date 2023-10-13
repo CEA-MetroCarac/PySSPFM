@@ -1,4 +1,4 @@
-![](https://cea-metrocarac.github.io/fitspy/fitspy.png)
+![](https://github.com/yudgugger/PySSPFM/blob/main/resources/logoPySSPFM_white.PNG)
 
 # PySSPFM
 
