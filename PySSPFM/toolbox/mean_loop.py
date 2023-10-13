@@ -27,7 +27,7 @@ from PySSPFM.utils.hyst_to_map.analysis import \
     find_best_loop, hyst_analysis, electrostatic_analysis
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
-from settings import ELECTROSTATIC_OFFSET
+from PySSPFM.settings import ELECTROSTATIC_OFFSET
 
 
 def single_script(file, user_pars, meas_pars, sign_pars,
