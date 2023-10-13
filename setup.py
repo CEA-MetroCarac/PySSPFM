@@ -23,7 +23,7 @@ setup(
 
     url="https://github.com/CEA-MetroCarac/PySSPFM",
     author_email="hugovalloire@gmail.com",
-    author="Hugo Valloire",
+    author="Hugo Valloire", "Patrick Quemere"
     keywords="PySSPFM, SS-PFM, C-KPFM, switching-spectroscopy, PFM, AFM, "
              "piezoelectric, ferroelectric, image, hysteresis, nano-loop, "
              "piezoresponse, bruker, datacube, spm, python, python-library, "
