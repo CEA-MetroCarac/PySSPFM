@@ -14,6 +14,7 @@ setup(
         "scipy",
         "lmfit",
         "scikit-learn",
+        "nanoscope",
         "pywin32; platform_system == 'Windows'",
     ],
     packages=find_packages(where='.', include=['PySSPFM*']),
