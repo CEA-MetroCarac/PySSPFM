@@ -5,8 +5,8 @@ import os
 import shutil
 from datetime import datetime
 
-from settings import \
-    EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT, SAVE_TEST_EXAMPLE
+from PySSPFM import EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT
+from PySSPFM.settings import SAVE_TEST_EXAMPLE
 
 
 def save_path_management(dir_path_in, dir_path_out=None, save=False,
