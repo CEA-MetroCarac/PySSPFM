@@ -8,7 +8,7 @@ import os
 import pandas as pd
 import numpy as np
 
-from settings import \
+from PySSPFM.settings import \
     KEY_MEASUREMENT_EXTRACTION, INDEX_LINE_MEAS_NAME, HEADER_LINES, DELIMITER
 
 
