@@ -18,12 +18,16 @@ setup(
     ],
     packages=find_packages(where='.', include=['PySSPFM*']),
 
-    description="PySSPFM (A specific tool to perform Switching Spectroscopy Piezoresponse Force Microscopy (SSPFM) data processing)",
+    description="PySSPFM: A specialized tool for Switching Spectroscopy "
+                "Piezoresponse Force Microscopy (SSPFM) data processing",
 
     url="https://github.com/CEA-MetroCarac/PySSPFM",
     author_email="hugovalloire@gmail.com",
     author="Hugo Valloire",
-    keywords="PySSPFM, Switching Spectroscopy, SSPFM, PFM, piezoelectric, ferroelectric, map, hysteresis, "
+    keywords="PySSPFM, SS-PFM, C-KPFM, switching-spectroscopy, PFM, AFM, "
+             "piezoelectric, ferroelectric, image, hysteresis, nano-loop, "
+             "piezoresponse, bruker, datacube, spm, python, python-library, "
+             "data-processing, machine-learning, k-means, cross-correlation",
     classifiers=[
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.7',
