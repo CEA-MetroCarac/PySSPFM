@@ -6,7 +6,7 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 
-from settings import DEFAULT_LOGO_PATH, DEFAULT_ICON_PATH
+from PySSPFM import DEFAULT_LOGO_PATH, DEFAULT_ICON_PATH
 
 
 def apply_style(root):
