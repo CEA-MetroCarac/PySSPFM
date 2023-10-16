@@ -15,7 +15,6 @@ setup(
         "lmfit",
         "scikit-learn",
         "nanoscope",
-        "pywin32; platform_system == 'Windows'",
     ],
     packages=find_packages(where='.', include=['PySSPFM*']),
 
@@ -24,7 +23,7 @@ setup(
 
     url="https://github.com/CEA-MetroCarac/PySSPFM",
     author_email="hugovalloire@gmail.com",
-    author="Hugo Valloire", "Patrick Quemere"
+    author="Hugo Valloire, Patrick Quemere",
     keywords="PySSPFM, SS-PFM, C-KPFM, switching-spectroscopy, PFM, AFM, "
              "piezoelectric, ferroelectric, image, hysteresis, nano-loop, "
              "piezoresponse, bruker, datacube, spm, python, python-library, "
@@ -45,7 +44,7 @@ setup(
 
     entry_points={
         'gui_scripts': [
-            'PySSPFM = PySSPFM.gui.main',
+            'PySSPFM = PySSPFM.gui.main:main',
         ]
     }
 
