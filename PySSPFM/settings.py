@@ -13,15 +13,15 @@ EXAMPLE_ROOT_PATH_OUT : str
 
 DEFAULT_DATA_PATH_OUT: str
     The default root path for saved output data (figures ...).
-    Default is r".../examples/datas/PySSPFM_data_out"
+    Default is r".../PySSPFM_data_out"
 
 DEFAULT_LOGO_PATH: str
     The default path of the logo PySSPFM for GUI.
-    Default is r".../resources/logoPySSPFM.png"
+    Default is r".../PySSPFM/logo_icon/logoPySSPFM.png"
 
 DEFAULT_ICON_PATH: str
     The default path of the icon PySSPFM for GUI.
-    Default is r".../resources/iconPySSPFM.png"
+    Default is r".../PySSPFM/logo_icon/iconPySSPFM.png"
 
 SAVE_TEST_EXAMPLE: bool
     Flag to control whether to save generated data (figures ...) with tests
@@ -115,17 +115,13 @@ ELECTROSTATIC_OFFSET: bool
 
 import os
 
-current_root = os.path.split(os.path.abspath(__file__))[0]
-EXAMPLE_ROOT_PATH_IN = os.path.join(
-    current_root, "examples", "datas", "PySSPFM_example_in")
-EXAMPLE_ROOT_PATH_OUT = os.path.join(
-    current_root, "examples", "datas", "PySSPFM_example_out")
-DEFAULT_DATA_PATH_OUT = os.path.join(
-    current_root, "examples", "datas", "PySSPFM_data_out")
-DEFAULT_LOGO_PATH = os.path.join(
-    current_root, "logo_icon", "logoPySSPFM.png")
-DEFAULT_ICON_PATH = os.path.join(
-    current_root, "logo_icon", "iconPySSPFM.png")
+ROOT = pathlib.Path(__file__).parent.parent
+EXAMPLES = ROOT / 'examples'
+EXAMPLE_ROOT_PATH_IN = EXAMPLES / 'datas' / 'PySSPFM_example_in'
+EXAMPLE_ROOT_PATH_OUT = EXAMPLES / 'datas' / 'PySSPFM_example_out'
+DEFAULT_DATA_PATH_OUT = ROOT / 'PySSPFM_data_out'
+DEFAULT_LOGO_PATH = ROOT / 'PySSPFM' / 'logo_icon' / 'logoPySSPFM.png'
+DEFAULT_ICON_PATH = ROOT / 'PySSPFM' / 'logo_icon' / 'iconPySSPFM.png'
 SAVE_TEST_EXAMPLE = True
 KEY_MEASUREMENT_EXTRACTION = {
     'spm': {
