@@ -113,7 +113,7 @@ ELECTROSTATIC_OFFSET: bool
     Default is True.
 """
 
-import os
+import pathlib
 
 ROOT = pathlib.Path(__file__).parent.parent
 EXAMPLES = ROOT / 'examples'
