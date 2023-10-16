@@ -11,7 +11,7 @@ from tkinter import filedialog
 import numpy as np
 
 from PySSPFM.data_processing.hyst_to_map_s2 import main_script
-from PySSPFM.user_interface.utils import \
+from PySSPFM.gui.utils import \
     (grid_item, add_separator_grid, show_tooltip, extract_var,
      init_secondary_wdw, wdw_main_title)
 
