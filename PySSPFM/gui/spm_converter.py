@@ -9,7 +9,7 @@ from tkinter import ttk
 from tkinter import filedialog
 
 from PySSPFM.toolbox.spm_converter import main_spm_converter as main_script
-from PySSPFM.user_interface.utils import \
+from PySSPFM.gui.utils import \
     (add_separator_grid, grid_item, show_tooltip, extract_var,
      init_secondary_wdw, wdw_main_title)
 
