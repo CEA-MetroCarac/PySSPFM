@@ -5,18 +5,18 @@ Main graphical interface (window) of PySSPFM: call all other exe of PySSPFM
 
 from tkinter import ttk
 
-from PySSPFM.user_interface.seg_to_loop_s1 import main as main_data_proc_1
-from PySSPFM.user_interface.hyst_to_map_s2 import main as main_data_proc_2
-from PySSPFM.user_interface.global_map_reader import main as main_tool_1_a
-from PySSPFM.user_interface.list_map_reader import main as main_tool_1_b
-from PySSPFM.user_interface.loop_file_reader import main as main_tool_1_c
-from PySSPFM.user_interface.raw_file_reader import main as main_tool_1_d
-from PySSPFM.user_interface.map_correlation import main as main_tool_2_a
-from PySSPFM.user_interface.hysteresis_clustering import main as main_tool_2_b
-from PySSPFM.user_interface.mean_loop import main as main_tool_2_c
-from PySSPFM.user_interface.plot_pixel_extrem import main as main_tool_2_d
-from PySSPFM.user_interface.spm_converter import main as main_tool_3_a
-from PySSPFM.user_interface.utils import \
+from PySSPFM.gui.seg_to_loop_s1 import main as main_data_proc_1
+from PySSPFM.gui.hyst_to_map_s2 import main as main_data_proc_2
+from PySSPFM.gui.global_map_reader import main as main_tool_1_a
+from PySSPFM.gui.list_map_reader import main as main_tool_1_b
+from PySSPFM.gui.loop_file_reader import main as main_tool_1_c
+from PySSPFM.gui.raw_file_reader import main as main_tool_1_d
+from PySSPFM.gui.map_correlation import main as main_tool_2_a
+from PySSPFM.gui.hysteresis_clustering import main as main_tool_2_b
+from PySSPFM.gui.mean_loop import main as main_tool_2_c
+from PySSPFM.gui.plot_pixel_extrem import main as main_tool_2_d
+from PySSPFM.gui.spm_converter import main as main_tool_3_a
+from PySSPFM.gui.utils import \
     add_section_separator, init_main_wdw, create_section
 
 
