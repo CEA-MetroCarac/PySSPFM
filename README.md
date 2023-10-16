@@ -1,5 +1,5 @@
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/yudgugger/PySSPFM/blob/main/resources/logoPySSPFM_white.PNG> <br>
+    <img align="center" width="30%" src=https://github.com/yudgugger/PySSPFM/blob/main/doc/_static/logoPySSPFM_white.PNG> <br>
     
 **PySSFPM** is a specific tool devloped in **Py**thon dedicated to perform data analysis on **SSPFM** (Switching Spectroscopy Piezoresponse Force Microscopy) measurements
 with a GUI that aims to be as simple and intuitive to use as possible.
