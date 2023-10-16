@@ -12,7 +12,7 @@ from datetime import datetime
 
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.toolbox.list_map_reader import main_list_map_reader as main_script
-from PySSPFM.user_interface.utils import \
+from PySSPFM.gui.utils import \
     (add_separator_grid, grid_item, show_tooltip, extract_var,
      init_secondary_wdw, wdw_main_title)
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
