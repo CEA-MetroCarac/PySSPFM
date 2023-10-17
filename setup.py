@@ -10,7 +10,9 @@ setup(
     install_requires=[
         "numpy",
         "pandas",
+        "openpyxl",
         "matplotlib",
+        "Pillow",
         "scipy",
         "lmfit",
         "scikit-learn",
