@@ -340,9 +340,9 @@ def extract_measures(dir_path_in):
 
         # Measurements extraction
         meas_keys = lines[2][2:].split('\t\t')[:-1]
-        measures = np.genfromtxt(file_path_in, dtype=float, delimiter='\t\t',
-                                 skip_header=3)
-
+        measures = np.genfromtxt(
+            file_path_in, dtype=float, delimiter='\t\t', skip_header=3,
+            encoding='utf-8')
         measurements[mode] = {}
         for key, meas in zip(meas_keys, np.array(measures).T):
             measurements[mode][key] = list(meas)
