@@ -340,7 +340,7 @@ def parameters():
                  'interp func': 'linear',
                  'man mask': [],
                  'ref': {'mode': 'off',
-                         'meas': 'charac tot fit: R² hyst',
+                         'meas': 'charac tot fit: R_2 hyst',
                          'fmt': '.5f',
                          'min val': 0.95,
                          'max val': None,
