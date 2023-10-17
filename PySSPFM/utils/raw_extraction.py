@@ -99,14 +99,8 @@ def data_extr_spm(file_path_in, mode_dfrt=False, verbose=False):
         parameters
     """
 
-    try:
-        from PySSPFM.utils.datacube_reader import \
-            DataExtraction, script_info # noqa
-    except NotImplementedError:
-        print("To open DATACUBE spm file (Bruker), nanoscope module is "
-              "required and NanoScope Analysis software (Bruker) should be "
-              "installed on the computer")
-        sys.exit()
+    from PySSPFM.utils.datacube_reader import \
+        DataExtraction, script_info # noqa
 
     # DataExtraction object is used to extract info from .spm file
     data_extract = DataExtraction(file_path_in)
@@ -216,8 +210,15 @@ def data_extraction(file_path_in, mode_dfrt=False, verbose=False):
     assert os.path.isfile(file_path_in)
 
     if file_path_in.endswith('.spm'):
-        dict_meas, script_dict = data_extr_spm(
-            file_path_in, mode_dfrt=mode_dfrt, verbose=verbose)
+        try:
+            dict_meas, script_dict = data_extr_spm(
+                file_path_in, mode_dfrt=mode_dfrt, verbose=verbose)
+        except (NotImplementedError, NameError):
+            print("To open DATACUBE spm file (Bruker), nanoscope "
+                  "module is required and NanoScope Analysis "
+                  "software (Bruker) should be installed on the "
+                  "computer")
+            sys.exit()
     else:
         dict_meas, script_dict = data_extr_table(
             file_path_in, mode_dfrt=mode_dfrt)
