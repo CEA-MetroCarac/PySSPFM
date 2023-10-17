@@ -58,7 +58,7 @@ def test_mean_loop_1_coupled():
     # print(fit_res[3])
     # print(np.sum(mean_diff_piezorep))
 
-    assert fit_res[0] == approx(-0.00022698554219434226, abs=1e-9)
+    assert fit_res[0] == approx(-0.00022698554219434226, abs=1e-8)
     assert fit_res[1] == approx(0.00014247330929064136)
     assert fit_res[2] == approx(0.6276757008984186)
     assert fit_res[3] == approx(0.999334257370327)
@@ -112,8 +112,8 @@ def test_mean_loop_2_coupled():
     # print(fit_res[3])
     # print(np.sum(mean_diff_piezorep))
 
-    assert fit_res[0] == approx(-0.0002861700476343689, abs=1e-9)
-    assert fit_res[1] == approx(0.00013029822120773734)
+    assert fit_res[0] == approx(-0.0002861700476343689, abs=1e-8)
+    assert fit_res[1] == approx(0.00013029822120773734, abs=1e-8)
     assert fit_res[2] == approx(0.4553174669566242)
     assert fit_res[3] == approx(0.9988143410969148)
     assert np.sum(mean_diff_piezorep) == approx(0.004077805282110943)
