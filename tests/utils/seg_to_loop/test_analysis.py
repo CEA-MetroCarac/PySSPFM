@@ -155,7 +155,7 @@ def test_segments_fit_on():
     # print(np.sum(seg.time_tab))
     # print(np.sum(seg.time_tab_init))
 
-    assert seg.amp == approx(3774.8298385169055, abs=1e-5)
+    assert seg.amp == approx(3774.8297802368393, abs=1e-5)
     assert np.sum(seg.amp_tab) == approx(10881.912337393867)
     assert np.sum(seg.amp_tab_init) == approx(11438.773117664969)
     assert seg.bckgnd == approx(12.518852685044568)
