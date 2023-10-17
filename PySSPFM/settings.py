@@ -156,3 +156,12 @@ COLOR_SSPFM_MAP_PIXEL = 'white'
 COLOR_SSPFM_MAP_HIGHLIGHTED_PIXEL = 'red'
 COLOR_HYSTERESIS_CLUSTERING = 'turbo'
 ELECTROSTATIC_OFFSET = True
+
+SETTINGS_DICT = {'key meas extract': KEY_MEASUREMENT_EXTRACTION,
+                 'header lines': HEADER_LINES,
+                 'index line meas name': INDEX_LINE_MEAS_NAME,
+                 'delimiter': DELIMITER,
+                 'detect bug segments': DETECT_BUG_SEGMENTS,
+                 'fit method': FIT_METHOD,
+                 'histo phase method': HISTO_PHASE_METHOD,
+                 'elec offset': ELECTROSTATIC_OFFSET}
