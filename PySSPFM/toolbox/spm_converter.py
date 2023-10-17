@@ -12,9 +12,8 @@ import time
 import pandas as pd
 import numpy as np
 
+from PySSPFM.utils.utils import get_setting
 from PySSPFM.utils.raw_extraction import data_extraction
-
-from PySSPFM.settings import DELIMITER, KEY_MEASUREMENT_EXTRACTION
 
 
 def single_script(dir_path_out, file_path_in, extension='txt', mode='classic',
@@ -64,11 +63,14 @@ def single_script(dir_path_out, file_path_in, extension='txt', mode='classic',
     file_name_out = file_name_in[:-4]
     file_path_out = os.path.join(dir_path_out, file_name_out + '.' + extension)
 
-    header = list(KEY_MEASUREMENT_EXTRACTION['table'][mode].keys())
+    key_measurement_extraction = get_setting("key meas extract")
+    header = list(key_measurement_extraction['table'][mode].keys())
+
     if extension == 'txt':
         # Text file format
-        header = DELIMITER.join(header)
-        np.savetxt(file_path_out, np.array(raw_data).T, delimiter=DELIMITER,
+        delimiter = get_setting('delimiter')
+        header = delimiter.join(header)
+        np.savetxt(file_path_out, np.array(raw_data).T, delimiter=delimiter,
                    newline='\n', header=header)
     elif extension in ['csv', 'xlsx']:
         save_dict = dict(zip(header, raw_data))
