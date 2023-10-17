@@ -33,5 +33,5 @@ def test_file():
     assert dict_strs['off'] == {'unit': 'nm', 'label': 'Off field', 'col': 'w'}
     assert headers['on'] == ('Loop index	Read Volt (V)	'
                              'Write Volt (V)	Amplitude (nm)	'
-                             'Phase (°)	')
+                             'Phase (deg)	')
     assert headers['on'] == headers['off']
