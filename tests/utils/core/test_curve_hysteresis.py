@@ -61,4 +61,4 @@ def test_hysteresis():
     assert props['y wdw'] == approx(ref_props[20])
     assert props['area'] == approx(ref_props[21])
     assert props['diff coef'] == approx(ref_props[22])
-    assert props['R² hyst'] == approx(ref_props[23])
+    assert props['R_2 hyst'] == approx(ref_props[23])

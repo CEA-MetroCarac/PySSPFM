@@ -10,7 +10,6 @@ from examples.toolbox.ex_spm_converter import example_spm_converter
 
 # class TestExtract(unittest.TestCase):
 
-
 # Error when Nanoscope Analysis wheel is not installed
 '''
 def test_spm_converter_txt():

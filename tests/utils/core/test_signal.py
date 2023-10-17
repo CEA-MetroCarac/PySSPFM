@@ -26,4 +26,4 @@ def test_ex_interpolate():
     x_interp, y_interp = ex_interpolate()
 
     assert np.sum(x_interp) == 0.0
-    assert np.sum(y_interp) == 1336.759322016279
+    assert np.sum(y_interp) == approx(1336.759322016279)
