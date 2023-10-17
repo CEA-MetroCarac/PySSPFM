@@ -102,7 +102,7 @@ def data_extr_spm(file_path_in, mode_dfrt=False, verbose=False):
     try:
         from PySSPFM.utils.datacube_reader import \
             DataExtraction, script_info # noqa
-    except (ModuleNotFoundError, WindowsError):
+    except NotImplementedError:
         print("To open DATACUBE spm file (Bruker), nanoscope module is "
               "required and NanoScope Analysis software (Bruker) should be "
               "installed on the computer")
