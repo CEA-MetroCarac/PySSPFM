@@ -12,6 +12,17 @@ import numpy as np
 from PySSPFM.utils.utils import get_setting
 
 
+class NanoscopeError(Exception):
+    """ NanoscopeError object """
+    def __init__(self, message):
+        """
+        Object used to generate error when spm files can't be opened with
+        nanoscope module (NanoScope Analysis DLL is required)
+        """
+        self.message = message
+        super().__init__(self.message)
+
+
 def datas_identification(raw_dict, type_file, mode_dfrt=False):
     """
     Extract and identify all the measurements contained in a table file
