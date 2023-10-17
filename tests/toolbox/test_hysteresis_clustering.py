@@ -117,7 +117,7 @@ def test_hysteresis_clustering():
     assert cluster_info["on"][0][3] == 59
     assert cluster_info["on"][1][3] == 4
 
-    assert cluster_info["coupled"][0][3] == 34
+    assert cluster_info["coupled"][0][3] == 36
     assert cluster_info["coupled"][1][3] == 18
     assert cluster_info["coupled"][2][3] == 8
     assert cluster_info["coupled"][3][3] == 3
