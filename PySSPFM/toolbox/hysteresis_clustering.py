@@ -17,12 +17,13 @@ import matplotlib.colors as mcolors
 from sklearn.cluster import KMeans
 from sklearn.metrics import pairwise_distances
 
+from PySSPFM.utils.utils import get_setting
 from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.hyst_to_map.file import extract_measures
 from PySSPFM.utils.map.main import main_mapping
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
-from PySSPFM.settings import FIGSIZE, ELECTROSTATIC_OFFSET, COLOR_HYSTERESIS_CLUSTERING
+from PySSPFM.settings import FIGSIZE, COLOR_HYSTERESIS_CLUSTERING
 
 
 def hyst_2d(datas):
@@ -298,8 +299,9 @@ def main_hysteresis_clustering(
             root = os.path.split(dir_path_in)[0]
             dir_path_in_meas = os.path.join(root, "txt_ferro_meas")
         measurements, dim_pix, dim_mic = extract_measures(dir_path_in_meas)
+        elec_offset = get_setting('elec offset')
         offsets = measurements['off']['fit pars: offset'] \
-            if ELECTROSTATIC_OFFSET else None
+            if elec_offset else None
 
     # If "coupled" mode is present, calculate coupled hysteresis
     if "coupled" in modes:
