@@ -1,6 +1,6 @@
-# Date of analysis: 2023-10-05 17;23
+# Date of analysis: 2023-10-17 09;56
 # 
-# Loop index	Read Volt (V)	Write Volt (V)	Amplitude (a.u)	Phase (°)	
+# Loop index	Read Volt (V)	Write Volt (V)	Amplitude (a.u)	Phase (deg)	
 1		0.00		0.00		1.747e-03		-30.479
 1		0.00		0.40		1.540e-03		-3.039
 1		0.00		0.80		1.642e-03		16.850

@@ -53,12 +53,12 @@ Seg sample (R): 100
 ### Treatment parameters: first step ###
 
 - Info
-start of analysis: 2023-10-05 17;22
-analysis duration: 00h:00m:32s
+start of analysis: 2023-10-17 09;56
+analysis duration: 00h:00m:28s
 nb file analyzed: 63
 
 - Segment parameters
-mode: dfrt
 cut seg [%]: {'start': 5, 'end': 5}
+mode: dfrt
 filter: False
 filter ord: 10
