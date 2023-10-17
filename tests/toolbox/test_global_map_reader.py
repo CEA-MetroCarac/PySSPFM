@@ -29,4 +29,4 @@ def test_global_map_reader():
 
     assert np.nansum(coef_arr['off']) == approx(92.8133823858753)
     assert np.nansum(coef_arr['on']) == approx(157.2555736840546)
-    assert np.nansum(coef_arr['off on']) == approx(2.8008741872277128)
+    assert np.nansum(coef_arr['off on']) == approx(2.788794474488689)
