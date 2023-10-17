@@ -35,13 +35,13 @@ def ex_list_map_reader(verbose=False):
                 ['off', 'charac tot fit: x shift'],
                 ['off', 'charac tot fit: y shift'],
                 ['off', 'charac tot fit: area'],
-                ['off', 'charac tot fit: R² hyst']]
+                ['off', 'charac tot fit: R_2 hyst']]
 
     user_pars = {'interp fact': 4,
                  'interp func': 'linear',
                  'man mask': None,
                  'ref': {'mode': 'off',
-                         'meas': 'charac tot fit: R² hyst',
+                         'meas': 'charac tot fit: R_2 hyst',
                          'fmt': '.5f',
                          'min val': 0.90,
                          'max val': None,
