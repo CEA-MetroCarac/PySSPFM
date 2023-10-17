@@ -2,19 +2,22 @@
 Test spm_converter methods
 """
 import pytest
-from pytest import approx
+from pytest import approx, skip
 import numpy as np
 
+from PySSPFM.utils.raw_extraction import NanoscopeError
 from examples.toolbox.ex_spm_converter import example_spm_converter
 
 
 # class TestExtract(unittest.TestCase):
 
-# Error when Nanoscope Analysis wheel is not installed
-'''
 def test_spm_converter_txt():
     """ Test example_spm_converter in txt file """
-    dict_meas, script_dict = example_spm_converter('txt')
+    try:
+        dict_meas, script_dict = example_spm_converter('txt')
+    except NanoscopeError:
+        skip("Test skipped (NanoscopeError): spm file can't be opened without "
+             "Nanoscope Analysis DLL")
 
     sum_dict = np.sum([np.sum(val) for val in dict_meas.values()])
 
@@ -39,7 +42,11 @@ def test_spm_converter_txt():
 
 def test_spm_converter_csv():
     """ Test example_spm_converter in csv file """
-    dict_meas, script_dict = example_spm_converter('csv')
+    try:
+        dict_meas, script_dict = example_spm_converter('csv')
+    except NanoscopeError:
+        skip("Test skipped (NanoscopeError): spm file can't be opened without "
+             "Nanoscope Analysis DLL")
 
     sum_dict = np.sum([np.sum(val) for val in dict_meas.values()])
 
@@ -65,7 +72,11 @@ def test_spm_converter_csv():
 @pytest.mark.slow
 def test_spm_converter_xlsx():
     """ Test example_spm_converter in xlsx file """
-    dict_meas, script_dict = example_spm_converter('xlsx')
+    try:
+        dict_meas, script_dict = example_spm_converter('xlsx')
+    except NanoscopeError:
+        skip("Test skipped (NanoscopeError): spm file can't be opened without "
+             "Nanoscope Analysis DLL")
 
     sum_dict = np.sum([np.sum(val) for val in dict_meas.values()])
 
@@ -86,4 +97,3 @@ def test_spm_converter_xlsx():
     assert sum_dict == approx(13119195.087875232)
     for key, value in target_script.items():
         assert script_dict[key] == value
-'''
