@@ -14,16 +14,9 @@ from PySSPFM import DEFAULT_DATA_PATH_OUT
 
 def print_plots(figs, save_plots=True, show_plots=True, dirname=None,
                 close_plots=False, file_format='png', tight_layout=False,
-                transparent=True, verbose=True,
-                **kwargs):
+                transparent=True, verbose=True, **kwargs):
     r"""
     Function that prints matplotlib figure on screen or disk.
-
-    >>> fig = plt.figure(1)
-    >>> fig.sfn = 'boar_on_the_beach'
-    >>> line = plt.plot([1, 2, 3], [3, 6, 2])
-    >>> print_plots([fig], save_plots=True, show_plots=False, dirname='.')
-    Figure number 1 saved to .\boar_on_the_beach.png
 
     Parameters
     ----------
