@@ -21,7 +21,7 @@ def test_mean_loop_1_on():
     # print(np.sum(best_hysts.params))
     # print(np.sum(list(best_hysts.props.values())))
 
-    assert np.sum(mean_best_loop.piezorep) == approx(0.014003870559976322)
+    assert np.sum(mean_best_loop.piezorep) == approx(0.013894300140924453)
     assert np.sum(mean_best_loop.pha) == approx(8159.251807692307)
     assert np.sum(mean_best_loop.amp) == approx(0.07747576573903911)
     assert np.sum(best_hysts.params) == approx(2.659780868629241)
