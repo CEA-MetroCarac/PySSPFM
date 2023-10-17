@@ -13,6 +13,7 @@ import tkinter.filedialog as tkf
 from datetime import datetime
 import numpy as np
 
+from PySSPFM.utils.utils import get_setting
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.nanoloop.file import extract_loop
 from PySSPFM.utils.nanoloop.analysis import treat_loop, MeanLoop
@@ -26,8 +27,6 @@ from PySSPFM.utils.hyst_to_map.electrostatic import diff_loop, linreg_diff
 from PySSPFM.utils.hyst_to_map.analysis import \
     find_best_loop, hyst_analysis, electrostatic_analysis
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
-
-from PySSPFM.settings import ELECTROSTATIC_OFFSET
 
 
 def single_script(file, user_pars, meas_pars, sign_pars,
@@ -383,8 +382,8 @@ def main_mean_loop(user_pars, verbose=False, make_plots=False):
         offsets_off = measurements['off']['charac tot fit: y shift']
         selected_offsets_off = [val for cont, val in enumerate(offsets_off) if
                                 cont not in mask]
-        selected_offsets_off = selected_offsets_off if ELECTROSTATIC_OFFSET \
-            else None
+        elec_offset = get_setting('elec offset')
+        selected_offsets_off = selected_offsets_off if elec_offset else None
         res = mean_analysis_coupled(
             best_loops,
             bias_min=user_pars['diff domain']['min'],
