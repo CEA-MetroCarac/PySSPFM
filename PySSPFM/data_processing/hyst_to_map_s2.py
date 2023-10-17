@@ -10,6 +10,7 @@ import time
 from datetime import datetime
 import numpy as np
 
+from PySSPFM.utils.utils import get_setting
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.nanoloop.file import extract_loop
 from PySSPFM.utils.nanoloop.plot import plot_ckpfm
@@ -24,7 +25,6 @@ from PySSPFM.utils.hyst_to_map.gen_datas import gen_datas_dict
 from PySSPFM.utils.hyst_to_map.analysis import \
     gen_analysis_mode, find_best_loop, hyst_analysis, electrostatic_analysis
 
-from PySSPFM.settings import ELECTROSTATIC_OFFSET
 DEFAULT_LIMIT = {'min': -5., 'max': 5.}
 DEFAULT_FRACTION_LIMIT = 4
 
@@ -267,8 +267,9 @@ def single_script(tab_path_in, user_pars, meas_pars, sign_pars, cont=1,
         figs.extend(single_figs)
 
     if add_str == 'b':
+        elec_offset = get_setting('elec offset')
         offset_off = measures['off']['charac tot fit: y shift'] \
-            if ELECTROSTATIC_OFFSET else 0
+            if elec_offset else 0
         par = coupled_analysis(
             best_loops, offset_off=offset_off, limit=limit, dict_str=dict_str,
             make_plots=make_plots)
