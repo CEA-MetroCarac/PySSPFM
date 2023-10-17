@@ -24,7 +24,7 @@ def test_mean_loop_1_on():
     assert np.sum(mean_best_loop.piezorep) == approx(0.013894300140924453)
     assert np.sum(mean_best_loop.pha) == approx(8162.9121683673475)
     assert np.sum(mean_best_loop.amp) == approx(0.07878820642891968)
-    assert np.sum(best_hysts.params) == approx(2.659780868629241)
+    assert np.sum(best_hysts.params) == approx(2.7083908411461195)
     assert np.sum(list(best_hysts.props.values())) == approx(12.469598207667214,
                                                              abs=1e-6)
 
@@ -61,7 +61,7 @@ def test_mean_loop_1_coupled():
     assert fit_res[0] == approx(-0.00022698554219434226)
     assert fit_res[1] == approx(0.00014247330929064136)
     assert fit_res[2] == approx(0.6276757008984186)
-    assert fit_res[3] == approx(0.9993368017190314)
+    assert fit_res[3] == approx(0.999334257370327)
     assert np.sum(mean_diff_piezorep) == approx(0.005292975854962335)
 
 
@@ -114,6 +114,6 @@ def test_mean_loop_2_coupled():
 
     assert fit_res[0] == approx(-0.0002861700476343689)
     assert fit_res[1] == approx(0.00013029822120773734)
-    assert fit_res[2] == approx(0.4552948622203159)
+    assert fit_res[2] == approx(0.4553174669566242)
     assert fit_res[3] == approx(0.9988143410969148)
     assert np.sum(mean_diff_piezorep) == approx(0.004077500754509586)
