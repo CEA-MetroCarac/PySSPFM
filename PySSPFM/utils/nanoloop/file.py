@@ -39,7 +39,7 @@ def sort_loop(ss_pfm_bias, write_nb_voltages, read_nb_voltages, dict_res,
     """
     # Create fmt and header for saving results in txt file
     meas_label = {'Amplitude': {'unit': f'{unit}', 'fmt': '%.3e'},
-                  'Phase': {'unit': '°', 'fmt': '%.3f'},
+                  'Phase': {'unit': 'deg', 'fmt': '%.3f'},
                   'Freq res': {'unit': 'kHz', 'fmt': '%.1f'},
                   'Q fact': {'unit': '', 'fmt': '%.1f'},
                   'inc Amp': {'unit': f'{unit}', 'fmt': '%.1e'},
