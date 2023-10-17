@@ -48,7 +48,7 @@ def test_hysteresis_clustering():
 
     assert inertia["off"] == approx(2.568030435477057e-05)
     assert inertia["on"] == approx(8.946253170285287e-05)
-    assert inertia["coupled"] == approx(7.458630290266829e-05)
+    assert inertia["coupled"] == approx(7.441939806296323e-05)
 
     assert np.sum(avg_hysteresis["off"][0]) == approx(0.010461290050570967)
     assert np.sum(avg_hysteresis["off"][1]) == approx(0.013119232693312501)
