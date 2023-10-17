@@ -5,7 +5,6 @@ Inspired by SS_PFM script, Nanoscope, Bruker
 """
 
 import os
-import sys
 import pandas as pd
 import numpy as np
 
@@ -14,10 +13,15 @@ from PySSPFM.utils.utils import get_setting
 
 class NanoscopeError(Exception):
     """ NanoscopeError object """
-    def __init__(self, message):
+    def __init__(self, message=""):
         """
         Object used to generate error when spm files can't be opened with
         nanoscope module (NanoScope Analysis DLL is required)
+
+        Parameters
+        ----------
+        message: str, optional
+            Custom error message (default is an empty string).
         """
         self.message = message
         super().__init__(self.message)
@@ -113,11 +117,11 @@ def data_extr_spm(file_path_in, mode_dfrt=False, verbose=False):
     try:
         from PySSPFM.utils.datacube_reader import \
             DataExtraction, script_info # noqa
-    except NotImplementedError:
-        print("To open DATACUBE spm file (Bruker), nanoscope module is "
-              "required and NanoScope Analysis software (Bruker) should be "
-              "installed on the computer")
-        sys.exit()
+    except NotImplementedError as error:
+        message = "To open DATACUBE spm file (Bruker), nanoscope module is " \
+                  "required and NanoScope Analysis software (Bruker) should " \
+                  "be installed on the computer"
+        raise NanoscopeError(message) from error
 
     # DataExtraction object is used to extract info from .spm file
     data_extract = DataExtraction(file_path_in)
