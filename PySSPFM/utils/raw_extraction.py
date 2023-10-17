@@ -5,11 +5,11 @@ Inspired by SS_PFM script, Nanoscope, Bruker
 """
 
 import os
+import sys
 import pandas as pd
 import numpy as np
 
-from PySSPFM.settings import \
-    KEY_MEASUREMENT_EXTRACTION, INDEX_LINE_MEAS_NAME, HEADER_LINES, DELIMITER
+from PySSPFM.utils.utils import get_setting
 
 
 def datas_identification(raw_dict, type_file, mode_dfrt=False):
@@ -33,7 +33,8 @@ def datas_identification(raw_dict, type_file, mode_dfrt=False):
     """
     dict_meas = {}
     strg = 'dfrt' if mode_dfrt else 'classic'
-    dict_identify_mea = KEY_MEASUREMENT_EXTRACTION[type_file][strg]
+    key_measurement_extraction = get_setting("key meas extract")
+    dict_identify_mea = key_measurement_extraction[type_file][strg]
 
     for key, value in dict_identify_mea.items():
         try:
@@ -101,10 +102,11 @@ def data_extr_spm(file_path_in, mode_dfrt=False, verbose=False):
     try:
         from PySSPFM.utils.datacube_reader import \
             DataExtraction, script_info # noqa
-    except ModuleNotFoundError:
+    except (ModuleNotFoundError, WindowsError):
         print("To open DATACUBE spm file (Bruker), nanoscope module is "
               "required and NanoScope Analysis software (Bruker) should be "
               "installed on the computer")
+        sys.exit()
 
     # DataExtraction object is used to extract info from .spm file
     data_extract = DataExtraction(file_path_in)
@@ -131,8 +133,7 @@ def data_extr_spm(file_path_in, mode_dfrt=False, verbose=False):
     return dict_meas, script_dict
 
 
-def data_extr_table(file_path_in, mode_dfrt=False, lines_header=HEADER_LINES,
-                    delimiter=DELIMITER):
+def data_extr_table(file_path_in, mode_dfrt=False):
     """
     Extract and identify data from a raw measurement table file
     (txt, csv, xlsx).
@@ -146,10 +147,6 @@ def data_extr_table(file_path_in, mode_dfrt=False, lines_header=HEADER_LINES,
     mode_dfrt: bool, optional
         If True, perform a dfrt measurement; otherwise, perform the default
         measurement.
-    lines_header: int, optional
-        Number of header lines to skip.
-    delimiter: str, optional
-        Delimiter used in the file (if txt file).
 
     Returns
     -------
@@ -165,22 +162,25 @@ def data_extr_table(file_path_in, mode_dfrt=False, lines_header=HEADER_LINES,
     script_dict = script_dict_from_meas_sheet(root_in)
 
     file_type = os.path.splitext(file_path_in)[1][1:]
+    header_lines = get_setting('header lines')
 
     # Extract and identify measurements from the file
     if file_type == 'txt':
+        delimiter = get_setting('delimiter')
+        index_line_meas_name = get_setting('index line meas name')
         raw_data = np.genfromtxt(
-            file_path_in, delimiter=delimiter, skip_header=lines_header).T
+            file_path_in, delimiter=delimiter, skip_header=header_lines).T
         # Extraire le header
         with open(file_path_in, 'r', encoding='utf-8') as file:
             lines = file.readlines()
             meas_names = \
-                lines[INDEX_LINE_MEAS_NAME].strip("# \n").split(DELIMITER)
+                lines[index_line_meas_name].strip("# \n").split(delimiter)
     elif file_type == 'csv':
-        data_frame = pd.read_csv(file_path_in)[lines_header-1:]
+        data_frame = pd.read_csv(file_path_in)[header_lines-1:]
         raw_data = np.array(data_frame[1:]).T
         meas_names = data_frame.columns.tolist()
     elif file_type == 'xlsx':
-        data_frame = pd.read_excel(file_path_in)[lines_header-1:]
+        data_frame = pd.read_excel(file_path_in)[header_lines-1:]
         raw_data = np.array(data_frame[1:]).T
         meas_names = data_frame.columns.tolist()
     else:
