@@ -1,20 +1,23 @@
 """
 Test raw_extraction methods
 """
-from pytest import approx
+from pytest import approx, skip
 import numpy as np
 
+from PySSPFM.utils.raw_extraction import NanoscopeError
 from examples.utils.ex_raw_extraction import \
     ex_data_extraction, ex_csv_meas_sheet_extract
 
 
 # class TestExtract(unittest.TestCase):
 
-# Error when Nanoscope Analysis wheel is not installed
-'''
 def test_data_extraction_spm():
     """ Test ex_data_extraction '.spm' file """
-    dict_meas, script_dict = ex_data_extraction('spm')
+    try:
+        dict_meas, script_dict = ex_data_extraction('spm')
+    except NanoscopeError:
+        skip("Test skipped (NanoscopeError): spm file can't be opened without "
+             "Nanoscope Analysis DLL")
 
     sum_dict = np.sum(list(dict_meas.values())[0:4])
     tab_script = list(script_dict.values())
@@ -40,7 +43,6 @@ def test_data_extraction_spm():
     assert tab_script[15] == 100
     assert tab_script[16][0] == 270
     assert tab_script[16][1] == 310
-'''
 
 
 def test_data_extraction_txt():
