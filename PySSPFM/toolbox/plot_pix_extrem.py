@@ -10,6 +10,7 @@ from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 
+from PySSPFM.utils.utils import get_setting
 from PySSPFM.utils.core.figure import print_plots, plot_hist, ax_formating
 from PySSPFM.utils.core.basic_func import linear
 from PySSPFM.utils.nanoloop.plot import plot_ckpfm
@@ -29,7 +30,7 @@ from PySSPFM.toolbox.mean_loop import single_script
 from PySSPFM.toolbox.loop_file_reader import main_loop_file_reader
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
-from PySSPFM.settings import FIGSIZE, ELECTROSTATIC_OFFSET
+from PySSPFM.settings import FIGSIZE
 DEFAULT_LIMIT = {'min': -8., 'max': 8.}
 
 
@@ -491,8 +492,8 @@ def main_plot_pix_extrem(user_pars, dir_path_in, verbose=False,
                 multi_figures = main_mean_loop(treat_pars, verbose=False,
                                                make_plots=True)
                 offsets_off = measurements['off']['charac tot fit: y shift']
-                offset_off = offsets_off[dict_file[file]] \
-                    if ELECTROSTATIC_OFFSET else 0
+                elec_offset = get_setting('elec offset')
+                offset_off = offsets_off[dict_file[file]] if elec_offset else 0
                 _, _, _, single_fig = differential_analysis(
                     best_loop['on'], best_loop['off'], offset_off=offset_off,
                     bias_min=DEFAULT_LIMIT['min'],
