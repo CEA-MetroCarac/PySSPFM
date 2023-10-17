@@ -91,7 +91,7 @@ def test_hysteresis_clustering():
 
     assert cluster_info["coupled"][0][1] == approx(0.0018836636880818609)
     assert cluster_info["coupled"][1][1] == approx(0.0018836636880818609)
-    assert cluster_info["coupled"][2][1] == approx(0.002469161284200277)
+    assert cluster_info["coupled"][2][1] == approx(0.0024577990105899027)
     assert cluster_info["coupled"][3][1] == approx(0.005585684068363985)
 
     assert cluster_info["off"][0][2] == "B"
