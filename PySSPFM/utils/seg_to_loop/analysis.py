@@ -5,12 +5,11 @@ Module used for the scripts of sspfm 1st step data analysis (conv seg to hyst)
 
 import numpy as np
 
+from PySSPFM.utils.utils import get_setting
 from PySSPFM.utils.core.noise import filter_mean
 from PySSPFM.utils.core.peak import width_peak
 from PySSPFM.utils.seg_to_loop.plot import plt_seg
 from PySSPFM.utils.core.fitting import ShoPeakFit, ShoPhaseFit
-
-from PySSPFM.settings import DETECT_BUG_SEGMENTS
 
 
 class Segment:
@@ -566,7 +565,8 @@ def nb_measure_segment(times, sign_pars, hold_dict):
     nb_sample_exp = len(times[hold_dict['index']['start'][1] +
                               1:hold_dict['index']['end'][0] - 1])
 
-    if nb_sample_th != nb_sample_exp and DETECT_BUG_SEGMENTS:
+    detect_bug_segments = get_setting('detect bug segments')
+    if nb_sample_th != nb_sample_exp and detect_bug_segments:
         print(f"Theoretical number of samples: {nb_sample_th}")
         print(f"Experimental number of samples: {nb_sample_exp}")
         print("Error with the application of ss_pfm_signal or parameters "
