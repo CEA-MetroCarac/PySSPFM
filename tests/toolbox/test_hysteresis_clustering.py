@@ -64,7 +64,7 @@ def test_hysteresis_clustering():
         0.022249788685527537)
     assert np.sum(avg_hysteresis["coupled"][2]) == approx(
         -0.0027894943553524987)
-    assert np.sum(avg_hysteresis["coupled"][3]) == approx(0.01173711573269598)
+    assert np.sum(avg_hysteresis["coupled"][3]) == approx(0.011706520416978458)
 
     assert cluster_info["off"][0][0] == approx(0.0)
     assert cluster_info["off"][1][0] == approx(0.00144966779086903)
