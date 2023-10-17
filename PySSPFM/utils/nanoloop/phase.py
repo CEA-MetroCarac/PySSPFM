@@ -5,11 +5,12 @@ Module used for nanoloop: - phase calibration
 import numpy as np
 import matplotlib.pyplot as plt
 
+from PySSPFM.utils.utils import get_setting
 from PySSPFM.utils.core.figure import plot_graph
 from PySSPFM.utils.core.peak import find_main_peaks
 from PySSPFM.utils.core.fitting import GaussianPeakFit
 
-from PySSPFM.settings import HISTO_PHASE_METHOD, FIGSIZE
+from PySSPFM.settings import FIGSIZE
 
 
 def phase_calibration(phase, write_voltage, dict_pha, dict_str=None,
@@ -114,7 +115,8 @@ def phase_calibration(phase, write_voltage, dict_pha, dict_str=None,
             peak_phase_max = (hist_vect[res['peaks'][res['main'][0]]],
                               hist_vect[res['peaks'][res['main'][1]]])
             diff_phase_max = abs(peak_phase_max[1] - peak_phase_max[0])
-            if HISTO_PHASE_METHOD == 'fit':
+            histo_phase_method = get_setting('histo phase method')
+            if histo_phase_method == 'fit':
                 try:
                     # Fit two phase peaks
                     peak_1_pha, peak_2_pha = fit_peak_hist(
