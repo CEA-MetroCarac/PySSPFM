@@ -5,11 +5,11 @@ Functions and class in order to perform fitting
 import numpy as np
 import matplotlib.pyplot as plt
 from lmfit import Model, Parameters, minimize, report_fit
+
+from PySSPFM.utils.utils import get_setting
 from PySSPFM.utils.core.basic_func import \
     linear, gaussian, sho, sho_phase, sho_phase_switch
 from PySSPFM.utils.core.peak import width_peak
-
-from PySSPFM.settings import FIT_METHOD
 
 
 class CurveFit:
@@ -66,8 +66,9 @@ class CurveFit:
             return y_val - self.model.eval(params, x=x_val)
 
         # Perform the minimization
+        fit_method = get_setting('fit method')
         self.result = minimize(
-            objective, self.params, args=(), method=FIT_METHOD)
+            objective, self.params, args=(), method=fit_method)
 
     def eval(self, x_val):
         """
