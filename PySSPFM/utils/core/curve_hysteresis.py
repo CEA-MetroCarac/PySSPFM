@@ -431,7 +431,7 @@ class Hysteresis:
             y_eval = self.eval(x_i, self.params, i=i)
             r_squared.append(r2_score(y_i, y_eval))
 
-        self.props.update({'R² hyst': np.mean(r_squared)})
+        self.props.update({'R_2 hyst': np.mean(r_squared)})
 
 
 def inflection(offset, slope, ampli, coef, model='sigmoid', threshold=10.):
