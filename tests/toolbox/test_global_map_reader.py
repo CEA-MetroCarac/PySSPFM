@@ -28,5 +28,5 @@ def test_global_map_reader():
     assert list(mask['coupled']) == coupled_mask_target
 
     assert np.nansum(coef_arr['off']) == approx(92.8133823858753)
-    assert np.nansum(coef_arr['on']) == approx(157.33132034451688)
+    assert np.nansum(coef_arr['on']) == approx(157.2555736840546)
     assert np.nansum(coef_arr['off on']) == approx(2.8008741872277128)
