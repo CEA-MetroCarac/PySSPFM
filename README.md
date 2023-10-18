@@ -96,7 +96,7 @@ includes algorithms of:
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20main%20GUI.PNG> <br>
 </p>
 
-All code executed and parameter adjustments made through the GUI can be replicated in executable script:
+All code executed and parameter adjustments made through the GUI can be replicated in executable scripts:
 * [Data Processing](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/data_processing)
 * [Toolbox](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox)
 
