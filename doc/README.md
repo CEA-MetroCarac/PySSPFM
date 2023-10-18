@@ -20,6 +20,11 @@ Then, SSPFM mapping can be performed.
 A toolbox is provided including machine learning algorithms (K-Means), phase separation, mapping cross-correlation, SPM file conversion, and viewers for result analysis.
 </p>
 
+<p align="center" width="100%">
+    <img align="center" width=80%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20File%20Management.PNG> <br>
+    <em>PySSPFM file management</em>
+</p>
+
 ## GUI
 
 <p align="justify" width="100%"> 
