@@ -60,8 +60,7 @@ PySSPFM facilitates the processing of a set of SSPFM measurement data points by 
 
 ### 1) First step of data analysis
 <p align="justify" width="100%">
-For each of the SSPFM measurement files, amplitude and phase SSPFM 
-measurements are extracted for each segment using a user-selected method:
+For each of the SSPFM measurement files, amplitude and phase are extracted for each segment using a user-selected method:
 </p>
 
 * `max`: extract maximum or resonance peak (for frequency sweep mode)
