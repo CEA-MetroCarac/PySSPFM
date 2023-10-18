@@ -9,7 +9,7 @@ L'application PySSPFM se décompose en deux étapes de traitements des mesures e
 ## GUI
 
 <p align="justify" width="100%"> 
-Les codes <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/gui">d'interface graphique</a> on été développés avec la librairie <a href="https://docs.python.org/fr/3/library/tkinter.html">Tkinter</a>. La librairie <a href="https://pypi.org/project/Pillow">PIL</a> est utilisée pour ouvrir et afficher le logo et l'icone de l'application sur les interfaces graphiques.
+The graphical user interface (GUI) codes have been meticulously crafted using the <a href='https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/gui'>Graphical Interface Library</a>, while the elegant <a href='https://docs.python.org/fr/3/library/tkinter.html'>Tkinter</a> library lends its charm. Furthermore, the <a href='https://pypi.org/project/Pillow'>PIL library</a> is artfully employed for opening and displaying both the logo and the application's icon in these graphical interfaces.
 </p>
 
 ### Main window
