@@ -20,11 +20,6 @@ Then, SSPFM mapping can be performed.
 A toolbox is provided including machine learning algorithms (K-Means), phase separation, mapping cross-correlation, SPM file conversion, and viewers for result analysis.
 </p>
 
-<p align="center" width="100%">
-    <img align="center" width=80%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20File%20Management.PNG> <br>
-    <em>PySSPFM file management</em>
-</p>
-
 ## GUI
 
 <p align="justify" width="100%"> 
@@ -87,11 +82,26 @@ Lastly, in most cases, a final section allows the user to choose whether to disp
 The processing can be executed with the 'Start' button, and the interface also features an 'Exit' button
 </p>
 
-## Input file
+## File management
 
-### Datacube files
+<p align="center" width="100%">
+    <img align="center" width=80%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20File%20Management.PNG> <br>
+    <em>PySSPFM file management</em>
+</p>
 
-### Measurement sheet
+### Input files
+
+#### Datacube files
+
+#### Measurement sheet
+
+### Output files
+
+#### First step of data analysis
+
+#### Second step of data analysis
+
+#### Toolbox
 
 ## First step of data analysis
 
