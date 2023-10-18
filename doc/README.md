@@ -93,7 +93,15 @@ The processing can be executed with the 'Start' button, and the interface also f
 
 #### Datacube files
 
+<p align="justify" width="100%">
+The input processed datacube files can be in the form of spreadsheets (columns of value lists for each measurement) with extensions 'txt', 'csv', or 'xlsx', or directly in the format of a Bruker SSPFM file with an 'spm' extension. SSPFM files from other manufacturers are not supported. It is advisable to extract the measurements from them and place them into a spreadsheet. The header dimensions, the column separator in the spreadsheet files to be extracted, and the measurements to be extracted are customizable. A converter from spm files to spreadsheets is also available.
+</p>
+
 #### Measurement sheet
+
+<p align="justify" width="100%">
+Prior to conducting the SSPFM measurement, the user must complete a measurement form. Templates are available for both the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a> and <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>) modes. This measurement form serves to guide the user in carrying out the SSPFM measurements and to maintain a record of critical measurement parameters. It also automatically generates certain measurement information based on the provided parameters, such as total measurement time, tip-induced pressure, lock-in amplifier settings, quality factor, and resonance settling time. Furthermore, completing the form is a mandatory prerequisite for the subsequent measurement processing. The parameters to be employed for measurement processing include grid dimensions, calibration coefficients, sign of piezoelectric coeffcient, sinusoidal voltage magnitude, voltage application direction, and SSPFM polarization signal parameters.
+</p>
 
 ### Output files
 
