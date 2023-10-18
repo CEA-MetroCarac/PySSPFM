@@ -44,7 +44,8 @@ software (Bruker).
 </p>
 
 If you encounter any bugs or issues, you can kindly bring them to the 
-developer's attention by visiting: See the [PySSPFM issues](https://github.com/CEA-MetroCarac/PySSPFM/issues) for more details.
+developer's attention by visiting: 
+See the [PySSPFM issues](https://github.com/CEA-MetroCarac/PySSPFM/issues) for more details.
 
 ## Overview
 
