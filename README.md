@@ -65,6 +65,9 @@ data points by simply populating a measurement form (insert the templates). The 
 For each of the SSPFM measurement files, amplitude and phase SSPFM 
 measurements are extracted for each segment using a user-selected method (insert the methods).
 </p>
+* `max`: extract maximum or resonance peak (for frequency sweep mode)
+* `fit`: perform a fit of the resonance peak based on `SHO` model (for frequency sweep mode)
+* `dfrt`: mean of the segment (for dfrt mode)
 
 ### 2) Second step of data analysis
 <p align="justify" width="100%">
