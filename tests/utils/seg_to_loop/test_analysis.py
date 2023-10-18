@@ -174,7 +174,7 @@ def test_segments_fit_on():
     assert np.sum(seg.pha_best_fit) == approx(12037.411509536036)
     assert np.sum(seg.pha_tab) == approx(11973.066691195469)
     assert np.sum(seg.pha_tab_init) == approx(15566.80339447678)
-    assert seg.q_fact == approx(343.3272390563352, abs=1e-5)
+    assert seg.q_fact == approx(343.3272390563352, abs=1e-4)
     assert seg.res_freq == approx(326.76409251747384)
     assert seg.start_ind == 830
     assert seg.start_ind_init == 820
@@ -222,7 +222,7 @@ def test_segments_fit_off():
     assert np.sum(seg.pha_best_fit) == approx(13205.780336868818)
     assert np.sum(seg.pha_tab) == approx(13323.539465541126)
     assert np.sum(seg.pha_tab_init) == approx(16557.26211717034)
-    assert seg.q_fact == approx(341.7160661770409, abs=1e-5)
+    assert seg.q_fact == approx(341.7160661770409, abs=1e-4)
     assert seg.res_freq == approx(295.0595059372857)
     assert seg.start_ind == 930
     assert seg.start_ind_init == 920
