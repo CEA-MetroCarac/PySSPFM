@@ -1,7 +1,7 @@
 # PySSPFM
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/yudgugger/PySSPFM/blob/main/doc/_static/logoPySSPFM_white.PNG> <br>
+    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/logoPySSPFM_white.PNG> <br>
 </p>
 
 <p align="justify" width="100%"> 
@@ -15,19 +15,20 @@ accommodate the user's measurement requirements and conditions. The source code 
 ## Important
 
 <p align="justify" width="100%">
-This library is provided in its current state and remains under active 
-development. It was initially developed from reverse engineering of 
-the Python-based SSPFM measurement processing code originally developed by 
-Bruker [INSERT A LINK]. The motivation behind the creation of a new 
-application for SSPFM measurement processing stemmed from several factors : 
+This library is provided in its current state and remains under active development. It was initially developed from reverse engineering of the Python-based SSPFM measurement processing code originally developed by Bruker. The motivation behind the creation of a new application for SSPFM measurement processing stemmed from several factors : 
 </p>
 
-* The original code proved to be incompatible with the measurement files (.
-  spm from Bruker) of the library's developer 
-* There was a desire to offer the scientific community in the PFM domain an open-source solution that is easily comprehensible, adaptable, and customizable according to individual requirements. 
-* PySSPFM has been developed with the aim of achieving the most 
-  quantitative, comprehensive, and advanced measurement processing compared 
-  to other existing solutions.
+<p align="justify" width="100%">
+&#8226; The original code proved to be incompatible with the measurement files (.spm from Bruker) of the library's developer.
+</p>
+
+<p align="justify" width="100%">
+&#8226; There was a desire to offer the scientific community in the PFM domain an open-source solution that is easily comprehensible, adaptable, and customizable according to individual requirements. All developments adhere to the PEP-8 development standard and are accompanied by comprehensive, internal script documentation.
+</p>
+
+<p align="justify" width="100%">
+&#8226; PySSPFM has been developed with the aim of achieving the most quantitative and advanced measurement processing compared to other existing solutions.
+</p>
 
 <p align="justify" width="100%">
 However, while it has shown reliable performance with the data used by the 
@@ -38,21 +39,18 @@ SPM file, DLL files must be installed alongside the Nanoscope Analysis
 software (Bruker).
 </p>
 
-If you encounter any bugs or issues, you can kindly bring them to the 
-developer's attention by visiting: https://github.com/scholi/pySPM/issues
+If you encounter any bugs or issues, you can kindly bring them to the developer's attention by visiting: [PySSPFM issues](https://github.com/CEA-MetroCarac/PySSPFM/issues)
 
 ## Overview
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src="add link"> <br>
+    <img align="center" width=80%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20worflow.PNG> <br>
     <em>PySSPFM workflow</em>
 </p>
 
 ### 0) Measures
 <p align="justify" width="100%">
-PySSPFM facilitates the processing of a set 
-of SSPFM measurement 
-data points by simply populating a measurement form (insert the templates). The range of measurement files to be processed may have the extensions:
+PySSPFM facilitates the processing of a set of SSPFM measurement data points by simply populating a measurement form (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). The range of measurement files to be processed may have the extensions:
 </p>
 
 * `.spm` (Bruker)
@@ -63,8 +61,12 @@ data points by simply populating a measurement form (insert the templates). The 
 ### 1) First step of data analysis
 <p align="justify" width="100%">
 For each of the SSPFM measurement files, amplitude and phase SSPFM 
-measurements are extracted for each segment using a user-selected method (insert the methods).
+measurements are extracted for each segment using a user-selected method:
 </p>
+
+* `max`: extract maximum or resonance peak (for frequency sweep mode)
+* `fit`: perform a fit of the resonance peak based on `SHO` model (for frequency sweep mode)
+* `dfrt`: mean of the segment (for dfrt mode)
 
 ### 2) Second step of data analysis
 <p align="justify" width="100%">
@@ -90,16 +92,24 @@ includes algorithms of:
 * `Viewers`
 * `...`
 
+See the [documentation](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc) for more details on PySSPFM workflow.
+
 ## Usage
 
-INSERER IMAGE INTERFACE GRAPHIQUE
+<p align="center" width="100%">
+    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20main%20GUI.PNG> <br>
+    <em>PySSPFM GUI main window</em>
+</p>
 
-All code executed and parameter adjustments made through the GUI can be  
-replicated in script mode. (see
-examples [here](https://github.com/CEA-MetroCarac/fitspy/tree/main/examples)).
+All code executed and parameter adjustments made through the [GUI](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/gui) can be replicated in executable scripts:
+* [Data Processing](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/data_processing)
+* [Toolbox](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox)
 
-MODIFY LINK
-See the [documentation](https://github.com/CEA-MetroCarac/fitspy/tree/main/doc) for more details.
+<p align="justify" width="100%">
+You can check the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples">examples</a> (based on both real and simulated SSPFM measurements) to grasp the utilization of the scripts, and the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests">tests</a> to ensure the proper functioning of the scripts. The examples and tests follow the same directory structure as the main PySSPFM scripts.
+</p>
+
+See the [documentation](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc) for more details on PySSPFM usage.
 
 ## Installation
 
@@ -113,15 +123,18 @@ pip install PySSPFM
 #### With poetry
 
 ```bash
-poetry add git+https://github.com/scholi/pySPM.git
+poetry add git+https://github.com/CEA-MetroCarac/PySSPFM.git
 ```
 
 #### With pip
 
 ```bash
-pip install git+https://github.com/scholi/pySPM.git
+pip install git+https://github.com/CEA-MetroCarac/PySSPFM.git
 ```
 
+### Optional dependencies
+
+`pytest` to run [tests](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests) python files
 
 ## Citing
 
