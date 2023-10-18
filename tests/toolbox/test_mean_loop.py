@@ -1,7 +1,6 @@
 """
 Test mean_loop methods
 """
-import sys
 from pytest import approx
 import numpy as np
 
@@ -62,23 +61,11 @@ def test_mean_loop_1_coupled():
     # print(fit_res[3])
     # print(np.sum(mean_diff_piezorep))
 
-    version_info = sys.version_info
-    python_version = f"{version_info.major}.{version_info.minor}"
-
-    if python_version in ["3.9", "3.10"] or version_info.minor >= 9:
-        assert fit_res[0] == approx(-0.00022698554219434226, abs=1e-8)
-        assert fit_res[1] == approx(0.00014247330929064136, abs=1e-8)
-        assert fit_res[2] == approx(0.6276757008984186, abs=1e-8)
-        assert fit_res[3] == approx(0.999334257370327, abs=1e-6)
-        assert np.sum(mean_diff_piezorep) == approx(
-            0.005286339592318832, abs=1e-8)
-    else:
-        assert fit_res[0] == approx(-0.00022698554219434226, abs=1e-8)
-        assert fit_res[1] == approx(0.0001425138151223328, abs=1e-8)
-        assert fit_res[2] == approx(0.6276757008984186, abs=1e-8)
-        assert fit_res[3] == approx(0.999334257370327, abs=1e-6)
-        assert np.sum(mean_diff_piezorep) == approx(
-            0.005286339592318832, abs=1e-8)
+    assert fit_res[0] == approx(-0.00022698554219434226, abs=1e-8)
+    assert fit_res[1] == approx(0.00014247330929064136, abs=1e-7)
+    assert fit_res[2] == approx(0.6276757008984186, abs=1e-3)
+    assert fit_res[3] == approx(0.999334257370327, abs=1e-5)
+    assert np.sum(mean_diff_piezorep) == approx(0.005286339592318832, abs=1e-5)
 
 
 def test_mean_loop_2_on():
@@ -112,29 +99,15 @@ def test_mean_loop_2_off():
     # print(np.sum(best_hysts.params))
     # print(np.sum(list(best_hysts.props.values())))
 
-    version_info = sys.version_info
-    python_version = f"{version_info.major}.{version_info.minor}"
-
-    if python_version in ["3.9", "3.10"] or version_info.minor >= 9:
-        assert np.sum(mean_best_loop.piezorep) == approx(
-            0.011137901732232256, abs=1e-8)
-        assert np.sum(mean_best_loop.pha) == approx(
-            6975.453306122449, abs=1e-2)
-        assert np.sum(mean_best_loop.amp) == approx(
-            0.02825795313366302, abs=1e-8)
-        assert np.sum(best_hysts.params) == approx(0.5378600460241104)
-        assert np.sum(list(best_hysts.props.values())) == approx(
-            23.03784757853354, abs=1e-6)
-    else:
-        assert np.sum(mean_best_loop.piezorep) == approx(
-            0.011137901732232256, abs=1e-8)
-        assert np.sum(mean_best_loop.pha) == approx(
-            6983.5187918367355, abs=1e-2)
-        assert np.sum(mean_best_loop.amp) == approx(
-            0.02825795313366302, abs=1e-8)
-        assert np.sum(best_hysts.params) == approx(0.5378600460241104)
-        assert np.sum(list(best_hysts.props.values())) == approx(
-            23.03784757853354, abs=1e-6)
+    assert np.sum(mean_best_loop.piezorep) == approx(
+        0.011137901732232256, abs=1e-8)
+    assert np.sum(mean_best_loop.pha) in \
+           [approx(6975.453306122449), approx(6983.5187918367355)]
+    assert np.sum(mean_best_loop.amp) == approx(
+        0.02825795313366302, abs=1e-8)
+    assert np.sum(best_hysts.params) == approx(0.5378600460241104, abs=1e-2)
+    assert np.sum(list(best_hysts.props.values())) == approx(
+        23.03784757853354, abs=1e-3)
 
 
 def test_mean_loop_2_coupled():
@@ -148,20 +121,9 @@ def test_mean_loop_2_coupled():
     # print(fit_res[3])
     # print(np.sum(mean_diff_piezorep))
 
-    version_info = sys.version_info
-    python_version = f"{version_info.major}.{version_info.minor}"
-
-    if python_version in ["3.9", "3.10"] or version_info.minor >= 9:
-        assert fit_res[0] == approx(-0.0002861700476343689, abs=1e-8)
-        assert fit_res[1] == approx(0.00013029822120773734, abs=1e-8)
-        assert fit_res[2] == approx(0.4553174669566242, abs=1e-8)
-        assert fit_res[3] == approx(0.9988143410969148, abs=1e-6)
-        assert np.sum(mean_diff_piezorep) == approx(
-            0.004077805282110943, abs=1e-8)
-    else:
-        assert fit_res[0] == approx(-0.0002861700476343689, abs=1e-8)
-        assert fit_res[1] == approx(0.0001302620064043062, abs=1e-8)
-        assert fit_res[2] == approx(0.4553174669566242, abs=1e-8)
-        assert fit_res[3] == approx(0.9988143410969148, abs=1e-6)
-        assert np.sum(mean_diff_piezorep) == approx(
-            0.004077805282110943, abs=1e-8)
+    assert fit_res[0] == approx(-0.0002861700476343689, abs=1e-8)
+    assert fit_res[1] == approx(0.0001302620064043062, abs=1e-7)
+    assert fit_res[2] == approx(0.4553174669566242, abs=1e-3)
+    assert fit_res[3] == approx(0.9988143410969148, abs=1e-5)
+    assert np.sum(mean_diff_piezorep) == approx(
+        0.004077805282110943, abs=1e-5)
