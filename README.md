@@ -84,7 +84,7 @@ Finally, a toolbox is provided for the analysis of processing results: it
 includes algorithms of:
 </p>
 
-* `Machine learning (K-Means)`
+* [`Machine learning (K-Means)`](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py)
 * `Phase separation`
 * `Mapping cross-correlation`
 * `SPM file converter`
