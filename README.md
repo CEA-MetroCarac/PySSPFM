@@ -9,7 +9,7 @@
 <strong>Py</strong>thon dedicated to perform data analysis on <strong>SSPFM</strong> 
 (Switching Spectroscopy Piezoresponse Force Microscopy) measurements
 with a GUI that aims to be as simple to use as possible and complete to 
-accommodate the user's measurement requirements and conditions. The source code is also easily customizable to meet the user's specific needs. Measurements can be processed in both standard SSPFM mode and in SSPFM + DFRT mode.
+accommodate the user's measurement requirements and conditions. The source code was developed to be easily customizable in order to meet the user's specific needs. Measurements can be processed in both standard SSPFM mode and in SSPFM-DFRT mode.
 </p>
 
 ## Important
