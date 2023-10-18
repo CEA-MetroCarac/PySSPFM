@@ -15,11 +15,7 @@ accommodate the user's measurement requirements and conditions. The source code 
 ## Important
 
 <p align="justify" width="100%">
-This library is provided in its current state and remains under active 
-development. It was initially developed from reverse engineering of 
-the Python-based SSPFM measurement processing code originally developed by 
-Bruker [INSERT A LINK]. The motivation behind the creation of a new 
-application for SSPFM measurement processing stemmed from several factors : 
+This library is provided in its current state and remains under active development. It was initially developed from reverse engineering of the Python-based SSPFM measurement processing code originally developed by Bruker. The motivation behind the creation of a new application for SSPFM measurement processing stemmed from several factors : 
 </p>
 
 <p align="justify" width="100%">
@@ -43,9 +39,7 @@ SPM file, DLL files must be installed alongside the Nanoscope Analysis
 software (Bruker).
 </p>
 
-If you encounter any bugs or issues, you can kindly bring them to the 
-developer's attention by visiting: 
-See the [PySSPFM issues](https://github.com/CEA-MetroCarac/PySSPFM/issues) for more details.
+If you encounter any bugs or issues, you can kindly bring them to the developer's attention by visiting: [PySSPFM issues](https://github.com/CEA-MetroCarac/PySSPFM/issues)
 
 ## Overview
 
