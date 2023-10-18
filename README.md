@@ -94,6 +94,8 @@ includes algorithms of:
 * `Viewers`
 * `...`
 
+See the [documentation](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc) for more details on PySSPFM workflow.
+
 ## Usage
 
 <p align="center" width="100%">
