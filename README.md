@@ -94,6 +94,7 @@ includes algorithms of:
 
 <p align="center" width="100%">
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20main%20GUI.PNG> <br>
+    <em>PySSPFM GUI main window</em>
 </p>
 
 All code executed and parameter adjustments made through the GUI can be replicated in executable scripts:
