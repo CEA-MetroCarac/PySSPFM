@@ -50,9 +50,7 @@ If you encounter any bugs or issues, you can kindly bring them to the developer'
 
 ### 0) Measures
 <p align="justify" width="100%">
-PySSPFM facilitates the processing of a set 
-of SSPFM measurement 
-data points by simply populating a measurement form (insert the templates). The range of measurement files to be processed may have the extensions:
+PySSPFM facilitates the processing of a set of SSPFM measurement data points by simply populating a measurement form (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). The range of measurement files to be processed may have the extensions:
 </p>
 
 * `.spm` (Bruker)
