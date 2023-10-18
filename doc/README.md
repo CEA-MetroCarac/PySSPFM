@@ -91,10 +91,24 @@ The processing can be executed with the 'Start' button, and the interface also f
 
 ### Input files
 
-#### Datacube files
+#### SSPFM measurement files
 
 <p align="justify" width="100%">
-The input processed datacube files can be in the form of spreadsheets (columns of value lists for each measurement) with extensions 'txt', 'csv', or 'xlsx', or directly in the format of a Bruker SSPFM file with an 'spm' extension. SSPFM files from other manufacturers are not supported. It is advisable to extract the measurements from them and place them into a spreadsheet. The header dimensions, the column separator in the spreadsheet files to be extracted, and the measurements to be extracted are customizable. A converter from spm files to spreadsheets is also available.
+The input processed SSPFM datacube files can be in the form of spreadsheets (columns of value lists for each measurement) with following extensions:
+</p>
+
+* `.txt`
+* `.csv`
+* `.xlsx`
+
+<p align="justify" width="100%">
+Or directly in the format of a Bruker SSPFM file with the extension:
+</p>
+
+* `.spm` (Bruker)
+
+<p align="justify" width="100%">
+SSPFM files from other manufacturers are not supported. It is advisable to extract the measurements from them and place them into a spreadsheet. The header dimensions, the column separator in the spreadsheet files to be extracted, and the measurements to be extracted are customizable. A converter from spm files to spreadsheets is also available.
 </p>
 
 #### Measurement sheet
