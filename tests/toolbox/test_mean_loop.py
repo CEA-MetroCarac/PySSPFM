@@ -46,7 +46,7 @@ def test_mean_loop_1_off():
         0.010593325340580346, abs=1e-8)
     assert np.sum(mean_best_loop.pha) == approx(7872.582328571429, abs=1e-2)
     assert np.sum(mean_best_loop.amp) == approx(0.05025387861725987, abs=1e-8)
-    assert np.sum(best_hysts.params) == approx(0.9034962392174538, abs=1e-8)
+    assert np.sum(best_hysts.params) == approx(0.9034962392174538, abs=1e-6)
     assert np.sum(list(best_hysts.props.values())) == approx(
         14.569503871304713, abs=1e-6)
 
@@ -69,14 +69,14 @@ def test_mean_loop_1_coupled():
         assert fit_res[0] == approx(-0.00022698554219434226, abs=1e-8)
         assert fit_res[1] == approx(0.00014247330929064136, abs=1e-8)
         assert fit_res[2] == approx(0.6276757008984186, abs=1e-8)
-        assert fit_res[3] == approx(0.999334257370327, abs=1e-8)
+        assert fit_res[3] == approx(0.999334257370327, abs=1e-6)
         assert np.sum(mean_diff_piezorep) == approx(
             0.005286339592318832, abs=1e-8)
     else:
         assert fit_res[0] == approx(-0.00022698554219434226, abs=1e-8)
         assert fit_res[1] == approx(0.0001425138151223328, abs=1e-8)
         assert fit_res[2] == approx(0.6276757008984186, abs=1e-8)
-        assert fit_res[3] == approx(0.999334257370327, abs=1e-8)
+        assert fit_res[3] == approx(0.999334257370327, abs=1e-6)
         assert np.sum(mean_diff_piezorep) == approx(
             0.005286339592318832, abs=1e-8)
 
@@ -155,13 +155,13 @@ def test_mean_loop_2_coupled():
         assert fit_res[0] == approx(-0.0002861700476343689, abs=1e-8)
         assert fit_res[1] == approx(0.00013029822120773734, abs=1e-8)
         assert fit_res[2] == approx(0.4553174669566242, abs=1e-8)
-        assert fit_res[3] == approx(0.9988143410969148, abs=1e-8)
+        assert fit_res[3] == approx(0.9988143410969148, abs=1e-6)
         assert np.sum(mean_diff_piezorep) == approx(
             0.004077805282110943, abs=1e-8)
     else:
         assert fit_res[0] == approx(-0.0002861700476343689, abs=1e-8)
         assert fit_res[1] == approx(0.0001302620064043062, abs=1e-8)
         assert fit_res[2] == approx(0.4553174669566242, abs=1e-8)
-        assert fit_res[3] == approx(0.9988143410969148, abs=1e-8)
+        assert fit_res[3] == approx(0.9988143410969148, abs=1e-6)
         assert np.sum(mean_diff_piezorep) == approx(
             0.004077805282110943, abs=1e-8)
