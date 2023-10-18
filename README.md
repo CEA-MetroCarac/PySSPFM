@@ -132,7 +132,7 @@ pip install git+https://github.com/CEA-MetroCarac/PySSPFM.git
 
 ### Optional dependencies
 
-`pytest` to run [tests](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests) python files: 
+`pytest` to run [tests](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests) python files
 
 ## Citing
 
