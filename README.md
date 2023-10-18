@@ -96,11 +96,13 @@ includes algorithms of:
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20main%20GUI.PNG> <br>
 </p>
 
-All code executed and parameter adjustments made through the GUI can be  
-replicated in script mode. (see
-examples [here](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples)).
+All code executed and parameter adjustments made through the GUI can be replicated in executable script:
+* [Data Processing](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/data_processing)
+* [Toolbox](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox)
 
-See the [documentation](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc) for more details.
+You can check the [examples](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples) to grasp the utilization of the scripts, and the [tests](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests) to ensure the proper functioning of the scripts.
+
+See the [documentation](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc) for more details on PySSPFM usage.
 
 ## Installation
 
@@ -125,7 +127,7 @@ pip install git+https://github.com/CEA-MetroCarac/PySSPFM.git
 
 ### Optional dependencies
 
-`pytest` for tests.
+`pytest` to run [tests](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests) python files: 
 
 ## Citing
 
