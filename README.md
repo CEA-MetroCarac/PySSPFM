@@ -1,7 +1,7 @@
 # PySSPFM
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/yudgugger/PySSPFM/blob/main/doc/_static/logoPySSPFM_white.PNG> <br>
+    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/logoPySSPFM_white.PNG> <br>
 </p>
 
 <p align="justify" width="100%"> 
@@ -92,7 +92,9 @@ includes algorithms of:
 
 ## Usage
 
-INSERER IMAGE INTERFACE GRAPHIQUE
+<p align="center" width="100%">
+    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20main%20GUI.PNG> <br>
+</p>
 
 All code executed and parameter adjustments made through the GUI can be  
 replicated in script mode. (see
