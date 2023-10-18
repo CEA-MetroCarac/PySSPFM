@@ -133,8 +133,8 @@ pip install git+https://github.com/CEA-MetroCarac/PySSPFM.git
 
 ### Optional dependencies
 
-* [`pytest`](https://pypi.org/project/pytest/) to run [tests](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests) python files
-* Nanoscope Analysis software (Bruker)
+* [`pytest`](https://pypi.org/project/pytest/) to run [tests](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests) python files.
+* Nanoscope Analysis software (Bruker) installed on computer to extract SSPFM Bruker files (`spm` extension).
 
 ## Citing
 
