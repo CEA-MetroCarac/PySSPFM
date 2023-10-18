@@ -14,10 +14,7 @@ The graphical user interface <a href="https://github.com/CEA-MetroCarac/PySSPFM/
 
 ### Main window
 
-L'interface graphique de la fenêtre principale constitu le menu de l'application PySSPFM. 
-Elle peut être lancée directement à partir du code de l'interface ou à partir du fichier PySSPFM.exe.
-Elle contient un ensemble de boutons, pour chacun des scripts exécutables. Une fenêtre secondaire est alors ouverte pour le script en question.
-L'interface peut être fermée par le bouton "Exit" ou par la croix en haut à droite.
+The graphical user interface of the main window constitutes the menu of the PySSPFM application. It can be launched directly from the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/main.py">interface code</a> or from the PySSPFM.exe file. It encompasses an array of buttons, each corresponding to an executable script. A secondary window is subsequently opened for the selected script. The interface can be closed either using the <img src="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Exit%20Button.PNG" width="20"> button or the close button in the upper right corner.
  
 ### Secondary window
 
