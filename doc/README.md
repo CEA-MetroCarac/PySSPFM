@@ -75,7 +75,7 @@ Users are guided through tooltips when hovering the mouse over the button. The p
 </p>
 
 <p align="justify" width="100%">
-Lastly, in most cases, a final section allows the user to choose whether to display the processing results in the console (verbose), show the figures on the screen (show plots), or save them. 
+Lastly, in most cases, a final section allows the user to choose whether to display the processing results in the console: <code>verbose</code>, show the figures on the screen: <code>show plots</code>, or save them: <code>save analysis</code>. 
 </p>
 
 <p align="center" width="100%">
