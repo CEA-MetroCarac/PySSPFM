@@ -54,7 +54,6 @@ PySSPFM facilitates the processing of a set
 of SSPFM measurement 
 data points by simply populating a measurement form (insert the templates). The range of measurement files to be processed may have the extensions:
 </p>
-
 * `.spm` (Bruker)
 * `.txt`
 * `.csv`
