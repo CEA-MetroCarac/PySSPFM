@@ -20,7 +20,6 @@ The graphical user interface <a href="https://github.com/CEA-MetroCarac/PySSPFM/
 
 <p align="center" width="100%">
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20main%20GUI.PNG> <br>
-    <em>PySSPFM GUI main window</em>
 </p>
 
 <p align="justify" width="100%">
