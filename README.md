@@ -23,8 +23,14 @@ application for SSPFM measurement processing stemmed from several factors :
 </p>
 
 <p align="justify" width="100%">
-&#8226; The original code proved to be incompatible with the measurement files (.spm from Bruker) of the library's developer.<br>
-&#8226; There was a desire to offer the scientific community in the PFM domain an open-source solution that is easily comprehensible, adaptable, and customizable according to individual requirements.<br>
+&#8226; The original code proved to be incompatible with the measurement files (.spm from Bruker) of the library's developer.
+</p>
+
+<p align="justify" width="100%">
+&#8226; There was a desire to offer the scientific community in the PFM domain an open-source solution that is easily comprehensible, adaptable, and customizable according to individual requirements.
+</p>
+
+<p align="justify" width="100%">
 &#8226; PySSPFM has been developed with the aim of achieving the most quantitative, comprehensive, and advanced measurement processing compared to other existing solutions.
 </p>
 
@@ -38,7 +44,7 @@ software (Bruker).
 </p>
 
 If you encounter any bugs or issues, you can kindly bring them to the 
-developer's attention by visiting: https://github.com/scholi/pySPM/issues
+developer's attention by visiting: https://github.com/CEA-MetroCarac/PySSPFM/issues
 
 ## Overview
 
