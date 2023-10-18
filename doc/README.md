@@ -23,16 +23,23 @@ The graphical user interface <a href="https://github.com/CEA-MetroCarac/PySSPFM/
     <em>PySSPFM GUI main window</em>
 </p>
 
-The graphical user interface of the main window constitutes the menu of the PySSPFM application. It can be launched directly from the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/main.py">interface code</a> or from the PySSPFM.exe file. It encompasses an array of buttons, each corresponding to an executable script. A secondary window is subsequently opened for the selected script. The interface can be closed either using the <img src="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Exit%20Button.PNG" width="60"> button or the close button in the upper right corner.
+The graphical user interface of the main window constitutes the menu of the PySSPFM application. It can be launched directly from the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/main.py">interface code</a> or from the PySSPFM.exe file. It encompasses an array of buttons, each corresponding to an executable script. A secondary window is subsequently opened for the selected script. The interface can be closed either using the <img src="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Exit%20Button.PNG" width="60"> button or the ### IMAGE A INSERER ### close button in the upper right corner.
  
 ### Secondary window
 
-L'interface graphique de la fenêtre secondaire est propre à chacun des scripts python excécutables en question et constitue leur menu spécifique.
-Elle peut être lancée directement à partir du code de l'interface en question ou à partir du menu principal.
-La plupart du temps, elles contiennent, une première section de file management pour sélectionner le chemin des fichiers d'entrée et de sortie, avec un bouton browse ou select pour choisir de manière intéractive le chemin dans l'explorateur de fichier. Dans la plupart des cas, une fois le chemin d'entrée sélectionné, les chemins en sortie sont remplis automatiquement en fonction du path management par défaut. Cependant, le chemin peut être modifiable.
-Ensuite des sections sont attribués aux paramètres propres à l'étape du traitement. En fonction du type de variable, le paramètre peut être rensigné dans un champ, par un checkbutton, une jauge etc. L'utilisateur est guidé grâce à une aide lorsque la souris est passée sur le bouton. Le nom du paramètre, une description résumée et globale ainsi que ses valeurs possibles et ses conditions d'activation sont rensignées.
-Enfin, dans la plupart des cas, une dernière section permet à l'utilisateur de choisir si'l souhaite afficher les résultats du traitement dans la console (verbose), afficher à l'écran les figures (show plots) ou encore les sauvegarder (save).
-Le traitement peut être exécuté grâce au bouton "Start" et l'interface contient aussi un bouton "Exit".
+The graphical user interface of the secondary window is specific to each of the respective executable Python scripts, constituting their dedicated menu. It can be initiated directly from the code of the respective interface or from the main menu. 
+
+### IMAGE A INSERER ###
+In most instances, they encompass a primary file management section to select the input and output file paths, with a 'Browse' or 'Select' button to interactively choose the path in the file explorer. In the majority of cases, once the input path is selected, the other paths are automatically populated based on the default path management. However, all the paths can be modified.
+
+### IMAGE A INSERER ###
+Following this, sections are allocated to parameters relevant to the processing step. Depending on the variable type, the parameter can be entered in a field, via a check button, a gauge, etc. Users are guided through tooltips when hovering the mouse over the button. The parameter name, a brief and overall description, along with its possible values and activation conditions, are provided.
+
+### IMAGE A INSERER ###
+Lastly, in most cases, a final section allows the user to choose whether to display the processing results in the console (verbose), show the figures on the screen (show plots), or save them. 
+
+### IMAGE A INSERER ###
+The processing can be executed with the 'Start' button, and the interface also features an 'Exit' button
 
 ## Input file
 
