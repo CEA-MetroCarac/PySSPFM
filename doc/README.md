@@ -43,7 +43,7 @@ The graphical user interface of the secondary window is specific to each of the 
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/File%20Management%20Section.PNG> <br>
+    <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/File%20Management%20Section.PNG> <br>
 </p>
 
 <p align="justify" width="100%">
@@ -51,7 +51,7 @@ In most instances, they encompass a primary file management section to select th
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/User%20Parameters%20Section.PNG> <br>
+    <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/User%20Parameters%20Section.PNG> <br>
 </p>
 
 <p align="justify" width="100%">
@@ -59,7 +59,7 @@ Following this, sections are allocated to parameters relevant to the processing 
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Tooltip.png> <br>
+    <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Tooltip.png> <br>
 </p>
 
 <p align="justify" width="100%">
@@ -67,7 +67,7 @@ Users are guided through tooltips when hovering the mouse over the button. The p
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Plot%20and%20save%20section.PNG> <br>
+    <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Plot%20and%20save%20section.PNG> <br>
 </p>
 
 <p align="justify" width="100%">
@@ -75,7 +75,7 @@ Lastly, in most cases, a final section allows the user to choose whether to disp
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Start%20and%20Exit%20section.PNG> <br>
+    <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Start%20and%20Exit%20section.PNG> <br>
 </p>
 
 <p align="justify" width="100%">
