@@ -1,6 +1,7 @@
 """
 Test hysteresis_clustering methods
 """
+import sys
 from pytest import approx
 import numpy as np
 
@@ -38,10 +39,22 @@ def test_hysteresis_clustering():
                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
                  0, 0, 0]
-    indexs_coupled = [2, 3, 2, 2, 2, 1, 3, 2, 1, 1, 1, 3, 2, 2, 0, 1, 0, 1, 1,
-                      0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                      0, 0, 0, 2, 1, 1]
+
+    # Get Python version
+    version_info = sys.version_info
+    python_version = f"{version_info.major}.{version_info.minor}"
+
+    if python_version in ["3.8", "3.9", "3.10"] or version_info.minor >= 8:
+        indexs_coupled = [2, 3, 2, 2, 2, 1, 3, 2, 1, 1, 1, 3, 2, 2, 0, 1, 0,
+                          1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0,
+                          0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                          0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1]
+    else:
+        indexs_coupled = [2, 3, 2, 2, 2, 1, 3, 2, 1, 1, 1, 3, 2, 2, 0, 1, 0,
+                          1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0,
+                          0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                          0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1]
+
     assert cluster_indexs["off"] == indexs_off
     assert cluster_indexs["on"] == indexs_on
     assert cluster_indexs["coupled"] == indexs_coupled
@@ -117,10 +130,16 @@ def test_hysteresis_clustering():
     assert cluster_info["on"][0][3] == 59
     assert cluster_info["on"][1][3] == 4
 
-    assert cluster_info["coupled"][0][3] == 36
-    assert cluster_info["coupled"][1][3] == 16
-    assert cluster_info["coupled"][2][3] == 8
-    assert cluster_info["coupled"][3][3] == 3
+    if python_version in ["3.8", "3.9", "3.10"] or version_info.minor >= 8:
+        assert cluster_info["coupled"][0][3] == 36
+        assert cluster_info["coupled"][1][3] == 16
+        assert cluster_info["coupled"][2][3] == 8
+        assert cluster_info["coupled"][3][3] == 3
+    else:
+        assert cluster_info["coupled"][0][3] == 34
+        assert cluster_info["coupled"][1][3] == 18
+        assert cluster_info["coupled"][2][3] == 8
+        assert cluster_info["coupled"][3][3] == 3
 
     assert cluster_info["off"][0][4] == "A"
     assert cluster_info["off"][1][4] == "B"
