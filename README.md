@@ -43,10 +43,8 @@ SPM file, DLL files must be installed alongside the Nanoscope Analysis
 software (Bruker).
 </p>
 
-<p align="justify" width="100%">
 If you encounter any bugs or issues, you can kindly bring them to the 
-developer's attention by visiting: [PySSPFM issues](https://github.com/CEA-MetroCarac/PySSPFM/issues)
-</p>
+developer's attention by visiting: See the [PySSPFM issues](https://github.com/CEA-MetroCarac/PySSPFM/issues) for more details.
 
 ## Overview
 
@@ -103,10 +101,9 @@ INSERER IMAGE INTERFACE GRAPHIQUE
 
 All code executed and parameter adjustments made through the GUI can be  
 replicated in script mode. (see
-examples [here](https://github.com/CEA-MetroCarac/fitspy/tree/main/examples)).
+examples [here](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples)).
 
-MODIFY LINK
-See the [documentation](https://github.com/CEA-MetroCarac/fitspy/tree/main/doc) for more details.
+See the [documentation](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc) for more details.
 
 ## Installation
 
@@ -120,15 +117,18 @@ pip install PySSPFM
 #### With poetry
 
 ```bash
-poetry add git+https://github.com/scholi/pySPM.git
+poetry add git+https://github.com/CEA-MetroCarac/PySSPFM.git
 ```
 
 #### With pip
 
 ```bash
-pip install git+https://github.com/scholi/pySPM.git
+pip install git+https://github.com/CEA-MetroCarac/PySSPFM.git
 ```
 
+### Optional dependencies
+
+`pytest` for tests.
 
 ## Citing
 
