@@ -105,7 +105,7 @@ def main():
     strg_functions = [
         "Conversion of raw_datas.spm (sspfm datacube file) to raw_datas.txt"
     ]
-    create_section(root, "Toolbox - 3 - File management", ["SPM to TXT"],
+    create_section(root, "Toolbox - 3 - File management", ["SPM converter"],
                    [main_tool_3_a], strg_title=strg_title,
                    strg_functions=strg_functions)
 
