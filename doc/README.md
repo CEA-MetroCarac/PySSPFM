@@ -125,7 +125,11 @@ Prior to conducting the SSPFM measurement, the user must complete a measurement 
 
 #### First step of data analysis
 
+Deux fichiers sont utilisés pour l'enregistrement des fichiers en sortie de la première étape de traitement: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/file.py">utils/seg_to_loop/file</a> and <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file.py">utils/nanoloop/file</a>.
+
 #### Second step of data analysis
+
+Un fichiers est utilisé pour l'enregistrement des fichiers en sortie de la deuxième étape de traitement: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a>.
 
 #### Toolbox
 
