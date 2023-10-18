@@ -109,6 +109,10 @@ All code executed and parameter adjustments made through the [GUI](https://githu
 
 You can check the [examples](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples) (based on both real and simulated SSPFM measurements) to grasp the utilization of the scripts, and the [tests](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests) to ensure the proper functioning of the scripts. The examples and tests follow the same directory structure as the main PySSPFM scripts.
 
+<p align="justify" width="100%">
+You can check the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples">examples</a> (based on both real and simulated SSPFM measurements) to grasp the utilization of the scripts, and the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests">tests</a> to ensure the proper functioning of the scripts. The examples and tests follow the same directory structure as the main PySSPFM scripts.
+</p>
+
 See the [documentation](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc) for more details on PySSPFM usage.
 
 ## Installation
