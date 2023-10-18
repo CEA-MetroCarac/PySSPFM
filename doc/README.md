@@ -11,7 +11,7 @@
     <em>PySSPFM workflow</em>
 </p>
 
-<p align="center" width="100%">
+<p align="justify" width="100%">
 Following the SSPFM measurement, one or more SSPFM files are generated. A measurement form should be completed by the user (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). 
 The PySSPFM application then proceeds with two stages of measurement processing:
 In the first data analysis step, amplitude and phase measurements are extracted and calibrated ufor each segment and nanoloops are created.
