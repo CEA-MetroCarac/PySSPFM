@@ -54,6 +54,7 @@ PySSPFM facilitates the processing of a set
 of SSPFM measurement 
 data points by simply populating a measurement form (insert the templates). The range of measurement files to be processed may have the extensions:
 </p>
+
 * `.spm` (Bruker)
 * `.txt`
 * `.csv`
@@ -62,8 +63,9 @@ data points by simply populating a measurement form (insert the templates). The 
 ### 1) First step of data analysis
 <p align="justify" width="100%">
 For each of the SSPFM measurement files, amplitude and phase SSPFM 
-measurements are extracted for each segment using a user-selected method (insert the methods).
+measurements are extracted for each segment using a user-selected method:
 </p>
+
 * `max`: extract maximum or resonance peak (for frequency sweep mode)
 * `fit`: perform a fit of the resonance peak based on `SHO` model (for frequency sweep mode)
 * `dfrt`: mean of the segment (for dfrt mode)
