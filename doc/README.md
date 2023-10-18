@@ -1,5 +1,9 @@
 # PySSPFM Documentation
 
+<p align="center" width="100%">
+    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/logoPySSPFM_white.PNG> <br>
+</p>
+
 ## Introduction
 
 Insérer le workflow et le file management overview
@@ -13,6 +17,11 @@ The graphical user interface <a href="https://github.com/CEA-MetroCarac/PySSPFM/
 </p>
 
 ### Main window
+
+<p align="center" width="100%">
+    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20main%20GUI.PNG> <br>
+    <em>PySSPFM GUI main window</em>
+</p>
 
 The graphical user interface of the main window constitutes the menu of the PySSPFM application. It can be launched directly from the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/main.py">interface code</a> or from the PySSPFM.exe file. It encompasses an array of buttons, each corresponding to an executable script. A secondary window is subsequently opened for the selected script. The interface can be closed either using the <img src="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Exit%20Button.PNG" width="60"> button or the close button in the upper right corner.
  
