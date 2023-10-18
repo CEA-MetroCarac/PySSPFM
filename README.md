@@ -97,7 +97,7 @@ See the [documentation](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc)
 ## Usage
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20main%20GUI.PNG> <br>
+    <img align="center" width="15%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20main%20GUI.PNG> <br>
     <em>PySSPFM GUI main window</em>
 </p>
 
