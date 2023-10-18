@@ -51,7 +51,7 @@ The graphical user interface of the secondary window is specific to each of the 
 </p>
 
 <p align="justify" width="100%">
-In most instances, they encompass a primary file management section to select the input and output file paths, with a 'Browse' or 'Select' button to interactively choose the path in the file explorer. In the majority of cases, once the input path is selected, the other paths are automatically populated based on the default path management. However, all the paths can be modified.
+In most instances, they encompass a primary file management section to select the input and output file paths, with a <code>'Browse'</code> or <code>'Select'</code> button to interactively choose the path in the file explorer. In the majority of cases, once the input path is selected, the other paths are automatically populated based on the default path management. However, all the paths can be modified.
 </p>
 
 <p align="center" width="100%">
