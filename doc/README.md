@@ -13,12 +13,16 @@
 
 <p align="justify" width="100%">
 Following the SSPFM measurement, one or more SSPFM files are generated. A measurement form should be completed by the user (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). 
-The PySSPFM application then proceeds with two stages of measurement processing:
-In the first data analysis step, amplitude and phase measurements are extracted and calibrated ufor each segment and nanoloops are created.
-The second step creates the piezoresponse hysteresis loop, and extracts piezoelectric and ferroelectric properties using an algorithm based on the lmfit library. Various artifact decorrelation protocols improve measurement accuracy.
-Then, SSPFM mapping can be performed.
-A toolbox is provided including machine learning algorithms (K-Means), phase separation, mapping cross-correlation, SPM file conversion, and viewers for result analysis.
+The PySSPFM application then proceeds with two stages of measurement processing. In the first data analysis step, amplitude and phase measurements are extracted and calibrated for each segment and nanoloops are determined. The second step creates the piezoresponse hysteresis loop, and extracts piezoelectric and ferroelectric properties using an algorithm based on the <a href="https://pypi.org/project/lmfit/">lmfit</a> library. Various artifact decorrelation protocols improve measurement accuracy.Then, SSPFM mapping can be performed. A toolbox is provided including:
 </p>
+
+* [`Machine learning (K-Means)`](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py)
+* [`Phase separation`](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_loop.py)
+* [`Mapping cross-correlation`](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py)
+* [`SPM file converter`](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py)
+* `Viewers`
+* `...`
+
 
 ## GUI
 
