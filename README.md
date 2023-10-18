@@ -43,13 +43,15 @@ SPM file, DLL files must be installed alongside the Nanoscope Analysis
 software (Bruker).
 </p>
 
+<p align="justify" width="100%">
 If you encounter any bugs or issues, you can kindly bring them to the 
-developer's attention by visiting: [PySSPFM issues]([https://github.com/CEA-MetroCarac/fitspy/tree/main/doc](https://github.com/CEA-MetroCarac/PySSPFM/issues)) 
+developer's attention by visiting: [PySSPFM issues](https://github.com/CEA-MetroCarac/PySSPFM/issues)
+</p>
 
 ## Overview
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20worflow.PNG"> <br>
+    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20worflow.PNG> <br>
     <em>PySSPFM workflow</em>
 </p>
 
