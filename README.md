@@ -15,11 +15,11 @@ accommodate the user's measurement requirements and conditions. The source code 
 ## Important
 
 <p align="justify" width="100%">
-This library is provided in its current state and remains under active development. It was initially developed from reverse engineering of the Python-based SSPFM measurement processing code originally developed by Bruker. The motivation behind the creation of a new application for SSPFM measurement processing stemmed from several factors : 
+This library is provided in its current state and remains under active development. It was initially developed from reverse engineering of the Python-based SSPFM measurement processing code originally developed by Bruker. The motivation behind the creation of the new PySSPFM application for SSPFM measurement processing stemmed from several factors : 
 </p>
 
 <p align="justify" width="100%">
-&#8226; The original code proved to be incompatible with the measurement files (.spm from Bruker) of the library's developer.
+&#8226; The original code of Bruker proved to be incompatible with the measurement files (.spm from Bruker) of the library's developer.
 </p>
 
 <p align="justify" width="100%">
