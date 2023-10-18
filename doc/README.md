@@ -6,9 +6,19 @@
 
 ## Introduction
 
-Insérer le workflow et le file management overview
+<p align="center" width="100%">
+    <img align="center" width=80%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20worflow.PNG> <br>
+    <em>PySSPFM workflow</em>
+</p>
 
-L'application PySSPFM se décompose en deux étapes de traitements des mesures et une toolbox qui permet d'effectuer des traitements supplémenaires.
+<p align="justify" width="100%">
+Following the SSPFM measurement, one or more SSPFM files are generated. A measurement form should be completed by the user (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). 
+The PySSPFM application then proceeds with two stages of measurement processing:
+In the first data analysis step, amplitude and phase measurements are extracted and calibrated ufor each segment and nanoloops are created.
+The second step creates the piezoresponse hysteresis loop, and extracts piezoelectric and ferroelectric properties using an algorithm based on the lmfit library. Various artifact decorrelation protocols improve measurement accuracy.
+Then, SSPFM mapping can be performed.
+A toolbox is provided including machine learning algorithms (K-Means), phase separation, mapping cross-correlation, SPM file conversion, and viewers for result analysis.
+</p>
 
 ## GUI
 
@@ -19,7 +29,7 @@ The graphical user interface <a href="https://github.com/CEA-MetroCarac/PySSPFM/
 ### Main window
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20main%20GUI.PNG> <br>
+    <img align="center" width="15%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20main%20GUI.PNG> <br>
 </p>
 
 <p align="justify" width="100%">
@@ -33,7 +43,7 @@ The graphical user interface of the secondary window is specific to each of the 
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/File%20Management%20Section.PNG> <br>
+    <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/File%20Management%20Section.PNG> <br>
 </p>
 
 <p align="justify" width="100%">
@@ -41,15 +51,23 @@ In most instances, they encompass a primary file management section to select th
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/User%20Parameters%20Section.PNG> <br>
+    <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/User%20Parameters%20Section.PNG> <br>
 </p>
 
 <p align="justify" width="100%">
-Following this, sections are allocated to parameters relevant to the processing step. Depending on the variable type, the parameter can be entered in a field, via a check button, a gauge, etc. Users are guided through tooltips when hovering the mouse over the button. The parameter name, a brief and overall description, along with its possible values and activation conditions, are provided.
+Following this, sections are allocated to parameters relevant to the processing step. Depending on the variable type, the parameter can be entered in a field, via a check button, a gauge, etc. 
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Plot%20and%20save%20section.PNG> <br>
+    <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Tooltip.png> <br>
+</p>
+
+<p align="justify" width="100%">
+Users are guided through tooltips when hovering the mouse over the button. The parameter name, a brief and overall description, along with its possible values and activation conditions, are provided.
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Plot%20and%20save%20section.PNG> <br>
 </p>
 
 <p align="justify" width="100%">
@@ -57,7 +75,7 @@ Lastly, in most cases, a final section allows the user to choose whether to disp
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Start%20and%20Exit%20section.PNG> <br>
+    <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Start%20and%20Exit%20section.PNG> <br>
 </p>
 
 <p align="justify" width="100%">
