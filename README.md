@@ -101,7 +101,7 @@ includes algorithms of:
     <em>PySSPFM GUI main window</em>
 </p>
 
-All code executed and parameter adjustments made through the GUI can be replicated in executable scripts:
+All code executed and parameter adjustments made through the [GUI](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/gui) can be replicated in executable scripts:
 * [Data Processing](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/data_processing)
 * [Toolbox](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox)
 
