@@ -123,9 +123,15 @@ Prior to conducting the SSPFM measurement, the user must complete a measurement 
 
 #### Extraction
 
-L'ensemble des fichiers de mesure ainsi que la feuille de mesure doivent être placés dans le même dossier. Les données contenues dans ces deux types de fichiers sont alors extraites grace au fichier <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/raw_extraction.py">utils/raw_extraction</a>. Pour des fichiers d'extension spm (Bruker), le script d'extraction se base sur un deuxième fichier: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_reader.py">utils/datacube_reader</a> qui utilise l'objet DataExtraction avec la librairie nanoscope. Cependant, la librairie nanoscope ne suffit pas à elle seule à extraire les données contenues dans le fichier: cette dernière demande l'utilisation de fichiers DLL installés avec le logiciel Nanoscope Analysis (Bruker). Dans le cas ou les fichiers DLL ne sont pas présent, l'objet NanoscopeError a été créé pour géré l'erreur.
+<p align="justify" width="100%">
+All measurement files and the measurement sheet must be placed within the same directory. The data contained in these file types are then extracted using the file <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/raw_extraction.py">utils/raw_extraction</a>. For files with the <code>.spm</code> extension (Bruker), the extraction script relies on a second file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_reader.py">utils/datacube_reader</a>, which employs the <code>DataExtraction</code> object with the <a href="https://pypi.org/project/nanoscope/">nanoscope</a> library. However, the nanoscope library alone is insufficient for data extraction, as it requires the use of DLL files installed with the Nanoscope Analysis software (Bruker). In the event that the DLL files are not present, the <code>NanoscopeError</code> object has been created to handle the error.
+</p>
 
 ### Output files
+
+<p align="justify" width="100%">
+A default data processing path management is provided, but the user has the option to select their own path management.
+</p>
 
 #### First step of data analysis
 
@@ -133,14 +139,17 @@ L'ensemble des fichiers de mesure ainsi que la feuille de mesure doivent être p
     <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_First_Step.PNG> <br>
 </p>
 
-A la suite de la première étape de traitement, par défaut, un nouveau dossier est créé à la même racine que le dossier des données d'entrée, avec la nomenclature :
-'nom_du_fichier_initial'_'aaaa-mm-dd-HHh-MMm'_out_'type_de_traitement'. Ce dernier contient lui même deux sous dossiers results et txt_loops.
-
-* Le premier contient:
-** Un fichier texte (par défaut saving_parameters.txt) de sauvegarde de l'ensemble des paramètres de mesures initialement contenues dans la fiche de mesure, ainsi que les paramètres et des informations sur la première étape du traitement de mesure réalisé. Il est génégé par le script: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/file.py">utils/seg_to_loop/file</a>.
-** Un dossier figs contenant l'ensemble des figures générées lors de la première étape: à savoir différentes représentations graphiques des données bruts gérées par les scripts <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/plot.py">utils/seg_to_loop/plot</a>, les histogramme de phase permettant à la calibration gérées par les scripts <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase</a> et les nanoloops en phase, amplitude et piezoresponse gérées par les scripts <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot</a>.
-
-* Le dossier txt_loops contient les données traitées à la suite de la première étape de traitement sous forme de nanoloop en amplitude et en phase en fonction de la tension de polarization, aussi bien en Off et On Field, et ce pour chaque fichier de mesure. Ce dernier est généré grâce au script contenus dans <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file.py">utils/nanoloop/file</a>
+<p align="justify" width="100%">
+Following the first processing step, by default, a new directory is created at the same root as the input data folder, with the nomenclature: <code>'initial_file_name'_'yyyy-mm-dd-HHh-MMm'_out_'processing_type'</code>. This directory itself contains two subdirectories, <code>results</code> and <code>txt_loops</code>.
+    <ul>
+        <li>The first one contains:</li>
+            <ul>
+                <li>A text file: <code>saving_parameters.txt</code>, that saves all the measurement parameters initially present in the measurement form, along with parameters and information about the first measurement processing step. It is generated by the script: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/file.py">utils/seg_to_loop/file</a>.</li>
+                <li>A directory <code>figs</code> directory containing all the figures generated during the first step, including various graphical representations of the raw data managed by the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/plot.py">utils/seg_to_loop/plot</a> script, phase histograms used for calibration managed by the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase</a> script, and phase, amplitude, and piezoresponse nanoloops managed by the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot</a> scripts.</li>
+            </ul>
+        <li>The <code>txt_loops</code> directory contains the processed data following the first step of processing in the form of amplitude and phase nanoloops as a function of polarization voltage, both in Off and On Field modes, for each measurement file. This directory is generated using the script located in <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file.py">utils/nanoloop/file</a>.</li>
+    </ul>
+</p>
 
 #### Second step of data analysis
 
@@ -148,18 +157,34 @@ A la suite de la première étape de traitement, par défaut, un nouveau dossier
     <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_Second_Step.PNG> <br>
 </p>
 
-A la suite de la deuxième étape du traitement, le dossier de traitement est complété:
-* Le dossier results contient désormais:
-** Un fichier texte (par défaut saving_parameters.txt) complété par les paramètres et des informations sur la deuxième étape du traitement de mesure réalisée. Cette étape est réalisé par le script <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a>.
-** Le dossier figs avec les figures générées lors de la deuxième étape de traitement : à savoir les hystérésis off et on field avec le fit et l'extraction des paramètres correspondant ainsi que l'extraction par plusieurs protocoles de la composante liées aux artefacts de mesure. Cette étape est réalisé par le script <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/plot.py">utils/hyst_to_map/plot</a>.
-* Un dossier txt_ferro_meas contient l'ensemble des propriétés du matériau mesurée pour chacun des fichiers de mesure, aussi bien en On et Off Field qu'en mesurées différentielles (ou couplées) extraites lors de l'étape du fit des hystérésis et de l'analyse des artefacts, respectivement par les scripts <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a> et <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic</a>
-* Un dossier txt_best_loops qui contient l'unique hystérésis par mode (en On et Off Field ainsi qu'en mesures couplées) par fichier de mesure.
+<p align="justify" width="100%">
+Following the second stage of processing, the processing folder is augmented as follows:
+    <ul>
+        <li>The <code>results</code> folder now includes:</li>
+            <ul>
+                <li>The text file <code>saving_parameters.txt</code> enriched with parameters and information pertaining to the second stage of measurement processing. This stage is conducted by the script <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a>.</li>
+                <li>The <code>figs</code> directory houses the visual representations generated during the second stage of processing, encompassing off and on-field hysteresis with fitting and parameter extraction, along with the extraction of the artifact-related component through multiple protocols. This stage is executed by the script <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/plot.py">utils/hyst_to_map/plot</a>.</li>
+            </ul>
+        <li>A new <code>txt_ferro_meas</code> folder contains all material properties measured for each measurement file, both in on-field and off-field conditions, as well as in differential (or coupled) measurements. These properties are extracted during the hysteresis fitting stage and artifact analysis, accomplished by the scripts <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a> and <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic</a>, respectively.</li>
+        <li>A <code>txt_best_loops</code> directory that contains the singular hysteresis for each mode (on-field and off-field, as well as coupled measurements) per measurement file.</li>
+     </ul>
+</p>
 
 #### Toolbox
 
-## First step of data analysis
+<p align="center" width="100%">
+    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_Toolbox.PNG> <br>
+</p>
 
-### Input file
+<p align="justify" width="100%">
+For each tool in the toolbox, it is possible to save the analysis conducted. A <code>toolbox</code> folder is then created within the processing directory. This folder comprises a set of subdirectories, one for each toolbox treatment, following the nomenclature: <code>'tool_used'_'yyyy-mm-dd-HHh-MMm'</code>. Each of these directories contains the figures generated during the analysis performed by the respective tool, along with a text file <code>user_params.txt</code> that maintains a record of the parameters employed for the analysis.
+
+Two tools deviate from this path management:
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">raw_file_reader</a>: It creates a folder with the nomenclature: <code>'initial_file_name'_toolbox</code> at the same root as the input folder. This folder contains a sub-folder <code>raw_file_reader'_yyyy-mm-dd-HHh-MMm'</code>.
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">spm_converter</a>: It creates a folder with the nomenclature: <code>'initial_file_name'_datacube'_extension'</code> at the same root as the input folder, containing all the converted datacube files.
+</p>
+
+## First step of data analysis
 
 ### Parameters
 
@@ -168,8 +193,6 @@ A la suite de la deuxième étape du traitement, le dossier de traitement est co
 ### Calibration
 
 ### Nanoloop
-
-### File management
 
 ## Second step of data analysis
 
