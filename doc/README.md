@@ -242,9 +242,19 @@ Pour en savoir plus sur le path management de cette étape, lire la section de l
 
 ### Viewers
 
+#### Raw file
+
+Le fichier 
+
 #### Parameters
 
 ### Hysteresis clustering (K-Means)
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox
+/hysteresis_clustering</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hysteresis_clustering.py">gui
+/hysteresis_clustering</a>.
+</p>
 
 #### Parameters
 
@@ -300,4 +310,6 @@ For each mode (On Field, Off Field, and coupled), three figures are generated, e
 #### Parameters
 
 ## Overall settings
+
+### Default settings & management
 
