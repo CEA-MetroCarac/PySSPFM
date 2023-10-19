@@ -159,7 +159,6 @@ Following the first processing step, by default, a new directory is created at t
 
 <p align="justify" width="100%">
 Following the second stage of processing, the processing folder is augmented as follows:
-
     <ul>
         <li>The <code>results</code> folder now includes:</li>
             <ul>
