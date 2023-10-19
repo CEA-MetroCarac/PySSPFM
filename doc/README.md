@@ -33,7 +33,7 @@ The graphical user interface <a href="https://github.com/CEA-MetroCarac/PySSPFM/
 ### Main window
 
 <p align="center" width="100%">
-    <img align="center" width="15%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20main%20GUI.PNG> <br>
+    <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20main%20GUI.PNG> <br>
 </p>
 
 <p align="justify" width="100%">
@@ -154,7 +154,7 @@ Following the first processing step, by default, a new directory is created at t
 #### Second step of data analysis
 
 <p align="center" width="100%">
-    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_Second_Step.PNG> <br>
+    <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_Second_Step.PNG> <br>
 </p>
 
 <p align="justify" width="100%">
