@@ -257,13 +257,17 @@ Two tools deviate from this path management:
 
 #### Extraction 
 
-L'ensemble des données issues des bests hysteresis loop en on et off field sont extraites des fichiers dans 'txt_best_loops'.
-Les mesures d'offsets verticales en off field et les dimensions des cartographies sont extraites des fichiers dans 'txt_ferro_meas'
-Les mesures coupled sont ensuite générées par analyse différentielle des mesures On et Off Field avec la possibilité de prendre en compte l'offset vertical en off field (composante influencée par le potentiel de contact de surface de l'échantillon).
+<p align="justify" width="100%">
+The entirety of data stemming from the finest hysteresis loops, both in the 'On Field' and 'Off Field' modes, is meticulously extracted from the files residing within the 'txt_best_loops' directory.
+Vertical offset measurements in the 'Off Field' mode and the dimensions of the mappings are scrupulously drawn from the files within the 'txt_ferro_meas' directory.
+The coupled measurements are subsequently generated through the process of differential analysis of 'On Field' and 'Off Field' measurements, with the flexibility to incorporate the vertical offset in the 'Off Field' mode, a component influenced by the sample's surface contact potential.
+</p>
 
 #### Treatment
 
-Pour chacun des modes (On Field, Off Field, and coupled) pour chacune des hystérésis associées à chacun des points, un cluster lui est attribué avec la méthode K-Means. Pour ça on importe la fonction KMeans from sklearn.cluster. Un cluster de référence est déterminé, comme étant le cluster comprenant le maximum de points. L'index attribué aux autres clusters est alors déterminé comme la distance de la centroïde de ce dernier respectivement par rapport à celle du cluster de référence. Une hystérésis moyenne par cluster est alors déterminée.
+<p align="justify" width="100%">
+For each of the modes (On Field, Off Field, and coupled), and for each of the hysteresis associated with each data point, a cluster is diligently assigned using the K-Means methodology. To accomplish this, we import the KMeans function from sklearn.cluster. A reference cluster is established, identified as the one encompassing the maximum number of data points. The index assigned to the other clusters is then computed as the distance between their centroid and that of the reference cluster, respectively. Subsequently, an average hysteresis for each cluster is computed.
+</p>
 
 #### Figures
 
@@ -273,10 +277,12 @@ Pour chacun des modes (On Field, Off Field, and coupled) pour chacune des hysté
     <img align="center" width="19%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/hysteresis_clustering_carto.PNG>
 </p>
 
-Pour chacun des modes (On Field, Off Field, and coupled), 3 figures sont générées comprenant respectivement:
-* l'ensemble des hystérésis de tous les dossiers, déffiéencié par une couleur attribué en fonction de leur index de cluster
-* les hystérésis moyennes par cluster, déffiéencié par une couleur attribué en fonction de leur index de cluster
-* une cartographie spacial des clusters attribué
+<p align="justify" width="100%">
+For each mode (On Field, Off Field, and coupled), three figures are meticulously generated, each containing:
+&#8226 The complete array of hysteresis loops from all datasets, distinguished by colors assigned based on their cluster index.
+&#8226 The average hysteresis loops for each cluster, distinguished by colors assigned according to their cluster index.
+&#8226 A spatial cartography displaying the assigned clusters.
+</p>
 
 ### Mean loop
 
