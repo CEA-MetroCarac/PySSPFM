@@ -249,7 +249,6 @@ Pour en savoir plus sur le path management de cette étape, lire la section de l
 #### Parameters
 
 <p align="justify" width="100%">
-Two tools deviate from this path management: <br>
 &#8226 File Management: In the initial phase, the algorithm ingests the <code>txt_best_loops</code> directory along with the <code>txt_ferro_meas</code> directory. <br>
 &#8226 Clusters: For each measurement (On Field, Off Field, and coupled), the user specifies the number of clusters. <br>
 &#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of outcomes. <br>
