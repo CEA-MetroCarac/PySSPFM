@@ -123,7 +123,9 @@ Prior to conducting the SSPFM measurement, the user must complete a measurement 
 
 #### Extraction
 
-L'ensemble des fichiers de mesure ainsi que la feuille de mesure doivent être placés dans le même dossier. Les données contenues dans ces deux types de fichiers sont alors extraites grace au fichier <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/raw_extraction.py">utils/raw_extraction</a>. Pour des fichiers d'extension spm (Bruker), le script d'extraction se base sur un deuxième fichier: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_reader.py">utils/datacube_reader</a> qui utilise l'objet DataExtraction avec la librairie nanoscope. Cependant, la librairie nanoscope ne suffit pas à elle seule à extraire les données contenues dans le fichier: cette dernière demande l'utilisation de fichiers DLL installés avec le logiciel Nanoscope Analysis (Bruker). Dans le cas ou les fichiers DLL ne sont pas présent, l'objet NanoscopeError a été créé pour géré l'erreur.
+<p align="justify" width="100%">
+All measurement files and the measurement sheet must be placed within the same directory. The data contained in these file types are then extracted using the file <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/raw_extraction.py">utils/raw_extraction</a>. For files with the <code>.spm</code> extension (Bruker), the extraction script relies on a second file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_reader.py">utils/datacube_reader</a>, which employs the <code>DataExtraction</code> object with the <a href="https://pypi.org/project/nanoscope/">nanoscope</a> library. However, the nanoscope library alone is insufficient for data extraction, as it requires the use of DLL files installed with the Nanoscope Analysis software (Bruker). In the event that the DLL files are not present, the <code>NanoscopeError</code> object has been created to handle the error.
+</p>
 
 ### Output files
 
