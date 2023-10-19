@@ -244,7 +244,35 @@ Pour en savoir plus sur le path management de cette étape, lire la section de l
 
 #### Raw file
 
-Le fichier 
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">toolbox
+/raw_file_reader</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/raw_file_reader.py">gui
+/raw_file_reader</a>.
+</p>
+
+#### Loop file
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox
+/loop_file_reader</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/loop_file_reader.py">gui
+/loop_file_reader</a>.
+</p>
+
+#### List map reader
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox
+/list_map_reader</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/list_map_reader.py">gui
+/list_map_reader</a>.
+</p>
+
+#### Global map reader
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox
+/global_map_reader</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/global_map_reader.py">gui
+/global_map_reader</a>.
+</p>
 
 #### Parameters
 
