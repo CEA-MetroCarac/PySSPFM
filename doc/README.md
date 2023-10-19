@@ -166,7 +166,7 @@ Following the second stage of processing, the processing folder is augmented as 
                 <li>The <code>figs</code> directory houses the visual representations generated during the second stage of processing, encompassing off and on-field hysteresis with fitting and parameter extraction, along with the extraction of the artifact-related component through multiple protocols. This stage is executed by the script <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/plot.py">utils/hyst_to_map/plot</a>.</li>
             </ul>
         <li>A new <code>txt_ferro_meas</code> folder contains all material properties measured for each measurement file, both in on-field and off-field conditions, as well as in differential (or coupled) measurements. These properties are extracted during the hysteresis fitting stage and artifact analysis, accomplished by the scripts <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a> and <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic</a>, respectively.</li>
-        <li>A <code>txt_best_loops</code> directory that contains the singular hysteresis for each mode (on-field and off-field, as well as coupled measurements) per measurement file.</li>
+        <li>A <code>txt_best_loops</code> directory that contains the singular hysteresis for each mode (on-field and off-field) per measurement file.</li>
      </ul>
 </p>
 
@@ -242,15 +242,57 @@ Pour en savoir plus sur le path management de cette étape, lire la section de l
 
 ### Viewers
 
+#### Parameters
+
 ### Hysteresis clustering (K-Means)
+
+#### Parameters
+
+<p align="justify" width="100%">
+Two tools deviate from this path management:
+&#8226 File Management: In the initial phase, the algorithm ingests the 'txt_best_loops' directory along with the 'txt_ferro_meas' directory.
+&#8226 Clusters: For each measurement (On Field, Off Field, and coupled), the user specifies the number of clusters.
+&#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of outcomes.
+</p>
+
+#### Extraction 
+
+L'ensemble des données issues des bests hysteresis loop en on et off field sont extraites des fichiers dans 'txt_best_loops'.
+Les mesures d'offsets verticales en off field et les dimensions des cartographies sont extraites des fichiers dans 'txt_ferro_meas'
+Les mesures coupled sont ensuite générées par analyse différentielle des mesures On et Off Field avec la possibilité de prendre en compte l'offset vertical en off field (composante influencée par le potentiel de contact de surface de l'échantillon).
+
+#### Treatment
+
+Pour chacun des modes (On Field, Off Field, and coupled) pour chacune des hystérésis associées à chacun des points, un cluster lui est attribué avec la méthode K-Means. Pour ça on importe la fonction KMeans from sklearn.cluster. Un cluster de référence est déterminé, comme étant le cluster comprenant le maximum de points. L'index attribué aux autres clusters est alors déterminé comme la distance de la centroïde de ce dernier respectivement par rapport à celle du cluster de référence. Une hystérésis moyenne par cluster est alors déterminée.
+
+#### Figures
+
+<p align="center" width="100%">
+    <img align="center" width="33%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/hysteresis_clustering_all_hyst.PNG>
+    <img align="center" width="33%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/hysteresis_clustering_mean_hyst.PNG>
+    <img align="center" width="33%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/hysteresis_clustering_carto.PNG>
+</p>
+
+Pour chacun des modes (On Field, Off Field, and coupled), 3 figures sont générées comprenant respectivement:
+* l'ensemble des hystérésis de tous les dossiers, déffiéencié par une couleur attribué en fonction de leur index de cluster
+* les hystérésis moyennes par cluster, déffiéencié par une couleur attribué en fonction de leur index de cluster
+* une cartographie spacial des clusters attribué
 
 ### Mean loop
 
+#### Parameters
+
 ### 2D cross correlation
+
+#### Parameters
 
 ### Pixel extremum
 
+#### Parameters
+
 ### SPM converter
+
+#### Parameters
 
 ## Overall settings
 
