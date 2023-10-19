@@ -200,6 +200,8 @@ Pour en savoir plus sur le path management de cette étape, lire la section de l
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Parameters_first_step.PNG> <br>
 </p>
 
+### Polarization voltage
+
 ### Segment
 
 ### Calibration
