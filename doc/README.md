@@ -127,6 +127,8 @@ L'ensemble des fichiers de mesure ainsi que la feuille de mesure doivent être p
 
 ### Output files
 
+Une gestion des chemins des données de traitement est proposé par défaut, mais l'utilisateur peut choisir son propre path management.
+
 #### First step of data analysis
 
 <p align="center" width="100%">
@@ -157,9 +159,17 @@ A la suite de la deuxième étape du traitement, le dossier de traitement est co
 
 #### Toolbox
 
-## First step of data analysis
+<p align="center" width="100%">
+    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_Toolbox.PNG> <br>
+</p>
 
-### Input file
+Pour chaque outil de la toolbox, il est possible de sauvegarder l'analyse effectuée. Un dossier toolbox est alors créé dans le dossier de traitement. Ce dossier contient un ensemble de sous dossier, un par traitement toolbox effectué avec la nomenclature suivante : 'tool_utilisé'_'aaaa-mm-dd-HHh-MMm'. Chacun de ses dossiers contients les figures générées lors de l'analyse effectuée par le tool en question ainsi qu'un fichier texte 'user_params.txt' qui garde une trace des paramètres utilisés pour l'analyse.
+
+Deux tools font exception à ce path management : 
+* <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">raw_file_reader</a> qui va créer un dossier avec la nomenclature: 'nom_du_fichier_initial'_toolbox à la même racine que le dossier d'entrée. Ce dossier contient un sous dossier 'raw_file_reader'_'aaaa-mm-dd-HHh-MMm'.
+* <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">spm_converter</a> qui va créer un dossier avec la nomenclature: 'nom_du_fichier_initial'_datacube_'extension' à la même racine que le dossier d'entrée, qui contient l'ensemble des fichiers datacube convertis.
+
+## First step of data analysis
 
 ### Parameters
 
@@ -168,8 +178,6 @@ A la suite de la deuxième étape du traitement, le dossier de traitement est co
 ### Calibration
 
 ### Nanoloop
-
-### File management
 
 ## Second step of data analysis
 
