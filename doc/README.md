@@ -129,7 +129,11 @@ L'ensemble des fichiers de mesure ainsi que la feuille de mesure doivent être p
 
 #### First step of data analysis
 
-A la suite de la première étape de traitement, par défaut, un nouveau dossier est créé avec la nomenclature :
+<p align="center" width="100%">
+    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_First_Step.PNG> <br>
+</p>
+
+A la suite de la première étape de traitement, par défaut, un nouveau dossier est créé à la même racine que le dossier des données d'entrée, avec la nomenclature :
 'nom_du_fichier_initial'_'aaaa-mm-dd-HHh-MMm'_out_'type_de_traitement'. Ce dernier contient lui même deux sous dossiers results et txt_loops.
 
 * Le premier contient:
