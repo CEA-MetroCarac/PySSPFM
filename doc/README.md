@@ -157,12 +157,19 @@ Following the first processing step, by default, a new directory is created at t
     <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_Second_Step.PNG> <br>
 </p>
 
-A la suite de la deuxième étape du traitement, le dossier de traitement est complété:
-* Le dossier results contient désormais:
-** Un fichier texte (par défaut saving_parameters.txt) complété par les paramètres et des informations sur la deuxième étape du traitement de mesure réalisée. Cette étape est réalisé par le script <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a>.
-** Le dossier figs avec les figures générées lors de la deuxième étape de traitement : à savoir les hystérésis off et on field avec le fit et l'extraction des paramètres correspondant ainsi que l'extraction par plusieurs protocoles de la composante liées aux artefacts de mesure. Cette étape est réalisé par le script <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/plot.py">utils/hyst_to_map/plot</a>.
-* Un dossier txt_ferro_meas contient l'ensemble des propriétés du matériau mesurée pour chacun des fichiers de mesure, aussi bien en On et Off Field qu'en mesurées différentielles (ou couplées) extraites lors de l'étape du fit des hystérésis et de l'analyse des artefacts, respectivement par les scripts <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a> et <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic</a>
-* Un dossier txt_best_loops qui contient l'unique hystérésis par mode (en On et Off Field ainsi qu'en mesures couplées) par fichier de mesure.
+<p align="justify" width="100%">
+Following the second stage of processing, the processing folder is augmented as follows:
+
+    <ul>
+        <li>The <code>results</code> folder now includes:</li>
+            <ul>
+                <li>The text file <code>saving_parameters.txt</code> enriched with parameters and information pertaining to the second stage of measurement processing. This stage is conducted by the script <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a>.</li>
+                <li>The <code>figs</code> directory houses the visual representations generated during the second stage of processing, encompassing off and on-field hysteresis with fitting and parameter extraction, along with the extraction of the artifact-related component through multiple protocols. This stage is executed by the script <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/plot.py">utils/hyst_to_map/plot</a>.</li>
+            </ul>
+        <li>A new <code>txt_ferro_meas</code> folder contains all material properties measured for each measurement file, both in on-field and off-field conditions, as well as in differential (or coupled) measurements. These properties are extracted during the hysteresis fitting stage and artifact analysis, accomplished by the scripts <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a> and <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic</a>, respectively.</li>
+        <li>A <code>txt_best_loops</code> directory that contains the singular hysteresis for each mode (on-field and off-field, as well as coupled measurements) per measurement file.</li>
+     </ul>
+</p>
 
 #### Toolbox
 
