@@ -140,7 +140,7 @@ A default data processing path management is provided, but the user has the opti
 </p>
 
 <p align="justify" width="100%">
-Following the first processing step, by default, a new directory is created at the same root as the input data folder, with the nomenclature: <code>'initial_file_name'_'yyyy-mm-dd-HHh-MMm'out'processing_type'</code>. This directory itself contains two subdirectories, <code>results</code> and <code>txt_loops</code>.
+Following the first processing step, by default, a new directory is created at the same root as the input data folder, with the nomenclature: <code>'initial_file_name'_'yyyy-mm-dd-HHh-MMm'_out_'processing_type'</code>. This directory itself contains two subdirectories, <code>results</code> and <code>txt_loops</code>.
     <ul>
         <li>The first one contains:</li>
             <ul>
@@ -180,7 +180,7 @@ Following the second stage of processing, the processing folder is augmented as 
 For each tool in the toolbox, it is possible to save the analysis conducted. A <code>toolbox</code> folder is then created within the processing directory. This folder comprises a set of subdirectories, one for each toolbox treatment, following the nomenclature: <code>'tool_used'_'yyyy-mm-dd-HHh-MMm'</code>. Each of these directories contains the figures generated during the analysis performed by the respective tool, along with a text file <code>user_params.txt</code> that maintains a record of the parameters employed for the analysis.
 
 Two tools deviate from this path management:
-&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">raw_file_reader</a>: It creates a folder with the nomenclature: <code>"initial_file_name"_toolbox</code> at the same root as the input folder. This folder contains a sub-folder <code>raw_file_reader_'yyyy-mm-dd-HHh-MMm'</code>.
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">raw_file_reader</a>: It creates a folder with the nomenclature: <code>'initial_file_name'_toolbox</code> at the same root as the input folder. This folder contains a sub-folder <code>raw_file_reader_'yyyy-mm-dd-HHh-MMm'</code>.
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">spm_converter</a>: It creates a folder with the nomenclature: <code>'initial_file_name'_datacube_'extension'</code> at the same root as the input folder, containing all the converted datacube files.
 </p>
 
