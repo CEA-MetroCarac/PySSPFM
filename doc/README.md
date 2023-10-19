@@ -176,11 +176,13 @@ Following the second stage of processing, the processing folder is augmented as 
     <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_Toolbox.PNG> <br>
 </p>
 
-Pour chaque outil de la toolbox, il est possible de sauvegarder l'analyse effectuée. Un dossier toolbox est alors créé dans le dossier de traitement. Ce dossier contient un ensemble de sous dossier, un par traitement toolbox effectué avec la nomenclature suivante : 'tool_utilisé'_'aaaa-mm-dd-HHh-MMm'. Chacun de ses dossiers contients les figures générées lors de l'analyse effectuée par le tool en question ainsi qu'un fichier texte 'user_params.txt' qui garde une trace des paramètres utilisés pour l'analyse.
+<p align="justify" width="100%">
+For each tool in the toolbox, it is possible to save the analysis conducted. A <code>toolbox</code> folder is then created within the processing directory. This folder comprises a set of subdirectories, one for each toolbox treatment, following the nomenclature: <code>'tool_used'_'yyyy-mm-dd-HHh-MMm'</code>. Each of these directories contains the figures generated during the analysis performed by the respective tool, along with a text file <code>user_params.txt</code> that maintains a record of the parameters employed for the analysis.
 
-Deux tools font exception à ce path management : 
-* <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">raw_file_reader</a> qui va créer un dossier avec la nomenclature: 'nom_du_fichier_initial'_toolbox à la même racine que le dossier d'entrée. Ce dossier contient un sous dossier 'raw_file_reader'_'aaaa-mm-dd-HHh-MMm'.
-* <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">spm_converter</a> qui va créer un dossier avec la nomenclature: 'nom_du_fichier_initial'_datacube_'extension' à la même racine que le dossier d'entrée, qui contient l'ensemble des fichiers datacube convertis.
+Two tools deviate from this path management:
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">raw_file_reader</a>: It creates a folder with the nomenclature: <code>"initial_file_name"_toolbox</code> at the same root as the input folder. This folder contains a sub-folder <code>raw_file_reader_'yyyy-mm-dd-HHh-MMm'</code>.
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">spm_converter</a>: It creates a folder with the nomenclature: <code>'initial_file_name'_datacube_'extension'</code> at the same root as the input folder, containing all the converted datacube files.
+</p>
 
 ## First step of data analysis
 
