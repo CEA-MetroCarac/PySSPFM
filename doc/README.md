@@ -250,23 +250,23 @@ Pour en savoir plus sur le path management de cette étape, lire la section de l
 
 <p align="justify" width="100%">
 Two tools deviate from this path management:
-&#8226 File Management: In the initial phase, the algorithm ingests the 'txt_best_loops' directory along with the 'txt_ferro_meas' directory.
-&#8226 Clusters: For each measurement (On Field, Off Field, and coupled), the user specifies the number of clusters.
-&#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of outcomes.
+&#8226 File Management: In the initial phase, the algorithm ingests the <code>txt_best_loops</code> directory along with the <code>txt_ferro_meas</code> directory. <br>
+&#8226 Clusters: For each measurement (On Field, Off Field, and coupled), the user specifies the number of clusters. <br>
+&#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of outcomes. <br>
 </p>
 
 #### Extraction 
 
 <p align="justify" width="100%">
-The entirety of data stemming from the finest hysteresis loops, both in the 'On Field' and 'Off Field' modes, is meticulously extracted from the files residing within the 'txt_best_loops' directory.
-Vertical offset measurements in the 'Off Field' mode and the dimensions of the mappings are scrupulously drawn from the files within the 'txt_ferro_meas' directory.
-The coupled measurements are subsequently generated through the process of differential analysis of 'On Field' and 'Off Field' measurements, with the flexibility to incorporate the vertical offset in the 'Off Field' mode, a component influenced by the sample's surface contact potential.
+The entirety of data stemming from the best hysteresis loops, both in the On Field and Off Field modes, is extracted from the files residing within the <code>txt_best_loops</code> directory. <br>
+Vertical offset measurements in the Off Field mode and the dimensions of the mappings are drawn from the files within the <code>txt_ferro_meas</code> directory. <br>
+The coupled measurements are subsequently generated through the process of differential analysis of On Field and Off Field measurements, with the flexibility to incorporate the vertical offset in the Off Field mode, a component influenced by the sample's surface contact potential.
 </p>
 
 #### Treatment
 
 <p align="justify" width="100%">
-For each of the modes (On Field, Off Field, and coupled), and for each of the hysteresis associated with each data point, a cluster is diligently assigned using the K-Means methodology. To accomplish this, we import the KMeans function from sklearn.cluster. A reference cluster is established, identified as the one encompassing the maximum number of data points. The index assigned to the other clusters is then computed as the distance between their centroid and that of the reference cluster, respectively. Subsequently, an average hysteresis for each cluster is computed.
+For each of the modes (On Field, Off Field, and coupled), and for each of the hysteresis associated with each data point, a cluster is assigned using the K-Means methodology. To accomplish this, we import the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">KMeans</a> function from <a href="https://scikit-learn.org/stable/modules/clustering.html#clustering">sklearn.cluster</a>. A reference cluster is established, identified as the one encompassing the maximum number of data points. The index assigned to the other clusters is then computed as the distance between their centroid and that of the reference cluster, respectively. Subsequently, an average hysteresis for each cluster is computed.
 </p>
 
 #### Figures
@@ -278,10 +278,10 @@ For each of the modes (On Field, Off Field, and coupled), and for each of the hy
 </p>
 
 <p align="justify" width="100%">
-For each mode (On Field, Off Field, and coupled), three figures are meticulously generated, each containing:
-&#8226 The complete array of hysteresis loops from all datasets, distinguished by colors assigned based on their cluster index.
-&#8226 The average hysteresis loops for each cluster, distinguished by colors assigned according to their cluster index.
-&#8226 A spatial cartography displaying the assigned clusters.
+For each mode (On Field, Off Field, and coupled), three figures are generated, each containing:
+&#8226 The complete array of hysteresis loops from all datasets, distinguished by colors assigned based on their cluster index. <br>
+&#8226 The average hysteresis loops for each cluster, distinguished by colors assigned according to their cluster index. <br>
+&#8226 A spatial cartography displaying the assigned clusters. <br>
 </p>
 
 ### Mean loop
