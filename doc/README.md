@@ -144,7 +144,16 @@ A la suite de la première étape de traitement, par défaut, un nouveau dossier
 
 #### Second step of data analysis
 
-Un fichiers est utilisé pour l'enregistrement des fichiers en sortie de la deuxième étape de traitement: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a>.
+<p align="center" width="100%">
+    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_Second_Step.PNG> <br>
+</p>
+
+A la suite de la deuxième étape du traitement, le dossier de traitement est complété:
+* Le dossier results contient désormais:
+** Un fichier texte (par défaut saving_parameters.txt) complété par les paramètres et des informations sur la deuxième étape du traitement de mesure réalisée. Cette étape est réalisé par le script <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a>.
+** Le dossier figs avec les figures générées lors de la deuxième étape de traitement : à savoir les hystérésis off et on field avec le fit et l'extraction des paramètres correspondant ainsi que l'extraction par plusieurs protocoles de la composante liées aux artefacts de mesure. Cette étape est réalisé par le script <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/plot.py">utils/hyst_to_map/plot</a>.
+* Un dossier txt_ferro_meas contient l'ensemble des propriétés du matériau mesurée pour chacun des fichiers de mesure, aussi bien en On et Off Field qu'en mesurées différentielles (ou couplées) extraites lors de l'étape du fit des hystérésis et de l'analyse des artefacts, respectivement par les scripts <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a> et <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic</a>
+* Un dossier txt_best_loops qui contient l'unique hystérésis par mode (en On et Off Field ainsi qu'en mesures couplées) par fichier de mesure.
 
 #### Toolbox
 
