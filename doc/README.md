@@ -4,7 +4,9 @@
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/logoPySSPFM_white.PNG> <br>
 </p>
 
-## Introduction
+## Overview
+
+### Workflow
 
 <p align="center" width="100%">
     <img align="center" width=80%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20worflow.PNG> <br>
@@ -13,7 +15,7 @@
 
 <p align="justify" width="100%">
 Following the SSPFM measurement, one or more SSPFM files are generated. A measurement form should be completed by the user (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). 
-The PySSPFM application then proceeds with two stages of measurement processing. In the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/seg_to_loop_s1.py">first step</a> of data analysis, amplitude and phase measurements are extracted and calibrated for each segment and nanoloops are determined. The <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">second step</a> creates the piezoresponse hysteresis loop, and extracts piezoelectric and ferroelectric properties using an algorithm based on the <a href="https://pypi.org/project/lmfit/">lmfit</a> library. Various artifact decorrelation protocols improve measurement accuracy. Then, SSPFM mapping can be performed. A <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">toolbox</a> is provided including:
+The PySSPFM application then proceeds with two stages of measurement processing. In the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/seg_to_loop_s1.py">first step</a> of data analysis, amplitude and phase measurements are extracted and calibrated for each segment and nanoloops are determined. The <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">second step</a> creates the piezoresponse hysteresis loop, and extracts piezoelectric and ferroelectric properties using an algorithm based on the <a href="https://pypi.org/project/lmfit/">lmfit</a> library. Various artifact decorrelation protocols improve measurement accuracy. Then, <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">SSPFM mapping</a> can be performed. A <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">toolbox</a> is provided including:
 </p>
 
 * [`Machine learning (K-Means)`](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py)
@@ -23,6 +25,9 @@ The PySSPFM application then proceeds with two stages of measurement processing.
 * `Viewers`
 * `...`
 
+### Code architecture
+
+INSERER FIGURE
 
 ## GUI
 
@@ -190,7 +195,7 @@ Two tools deviate from this path management:
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/GUI_first_step.PNG> <br>
 </p>
 
-La première étape du traitement peut être lancée via le code source excécutable, ou par le code de l'interface graphique. En entrée, un fichier de mesure SSPFM datacube est choisi. Les données sont alors extraites, tout comme les données contenues dans la fiche de mesure. Le fichier va être traité en fonction des paramètres, et l'ensemble des figures va être affiché. Ensuite, chaque fichier de mesure du dossier d'entrée va être traité automatiquement, sans affichage des figures. Les données sont converties sous forme de nanoloops et enregistrées.
+La première étape du traitement peut être lancée via le code source excécutable, ou par le code de l'interface graphique. En entrée, un fichier de mesure SSPFM datacube est choisi. Les données sont alors extraites, tout comme les données contenues dans la fiche de mesure. Le fichier va être traité en fonction des paramètres, et un ensemble de figures va être affiché. Ensuite, chaque fichier de mesure du dossier d'entrée va être traité automatiquement, sans affichage des figures. Les données sont converties sous forme de nanoloops et enregistrées dans des fichiers textes.
 
 Pour en savoir plus sur le path management de cette étape, lire la section de la documentation en question (File management/Output files/First step of data analysis).
 
@@ -202,7 +207,25 @@ Pour en savoir plus sur le path management de cette étape, lire la section de l
 
 ### Polarization voltage
 
+INSERER UNE IMAGE
+
+Dans le cas ou l'acquisition de la tension de polarisation n'est pas effectuée, cette dernière peut être reconstruite à partir d'un dictionnaire de propriétés contenant respectivement pour les segments d'écriture (On Field) et de lecture (Off Field) : leur durée, leur nombre d'échantillon par segment, le nombre de segment, leur sens de variation, leur tension limite. Ces paramètres sont renseignés dans la fiche de mesure et sont ensuite utilisés lors de l'étape de traitement. Le script <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/signal_bias.py">utils/signal_bias</a> permet de générer le signal de polarization à partir de ces paramètres et vice versa. Il contient également d'autres signaux de polarisation qui peuvent être utilisés pour le développement d'autres modes.
+
+FAIRE LE LISTING
+
+INSERER LES DIFFERENTES IMAGES
+
 ### Segment
+
+La mesure SSPFM est découpée en segment : un pour chaque commutation du signal de la tension de polarisation. Un segment de hold est présent en début et en fin de mesure: leur temps est INSIQUER LA FORMULE. En fonction des paramètres de signal de polarisation, le nombre de segment et la durée totale de la mesure peut être déterminée: INIDQUER LA FORMULE. On peut alors la comparer à la durée total mesuré : les deux valeurs doivent correspondre. Cette vérification peut être effectué si le pramaètre detect_bug_segments est activé.
+
+Une fois le découpage effectué, chaque segment sont générés. L'objet segment, lorsqu'il est initialisé, génère certains de ses attribus tels que les tableaux de mesures en amplitude et phase PFM, ainsi que la fréquence (utilisé en mode sweep) et le temps délimités en fonction des index de début et de fin du segment. Puis ces tableaux sont éventuellement rognés au début et à la fin en fonction du paramètre cut_seg. Les bruit des mesures en amplitude et en phase est éventuellement réduit par un filtre de moyenne. Le segment est alors traités en fonction du mode choisi par l'utilisateur :
+
+INSERER LES FIGURES DE CHACUN DES TROIS TRAITEMENTS
+
+- max (utilisable pour un sweep à la résonance) : le maximum du tableau d'amplitude est extrait. L'indice correspondant permet d'extraire la valeur de la fréquence de résoancne, avec la valeur de phase. La bande passante du pic est extraite grâce à un script de , afin de déterminer le facetur de qualité. Ce traitement à l'avantage d'être rapide et robuste.
+- fit (utilisable pour un sweep à la résonance) : le pic de résonance en amplitude est fité par le modèle SHO : INSERER EQUATION. Les paramètres tels que l'amplitude, le facteur de qualité et le centre du pic (correspondant à la fréquence de réosnance) peuvent être extraits. Le bruit peut être déduit de la mesure. La phase peut être extraite simplement à l'indice du centre du pic, ou bien en effetcuant un fit au voisinage restreint du pic de résoancne grâce au paramètre fit_pha selon un modèle de fonction arctengente avec ou sans switch: INSERTER EQUATION. L'ensemble de ce traitement permet de gagner en précision sur les valeurs mesurées. La robustesse du traitement peut être augmentée grâce à un algorithme de détection de pic, permettant de choisir quant à la réalisation du fit. EN DIRE PLUS. L'ensemble des fits sont réalisés avec la librairie lmfit, et des méthodes least_sq, least_square (rapidité priviégiée) ou Nelder (convergence privilégéie) peuvent être choisis.
+- dfrt : la moyenne des tableaux de mesures en amplitude et en phase définisse respectivement les uniques valeurs du segment en amplitude en phase. L'incertitude sur ces deux grandeurs peut être déterminées en fonction de leur variance au sein du segment. Ce traitement est rapide, robuste et très précis.
 
 ### Calibration
 
