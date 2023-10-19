@@ -9,17 +9,17 @@
 <strong>Py</strong>thon dedicated to perform data analysis on <strong>SSPFM</strong> 
 (Switching Spectroscopy Piezoresponse Force Microscopy) measurements
 with a GUI that aims to be as simple to use as possible and complete to 
-accommodate the user's measurement requirements and conditions. The source code is also easily customizable to meet the user's specific needs. Measurements can be processed in both standard SSPFM mode and in SSPFM + DFRT mode.
+accommodate the user's measurement requirements and conditions. The source code was developed to be easily customizable in order to meet the user's specific needs. Measurements can be processed in both standard SSPFM and SSPFM-DFRT mode.
 </p>
 
 ## Important
 
 <p align="justify" width="100%">
-This library is provided in its current state and remains under active development. It was initially developed from reverse engineering of the Python-based SSPFM measurement processing code originally developed by Bruker. The motivation behind the creation of a new application for SSPFM measurement processing stemmed from several factors : 
+This library is provided in its current state and remains under active development. It was initially developed from reverse engineering of the Python-based SSPFM measurement processing code originally developed by Bruker. The motivation behind the creation of the new PySSPFM application for SSPFM measurement processing stemmed from several factors : 
 </p>
 
 <p align="justify" width="100%">
-&#8226; The original code proved to be incompatible with the measurement files (.spm from Bruker) of the library's developer.
+&#8226; The original code of Bruker proved to be incompatible with the measurement files (.spm from Bruker) of the library's developer.
 </p>
 
 <p align="justify" width="100%">
@@ -60,8 +60,7 @@ PySSPFM facilitates the processing of a set of SSPFM measurement data points by 
 
 ### 1) First step of data analysis
 <p align="justify" width="100%">
-For each of the SSPFM measurement files, amplitude and phase SSPFM 
-measurements are extracted for each segment using a user-selected method:
+For each of the SSPFM measurement files, amplitude and phase are extracted for each segment using a user-selected method:
 </p>
 
 * `max`: extract maximum or resonance peak (for frequency sweep mode)
@@ -70,7 +69,7 @@ measurements are extracted for each segment using a user-selected method:
 
 ### 2) Second step of data analysis
 <p align="justify" width="100%">
-The measurements are then automatically calibrated, and the piezoresponse hysteresis is created. It is subsequently fitted using an algorithm based on the lmfit library, and the piezoelectric and ferroelectric properties are extracted. Five different artifact decorrelation protocols (quadratic components: electrostatic, electrostrictive, and Joule effects) allow for obtaining quantitative piezoelectric and ferroelectric measurements and for acquiring a more comprehensive understanding of material properties, such as the contact surface potential.
+The measurements are then automatically calibrated, and the piezoresponse hysteresis is created. It is subsequently fitted using an algorithm based on the <a href="https://pypi.org/project/lmfit/">lmfit</a> library, and the piezoelectric and ferroelectric properties are extracted. Five different artifact decorrelation protocols (quadratic components: electrostatic, electrostrictive, and joules effects) allow for obtaining quantitative piezoelectric and ferroelectric measurements and for acquiring a more comprehensive understanding of material properties, such as the contact surface potential.
 </p>
 
 ### 3) Mapping
@@ -85,10 +84,10 @@ Finally, a toolbox is provided for the analysis of processing results: it
 includes algorithms of:
 </p>
 
-* `Machine learning (K-Means)`
-* `Phase separation`
-* `Mapping cross-correlation`
-* `SPM file converter`
+* [`Machine learning (K-Means)`](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py)
+* [`Phase separation`](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_loop.py)
+* [`Mapping cross-correlation`](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py)
+* [`SPM file converter`](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py)
 * `Viewers`
 * `...`
 
@@ -134,7 +133,8 @@ pip install git+https://github.com/CEA-MetroCarac/PySSPFM.git
 
 ### Optional dependencies
 
-`pytest` to run [tests](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests) python files
+* [`pytest`](https://pypi.org/project/pytest/) to run [tests](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests) python files.
+* Nanoscope Analysis software (Bruker) installed on computer to extract data from SSPFM Bruker measurement files (`spm` extension).
 
 ## Citing
 
