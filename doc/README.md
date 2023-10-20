@@ -27,7 +27,14 @@ The PySSPFM application then proceeds with two stages of measurement processing.
 
 ### Code architecture
 
-INSERER FIGURE
+<p align="center" width="100%">
+    <img align="center" width=50%" src="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20architecture.PNG"> <br>
+    <em>PySSPFM workflow</em>
+</p>
+
+Voici l'architecture du code source de l'application PySSPFM, simplifiée (le path management, l'extraction et la sauvegarde des données, les settings ainsi que la gestion du signal de polarisation ne sont pas prise en compte dans le schéma).
+L'interface graphique permet de lancer l'ensemble des exécutables, à savoir les codes contenus dans data_processing et toolbox.
+La toolbox fait appel à diverses fonctions contenus dans data_processing et utils.
 
 ## GUI
 
