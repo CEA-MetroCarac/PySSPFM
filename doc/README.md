@@ -285,9 +285,9 @@ The code also includes other polarization voltage form that can be utilized for 
 The SSPFM measurement is divided into segments, one for each polarization voltage signal switch. A hold segment is present at the beginning and end of the measurement. For the Bruker constructor mode, their duration is equal to the ratio between the ramp size (in nanometers) and the tip velocity (in nanometers per second). Depending on the polarization signal parameters, the total number of segments in the measurement can be determined: <br>
 </p>
     
-\[
-('Nb volt (W)' - 1) * 2 * 'Nb volt (R)'
-\]
+```
+sspfm_pars = (sign_pars['Nb volt (W)'] - 1) * 4 * sign_pars['Nb volt (R)']
+```
 
 <p align="justify" width="100%">
 To obtain the total duration (or total sample count) of the measurement, it suffices to multiply the total number of segments by the average of 'Seg durat (W) [ms]' and 'Seg durat (R) [ms]' (or 'Seg sample (W)' and 'Seg sample (R)'). 
