@@ -278,6 +278,12 @@ The code also includes other polarization voltage form that can be utilized for 
     <em>4 - cKPFM voltage n°2</em> <br>
 </p>
 
+### Pre-measurement calibration
+
+<p align="justify" width="100%">
+Calibration is indispensable for obtaining quantitative measurements. In the measurement data sheet, values can be provided to quantify the measured amplitude, including tip sensitivity (nm/V) and spring constant (N/m), which can be obtained from the manufacturer or through pre-measurement calibration. Additionally, a pre-measurement calibration can be used to determine the phase offset. All amplitude and phase values are calibrated with the result in the script.  
+</p>
+
 ### Segment
 
 <p align="justify" width="100%">
@@ -301,7 +307,7 @@ Once the segmentation process is completed, each segment is generated. When the 
 &#8226 <code>max</code> (usable for resonance sweep): the maximum value from the amplitude array is extracted. The corresponding index is used to extract the resonance frequency value along with the phase value. The bandwidth of the peak is determined using a function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/peak.py">utils/core/peak</a></code>, allowing for the calculation of the quality factor. This method is advantageous due to its speed and robustness.
 </p>
 
-INSERER TRAITEMENT MAX
+INSERER FIGURE TRAITEMENT MAX
 
 <p align="justify" width="100%">
 &#8226 <code>fit</code> (usable for a resonance sweep): The amplitude resonance peak with frequency $R(f)$ is fitted using the SHO (simple harmonic oscillator) model:
@@ -332,11 +338,48 @@ This entire process enhances the precision of the measured values. The robustnes
 &#8226 <code>dfrt</code> : The average of the arrays of measurements in amplitude and phase maintained at resonance through the use of dfrt, defines the unique values of the segment in amplitude and phase, respectively. The uncertainty in these two quantities can be determined based on their variance within the segment. This process is swift, robust, and highly precise.
 </p>
 
-INSERER DFRT
+INSERER FIGURE TRAITEMENT DFRT
 
-### Calibration
+<p align="justify" width="100%">
+All segments (in the Off Field mode) can be visualized on the map:
+</p>
 
-### Nanoloop
+INSERER FIGURE CARTOGRAPHIE
+
+<p align="justify" width="100%">
+Once all the measurements are extracted per segment, phase and amplitude nanoloops as a function of polarization voltage can be created and saved.
+</p>
+
+## Nanoloop
+
+### Post-measurement phase calibration
+
+<p align="justify" width="100%">
+En s'inspirant des publications de Neumayer et al., un protocole de calibration post mesure a été proposé. Le principe physique de ce dernier est détaillé dans la publication INSERER. Pour résumer, un histogramme de phase est créé. Pour des mesures en Vertical PFM, et pour un signal d'origine princiapelment d'origine piézo-ferroélectrique, deux valeurs de phases sont majoritaires et forme deux pics au niveau de l'histogramme de phase. En théorie, ces deux pics doivent être espacés de plus ou moins 180°. En fonction du signe du coefficient piézoélectrique du matériau, du sens d'application de la tension, de la prédominance ou non de la composante électroistatique sur le reste de la mesure et du signe de sa pente (en On Field), une correspondance en terme de polarisation peut être attribué aux deux pics. Alors, en fonction des para
+</p>
+
+### MultiLoop
+
+<p align="justify" width="100%">
+Pour chaque fichier de mesure, il est possible d'acquérir plusieurs courbe nanoloop, de telle sorte à étudier la répétabilité des mesures et à réduire le bruit des mesures (en effectuant la moyenne de l'ensemble des nanoloops du fichier). Un objet MultiLoop est alors créé. Ce dernier est initialisé avec des tableaux de sous tableaux (nombre de sous tableaux correspondant au nombre de loop) de mesures correspondantes : tension de polarisation, valeur d'amplitude et de phase extraites. Sont également rensignés un tableau de tension de lecture (dont les valeurs correspondent à chacune des nanoloop), un dictionnaire des réslultats de la calibration de phase. et le mode de mesure (On ou Off Field).
+</p>
+
+<p align="justify" width="100%">
+Afin de permettre une meilleure visualition des données :
+- Des marqueurs (au début et à la fin de la mesure, ainsi qu'aux extremums des tensions de polarisation) sont déterminés automatioquement en fonction du signal en tension de polarisation.
+- Les branches de chaque nanoloop sont divisées en deux : celles de droite (en rouge) et celle de gauche (en bleu).
+Les valeurs de phase sont alors modifiées en fonction du dictionnaire de calibration de phase.
+</p>
+
+INSERER LES MULTILOOPS EN AMPLITUDE ET EN PHASE
+
+<p align="justify" width="100%">
+Enfin, en fonction des loop en amplitude et en phase, les loop en piezoreponse sont crées.
+</p>
+
+INSERER LES MULTILOOPS PIEZORESPONSE
+
+### MeanLoop
 
 ## Second step of data analysis
 
