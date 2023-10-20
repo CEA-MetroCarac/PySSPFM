@@ -307,7 +307,10 @@ Once the segmentation process is completed, each segment is generated. When the 
 &#8226 <code>max</code> (usable for resonance sweep): the maximum value from the amplitude array is extracted. The corresponding index is used to extract the resonance frequency value along with the phase value. The bandwidth of the peak is determined using a function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/peak.py">utils/core/peak</a></code>, allowing for the calculation of the quality factor. This method is advantageous due to its speed and robustness.
 </p>
 
-INSERER FIGURE TRAITEMENT MAX
+<p align="center" width="100%">
+    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/max_resonance_segment.PNG> <br>
+    <em>Segment treatment in max mode</em>
+</p>
 
 <p align="justify" width="100%">
 &#8226 <code>fit</code> (usable for a resonance sweep): The amplitude resonance peak with frequency $R(f)$ is fitted using the SHO (simple harmonic oscillator) model:
@@ -338,7 +341,10 @@ This entire process enhances the precision of the measured values. The robustnes
 &#8226 <code>dfrt</code> : The average of the arrays of measurements in amplitude and phase maintained at resonance through the use of dfrt, defines the unique values of the segment in amplitude and phase, respectively. The uncertainty in these two quantities can be determined based on their variance within the segment. This process is swift, robust, and highly precise.
 </p>
 
-INSERER FIGURE TRAITEMENT DFRT
+<p align="center" width="100%">
+    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/dfrt_segment.PNG> <br>
+    <em>Segment treatment in dfrt mode</em>
+</p>
 
 <p align="justify" width="100%">
 All segments (in the Off Field mode) can be visualized on the map:
