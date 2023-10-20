@@ -34,7 +34,7 @@ The PySSPFM application then proceeds with two stages of measurement processing.
 
 <p align="justify" width="100%">
 Here is the simplified architectural overview of the PySSPFM application's source code (path management, data extraction and storage, settings, and polarization signal management are not included in the diagram). Nevertheless, it provides a fairly accurate representation of the overall interaction between the various components of the code.
-&#8226 The functions within the "core" are quite generic and not specific to SSPFM. They exhibit relative independence from the rest of the code and serve as fundamental building blocks for the execution of all other functions. <br>
+&#8226 The functions within the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code> are quite generic and not specific to SSPFM. They exhibit relative independence from the rest of the code and serve as fundamental building blocks for the execution of all other functions. <br>
 &#8226 The "seg_to_loop" module facilitates the conversion of measurements into nanoloops. It relies on the use of both "core" and "nanoloop" functions. <br>
 &#8226 The "nanoloop" module enables the creation and processing of nanoloops. It relies on the utilization of "core" functions. <br>
 &#8226 The "hyst_to_map" module is responsible for extracting material properties from nanoloops. It relies on the utilization of functions from "core" and "nanoloop." <br>
