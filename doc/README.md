@@ -385,13 +385,17 @@ The direction of vertical polarization (a purely ferroelectric effect) induced i
 One can then discern the rotational direction of the hysteresis (clockwise or counterclockwise), influenced by piezoelectric and ferroelectric effects. The correspondence between voltage and phase values (forward or reverse, meaning they induce a multiplicative coefficient of 1 or -1 in the piezoresponse calculation with amplitude) allows for the determination of the hysteresis's rotational direction. Two scenarios are also distinguished here: one for a material with a positive piezoelectric coefficient and one for a material with a negative coefficient.
 </p>
 
-INSERER LE DEUXIEME TABLEAU
+<p align="center" width="100%">
+    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_calibration_2.PNG> <br>
+</p>
 
 <p align="justify" width="100%">
 From these two initial tables, one can ascertain the subsequent table depicting the direction of hysteresis rotation, solely contingent on the experimental conditions:
 </p>
 
-INSERER LE TROISIEME TABLEAU
+<p align="center" width="100%">
+    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_calibration_3.PNG> <br>
+</p>
 
 INSERER QUATRES HYSTERESIS OFF FIELD
 
@@ -399,17 +403,23 @@ INSERER QUATRES HYSTERESIS OFF FIELD
 In the specific scenario of On Field measurements with a predominant electrostatic component (where the electrostatic component determines the direction of hysteresis rotation), the sign of the electrostatic component's slope is contingent on the direction of the applied voltage, as established in the following table:
 </p>
 
-INSERER LE QUATRIEME TABLEAU
+<p align="center" width="100%">
+    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_calibration_4.PNG> <br>
+</p>
 
 <p align="justify" width="100%">
 The voltage value can then be directly correlated with the phase according to the following table, without any alteration in the hysteresis rotation direction:
 </p>
 
-INSERER LE CINQUIEME TABLEAU
+<p align="center" width="100%">
+    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_calibration_5.PNG> <br>
+</p>
 
 INSERER QUATRES HYSTERESIS ON FIELD
 
-On notera que dans certains cas de mesures On Field pour lesquels les composantes électrostatiques et ferroélectriques sont voisines, plusieurs changement de phases peuvent être présents au cours du cycle. 
+<p align="justify" width="100%">
+It is worth noting that in some cases of On-Field measurements, where the electrostatic and ferroelectric components are closely related, multiple phase transitions may occur during the cycle.
+</p>
 
 INSERER HYSTERESIS CAS PARTICULIER
 
