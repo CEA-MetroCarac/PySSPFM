@@ -234,6 +234,23 @@ For a deeper understanding of the path management in this phase, please refer to
     <em>Polarization voltage</em>
 </p>
 
+```
+    sspfm_pars = {
+        'Min volt (R) [V]': 0,
+        'Max volt (R) [V]': 0,
+        'Nb volt (R)': 10,
+        'Mode (R)': 'Low to High',
+        'Seg durat (R) [ms]': 500,
+        'Seg sample (R)': 100,
+        'Min volt (W) [V]': -10,
+        'Max volt (W) [V]': 10,
+        'Nb volt (W)': 9,
+        'Mode (W)': 'Zero, up',
+        'Seg durat (W) [ms]': 500,
+        'Seg sample (W)': 100
+    }
+```
+
 <p align="justify" width="100%">
 In cases where the acquisition of polarization voltage is not conducted, it can be reconstructed from a property dictionary containing the following information for both write (On Field) and read (Off Field) segments: their duration, the number of samples per segment, the number of segments, their direction of variation, and their voltage limits. These parameters are specified in the measurement sheet and are subsequently employed during the processing step. The script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/signal_bias.py">utils/signal_bias</a></code> is responsible for generating the polarization signal based on these parameters and vice versa. It also includes other polarization signals that can be utilized for the development of various modes.
 </p>
