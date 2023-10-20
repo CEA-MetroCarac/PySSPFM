@@ -435,7 +435,9 @@ Here are the various hysteresis configurations in the On-Field mode, depending o
 It is worth noting that in some cases of On-Field measurements, where the electrostatic and ferroelectric components are closely related, multiple phase transitions may occur during the cycle.
 </p>
 
-INSERER HYSTERESIS CAS PARTICULIER
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/problematic_case_on_field_nanoloop.PNG> <br>
+</p>
 
 <p align="justify" width="100%">
 In the PySSPFM application, users can concretely assign the desired phase values for both forward and reverse directions using the <code>pha_fwd</code> and <code>pha_rev</code> parameters. It is essential for the user to identify whether they are dealing with a predominant electrostatic component in the On-Field mode through the <code>main_electrostatic</code> parameter. Additionally, they can opt to specify the sign for the electrostatic component's slope. The user should also provide information about the piezoelectric coefficient sign of the material in the measurement record with the parameter <code>locked_elec_slope</code>. With these provided parameters and the calibration protocol, phase values can be attributed to the two peaks in the histogram.
