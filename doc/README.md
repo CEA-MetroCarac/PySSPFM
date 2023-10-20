@@ -29,19 +29,21 @@ The PySSPFM application then proceeds with two stages of measurement processing.
 
 <p align="center" width="100%">
     <img align="center" width=50%" src="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20architecture.PNG"> <br>
-    <em>PySSPFM workflow</em>
+    <em>Simplified code architecture diagram</em>
 </p>
 
-Voici l'architecture du code source de l'application PySSPFM, simplifiée (le path management, l'extraction et la sauvegarde des données, les settings ainsi que la gestion du signal de polarisation ne sont pas prise en compte dans le schéma). Cependant elle donne une représentation assez fidèle de l'interaction globale des différentes parties du code entre elles.
-* Les fonctions contenues dans "core" sont assez génériques et non sépcifique au SSPFM. Elles sont relativement indépendantes avec le reste du code et servent de brique de base à l'excéution de l'ensemble des autres fonctions.
-* Le module seg_to_loop permet la conversion des mesures sous forme de nanoloop. Il repose sur l'utilisation de fonctions de core et nanoloop.
-* Le module nanoloop permet la création et le traitement des nanoloops. Il repose sur l'utilisation de fonctions de core.
-* Le module hyst_to_map permet l'extraction des propriétés du matériau à partir des nanoloops. Il repose sur l'utilisation de fonctions de core et nanoloop.
-* Le module map permet la mise en forme des propriétés du matériau sous forme de map. Il repose sur l'utilisation de fonctions de core.
-* Le fichier seg_to_loop_s1 (excécutable) permet la première étape du traitement des mesures SSPFM. Il assemble et s'appui sur des fonctions de core, seg_to_loop et nanoloop.
-* Le fichier hyst_to_map_s2 (excécutable) permet la deuxième étape du traitement des mesures SSPFM. Il assemble et s'appui sur des fonctions de core, hyst_to_map et nanoloop.
-* La toolbox contient un ensemble d'outils (excécutable) permettant une analyse approfondie des mesures traitées fait appel à diverses fonctions contenus dans data_processing et utils.
-* L'interface graphique permet de lancer l'ensemble des exécutables, à savoir les codes contenus dans data_processing et toolbox.
+<p align="justify" width="100%">
+Here is the simplified architectural overview of the PySSPFM application's source code (path management, data extraction and storage, settings, and polarization signal management are not included in the diagram). Nevertheless, it provides a fairly accurate representation of the overall interaction between the various components of the code.
+&#8226 The functions within the "core" are quite generic and not specific to SSPFM. They exhibit relative independence from the rest of the code and serve as fundamental building blocks for the execution of all other functions. <br>
+&#8226 The "seg_to_loop" module facilitates the conversion of measurements into nanoloops. It relies on the use of both "core" and "nanoloop" functions. <br>
+&#8226 The "nanoloop" module enables the creation and processing of nanoloops. It relies on the utilization of "core" functions. <br>
+&#8226 The "hyst_to_map" module is responsible for extracting material properties from nanoloops. It relies on the utilization of functions from "core" and "nanoloop." <br>
+&#8226 The "map" module formats material properties into a map. It depends on the use of functions from "core." <br>
+&#8226 The "seg_to_loop_s1" executable file performs the initial stage of SSPFM measurements processing. It assembles and relies upon functions from "core," "seg_to_loop," and "nanoloop." <br>
+&#8226 The "hyst_to_map_s2" executable file accomplishes the second stage of SSPFM measurements processing. It assembles and relies upon functions from "core," "hyst_to_map," and "nanoloop." <br>
+&#8226 The toolbox contains a set of executable tools that enable in-depth analysis of processed measurements and call various functions contained within "data_processing" and "utils." <br>
+&#8226 The graphical user interface facilitates the execution of all executables, which include the code within "data_processing" and "toolbox." <br>
+</p>
 
 ## GUI
 
