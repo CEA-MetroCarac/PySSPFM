@@ -457,18 +457,8 @@ Following the calibration process and the identification of the positions of the
 &#8226 <code>raw_phase</code>: The raw phase is retained, and no processing is applied (suitable for use in pre-measurement phase calibration).<br>
 &#8226 <code>offset</code>: A phase offset is determined through calibration, and the phase difference between the two peaks remains unchanged (a treatment method that aims to preserve the initial measurement as faithfully as possible).<br>
 &#8226 <code>affine</code>: An affine relationship is applied to all phase values, adjusting the phase difference to 180°.<br>
-&#8226 <code>up and down</code>: A threshold is established between the two peaks, and each phase value is assigned the target value, pha_fwd or pha_rev, based on its position relative to the threshold and the calibration process.
-
-
-
-
-
-
-A la suite de la calibration et de l'identification de la position des deux pics sur l'histogramme et de la différence de phase, la phase peut être corrigée avec 4 différents protocoles :
-- raw_phase : la phase brute est conservée et aucun traitement n'est appliqué (peut être utilisée dans le cas d'une calibration de phase pré mesure)
-- offset : un offset de phase est déterminé par la calibration, la différence de phase reste entre les deux pics reste inchangé (traitement permettant le rester le plus fidèle à la mesure initiale).
-- affine : une relation affine est appliquée à l'ensemble des valeurs de phase de telle sorte à ajuster la différence de phase à 180°.
-- up and down : un threshold est déterminé (entre les deux pics) et chaque valeur de phase se voit attribuer la valeur cible pha_fwd ou pha_rev en fonction de sa position par rapport au threshold et de la calibration
+&#8226 <code>up and down</code>: A threshold is established between the two peaks, and each phase value is assigned the target value, <code>pha_fwd</code> or <code>pha_rev</code>, based on its position relative to the threshold and the calibration process.
+</p>
 
 ### MultiLoop
 
