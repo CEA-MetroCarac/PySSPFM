@@ -318,7 +318,7 @@ Parameters such as amplitude (\(A\)), quality factor (Q), and the center of the 
 The phase can be extracted simply at the index of the peak's center or by performing a fit in the narrow vicinity of the resonance peak using the <code>fit_pha</code> parameter with an arctangent function model, with or without a switch:
 </p>
 
-$$ /phi(f) = arctan(f * f_0 \over Q * (f_0^2 - f^2)) $$
+$$ $\phi$(f) = arctan({f * f_0 \over Q * (f_0^2 - f^2)}) $$
 
 <p align="justify" width="100%">
 This entire process enhances the precision of the measured values. The robustness of the treatment can be increased with a peak detection algorithm (activated with <code>detect_peak</code> and with order of <code>filter_ord</code>), allowing a choice regarding whether to perform the fit. All fits are conducted using the <a href="https://pypi.org/project/lmfit/">lmfit</a> library, and methods like <code>least_sq</code>, <code>least_square</code> (prioritizing speed), or <code>nelder</code> (prioritizing convergence) can be selected.
