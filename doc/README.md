@@ -238,7 +238,8 @@ In cases where the acquisition of polarization voltage is not conducted, it can 
     <em>Polarization voltage</em>
 
 </p>
-<p align="center" width="100%">
+
+<p align="justify" width="100%">
 This polarization signal is generated with these parameters: 
 </p>
 
@@ -260,7 +261,7 @@ This polarization signal is generated with these parameters:
 ```
 
 <p align="justify" width="100%">
-The code also includes other polarization signals that can be utilized for the development of various modes.
+The code also includes other polarization voltage form that can be utilized for the development of various modes:
 </p>
 
 <p align="center" width="100%">
