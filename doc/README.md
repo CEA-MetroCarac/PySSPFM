@@ -428,7 +428,7 @@ Here are the various hysteresis configurations in the On-Field mode, depending o
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/calibration_hysteresis_on_field.PNG> <br>
+    <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/calibration_hysteresis_on_field.PNG.PNG> <br>
 </p>
 
 <p align="justify" width="100%">
