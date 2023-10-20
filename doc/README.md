@@ -236,7 +236,6 @@ In cases where the acquisition of polarization voltage is not conducted, it can 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Polarization%20bias.PNG> <br>
     <em>Polarization voltage</em>
-
 </p>
 
 <p align="justify" width="100%">
@@ -279,6 +278,12 @@ The code also includes other polarization voltage form that can be utilized for 
     <em>4 - cKPFM voltage n°2</em> <br>
 </p>
 
+### Pre-measurement calibration
+
+<p align="justify" width="100%">
+Calibration is indispensable for obtaining quantitative measurements. In the measurement data sheet, values can be provided to quantify the measured amplitude, including tip sensitivity (nm/V) and spring constant (N/m), which can be obtained from the manufacturer or through pre-measurement calibration. Additionally, a pre-measurement calibration can be used to determine the phase offset. All amplitude and phase values are calibrated with the result in the script.  
+</p>
+
 ### Segment
 
 <p align="justify" width="100%">
@@ -298,11 +303,11 @@ One can then compare the theoretical and actual duration of the measurement: the
 Once the segmentation process is completed, each segment is generated. When the <code>Segment</code> object is initialized, it generates some of its attributes, including arrays of PFM amplitude and phase measurements, as well as frequency (used in sweep mode in resonance) and time bounded by the start and end indices of the segment. These arrays are optionally trimmed at the beginning and end based on the <code>cut_seg</code> parameter. Noise in the amplitude and phase measurements is potentially reduced by a mean filter, which can be enabled (<code>filter</code>) and is defined by its order (<code>filter_ord</code>). The segment is then processed according to the <code>mode</code> chosen by the user:
 </p>
 
-INSERER LES FIGURES DE CHACUN DES TROIS TRAITEMENTS
-
 <p align="justify" width="100%">
 &#8226 <code>max</code> (usable for resonance sweep): the maximum value from the amplitude array is extracted. The corresponding index is used to extract the resonance frequency value along with the phase value. The bandwidth of the peak is determined using a function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/peak.py">utils/core/peak</a></code>, allowing for the calculation of the quality factor. This method is advantageous due to its speed and robustness.
 </p>
+
+INSERER FIGURE TRAITEMENT MAX
 
 <p align="justify" width="100%">
 &#8226 <code>fit</code> (usable for a resonance sweep): The amplitude resonance peak with frequency $R(f)$ is fitted using the SHO (simple harmonic oscillator) model:
@@ -320,17 +325,113 @@ The phase $\phi$ can be extracted simply at the index of the resonance frequency
 
 $$ \phi(f) = arctan({f * f_0 \over Q * (f_0^2 - f^2)}) $$
 
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/resonance_peak_segment.png> <br>
+    <em>Segment treatment in fit mode</em>
+</p>
+
 <p align="justify" width="100%">
 This entire process enhances the precision of the measured values. The robustness of the treatment can be increased with a peak detection algorithm (activated with <code>detect_peak</code> and with order of <code>filter_ord</code>), allowing a choice regarding whether to perform the fit. All fits are conducted using the <a href="https://pypi.org/project/lmfit/">lmfit</a> library, and methods like <code>least_sq</code>, <code>least_square</code> (prioritizing speed), or <code>nelder</code> (prioritizing convergence) can be selected.
 </p>
 
 <p align="justify" width="100%">
-&#8226 <code>dfrt</code> : The average of the arrays of measurements in amplitude and phase defines the unique values of the segment in amplitude and phase, respectively. The uncertainty in these two quantities can be determined based on their variance within the segment. This process is swift, robust, and highly precise.
+&#8226 <code>dfrt</code> : The average of the arrays of measurements in amplitude and phase maintained at resonance through the use of dfrt, defines the unique values of the segment in amplitude and phase, respectively. The uncertainty in these two quantities can be determined based on their variance within the segment. This process is swift, robust, and highly precise.
 </p>
 
-### Calibration
+INSERER FIGURE TRAITEMENT DFRT
 
-### Nanoloop
+<p align="justify" width="100%">
+All segments (in the Off Field mode) can be visualized on the map:
+</p>
+
+INSERER FIGURE CARTOGRAPHIE
+
+<p align="justify" width="100%">
+Once all the measurements are extracted per segment, phase and amplitude nanoloops as a function of polarization voltage can be created and saved.
+</p>
+
+## Nanoloop
+
+### Post-measurement phase calibration
+
+Un histogramme de phase est créé à partir de l'ensemble des valeurs de phase du fichier. Pour des mesures en Vertical PFM, deux pics espacés de plus ou moins 180° sont fréquemment observés. Ces deux pics sont soit fités par un modèle gaussien (gain en précision) ou leur maxiumum est extrait (gain en robustesse et en temps). Le setting  histo_phase_method permet de choisir entre les deux options. Dans le cas d'un echec sur le fit, la méthode du maximum est appliquée. La différence de phase et la position des deux pics est alors extraite. En PFM, un offset de phase est présent au cours de la mesure et une inversion de la valeur de phase peut être observé. Il est donc indispensable d'identifier les deux pics de l'histogramme et de leur attribuer une valeurs de phase cible.
+INSERER LA FIGURE
+
+<p align="justify" width="100%">
+Pour se faire, en s'inspirant des publications de Neumayer et al., un protocole de calibration post mesure a été proposé. Le principe physique de ce dernier est détaillé dans la publication INSERER. Nous avons adapté ce protocole dans le cas de l'application PySSPFM en fonction des conditions expérimentales ,propres à l'utilisateur.
+</p>
+
+<p align="justify" width="100%">
+Le sens de la polarisation verticale (effet purement ferroélectrique) induite dans le matériau est fonction de la tension appliquée entre la pointe et la bottom électrode du matériau. On appelle tension basse et haute respectivement des tensions plus importante (en valeur absolue) que les tensions coercitives basse et hautes de l'hystérésis. On distingue alors deux cas de figures, le premier pour le cas grounded tip et le deuxième pour le cas grounded bottom. Le schéma ci dessous récapituale le sens de la polarisation en fonction de la tension appliquée pour les deux cas :
+</p>
+
+INSERER LE PREMIER TABLEAU
+
+<p align="justify" width="100%">
+On peut alors chercher le sens de rotation de l'hystérésis (clockwise ou counterclockwise), influencé par les effets piézoélectriques et ferroélectriques.
+La correspondance entre la tension et la valeurs de phase (forward ou reverse, c'est à dire induisant un coefficient multiplicatif de 1 ou -1 dans le calcul de la piezoresponse avec l'amplitude) permet ici de déterminer le sens de rotation de l'hystérésis.
+On distingue la aussi deux cas de figure : un matériau a coefficient piézoélectrique positif et négatif :
+</p>
+
+INSERER LE DEUXIEME TABLEAU
+
+<p align="justify" width="100%">
+A partir de ces deux premier tableaux on peut déterminer le tableau suivant du sens de rotation de l'hystérésis, fonction uniquement des conditions expérimentales :
+</p>
+
+INSERER LE TROISIEME TABLEAU
+
+INSERER QUATRES HYSTERESIS OFF FIELD
+
+<p align="justify" width="100%">
+Dans le cas spécifique de mesures On Field à composante électrostatique majoritaire (la composante électrostatique dicte le sens de rotation de l'hystérésis) le signe de la pente de la composante électrostatique est fonction du sens d'application de la tension est établit selon le tableau suivant :
+</p>
+
+INSERER LE QUATRIEME TABLEAU
+
+La valeur de la tension peut alors directement être associée à la phase selon le tableau suivant, sans que le sens de rotation de l'hystérésis ne change :
+
+INSERER LE CINQUIEME TABLEAU
+
+INSERER QUATRES HYSTERESIS ON FIELD
+
+On notera que dans certains cas de mesures On Field pour lesquels les composantes électrostatiques et ferroélectriques sont voisines, plusieurs changement de phases peuvent être présents au cours du cycle. 
+
+INSERER HYSTERESIS CAS PARTICULIER
+
+Concrètement, dans l'application PySSPFM, l'utilisateur peut attriibuer la valeur de phase forward et reverse qu'il souhaite à partir des paramètres pha_fwd et pha_rev. Il doit identifier s'il se trouve dans le cas d'une composante électrostatique majoritaire ou non en On Field à travers le paramètre main_electrostatic. Il peut choisir ou non d'attribuer le signe qu'il souhaite à la pente de la composante électrstatqiue. Il renseigne dans la fiche de mesure le signe du coefficient piézoélectrique du matériau. Grâce aux paramètres renseignés et au protocole de calibration, une valeur de phase peut être attribuée aux deux pics de l'histogramme. 
+
+Une inversion de phase éventuelle peut être détectée grâce à l'étude de la variation de la phase moyenne en fonction de la tension de polarisation. Si la variation théorique et mesurée sont inversée, une inversion de phase a eu lieu, et cette dernière est corrigée.
+INSERER LA FIGURE
+
+A la suite de la calibration et de l'identification de la position des deux pics sur l'histogramme et de la différence de phase, la phase peut être corrigée avec 4 différents protocoles :
+- raw_phase : la phase brute est conservée et aucun traitement n'est appliqué (peut être utilisée dans le cas d'une calibration de phase pré mesure)
+- offset : un offset de phase est déterminé par la calibration, la différence de phase reste entre les deux pics reste inchangé (traitement permettant le rester le plus fidèle à la mesure initiale).
+- affine : une relation affine est appliquée à l'ensemble des valeurs de phase de telle sorte à ajuster la différence de phase à 180°.
+- up and down : un threshold est déterminé (entre les deux pics) et chaque valeur de phase se voit attribuer la valeur cible pha_fwd ou pha_rev en fonction de sa position par rapport au threshold et de la calibration
+
+### MultiLoop
+
+<p align="justify" width="100%">
+Pour chaque fichier de mesure, il est possible d'acquérir plusieurs courbe nanoloop, de telle sorte à étudier la répétabilité des mesures et à réduire le bruit des mesures (en effectuant la moyenne de l'ensemble des nanoloops du fichier). Un objet MultiLoop est alors créé. Ce dernier est initialisé avec des tableaux de sous tableaux (nombre de sous tableaux correspondant au nombre de loop) de mesures correspondantes : tension de polarisation, valeur d'amplitude et de phase extraites. Sont également rensignés un tableau de tension de lecture (dont les valeurs correspondent à chacune des nanoloop), un dictionnaire des réslultats de la calibration de phase. et le mode de mesure (On ou Off Field).
+</p>
+
+<p align="justify" width="100%">
+Afin de permettre une meilleure visualition des données :
+- Des marqueurs (au début et à la fin de la mesure, ainsi qu'aux extremums des tensions de polarisation) sont déterminés automatioquement en fonction du signal en tension de polarisation.
+- Les branches de chaque nanoloop sont divisées en deux : celles de droite (en rouge) et celle de gauche (en bleu).
+Les valeurs de phase sont alors modifiées en fonction du dictionnaire de calibration de phase.
+</p>
+
+INSERER LES MULTILOOPS EN AMPLITUDE ET EN PHASE
+
+<p align="justify" width="100%">
+Enfin, en fonction des loop en amplitude et en phase, les loop en piezoreponse sont crées.
+</p>
+
+INSERER LES MULTILOOPS PIEZORESPONSE
+
+### MeanLoop
 
 ## Second step of data analysis
 
