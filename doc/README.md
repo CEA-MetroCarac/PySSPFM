@@ -229,7 +229,9 @@ For a deeper understanding of the path management in this phase, please refer to
 
 ### Polarization voltage
 
-INSERER UNE IMAGE
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Polarization%20bias.PNG> <br>
+</p>
 
 <p align="justify" width="100%">
 In cases where the acquisition of polarization voltage is not conducted, it can be reconstructed from a property dictionary containing the following information for both write (On Field) and read (Off Field) segments: their duration, the number of samples per segment, the number of segments, their direction of variation, and their voltage limits. These parameters are specified in the measurement sheet and are subsequently employed during the processing step. The script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/signal_bias.py">utils/signal_bias</a></code> is responsible for generating the polarization signal based on these parameters and vice versa. It also includes other polarization signals that can be utilized for the development of various modes.
@@ -237,7 +239,12 @@ In cases where the acquisition of polarization voltage is not conducted, it can 
 
 FAIRE LE LISTING
 
-INSERER LES DIFFERENTES IMAGES
+<p align="center" width="100%">
+    <img align="center" width="24%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Increasing%20polarization%20bias.PNG>
+    <img align="center" width="24%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/dynamic%20switching%20bias.PNG>
+    <img align="center" width="24%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/ckpfm_bias_1.PNG>
+    <img align="center" width="24%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/ckpfm_bias_2.PNG>
+</p>
 
 ### Segment
 
