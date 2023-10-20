@@ -218,8 +218,8 @@ The initial step of the process may be initiated either through the <a href="htt
 </p>
 
 <p align="justify" width="100%">
-For a deeper understanding of the path management in this phase, please refer to the relevant section in the documentation:
-&#8226 Input: File Management/Input Files.
+For a deeper understanding of the path management in this phase, please refer to the relevant section in the documentation:<br>
+&#8226 Input: File Management/Input Files.<br>
 &#8226 Output: File Management/Output Files/First Step of Data Analysis.
 </p>
 
