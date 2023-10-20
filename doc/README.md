@@ -354,9 +354,61 @@ Once all the measurements are extracted per segment, phase and amplitude nanoloo
 
 ### Post-measurement phase calibration
 
+Un histogramme de phase est créé à partir de l'ensemble des valeurs de phase du fichier. Pour des mesures en Vertical PFM, deux pics espacés de plus ou moins 180° sont fréquemment observés. Ces deux pics sont soit fités par un modèle gaussien (gain en précision) ou leur maxiumum est extrait (gain en robustesse et en temps). Le setting  histo_phase_method permet de choisir entre les deux options. Dans le cas d'un echec sur le fit, la méthode du maximum est appliquée. La différence de phase et la position des deux pics est alors extraite. En PFM, un offset de phase est présent au cours de la mesure et une inversion de la valeur de phase peut être observé. Il est donc indispensable d'identifier les deux pics de l'histogramme et de leur attribuer une valeurs de phase cible.
+INSERER LA FIGURE
+
 <p align="justify" width="100%">
-En s'inspirant des publications de Neumayer et al., un protocole de calibration post mesure a été proposé. Le principe physique de ce dernier est détaillé dans la publication INSERER. Pour résumer, un histogramme de phase est créé. Pour des mesures en Vertical PFM, et pour un signal d'origine princiapelment d'origine piézo-ferroélectrique, deux valeurs de phases sont majoritaires et forme deux pics au niveau de l'histogramme de phase. En théorie, ces deux pics doivent être espacés de plus ou moins 180°. En fonction du signe du coefficient piézoélectrique du matériau, du sens d'application de la tension, de la prédominance ou non de la composante électroistatique sur le reste de la mesure et du signe de sa pente (en On Field), une correspondance en terme de polarisation peut être attribué aux deux pics. Alors, en fonction des para
+Pour se faire, en s'inspirant des publications de Neumayer et al., un protocole de calibration post mesure a été proposé. Le principe physique de ce dernier est détaillé dans la publication INSERER. Nous avons adapté ce protocole dans le cas de l'application PySSPFM en fonction des conditions expérimentales ,propres à l'utilisateur.
 </p>
+
+<p align="justify" width="100%">
+Le sens de la polarisation verticale (effet purement ferroélectrique) induite dans le matériau est fonction de la tension appliquée entre la pointe et la bottom électrode du matériau. On appelle tension basse et haute respectivement des tensions plus importante (en valeur absolue) que les tensions coercitives basse et hautes de l'hystérésis. On distingue alors deux cas de figures, le premier pour le cas grounded tip et le deuxième pour le cas grounded bottom. Le schéma ci dessous récapituale le sens de la polarisation en fonction de la tension appliquée pour les deux cas :
+</p>
+
+INSERER LE PREMIER TABLEAU
+
+<p align="justify" width="100%">
+On peut alors chercher le sens de rotation de l'hystérésis (clockwise ou counterclockwise), influencé par les effets piézoélectriques et ferroélectriques.
+La correspondance entre la tension et la valeurs de phase (forward ou reverse, c'est à dire induisant un coefficient multiplicatif de 1 ou -1 dans le calcul de la piezoresponse avec l'amplitude) permet ici de déterminer le sens de rotation de l'hystérésis.
+On distingue la aussi deux cas de figure : un matériau a coefficient piézoélectrique positif et négatif :
+</p>
+
+INSERER LE DEUXIEME TABLEAU
+
+<p align="justify" width="100%">
+A partir de ces deux premier tableaux on peut déterminer le tableau suivant du sens de rotation de l'hystérésis, fonction uniquement des conditions expérimentales :
+</p>
+
+INSERER LE TROISIEME TABLEAU
+
+INSERER QUATRES HYSTERESIS OFF FIELD
+
+<p align="justify" width="100%">
+Dans le cas spécifique de mesures On Field à composante électrostatique majoritaire (la composante électrostatique dicte le sens de rotation de l'hystérésis) le signe de la pente de la composante électrostatique est fonction du sens d'application de la tension est établit selon le tableau suivant :
+</p>
+
+INSERER LE QUATRIEME TABLEAU
+
+La valeur de la tension peut alors directement être associée à la phase selon le tableau suivant, sans que le sens de rotation de l'hystérésis ne change :
+
+INSERER LE CINQUIEME TABLEAU
+
+INSERER QUATRES HYSTERESIS ON FIELD
+
+On notera que dans certains cas de mesures On Field pour lesquels les composantes électrostatiques et ferroélectriques sont voisines, plusieurs changement de phases peuvent être présents au cours du cycle. 
+
+INSERER HYSTERESIS CAS PARTICULIER
+
+Concrètement, dans l'application PySSPFM, l'utilisateur peut attriibuer la valeur de phase forward et reverse qu'il souhaite à partir des paramètres pha_fwd et pha_rev. Il doit identifier s'il se trouve dans le cas d'une composante électrostatique majoritaire ou non en On Field à travers le paramètre main_electrostatic. Il peut choisir ou non d'attribuer le signe qu'il souhaite à la pente de la composante électrstatqiue. Il renseigne dans la fiche de mesure le signe du coefficient piézoélectrique du matériau. Grâce aux paramètres renseignés et au protocole de calibration, une valeur de phase peut être attribuée aux deux pics de l'histogramme. 
+
+Une inversion de phase éventuelle peut être détectée grâce à l'étude de la variation de la phase moyenne en fonction de la tension de polarisation. Si la variation théorique et mesurée sont inversée, une inversion de phase a eu lieu, et cette dernière est corrigée.
+INSERER LA FIGURE
+
+A la suite de la calibration et de l'identification de la position des deux pics sur l'histogramme et de la différence de phase, la phase peut être corrigée avec 4 différents protocoles :
+- raw_phase : la phase brute est conservée et aucun traitement n'est appliqué (peut être utilisée dans le cas d'une calibration de phase pré mesure)
+- offset : un offset de phase est déterminé par la calibration, la différence de phase reste entre les deux pics reste inchangé (traitement permettant le rester le plus fidèle à la mesure initiale).
+- affine : une relation affine est appliquée à l'ensemble des valeurs de phase de telle sorte à ajuster la différence de phase à 180°.
+- up and down : un threshold est déterminé (entre les deux pics) et chaque valeur de phase se voit attribuer la valeur cible pha_fwd ou pha_rev en fonction de sa position par rapport au threshold et de la calibration
 
 ### MultiLoop
 
