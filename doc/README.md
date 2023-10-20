@@ -311,7 +311,7 @@ INSERER LES FIGURES DE CHACUN DES TROIS TRAITEMENTS
 $$ R(f) = A * {f_0^2 \over \sqrt{f_0^2 - f^2)^2 + (f * f_0 / Q)^2}} $$
 
 <p align="justify" width="100%">
-Parameters such as amplitude (\(A\)), quality factor (Q), and the center of the peak (corresponding to the resonance frequency f0) can be extracted. Background by adding a constant in the fit and therefore can be removed from the measurement to improve accuracy.
+Parameters such as amplitude \(A\), quality factor (Q), and the center of the peak (corresponding to the resonance frequency f0) can be extracted. Background by adding a constant in the fit and therefore can be removed from the measurement to improve accuracy.
 </p>
 
 <p align="justify" width="100%">
