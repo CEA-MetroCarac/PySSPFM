@@ -485,10 +485,24 @@ INSERER LES MULTILOOPS PIEZORESPONSE
 
 ### MeanLoop
 
+<p align="justify" width="100%">
+The <code>MeanLoop</code> is defined within the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis</a></code> script. It is initialized with a <code>MultiLoop</code> object, and optionally, a phase calibration dictionary. This object facilitates the averaging of all loops within the <code>MultiLoop</code, encompassing both amplitude, phase, and piezoresponse, except for the initial loop, which differs due to the sample's pre-polarized state at the beginning of the measurement. If a phase calibration dictionary is provided, the phase component of the MeanLoop is processed accordingly.
+</p>
+
+INSERER LES MEANLOOP EN AMPLITUDE, PHASE ET PIEZORESPONSE
+
 ## Second step of data analysis
 
 <p align="center" width="100%">
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/GUI_second_step.PNG> <br>
+</p>
+
+<p align="justify" width="100%">
+The second step of the process may be initiated either through the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">executable source code</a> or via the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hyst_to_map_s2.py">graphical user interface</a>. En entrée, le dossier txt_loops obtenu après la première étape du traitement est sélectionné. L'ensemble des fichiers contenu est trié dans l'ordre avec la fonction generate_file_paths contenue dans le script utils.hyst_to_map.file et les données seront extraites pour chacun des fichiers. Les paramètres de mesures et de traitement contenus dans le fichier result/parameters.txt sont également lu et extraits. Des figures issus du traitement du premier fichier sont générées, puis chacun des fichier est analysé automatiquement sans affichage des figures. Un ensemble de propriétés piezo ferroélectrique et autre sont alors extraite en fin de traitement et enregistré dans un fichier texte pour chacun des modes (On et Off field et coupled).
+</p>
+
+<p align="justify" width="100%">
+For a deeper understanding of the path management in this phase, please refer to the relevant section in the documentation (File Management/Output Files/Second Step of Data Analysis).
 </p>
 
 ### Parameters
