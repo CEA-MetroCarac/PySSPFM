@@ -1,4 +1,4 @@
-![phase_variation_with_voltage](https://github.com/CEA-MetroCarac/PySSPFM/assets/76450221/095d391e-605c-420f-a37c-34c8cffe95a5)# PySSPFM Documentation
+# PySSPFM Documentation
 
 <p align="center" width="100%">
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/logoPySSPFM_white.PNG> <br>
