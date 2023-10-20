@@ -297,11 +297,11 @@ One can then compare the theoretical and actual duration of the measurement: the
 Once the segmentation process is completed, each segment is generated. When the <code>Segment</code> object is initialized, it generates some of its attributes, including arrays of PFM amplitude and phase measurements, as well as frequency (used in sweep mode in resonance) and time bounded by the start and end indices of the segment. These arrays are optionally trimmed at the beginning and end based on the <code>cut_seg</code> parameter. Noise in the amplitude and phase measurements is potentially reduced by a mean filter, which can be enabled (<code>filter</code>) and is defined by its order (<code>filter_ord</code>). The segment is then processed according to the <code>mode</code> chosen by the user:
 </p>
 
-INSERER LES FIGURES DE CHACUN DES TROIS TRAITEMENTS
-
 <p align="justify" width="100%">
 &#8226 <code>max</code> (usable for resonance sweep): the maximum value from the amplitude array is extracted. The corresponding index is used to extract the resonance frequency value along with the phase value. The bandwidth of the peak is determined using a function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/peak.py">utils/core/peak</a></code>, allowing for the calculation of the quality factor. This method is advantageous due to its speed and robustness.
 </p>
+
+INSERER TRAITEMENT MAX
 
 <p align="justify" width="100%">
 &#8226 <code>fit</code> (usable for a resonance sweep): The amplitude resonance peak with frequency $R(f)$ is fitted using the SHO (simple harmonic oscillator) model:
@@ -331,6 +331,8 @@ This entire process enhances the precision of the measured values. The robustnes
 <p align="justify" width="100%">
 &#8226 <code>dfrt</code> : The average of the arrays of measurements in amplitude and phase maintained at resonance through the use of dfrt, defines the unique values of the segment in amplitude and phase, respectively. The uncertainty in these two quantities can be determined based on their variance within the segment. This process is swift, robust, and highly precise.
 </p>
+
+INSERER DFRT
 
 ### Calibration
 
