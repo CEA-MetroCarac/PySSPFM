@@ -4,7 +4,9 @@
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/logoPySSPFM_white.PNG> <br>
 </p>
 
-## Introduction
+## Overview
+
+### Workflow
 
 <p align="center" width="100%">
     <img align="center" width=80%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20worflow.PNG> <br>
@@ -13,7 +15,7 @@
 
 <p align="justify" width="100%">
 Following the SSPFM measurement, one or more SSPFM files are generated. A measurement form should be completed by the user (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). 
-The PySSPFM application then proceeds with two stages of measurement processing. In the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/seg_to_loop_s1.py">first step</a> of data analysis, amplitude and phase measurements are extracted and calibrated for each segment and nanoloops are determined. The <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">second step</a> creates the piezoresponse hysteresis loop, and extracts piezoelectric and ferroelectric properties using an algorithm based on the <a href="https://pypi.org/project/lmfit/">lmfit</a> library. Various artifact decorrelation protocols improve measurement accuracy. Then, SSPFM mapping can be performed. A <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">toolbox</a> is provided including:
+The PySSPFM application then proceeds with two stages of measurement processing. In the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/seg_to_loop_s1.py">first step</a> of data analysis, amplitude and phase measurements are extracted and calibrated for each segment and nanoloops are determined. The <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">second step</a> creates the piezoresponse hysteresis loop, and extracts piezoelectric and ferroelectric properties using an algorithm based on the <a href="https://pypi.org/project/lmfit/">lmfit</a> library. Various artifact decorrelation protocols improve measurement accuracy. Then, <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">SSPFM mapping</a> can be performed. A <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">toolbox</a> is provided including:
 </p>
 
 * [`Machine learning (K-Means)`](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py)
@@ -23,6 +25,9 @@ The PySSPFM application then proceeds with two stages of measurement processing.
 * `Viewers`
 * `...`
 
+### Code architecture
+
+INSERER FIGURE
 
 ## GUI
 
@@ -166,7 +171,7 @@ Following the second stage of processing, the processing folder is augmented as 
                 <li>The <code>figs</code> directory houses the visual representations generated during the second stage of processing, encompassing off and on-field hysteresis with fitting and parameter extraction, along with the extraction of the artifact-related component through multiple protocols. This stage is executed by the script <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/plot.py">utils/hyst_to_map/plot</a>.</li>
             </ul>
         <li>A new <code>txt_ferro_meas</code> folder contains all material properties measured for each measurement file, both in on-field and off-field conditions, as well as in differential (or coupled) measurements. These properties are extracted during the hysteresis fitting stage and artifact analysis, accomplished by the scripts <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a> and <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic</a>, respectively.</li>
-        <li>A <code>txt_best_loops</code> directory that contains the singular hysteresis for each mode (on-field and off-field, as well as coupled measurements) per measurement file.</li>
+        <li>A <code>txt_best_loops</code> directory that contains the singular hysteresis for each mode (on-field and off-field) per measurement file.</li>
      </ul>
 </p>
 
@@ -190,7 +195,7 @@ Two tools deviate from this path management:
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/GUI_first_step.PNG> <br>
 </p>
 
-La première étape du traitement peut être lancée via le code source excécutable, ou par le code de l'interface graphique. En entrée, un fichier de mesure SSPFM datacube est choisi. Les données sont alors extraites, tout comme les données contenues dans la fiche de mesure. Le fichier va être traité en fonction des paramètres, et l'ensemble des figures va être affiché. Ensuite, chaque fichier de mesure du dossier d'entrée va être traité automatiquement, sans affichage des figures. Les données sont converties sous forme de nanoloops et enregistrées.
+La première étape du traitement peut être lancée via le code source excécutable, ou par le code de l'interface graphique. En entrée, un fichier de mesure SSPFM datacube est choisi. Les données sont alors extraites, tout comme les données contenues dans la fiche de mesure. Le fichier va être traité en fonction des paramètres, et un ensemble de figures va être affiché. Ensuite, chaque fichier de mesure du dossier d'entrée va être traité automatiquement, sans affichage des figures. Les données sont converties sous forme de nanoloops et enregistrées dans des fichiers textes.
 
 Pour en savoir plus sur le path management de cette étape, lire la section de la documentation en question (File management/Output files/First step of data analysis).
 
@@ -200,7 +205,27 @@ Pour en savoir plus sur le path management de cette étape, lire la section de l
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Parameters_first_step.PNG> <br>
 </p>
 
+### Polarization voltage
+
+INSERER UNE IMAGE
+
+Dans le cas ou l'acquisition de la tension de polarisation n'est pas effectuée, cette dernière peut être reconstruite à partir d'un dictionnaire de propriétés contenant respectivement pour les segments d'écriture (On Field) et de lecture (Off Field) : leur durée, leur nombre d'échantillon par segment, le nombre de segment, leur sens de variation, leur tension limite. Ces paramètres sont renseignés dans la fiche de mesure et sont ensuite utilisés lors de l'étape de traitement. Le script <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/signal_bias.py">utils/signal_bias</a> permet de générer le signal de polarization à partir de ces paramètres et vice versa. Il contient également d'autres signaux de polarisation qui peuvent être utilisés pour le développement d'autres modes.
+
+FAIRE LE LISTING
+
+INSERER LES DIFFERENTES IMAGES
+
 ### Segment
+
+La mesure SSPFM est découpée en segment : un pour chaque commutation du signal de la tension de polarisation. Un segment de hold est présent en début et en fin de mesure: leur temps est INSIQUER LA FORMULE. En fonction des paramètres de signal de polarisation, le nombre de segment et la durée totale de la mesure peut être déterminée: INIDQUER LA FORMULE. On peut alors la comparer à la durée total mesuré : les deux valeurs doivent correspondre. Cette vérification peut être effectué si le pramaètre detect_bug_segments est activé.
+
+Une fois le découpage effectué, chaque segment sont générés. L'objet segment, lorsqu'il est initialisé, génère certains de ses attribus tels que les tableaux de mesures en amplitude et phase PFM, ainsi que la fréquence (utilisé en mode sweep) et le temps délimités en fonction des index de début et de fin du segment. Puis ces tableaux sont éventuellement rognés au début et à la fin en fonction du paramètre cut_seg. Les bruit des mesures en amplitude et en phase est éventuellement réduit par un filtre de moyenne. Le segment est alors traités en fonction du mode choisi par l'utilisateur :
+
+INSERER LES FIGURES DE CHACUN DES TROIS TRAITEMENTS
+
+- max (utilisable pour un sweep à la résonance) : le maximum du tableau d'amplitude est extrait. L'indice correspondant permet d'extraire la valeur de la fréquence de résoancne, avec la valeur de phase. La bande passante du pic est extraite grâce à un script de , afin de déterminer le facetur de qualité. Ce traitement à l'avantage d'être rapide et robuste.
+- fit (utilisable pour un sweep à la résonance) : le pic de résonance en amplitude est fité par le modèle SHO : INSERER EQUATION. Les paramètres tels que l'amplitude, le facteur de qualité et le centre du pic (correspondant à la fréquence de réosnance) peuvent être extraits. Le bruit peut être déduit de la mesure. La phase peut être extraite simplement à l'indice du centre du pic, ou bien en effetcuant un fit au voisinage restreint du pic de résoancne grâce au paramètre fit_pha selon un modèle de fonction arctengente avec ou sans switch: INSERTER EQUATION. L'ensemble de ce traitement permet de gagner en précision sur les valeurs mesurées. La robustesse du traitement peut être augmentée grâce à un algorithme de détection de pic, permettant de choisir quant à la réalisation du fit. EN DIRE PLUS. L'ensemble des fits sont réalisés avec la librairie lmfit, et des méthodes least_sq, least_square (rapidité priviégiée) ou Nelder (convergence privilégéie) peuvent être choisis.
+- dfrt : la moyenne des tableaux de mesures en amplitude et en phase définisse respectivement les uniques valeurs du segment en amplitude en phase. L'incertitude sur ces deux grandeurs peut être déterminées en fonction de leur variance au sein du segment. Ce traitement est rapide, robuste et très précis.
 
 ### Calibration
 
@@ -242,15 +267,102 @@ Pour en savoir plus sur le path management de cette étape, lire la section de l
 
 ### Viewers
 
+#### Raw file
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">toolbox
+/raw_file_reader</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/raw_file_reader.py">gui
+/raw_file_reader</a>.
+</p>
+
+#### Loop file
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox
+/loop_file_reader</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/loop_file_reader.py">gui
+/loop_file_reader</a>.
+</p>
+
+#### List map reader
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox
+/list_map_reader</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/list_map_reader.py">gui
+/list_map_reader</a>.
+</p>
+
+#### Global map reader
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox
+/global_map_reader</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/global_map_reader.py">gui
+/global_map_reader</a>.
+</p>
+
+#### Parameters
+
 ### Hysteresis clustering (K-Means)
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox
+/hysteresis_clustering</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hysteresis_clustering.py">gui
+/hysteresis_clustering</a>.
+</p>
+
+#### Parameters
+
+<p align="justify" width="100%">
+&#8226 File Management: In the initial phase, the algorithm ingests the <code>txt_best_loops</code> directory along with the <code>txt_ferro_meas</code> directory. <br>
+&#8226 Clusters: For each measurement (On Field, Off Field, and coupled), the user specifies the number of clusters. <br>
+&#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of outcomes. <br>
+</p>
+
+#### Extraction 
+
+<p align="justify" width="100%">
+The entirety of data stemming from the best hysteresis loops, both in the On Field and Off Field modes, is extracted from the files residing within the <code>txt_best_loops</code> directory. <br>
+Vertical offset measurements in the Off Field mode and the dimensions of the mappings are drawn from the files within the <code>txt_ferro_meas</code> directory. <br>
+The coupled measurements are subsequently generated through the process of differential analysis of On Field and Off Field measurements, with the flexibility to incorporate the vertical offset in the Off Field mode, a component influenced by the sample's surface contact potential.
+</p>
+
+#### Treatment
+
+<p align="justify" width="100%">
+For each of the modes (On Field, Off Field, and coupled), and for each of the hysteresis associated with each data point, a cluster is assigned using the K-Means methodology. To accomplish this, we import the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">KMeans</a> function from <a href="https://scikit-learn.org/stable/modules/clustering.html#clustering">sklearn.cluster</a>. A reference cluster is established, identified as the one encompassing the maximum number of data points. The index assigned to the other clusters is then computed as the distance between their centroid and that of the reference cluster, respectively. Subsequently, an average hysteresis for each cluster is computed.
+</p>
+
+#### Figures
+
+<p align="center" width="100%">
+    <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/hysteresis_clustering_all_hyst.PNG>
+    <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/hysteresis_clustering_mean_hyst.PNG>
+    <img align="center" width="19%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/hysteresis_clustering_carto.PNG>
+</p>
+
+<p align="justify" width="100%">
+For each mode (On Field, Off Field, and coupled), three figures are generated, each containing: <br>
+&#8226 The complete array of hysteresis loops from all datasets, distinguished by colors assigned based on their cluster index. <br>
+&#8226 The average hysteresis loops for each cluster, distinguished by colors assigned according to their cluster index. <br>
+&#8226 A spatial cartography displaying the assigned clusters. <br>
+</p>
 
 ### Mean loop
 
+#### Parameters
+
 ### 2D cross correlation
+
+#### Parameters
 
 ### Pixel extremum
 
+#### Parameters
+
 ### SPM converter
 
+#### Parameters
+
 ## Overall settings
+
+### Default settings & management
 
