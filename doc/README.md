@@ -386,7 +386,7 @@ One can then discern the rotational direction of the hysteresis (clockwise or co
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_calibration_2.PNG> <br>
+    <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_calibration_2.PNG> <br>
 </p>
 
 <p align="justify" width="100%">
@@ -394,7 +394,7 @@ From these two initial tables, one can ascertain the subsequent table depicting 
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_calibration_3.PNG> <br>
+    <img align="center" width="45%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_calibration_3.PNG> <br>
 </p>
 
 INSERER QUATRES HYSTERESIS OFF FIELD
@@ -404,7 +404,7 @@ In the specific scenario of On Field measurements with a predominant electrostat
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_calibration_4.PNG> <br>
+    <img align="center" width="35%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_calibration_4.PNG> <br>
 </p>
 
 <p align="justify" width="100%">
