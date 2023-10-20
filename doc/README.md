@@ -281,9 +281,22 @@ The code also includes other polarization voltage form that can be utilized for 
 
 ### Segment
 
-La mesure SSPFM est découpée en segment : un pour chaque commutation du signal de la tension de polarisation. Un segment de hold est présent en début et en fin de mesure: leur temps est INSIQUER LA FORMULE. En fonction des paramètres de signal de polarisation, le nombre de segment et la durée totale de la mesure peut être déterminée: INIDQUER LA FORMULE. On peut alors la comparer à la durée total mesuré : les deux valeurs doivent correspondre. Cette vérification peut être effectué si le pramaètre detect_bug_segments est activé.
+<p align="justify" width="100%">
+The SSPFM measurement is divided into segments, one for each polarization voltage signal switch. A hold segment is present at the beginning and end of the measurement. For the Bruker constructor mode, their duration is equal to the ratio between the ramp size (in nanometers) and the tip velocity (in nanometers per second). Depending on the polarization signal parameters, the total number of segments in the measurement can be determined: <br>
+</p>
+    
+\[
+('Nb volt (W)' - 1) * 2 * 'Nb volt (R)'
+\]
 
-Une fois le découpage effectué, chaque segment sont générés. L'objet segment, lorsqu'il est initialisé, génère certains de ses attribus tels que les tableaux de mesures en amplitude et phase PFM, ainsi que la fréquence (utilisé en mode sweep) et le temps délimités en fonction des index de début et de fin du segment. Puis ces tableaux sont éventuellement rognés au début et à la fin en fonction du paramètre cut_seg. Les bruit des mesures en amplitude et en phase est éventuellement réduit par un filtre de moyenne. Le segment est alors traités en fonction du mode choisi par l'utilisateur :
+<p align="justify" width="100%">
+To obtain the total duration (or total sample count) of the measurement, it suffices to multiply the total number of segments by the average of 'Seg durat (W) [ms]' and 'Seg durat (R) [ms]' (or 'Seg sample (W)' and 'Seg sample (R)'). 
+One can then compare the theoretical and actual duration of the measurement: the two values should align. This verification can be performed if the 'detect_bug_segments' parameter is enabled.
+</p>
+
+<p align="justify" width="100%">
+Once the segmentation process is completed, each segment is generated. When the segment object is initialized, it generates some of its attributes, including arrays of PFM amplitude and phase measurements, as well as frequency (used in sweep mode) and time bounded by the start and end indices of the segment. These arrays are optionally trimmed at the beginning and end based on the 'cut_seg' parameter. Noise in the amplitude and phase measurements is potentially reduced by a mean filter. The segment is then processed according to the mode chosen by the user:
+</p>
 
 INSERER LES FIGURES DE CHACUN DES TROIS TRAITEMENTS
 
