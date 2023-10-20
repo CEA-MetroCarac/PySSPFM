@@ -213,9 +213,13 @@ Two tools deviate from this path management: <br>
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/GUI_first_step.PNG> <br>
 </p>
 
-La première étape du traitement peut être lancée via le code source excécutable, ou par le code de l'interface graphique. En entrée, un fichier de mesure SSPFM datacube est choisi. Les données sont alors extraites, tout comme les données contenues dans la fiche de mesure. Le fichier va être traité en fonction des paramètres, et un ensemble de figures va être affiché. Ensuite, chaque fichier de mesure du dossier d'entrée va être traité automatiquement, sans affichage des figures. Les données sont converties sous forme de nanoloops et enregistrées dans des fichiers textes.
+<p align="justify" width="100%">
+The initial step of the process may be initiated either through the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/seg_to_loop_s1.py">executable source code</a> or via the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/seg_to_loop_s1.py">graphical user interface</a>. At the outset, an SSPFM datacube measurement file is selected as input. Subsequently, the data is extracted, including the information contained within the measurement record. The file is then processed based on specified parameters, and a set of graphical representations is presented. Following this, each measurement file within the input directory is processed automatically, without graphical output. The data is transformed into nanoloops and stored in text files.
+</p>
 
-Pour en savoir plus sur le path management de cette étape, lire la section de la documentation en question (File management/Output files/First step of data analysis).
+<p align="justify" width="100%">
+For a deeper understanding of the path management in this phase, please refer to the relevant section in the documentation (File Management/Output Files/First Step of Data Analysis).
+</p>
 
 ### Parameters
 
