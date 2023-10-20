@@ -286,11 +286,11 @@ The SSPFM measurement is divided into segments, one for each polarization voltag
 </p>
     
 ```
-sspfm_pars = (sign_pars['Nb volt (W)'] - 1) * 4 * sign_pars['Nb volt (R)']
+sspfm_pars = (sspfm_pars['Nb volt (W)'] - 1) * 4 * sspfm_pars['Nb volt (R)']
 ```
 
 <p align="justify" width="100%">
-To obtain the total duration (or total sample count) of the measurement, it suffices to multiply the total number of segments by the average of 'Seg durat (W) [ms]' and 'Seg durat (R) [ms]' (or 'Seg sample (W)' and 'Seg sample (R)'). 
+To obtain the total duration (or total sample count) of the measurement, it suffices to multiply the total number of segments by the average of <code>sspfm_pars['Seg durat (W) [ms]']</code> and <code>sspfm_pars['Seg durat (R) [ms]']</code> (or <code>sspfm_pars['Seg sample (W)']</code> and <code>sspfm_pars['Seg sample (R)']</code>). 
 One can then compare the theoretical and actual duration of the measurement: the two values should align. This verification can be performed if the 'detect_bug_segments' parameter is enabled.
 </p>
 
