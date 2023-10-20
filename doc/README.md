@@ -229,27 +229,104 @@ For a deeper understanding of the path management in this phase, please refer to
 
 ### Polarization voltage
 
-INSERER UNE IMAGE
-
 <p align="justify" width="100%">
-In cases where the acquisition of polarization voltage is not conducted, it can be reconstructed from a property dictionary containing the following information for both write (On Field) and read (Off Field) segments: their duration, the number of samples per segment, the number of segments, their direction of variation, and their voltage limits. These parameters are specified in the measurement sheet and are subsequently employed during the processing step. The script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/signal_bias.py">utils/signal_bias</a></code> is responsible for generating the polarization signal based on these parameters and vice versa. It also includes other polarization signals that can be utilized for the development of various modes.
+In cases where the acquisition of polarization voltage is not conducted, it can be reconstructed from a property dictionary containing the following information for both write (On Field) and read (Off Field) segments: their duration, the number of samples per segment, the number of segments, their direction of variation, and their voltage limits. These parameters are specified in the measurement sheet and are subsequently employed during the processing step. The script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/signal_bias.py">utils/signal_bias</a></code> is responsible for generating the polarization signal based on these parameters and vice versa.
 </p>
 
-FAIRE LE LISTING
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Polarization%20bias.PNG> <br>
+    <em>Polarization voltage</em>
 
-INSERER LES DIFFERENTES IMAGES
+</p>
+
+<p align="justify" width="100%">
+This polarization signal is generated with these parameters: 
+</p>
+
+```
+    sspfm_pars = {
+        'Min volt (R) [V]': 0,
+        'Max volt (R) [V]': 0,
+        'Nb volt (R)': 10,
+        'Mode (R)': 'Low to High',
+        'Seg durat (R) [ms]': 500,
+        'Seg sample (R)': 100,
+        'Min volt (W) [V]': -10,
+        'Max volt (W) [V]': 10,
+        'Nb volt (W)': 9,
+        'Mode (W)': 'Zero, up',
+        'Seg durat (W) [ms]': 500,
+        'Seg sample (W)': 100
+    }
+```
+
+<p align="justify" width="100%">
+The code also includes other polarization voltage form that can be utilized for the development of various modes:
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Increasing%20polarization%20bias.PNG>
+    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/dynamic%20switching%20bias.PNG> <br>
+</p>
+<p align="center" width="100%">*
+    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/ckpfm_bias_1.PNG>
+    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/ckpfm_bias_2.PNG> <br>
+</p>
+<p align="center" width="100%">
+    <em>1 - Increasing polarization voltage</em> <br>
+    <em>2 - Dynamic switching spectroscopy voltage</em> <br>
+    <em>3 - cKPFM voltage n°1</em> <br>
+    <em>4 - cKPFM voltage n°2</em> <br>
+</p>
 
 ### Segment
 
-La mesure SSPFM est découpée en segment : un pour chaque commutation du signal de la tension de polarisation. Un segment de hold est présent en début et en fin de mesure: leur temps est INSIQUER LA FORMULE. En fonction des paramètres de signal de polarisation, le nombre de segment et la durée totale de la mesure peut être déterminée: INIDQUER LA FORMULE. On peut alors la comparer à la durée total mesuré : les deux valeurs doivent correspondre. Cette vérification peut être effectué si le pramaètre detect_bug_segments est activé.
+<p align="justify" width="100%">
+The SSPFM measurement is divided into segments, one for each polarization voltage signal switch. A hold segment is present at the beginning and end of the measurement. For the Bruker constructor mode, their duration is equal to the ratio between the ramp size (in nanometers) and the tip velocity (in nanometers per second). Depending on the polarization signal parameters, the total number of segments in the measurement can be determined: <br>
+</p>
+    
+```
+sspfm_pars = (sspfm_pars['Nb volt (W)'] - 1) * 4 * sspfm_pars['Nb volt (R)']
+```
 
-Une fois le découpage effectué, chaque segment sont générés. L'objet segment, lorsqu'il est initialisé, génère certains de ses attribus tels que les tableaux de mesures en amplitude et phase PFM, ainsi que la fréquence (utilisé en mode sweep) et le temps délimités en fonction des index de début et de fin du segment. Puis ces tableaux sont éventuellement rognés au début et à la fin en fonction du paramètre cut_seg. Les bruit des mesures en amplitude et en phase est éventuellement réduit par un filtre de moyenne. Le segment est alors traités en fonction du mode choisi par l'utilisateur :
+<p align="justify" width="100%">
+To obtain the total duration (or total sample count) of the measurement, it suffices to multiply the total number of segments by the average of <code>sspfm_pars['Seg durat (W) [ms]']</code> and <code>sspfm_pars['Seg durat (R) [ms]']</code> (or <code>sspfm_pars['Seg sample (W)']</code> and <code>sspfm_pars['Seg sample (R)']</code>). 
+One can then compare the theoretical and actual duration of the measurement: the two values should align. This verification can be performed if the <code>detect_bug_segments</code> parameter is enabled.
+</p>
+
+<p align="justify" width="100%">
+Once the segmentation process is completed, each segment is generated. When the <code>Segment</code> object is initialized, it generates some of its attributes, including arrays of PFM amplitude and phase measurements, as well as frequency (used in sweep mode in resonance) and time bounded by the start and end indices of the segment. These arrays are optionally trimmed at the beginning and end based on the <code>cut_seg</code> parameter. Noise in the amplitude and phase measurements is potentially reduced by a mean filter, which can be enabled (<code>filter</code>) and is defined by its order (<code>filter_ord</code>). The segment is then processed according to the <code>mode</code> chosen by the user:
+</p>
 
 INSERER LES FIGURES DE CHACUN DES TROIS TRAITEMENTS
 
-- max (utilisable pour un sweep à la résonance) : le maximum du tableau d'amplitude est extrait. L'indice correspondant permet d'extraire la valeur de la fréquence de résoancne, avec la valeur de phase. La bande passante du pic est extraite grâce à un script de , afin de déterminer le facetur de qualité. Ce traitement à l'avantage d'être rapide et robuste.
-- fit (utilisable pour un sweep à la résonance) : le pic de résonance en amplitude est fité par le modèle SHO : INSERER EQUATION. Les paramètres tels que l'amplitude, le facteur de qualité et le centre du pic (correspondant à la fréquence de réosnance) peuvent être extraits. Le bruit peut être déduit de la mesure. La phase peut être extraite simplement à l'indice du centre du pic, ou bien en effetcuant un fit au voisinage restreint du pic de résoancne grâce au paramètre fit_pha selon un modèle de fonction arctengente avec ou sans switch: INSERTER EQUATION. L'ensemble de ce traitement permet de gagner en précision sur les valeurs mesurées. La robustesse du traitement peut être augmentée grâce à un algorithme de détection de pic, permettant de choisir quant à la réalisation du fit. EN DIRE PLUS. L'ensemble des fits sont réalisés avec la librairie lmfit, et des méthodes least_sq, least_square (rapidité priviégiée) ou Nelder (convergence privilégéie) peuvent être choisis.
-- dfrt : la moyenne des tableaux de mesures en amplitude et en phase définisse respectivement les uniques valeurs du segment en amplitude en phase. L'incertitude sur ces deux grandeurs peut être déterminées en fonction de leur variance au sein du segment. Ce traitement est rapide, robuste et très précis.
+<p align="justify" width="100%">
+&#8226 <code>max</code> (usable for resonance sweep): the maximum value from the amplitude array is extracted. The corresponding index is used to extract the resonance frequency value along with the phase value. The bandwidth of the peak is determined using a function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/peak.py">utils/core/peak</a></code>, allowing for the calculation of the quality factor. This method is advantageous due to its speed and robustness.
+</p>
+
+<p align="justify" width="100%">
+&#8226 <code>fit</code> (usable for a resonance sweep): The amplitude resonance peak with frequency $R(f)$ is fitted using the SHO (simple harmonic oscillator) model:
+</p>
+
+$$ R(f) = A * {f_0^2 \over \sqrt{f_0^2 - f^2)^2 + (f * f_0 / Q)^2}} $$
+
+<p align="justify" width="100%">
+Parameters such as amplitude $A$, quality factor $Q$, and the center of the peak (corresponding to the resonance frequency $f0$) can be extracted. Background by adding a constant in the fit and therefore can be removed from the measurement to improve accuracy.
+</p>
+
+<p align="justify" width="100%">
+The phase $\phi$ can be extracted simply at the index of the resonance frequency $f0$ or by performing a fit in the narrow vicinity of the resonance peak using the <code>fit_pha</code> parameter with an arctangent function model, with or without a switch:
+</p>
+
+$$ \phi(f) = arctan({f * f_0 \over Q * (f_0^2 - f^2)}) $$
+
+<p align="justify" width="100%">
+This entire process enhances the precision of the measured values. The robustness of the treatment can be increased with a peak detection algorithm (activated with <code>detect_peak</code> and with order of <code>filter_ord</code>), allowing a choice regarding whether to perform the fit. All fits are conducted using the <a href="https://pypi.org/project/lmfit/">lmfit</a> library, and methods like <code>least_sq</code>, <code>least_square</code> (prioritizing speed), or <code>nelder</code> (prioritizing convergence) can be selected.
+</p>
+
+<p align="justify" width="100%">
+&#8226 <code>dfrt</code> : The average of the arrays of measurements in amplitude and phase defines the unique values of the segment in amplitude and phase, respectively. The uncertainty in these two quantities can be determined based on their variance within the segment. This process is swift, robust, and highly precise.
+</p>
 
 ### Calibration
 
