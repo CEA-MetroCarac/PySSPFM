@@ -1,4 +1,4 @@
-# PySSPFM Documentation
+![phase_variation_with_voltage](https://github.com/CEA-MetroCarac/PySSPFM/assets/76450221/095d391e-605c-420f-a37c-34c8cffe95a5)# PySSPFM Documentation
 
 <p align="center" width="100%">
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/logoPySSPFM_white.PNG> <br>
@@ -399,6 +399,10 @@ From these two initial tables, one can ascertain the subsequent table depicting 
     <img align="center" width="45%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_calibration_3.PNG> <br>
 </p>
 
+<p align="justify" width="100%">
+Here are the various hysteresis configurations in the Off-Field mode, depending on the experimental parameters:
+</p>
+
 <p align="center" width="100%">
     <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/calibration_hysteresis_off_field.PNG> <br>
 </p>
@@ -419,7 +423,13 @@ The voltage value can then be directly correlated with the phase according to th
     <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_calibration_5.PNG> <br>
 </p>
 
-INSERER QUATRES HYSTERESIS ON FIELD
+<p align="justify" width="100%">
+Here are the various hysteresis configurations in the On-Field mode, depending on the experimental parameters:
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/calibration_hysteresis_on_field.PNG> <br>
+</p>
 
 <p align="justify" width="100%">
 It is worth noting that in some cases of On-Field measurements, where the electrostatic and ferroelectric components are closely related, multiple phase transitions may occur during the cycle.
@@ -427,10 +437,18 @@ It is worth noting that in some cases of On-Field measurements, where the electr
 
 INSERER HYSTERESIS CAS PARTICULIER
 
-Concrètement, dans l'application PySSPFM, l'utilisateur peut attriibuer la valeur de phase forward et reverse qu'il souhaite à partir des paramètres pha_fwd et pha_rev. Il doit identifier s'il se trouve dans le cas d'une composante électrostatique majoritaire ou non en On Field à travers le paramètre main_electrostatic. Il peut choisir ou non d'attribuer le signe qu'il souhaite à la pente de la composante électrstatqiue. Il renseigne dans la fiche de mesure le signe du coefficient piézoélectrique du matériau. Grâce aux paramètres renseignés et au protocole de calibration, une valeur de phase peut être attribuée aux deux pics de l'histogramme. 
+<p align="justify" width="100%">
+In the PySSPFM application, users can concretely assign the desired phase values for both forward and reverse directions using the <code>pha_fwd</code> and <code>pha_rev</code> parameters. It is essential for the user to identify whether they are dealing with a predominant electrostatic component in the On-Field mode through the <code>main_electrostatic</code> parameter. Additionally, they can opt to specify the sign for the electrostatic component's slope. The user should also provide information about the piezoelectric coefficient sign of the material in the measurement record with the parameter <code>locked_elec_slope</code>. With these provided parameters and the calibration protocol, phase values can be attributed to the two peaks in the histogram.
+</p>
 
-Une inversion de phase éventuelle peut être détectée grâce à l'étude de la variation de la phase moyenne en fonction de la tension de polarisation. Si la variation théorique et mesurée sont inversée, une inversion de phase a eu lieu, et cette dernière est corrigée.
-INSERER LA FIGURE
+<p align="justify" width="100%">
+A potential phase inversion can be detected by examining the variation in the mean phase concerning the polarization voltage. If the theoretical and measured variations are opposite, a phase inversion has occurred, and it is subsequently corrected.
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_variation_with_voltage.png> <br>
+</p>
+
 
 A la suite de la calibration et de l'identification de la position des deux pics sur l'histogramme et de la différence de phase, la phase peut être corrigée avec 4 différents protocoles :
 - raw_phase : la phase brute est conservée et aucun traitement n'est appliqué (peut être utilisée dans le cas d'une calibration de phase pré mesure)
