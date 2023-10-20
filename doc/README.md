@@ -451,6 +451,7 @@ A potential phase inversion can be detected by examining the variation in the me
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_variation_with_voltage.png> <br>
+    <em>Detection of phase inversion with phase variation with voltage</em>
 </p>
 
 <p align="justify" width="100%">
@@ -464,20 +465,20 @@ Following the calibration process and the identification of the positions of the
 ### MultiLoop
 
 <p align="justify" width="100%">
-Pour chaque fichier de mesure, il est possible d'acquérir plusieurs courbe nanoloop, de telle sorte à étudier la répétabilité des mesures et à réduire le bruit des mesures (en effectuant la moyenne de l'ensemble des nanoloops du fichier). Un objet MultiLoop est alors créé. Ce dernier est initialisé avec des tableaux de sous tableaux (nombre de sous tableaux correspondant au nombre de loop) de mesures correspondantes : tension de polarisation, valeur d'amplitude et de phase extraites. Sont également rensignés un tableau de tension de lecture (dont les valeurs correspondent à chacune des nanoloop), un dictionnaire des réslultats de la calibration de phase. et le mode de mesure (On ou Off Field).
+For each measurement file, the acquisition of multiple nanoloop curves is possible, enabling the study of measurement repeatability and the reduction of measurement noise (by averaging all nanoloops within the file). This process involves the creation of a <code>MultiLoop</code> object with the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis</a></code> script, initialized with arrays of sub-arrays (the number of sub-arrays corresponding to the number of loops). These sub-arrays contain measurements such as polarization voltage, extracted amplitude, and phase values. Additionally, a voltage reading array is provided (with values corresponding to each nanoloop), a dictionary of phase calibration results, and the measurement mode (On or Off Field).
 </p>
 
 <p align="justify" width="100%">
-Afin de permettre une meilleure visualition des données :
-- Des marqueurs (au début et à la fin de la mesure, ainsi qu'aux extremums des tensions de polarisation) sont déterminés automatioquement en fonction du signal en tension de polarisation.
-- Les branches de chaque nanoloop sont divisées en deux : celles de droite (en rouge) et celle de gauche (en bleu).
-Les valeurs de phase sont alors modifiées en fonction du dictionnaire de calibration de phase.
+To facilitate a more comprehensive data visualization:<br>
+&#8226 Markers (at the beginning and end of the measurement, as well as at the extremities of the polarization voltages) are automatically determined based on the polarization voltage signal.<br>
+&#8226 The branches of each nanoloop are divided into two categories: those on the right (in red) and those on the left (in blue).<br>
+Phase values are then adjusted according to the phase calibration dictionary.
 </p>
 
 INSERER LES MULTILOOPS EN AMPLITUDE ET EN PHASE
 
 <p align="justify" width="100%">
-Enfin, en fonction des loop en amplitude et en phase, les loop en piezoreponse sont crées.
+Subsequently, based on the amplitude and phase loops, piezoresponse loops are generated. The user selects the function for calculating the piezoresponse with the parameter <code>pha_func</code>: &PR=R*pha_func(\phi)&. For phase values such as <code>pha_rev</code>=-90 and <code>pha_fwd</code>=90, the chosen function should be <code>np.sin()</code>, whereas for phase values like <code>pha_rev</code>=180 and <code>pha_fwd</code>=0, the selected function should be <code>np.cos()</code>.
 </p>
 
 INSERER LES MULTILOOPS PIEZORESPONSE
