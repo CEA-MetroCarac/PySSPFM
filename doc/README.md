@@ -308,8 +308,8 @@ Once the segmentation process is completed, each segment is generated. When the 
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=[https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/resonance_peak_segment.png](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/max_resonance_segment.PNG)> <br>
-    <em>Segment treatment in fit mode</em>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/max_resonance_segment.PNG> <br>
+    <em>Segment treatment in max mode</em>
 </p>
 
 <p align="justify" width="100%">
@@ -343,7 +343,7 @@ This entire process enhances the precision of the measured values. The robustnes
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/dfrt_segment.PNG> <br>
-    <em>Segment treatment in fit mode</em>
+    <em>Segment treatment in dfrt mode</em>
 </p>
 
 <p align="justify" width="100%">
