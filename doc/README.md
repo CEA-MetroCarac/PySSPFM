@@ -33,7 +33,7 @@ The PySSPFM application then proceeds with two stages of measurement processing.
 </p>
 
 <p align="justify" width="100%">
-Here is the simplified architectural overview of the PySSPFM application's source code (path management, data extraction and storage, settings, and polarization signal management are not included in the diagram). Nevertheless, it provides a fairly accurate representation of the overall interaction between the various components of the code. <br>
+Here is the simplified architectural overview of the PySSPFM application's source code (path and file management, data extraction and storage, settings, and polarization signal management are not included in the diagram). Nevertheless, it provides a fairly accurate representation of the overall interaction between the various components of the code. <br>
 &#8226 The functions within the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code> are quite generic and not specific to SSPFM. They exhibit relative independence from the rest of the code and serve as fundamental building blocks for the execution of all other functions. <br>
 &#8226 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/seg_to_loop">seg_to_loop</a></code> module facilitates the conversion of measurements into nanoloops. It relies on the use of both <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop">nanoloop</a></code> functions. <br>
 &#8226 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop">nanoloop</a></code> module enables the creation and processing of nanoloops. It relies on the utilization of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code> functions. <br>
@@ -218,7 +218,7 @@ The initial step of the process may be initiated either through the <a href="htt
 </p>
 
 <p align="justify" width="100%">
-For a deeper understanding of the path management in this phase, please refer to the relevant section in the documentation:<br>
+For a deeper understanding of the file management in this phase, please refer to the relevant section in the documentation:<br>
 &#8226 Input: File Management/Input Files.<br>
 &#8226 Output: File Management/Output Files/First Step of Data Analysis.
 </p>
@@ -512,7 +512,7 @@ Figures resulting from the processing of the first file are generated. Subsequen
 </p>
 
 <p align="justify" width="100%">
-For a deeper understanding of the path management in this phase, please refer to the relevant section in the documentation:<br>
+For a deeper understanding of the file management in this phase, please refer to the relevant section in the documentation:<br>
 &#8226 File Management/Output Files/Second Step of Data Analysis.
 </p>
 
@@ -549,33 +549,33 @@ For a deeper understanding of the path management in this phase, please refer to
 #### Raw file
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">toolbox
-/raw_file_reader</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/raw_file_reader.py">gui
-/raw_file_reader</a>.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">toolbox
+/raw_file_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/raw_file_reader.py">gui
+/raw_file_reader</a></code>.
 </p>
 
 #### Loop file
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox
-/loop_file_reader</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/loop_file_reader.py">gui
-/loop_file_reader</a>.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox
+/loop_file_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/loop_file_reader.py">gui
+/loop_file_reader</a></code>.
 </p>
 
 #### List map reader
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox
-/list_map_reader</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/list_map_reader.py">gui
-/list_map_reader</a>.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox
+/list_map_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/list_map_reader.py">gui
+/list_map_reader</a></code>.
 </p>
 
 #### Global map reader
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox
-/global_map_reader</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/global_map_reader.py">gui
-/global_map_reader</a>.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox
+/global_map_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/global_map_reader.py">gui
+/global_map_reader</a></code>.
 </p>
 
 #### Parameters
@@ -583,9 +583,9 @@ The script can be executed directly using the executable file: <a href="https://
 ### Hysteresis clustering (K-Means)
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox
-/hysteresis_clustering</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hysteresis_clustering.py">gui
-/hysteresis_clustering</a>.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox
+/hysteresis_clustering</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hysteresis_clustering.py">gui
+/hysteresis_clustering</a></code>.
 </p>
 
 #### Parameters
