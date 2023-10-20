@@ -311,14 +311,14 @@ INSERER LES FIGURES DE CHACUN DES TROIS TRAITEMENTS
 $$ R(f) = A * {f_0^2 \over \sqrt{f_0^2 - f^2)^2 + (f * f_0 / Q)^2}} $$
 
 <p align="justify" width="100%">
-Parameters such as amplitude (A), quality factor (Q), and the center of the peak (corresponding to the resonance frequency f0) can be extracted. Background by adding a constant in the fit and therefore can be removed from the measurement to improve accuracy.
+Parameters such as amplitude (\(A\)), quality factor (Q), and the center of the peak (corresponding to the resonance frequency f0) can be extracted. Background by adding a constant in the fit and therefore can be removed from the measurement to improve accuracy.
 </p>
 
 <p align="justify" width="100%">
 The phase can be extracted simply at the index of the peak's center or by performing a fit in the narrow vicinity of the resonance peak using the <code>fit_pha</code> parameter with an arctangent function model, with or without a switch:
 </p>
 
-$$ /phi(f) = /arctan(f * f_0 \over Q * (f_0^2 - f^2)) $$
+$$ /phi(f) = arctan(f * f_0 \over Q * (f_0^2 - f^2)) $$
 
 <p align="justify" width="100%">
 This entire process enhances the precision of the measured values. The robustness of the treatment can be increased with a peak detection algorithm (activated with <code>detect_peak</code> and with order of <code>filter_ord</code>), allowing a choice regarding whether to perform the fit. All fits are conducted using the <a href="https://pypi.org/project/lmfit/">lmfit</a> library, and methods like <code>least_sq</code>, <code>least_square</code> (prioritizing speed), or <code>nelder</code> (prioritizing convergence) can be selected.
@@ -326,8 +326,6 @@ This entire process enhances the precision of the measured values. The robustnes
 
 An important calculation in our process involves the use of the following equation:
 
-
-$$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $$
 - <code>dfrt</code> : la moyenne des tableaux de mesures en amplitude et en phase définisse respectivement les uniques valeurs du segment en amplitude en phase. L'incertitude sur ces deux grandeurs peut être déterminées en fonction de leur variance au sein du segment. Ce traitement est rapide, robuste et très précis.
 
 ### Calibration
