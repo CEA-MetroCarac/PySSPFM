@@ -319,7 +319,7 @@ Once the segmentation process is completed, each segment is generated. When the 
 $$ R(f) = A * {f_0^2 \over \sqrt{f_0^2 - f^2)^2 + (f * f_0 / Q)^2}} $$
 
 <p align="justify" width="100%">
-Parameters such as amplitude $A$, quality factor $Q$, and the center of the peak (corresponding to the resonance frequency $f0$) can be extracted. Background by adding a constant in the fit and therefore can be removed from the measurement to improve accuracy.
+Parameters such as amplitude $A$, quality factor $Q$, and the center of the peak (corresponding to the resonance frequency $f_0$) can be extracted. Background by adding a constant in the fit and therefore can be removed from the measurement to improve accuracy.
 </p>
 
 <p align="justify" width="100%">
@@ -355,11 +355,11 @@ All segments (in the Off Field mode) can be visualized on this map:
     <em>Segment map (Off Field)</em>
 </p>
 
-<p align="justify" width="100%">
-Once all the measurements are extracted per segment, phase and amplitude nanoloops as a function of polarization voltage can be created and saved.
-</p>
-
 ## Nanoloop
+
+<p align="justify" width="100%">
+Once all the measurements are extracted per segment, phase and amplitude nanoloops as a function of polarization voltage can be created and saved. All the nanoloop script are located in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop">utils/nanoloop</a></code> scripts.
+</p>
 
 ### Post-measurement phase calibration
 
