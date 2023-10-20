@@ -350,7 +350,10 @@ This entire process enhances the precision of the measured values. The robustnes
 All segments (in the Off Field mode) can be visualized on the map:
 </p>
 
-INSERER FIGURE CARTOGRAPHIE
+<p align="center" width="100%">
+    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/segment_map.PNG> <br>
+    <em>Segment map (Off Field)</em>
+</p>
 
 <p align="justify" width="100%">
 Once all the measurements are extracted per segment, phase and amplitude nanoloops as a function of polarization voltage can be created and saved.
