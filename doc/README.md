@@ -347,7 +347,7 @@ This entire process enhances the precision of the measured values. The robustnes
 </p>
 
 <p align="justify" width="100%">
-All segments (in the Off Field mode) can be visualized on the map:
+All segments (in the Off Field mode) can be visualized on this map:
 </p>
 
 <p align="center" width="100%">
@@ -363,29 +363,32 @@ Once all the measurements are extracted per segment, phase and amplitude nanoloo
 
 ### Post-measurement phase calibration
 
-Un histogramme de phase est créé à partir de l'ensemble des valeurs de phase du fichier. Pour des mesures en Vertical PFM, deux pics espacés de plus ou moins 180° sont fréquemment observés. Ces deux pics sont soit fités par un modèle gaussien (gain en précision) ou leur maxiumum est extrait (gain en robustesse et en temps). Le setting  histo_phase_method permet de choisir entre les deux options. Dans le cas d'un echec sur le fit, la méthode du maximum est appliquée. La différence de phase et la position des deux pics est alors extraite. En PFM, un offset de phase est présent au cours de la mesure et une inversion de la valeur de phase peut être observé. Il est donc indispensable d'identifier les deux pics de l'histogramme et de leur attribuer une valeurs de phase cible.
+<p align="justify" width="100%">
+An angular histogram is constructed from the complete set of phase values within the file. In the case of Vertical PFM measurements, it's common to observe two peaks separated by approximately 180°. These two peaks can either be fitted using a <code>Gaussian</code> model for improved precision or their maxima can be directly extracted for enhanced robustness and efficiency. The setting </code>histo_phase_method</code> allows for the selection of either of these methods. In the event of a fitting failure, the maximum method is applied. The phase difference and the positions of these two peaks are then extracted. During PFM measurements, a phase offset is typically present, and phase inversion can occur. Therefore, it's imperative to identify both peaks within the histogram and assign them target phase values.
+</p>
+
 INSERER LA FIGURE
 
 <p align="justify" width="100%">
-Pour se faire, en s'inspirant des publications de Neumayer et al., un protocole de calibration post mesure a été proposé. Le principe physique de ce dernier est détaillé dans la publication INSERER. Nous avons adapté ce protocole dans le cas de l'application PySSPFM en fonction des conditions expérimentales ,propres à l'utilisateur.
+To accomplish this, taking inspiration from the publications of Neumayer et al. (INSERER LA SOURCE), a post-measurement calibration protocol has been devised. The underlying physical principles of this protocol are elaborated upon in the publication (INSERER LA SOURCE). We have tailored this protocol for integration into the PySSPFM application, considering the specific user-specific experimental conditions.
 </p>
 
 <p align="justify" width="100%">
-Le sens de la polarisation verticale (effet purement ferroélectrique) induite dans le matériau est fonction de la tension appliquée entre la pointe et la bottom électrode du matériau. On appelle tension basse et haute respectivement des tensions plus importante (en valeur absolue) que les tensions coercitives basse et hautes de l'hystérésis. On distingue alors deux cas de figures, le premier pour le cas grounded tip et le deuxième pour le cas grounded bottom. Le schéma ci dessous récapituale le sens de la polarisation en fonction de la tension appliquée pour les deux cas :
+The direction of vertical polarization (a purely ferroelectric effect) induced in the material is contingent on the applied voltage between the tip and the material's bottom electrode. Voltages greater in magnitude than the low and high coercive voltages of the hysteresis are referred to as low and high voltages, respectively. Two scenarios are then distinguished: one for the grounded tip case and the other for the grounded bottom case. The diagram below summarizes the direction of polarization concerning the applied voltage for both cases:
 </p>
 
-INSERER LE PREMIER TABLEAU
+<p align="center" width="100%">
+    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_calibration_1.PNG> <br>
+</p>
 
 <p align="justify" width="100%">
-On peut alors chercher le sens de rotation de l'hystérésis (clockwise ou counterclockwise), influencé par les effets piézoélectriques et ferroélectriques.
-La correspondance entre la tension et la valeurs de phase (forward ou reverse, c'est à dire induisant un coefficient multiplicatif de 1 ou -1 dans le calcul de la piezoresponse avec l'amplitude) permet ici de déterminer le sens de rotation de l'hystérésis.
-On distingue la aussi deux cas de figure : un matériau a coefficient piézoélectrique positif et négatif :
+One can then discern the rotational direction of the hysteresis (clockwise or counterclockwise), influenced by piezoelectric and ferroelectric effects. The correspondence between voltage and phase values (forward or reverse, meaning they induce a multiplicative coefficient of 1 or -1 in the piezoresponse calculation with amplitude) allows for the determination of the hysteresis's rotational direction. Two scenarios are also distinguished here: one for a material with a positive piezoelectric coefficient and one for a material with a negative coefficient.
 </p>
 
 INSERER LE DEUXIEME TABLEAU
 
 <p align="justify" width="100%">
-A partir de ces deux premier tableaux on peut déterminer le tableau suivant du sens de rotation de l'hystérésis, fonction uniquement des conditions expérimentales :
+From these two initial tables, one can ascertain the subsequent table depicting the direction of hysteresis rotation, solely contingent on the experimental conditions:
 </p>
 
 INSERER LE TROISIEME TABLEAU
@@ -393,12 +396,14 @@ INSERER LE TROISIEME TABLEAU
 INSERER QUATRES HYSTERESIS OFF FIELD
 
 <p align="justify" width="100%">
-Dans le cas spécifique de mesures On Field à composante électrostatique majoritaire (la composante électrostatique dicte le sens de rotation de l'hystérésis) le signe de la pente de la composante électrostatique est fonction du sens d'application de la tension est établit selon le tableau suivant :
+In the specific scenario of On Field measurements with a predominant electrostatic component (where the electrostatic component determines the direction of hysteresis rotation), the sign of the electrostatic component's slope is contingent on the direction of the applied voltage, as established in the following table:
 </p>
 
 INSERER LE QUATRIEME TABLEAU
 
-La valeur de la tension peut alors directement être associée à la phase selon le tableau suivant, sans que le sens de rotation de l'hystérésis ne change :
+<p align="justify" width="100%">
+The voltage value can then be directly correlated with the phase according to the following table, without any alteration in the hysteresis rotation direction:
+</p>
 
 INSERER LE CINQUIEME TABLEAU
 
