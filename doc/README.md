@@ -504,11 +504,11 @@ The second step of the process may be initiated either through the <a href="http
 </p>
 
 <p align="justify" width="100%">
-En entrée, le dossier txt_loops obtenu après la première étape du traitement est sélectionné. L'ensemble des fichiers contenu est trié dans l'ordre avec la fonction generate_file_paths contenue dans le script utils/hyst_to_map/file et les données seront extraites pour chacun des fichiers avec la fonction extract_loop de utils/nanoloop/file. Les paramètres de mesures et de traitement contenus dans le fichier result/parameters.txt sont également lu et extraits avec la fonction read_plot_parameters de utils/hyst_to_map/file. 
+As an initial step, the <code>txt_loops</code> folder obtained is selected. The entirety of the files within it is arranged using the <code>generate_file_paths</code> function found in the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a></code> script. Subsequently, data extraction is carried out for each file, employing the <code>extract_loop</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file">utils/nanoloop/file</a></code>. The measurement and processing parameters from the <code>result/parameters.txt</code> file are also read and extracted using the <code>read_plot_parameters</code> function within the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a></code>.
 </p>
 
 <p align="justify" width="100%">
-Des figures issues du traitement du premier fichier sont générées, puis chacun des fichier est analysé automatiquement sans affichage des figures. Pour chaque mode (On et Off Field et coupled) une hystérésis est sélectionnée et asscoiée à chaque pixel et un ensemble de propriétés piezo ferroélectrique sont extraites. D'autre propriétés sont extraites de l'analyse des artefacts de mesure. L'ensemble des propriétés permet de construire les cartographies SSPFM.
+Figures resulting from the processing of the first file are generated. Subsequently, each of the files is automatically analyzed without displaying the figures. For each mode (On Field, Off Field, and coupled), a hysteresis loop is selected and associated with each pixel, and a set of ferroelectric piezo properties is extracted. Other properties are obtained through the analysis of measurement artifacts. The entirety of these properties contributes to the creation of SSPFM mappings.
 </p>
 
 <p align="justify" width="100%">
