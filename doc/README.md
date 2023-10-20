@@ -452,6 +452,17 @@ A potential phase inversion can be detected by examining the variation in the me
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_variation_with_voltage.png> <br>
 </p>
 
+<p align="justify" width="100%">
+Following the calibration process and the identification of the positions of the two peaks on the histogram, as well as the phase difference, phase correction can be achieved through four distinct protocols:<br>
+&#8226 <code>raw_phase</code>: The raw phase is retained, and no processing is applied (suitable for use in pre-measurement phase calibration).<br>
+&#8226 <code>offset</code>: A phase offset is determined through calibration, and the phase difference between the two peaks remains unchanged (a treatment method that aims to preserve the initial measurement as faithfully as possible).<br>
+&#8226 <code>affine</code>: An affine relationship is applied to all phase values, adjusting the phase difference to 180°.<br>
+&#8226 <code>up and down</code>: A threshold is established between the two peaks, and each phase value is assigned the target value, pha_fwd or pha_rev, based on its position relative to the threshold and the calibration process.
+
+
+
+
+
 
 A la suite de la calibration et de l'identification de la position des deux pics sur l'histogramme et de la différence de phase, la phase peut être corrigée avec 4 différents protocoles :
 - raw_phase : la phase brute est conservée et aucun traitement n'est appliqué (peut être utilisée dans le cas d'une calibration de phase pré mesure)
