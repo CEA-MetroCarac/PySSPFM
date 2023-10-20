@@ -500,11 +500,20 @@ INSERER LES MEANLOOP EN AMPLITUDE, PHASE ET PIEZORESPONSE
 </p>
 
 <p align="justify" width="100%">
-The second step of the process may be initiated either through the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">executable source code</a> or via the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hyst_to_map_s2.py">graphical user interface</a>. En entrée, le dossier txt_loops obtenu après la première étape du traitement est sélectionné. L'ensemble des fichiers contenu est trié dans l'ordre avec la fonction generate_file_paths contenue dans le script utils.hyst_to_map.file et les données seront extraites pour chacun des fichiers. Les paramètres de mesures et de traitement contenus dans le fichier result/parameters.txt sont également lu et extraits. Des figures issus du traitement du premier fichier sont générées, puis chacun des fichier est analysé automatiquement sans affichage des figures. Un ensemble de propriétés piezo ferroélectrique et autre sont alors extraite en fin de traitement et enregistré dans un fichier texte pour chacun des modes (On et Off field et coupled).
+The second step of the process may be initiated either through the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">executable source code</a> or via the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hyst_to_map_s2.py">graphical user interface</a>. 
 </p>
 
 <p align="justify" width="100%">
-For a deeper understanding of the path management in this phase, please refer to the relevant section in the documentation (File Management/Output Files/Second Step of Data Analysis).
+En entrée, le dossier txt_loops obtenu après la première étape du traitement est sélectionné. L'ensemble des fichiers contenu est trié dans l'ordre avec la fonction generate_file_paths contenue dans le script utils/hyst_to_map/file et les données seront extraites pour chacun des fichiers avec la fonction extract_loop de utils/nanoloop/file. Les paramètres de mesures et de traitement contenus dans le fichier result/parameters.txt sont également lu et extraits avec la fonction read_plot_parameters de utils/hyst_to_map/file. 
+</p>
+
+<p align="justify" width="100%">
+Des figures issues du traitement du premier fichier sont générées, puis chacun des fichier est analysé automatiquement sans affichage des figures. Pour chaque mode (On et Off Field et coupled) une hystérésis est sélectionnée et asscoiée à chaque pixel et un ensemble de propriétés piezo ferroélectrique sont extraites. D'autre propriétés sont extraites de l'analyse des artefacts de mesure. L'ensemble des propriétés permet de construire les cartographies SSPFM.
+</p>
+
+<p align="justify" width="100%">
+For a deeper understanding of the path management in this phase, please refer to the relevant section in the documentation:<br>
+&#8226 File Management/Output Files/Second Step of Data Analysis.
 </p>
 
 ### Parameters
