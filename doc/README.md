@@ -305,7 +305,7 @@ INSERER LES FIGURES DE CHACUN DES TROIS TRAITEMENTS
 </p>
 
 <p align="justify" width="100%">
-&#8226 <code>fit</code> (usable for a resonance sweep): The amplitude resonance peak $R(f)$ with frequency $f$ is fitted using the SHO (simple hormonic oscillator) model:
+&#8226 <code>fit</code> (usable for a resonance sweep): The amplitude resonance peak with frequency $R(f)$ is fitted using the SHO (simple hormonic oscillator) model:
 </p>
 
 $$ R(f) = A * {f_0^2 \over \sqrt{f_0^2 - f^2)^2 + (f * f_0 / Q)^2}} $$
