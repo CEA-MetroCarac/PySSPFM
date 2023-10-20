@@ -437,6 +437,7 @@ It is worth noting that in some cases of On-Field measurements, where the electr
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/problematic_case_on_field_nanoloop.PNG> <br>
+    <em>Problematic case of nanoloop: same order of magnitude for both ferroelectric and electrostatic component (On Field, grounded tip, positive d33)</em>
 </p>
 
 <p align="justify" width="100%">
