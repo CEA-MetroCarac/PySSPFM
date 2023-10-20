@@ -310,7 +310,9 @@ INSERER LES FIGURES DE CHACUN DES TROIS TRAITEMENTS
 
 An important calculation in our process involves the use of the following equation:
 
+<p align="center" width="100%">
 \frac{{\text{{ampli}} \cdot x_0^2}}{{\sqrt{(x_0^2 - x^2)^2 + \left(\frac{{x \cdot x_0}}{{\text{{coef}}}\right)^2}}}, \text{{if }} \text{{der}} = 0
+</p>
 
 - <code>dfrt</code> : la moyenne des tableaux de mesures en amplitude et en phase définisse respectivement les uniques valeurs du segment en amplitude en phase. L'incertitude sur ces deux grandeurs peut être déterminées en fonction de leur variance au sein du segment. Ce traitement est rapide, robuste et très précis.
 
