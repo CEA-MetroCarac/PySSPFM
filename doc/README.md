@@ -231,7 +231,9 @@ For a deeper understanding of the path management in this phase, please refer to
 
 INSERER UNE IMAGE
 
-Dans le cas ou l'acquisition de la tension de polarisation n'est pas effectuée, cette dernière peut être reconstruite à partir d'un dictionnaire de propriétés contenant respectivement pour les segments d'écriture (On Field) et de lecture (Off Field) : leur durée, leur nombre d'échantillon par segment, le nombre de segment, leur sens de variation, leur tension limite. Ces paramètres sont renseignés dans la fiche de mesure et sont ensuite utilisés lors de l'étape de traitement. Le script <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/signal_bias.py">utils/signal_bias</a> permet de générer le signal de polarization à partir de ces paramètres et vice versa. Il contient également d'autres signaux de polarisation qui peuvent être utilisés pour le développement d'autres modes.
+<p align="justify" width="100%">
+In cases where the acquisition of polarization voltage is not conducted, it can be reconstructed from a property dictionary containing the following information for both write (On Field) and read (Off Field) segments: their duration, the number of samples per segment, the number of segments, their direction of variation, and their voltage limits. These parameters are specified in the measurement sheet and are subsequently employed during the processing step. The script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/signal_bias.py">utils/signal_bias</a></code> is responsible for generating the polarization signal based on these parameters and vice versa. It also includes other polarization signals that can be utilized for the development of various modes.
+</p>
 
 FAIRE LE LISTING
 
