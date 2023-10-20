@@ -310,7 +310,7 @@ INSERER LES FIGURES DE CHACUN DES TROIS TRAITEMENTS
 
 An important calculation in our process involves the use of the following equation:
 
-$$ y = A * {f_0^2 \over \sqrt((f_0^2 - f^2)^2 + (f * f_0 \over Q))^2)} $$
+$$ y = A * {f_0^2 \over \sqrt(f_0^2 - f^2)^2 + (f * f_0 / Q)^2)} $$
 $$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $$
 - <code>dfrt</code> : la moyenne des tableaux de mesures en amplitude et en phase définisse respectivement les uniques valeurs du segment en amplitude en phase. L'incertitude sur ces deux grandeurs peut être déterminées en fonction de leur variance au sein du segment. Ce traitement est rapide, robuste et très précis.
 
