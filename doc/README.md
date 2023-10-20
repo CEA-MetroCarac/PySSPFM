@@ -241,14 +241,16 @@ In cases where the acquisition of polarization voltage is not conducted, it can 
 <p align="center" width="100%">
     <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Increasing%20polarization%20bias.PNG>
     <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/dynamic%20switching%20bias.PNG> <br>
-    <em>Increasing polarization voltage</em>
-    <em>Dynamic switching spectroscopy voltage</em> <br>
 </p>
 <p align="center" width="100%">*
     <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/ckpfm_bias_1.PNG>
     <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/ckpfm_bias_2.PNG> <br>
-    <em>cKPFM voltage n°1</em>
-    <em>cKPFM voltage n°2</em>
+</p>
+<p align="center" width="100%">
+    <em>1 - Increasing polarization voltage</em> <br>
+    <em>2 - Dynamic switching spectroscopy voltage</em> <br>
+    <em>3 - cKPFM voltage n°1</em> <br>
+    <em>4 - cKPFM voltage n°2</em> <br>
 </p>
 
 ### Segment
