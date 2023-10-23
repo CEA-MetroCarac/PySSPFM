@@ -34,9 +34,6 @@ The PySSPFM application then proceeds with two stages of measurement processing.
 
 <p align="justify" width="100%">
 Here is the simplified architectural overview of the PySSPFM application's source code (path and file management, data extraction and storage, settings, and polarization signal management are not included in the diagram). Nevertheless, it provides a fairly accurate representation of the overall interaction between the various components of the code. <br>
-</p>
-
-<p align="justify" width="100%" style="text-indent: 20px;">
 &#8226 The functions within the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code> are quite generic and not specific to SSPFM. They exhibit relative independence from the rest of the code and serve as fundamental building blocks for the execution of all other functions. <br>
 &#8226 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/seg_to_loop">seg_to_loop</a></code> module facilitates the conversion of measurements into nanoloops. It relies on the use of both <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop">nanoloop</a></code> functions. <br>
 &#8226 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop">nanoloop</a></code> module enables the creation and processing of nanoloops. It relies on the utilization of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code> functions. <br>
@@ -149,18 +146,22 @@ SSPFM files from other manufacturers are not supported in this application. It i
 
 <p align="justify" width="100%">
 Prior to conducting the SSPFM measurement, the user must complete a measurement form. Templates are available for both the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a> and <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>) modes. This measurement form serves to guide the user in carrying out the SSPFM measurements and to maintain a record of critical measurement parameters. It also automatically generates certain measurement information based on the provided parameters, such as: <br>
-    &#8226 total measurement time <br>
-    &#8226 tip-induced pressure <br>
-    &#8226 lock-in amplifier settings <br>
-    &#8226 quality factor <br>
-    &#8226 resonance settling time <br>
+    <ul>
+        <li>total measurement time</li>
+        <li>tip-induced pressure</li>
+        <li>lock-in amplifier settings</li>
+        <li>quality factor</li>
+        <li>resonance settling time</li>
+    </ul>
 Furthermore, completing the form is a mandatory prerequisite for the subsequent measurement processing. The parameters to be employed for measurement processing include:
-    &#8226 grid dimensions <br>
-    &#8226 calibration coefficients <br>
-    &#8226 sign of piezoelectric coeffcient <br>
-    &#8226 sinusoidal voltage magnitude <br>
-    &#8226 voltage application direction <br>
-    &#8226 SSPFM polarization signal parameters <br>
+    <ul>
+        <li>grid dimensions</li>
+        <li>calibration coefficients</li>
+        <li>sign of piezoelectric coeffcient</li>
+        <li>sinusoidal voltage magnitude</li>
+        <li>voltage application direction</li>
+        <li>SSPFM polarization signal parameters</li>
+    </ul>
 </p>
 
 #### III.1.c) - Extraction
