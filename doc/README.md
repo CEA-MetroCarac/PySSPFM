@@ -592,7 +592,7 @@ An initialization of the fitting parameters is meticulously conducted:
 </p>
 
 <p align="justify" width="100%">
-The hysteresis is subsequently fitted using the <code>fit</code> method, considering the coordinates of the best loop's points and selecting the desired <code>method</code. This approach leverages the lmfit library, enabling the extraction of parameters from the hysteresis model that best converges with the experimental data.
+The hysteresis is subsequently fitted using the <code>fit</code> method, considering the coordinates of the best loop's points and selecting the desired <code>method</code>. This approach leverages the lmfit library, enabling the extraction of parameters from the hysteresis model that best converges with the experimental data.
 </p>
 
 <p align="justify" width="100%">
