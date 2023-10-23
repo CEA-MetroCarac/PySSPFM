@@ -170,6 +170,30 @@ Furthermore, completing the form is a mandatory prerequisite for the subsequent 
 All measurement files and the measurement sheet must be placed within the same directory. The data contained in these file types are then extracted using the file <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/raw_extraction.py">utils/raw_extraction</a></code>. For files with the <code>.spm</code> extension (Bruker), the extraction script relies on a second file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_reader.py">utils/datacube_reader</a></code>, which employs the <code>DataExtraction</code> object with the <a href="https://pypi.org/project/nanoscope/">nanoscope</a> library. However, the nanoscope library alone is insufficient for data extraction, as it requires the use of DLL files installed with the Nanoscope Analysis software (Bruker). In the event that the DLL files are not present, the <code>NanoscopeError</code> object has been created to handle the error.
 </p>
 
+#### III.1.d) - Test and example
+
+Les examples s'appuient soient sur des données:
+- simulées par des scripts python prévus à cet effet, à savoir :
+  
+- <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/gen_datas.py">utils/seg_to_loop/gen_datas</a></code> pour la simulation d'une mesures SSPFM datacube (aussi bien en mode sweep resonance que dfrt), utilisé pour les examples :
+
+- <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data_processing/ex_seg_to_loop_s1.py">examples/data_processing/ex_seg_to_loop_s1</a></code>
+- <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/seg_to_loop/ex_analysis.py">examples/utils/seg_to_loop/ex_analysis</a></code>
+- <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/seg_to_loop/ex_gen_datas.py">examples/utils/seg_to_loop/ex_gen_datas</a></code>
+- <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/seg_to_loop/ex_plot.py">examples/utils/seg_to_loop/ex_plot</a></code>
+
+- <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloops/gen_datas.py">utils/nanoloops/gen_datas</a></code> pour la simulation de nanoloops (aussi bien en mode sweep resonance que dfrt)
+  
+- <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/gen_datas.py">utils/nanoloops/gen_datas</a></code> pour la simulation d'hystérésis (aussi bien en mode sweep resonance que dfrt)
+Ou sur des données réelles issus d'une mesures SSPFM+DFRT sur un échantillon de KNN:
+- le dossier KNN500n contient l'ensemble des fichiers datacube spm de Bruker issues de la mesure, avec la fiche de mesure correspondante
+- le dossier KNN500n_2023-10-05-17h21m_out_dfrt contient le résultat de la mesure à la suite de la première étape de traitement
+- le dossier KNN500n_2023-10-05-17h23m_out_dfrt contient le résultat de la mesure à la suite de la deuxième étape de traitement
+- le dossier KNN500n_reduced contient le dossier de 3 des fichiers datacube spm de Bruker issues de la mesure, avec la fiche de mesure correspondante
+- le dossier KNN500n_reduced_datacube_csv contient le dossier de 3 des fichiers datacube convertis en extension csv, issues de la mesure, avec la fiche de mesure correspondante
+- le dossier KNN500n_reduced_datacube_txt contient le dossier de 3 des fichiers datacube convertis en extension txt, issues de la mesure, avec la fiche de mesure correspondante
+- le dossier KNN500n_reduced_datacube_xlsx contient le dossier de 3 des fichiers datacube convertis en extension xlsx, issues de la mesure, avec la fiche de mesure correspondante
+
 ### III.2) - Output files
 
 <p align="justify" width="100%">
@@ -231,6 +255,8 @@ Two tools deviate from this path management: <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">raw_file_reader</a></code>: It creates a folder with the nomenclature: <code>'initial_file_name'_toolbox</code> at the same root as the input folder. This folder contains a sub-folder <code>raw_file_reader'_yyyy-mm-dd-HHh-MMm'</code>. <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">spm_converter</a></code>: It creates a folder with the nomenclature: <code>'initial_file_name'_datacube'_extension'</code> at the same root as the input folder, containing all the converted datacube files.
 </p>
+
+#### III.2.d) - Test and example
 
 ## IV) - First step of data analysis
 
