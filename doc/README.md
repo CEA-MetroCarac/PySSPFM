@@ -615,6 +615,32 @@ LES LISTER
 
 ## SSPFM mapping
 
+La création et le traitement des carographies SSPFM est assuré par l'ensemble des scripts contenus dans: <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map>utils/map</a></code>.
+
+Les cartographies SSPFM constituent les résultats principaux de l'analyse des mesures. Elles ne peuvent être déterminées qu'une fois l'ensemble des deux étapes de traitement effectuées, étant donnée que les propriétés des hystérésis et des artefacts électrostatiques doivent être déterminées.
+
+Le script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py>utils/map/main.py</a></code> permet de coordonner et gérer l'ensemble de la création et du traitement des cartographies SSPFM, en s'appuyant nottament sur les scripts <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/annotate.py>utils/map/annotate.py</a></code> qui permet de gérer l'annotation des cartographies, <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/interpolate.py>utils/map/interpolate.py</a></code> pour l'interpolation 2D et
+<code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/matrix_formatting.py>utils/map/matrix_formatting.py</a></code> pour la mise en forme des mesures sous la forme de cartographies.
+
+Les cartographies sont générées via les codes exécutables list_map_reader et global_map_reader.
+
+### Mask
+
+Pour les cartoraphies, il est possible de déterminer un masque pour:
+- Inhiber l'influence de pixels problématiques / défectueux de la mesure
+- Isoler certaines phases ferroélectriques ou zones spécifiques en surface de l'échantillon
+
+Le masque peut être déterminé:
+
+- Manuellement via une liste de pixel rensiegnée par l'utilisateur
+- 
+
+### Interpolation 2D
+
+### Figures
+
+AFFICHER LES CARTO
+
 ## Toolbox
 
 ### Viewers
@@ -651,6 +677,10 @@ The script can be executed directly using the executable file: <code><a href="ht
 Global map reader: <br>
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/global_map_reader.py">gui/global_map_reader</a></code>.
 </p>
+
+Le principe fonctionnement de ces deux readers est similaire, la seule différence réside dans le fait que list_map_reader permet de lire une liste de cartographies déterminée par l'utilisateur tandis que le global map reader permet de lire l'ensemble des cartographies pour chaques mode (On et Off field, coupled).
+
+En entrée, le dossier txt_ferro_meas, contenant les mesures des propriétés sous forme de fichiers texte pour l'ensemble des modes (On et Off field, coupled) est reseigné.
 
 #### Parameters
 
