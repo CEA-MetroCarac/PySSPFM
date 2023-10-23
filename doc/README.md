@@ -586,7 +586,7 @@ An initialization of the fitting parameters is meticulously conducted:
                 <li>The dilation coefficients of the branches are required to be positive.</li>
                 <li>The amplitude value of the hysteresis is ascertained from the maximum of <code>diff_hyst</code>.</li>             
                 <li>The coercive voltages of the two branches are defined as the abscissas corresponding to the minimum and maximum slopes of <code>diff_hyst</code>.</li>
-                <li>For <code>analysis_mode == 'on_f_loop'</code>, the slope is initialized as the ratio: ${max(PR)-min(PR) /over max(voltage)-min(voltage)}$.</li>   
+                <li>For <code>analysis_mode == 'on_f_loop'</code>, the slope is initialized as the ratio: ${max(PR)-min(PR) \over max(voltage)-min(voltage)}$.</li>   
             </ul>
     </ul>
 </p>
