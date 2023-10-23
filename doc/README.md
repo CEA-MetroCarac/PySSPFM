@@ -546,21 +546,48 @@ For a deeper understanding of the file management in this phase, please refer to
 ### Best loop
 
 <p align="justify" width="100%">
-Les données des nanoloops sont extraites des fichiers du dossier <code>txt_loops</code> correspondants et un objet <code>MultiLoop</code> est créé pour chacun des fichiers. Ensuite, les données d'amplitude et de phase sont respectivement divisées par le facteur de qualité et calibrées ex-situ et les valeurs d'amplitude et de phase sur le premier point de mesure sont extraites. Elles constituent deux des propriétés piézo-ferroélectrique cartographiées, correspondant à la polarisation électrique du film à l'état de pristine.
+The nanoloops data is extracted from the files within the corresponding <code>txt_loops</code> directory, and a <code>MultiLoop</code> object is instantiated for each file. Subsequently, the amplitude and phase data are divided by the quality factor, calibrated ex-situ, and the amplitude and phase values at the first measurement point are extracted. These form two of the mapped piezo-ferroelectric properties, corresponding to the electrical polarization of the pristine state of the film.
 </p>
 
 <p align="justify" width="100%">
-Il existe alors 3 différents modes de traitement de mesures, pour lesquels une best loop est extraite avec la fonction <code>find_best_loop</code> du script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">data_processing/hyst_to_map_s2</a></code> :  <br>
-&#8226 <code>'multi_loop'</code> : la mesure est effectuée en Off Field et plusieurs valeurs de tension de lecture sont appliquées. Ce mode correspond au mode ckpfm introduit par N.Balke et al (INSERER LA REFERENCE). L'ensemble des loops sont fitées avec l'object Hysteresis et la best loop correspond à celle qui minimise l'offset vertical associé à la composante électrostatique en Off Field <br>
-&#8226 <code>'mean_loop'</code> : la mesure est effectuée en Off Field et une unique valeur de tension de lecture est appliquée, le plus souvent à 0 volt. La best loop correspond à la moyenne de l'ensemble des loop, déterminée par la création de l'object MeanLoop. <br>
-&#8226 <code>'on_field'</code> : la mesure est effectuée en On Field. La best loop correspond à la moyenne de l'ensemble des loop, déterminée par la création de l'object MeanLoop.
+There are three distinct measurement processing modes, each involving the extraction of a 'best loop' using the <code>find_best_loop</code> function from the <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> script: <br>
+&#8226 <code>'multi_loop'</code>: Measurements are conducted in Off Field, and various reading voltage values are applied. This mode corresponds to the cKPFM mode introduced by N. Balke and his colleagues (INSERT REFERENCE). All loops are fitted using the <code>Hysteresis</code> object, and the best loop is the one that minimizes the vertical offset associated with the electrostatic component in Off Field. <br>
+&#8226 <code>'mean_loop'</code>: Measurements are conducted in Off Field with a single reading voltage value, often set at 0 volts. The best loop is the average of all the loops, determined through the creation of the <code>MeanLoop</code> object. <br>
+&#8226 <code>'on_field'</code>: Measurements are conducted in On Field. The best loop, in this case, is the average of all the loops, determined through the creation of the <code>MeanLoop</code> object.
 </p>
 
 ### Hysteresis and properties
 
+Un objet Hysteresis est alors initialisé, avec les variables model correspondant à la fonction algébrique définissant chacune des ses deux branches ('sigmoid' ou 'arctan') INSERER LES EQUATIONS, et un boolean 'assymetric' permettant ou non d'attribuer un coefficient de dilatiation différent entre les deux brancehs. Une composante affine est ajoutée à ce modèle.
 
+Une initialisation des paramètres du fit est alors effectuée:
 
-find best loop
+Intervale de définition:
+    Les coefficients de diollatiuon des branches sont positifs 
+    Le signe de l'amplitude de l'hystérésis est défini positivement pour une boucle counterclockwise et positivement pour une boucle clockwise
+    Les tensions coercitives des deux branches sont bornées dans l'intervalle de mesure de tension de polarisation
+    L'offset de la composante affine est bornée dans l'intervalle de mesure de piezoresponse
+    Pour analysis_mode == 'on_f_loop':
+        Dans le cas ou locked_elec_slope = 'positive', la pente est définie positivement, et vice versa, si locked_elec_slope = 'negative', la pente est définie négativement.
+        Si locked_elec_slope est None, la pente est définie selon le sens d'application de la tension : grounded_tip=True -> 'negative', grounded_tip=False -> 'psotive'.
+    Sinon la pente est fixée à 0.
+    
+Le différentiel des deux branches, diff_hyst, est calculé puis filtré (par la fonction filter_mean du script INSERER), formant en quelque un dome. Ce dernier permet d'initialiser les valeurs de paramètres de fit. Cette procédure est basée sur le stravaux de INSERER LA SOURCE.
+
+Valeur initiale
+    La valeur de l'amplitude de l'hystérésis est déterminé à partir du maximum de diff_hyst
+    Les tensions coercitives des deux branches sont définies comme les absicices correpondant aux pentes minimum et maximum de diff_hyst
+    Pour analysis_mode == 'on_f_loop', la pente est initialisée comme le rapport : max(PR)-min(PR)/(max(tension)-min(tension))
+    
+L'hystérésis est alors fitée avec la méthode fit, en fonction des coordonnes des points de la best loop, et en choisissant la méthod voulue. Cette méthode repose sur la librairie lmfit et permet d'extraire les paramètres du modèle de l'hystérésis qui converge le plus vers les données expérimentales.
+
+Une fois le fit effectué, la méthode properties permet d'extraire les propriétés piézo-ferroélectriques de l'ghystérésis. 
+
+L'ensemble des prorpriétés est calculé avec et sans la composante électrostatique:
+L'imprint (x_shift) est définit comme la moyenne entre les deux tensions coercitives des deux branches, tandis que la fenêtre en tension, comme la différence entre ces deux valeurs. L'aire de l'hystérésis est simplement définie comme le produit de la fenêtre en tension par l'amplitude de l'hystérésis.
+Les points d'intersection des axes des des abscisses et des ordonnées définissent respectivement les tensions coercitives et de les piezoersponse rémanente.
+Les tensions points d'inflection située par défaut à 10 et 90% de l'amplitude des branches définissent respectivement les tensions de nucléations et de saturations.
+La différence erlative entre les coefficients de dillatiation de sbrnaches de droite et de gauche permet de traduire avec un scalaire le degré d'assymétrie de l'hystérésis.
 
 ### Artifact decoupling
 
