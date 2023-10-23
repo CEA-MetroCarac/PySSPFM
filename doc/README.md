@@ -562,20 +562,7 @@ There are three distinct measurement processing modes, each involving the extrac
 The script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/curve_hysteresis.py>utils/core/curve_hysteresis</a></code> introduces and processes a new object, the <code>Hysteresis</code>. This object is initialized with the variable <code>model</code>, which defines the algebraic function for each of its two branches: <br>
 &#8226 <code>'sigmoid'</code>: $y(x) = a * ({1 \over 1. + exp(-coef * (x - x_0))} - 0.5)$ <br>
 &#8226 <code>'arctan'</code>: $y(x) = a * arctan(coef * (x - x_0)$ <br>
-A boolean variable <code>assymetric</code> determines whether to assign different dilation coefficients to the two branches. An affine component is added to this model.
-</p>
-
-<p align="justify" width="100%">
-Following the second stage of processing, the processing folder is augmented as follows:
-    <ul>
-        <li>The <code>results</code> folder now includes:</li>
-            <ul>
-                <li>The text file <code>saving_parameters.txt</code> enriched with parameters and information pertaining to the second stage of measurement processing. This stage is conducted by the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a></code>.</li>
-                <li>The <code>figs</code> directory houses the visual representations generated during the second stage of processing, encompassing off and on-field hysteresis with fitting and parameter extraction, along with the extraction of the artifact-related component through multiple protocols. This stage is executed by the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/plot.py">utils/hyst_to_map/plot</a></code>.</li>
-            </ul>
-        <li>A new <code>txt_ferro_meas</code> folder contains all material properties measured for each measurement file, both in on-field and off-field conditions, as well as in differential (or coupled) measurements. These properties are extracted during the hysteresis fitting stage and artifact analysis, accomplished by the scripts <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic</a></code>, respectively.</li>
-        <li>A <code>txt_best_loops</code> directory that contains the singular hysteresis for each mode (on-field and off-field) per measurement file.</li>
-     </ul>
+A boolean variable <code>asymmetric</code> determines whether to assign different dilation coefficients to the two branches. An affine component is added to this model.
 </p>
 
 <p align="justify" width="100%">
@@ -584,37 +571,37 @@ Une initialisation des paramètres du fit est alors effectuée:
         <li>Intervale de définition:</li>
             <ul>
                 <li>Les coefficients de diollatiuon des branches sont positifs.</li>
-                <li>Le signe de l'amplitude de l'hystérésis est défini positivement pour une boucle counterclockwise et positivement pour une boucle clockwise.</li>
+                <li>Le signe de l'amplitude de l'hystérésis est défini positivement pour une boucle <code>counterclockwise</code> et positivement pour une boucle <code>clockwise</code>.</li>
                 <li>Les tensions coercitives des deux branches sont bornées dans l'intervalle de mesure de tension de polarisation.</li>
                 <li>L'offset de la composante affine est bornée dans l'intervalle de mesure de piezoresponse.</li>
                 <li>La pente:</li>
                     <ul>
-                        <li>Pour analysis_mode == 'on_f_loop': Dans le cas ou locked_elec_slope = 'positive', la pente est définie positivement, et vice versa, si locked_elec_slope = 'negative', la pente est définie négativement. Si locked_elec_slope est None, la pente est définie selon le sens d'application de la tension : grounded_tip=True -> 'negative', grounded_tip=False -> 'psotive'.</li>
+                        <li>Pour <code>analysis_mode == 'on_f_loop'</code>: Dans le cas ou <code>locked_elec_slope = 'positive'</code>, la pente est définie positivement, et vice versa, si <code>locked_elec_slope = 'negative'</code>, la pente est définie négativement. Si <code>locked_elec_slope is None</code>, la pente est définie selon le sens d'application de la tension : <code>grounded_tip is True</code> -> <code>'negative'</code>, <code>grounded_tip is False</code> -> <code>'positive'</code>.</li>
                         <li>Sinon la pente est fixée à 0.</li>
                     </ul>
             </ul>
-        <li>Le différentiel des deux branches, diff_hyst, est calculé puis filtré (par la fonction filter_mean du script INSERER), formant en quelque un dome. Ce dernier permet d'initialiser les valeurs de paramètres de fit. Cette procédure est basée sur le stravaux de INSERER LA SOURCE.</li>
+        <li>Le différentiel des deux branches, <code>diff_hyst</code>, est calculé puis filtré (par la fonction <code>filter_mean</code> du script INSERER), formant en quelque sorte un dome. Ce dernier permet d'initialiser les valeurs de paramètres de fit. Cette procédure est basée sur le stravaux de INSERER LA SOURCE.</li>
         <li>Valeur initiale:</li>
             <ul>
                 <li>Les coefficients de diollatiuon des branches sont positifs.</li>
-                <li>La valeur de l'amplitude de l'hystérésis est déterminé à partir du maximum de diff_hyst.</li>             
-                <li>Les tensions coercitives des deux branches sont définies comme les absicices correpondant aux pentes minimum et maximum de diff_hyst.</li>
-                <li>Pour analysis_mode == 'on_f_loop', la pente est initialisée comme le rapport : max(PR)-min(PR)/(max(tension)-min(tension)).</li>   
+                <li>La valeur de l'amplitude de l'hystérésis est déterminé à partir du maximum de <code>diff_hyst</code>.</li>             
+                <li>Les tensions coercitives des deux branches sont définies comme les absicices correpondant aux pentes minimum et maximum de <code>diff_hyst</code>.</li>
+                <li>Pour <code>analysis_mode == 'on_f_loop'</code>, la pente est initialisée comme le rapport : ${max(PR)-min(PR)/overmax(tension)-min(tension)}$.</li>   
             </ul>
     </ul>
 </p>
 
 <p align="justify" width="100%">
-L'hystérésis est alors fitée avec la méthode fit, en fonction des coordonnes des points de la best loop, et en choisissant la méthod voulue. Cette méthode repose sur la librairie lmfit et permet d'extraire les paramètres du modèle de l'hystérésis qui converge le plus vers les données expérimentales.
+L'hystérésis est alors fitée avec la méthode <code>fit</code>, en fonction des coordonnes des points de la best loop, et en choisissant la <code>method</code> voulue. Cette méthode repose sur la librairie lmfit et permet d'extraire les paramètres du modèle de l'hystérésis qui converge le plus vers les données expérimentales.
 </p>
 
 <p align="justify" width="100%">
 Une fois le fit effectué, la méthode properties permet d'extraire les propriétés piézo-ferroélectriques de l'ghystérésis. 
 L'ensemble des prorpriétés est calculé avec et sans la composante électrostatique: <br>
-&#8226 L'imprint (x_shift) est définit comme la moyenne entre les deux tensions coercitives des deux branches, tandis que la fenêtre en tension, comme la différence entre ces deux valeurs. L'aire de l'hystérésis est simplement définie comme le produit de la fenêtre en tension par l'amplitude de l'hystérésis. <br>
-&#8226 Les points d'intersection des axes des des abscisses et des ordonnées définissent respectivement les tensions coercitives et de les piezoersponse rémanente. <br>
-&#8226 Les tensions points d'inflection située par défaut à 10 et 90% de l'amplitude des branches définissent respectivement les tensions de nucléations et de saturations. <br>
-&#8226 La différence erlative entre les coefficients de dillatiation de sbrnaches de droite et de gauche permet de traduire avec un scalaire le degré d'assymétrie de l'hystérésis. <br>
+&#8226 L'imprint, <code>x_shift</code> est définit comme la moyenne entre les deux tensions coercitives des deux branches, tandis que la fenêtre en tension, <code>x0_wid</code> comme la différence entre ces deux valeurs. L'aire de l'hystérésis, <code>area</code>, est simplement définie comme le produit de la fenêtre en tension par l'amplitude de l'hystérésis. <br>
+&#8226 Les points d'intersection des axes des des abscisses (<code>x_inters_l</code>, <code>x_inters_r</code>) et des ordonnées (<code>y_inters_l</code>, <code>y_inters_r</code>) définissent respectivement les tensions coercitives et de les piezoersponse rémanente. <br>
+&#8226 Les tensions points d'inflection située par défaut à 10 et 90% de l'amplitude des branches définissent respectivement les tensions de nucléations (<code>x_infl_l</code>, <code>x_infl_r</code>) et de saturations (<code>x_sat_l</code>, <code>x_sat_r</code>). <br>
+&#8226 La différence relative entre les coefficients de dilatation des branches de droite et de gauche, <code>diff_coef</code>, permet de traduire avec un scalaire le degré d'assymétrie de l'hystérésis. <br>
 </p>
 
 ### Artifact decoupling
