@@ -605,7 +605,13 @@ Following the completion of the fitting process, the 'properties' method facilit
 
 ### Artifact decoupling
 
-### File management
+Les artefacts, princiapelemnt électrostatique mais plus généralement les termes d'origine quadratique (électrostatics, électrostrictif, effet Joules), non nuls ici par application d'une tension continue V_DC peuvent influencer la mesure:
+par un offset vertical pour la mesure off field (artefacts uniquement électrostatics)
+par une composante affine pour la mesure on field (influencé par terme d'origine quadratiques)
+de manière non linéaire, lorsque l'effet est activé après une certaine tension de seuil en on field
+
+Des protocoles de décorélation ont été mis au point :
+LES LISTER
 
 ## SSPFM mapping
 
@@ -619,21 +625,30 @@ Following the completion of the fitting process, the 'properties' method facilit
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">toolbox/raw_file_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/raw_file_reader.py">gui/raw_file_reader</a></code>.
 </p>
 
+En entrée un fichier de mesure SSPFM datacube est ouvert, les données sont extraites et affichées sous forme graphique. 
+Le mode de mesure doit être choisi grâce au paramètre 'mode' :
+- 'classique' (sweep resonance)
+- 'dfrt'
+
+INSERER LE GRAPHIQUE
+
 #### Loop file
 
 <p align="justify" width="100%">
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox/loop_file_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/loop_file_reader.py">gui/loop_file_reader</a></code>.
 </p>
 
-#### List map reader
+En entrée, un fichier de mesure sous forme de fichier txt_loop est ouvert (généré ,après la première étape de traitement), ainsi que la fiche de mesure csv de telle sorte à en extraire les parmaètre du signal en tension de polarisation. Une calibration ex situ de la phase est effectuée, grâce à l'ensemble des paramètres utilisateurs de traitement de phase à remplir. L'utilisateur peut aussi choisir de supprimer la première courbe d'hystérésis des figures générées, si cette dernière diffère des autres du à l'état de pristine du film. L'ensemble des objets MultiLoop et MeanLoop associé au fichier sont alors construi puis les figures associées sont générées et affichées. 
+
+#### (List & Global) map reader
 
 <p align="justify" width="100%">
+List map reader: <br>
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/list_map_reader.py">gui/list_map_reader</a></code>.
 </p>
 
-#### Global map reader
-
 <p align="justify" width="100%">
+Global map reader: <br>
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/global_map_reader.py">gui/global_map_reader</a></code>.
 </p>
 
