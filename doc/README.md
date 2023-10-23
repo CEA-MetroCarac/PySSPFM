@@ -559,30 +559,37 @@ There are three distinct measurement processing modes, each involving the extrac
 ### Hysteresis and properties
 
 <p align="justify" width="100%">
-Le script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/curve_hysteresis.py>utils/core/curve_hysteresis</a></code> permet d'introduire et de traiter un nouvel objet <code>Hysteresis</code>. Ce dernier est initialisé, avec par la variable <code>model</code> correspondant à la fonction algébrique définissant chacune des ses deux branches: <br>
+The script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/curve_hysteresis.py>utils/core/curve_hysteresis</a></code> introduces and processes a new object, the <code>Hysteresis</code>. This object is initialized with the variable <code>model</code, which defines the algebraic function for each of its two branches: <br>
 &#8226 <code>'sigmoid'</code>: $y(x) = a * ({1 \over 1. + exp(-coef * (x - x_0))} - 0.5)$ <br>
-&#8226 <code>'arctan'</code>: $y(x) = a*arctan(coef * (x-x_0)$ <br>
-et un boolean 'assymetric' permettant ou non d'attribuer un coefficient de dilatiation différent entre les deux brancehs. Une composante affine est ajoutée à ce modèle.
+&#8226 <code>'arctan'</code>: $y(x) = a * arctan(coef * (x - x_0)$ <br>
+A boolean variable <code>assymetric</code> determines whether to assign different dilation coefficients to the two branches. An affine component is added to this model.
 </p>
 
-Une initialisation des paramètres du fit est alors effectuée:
-
-Intervale de définition:
-    Les coefficients de diollatiuon des branches sont positifs 
-    Le signe de l'amplitude de l'hystérésis est défini positivement pour une boucle counterclockwise et positivement pour une boucle clockwise
-    Les tensions coercitives des deux branches sont bornées dans l'intervalle de mesure de tension de polarisation
-    L'offset de la composante affine est bornée dans l'intervalle de mesure de piezoresponse
-    Pour analysis_mode == 'on_f_loop':
-        Dans le cas ou locked_elec_slope = 'positive', la pente est définie positivement, et vice versa, si locked_elec_slope = 'negative', la pente est définie négativement.
-        Si locked_elec_slope est None, la pente est définie selon le sens d'application de la tension : grounded_tip=True -> 'negative', grounded_tip=False -> 'psotive'.
-    Sinon la pente est fixée à 0.
-    
-Le différentiel des deux branches, diff_hyst, est calculé puis filtré (par la fonction filter_mean du script INSERER), formant en quelque un dome. Ce dernier permet d'initialiser les valeurs de paramètres de fit. Cette procédure est basée sur le stravaux de INSERER LA SOURCE.
-
-Valeur initiale
-    La valeur de l'amplitude de l'hystérésis est déterminé à partir du maximum de diff_hyst
-    Les tensions coercitives des deux branches sont définies comme les absicices correpondant aux pentes minimum et maximum de diff_hyst
-    Pour analysis_mode == 'on_f_loop', la pente est initialisée comme le rapport : max(PR)-min(PR)/(max(tension)-min(tension))
+<p align="justify" width="100%">
+Une initialisation des paramètres du fit est alors effectuée::
+    <ul>
+        <li>Intervale de définition:</li>
+            <ul>
+                <li>Les coefficients de diollatiuon des branches sont positifs.</li>
+                <li>Le signe de l'amplitude de l'hystérésis est défini positivement pour une boucle counterclockwise et positivement pour une boucle clockwise.</li>
+                <li>Les tensions coercitives des deux branches sont bornées dans l'intervalle de mesure de tension de polarisation.</li>
+                <li>L'offset de la composante affine est bornée dans l'intervalle de mesure de piezoresponse.</li>
+                <li>La pente:</li>
+                <ul>
+                    <li>Pour analysis_mode == 'on_f_loop': Dans le cas ou locked_elec_slope = 'positive', la pente est définie positivement, et vice versa, si locked_elec_slope = 'negative', la pente est définie négativement. Si locked_elec_slope est None, la pente est définie selon le sens d'application de la tension : grounded_tip=True -> 'negative', grounded_tip=False -> 'psotive'.</li>
+                    <li>Sinon la pente est fixée à 0.</li>
+            </ul>
+        </ul>
+    <ul>
+        <li></li>Le différentiel des deux branches, diff_hyst, est calculé puis filtré (par la fonction filter_mean du script INSERER), formant en quelque un dome. Ce dernier permet d'initialiser les valeurs de paramètres de fit. Cette procédure est basée sur le stravaux de INSERER LA SOURCE.</li>
+        <li>Valeur initiale:</li>
+            <ul>
+                <li>Les coefficients de diollatiuon des branches sont positifs.</li>
+                <li>La valeur de l'amplitude de l'hystérésis est déterminé à partir du maximum de diff_hyst.</li>             
+                <li>Les tensions coercitives des deux branches sont définies comme les absicices correpondant aux pentes minimum et maximum de diff_hyst.</li>
+                <li>Pour analysis_mode == 'on_f_loop', la pente est initialisée comme le rapport : max(PR)-min(PR)/(max(tension)-min(tension)).</li>                      
+            </ul>
+</p>
     
 L'hystérésis est alors fitée avec la méthode fit, en fonction des coordonnes des points de la best loop, et en choisissant la méthod voulue. Cette méthode repose sur la librairie lmfit et permet d'extraire les paramètres du modèle de l'hystérésis qui converge le plus vers les données expérimentales.
 
