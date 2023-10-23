@@ -180,6 +180,7 @@ A default data processing path management is provided, but the user has the opti
 
 <p align="center" width="100%">
     <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_First_Step.PNG> <br>
+    <em>File management after first step of data anakysis</em>
 </p>
 
 <p align="justify" width="100%">
@@ -198,6 +199,7 @@ Following the first processing step, by default, a new directory is created at t
 
 <p align="center" width="100%">
     <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_Second_Step.PNG> <br>
+    <em>File management after second step of data anakysis</em>
 </p>
 
 <p align="justify" width="100%">
