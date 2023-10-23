@@ -153,7 +153,7 @@ Prior to conducting the SSPFM measurement, the user must complete a measurement 
         <li>quality factor</li>
         <li>resonance settling time</li>
     </ul>
-Furthermore, completing the form is a mandatory prerequisite for the subsequent measurement processing. The parameters to be employed for measurement processing include:
+Furthermore, completing the form is a mandatory prerequisite for the subsequent measurement processing. The parameters to be employed for measurement processing include: <br>
     <ul>
         <li>grid dimensions</li>
         <li>calibration coefficients</li>
