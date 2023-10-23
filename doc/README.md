@@ -1,4 +1,4 @@
-![phase_variation_with_voltage](https://github.com/CEA-MetroCarac/PySSPFM/assets/76450221/095d391e-605c-420f-a37c-34c8cffe95a5)# PySSPFM Documentation
+# PySSPFM Documentation
 
 <p align="center" width="100%">
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/logoPySSPFM_white.PNG> <br>
@@ -33,7 +33,7 @@ The PySSPFM application then proceeds with two stages of measurement processing.
 </p>
 
 <p align="justify" width="100%">
-Here is the simplified architectural overview of the PySSPFM application's source code (path management, data extraction and storage, settings, and polarization signal management are not included in the diagram). Nevertheless, it provides a fairly accurate representation of the overall interaction between the various components of the code. <br>
+Here is the simplified architectural overview of the PySSPFM application's source code (path and file management, data extraction and storage, settings, and polarization signal management are not included in the diagram). Nevertheless, it provides a fairly accurate representation of the overall interaction between the various components of the code. <br>
 &#8226 The functions within the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code> are quite generic and not specific to SSPFM. They exhibit relative independence from the rest of the code and serve as fundamental building blocks for the execution of all other functions. <br>
 &#8226 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/seg_to_loop">seg_to_loop</a></code> module facilitates the conversion of measurements into nanoloops. It relies on the use of both <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop">nanoloop</a></code> functions. <br>
 &#8226 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop">nanoloop</a></code> module enables the creation and processing of nanoloops. It relies on the utilization of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code> functions. <br>
@@ -218,7 +218,9 @@ The initial step of the process may be initiated either through the <a href="htt
 </p>
 
 <p align="justify" width="100%">
-For a deeper understanding of the path management in this phase, please refer to the relevant section in the documentation (File Management/Output Files/First Step of Data Analysis).
+For a deeper understanding of the file management in this phase, please refer to the relevant section in the documentation:<br>
+&#8226 Input: File Management/Input Files.<br>
+&#8226 Output: File Management/Output Files/First Step of Data Analysis.
 </p>
 
 ### Parameters
@@ -281,7 +283,7 @@ The code also includes other polarization voltage form that can be utilized for 
 ### Pre-measurement calibration
 
 <p align="justify" width="100%">
-Calibration is indispensable for obtaining quantitative measurements. In the measurement data sheet, values can be provided to quantify the measured amplitude, including tip sensitivity (nm/V) and spring constant (N/m), which can be obtained from the manufacturer or through pre-measurement calibration. Additionally, a pre-measurement calibration can be used to determine the phase offset. All amplitude and phase values are calibrated with the result in the script.  
+Calibration is indispensable for obtaining quantitative measurements. In the measurement data sheet, values can be provided to quantify the measured amplitude, including tip sensitivity (nm/V) and spring constant (N/m), which can be obtained from the manufacturer or through pre-measurement calibration. Additionally, a pre-measurement calibration can be used to determine the phase offset. All amplitude and phase values are calibrated with the result in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/analysis.py">seg_to_loop/analysis</a></code>.
 </p>
 
 ### Segment
@@ -300,7 +302,7 @@ One can then compare the theoretical and actual duration of the measurement: the
 </p>
 
 <p align="justify" width="100%">
-Once the segmentation process is completed, each segment is generated. When the <code>Segment</code> object is initialized, it generates some of its attributes, including arrays of PFM amplitude and phase measurements, as well as frequency (used in sweep mode in resonance) and time bounded by the start and end indices of the segment. These arrays are optionally trimmed at the beginning and end based on the <code>cut_seg</code> parameter. Noise in the amplitude and phase measurements is potentially reduced by a mean filter, which can be enabled (<code>filter</code>) and is defined by its order (<code>filter_ord</code>). The segment is then processed according to the <code>mode</code> chosen by the user:
+Once the segmentation process is completed, each segment is generated. When the <code>Segment</code> object is initialized in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/analysis.py">seg_to_loop/analysis</a></code>, it generates some of its attributes, including arrays of PFM amplitude and phase measurements, as well as frequency (used in sweep mode in resonance) and time bounded by the start and end indices of the segment. These arrays are optionally trimmed at the beginning and end based on the <code>cut_seg</code> parameter. Noise in the amplitude and phase measurements is potentially reduced by a mean filter, which can be enabled (<code>filter</code>) and is defined by its order (<code>filter_ord</code>). The segment is then processed according to the <code>mode</code> chosen by the user:
 </p>
 
 <p align="justify" width="100%">
@@ -319,7 +321,7 @@ Once the segmentation process is completed, each segment is generated. When the 
 $$ R(f) = A * {f_0^2 \over \sqrt{f_0^2 - f^2)^2 + (f * f_0 / Q)^2}} $$
 
 <p align="justify" width="100%">
-Parameters such as amplitude $A$, quality factor $Q$, and the center of the peak (corresponding to the resonance frequency $f0$) can be extracted. Background by adding a constant in the fit and therefore can be removed from the measurement to improve accuracy.
+Parameters such as amplitude $A$, quality factor $Q$, and the center of the peak (corresponding to the resonance frequency $f_0$) can be extracted. Background by adding a constant in the fit and therefore can be removed from the measurement to improve accuracy.
 </p>
 
 <p align="justify" width="100%">
@@ -355,16 +357,17 @@ All segments (in the Off Field mode) can be visualized on this map:
     <em>Segment map (Off Field)</em>
 </p>
 
-<p align="justify" width="100%">
-Once all the measurements are extracted per segment, phase and amplitude nanoloops as a function of polarization voltage can be created and saved.
-</p>
-
 ## Nanoloop
+
+<p align="justify" width="100%">
+Once all the measurements are extracted per segment, phase and amplitude nanoloops as a function of polarization voltage can be created and saved. All the nanoloop script are located in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop">utils/nanoloop</a></code> scripts. The script <code><a href="https://github.com/CEA MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop/theory">utils/nanoloop/theory</a></code> is designed to generate nanoloops in amplitude, phase, and piezoresponse based on the physical equations related to piezoelectric, ferroelectric, and electrostatic phenomena.
+</p>
 
 ### Post-measurement phase calibration
 
 <p align="justify" width="100%">
-An angular histogram is constructed from the complete set of phase values within the file. In the case of Vertical PFM measurements, it's common to observe two peaks separated by approximately 180°. These two peaks can either be fitted using a <code>Gaussian</code> model for improved precision or their maxima can be directly extracted for enhanced robustness and efficiency. The setting </code>histo_phase_method</code> allows for the selection of either of these methods. In the event of a fitting failure, the maximum method is applied. The phase difference and the positions of these two peaks are then extracted. During PFM measurements, a phase offset is typically present, and phase inversion can occur. Therefore, it's imperative to identify both peaks within the histogram and assign them target phase values.
+Post-measurement phase calibration is performed with <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase</a></code> script.
+An angular histogram is constructed from the complete set of phase values within the file. In the case of Vertical PFM measurements, it's common to observe two peaks separated by approximately 180°. These two peaks can either be fitted using a <code>Gaussian</code> model for improved precision or their maxima can be directly extracted for enhanced robustness and efficiency. The setting <code>histo_phase_method</code> allows for the selection of either of these methods. In the event of a fitting failure, the maximum method is applied. The phase difference and the positions of these two peaks are then extracted. During PFM measurements, a phase offset is typically present, and phase inversion can occur. Therefore, it's imperative to identify both peaks within the histogram and assign them target phase values.
 </p>
 
 <p align="center" width="100%">
@@ -435,7 +438,10 @@ Here are the various hysteresis configurations in the On-Field mode, depending o
 It is worth noting that in some cases of On-Field measurements, where the electrostatic and ferroelectric components are closely related, multiple phase transitions may occur during the cycle.
 </p>
 
-INSERER HYSTERESIS CAS PARTICULIER
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/problematic_case_on_field_nanoloop.PNG> <br>
+    <em>Problematic case of nanoloop: same order of magnitude for both ferroelectric and electrostatic component (On Field, grounded tip, positive d33)</em>
+</p>
 
 <p align="justify" width="100%">
 In the PySSPFM application, users can concretely assign the desired phase values for both forward and reverse directions using the <code>pha_fwd</code> and <code>pha_rev</code> parameters. It is essential for the user to identify whether they are dealing with a predominant electrostatic component in the On-Field mode through the <code>main_electrostatic</code> parameter. Additionally, they can opt to specify the sign for the electrostatic component's slope. The user should also provide information about the piezoelectric coefficient sign of the material in the measurement record with the parameter <code>locked_elec_slope</code>. With these provided parameters and the calibration protocol, phase values can be attributed to the two peaks in the histogram.
@@ -447,42 +453,67 @@ A potential phase inversion can be detected by examining the variation in the me
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_variation_with_voltage.png> <br>
+    <em>Detection of phase inversion with phase variation with voltage</em>
 </p>
 
-
-A la suite de la calibration et de l'identification de la position des deux pics sur l'histogramme et de la différence de phase, la phase peut être corrigée avec 4 différents protocoles :
-- raw_phase : la phase brute est conservée et aucun traitement n'est appliqué (peut être utilisée dans le cas d'une calibration de phase pré mesure)
-- offset : un offset de phase est déterminé par la calibration, la différence de phase reste entre les deux pics reste inchangé (traitement permettant le rester le plus fidèle à la mesure initiale).
-- affine : une relation affine est appliquée à l'ensemble des valeurs de phase de telle sorte à ajuster la différence de phase à 180°.
-- up and down : un threshold est déterminé (entre les deux pics) et chaque valeur de phase se voit attribuer la valeur cible pha_fwd ou pha_rev en fonction de sa position par rapport au threshold et de la calibration
+<p align="justify" width="100%">
+Following the calibration process and the identification of the positions of the two peaks on the histogram, as well as the phase difference, phase correction can be achieved through four distinct protocols:<br>
+&#8226 <code>raw_phase</code>: The raw phase is retained, and no processing is applied (suitable for use in pre-measurement phase calibration).<br>
+&#8226 <code>offset</code>: A phase offset is determined through calibration, and the phase difference between the two peaks remains unchanged (a treatment method that aims to preserve the initial measurement as faithfully as possible).<br>
+&#8226 <code>affine</code>: An affine relationship is applied to all phase values, adjusting the phase difference to 180°.<br>
+&#8226 <code>up and down</code>: A threshold is established between the two peaks, and each phase value is assigned the target value, <code>pha_fwd</code> or <code>pha_rev</code>, based on its position relative to the threshold and the calibration process.
+</p>
 
 ### MultiLoop
 
 <p align="justify" width="100%">
-Pour chaque fichier de mesure, il est possible d'acquérir plusieurs courbe nanoloop, de telle sorte à étudier la répétabilité des mesures et à réduire le bruit des mesures (en effectuant la moyenne de l'ensemble des nanoloops du fichier). Un objet MultiLoop est alors créé. Ce dernier est initialisé avec des tableaux de sous tableaux (nombre de sous tableaux correspondant au nombre de loop) de mesures correspondantes : tension de polarisation, valeur d'amplitude et de phase extraites. Sont également rensignés un tableau de tension de lecture (dont les valeurs correspondent à chacune des nanoloop), un dictionnaire des réslultats de la calibration de phase. et le mode de mesure (On ou Off Field).
+For each measurement file, the acquisition of multiple nanoloop curves is possible, enabling the study of measurement repeatability and the reduction of measurement noise (by averaging all nanoloops within the file). This process involves the creation of a <code>MultiLoop</code> object with the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis</a></code> script, initialized with arrays of sub-arrays (the number of sub-arrays corresponding to the number of loops). These sub-arrays contain measurements such as polarization voltage, extracted amplitude, and phase values. Additionally, a voltage reading array is provided (with values corresponding to each nanoloop), a dictionary of phase calibration results, and the measurement mode (On or Off Field).
 </p>
 
 <p align="justify" width="100%">
-Afin de permettre une meilleure visualition des données :
-- Des marqueurs (au début et à la fin de la mesure, ainsi qu'aux extremums des tensions de polarisation) sont déterminés automatioquement en fonction du signal en tension de polarisation.
-- Les branches de chaque nanoloop sont divisées en deux : celles de droite (en rouge) et celle de gauche (en bleu).
-Les valeurs de phase sont alors modifiées en fonction du dictionnaire de calibration de phase.
+To facilitate a more comprehensive data visualization:<br>
+&#8226 Markers (at the beginning and end of the measurement, as well as at the extremities of the polarization voltages) are automatically determined based on the polarization voltage signal.<br>
+&#8226 The branches of each nanoloop are divided into two categories: those on the right (in red) and those on the left (in blue).<br>
+Phase values are then adjusted according to the phase calibration dictionary.
 </p>
 
 INSERER LES MULTILOOPS EN AMPLITUDE ET EN PHASE
 
 <p align="justify" width="100%">
-Enfin, en fonction des loop en amplitude et en phase, les loop en piezoreponse sont crées.
+Subsequently, based on the amplitude and phase loops, piezoresponse loops are generated. The user selects the function for calculating the piezoresponse with the parameter <code>pha_func</code>: $PR=R*func_{pha}(\phi)$. For phase values such as <code>pha_rev</code>=-90° and <code>pha_fwd</code>=90°, the chosen function should be <code>np.sin()</code>, whereas for phase values like <code>pha_rev</code>=180° and <code>pha_fwd</code>=0°, the selected function should be <code>np.cos()</code>.
 </p>
 
 INSERER LES MULTILOOPS PIEZORESPONSE
 
 ### MeanLoop
 
+<p align="justify" width="100%">
+The <code>MeanLoop</code> is defined within the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis</a></code> script. It is initialized with a <code>MultiLoop</code> object, and optionally, a phase calibration dictionary. This object facilitates the averaging of all loops within the <code>MultiLoop</code>, encompassing both amplitude, phase, and piezoresponse, except for the initial loop, which differs due to the sample's pre-polarized state at the beginning of the measurement. If a phase calibration dictionary is provided, the phase component of the MeanLoop is processed accordingly.
+</p>
+
+INSERER LES MEANLOOP EN AMPLITUDE, PHASE ET PIEZORESPONSE
+
 ## Second step of data analysis
 
 <p align="center" width="100%">
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/GUI_second_step.PNG> <br>
+</p>
+
+<p align="justify" width="100%">
+The second step of the process may be initiated either through the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">executable source code</a> or via the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hyst_to_map_s2.py">graphical user interface</a>. 
+</p>
+
+<p align="justify" width="100%">
+As an initial step, the <code>txt_loops</code> folder obtained is selected. The entirety of the files within it is arranged using the <code>generate_file_paths</code> function found in the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a></code> script. Subsequently, data extraction is carried out for each file, employing the <code>extract_loop</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file">utils/nanoloop/file</a></code>. The measurement and processing parameters from the <code>result/parameters.txt</code> file are also read and extracted using the <code>read_plot_parameters</code> function within the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a></code>.
+</p>
+
+<p align="justify" width="100%">
+Figures resulting from the processing of the first file are generated. Subsequently, each of the files is automatically analyzed without displaying the figures. For each mode (On Field, Off Field, and coupled), a hysteresis loop is selected and associated with each pixel, and a set of ferroelectric piezo properties is extracted. Other properties are obtained through the analysis of measurement artifacts. The entirety of these properties contributes to the creation of SSPFM mappings.
+</p>
+
+<p align="justify" width="100%">
+For a deeper understanding of the file management in this phase, please refer to the relevant section in the documentation:<br>
+&#8226 File Management/Output Files/Second Step of Data Analysis.
 </p>
 
 ### Parameters
@@ -518,33 +549,25 @@ INSERER LES MULTILOOPS PIEZORESPONSE
 #### Raw file
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">toolbox
-/raw_file_reader</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/raw_file_reader.py">gui
-/raw_file_reader</a>.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">toolbox/raw_file_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/raw_file_reader.py">gui/raw_file_reader</a></code>.
 </p>
 
 #### Loop file
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox
-/loop_file_reader</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/loop_file_reader.py">gui
-/loop_file_reader</a>.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox/loop_file_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/loop_file_reader.py">gui/loop_file_reader</a></code>.
 </p>
 
 #### List map reader
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox
-/list_map_reader</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/list_map_reader.py">gui
-/list_map_reader</a>.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/list_map_reader.py">gui/list_map_reader</a></code>.
 </p>
 
 #### Global map reader
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox
-/global_map_reader</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/global_map_reader.py">gui
-/global_map_reader</a>.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/global_map_reader.py">gui/global_map_reader</a></code>.
 </p>
 
 #### Parameters
@@ -552,9 +575,7 @@ The script can be executed directly using the executable file: <a href="https://
 ### Hysteresis clustering (K-Means)
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox
-/hysteresis_clustering</a> or through the graphical user interface: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hysteresis_clustering.py">gui
-/hysteresis_clustering</a>.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox/hysteresis_clustering</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hysteresis_clustering.py">gui/hysteresis_clustering</a></code>.
 </p>
 
 #### Parameters
