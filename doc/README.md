@@ -477,13 +477,18 @@ To facilitate a more comprehensive data visualization:<br>
 Phase values are then adjusted according to the phase calibration dictionary.
 </p>
 
-INSERER LES MULTILOOPS EN AMPLITUDE ET EN PHASE
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/multiloop_amplitude.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/multiloop_phase.PNG> <br>
+</p>
 
 <p align="justify" width="100%">
 Subsequently, based on the amplitude and phase loops, piezoresponse loops are generated. The user selects the function for calculating the piezoresponse with the parameter <code>pha_func</code>: $PR=R*func_{pha}(\phi)$. For phase values such as <code>pha_rev</code>=-90° and <code>pha_fwd</code>=90°, the chosen function should be <code>np.sin()</code>, whereas for phase values like <code>pha_rev</code>=180° and <code>pha_fwd</code>=0°, the selected function should be <code>np.cos()</code>.
 </p>
 
-INSERER LES MULTILOOPS PIEZORESPONSE
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/multiloop_piezoresponse.PNG> <br>
+</p>
 
 ### MeanLoop
 
@@ -491,7 +496,11 @@ INSERER LES MULTILOOPS PIEZORESPONSE
 The <code>MeanLoop</code> is defined within the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis</a></code> script. It is initialized with a <code>MultiLoop</code> object, and optionally, a phase calibration dictionary. This object facilitates the averaging of all loops within the <code>MultiLoop</code>, encompassing both amplitude, phase, and piezoresponse, except for the initial loop, which differs due to the sample's pre-polarized state at the beginning of the measurement. If a phase calibration dictionary is provided, the phase component of the MeanLoop is processed accordingly.
 </p>
 
-INSERER LES MEANLOOP EN AMPLITUDE, PHASE ET PIEZORESPONSE
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/meanloop_amplitude.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/meanloop_phase.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/meanloop_piezoresponse.PNG> <br>
+</p>
 
 ## Second step of data analysis
 
