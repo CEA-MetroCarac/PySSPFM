@@ -581,7 +581,7 @@ Une initialisation des paramètres du fit est alors effectuée::
             </ul>
         </ul>
     <ul>
-        <li></li>Le différentiel des deux branches, diff_hyst, est calculé puis filtré (par la fonction filter_mean du script INSERER), formant en quelque un dome. Ce dernier permet d'initialiser les valeurs de paramètres de fit. Cette procédure est basée sur le stravaux de INSERER LA SOURCE.</li>
+        <li>Le différentiel des deux branches, diff_hyst, est calculé puis filtré (par la fonction filter_mean du script INSERER), formant en quelque un dome. Ce dernier permet d'initialiser les valeurs de paramètres de fit. Cette procédure est basée sur le stravaux de INSERER LA SOURCE.</li>
         <li>Valeur initiale:</li>
             <ul>
                 <li>Les coefficients de diollatiuon des branches sont positifs.</li>
@@ -589,6 +589,8 @@ Une initialisation des paramètres du fit est alors effectuée::
                 <li>Les tensions coercitives des deux branches sont définies comme les absicices correpondant aux pentes minimum et maximum de diff_hyst.</li>
                 <li>Pour analysis_mode == 'on_f_loop', la pente est initialisée comme le rapport : max(PR)-min(PR)/(max(tension)-min(tension)).</li>                      
             </ul>
+        </ul>
+    </ul>
 </p>
     
 L'hystérésis est alors fitée avec la méthode fit, en fonction des coordonnes des points de la best loop, et en choisissant la méthod voulue. Cette méthode repose sur la librairie lmfit et permet d'extraire les paramètres du modèle de l'hystérésis qui converge le plus vers les données expérimentales.
