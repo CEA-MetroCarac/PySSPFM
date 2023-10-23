@@ -560,8 +560,8 @@ There are three distinct measurement processing modes, each involving the extrac
 
 <p align="justify" width="100%">
 Le script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/curve_hysteresis.py>utils/core/curve_hysteresis</a></code> permet d'introduire et de traiter un nouvel objet <code>Hysteresis</code>. Ce dernier est initialisé, avec par la variable <code>model</code> correspondant à la fonction algébrique définissant chacune des ses deux branches: <br>
-&#8226 'sigmoid': $ y(x) = a * (1 /over {1. + exp(-coef * (x - x_0))} - 0.5) $ <br>
-&#8226 'arctan': $ y(x) = a*arctan(coef * (x-x_0) $ <br>
+&#8226 'sigmoid': $y(x) = a * (1 /over {1. + exp(-coef * (x - x_0))} - 0.5)$ <br>
+&#8226 'arctan': $y(x) = a*arctan(coef * (x-x_0)$ <br>
 et un boolean 'assymetric' permettant ou non d'attribuer un coefficient de dilatiation différent entre les deux brancehs. Une composante affine est ajoutée à ce modèle.
 </p>
 
