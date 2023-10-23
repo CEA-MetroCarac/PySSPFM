@@ -559,49 +559,48 @@ There are three distinct measurement processing modes, each involving the extrac
 ### Hysteresis and properties
 
 <p align="justify" width="100%">
-The script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/curve_hysteresis.py>utils/core/curve_hysteresis</a></code> introduces and processes a new object, the <code>Hysteresis</code>. This object is initialized with the variable <code>model</code>, which defines the algebraic function for each of its two branches: <br>
+The script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/curve_hysteresis.py>utils/core/curve_hysteresis</a></code> introduces and processes a novel entity known as the <code>Hysteresis</code>. This entity commences its existence by initializing through the variable <code>model</code>, encapsulating the mathematical formulations for both of its branches: <br>
 &#8226 <code>'sigmoid'</code>: $y(x) = a * ({1 \over 1. + exp(-coef * (x - x_0))} - 0.5)$ <br>
 &#8226 <code>'arctan'</code>: $y(x) = a * arctan(coef * (x - x_0)$ <br>
-A boolean variable <code>asymmetric</code> determines whether to assign different dilation coefficients to the two branches. An affine component is added to this model.
+A binary variable, <code>asymmetric</code>, holds the responsibility of deciding whether to apportion distinct dilation coefficients to these bifurcated branches. Additionally, an affine component becomes an integral part of this model.
 </p>
 
 <p align="justify" width="100%">
-Une initialisation des paramètres du fit est alors effectuée:
+An initialization of the fitting parameters is meticulously conducted:
     <ul>
-        <li>Intervale de définition:</li>
+        <li>Definition Interval:</li>
             <ul>
-                <li>Les coefficients de diollatiuon des branches sont positifs.</li>
-                <li>Le signe de l'amplitude de l'hystérésis est défini positivement pour une boucle <code>counterclockwise</code> et positivement pour une boucle <code>clockwise</code>.</li>
-                <li>Les tensions coercitives des deux branches sont bornées dans l'intervalle de mesure de tension de polarisation.</li>
-                <li>L'offset de la composante affine est bornée dans l'intervalle de mesure de piezoresponse.</li>
-                <li>La pente:</li>
+                <li>The dilation coefficients of the branches are constrained to be positive.</li>
+                <li>The amplitude sign of the hysteresis is set positively for a "counterclockwise" loop and negatively for a "clockwise" loop.</li>
+                <li>The coercive voltages of both branches are bounded within the range of the polarization voltage measurement.</li>
+                <li>The offset of the affine component is bounded within the piezoresponse measurement range.</li>
+                <li>The Slope:</li>
                     <ul>
-                        <li>Pour <code>analysis_mode == 'on_f_loop'</code>: Dans le cas ou <code>locked_elec_slope = 'positive'</code>, la pente est définie positivement, et vice versa, si <code>locked_elec_slope = 'negative'</code>, la pente est définie négativement. Si <code>locked_elec_slope is None</code>, la pente est définie selon le sens d'application de la tension : <code>grounded_tip is True</code> -> <code>'negative'</code>, <code>grounded_tip is False</code> -> <code>'positive'</code>.</li>
-                        <li>Sinon la pente est fixée à 0.</li>
+                        <li>For <code>analysis_mode == 'on_f_loop'</code>: In cases where <code>locked_elec_slope = 'positive'</code>, the slope is defined positively; conversely, if <code>locked_elec_slope = 'negative'</code>, the slope is defined negatively. If <code>locked_elec_slope is None</code>, the slope is determined based on the direction of voltage application: <code>grounded_tip is True</code> -> <code>'negative'</code>, <code>grounded_tip is False</code> -> <code>'positive'</code>.</li>
+                        <li>Otherwise, the slope is fixed at 0.</li>
                     </ul>
             </ul>
-        <li>Le différentiel des deux branches, <code>diff_hyst</code>, est calculé puis filtré (par la fonction <code>filter_mean</code> du script INSERER), formant en quelque sorte un dome. Ce dernier permet d'initialiser les valeurs de paramètres de fit. Cette procédure est basée sur le stravaux de INSERER LA SOURCE.</li>
-        <li>Valeur initiale:</li>
+        <li>The differential of the two branches, <code>diff_hyst</code>, is calculated and subsequently filtered (via the <code>filter_mean</code> function in the script INSERT), effectively forming a dome. This process facilitates the initialization of fit parameter values and is derived from the work of INSERT THE SOURCE.</li>
+        <li>Initial Value:</li>
             <ul>
-                <li>Les coefficients de diollatiuon des branches sont positifs.</li>
-                <li>La valeur de l'amplitude de l'hystérésis est déterminé à partir du maximum de <code>diff_hyst</code>.</li>             
-                <li>Les tensions coercitives des deux branches sont définies comme les absicices correpondant aux pentes minimum et maximum de <code>diff_hyst</code>.</li>
-                <li>Pour <code>analysis_mode == 'on_f_loop'</code>, la pente est initialisée comme le rapport : ${max(PR)-min(PR)/overmax(tension)-min(tension)}$.</li>   
+                <li>The dilation coefficients of the branches are required to be positive.</li>
+                <li>The amplitude value of the hysteresis is ascertained from the maximum of <code>diff_hyst</code>.</li>             
+                <li>The coercive voltages of the two branches are defined as the abscissas corresponding to the minimum and maximum slopes of <code>diff_hyst</code>.</li>
+                <li>For <code>analysis_mode == 'on_f_loop'</code>, the slope is initialized as the ratio: ${max(PR)-min(PR)/over max(voltage)-min(voltage)}$.</li>   
             </ul>
     </ul>
 </p>
 
 <p align="justify" width="100%">
-L'hystérésis est alors fitée avec la méthode <code>fit</code>, en fonction des coordonnes des points de la best loop, et en choisissant la <code>method</code> voulue. Cette méthode repose sur la librairie lmfit et permet d'extraire les paramètres du modèle de l'hystérésis qui converge le plus vers les données expérimentales.
+The hysteresis is subsequently fitted using the <code>fit</code> method, considering the coordinates of the best loop's points and selecting the desired <code>method</code. This approach leverages the lmfit library, enabling the extraction of parameters from the hysteresis model that best converges with the experimental data.
 </p>
 
 <p align="justify" width="100%">
-Une fois le fit effectué, la méthode properties permet d'extraire les propriétés piézo-ferroélectriques de l'ghystérésis. 
-L'ensemble des prorpriétés est calculé avec et sans la composante électrostatique: <br>
-&#8226 L'imprint, <code>x_shift</code> est définit comme la moyenne entre les deux tensions coercitives des deux branches, tandis que la fenêtre en tension, <code>x0_wid</code> comme la différence entre ces deux valeurs. L'aire de l'hystérésis, <code>area</code>, est simplement définie comme le produit de la fenêtre en tension par l'amplitude de l'hystérésis. <br>
-&#8226 Les points d'intersection des axes des des abscisses (<code>x_inters_l</code>, <code>x_inters_r</code>) et des ordonnées (<code>y_inters_l</code>, <code>y_inters_r</code>) définissent respectivement les tensions coercitives et de les piezoersponse rémanente. <br>
-&#8226 Les tensions points d'inflection située par défaut à 10 et 90% de l'amplitude des branches définissent respectivement les tensions de nucléations (<code>x_infl_l</code>, <code>x_infl_r</code>) et de saturations (<code>x_sat_l</code>, <code>x_sat_r</code>). <br>
-&#8226 La différence relative entre les coefficients de dilatation des branches de droite et de gauche, <code>diff_coef</code>, permet de traduire avec un scalaire le degré d'assymétrie de l'hystérésis. <br>
+Following the completion of the fitting process, the 'properties' method facilitates the extraction of the piezo-ferroelectric properties of the hysteresis. All properties are calculated both with and without the electrostatic component: <br>
+&#8226 The imprint, denoted by <code>x_shift</code>, is defined as the mean of the two coercive voltages of the hysteresis branches. The voltage window, <code>x0_wid</code>, is the difference between these two values. The hysteresis area, <code>area</code>, is simply the product of the voltage window and the hysteresis amplitude. <br>
+&#8226 The intersection points on the abscissa axes (<code>x_inters_l</code>, <code>x_inters_r</code>) and the ordinate axes (<code>y_inters_l</code>, <code>y_inters_r</code>) respectively define the coercive voltages and the remanent piezoresponse voltages. <br>
+&#8226 The inflection points, by default located at 10% and 90% of the branch amplitudes, determine the nucleation voltages (<code>x_infl_l</code>, <code>x_infl_r</code>) and saturation voltages (<code>x_sat_l</code>, <code>x_sat_r</code>). <br>
+&#8226 The relative difference between the expansion coefficients of the right and left branches, denoted as <code>diff_coef</code>, quantifies the level of hysteresis asymmetry.
 </p>
 
 ### Artifact decoupling
