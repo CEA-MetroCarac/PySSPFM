@@ -178,6 +178,14 @@ All measurement files and the measurement sheet must be placed within the same d
 
 #### III.1.d) - Examples & Tests
 
+Les exemples et tests s'appuient soit sur des données:
+- réelles issues de mesures SSPFM (échantillon de KNN)
+- simulées par des scripts prévus à cet effet:
+- utils/seg_to_loop/gen_datas.py permet de générer une mesure datacube SSPFM, soit en mode sweep resonance soit dfrt
+- utils/nanoloop/gen_datas.py permet de générer des nanoloop
+- utils/hyst_to_map/gen_datas.py permet de générer un fichier de la forme txt_loops
+
+  
 ### III.2) - Output files
 
 <p align="justify" width="100%">
@@ -241,6 +249,8 @@ Two tools deviate from this path management: <br>
 </p>
 
 #### III.2.d) - Examples & Tests
+
+
 
 ## IV) - First step of data analysis
 
