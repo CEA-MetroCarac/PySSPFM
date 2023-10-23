@@ -566,6 +566,21 @@ A boolean variable <code>assymetric</code> determines whether to assign differen
 </p>
 
 <p align="justify" width="100%">
+Une initialisation des paramètres du fit est alors effectuée:
+    <ul>
+        <li>Intervale de définition:</li>
+            <ul>
+                <li>Les coefficients de diollatiuon des branches sont positifs.</li>
+                <li>Le signe de l'amplitude de l'hystérésis est défini positivement pour une boucle counterclockwise et positivement pour une boucle clockwise.</li>
+                <li>Les tensions coercitives des deux branches sont bornées dans l'intervalle de mesure de tension de polarisation.</li>
+                <li>L'offset de la composante affine est bornée dans l'intervalle de mesure de piezoresponse.</li>
+                <li>La pente:</li>
+            </ul>
+        <li>The <code>txt_loops</code> directory contains the processed data following the first step of processing in the form of amplitude and phase nanoloops as a function of polarization voltage, both in Off and On Field modes, for each measurement file. This directory is generated using the script located in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file.py">utils/nanoloop/file</a></code>.</li>
+    </ul>
+</p>
+
+<p align="justify" width="100%">
 Une initialisation des paramètres du fit est alors effectuée::
     <ul>
         <li>Intervale de définition:</li>
@@ -590,16 +605,19 @@ Une initialisation des paramètres du fit est alors effectuée::
         </ul>
      </ul>
 </p>
-    
+
+<p align="justify" width="100%">
 L'hystérésis est alors fitée avec la méthode fit, en fonction des coordonnes des points de la best loop, et en choisissant la méthod voulue. Cette méthode repose sur la librairie lmfit et permet d'extraire les paramètres du modèle de l'hystérésis qui converge le plus vers les données expérimentales.
+</p>
 
+<p align="justify" width="100%">
 Une fois le fit effectué, la méthode properties permet d'extraire les propriétés piézo-ferroélectriques de l'ghystérésis. 
-
-L'ensemble des prorpriétés est calculé avec et sans la composante électrostatique:
-L'imprint (x_shift) est définit comme la moyenne entre les deux tensions coercitives des deux branches, tandis que la fenêtre en tension, comme la différence entre ces deux valeurs. L'aire de l'hystérésis est simplement définie comme le produit de la fenêtre en tension par l'amplitude de l'hystérésis.
-Les points d'intersection des axes des des abscisses et des ordonnées définissent respectivement les tensions coercitives et de les piezoersponse rémanente.
-Les tensions points d'inflection située par défaut à 10 et 90% de l'amplitude des branches définissent respectivement les tensions de nucléations et de saturations.
-La différence erlative entre les coefficients de dillatiation de sbrnaches de droite et de gauche permet de traduire avec un scalaire le degré d'assymétrie de l'hystérésis.
+L'ensemble des prorpriétés est calculé avec et sans la composante électrostatique: <br>
+&#8226 L'imprint (x_shift) est définit comme la moyenne entre les deux tensions coercitives des deux branches, tandis que la fenêtre en tension, comme la différence entre ces deux valeurs. L'aire de l'hystérésis est simplement définie comme le produit de la fenêtre en tension par l'amplitude de l'hystérésis. <br>
+&#8226 Les points d'intersection des axes des des abscisses et des ordonnées définissent respectivement les tensions coercitives et de les piezoersponse rémanente. <br>
+&#8226 Les tensions points d'inflection située par défaut à 10 et 90% de l'amplitude des branches définissent respectivement les tensions de nucléations et de saturations. <br>
+&#8226 La différence erlative entre les coefficients de dillatiation de sbrnaches de droite et de gauche permet de traduire avec un scalaire le degré d'assymétrie de l'hystérésis. <br>
+</p>
 
 ### Artifact decoupling
 
