@@ -545,12 +545,16 @@ For a deeper understanding of the file management in this phase, please refer to
 
 ### Best loop
 
+<p align="justify" width="100%">
 Les données des nanoloops sont extraites des fichiers du dossier <code>txt_loops</code> correspondants et un objet <code>MultiLoop</code> est créé pour chacun des fichiers. Ensuite, les données d'amplitude et de phase sont respectivement divisées par le facteur de qualité et calibrées ex-situ et les valeurs d'amplitude et de phase sur le premier point de mesure sont extraites. Elles constituent deux des propriétés piézo-ferroélectrique cartographiées, correspondant à la polarisation électrique du film à l'état de pristine.
+</p>
 
-Il existe alors 3 différents modes de traitement de mesures, pour lesquels une best loop est extraite avec la fonction <code>find_best_loop</code> du script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">data_processing/hyst_to_map_s2</a></code> : 
-<code>'multi_loop'</code> : la mesure est effectuée en Off Field et plusieurs valeurs de tension de lecture sont appliquées. Ce mode correspond au mode ckpfm introduit par N.Balke et al (INSERER LA REFERENCE). L'ensemble des loops sont fitées avec l'object Hysteresis et la best loop correspond à celle qui minimise l'offset vertical associé à la composante électrostatique en Off Field
-<code>'mean_loop'</code> : la mesure est effectuée en Off Field et une unique valeur de tension de lecture est appliquée, le plus souvent à 0 volt. La best loop correspond à la moyenne de l'ensemble des loop, déterminée par la création de l'object MeanLoop.
-<code>'on_field'</code> : la mesure est effectuée en On Field. La best loop correspond à la moyenne de l'ensemble des loop, déterminée par la création de l'object MeanLoop.
+<p align="justify" width="100%">
+Il existe alors 3 différents modes de traitement de mesures, pour lesquels une best loop est extraite avec la fonction <code>find_best_loop</code> du script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">data_processing/hyst_to_map_s2</a></code> :  <br>
+&#8226 <code>'multi_loop'</code> : la mesure est effectuée en Off Field et plusieurs valeurs de tension de lecture sont appliquées. Ce mode correspond au mode ckpfm introduit par N.Balke et al (INSERER LA REFERENCE). L'ensemble des loops sont fitées avec l'object Hysteresis et la best loop correspond à celle qui minimise l'offset vertical associé à la composante électrostatique en Off Field <br>
+&#8226 <code>'mean_loop'</code> : la mesure est effectuée en Off Field et une unique valeur de tension de lecture est appliquée, le plus souvent à 0 volt. La best loop correspond à la moyenne de l'ensemble des loop, déterminée par la création de l'object MeanLoop. <br>
+&#8226 <code>'on_field'</code> : la mesure est effectuée en On Field. La best loop correspond à la moyenne de l'ensemble des loop, déterminée par la création de l'object MeanLoop.
+</p>
 
 ### Hysteresis and properties
 
