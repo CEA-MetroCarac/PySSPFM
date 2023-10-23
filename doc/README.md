@@ -578,9 +578,8 @@ Une initialisation des paramètres du fit est alors effectuée::
                 <ul>
                     <li>Pour analysis_mode == 'on_f_loop': Dans le cas ou locked_elec_slope = 'positive', la pente est définie positivement, et vice versa, si locked_elec_slope = 'negative', la pente est définie négativement. Si locked_elec_slope est None, la pente est définie selon le sens d'application de la tension : grounded_tip=True -> 'negative', grounded_tip=False -> 'psotive'.</li>
                     <li>Sinon la pente est fixée à 0.</li>
+                </ul>
             </ul>
-        </ul>
-    <ul>
         <li>Le différentiel des deux branches, diff_hyst, est calculé puis filtré (par la fonction filter_mean du script INSERER), formant en quelque un dome. Ce dernier permet d'initialiser les valeurs de paramètres de fit. Cette procédure est basée sur le stravaux de INSERER LA SOURCE.</li>
         <li>Valeur initiale:</li>
             <ul>
@@ -590,7 +589,6 @@ Une initialisation des paramètres du fit est alors effectuée::
                 <li>Pour analysis_mode == 'on_f_loop', la pente est initialisée comme le rapport : max(PR)-min(PR)/(max(tension)-min(tension)).</li>                      
             </ul>
         </ul>
-    </ul>
 </p>
     
 L'hystérésis est alors fitée avec la méthode fit, en fonction des coordonnes des points de la best loop, et en choisissant la méthod voulue. Cette méthode repose sur la librairie lmfit et permet d'extraire les paramètres du modèle de l'hystérésis qui converge le plus vers les données expérimentales.
