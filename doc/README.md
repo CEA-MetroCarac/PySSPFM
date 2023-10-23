@@ -4,9 +4,9 @@
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/logoPySSPFM_white.PNG> <br>
 </p>
 
-## Overview
+## I) - Overview
 
-### Workflow
+### I.1) - Workflow
 
 <p align="center" width="100%">
     <img align="center" width=80%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20worflow.PNG> <br>
@@ -25,7 +25,7 @@ The PySSPFM application then proceeds with two stages of measurement processing.
 * `Viewers`
 * `...`
 
-### Code architecture
+### I.2) - Code architecture
 
 <p align="center" width="100%">
     <img align="center" width=50%" src="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20architecture.PNG"> <br>
@@ -41,27 +41,28 @@ Here is the simplified architectural overview of the PySSPFM application's sourc
 &#8226 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">map</a></code> module formats material properties into a map. It depends on the use of functions from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code>. <br>
 &#8226 The The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/seg_to_loop_s1.py">seg_to_loop_s1</a></code> executable file performs the initial stage of SSPFM measurements processing. It assembles and relies upon functions from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/seg_to_loop">seg_to_loop</a></code>, and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop">nanoloop</a></code>. <br>
 &#8226 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">hyst_to_map_s2</a></code> executable file accomplishes the second stage of SSPFM measurements processing. It assembles and relies upon functions from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/hyst_to_map">hyst_to_map</a></code>, and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop">nanoloop</a></code>. <br>
-&#8226 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">toolbox</a></code> contains a set of executable tools that enable in-depth analysis of processed measurements and call various functions contained within <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/data_processing">data_processing</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils">utils.</a></code> <br>
+&#8226 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">toolbox</a></code> contains a set of executable tools that enable in-depth analysis of processed measurements and call various functions contained within <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/data_processing">data_processing</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils">utils</a></code>. <br>
 &#8226 The graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/gui">gui</a></code> facilitates the execution of all executables, which include the code within <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/data_processing">data_processing</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">toolbox</a></code>. <br>
 </p>
 
-## GUI
+## II) - GUI
 
 <p align="justify" width="100%"> 
-The graphical user interface <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/gui">codes</a> have been crafted using the <a href="https://docs.python.org/fr/3/library/tkinter.html">Tkinter</a> library. The <a href="https://pypi.org/project/Pillow">PIL library</a> is employed to open and display the application's logo and icon on the graphical interfaces.
+The <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/gui">graphical user interface codes</a> have been crafted using the <a href="https://docs.python.org/fr/3/library/tkinter.html">Tkinter</a> library. The <a href="https://pypi.org/project/Pillow">PIL library</a> is employed to open and display the application's logo and icon on the graphical interfaces.
 </p>
 
-### Main window
+### II.1) - Main window
 
 <p align="center" width="100%">
     <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20main%20GUI.PNG> <br>
+    <em>GUI: Main window</em>
 </p>
 
 <p align="justify" width="100%">
 The graphical user interface of the main window constitutes the menu of the PySSPFM application. It can be launched directly from the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/main.py">interface code</a> or from the PySSPFM.exe file. It encompasses an array of buttons, each corresponding to an executable script. A secondary window is subsequently opened for the selected script. The interface can be closed either using the <img src="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Exit%20Button.PNG" width="60"> button in the bottom or the <img src="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Close%20Button.PNG" width="20"> button in the upper right corner.
 </p>
 
-### Secondary window
+### II.2) - Secondary window
 
 <p align="justify" width="100%">
 The graphical user interface of the secondary window is specific to each of the respective executable Python scripts, constituting their dedicated menu. It can be initiated directly from the code of the respective interface or from the main menu. 
@@ -69,6 +70,7 @@ The graphical user interface of the secondary window is specific to each of the 
 
 <p align="center" width="100%">
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/File%20Management%20Section.PNG> <br>
+    <em>GUI: File management section</em>
 </p>
 
 <p align="justify" width="100%">
@@ -77,6 +79,7 @@ In most instances, they encompass a primary file management section to select th
 
 <p align="center" width="100%">
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/User%20Parameters%20Section.PNG> <br>
+    <em>GUI: Treatment parameter section</em>
 </p>
 
 <p align="justify" width="100%">
@@ -85,6 +88,7 @@ Following this, sections are allocated to parameters relevant to the processing 
 
 <p align="center" width="100%">
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Tooltip.png> <br>
+    <em>GUI: Tooltip</em>
 </p>
 
 <p align="justify" width="100%">
@@ -93,6 +97,7 @@ Users are guided through tooltips when hovering the mouse over the button. The p
 
 <p align="center" width="100%">
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Plot%20and%20save%20section.PNG> <br>
+    <em>GUI: Plot and save section</em>
 </p>
 
 <p align="justify" width="100%">
@@ -101,22 +106,23 @@ Lastly, in most cases, a final section allows the user to choose whether to disp
 
 <p align="center" width="100%">
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Start%20and%20Exit%20section.PNG> <br>
+    <em>GUI: Start and Exit buttons</em>
 </p>
 
 <p align="justify" width="100%">
-The processing can be executed with the <code>Start</code> button, and the interface also features an <code>Exit</code> button
+The processing can be executed with the <code>Start</code> button, and the interface also features an <code>Exit</code> button.
 </p>
 
-## File management
+## III) - File management
 
 <p align="center" width="100%">
-    <img align="center" width=80%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20File%20Management.PNG> <br>
+    <img align="center" width=100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20File%20Management.PNG> <br>
     <em>PySSPFM file management</em>
 </p>
 
-### Input files
+### III.1) - Input files
 
-#### SSPFM measurement files
+#### III.1.a) - SSPFM measurement files
 
 <p align="justify" width="100%">
 The input processed SSPFM datacube files can be in the form of spreadsheets (columns of value lists for each measurement) with following extensions:
@@ -133,28 +139,28 @@ Or directly in the format of a Bruker SSPFM file with the extension:
 * `.spm` (Bruker)
 
 <p align="justify" width="100%">
-SSPFM files from other manufacturers are not supported. It is advisable to extract the measurements from them and place them into a spreadsheet. The header dimensions, the column separator in the spreadsheet files to be extracted, and the measurements to be extracted are customizable. In the current version, deflection, polarization voltage, PFM amplitude and phase are plotted and treated, but the code can be adapted to further parameters measured. A converter from spm files to spreadsheets is also available.
+SSPFM files from other manufacturers are not supported in this application. It is advisable to extract the measurements from them and place them into a spreadsheet. The header dimensions, the column separator in the spreadsheet files to be extracted, and the measurements to be extracted are customizable. In the current version, deflection, polarization voltage, PFM amplitude and phase are plotted and treated, but the code can be adapted to further parameters measured. A <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">converter</a> from spm files to spreadsheets is also available.
 </p>
 
-#### Measurement sheet
+#### III.1.b) - Measurement sheet
 
 <p align="justify" width="100%">
 Prior to conducting the SSPFM measurement, the user must complete a measurement form. Templates are available for both the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a> and <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>) modes. This measurement form serves to guide the user in carrying out the SSPFM measurements and to maintain a record of critical measurement parameters. It also automatically generates certain measurement information based on the provided parameters, such as total measurement time, tip-induced pressure, lock-in amplifier settings, quality factor, and resonance settling time. Furthermore, completing the form is a mandatory prerequisite for the subsequent measurement processing. The parameters to be employed for measurement processing include grid dimensions, calibration coefficients, sign of piezoelectric coeffcient, sinusoidal voltage magnitude, voltage application direction, and SSPFM polarization signal parameters.
 </p>
 
-#### Extraction
+#### III.1.c) - Extraction
 
 <p align="justify" width="100%">
 All measurement files and the measurement sheet must be placed within the same directory. The data contained in these file types are then extracted using the file <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/raw_extraction.py">utils/raw_extraction</a></code>. For files with the <code>.spm</code> extension (Bruker), the extraction script relies on a second file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_reader.py">utils/datacube_reader</a></code>, which employs the <code>DataExtraction</code> object with the <a href="https://pypi.org/project/nanoscope/">nanoscope</a> library. However, the nanoscope library alone is insufficient for data extraction, as it requires the use of DLL files installed with the Nanoscope Analysis software (Bruker). In the event that the DLL files are not present, the <code>NanoscopeError</code> object has been created to handle the error.
 </p>
 
-### Output files
+### III.2) - Output files
 
 <p align="justify" width="100%">
 A default data processing path management is provided, but the user has the option to select their own path management.
 </p>
 
-#### First step of data analysis
+#### III.2.a) - First step of data analysis
 
 <p align="center" width="100%">
     <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_First_Step.PNG> <br>
@@ -172,7 +178,7 @@ Following the first processing step, by default, a new directory is created at t
     </ul>
 </p>
 
-#### Second step of data analysis
+#### III.2.b) - Second step of data analysis
 
 <p align="center" width="100%">
     <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_Second_Step.PNG> <br>
@@ -191,7 +197,7 @@ Following the second stage of processing, the processing folder is augmented as 
      </ul>
 </p>
 
-#### Toolbox
+#### III.2.c) - Toolbox
 
 <p align="center" width="100%">
     <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_Toolbox.PNG> <br>
@@ -207,7 +213,7 @@ Two tools deviate from this path management: <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">spm_converter</a></code>: It creates a folder with the nomenclature: <code>'initial_file_name'_datacube'_extension'</code> at the same root as the input folder, containing all the converted datacube files.
 </p>
 
-## First step of data analysis
+## IV) - First step of data analysis
 
 <p align="center" width="100%">
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/GUI_first_step.PNG> <br>
@@ -223,13 +229,13 @@ For a deeper understanding of the file management in this phase, please refer to
 &#8226 Output: File Management/Output Files/First Step of Data Analysis.
 </p>
 
-### Parameters
+### IV.1) - Parameters
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Parameters_first_step.PNG> <br>
 </p>
 
-### Polarization voltage
+### IV.2) - Polarization voltage
 
 <p align="justify" width="100%">
 In cases where the acquisition of polarization voltage is not conducted, it can be reconstructed from a property dictionary containing the following information for both write (On Field) and read (Off Field) segments: their duration, the number of samples per segment, the number of segments, their direction of variation, and their voltage limits. These parameters are specified in the measurement sheet and are subsequently employed during the processing step. The script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/signal_bias.py">utils/signal_bias</a></code> is responsible for generating the polarization signal based on these parameters and vice versa.
@@ -280,13 +286,13 @@ The code also includes other polarization voltage form that can be utilized for 
     <em>4 - cKPFM voltage n°2</em> <br>
 </p>
 
-### Pre-measurement calibration
+### IV.3) - Pre-measurement calibration
 
 <p align="justify" width="100%">
 Calibration is indispensable for obtaining quantitative measurements. In the measurement data sheet, values can be provided to quantify the measured amplitude, including tip sensitivity (nm/V) and spring constant (N/m), which can be obtained from the manufacturer or through pre-measurement calibration. Additionally, a pre-measurement calibration can be used to determine the phase offset. All amplitude and phase values are calibrated with the result in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/analysis.py">seg_to_loop/analysis</a></code>.
 </p>
 
-### Segment
+### IV.4) - Segment
 
 <p align="justify" width="100%">
 The SSPFM measurement is divided into segments, one for each polarization voltage signal switch. A hold segment is present at the beginning and end of the measurement. For the Bruker constructor mode, their duration is equal to the ratio between the ramp size (in nanometers) and the tip velocity (in nanometers per second). Depending on the polarization signal parameters, the total number of segments in the measurement can be determined: <br>
@@ -357,13 +363,13 @@ All segments (in the Off Field mode) can be visualized on this map:
     <em>Segment map (Off Field)</em>
 </p>
 
-## Nanoloop
+## V) - Nanoloop
 
 <p align="justify" width="100%">
 Once all the measurements are extracted per segment, phase and amplitude nanoloops as a function of polarization voltage can be created and saved. All the nanoloop script are located in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop">utils/nanoloop</a></code> scripts. The script <code><a href="https://github.com/CEA MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop/theory">utils/nanoloop/theory</a></code> is designed to generate nanoloops in amplitude, phase, and piezoresponse based on the physical equations related to piezoelectric, ferroelectric, and electrostatic phenomena.
 </p>
 
-### Post-measurement phase calibration
+### V.1) - Post-measurement phase calibration
 
 <p align="justify" width="100%">
 Post-measurement phase calibration is performed with <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase</a></code> script.
@@ -464,7 +470,7 @@ Following the calibration process and the identification of the positions of the
 &#8226 <code>up and down</code>: A threshold is established between the two peaks, and each phase value is assigned the target value, <code>pha_fwd</code> or <code>pha_rev</code>, based on its position relative to the threshold and the calibration process.
 </p>
 
-### MultiLoop
+### V.2) - MultiLoop
 
 <p align="justify" width="100%">
 For each measurement file, the acquisition of multiple nanoloop curves is possible, enabling the study of measurement repeatability and the reduction of measurement noise (by averaging all nanoloops within the file). This process involves the creation of a <code>MultiLoop</code> object with the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis</a></code> script, initialized with arrays of sub-arrays (the number of sub-arrays corresponding to the number of loops). These sub-arrays contain measurements such as polarization voltage, extracted amplitude, and phase values. Additionally, a voltage reading array is provided (with values corresponding to each nanoloop), a dictionary of phase calibration results, and the measurement mode (On or Off Field).
@@ -490,7 +496,7 @@ Subsequently, based on the amplitude and phase loops, piezoresponse loops are ge
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/multiloop_piezoresponse.PNG> <br>
 </p>
 
-### MeanLoop
+### V.3) - MeanLoop
 
 <p align="justify" width="100%">
 The <code>MeanLoop</code> is defined within the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis</a></code> script. It is initialized with a <code>MultiLoop</code> object, and optionally, a phase calibration dictionary. This object facilitates the averaging of all loops within the <code>MultiLoop</code>, encompassing both amplitude, phase, and piezoresponse, except for the initial loop, which differs due to the sample's pre-polarized state at the beginning of the measurement. If a phase calibration dictionary is provided, the phase component of the MeanLoop is processed accordingly.
@@ -502,7 +508,7 @@ The <code>MeanLoop</code> is defined within the <code><a href="https://github.co
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/meanloop_piezoresponse.PNG> <br>
 </p>
 
-## Second step of data analysis
+## VI) - Second step of data analysis
 
 <p align="center" width="100%">
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/GUI_second_step.PNG> <br>
@@ -525,7 +531,7 @@ For a deeper understanding of the file management in this phase, please refer to
 &#8226 File Management/Output Files/Second Step of Data Analysis.
 </p>
 
-### Parameters
+### VI.1) - Parameters
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Parameters_second_step_1.PNG> <br>
@@ -543,7 +549,7 @@ For a deeper understanding of the file management in this phase, please refer to
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Parameters_second_step_4.PNG> <br>
 </p>
 
-### Best loop
+### VI.2) - Best loop
 
 <p align="justify" width="100%">
 The nanoloops data is extracted from the files within the corresponding <code>txt_loops</code> directory, and a <code>MultiLoop</code> object is instantiated for each file. Subsequently, the amplitude and phase data are divided by the quality factor, calibrated ex-situ, and the amplitude and phase values at the first measurement point are extracted. These form two of the mapped piezo-ferroelectric properties, corresponding to the electrical polarization of the pristine state of the film.
@@ -556,7 +562,7 @@ There are three distinct measurement processing modes, each involving the extrac
 &#8226 <code>'on_field'</code>: Measurements are conducted in On Field. The best loop, in this case, is the average of all the loops, determined through the creation of the <code>MeanLoop</code> object.
 </p>
 
-### Hysteresis and properties
+### VI.3) - Hysteresis and properties
 
 <p align="justify" width="100%">
 The script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/curve_hysteresis.py>utils/core/curve_hysteresis</a></code> introduces and processes a novel entity known as the <code>Hysteresis</code>. This entity commences its existence by initializing through the variable <code>model</code>, encapsulating the mathematical formulations for both of its branches: <br>
@@ -603,7 +609,7 @@ Following the completion of the fitting process, the 'properties' method facilit
 &#8226 The relative difference between the expansion coefficients of the right and left branches, denoted as <code>diff_coef</code>, quantifies the level of hysteresis asymmetry.
 </p>
 
-### Artifact decoupling
+### VI.4) - Artifact decoupling
 
 Les artefacts, princiapelemnt électrostatique mais plus généralement les termes d'origine quadratique (électrostatics, électrostrictif, effet Joules), non nuls ici par application d'une tension continue V_DC peuvent influencer la mesure:
 par un offset vertical pour la mesure off field (artefacts uniquement électrostatics)
@@ -613,7 +619,7 @@ de manière non linéaire, lorsque l'effet est activé après une certaine tensi
 Des protocoles de décorélation ont été mis au point :
 LES LISTER
 
-## SSPFM mapping
+## VII) - SSPFM mapping
 
 La création et le traitement des carographies SSPFM est assuré par l'ensemble des scripts contenus dans: <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map>utils/map</a></code>.
 
@@ -624,7 +630,7 @@ Le script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySS
 
 Les cartographies sont générées via les codes exécutables list_map_reader et global_map_reader.
 
-### Mask
+### VII.1) - Mask
 
 Pour les cartoraphies, il est possible de déterminer un masque pour:
 - Inhiber l'influence de pixels problématiques / défectueux de la mesure
@@ -635,17 +641,17 @@ Le masque peut être déterminé:
 - Manuellement via une liste de pixel rensiegnée par l'utilisateur
 - 
 
-### Interpolation 2D
+### VII.2) - Interpolation 2D
 
-### Figures
+### VII.3) - Figures
 
 AFFICHER LES CARTO
 
-## Toolbox
+## VIII) Toolbox
 
-### Viewers
+### VIII.1) Viewers
 
-#### Raw file
+#### VIII.1.a) Raw file
 
 <p align="justify" width="100%">
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">toolbox/raw_file_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/raw_file_reader.py">gui/raw_file_reader</a></code>.
@@ -658,7 +664,7 @@ Le mode de mesure doit être choisi grâce au paramètre 'mode' :
 
 INSERER LE GRAPHIQUE
 
-#### Loop file
+#### VIII.1.b) Loop file
 
 <p align="justify" width="100%">
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox/loop_file_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/loop_file_reader.py">gui/loop_file_reader</a></code>.
@@ -666,7 +672,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 
 En entrée, un fichier de mesure sous forme de fichier txt_loop est ouvert (généré ,après la première étape de traitement), ainsi que la fiche de mesure csv de telle sorte à en extraire les parmaètre du signal en tension de polarisation. Une calibration ex situ de la phase est effectuée, grâce à l'ensemble des paramètres utilisateurs de traitement de phase à remplir. L'utilisateur peut aussi choisir de supprimer la première courbe d'hystérésis des figures générées, si cette dernière diffère des autres du à l'état de pristine du film. L'ensemble des objets MultiLoop et MeanLoop associé au fichier sont alors construi puis les figures associées sont générées et affichées. 
 
-#### (List & Global) map reader
+#### VIII.1.c) (List & Global) map reader
 
 <p align="justify" width="100%">
 List map reader: <br>
@@ -682,15 +688,13 @@ Le principe fonctionnement de ces deux readers est similaire, la seule différen
 
 En entrée, le dossier txt_ferro_meas, contenant les mesures des propriétés sous forme de fichiers texte pour l'ensemble des modes (On et Off field, coupled) est reseigné.
 
-#### Parameters
-
-### Hysteresis clustering (K-Means)
+### VIII.2) Hysteresis clustering (K-Means)
 
 <p align="justify" width="100%">
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox/hysteresis_clustering</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hysteresis_clustering.py">gui/hysteresis_clustering</a></code>.
 </p>
 
-#### Parameters
+#### VIII.2.a) Parameters
 
 <p align="justify" width="100%">
 &#8226 File Management: In the initial phase, the algorithm ingests the <code>txt_best_loops</code> directory along with the <code>txt_ferro_meas</code> directory. <br>
@@ -698,7 +702,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 &#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of outcomes. <br>
 </p>
 
-#### Extraction 
+#### VIII.2.b) Extraction 
 
 <p align="justify" width="100%">
 The entirety of data stemming from the best hysteresis loops, both in the On Field and Off Field modes, is extracted from the files residing within the <code>txt_best_loops</code> directory. <br>
@@ -706,13 +710,13 @@ Vertical offset measurements in the Off Field mode and the dimensions of the map
 The coupled measurements are subsequently generated through the process of differential analysis of On Field and Off Field measurements, with the flexibility to incorporate the vertical offset in the Off Field mode, a component influenced by the sample's surface contact potential.
 </p>
 
-#### Treatment
+#### VIII.2.c) Treatment
 
 <p align="justify" width="100%">
 For each of the modes (On Field, Off Field, and coupled), and for each of the hysteresis associated with each data point, a cluster is assigned using the K-Means methodology. To accomplish this, we import the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">KMeans</a> function from <a href="https://scikit-learn.org/stable/modules/clustering.html#clustering">sklearn.cluster</a>. A reference cluster is established, identified as the one encompassing the maximum number of data points. The index assigned to the other clusters is then computed as the distance between their centroid and that of the reference cluster, respectively. Subsequently, an average hysteresis for each cluster is computed.
 </p>
 
-#### Figures
+#### VIII.2.d) Figures
 
 <p align="center" width="100%">
     <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/hysteresis_clustering_all_hyst.PNG>
