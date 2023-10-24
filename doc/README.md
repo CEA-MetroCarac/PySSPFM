@@ -445,7 +445,7 @@ All segments (in the Off Field mode) can be visualized on this map:
 
 <p align="center" width="100%">
     <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/segment_map.PNG> <br>
-    <em>Segment map (Off Field)</em>
+    <em>Segment map (Off Field) (figure generated with <code>amp_pha_map</code> function of <code>utils/seg_to_loop/plot</code> script)</em>
 </p>
 
 ## V) - Nanoloop
@@ -463,6 +463,7 @@ An angular histogram is constructed from the complete set of phase values within
 
 <p align="center" width="100%">
     <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_histogram.png> <br>
+    <em>Phase histogram of SSPFM measurement</em>
 </p>
 
 <p align="justify" width="100%">
@@ -499,6 +500,7 @@ Here are the various hysteresis configurations in the Off-Field mode, depending 
 
 <p align="center" width="100%">
     <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/calibration_hysteresis_off_field.PNG> <br>
+    <em>Hysteresis (Off Field) configuration depending on sign of $d_33$ and direction of voltage</em>
 </p>
 
 <p align="justify" width="100%">
@@ -523,6 +525,7 @@ Here are the various hysteresis configurations in the On-Field mode, depending o
 
 <p align="center" width="100%">
     <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/calibration_hysteresis_on_field.PNG.PNG> <br>
+    <em>Hysteresis (On Field) configuration depending on sign of $d_33$ and direction of voltage</em>
 </p>
 
 <p align="justify" width="100%">
@@ -570,7 +573,9 @@ Phase values are then adjusted according to the phase calibration dictionary.
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/multiloop_amplitude.PNG> <br>
+    <em><code>MultiLoop</code> of amplitude (figure generated with <code>plot_all_loop</code> function of <code>utils/nanoloop/plot</code> script)</em> <br>
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/multiloop_phase.PNG> <br>
+    <em><code>MultiLoop</code> of phase (figure generated with <code>plot_all_loop</code> function of <code>utils/nanoloop/plot</code> script)</em>
 </p>
 
 <p align="justify" width="100%">
@@ -579,6 +584,7 @@ Subsequently, based on the amplitude and phase loops, piezoresponse loops are ge
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/multiloop_piezoresponse.PNG> <br>
+    <em><code>MultiLoop</code> of piezoresponse (figure generated with <code>plot_all_loop</code> function of <code>utils/nanoloop/plot</code> script)</em>
 </p>
 
 ### V.3) - MeanLoop
@@ -589,14 +595,18 @@ The <code>MeanLoop</code> is defined within the <code><a href="https://github.co
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/meanloop_amplitude.PNG> <br>
+    <em><code>MeanLoop</code> of amplitude (figure generated with <code>plot_meanloop</code> function of <code>utils/nanoloop/plot</code> script)</em> <br>
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/meanloop_phase.PNG> <br>
+    <em><code>MeanLoop</code> of phase (figure generated with <code>plot_meanloop</code> function of <code>utils/nanoloop/plot</code> script)</em> <br>
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/meanloop_piezoresponse.PNG> <br>
+    <em><code>MeanLoop</code> of piezoresponse (figure generated with <code>plot_meanloop</code> function of <code>utils/nanoloop/plot</code> script)</em>
 </p>
 
 ## VI) - Second step of data analysis
 
 <p align="center" width="100%">
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/GUI_second_step.PNG> <br>
+    <em>GUI: Second step of data analysis</em>
 </p>
 
 <p align="justify" width="100%">
