@@ -178,8 +178,17 @@ All measurement files and the measurement sheet must be placed within the same d
 
 #### III.1.d) - Examples & Tests
 
-Les exemples et tests s'appuient soit sur des données:
-- réelles issues de mesures SSPFM (échantillon de KNN)
+Les <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples">exemples</a></code> et <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests">tests</a></code> s'appuient nécessaierment sur des données en entrée. Elles peuvent être de deux nature différentes :
+- Des données réelles issues de mesures SSPFM réaliséess sur un échantillon de KNN, qui se trouvent dans le dossier: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in">examples/datas/PySSPFM_example_in</a></code>. Ce dernier contient un ensemble de sous dossiers:
+- <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n">KNN500n</a></code>: ensemble des fichiers de mesure datacube SSPFM, d'extention spm (Bruker), ainsi que la fiche de mesure correspondante
+- <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_2023-10-05-17h21m_out_dfrt">KNN500n_2023-10-05-17h21m_out_dfrt</a></code>: ensemble de la mesure arpès la première étape de traitement
+- <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_2023-10-05-17h23m_out_dfrt">KNN500n_2023-10-05-17h23m_out_dfrt</a></code>: ensemble de la mesure arpès la deuxième étape de traitement
+- <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_reduced">KNN500n_reduced</a></code>: ensemble réduit de la mesure SSPFM (3 des fichiers de mesure datacube SSPFM Bruker d'extention spm), ainsi que la fiche de mesure correspondante
+- <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_reduced_datacube_csv">KNN500n_reduced_datacube_csv</a></code>: ensemble réduit de la mesure SSPFM (3 des fichiers de mesure datacube SSPFM d'extention csv), ainsi que la fiche de mesure correspondante
+- <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_reduced_datacube_txt">KNN500n_reduced_datacube_txt</a></code>: ensemble réduit de la mesure SSPFM (3 des fichiers de mesure datacube SSPFM d'extention txt), ainsi que la fiche de mesure correspondante
+- <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_reduced_datacube_xlsx">KNN500n_reduced_datacube_xlsx</a></code>: ensemble réduit de la mesure SSPFM (3 des fichiers de mesure datacube SSPFM d'extention xlsx), ainsi que la fiche de mesure correspondante
+
+  
 - simulées par des scripts prévus à cet effet:
 - utils/seg_to_loop/gen_datas.py permet de générer une mesure datacube SSPFM, soit en mode sweep resonance soit dfrt
 - utils/nanoloop/gen_datas.py permet de générer des nanoloop
