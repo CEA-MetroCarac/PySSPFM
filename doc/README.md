@@ -397,7 +397,7 @@ The segmentation process is performed with <code>cut_function</code> in the scri
 </p>
 
 <p align="justify" width="100%">
-&#8226 <code>max</code> (usable for resonance sweep): the maximum value from the amplitude array is extracted. The corresponding index is used to extract the resonance frequency value along with the phase value. The bandwidth of the peak is determined using the function <code>width_peak</code> in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/peak.py">utils/core/peak</a></code>, allowing for the calculation of the quality factor. This method is advantageous due to its speed and robustness.
+&#8226 <code>max</code> (usable for resonance sweep): the maximum value from the amplitude array is extracted. The corresponding index is used to extract the resonance frequency value along with the phase value. The bandwidth of the peak is determined with method <code>q_fact_max</code> using the function <code>width_peak</code> in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/peak.py">utils/core/peak</a></code>, allowing for the calculation of the quality factor. This method is advantageous due to its speed and robustness.
 </p>
 
 <p align="center" width="100%">
@@ -416,7 +416,7 @@ Parameters such as amplitude $A$, quality factor $Q$, and the center of the peak
 </p>
 
 <p align="justify" width="100%">
-The phase $\phi$ can be extracted simply at the index of the resonance frequency $f_0$ or by performing a fit in the narrow vicinity of the resonance peak using the <code>fit_pha</code> parameter with an arctangent function model (in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script), with (<code>sho_phase_switch</code> function) or without (<code>sho_phase</code> function) a switch:
+The phase $\phi$ can be extracted simply at the index of the resonance frequency $f_0$ or by performing a fit (the process is performed in <code>phase_fit</code> method) in the narrow vicinity of the resonance peak using the <code>fit_pha</code> parameter with an arctangent function model (in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) with (<code>sho_phase_switch</code> function) or without (<code>sho_phase</code> function) a switch (detected with <code>phase_fit_analysis</code> method):
 </p>
 
 $$ \phi(f) = arctan({f * f_0 \over Q * (f_0^2 - f^2)}) + \phi_0 $$
@@ -427,7 +427,7 @@ $$ \phi(f) = arctan({f * f_0 \over Q * (f_0^2 - f^2)}) + \phi_0 $$
 </p>
 
 <p align="justify" width="100%">
-This entire process enhances the precision of the measured values. The robustness of the treatment can be increased with a peak detection algorithm (activated with <code>detect_peak</code> and with order of <code>filter_ord</code>), allowing a choice regarding whether to perform the fit. All fits are conducted using the <a href="https://pypi.org/project/lmfit/">lmfit</a> library, and methods like <code>least_sq</code>, <code>least_square</code> (prioritizing speed), or <code>nelder</code> (prioritizing convergence) can be selected with the <code>fit_method</code> setting.
+This entire process enhances the precision of the measured values. The robustness of the treatment can be increased with <code>treatment_fit</code> method in which a peak detection algorithm is used (activated with <code>detect_peak</code> and with order of <code>filter_ord</code>), allowing a choice regarding whether to perform the fit. All fits are conducted using the <a href="https://pypi.org/project/lmfit/">lmfit</a> library, and methods like <code>least_sq</code>, <code>least_square</code> (prioritizing speed), or <code>nelder</code> (prioritizing convergence) can be selected with the <code>fit_method</code> setting.
 </p>
 
 <p align="justify" width="100%">
