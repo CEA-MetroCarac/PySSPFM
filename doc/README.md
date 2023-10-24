@@ -179,7 +179,7 @@ All measurement files and the measurement sheet must be placed within the same d
 #### III.1.d) - Examples & Tests
 
 <p align="justify" width="100%">
-The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples">illustrative instances</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests">evaluations</a></code> inherently rely upon input data, which may assume one of two distinct forms:
+The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples">examples</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests">tests</a></code> inherently rely upon input data, which may assume one of two distinct forms:
 
 1. Authentic data stemming from SSPFM measurements conducted on a KNN sample, which are located within the directory: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in">examples/datas/PySSPFM_example_in</a></code>. This repository encompasses several subdirectories, specifically:
     - <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n">KNN500n</a></code>: housing an assemblage of SSPFM datacube measurement files, bearing the spm extension (Bruker), alongside their corresponding measurement records. This serves the following purpose:
@@ -226,79 +226,6 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
         - <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data_processing/ex_hyst_to_map_s2.py">examples/data_processing/ex_hyst_to_map_s2</a></code>.
         - <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/hyst_to_map/ex_analysis.py">examples/utils/hyst_to_map/ex_analysis.py</a></code>.
         - <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/hyst_to_map/ex_gen_datas.py">examples/utils/hyst_to_map/ex_gen_datas.py</a></code>.
-</p>
-
-
-<p align="justify" width="100%">
-Les <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples">exemples</a></code> et <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests">tests</a></code> s'appuient nécessaierment sur des données en entrée. Elles peuvent être de deux nature différentes : <br>
-    <ul>
-        <li>Des données réelles issues de mesures SSPFM réaliséess sur un échantillon de KNN, qui se trouvent dans le dossier: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in">examples/datas/PySSPFM_example_in</a></code>. Ce dernier contient un ensemble de sous dossiers:</li>
-            <ul>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n">KNN500n</a></code>: ensemble des fichiers de mesure datacube SSPFM, d'extention spm (Bruker), ainsi que la fiche de mesure correspondante. Il est utilisé pour:</li>
-                    <ul>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/seg_to_loop/ex_file.py">examples/utils/seg_to_loop/ex_file</a></code></li>
-                    </ul>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_2023-10-05-17h21m_out_dfrt">KNN500n_2023-10-05-17h21m_out_dfrt</a></code>: ensemble de la mesure arpès la première étape de traitement. Il est utilisé pour:</li>
-                    <ul>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_loop_file_reader">examples/toolbox/ex_loop_file_reader</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/hyst_to_map/ex_file.py">examples/utils/hyst_to_map/ex_file</a></code></li>
-                    </ul>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_2023-10-05-17h23m_out_dfrt">KNN500n_2023-10-05-17h23m_out_dfrt</a></code>: ensemble de la mesure arpès la deuxième étape de traitement. Il est utilisé pour:</li>
-                    <ul>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_global_map_reader.py">examples/toolbox/ex_global_map_reader</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_hysteresis_clustering">examples/toolbox/ex_hysteresis_clustering</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_list_map_reader">examples/toolbox/ex_list_map_reader</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_map_correlation">examples/toolbox/ex_map_correlation</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_mean_loop">examples/toolbox/ex_mean_loop</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_plot_extrem">examples/toolbox/ex_plot_extrem</a></code></li>
-                    </ul>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_reduced">KNN500n_reduced</a></code>: ensemble réduit de la mesure SSPFM (3 des fichiers de mesure datacube SSPFM Bruker d'extention spm), ainsi que la fiche de mesure correspondante. Il est utilisé pour:</li>
-                    <ul>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_raw_file_reader">examples/toolbox/ex_raw_file_reader</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_spm_converter">examples/toolbox/ex_spm_converter</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/ex_raw_extraction.py">examples/utils/ex_raw_extraction</a></code></li>
-                    </ul>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_reduced_datacube_csv">KNN500n_reduced_datacube_csv</a></code>: ensemble réduit de la mesure SSPFM (3 des fichiers de mesure datacube SSPFM d'extention csv), ainsi que la fiche de mesure correspondante. Il est utilisé pour:</li>
-                    <ul>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_raw_file_reader">examples/toolbox/ex_raw_file_reader</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/ex_raw_extraction.py">examples/utils/ex_raw_extraction</a></code></li>
-                    </ul>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_reduced_datacube_txt">KNN500n_reduced_datacube_txt</a></code>: ensemble réduit de la mesure SSPFM (3 des fichiers de mesure datacube SSPFM d'extention txt), ainsi que la fiche de mesure correspondante. Il est utilisé pour:</li>
-                    <ul>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_raw_file_reader">examples/toolbox/ex_raw_file_reader</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/ex_raw_extraction.py">examples/utils/ex_raw_extraction</a></code></li>
-                    </ul>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_reduced_datacube_xlsx">KNN500n_reduced_datacube_xlsx</a></code>: ensemble réduit de la mesure SSPFM (3 des fichiers de mesure datacube SSPFM d'extention xlsx), ainsi que la fiche de mesure correspondante. Il est utilisé pour:</li>
-                    <ul>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_raw_file_reader">examples/toolbox/ex_raw_file_reader</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/ex_raw_extraction.py">examples/utils/ex_raw_extraction</a></code></li>
-                    </ul>
-            </ul>
-        <li>Des données simulées par des scripts prévus à cet effet:</li>
-            <ul>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/gen_datas.py">utils/seg_to_loop/gen_datas.py</a></code> permet de générer une mesure datacube SSPFM, soit en mode sweep resonance soit dfrt. Les examples suivants s'appuient dessus:</li>
-                    <ul>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data_processing/ex_seg_to_loop_s1.py">examples/data_processing/ex_seg_to_loop_s1</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/seg_to_loop/ex_analysis.py">examples/utils/seg_to_loop/ex_analysis.py</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/seg_to_loop/ex_gen_datas.py">examples/utils/seg_to_loop/ex_gen_datas.py</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/seg_to_loop/ex_plot.py">examples/utils/seg_to_loop/ex_plot.py</a></code></li>
-                    </ul>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/gen_datas.py">utils/nanoloop/gen_datas.py</a></code> permet de générer des nanoloop. Les examples suivants s'appuient dessus:</li>
-                    <ul>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/hyst_to_map/ex_electrostatic.py">examples/utils/hyst_to_map/ex_electrostatic.py</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_analysis.py">examples/utils/nanoloop/ex_analysis.py</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_file.py">examples/utils/nanoloop/ex_file.py</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_gen_datas.py">examples/utils/nanoloop/ex_gen_datas.py</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_phase.py">examples/utils/nanoloop/ex_phase.py</a></code></li>
-                    </ul>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/gen_datas.py">utils/hyst_to_map/gen_datas.py</a></code> permet de générer un fichier de la forme txt_loops. Les examples suivants s'appuient dessus:</li>
-                    <ul>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data_processing/ex_hyst_to_map_s2.py">examples/data_processing/ex_hyst_to_map_s2</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/hyst_to_map/ex_analysis.py">examples/utils/hyst_to_map/ex_analysis.py</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/hyst_to_map/ex_gen_datas.py">examples/utils/hyst_to_map/ex_gen_datas.py</a></code></li>
-                    </ul>
-            </ul>
-    </ul>
 </p>
                     
 ### III.2) - Output files
