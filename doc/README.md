@@ -458,16 +458,7 @@ Once all the measurements are extracted per segment, phase and amplitude nanoloo
 
 <p align="justify" width="100%">
 Post-measurement phase calibration is performed with <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase</a></code> script.
-An angular histogram is constructed from the complete set of phase values within the file. In the case of Vertical PFM measurements, it's common to observe two peaks separated by approximately 180°. These two peaks can either be fitted using a <code>Gaussian</code> model (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) for improved precision or their maxima can be directly extracted for enhanced robustness and efficiency. The setting <code>histo_phase_method</code> allows for the selection of either of these methods. In the event of a fitting failure, the maximum method is applied. The phase difference and the positions of these two peaks are then extracted. During PFM measurements, a phase offset is typically present, and phase inversion can occur. Therefore, it's imperative to identify both peaks within the histogram and assign them target phase values.
-</p>
-
-<p align="center" width="100%">
-    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_histogram.png> <br>
-    <em>Phase histogram of SSPFM measurement</em>
-</p>
-
-<p align="justify" width="100%">
-To accomplish this, taking inspiration from the publications of Neumayer et al. (INSERER LA SOURCE), a post-measurement calibration protocol has been devised. The underlying physical principles of this protocol are elaborated upon in the publication (INSERER LA SOURCE). We have tailored this protocol for integration into the PySSPFM application, considering the specific user-specific experimental conditions.
+To accomplish the calibration, taking inspiration from the publications of Neumayer et al. (INSERER LA SOURCE), a post-measurement calibration protocol has been devised. The underlying physical principles of this protocol are elaborated upon in the publication (INSERER LA SOURCE). We have tailored this protocol for integration into the PySSPFM application, considering the specific user-specific experimental conditions.
 </p>
 
 <p align="justify" width="100%">
@@ -529,12 +520,26 @@ Here are the various hysteresis configurations in the On-Field mode, depending o
 </p>
 
 <p align="justify" width="100%">
+The entirety of these steps, including the determination of the direction of hysteresis rotation, as well as the correlation between the various levels of bias, polarization, and phase, is ascertained within the initial segment of the <code>phase_calibration</code> function.
+</p>
+
+<p align="justify" width="100%">
 It is worth noting that in some cases of On-Field measurements, where the electrostatic and ferroelectric components are closely related, multiple phase transitions may occur during the cycle.
 </p>
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/problematic_case_on_field_nanoloop.PNG> <br>
     <em>Problematic case of nanoloop: same order of magnitude for both ferroelectric and electrostatic component (On Field, grounded tip, positive d33)</em>
+</p>
+
+<p align="justify" width="100%">
+For the second part of the <code>phase_calibration</code> function, an in-depth analysis of the phase signal is conducted using the <code>phase_analysis</code> function.
+An angular histogram is constructed from the complete set of phase values within the file. In the case of Vertical PFM measurements, it's common to observe two peaks separated by approximately 180°. These two peaks can either be fitted using a <code>Gaussian</code> model (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) for improved precision or their maxima can be directly extracted for enhanced robustness and efficiency. The setting <code>histo_phase_method</code> allows for the selection of either of these methods. In the event of a fitting failure, the <code>maximum</code> method is applied. The phase difference and the positions of these two peaks are then extracted. During PFM measurements, a phase offset is typically present, and phase inversion can occur. Therefore, it's imperative to identify both peaks within the histogram and assign them target phase values.
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_histogram.png> <br>
+    <em>Phase histogram of SSPFM measurement</em>
 </p>
 
 <p align="justify" width="100%">
