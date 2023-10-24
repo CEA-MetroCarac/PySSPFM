@@ -412,7 +412,7 @@ Once the segmentation process is completed, each segment is generated. When the 
 $$ R(f) = A * {f_0^2 \over \sqrt{f_0^2 - f^2)^2 + (f * f_0 / Q)^2}} + bckgnd $$
 
 <p align="justify" width="100%">
-Parameters such as amplitude $A$, quality factor $Q$, and the center of the peak (corresponding to the resonance frequency $f_0$) can be extracted. The background $bckgnd$ in the fit can be removed from the measurement to improve accuracy.
+Parameters such as amplitude $A$, quality factor $Q$, and the center of the peak (corresponding to the resonance frequency $f_0$) can be extracted. The background $bckgnd$ in the fit can be removed from the measurement to improve accuracy. All the peak fit process is performed in <code>peak_fit</code> method.
 </p>
 
 <p align="justify" width="100%">
@@ -427,7 +427,7 @@ $$ \phi(f) = arctan({f * f_0 \over Q * (f_0^2 - f^2)}) + \phi_0 $$
 </p>
 
 <p align="justify" width="100%">
-This entire process enhances the precision of the measured values. The robustness of the treatment can be increased with a peak detection algorithm (activated with <code>detect_peak</code> and with order of <code>filter_ord</code>), allowing a choice regarding whether to perform the fit. All fits are conducted using the <a href="https://pypi.org/project/lmfit/">lmfit</a> library, and methods like <code>least_sq</code>, <code>least_square</code> (prioritizing speed), or <code>nelder</code> (prioritizing convergence) can be selected.
+This entire process enhances the precision of the measured values. The robustness of the treatment can be increased with a peak detection algorithm (activated with <code>detect_peak</code> and with order of <code>filter_ord</code>), allowing a choice regarding whether to perform the fit. All fits are conducted using the <a href="https://pypi.org/project/lmfit/">lmfit</a> library, and methods like <code>least_sq</code>, <code>least_square</code> (prioritizing speed), or <code>nelder</code> (prioritizing convergence) can be selected with the <code>fit_method</code> setting.
 </p>
 
 <p align="justify" width="100%">
@@ -651,8 +651,8 @@ There are three distinct measurement processing modes, each involving the extrac
 
 <p align="justify" width="100%">
 The script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/curve_hysteresis.py>utils/core/curve_hysteresis</a></code> introduces and processes a novel entity known as the <code>Hysteresis</code>. This entity commences its existence by initializing through the variable <code>model</code>, encapsulating the mathematical formulations for both of its branches: <br>
-&#8226 <code>'sigmoid'</code>: $y(x) = a * ({1 \over 1. + exp(-coef * (x - x_0))} - 0.5)$ <br>
-&#8226 <code>'arctan'</code>: $y(x) = a * arctan(coef * (x - x_0)$ <br>
+&#8226 <code>'sigmoid'</code> (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script): $y(x) = a * ({1 \over 1. + exp(-coef * (x - x_0))} - 0.5)$ <br>
+&#8226 <code>'arctan'</code> (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script): $y(x) = a * arctan(coef * (x - x_0)$ <br>
 A binary variable, <code>asymmetric</code>, holds the responsibility of deciding whether to apportion distinct dilation coefficients to these bifurcated branches. Additionally, an affine component becomes an integral part of this model.
 </p>
 
@@ -836,3 +836,4 @@ For each mode (On Field, Off Field, and coupled), three figures are generated, e
 
 ### Default settings & management
 
+## Core scripts
