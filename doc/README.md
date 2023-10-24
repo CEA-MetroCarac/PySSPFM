@@ -228,20 +228,23 @@ Les <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/gen_datas.py">utils/seg_to_loop/gen_datas.py</a></code> permet de générer une mesure datacube SSPFM, soit en mode sweep resonance soit dfrt. Les examples suivants s'appuient dessus:</li>
                     <ul>
                         <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data_processing/ex_seg_to_loop_s1.py">examples/data_processing/ex_seg_to_loop_s1</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/gen_datas.py">utils/seg_to_loop/gen_datas.py</a></code> </li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/gen_datas.py">utils/seg_to_loop/gen_datas.py</a></code> </li>
+                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/seg_to_loop/ex_analysis.py">examples/utils/seg_to_loop/ex_analysis.py</a></code></li>
+                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/seg_to_loop/ex_gen_datas.py">examples/utils/seg_to_loop/ex_gen_datas.py</a></code></li>
+                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/seg_to_loop/ex_plot.py">examples/utils/seg_to_loop/ex_plot.py</a></code></li>
                     </ul>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/gen_datas.py">utils/nanoloop/gen_datas.py</a></code> permet de générer des nanoloop. Les examples suivants s'appuient dessus:</li>
                     <ul>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data_processing/ex_seg_to_loop_s1.py">examples/data_processing/ex_seg_to_loop_s1</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/gen_datas.py">utils/seg_to_loop/gen_datas.py</a></code> </li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/gen_datas.py">utils/seg_to_loop/gen_datas.py</a></code> </li>
+                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/hyst_to_map/ex_electrostatic.py">examples/utils/hyst_to_map/ex_electrostatic.py</a></code></li>
+                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_analysis.py">examples/utils/nanoloop/ex_analysis.py</a></code></li>
+                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_file.py">examples/utils/nanoloop/ex_file.py</a></code></li>
+                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_gen_datas.py">examples/utils/nanoloop/ex_gen_datas.py</a></code></li>
+                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_phase.py">examples/utils/nanoloop/ex_phase.py</a></code></li>
                     </ul>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/gen_datas.py">utils/hyst_to_map/gen_datas.py</a></code> permet de générer un fichier de la forme txt_loops. Les examples suivants s'appuient dessus:</li>
                     <ul>
                         <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data_processing/ex_hyst_to_map_s2.py">examples/data_processing/ex_hyst_to_map_s2</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/gen_datas.py">utils/seg_to_loop/gen_datas.py</a></code> </li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/gen_datas.py">utils/seg_to_loop/gen_datas.py</a></code> </li>
+                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/hyst_to_map/ex_analysis.py">examples/utils/hyst_to_map/ex_analysis.py</a></code></li>
+                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/hyst_to_map/ex_gen_datas.py">examples/utils/hyst_to_map/ex_gen_datas.py</a></code></li>
                     </ul>
             </ul>
     </ul>
