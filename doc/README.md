@@ -402,7 +402,7 @@ The segmentation process is performed with <code>cut_function</code> in the scri
 
 <p align="center" width="100%">
     <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/max_resonance_segment.PNG> <br>
-    <em>Segment treatment in max mode</em>
+    <em>Segment treatment in max mode. Figure generated with <code>plt_seg_max</code> function of <code>utils/seg_to_loop/plot script</code></em>
 </p>
 
 <p align="justify" width="100%">
