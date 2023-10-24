@@ -654,11 +654,11 @@ For a deeper understanding of the file management in this phase, please refer to
 ### VI.2) - Best loop
 
 <p align="justify" width="100%">
-The nanoloops data is extracted from the files within the corresponding <code>txt_loops</code> directory, and a <code>MultiLoop</code> object is instantiated for each file. Subsequently, the amplitude and phase data are divided by the quality factor, calibrated ex-situ, and the amplitude and phase values at the first measurement point are extracted. These form two of the mapped piezo-ferroelectric properties, corresponding to the electrical polarization of the pristine state of the film.
+The nanoloops data is extracted from the files within the corresponding <code>txt_loops</code> directory, and a <code>MultiLoop</code> object is instantiated for each file. Subsequently, with the <code>treat_loop</code> function of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis</a></code> script the amplitude and phase data are divided by the quality factor, calibrated ex-situ, and the amplitude and phase values at the first measurement point are extracted. These form two of the mapped piezo-ferroelectric properties, corresponding to the electrical polarization of the pristine state of the film.
 </p>
 
 <p align="justify" width="100%">
-There are three distinct measurement processing modes, each involving the extraction of a 'best loop' using the <code>find_best_loop</code> function from the <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> script: <br>
+There are three distinct measurement processing modes, each involving the extraction of a <code>best_loop</code> using the <code>find_best_loop</code> function from the <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> script: <br>
 &#8226 <code>'multi_loop'</code>: Measurements are conducted in Off Field, and various reading voltage values are applied. This mode corresponds to the cKPFM mode introduced by N. Balke and his colleagues (INSERT REFERENCE). All loops are fitted using the <code>Hysteresis</code> object, and the best loop is the one that minimizes the vertical offset associated with the electrostatic component in Off Field. <br>
 &#8226 <code>'mean_loop'</code>: Measurements are conducted in Off Field with a single reading voltage value, often set at 0 volts. The best loop is the average of all the loops, determined through the creation of the <code>MeanLoop</code> object. <br>
 &#8226 <code>'on_field'</code>: Measurements are conducted in On Field. The best loop, in this case, is the average of all the loops, determined through the creation of the <code>MeanLoop</code> object.
@@ -673,8 +673,10 @@ The script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PyS
 A binary variable, <code>asymmetric</code>, holds the responsibility of deciding whether to apportion distinct dilation coefficients to these bifurcated branches. Additionally, an affine component becomes an integral part of this model.
 </p>
 
+La fonction <code>hyst_analysis</code> du script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> permet d'effectuer l'ensemble de l'analyse de l'hystérésis.
+
 <p align="justify" width="100%">
-An initialization of the fitting parameters is meticulously conducted:
+An initialization of the fitting parameters is meticulously conducted with the function <code>init_pars</code> of the <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> script:
     <ul>
         <li>Definition Interval:</li>
             <ul>
@@ -714,12 +716,14 @@ Following the completion of the fitting process, the 'properties' method facilit
 ### VI.4) - Artifact decoupling
 
 Les artefacts, princiapelemnt électrostatique mais plus généralement les termes d'origine quadratique (électrostatics, électrostrictif, effet Joules), non nuls ici par application d'une tension continue V_DC peuvent influencer la mesure:
-par un offset vertical pour la mesure off field (artefacts uniquement électrostatics)
-par une composante affine pour la mesure on field (influencé par terme d'origine quadratiques)
-de manière non linéaire, lorsque l'effet est activé après une certaine tension de seuil en on field
+- par un offset vertical pour la mesure off field (artefacts uniquement électrostatics)
+- par une composante affine pour la mesure on field (influencé par terme d'origine quadratiques)
+- de manière non linéaire, lorsque l'effet est activé après une certaine tension de seuil en on field
 
 Des protocoles de décorélation ont été mis au point :
 LES LISTER
+
+La fonction electrostatic_analysis du script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> permet d'effectuer l'ensemble du découplage des artefacts en fonction des différents protocoles.
 
 ## VII) - SSPFM mapping
 
