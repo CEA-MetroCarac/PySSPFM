@@ -183,9 +183,26 @@ Les <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
     <ul>
         <li>Des données réelles issues de mesures SSPFM réaliséess sur un échantillon de KNN, qui se trouvent dans le dossier: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in">examples/datas/PySSPFM_example_in</a></code>. Ce dernier contient un ensemble de sous dossiers:</li>
             <ul>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n">KNN500n</a></code>: ensemble des fichiers de mesure datacube SSPFM, d'extention spm (Bruker), ainsi que la fiche de mesure correspondante</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n">KNN500n</a></code>: ensemble des fichiers de mesure datacube SSPFM, d'extention spm (Bruker), ainsi que la fiche de mesure correspondante. Il est utilisé pour:</li>
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_2023-10-05-17h21m_out_dfrt">KNN500n_2023-10-05-17h21m_out_dfrt</a></code>: ensemble de la mesure arpès la première étape de traitement</li>
+                    <ul>
+                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_loop_file_reader">examples/toolbox
+/ex_loop_file_reader</a></code></li>
+                    </ul>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_2023-10-05-17h23m_out_dfrt">KNN500n_2023-10-05-17h23m_out_dfrt</a></code>: ensemble de la mesure arpès la deuxième étape de traitement</li>
+                    <ul>
+                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_global_map_reader.py">examples/toolbox
+/ex_global_map_reader</a></code></li>
+                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_hysteresis_clustering">examples/toolbox
+/ex_hysteresis_clustering</a></code></li>
+                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_list_map_reader">examples/toolbox
+/ex_list_map_reader</a></code></li>
+                    </ul>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_reduced">KNN500n_reduced</a></code>: ensemble réduit de la mesure SSPFM (3 des fichiers de mesure datacube SSPFM Bruker d'extention spm), ainsi que la fiche de mesure correspondante</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_reduced_datacube_csv">KNN500n_reduced_datacube_csv</a></code>: ensemble réduit de la mesure SSPFM (3 des fichiers de mesure datacube SSPFM d'extention csv), ainsi que la fiche de mesure correspondante</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_reduced_datacube_txt">KNN500n_reduced_datacube_txt</a></code>: ensemble réduit de la mesure SSPFM (3 des fichiers de mesure datacube SSPFM d'extention txt), ainsi que la fiche de mesure correspondante</li>
@@ -193,12 +210,15 @@ Les <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
             </ul>
         <li>simulées par des scripts prévus à cet effet:</li>
             <ul>
-                <li>utils/seg_to_loop/gen_datas.py permet de générer une mesure datacube SSPFM, soit en mode sweep resonance soit dfrt</li>
-                <liutils/nanoloop/gen_datas.py permet de générer des nanoloop</li>
-                <li>sign of piezoelectric coeffcient</li>
-                <li>utils/hyst_to_map/gen_datas.py permet de générer un fichier de la forme txt_loops</li>
-                <li>voltage application direction</li>
-                <li>SSPFM polarization signal parameters</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/gen_datas.py">utils/seg_to_loop/gen_datas.py</a></code> permet de générer une mesure datacube SSPFM, soit en mode sweep resonance soit dfrt. Les examples suivant s''appuient dessus:</li>
+                    <ul>
+                        <li><li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data_processing/ex_seg_to_loop_s1.py">examples/data_processing
+/ex_seg_to_loop_s1</a></code> </li>
+                        <li><li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/gen_datas.py">utils/seg_to_loop/gen_datas.py</a></code> </li>
+                        <li><li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/gen_datas.py">utils/seg_to_loop/gen_datas.py</a></code> </li>
+                    </ul>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/gen_datas.py">utils/nanoloop/gen_datas.py</a></code> permet de générer des nanoloop</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/gen_datas.py">utils/hyst_to_map/gen_datas.py</a></code> permet de générer un fichier de la forme txt_loops</li>
             </ul>
     </ul>
 </p>
