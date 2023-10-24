@@ -762,6 +762,26 @@ INSERER LE GRAPHIQUE
 
 #### VIII.1.b) Loop file
 
+```
+    default_user_parameters = {
+        'file path in': '',
+        'csv path in': '',
+        'dir path out': '',
+        'del 1st loop': True,
+        'corr': 'offset',
+        'pha fwd': 0,
+        'pha rev': 180,
+        'func': 'cosine',
+        'main elec': True,
+        'grounded tip': True,
+        'positive d33': True,
+        'locked elec slope': 'None',
+        'verbose': True,
+        'show plots': True,
+        'save': False,
+    }
+```
+
 <p align="justify" width="100%">
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox/loop_file_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/loop_file_reader.py">gui/loop_file_reader</a></code>.
 </p>
@@ -769,6 +789,68 @@ The script can be executed directly using the executable file: <code><a href="ht
 En entrée, un fichier de mesure sous forme de fichier txt_loop est ouvert (généré ,après la première étape de traitement), ainsi que la fiche de mesure csv de telle sorte à en extraire les parmaètre du signal en tension de polarisation. Une calibration ex situ de la phase est effectuée, grâce à l'ensemble des paramètres utilisateurs de traitement de phase à remplir. L'utilisateur peut aussi choisir de supprimer la première courbe d'hystérésis des figures générées, si cette dernière diffère des autres du à l'état de pristine du film. L'ensemble des objets MultiLoop et MeanLoop associé au fichier sont alors construi puis les figures associées sont générées et affichées. 
 
 #### VIII.1.c) (List & Global) map reader
+
+<p align="justify" width="100%">
+List map reader:
+</p>
+
+```
+    ind_maps = [['off', 'charac tot fit: area'],
+                ['off', 'fit pars: ampli_0'],
+                ['on', 'charac tot fit: area'],
+                ['on', 'fit pars: ampli_0']]
+    default_user_parameters = {
+        'dir path in': '',
+        'dir path out': '',
+        'ind maps': ind_maps,
+        'interp fact': 4,
+        'interp func': 'linear',
+        'man mask': [],
+        'ref': {'mode': 'off',
+                'meas': 'charac tot fit: R_2 hyst',
+                'min val': 0.95,
+                'max val': None,
+                'fmt': '.5f',
+                'interactive': False},
+        'verbose': True,
+        'show plots': True,
+        'save': False
+    }
+```
+
+<p align="justify" width="100%">
+Global map reader:
+</p>
+
+```
+    default_user_parameters = {
+        'dir path in': '',
+        'dir path out': '',
+        'interp fact': 4,
+        'interp func': 'linear',
+        'man mask': {'on': [],
+                     'off': [],
+                     'coupled': []},
+        'ref': {'on': {'meas': 'charac tot fit: area',
+                       'min val': None,
+                       'max val': 0.005,
+                       'fmt': '.5f',
+                       'interactive': False},
+                'off': {'meas': 'charac tot fit: area',
+                        'min val': None,
+                        'max val': 0.005,
+                        'fmt': '.5f',
+                        'interactive': False},
+                'coupled': {'meas': 'r_2',
+                            'min val': 0.95,
+                            'max val': None,
+                            'fmt': '.5f',
+                            'interactive': False}},
+        'verbose': True,
+        'show plots': True,
+        'save': False,
+    }
+```
 
 <p align="justify" width="100%">
 List map reader: <br>
