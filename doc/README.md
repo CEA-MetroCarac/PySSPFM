@@ -874,6 +874,20 @@ The script can be executed directly using the executable file: <code><a href="ht
 
 #### VIII.2.a) Parameters
 
+```
+    default_user_parameters = {
+        'dir path in': '',
+        'dir path in meas': '',
+        'dir path out': '',
+        'nb clusters off': 4,
+        'nb clusters on': 4,
+        'nb clusters coupled': 4,
+        'verbose': True,
+        'show plots': True,
+        'save': False,
+    }
+```
+
 <p align="justify" width="100%">
 &#8226 File Management: In the initial phase, the algorithm ingests the <code>txt_best_loops</code> directory along with the <code>txt_ferro_meas</code> directory. <br>
 &#8226 Clusters: For each measurement (On Field, Off Field, and coupled), the user specifies the number of clusters. <br>
