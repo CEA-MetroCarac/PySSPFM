@@ -191,17 +191,13 @@ Les <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
                     </ul>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_2023-10-05-17h21m_out_dfrt">KNN500n_2023-10-05-17h21m_out_dfrt</a></code>: ensemble de la mesure arpès la première étape de traitement</li>
                     <ul>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_loop_file_reader">examples/toolbox
-/ex_loop_file_reader</a></code></li>
+                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_loop_file_reader">examples/toolbox/ex_loop_file_reader</a></code></li>
                     </ul>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_2023-10-05-17h23m_out_dfrt">KNN500n_2023-10-05-17h23m_out_dfrt</a></code>: ensemble de la mesure arpès la deuxième étape de traitement</li>
                     <ul>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_global_map_reader.py">examples/toolbox
-/ex_global_map_reader</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_hysteresis_clustering">examples/toolbox
-/ex_hysteresis_clustering</a></code></li>
-                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_list_map_reader">examples/toolbox
-/ex_list_map_reader</a></code></li>
+                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_global_map_reader.py">examples/toolbox/ex_global_map_reader</a></code></li>
+                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_hysteresis_clustering">examples/toolbox/ex_hysteresis_clustering</a></code></li>
+                        <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_list_map_reader">examples/toolbox/ex_list_map_reader</a></code></li>
                     </ul>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_reduced">KNN500n_reduced</a></code>: ensemble réduit de la mesure SSPFM (3 des fichiers de mesure datacube SSPFM Bruker d'extention spm), ainsi que la fiche de mesure correspondante</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas/PySSPFM_example_in/KNN500n_reduced_datacube_csv">KNN500n_reduced_datacube_csv</a></code>: ensemble réduit de la mesure SSPFM (3 des fichiers de mesure datacube SSPFM d'extention csv), ainsi que la fiche de mesure correspondante</li>
