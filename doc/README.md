@@ -520,7 +520,7 @@ Here are the various hysteresis configurations in the On-Field mode, depending o
 </p>
 
 <p align="justify" width="100%">
-The entirety of these steps, including the determination of the direction of hysteresis rotation, as well as the correlation between the various levels of bias, polarization, and phase, is ascertained within the initial segment of the <code>phase_calibration</code> function.
+The entirety of these steps, including the determination of the direction of hysteresis rotation, as well as the correlation between the various levels of bias, polarization, and phase, is ascertained within the first part of the <code>phase_calibration</code> function.
 </p>
 
 <p align="justify" width="100%">
@@ -555,7 +555,7 @@ A potential phase inversion can be detected by examining the variation in the me
 </p>
 
 <p align="justify" width="100%">
-Following the calibration process and the identification of the positions of the two peaks on the histogram, as well as the phase difference, phase correction can be achieved through four distinct protocols:<br>
+Following the calibration process and the identification of the positions of the two peaks on the histogram, as well as the phase difference, phase correction performed by <code>corr_phase</code> function can be achieved through four distinct protocols:<br>
 &#8226 <code>raw_phase</code>: The raw phase is retained, and no processing is applied (suitable for use in pre-measurement phase calibration).<br>
 &#8226 <code>offset</code>: A phase offset is determined through calibration, and the phase difference between the two peaks remains unchanged (a treatment method that aims to preserve the initial measurement as faithfully as possible).<br>
 &#8226 <code>affine</code>: An affine relationship is applied to all phase values, adjusting the phase difference to 180°.<br>
