@@ -423,7 +423,7 @@ $$ \phi(f) = arctan({f * f_0 \over Q * (f_0^2 - f^2)}) + \phi_0 $$
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/resonance_peak_segment.png> <br>
-    <em>Segment treatment in fit mode</em>
+    <em>Segment treatment in fit mode. Figure generated with <code>plt_seg_fit</code> function of <code>utils/seg_to_loop/plot script</code></em>
 </p>
 
 <p align="justify" width="100%">
@@ -436,7 +436,7 @@ This entire process enhances the precision of the measured values. The robustnes
 
 <p align="center" width="100%">
     <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/dfrt_segment.PNG> <br>
-    <em>Segment treatment in dfrt mode</em>
+    <em>Segment treatment in dfrt mode. Figure generated with <code>plt_seg_dfrt</code> function of <code>utils/seg_to_loop/plot script</code></em></em>
 </p>
 
 <p align="justify" width="100%">
