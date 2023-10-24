@@ -406,7 +406,7 @@ Once the segmentation process is completed, each segment is generated. When the 
 </p>
 
 <p align="justify" width="100%">
-&#8226 <code>fit</code> (usable for a resonance sweep): The amplitude resonance peak with frequency $R(f)$ is fitted using the SHO (simple harmonic oscillator) model (<code>sho</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/peak</a></code> script):
+&#8226 <code>fit</code> (usable for a resonance sweep): The amplitude resonance peak with frequency $R(f)$ is fitted using the SHO (simple harmonic oscillator) model (<code>sho</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script):
 </p>
 
 $$ R(f) = A * {f_0^2 \over \sqrt{f_0^2 - f^2)^2 + (f * f_0 / Q)^2}} + bckgnd $$
@@ -416,7 +416,7 @@ Parameters such as amplitude $A$, quality factor $Q$, and the center of the peak
 </p>
 
 <p align="justify" width="100%">
-The phase $\phi$ can be extracted simply at the index of the resonance frequency $f_0$ or by performing a fit in the narrow vicinity of the resonance peak using the <code>fit_pha</code> parameter with an arctangent function model, with or without a switch:
+The phase $\phi$ can be extracted simply at the index of the resonance frequency $f_0$ or by performing a fit in the narrow vicinity of the resonance peak using the <code>fit_pha</code> parameter with an arctangent function model (in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script), with (<code>sho_phase_switch</code> function) or without (<code>sho_phase</code> function) a switch:
 </p>
 
 $$ \phi(f) = arctan({f * f_0 \over Q * (f_0^2 - f^2)}) + \phi_0 $$
