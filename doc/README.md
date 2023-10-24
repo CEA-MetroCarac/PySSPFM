@@ -595,7 +595,7 @@ Subsequently, based on the amplitude ($R$) and phase ($\phi$) loops, piezorespon
 ### V.3) - MeanLoop
 
 <p align="justify" width="100%">
-The <code>MeanLoop</code> is defined within the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis</a></code> script. It is initialized with a <code>MultiLoop</code> object, and optionally, a phase calibration dictionary. This object facilitates the averaging of all loops within the <code>MultiLoop</code>, encompassing both amplitude, phase, and piezoresponse, except for the initial loop, which differs due to the sample's pre-polarized state at the beginning of the measurement. If a phase calibration dictionary is provided, the phase component of the MeanLoop is processed accordingly.
+The <code>MeanLoop</code> object is defined within the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis</a></code> script. It is initialized with a <code>MultiLoop</code> object, and optionally, a phase calibration dictionary. This object facilitates the averaging of all loops within the <code>MultiLoop</code>, encompassing both amplitude, phase, and piezoresponse, except for the initial loop, which differs due to the sample's pre-polarized state at the beginning of the measurement. If a phase calibration dictionary is provided, the phase component of the MeanLoop is processed accordingly.
 </p>
 
 <p align="center" width="100%">
@@ -625,7 +625,7 @@ As an initial step, the <code>txt_loops</code> folder obtained is selected. The 
 </p>
 
 <p align="justify" width="100%">
-Figures resulting from the processing of the first file are generated. Subsequently, each of the files is automatically analyzed without displaying the figures. For each mode (On Field, Off Field, and coupled), a hysteresis loop is selected and associated with each pixel, and a set of ferroelectric piezo properties is extracted. Other properties are obtained through the analysis of measurement artifacts. The entirety of these properties contributes to the creation of SSPFM mappings.
+Figures resulting from the processing of the first file are generated with <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/plot.py">utils/hyst_to_map/plot</a></code> scripts. Subsequently, each of the files is automatically analyzed without displaying the figures. For each mode (On Field, Off Field, and coupled), a hysteresis loop is selected and associated with each pixel, and a set of ferroelectric piezo properties is extracted. Other properties are obtained through the analysis of measurement artifacts. The entirety of these properties contributes to the creation of SSPFM mappings.
 </p>
 
 <p align="justify" width="100%">
