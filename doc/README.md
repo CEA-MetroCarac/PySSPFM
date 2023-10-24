@@ -292,7 +292,12 @@ Two tools deviate from this path management: <br>
 
 #### III.2.d) - Examples & Tests
 
-
+<p align="justify" width="100%">
+Le path management pour les <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples">examples</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests">tests</a></code> est géré avec la fonction <code>save_path_example</code> du script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/path_for_runable.py">utils/path_for_runable.py</a></code>. 
+La majorité des résultats des exemples sont des figures. Elles sont enregistrées par défaut dans le dossier PySSPFM_example_out, situé dans <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/datas">examples/datas</a></code>. 
+Les résultats des tests ne sont pas enregistrés sauf pour quelques tests dont peu ou pas de target sont comparées avec les résultats expérimentaux (<code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/data_processing/test_seg_to_loop_s1.py">tests/data_processing/test_seg_to_loop_s1.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/utils/nanoloop/test_theory.py">tests/utils/nanoloop/test_theory.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/utils/map/test_map.py">tests/utils/map/test_map.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/data_processing/test_hyst_to_map_s2.py">tests/data_processing/test_hyst_to_map_s2.py</a></code>) ou encore pour <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/toolbox/test_spm_converter.py">tests/toolbox/test_spm_converter.py</a></code>. Elles sont enregistrées par défaut dans le dossier PySSPFM_data_out, situé dans la racine de PySSPFM. 
+Le settings <code>SAVE_TEST_EXAMPLE</code> permet de choisir si les résultats des exemples et tests sont enregistrés par défaut.
+</p>
 
 ## IV) - First step of data analysis
 
