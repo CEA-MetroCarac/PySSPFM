@@ -529,17 +529,16 @@ It is worth noting that in some cases of On-Field measurements, where the electr
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/problematic_case_on_field_nanoloop.PNG> <br>
-    <em>Problematic case of nanoloop: same order of magnitude for both ferroelectric and electrostatic component (On Field, grounded tip, positive d33)</em>
+    <em>Problematic case of nanoloop: same order of magnitude for both ferroelectric and electrostatic component (On Field, grounded tip, positive d33) (figure generated with <code>utils/nanoloop/theory</code> script)</em>
 </p>
 
 <p align="justify" width="100%">
-For the second part of the <code>phase_calibration</code> function, an in-depth analysis of the phase signal is conducted using the <code>phase_analysis</code> function.
-An angular histogram is constructed from the complete set of phase values within the file, with <code>histo_init</code> function. In the case of Vertical PFM measurements, it's common to observe two peaks separated by approximately 180°. These two peaks can either be fitted (with <code>fit_peak_hist</code> function) using a <code>Gaussian</code> model (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) for improved precision or their maxima can be directly extracted for enhanced robustness and efficiency. The setting <code>histo_phase_method</code> allows for the selection of either of these methods. In the event of a fitting failure, the <code>maximum</code> method is applied. The phase difference and the positions of these two peaks are then extracted. During PFM measurements, a phase offset is typically present, and phase inversion can occur. Therefore, it's imperative to identify both peaks within the histogram and assign them target phase values.
+For the second part of the <code>phase_calibration</code> function, an in-depth analysis of the phase signal is conducted. An angular histogram is constructed from the complete set of phase values within the file, with <code>histo_init</code> function. In the case of Vertical PFM measurements, it's common to observe two peaks separated by approximately 180°. These two peaks can either be fitted (with <code>fit_peak_hist</code> function) using a <code>Gaussian</code> model (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) for improved precision or their maxima can be directly extracted for enhanced robustness and efficiency. The setting <code>histo_phase_method</code> allows for the selection of either of these methods. In the event of a fitting failure, the <code>maximum</code> method is applied. The phase difference and the positions of these two peaks are then extracted. During PFM measurements, a phase offset is typically present, and phase inversion can occur. Therefore, it's imperative to identify both peaks within the histogram and assign them target phase values.
 </p>
 
 <p align="center" width="100%">
     <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_histogram.png> <br>
-    <em>Phase histogram of SSPFM measurement</em>
+    <em>Phase histogram of SSPFM measurement (figure generated with <code>histo_init</code> function of <code>utils/nanoloop/phase</code> script)</em>
 </p>
 
 <p align="justify" width="100%">
@@ -547,12 +546,12 @@ In the PySSPFM application, users can concretely assign the desired phase values
 </p>
 
 <p align="justify" width="100%">
-A potential phase inversion can be detected by examining the variation in the mean phase concerning the polarization voltage. If the theoretical and measured variations are opposite, a phase inversion has occurred, and it is subsequently corrected.
+A potential phase inversion can be detected by examining the variation in the mean phase concerning the polarization voltage, using the <code>phase_analysis</code> function. If the theoretical and measured variations are opposite, a phase inversion has occurred, and it is subsequently corrected.
 </p>
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_variation_with_voltage.png> <br>
-    <em>Detection of phase inversion with phase variation with voltage</em>
+    <em>Detection of phase inversion with phase variation with voltage (figure generated with <code>phase_analysis</code> function of <code>utils/nanoloop/phase</code> script)</em>
 </p>
 
 <p align="justify" width="100%">
