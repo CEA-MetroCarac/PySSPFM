@@ -690,7 +690,7 @@ An initialization of the fitting parameters is conducted with the function <code
     <ul>
         <li>Definition Interval:</li>
             <ul>
-                <li>$c \in \left]0,\infty\right[$ The dilation coefficients of the branches are constrained to be positive.</li>
+                <li>$c^i \in \left[0, \infty\right[$ The dilation coefficients of the branches are constrained to be positive.</li>
                 <li>The amplitude sign of the hysteresis is set positively for a "counterclockwise" loop and negatively for a "clockwise" loop.</li>
                 <li>The coercive voltages of both branches are bounded within the range of the polarization voltage measurement.</li>
                 <li>The offset of the affine component is bounded within the piezoresponse measurement range.</li>
