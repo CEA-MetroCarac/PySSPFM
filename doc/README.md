@@ -859,10 +859,14 @@ The <code>grid_interp</code> function performs a 2D interpolation on a map using
 The <code>interp_2d_treated</code> function oversees the entire calibration procedure. Initially, by calling the <code>grid_interp</code> function, the map is interpolated with an interpolation coefficient of 1 to correct any defective or masked values (<code>nan</code>). Next, the dimensions of this map are expanded based on the <code>interp_fact</code> parameter with new <code>nan</code> values. Then, a new 2D interpolation is performed by invoking the <code>grid_interp</code> function once more.
 </p>
 
-### VII.3) - Figures
+### VII.4) - Figures
 
 <p align="justify" width="100%">
-The entirety of the displayed figures est assuré par la fonction plot_and_save_image du script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> and corresponds to: <br>
+The SSPFM matrices are determined using the primary function "formatting_measure" in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/matrix_formatting.py">utils/map/matrix_formatting.py</a></code>. The measurement is initially in the form of a 1D array. Initially, it needs to be transformed into a matrix based on the probe's path. This process is partially handled by the "rearrangement_matrix" function. The main function "formatting_measure" numerically applies masks, determines if pixel values correspond to errors, generates matrices specific to map annotations, and manages axis scaling. It also calls the "interp_2d_treated" function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/interpolate.py">utils/map/interpolate.py</a></code> to perform 2D interpolation. In summary, the entire script is responsible for generating all the matrices (measurements, annotations, etc.) and values displayed in the figures.
+</p>
+
+<p align="justify" width="100%">
+The complete set of displayed figures is orchestrated by the function "plot_and_save_image" in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>, and it represents: <br>
 <br>
 &#8226 Image 3: Step 1 of measure: raw measure map (no selection criterion) <br>
 &#8226 Image 4: Step 1bis: interpolation of step 1 <br>
@@ -875,10 +879,18 @@ The entirety of the displayed figures est assuré par la fonction plot_and_save_
 &#8226 Image 2: ref meas: step 4 <br>
 </p>
 
+Chaque cartographie est tracé avec la fonction sub_image ou final_image (pour la step 4).
+
+Des annotations sont ajoutées sur les figures des cartographies générées par final_image via la fonction annotate du script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/annotate.py">utils/map/annotate.py</a></code>, à savoir la position de l'ensemble des points de mesures, les directions du trajet de la pointe etc.
+
+Egalement, la détermination des valeurs des axes en x et y est effectuée (pour les cartographies d'origine ou interpolées) via la fonction extent du script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/annotate.py">utils/map/annotate.py</a></code>
+
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/ssfpm_map_amplitude.PNG> <br>
     <em>cKPFM analysis result (figure generated with <code>plot_ckpfm</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot.py</a></code> script)</em>
 </p>
+
+Les figures peuvent être sauvegardées en format png et txt avec le paramètre save.
 
 ## VIII) Toolbox
 
