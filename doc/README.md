@@ -676,7 +676,7 @@ Artangent or sigmoid terms representing the influence of ferroelectric component
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Hysteresis_model.PNG> <br>
+    <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Hysteresis_model.PNG> <br>
     <em>Hysteresis model used for the fit</em>
 </p>
 
