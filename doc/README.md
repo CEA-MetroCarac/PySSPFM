@@ -962,7 +962,9 @@ As input, SSPFM datacube measurement file is open, and its data is extracted and
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox/loop_file_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/loop_file_reader.py">gui/loop_file_reader</a></code>.
 </p>
 
-En entrée, un fichier de mesure sous forme de fichier txt_loop est ouvert (généré ,après la première étape de traitement), ainsi que la fiche de mesure csv de telle sorte à en extraire les parmaètre du signal en tension de polarisation. Une calibration ex situ de la phase est effectuée, grâce à l'ensemble des paramètres utilisateurs de traitement de phase à remplir. L'utilisateur peut aussi choisir de supprimer la première courbe d'hystérésis des figures générées, si cette dernière diffère des autres du à l'état de pristine du film. L'ensemble des objets MultiLoop et MeanLoop associé au fichier sont alors construi puis les figures associées sont générées et affichées. 
+<p align="justify" width="100%">
+In input, a measurement file in the form of a <code>txt_loop</code> file is opened (generated after the first processing step). Additionally, the corresponding CSV measurement record is accessed to extract the parameters of the polarization voltage signal. An ex-situ calibration of the phase is performed, using the comprehensive set of user-defined phase processing parameters. Furthermore, the user has the option to exclude the first hysteresis curve from the generated figures if it differs from the others due to the pristine state of the film. Subsequently, the objects <code>MultiLoop</code> and <code>MeanLoop</code> associated with the file are constructed, and the corresponding figures are generated and displayed.
+</p>
 
 #### VIII.1.c) (List & Global) map reader
 
