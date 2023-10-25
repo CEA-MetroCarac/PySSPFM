@@ -672,7 +672,7 @@ The script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PyS
 &#8226 <code>'arctan'</code> (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script): $PR(V) = G * arctan(c^i * (V - V_0^i)) + a*V + b$ <br>
 $i$ serves as the index designating the branch: $i=L$ for the left branch, and $i=R$ for the right branch. <br>
 The boolean variable, <code>asymmetric</code>, holds the responsibility of deciding whether to apportion distinct dilation coefficients to these bifurcated branches. 
-If <code>asymmetric is False</code>, then $V_0^L = V_0^R$, and vice versa. If <code>asymmetric is True</code>, $V_0^L \ne V_0^R$.
+If <code>asymmetric is False</code>, then $V_0^L = V_0^R$, while if <code>asymmetric is True</code>, $V_0^L \ne V_0^R$.
 Artangent or sigmoid terms representing the influence of ferroelectric component, while the affine component representing the influence of the quadratic terms of artifacts is added to the the model.
 </p>
 
@@ -681,7 +681,9 @@ Artangent or sigmoid terms representing the influence of ferroelectric component
     <em>Hysteresis model used for the fit</em>
 </p>
 
-La fonction <code>hyst_analysis</code> du script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> permet d'effectuer l'ensemble de l'analyse de l'hystérésis.
+<p align="justify" width="100%">
+The <code>hyst_analysis</code> function within the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> facilitates the comprehensive analysis of hysteresis.
+</p>
 
 <p align="justify" width="100%">
 An initialization of the fitting parameters is meticulously conducted with the function <code>init_pars</code> of the <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> script:
