@@ -966,35 +966,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 In input, a measurement file in the form of a <code>txt_loop</code> file is opened (generated after the first processing step). Additionally, the corresponding CSV measurement record is accessed to extract the parameters of the polarization voltage signal. An ex-situ calibration of the phase is performed, using the comprehensive set of user-defined phase processing parameters. Furthermore, the user has the option to exclude the first hysteresis curve from the generated figures if it differs from the others due to the pristine state of the film. Subsequently, the objects <code>MultiLoop</code> and <code>MeanLoop</code> associated with the file are constructed, and the corresponding figures are generated and displayed.
 </p>
 
-#### VIII.1.c) (List & Global) map reader
-
-<p align="justify" width="100%">
-List map reader:
-</p>
-
-```
-    ind_maps = [['off', 'charac tot fit: area'],
-                ['off', 'fit pars: ampli_0'],
-                ['on', 'charac tot fit: area'],
-                ['on', 'fit pars: ampli_0']]
-    default_user_parameters = {
-        'dir path in': '',
-        'dir path out': '',
-        'ind maps': ind_maps,
-        'interp fact': 4,
-        'interp func': 'linear',
-        'man mask': [],
-        'ref': {'mode': 'off',
-                'meas': 'charac tot fit: R_2 hyst',
-                'min val': 0.95,
-                'max val': None,
-                'fmt': '.5f',
-                'interactive': False},
-        'verbose': True,
-        'show plots': True,
-        'save': False
-    }
-```
+#### VIII.1.c) Global map reader
 
 <p align="justify" width="100%">
 Global map reader:
@@ -1030,19 +1002,50 @@ Global map reader:
     }
 ```
 
-<p align="justify" width="100%">
-List map reader: <br>
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/list_map_reader.py">gui/list_map_reader</a></code>.
-</p>
 
 <p align="justify" width="100%">
 Global map reader: <br>
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/global_map_reader.py">gui/global_map_reader</a></code>.
 </p>
 
-Le principe fonctionnement de ces deux readers est similaire, la seule différence réside dans le fait que list_map_reader permet de lire une liste de cartographies déterminée par l'utilisateur tandis que le global map reader permet de lire l'ensemble des cartographies pour chaques mode (On et Off field, coupled).
+En entrée, le dossier txt_ferro_meas, contenant les mesures des propriétés sous forme de fichiers texte pour l'ensemble des modes (On et Off field, coupled) est reseigné et les données sont extraites. Puis une analyse cross correlative est effectuée entre les différentes cartographies : INSERER LA SECTION CORRESPONDANTE DE LA DOCUMENTATION
 
-En entrée, le dossier txt_ferro_meas, contenant les mesures des propriétés sous forme de fichiers texte pour l'ensemble des modes (On et Off field, coupled) est reseigné.
+#### VIII.1.d) List map reader
+
+<p align="justify" width="100%">
+List map reader:
+</p>
+
+```
+    ind_maps = [['off', 'charac tot fit: area'],
+                ['off', 'fit pars: ampli_0'],
+                ['on', 'charac tot fit: area'],
+                ['on', 'fit pars: ampli_0']]
+    default_user_parameters = {
+        'dir path in': '',
+        'dir path out': '',
+        'ind maps': ind_maps,
+        'interp fact': 4,
+        'interp func': 'linear',
+        'man mask': [],
+        'ref': {'mode': 'off',
+                'meas': 'charac tot fit: R_2 hyst',
+                'min val': 0.95,
+                'max val': None,
+                'fmt': '.5f',
+                'interactive': False},
+        'verbose': True,
+        'show plots': True,
+        'save': False
+    }
+```
+
+<p align="justify" width="100%">
+List map reader: <br>
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/list_map_reader.py">gui/list_map_reader</a></code>.
+</p>
+
+Le principe fonctionnement de ces deux readers est similaire, la seule différence réside dans le fait que list_map_reader permet de lire une liste de cartographies déterminée par l'utilisateur tandis que le global map reader permet de lire l'ensemble des cartographies pour chaques mode (On et Off field, coupled).
 
 ### VIII.2) Hysteresis clustering (K-Means)
 
