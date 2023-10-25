@@ -672,7 +672,7 @@ The script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PyS
 &#8226 <code>'arctan'</code> (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script): $PR(V) = G * arctan(c^i * (V - V_0^i)) + a*V + b$ <br>
 $i$ serves as the index designating the branch: $i=L$ for the left branch, and $i=R$ for the right branch. <br>
 The boolean variable, <code>asymmetric</code>, holds the responsibility of deciding whether to apportion distinct dilation coefficients to these bifurcated branches. 
-If <code>asymmetric is False</code>, then $V_0^L = V_0^R$, while if <code>asymmetric is True</code>, $V_0^L \ne V_0^R$.
+If <code>asymmetric is False</code>, then $c^L = c^R$, while if <code>asymmetric is True</code>, $c^L \ne c^R$.
 Artangent or sigmoid terms representing the influence of ferroelectric component, while the affine component representing the influence of the quadratic terms of artifacts is added to the the model.
 </p>
 
@@ -686,11 +686,11 @@ The <code>hyst_analysis</code> function within the script <code><a href="https:/
 </p>
 
 <p align="justify" width="100%">
-An initialization of the fitting parameters is meticulously conducted with the function <code>init_pars</code> of the <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> script:
+An initialization of the fitting parameters is conducted with the function <code>init_pars</code> of the <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> script:
     <ul>
         <li>Definition Interval:</li>
             <ul>
-                <li>The dilation coefficients of the branches are constrained to be positive.</li>
+                <li>(c \in \left]0,\infty\right[\)The dilation coefficients of the branches are constrained to be positive.</li>
                 <li>The amplitude sign of the hysteresis is set positively for a "counterclockwise" loop and negatively for a "clockwise" loop.</li>
                 <li>The coercive voltages of both branches are bounded within the range of the polarization voltage measurement.</li>
                 <li>The offset of the affine component is bounded within the piezoresponse measurement range.</li>
