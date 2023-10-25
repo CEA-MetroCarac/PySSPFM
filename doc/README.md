@@ -439,6 +439,10 @@ This entire process enhances the precision of the measured values. The robustnes
     <em>Segment treatment in dfrt mode (figure generated with <code>plt_seg_dfrt</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/plot.py">utils/seg_to_loop/plot</a></code> script)</em>
 </p>
 
+<p align="center" width="100%">
+Note that SSPFM can also allow to investigate nanomechanical properties as a function of applied voltage, by analyzing the resonance frequency and quality factor of the contact resonance peak. Thus, we can gain insights into phase transitions or multi-ferroic material properties.
+</p>
+
 <p align="justify" width="100%">
 All segments (in the Off Field mode) can be visualized on this map:
 </p>
@@ -667,6 +671,10 @@ There are three distinct measurement processing modes, each involving the extrac
 ### VI.3) - Hysteresis and properties
 
 <p align="justify" width="100%">
+The process of fitting hysteresis curves is a crucial step in determining the piezo/ferro properties of a material. However, it is also a delicate part of the data processing that can greatly influence quality of the results. In many cases, the shape of the PFM hysteresis nanoloop can be deformed compared to macroscopic polarization hysteresis P(E).
+</p>
+
+<p align="justify" width="100%">
 The script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/curve_hysteresis.py>utils/core/curve_hysteresis</a></code> introduces and processes a novel entity known as the <code>Hysteresis</code> object. This object is initialized through the variable <code>model</code>, encapsulating the mathematical formulations for both of its branches: <br>
 &#8226 <code>'sigmoid'</code> (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script): $PR(V) = G * ({1 \over 1. + exp(-c^i * (V - V_0^i))} - 0.5) + a*V + b$ <br>
 &#8226 <code>'arctan'</code> (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script): $PR(V) = G * arctan(c^i * (V - V_0^i)) + a*V + b$ <br>
@@ -720,12 +728,20 @@ The hysteresis is subsequently fitted using the <code>fit</code> method, conside
 </p>
 
 <p align="justify" width="100%">
+It should be noted that the fitting process (based on minimization of mean square deviation between analytical model and experimental datas) is performed on the entirety of the hysteresis curve and not on each individual branch separately. Some parameters are global to the hysteresis such as affine component and hysteresis amplitude while some can vary for each branch such as the position and the dilatation coefficient. 
+</p>
+
+<p align="justify" width="100%">
 Following the completion of the fitting process, the <code>properties</code> method facilitates the extraction of the piezo-ferroelectric properties of the hysteresis. All properties are calculated both with and without the electrostatic component: <br>
 &#8226 The imprint, denoted by <code>x_shift</code>, is defined as the mean of the two coercive voltages of the hysteresis branches. The voltage window, <code>x0_wid</code>, is the difference between these two values. The hysteresis area, <code>area</code>, is simply the product of the voltage window and the hysteresis amplitude. <br>
 &#8226 The intersection points on the abscissa axes (<code>x_inters_l</code>, <code>x_inters_r</code>) and the ordinate axes (<code>y_inters_l</code>, <code>y_inters_r</code>) respectively define the coercive voltages and the remanent piezoresponse voltages. <br>
 &#8226 The inflection points, by default located at 10% and 90% of the branch amplitudes, determine the nucleation voltages (<code>x_infl_l</code>, <code>x_infl_r</code>) and saturation voltages (<code>x_sat_l</code>, <code>x_sat_r</code>). <br>
 &#8226 The relative difference between the expansion coefficients of the right and left branches, denoted as <code>diff_coef</code>, quantifies the level of hysteresis asymmetry.
-&#8226 The quadratic error between the experimental data and the model determined by the fit achieved using the <code>r_square</code> method.
+&#8226 The quadratic error between the experimental data and the model .
+</p>
+
+<p align="justify" width="100%">
+The quality of the fit is expressed as the R-squared value, determined by the fit achieved using the <code>r_square</code> method. It represents the mean square deviation between the fit and measurements. During the analysis of piezo-ferroelectric properties, it is important to always consider the R-squared value. This is because variations in these properties can arise from both physical nanoscale effects and poor quality fitting. For hysteresis curves with abnormally low R-squared values, it is recommended to inspect each measurement individually to identify potential issues with the data. 
 </p>
 
 <p align="center" width="100%">
@@ -880,7 +896,7 @@ The complete set of displayed figures is orchestrated by the function <code>plot
 </p>
 
 <p align="justify" width="100%">
-Each cartography is rendered using the functions <code>sub_image</code> or <code>final_image</code> (for step 4). Annotations are incorporated into the cartography figures generated by <code>final_image</code> through the <code>annotate</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/annotate.py">utils/map/annotate.py</a></code>. These annotations include the positions of all measurement points and the probe's trajectory directions. Furthermore, the determination of x and y-axis values is accomplished (for original or interpolated cartographies) using the <code>extent</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/annotate.py">utils/map/annotate.py</a></code>. The resulting figures can be saved in both png and txt formats using the <code>save</code> parameter.
+Each cartography is rendered using the functions <code>sub_image</code> or <code>final_image</code> (for step 4). Annotations are incorporated into the cartography figures generated by <code>final_image</code> through the <code>annotate</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/annotate.py">utils/map/annotate.py</a></code>. These annotations include the positions of all measurement points and the probe's trajectory directions. Furthermore, the determination of x and y-axis values is accomplished (for original or interpolated cartographies) using the <code>extent</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/annotate.py">utils/map/annotate.py</a></code>. The resulting figures can be saved in both 'png' and 'txt' formats using the <code>save</code> parameter.
 </p>
 
 <p align="center" width="100%">
@@ -909,12 +925,16 @@ Each cartography is rendered using the functions <code>sub_image</code> or <code
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">toolbox/raw_file_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/raw_file_reader.py">gui/raw_file_reader</a></code>.
 </p>
 
-En entrée un fichier de mesure SSPFM datacube est ouvert, les données sont extraites et affichées sous forme graphique. 
-Le mode de mesure doit être choisi grâce au paramètre 'mode' :
-- 'classique' (sweep resonance)
-- 'dfrt'
+<p align="justify" width="100%">
+As input, SSPFM datacube measurement file is open, and its data is extracted and plotted. The selection of the measurement mode is facilitated through the 'mode' parameter, with options including: <br>
+&#8226 'classic' (Sweep Resonance) <br>
+&#8226 'dfrt'
+</p>
 
-INSERER LE GRAPHIQUE
+<p align="center" width="100%">
+    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/raw_signals.png> <br>
+    <em>Raw measurement of an datacube file (figure generated with <code>plt_signals</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/plot.py">utils/seg_to_loop/plot</a></code> script)</em>
+</p>
 
 #### VIII.1.b) Loop file
 
