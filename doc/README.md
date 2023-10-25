@@ -730,7 +730,7 @@ Following the completion of the fitting process, the <code>properties</code> met
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/asymmetric_hysteresis_fit_and_properties.PNG> <br>
-    <em>Asymmetric hysteresis fit and properties</em>
+    <em>Asymmetric hysteresis fit and properties (figure generated with <code>plot</code> and <code>plot_properties</code> functions of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/curve_hysteresis.py">utils/core/curve_hysteresis.py</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
