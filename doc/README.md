@@ -782,7 +782,7 @@ The function <code>btfly_analysis</code> enables the execution of the procedure.
     <em>Result of <code>sat_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic.py</a></code> script</em>
 </p>
 
-### VI.4.2) - Multi read voltages of Off-field hysteresis
+### VI.4.3) - Multi read voltages of Off-field hysteresis
 
 <p align="justify" width="100%">
 The function <code>offset_analysis</code> enables the execution of the procedure. This method involves measuring multiple off-field hysteresis curves at different read voltages (equivalent of c-KPFM method introduced by N.Balke et al. [8]). Bruker recommends this technique [20]. For each curve, a vertical offset is extracted by fitting Off-field hysteresis. Then vertical offset is determined as a function of the read voltage, which constitutes the affine component. This approach is robust and precise as it is based solely on the off-field fits, with a broad range of validity. Moreover, it allows obtaining the whole affine component. However, the implementation of this method necessitates measuring several off-field hysteresis curves at various voltages, which is time-consuming and can disrupt the analysis of the hysteresis reproducibility. <br>
@@ -793,11 +793,22 @@ The function <code>offset_analysis</code> enables the execution of the procedure
     <em>Result of <code>offset_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic.py</a></code> script</em>
 </p>
 
-&#8226 4) <code>differential_analysis</code> function: <br>
-Differential analysis of On and Off-field hysteresis [50] [51]: this method involves subtracting On and Off-field hysteresis curves, then a line passing through zero is obtained. A linear regression is performed to determine the slope, which is then used to divide the vertical offset of the Off-field hysteresis curve to obtain the CPD. This method enables the determination of the entire affine component. It is both robust and precise since it primarily relies on Off-field fits, and it is also easy to implement. Additionally, the differential analysis allows for choosing the voltage domain to perform the linear regression. Indeed, in some cases, it is better to do it in low voltage domain since non linear effects could appear at high voltage as previously mentioned. It can be usefull to study these phenomenons (charge injection, leakage current, joule effect …).
+### VI.4.4) - Differential analysis of On and Off-field hysteresis
+
+<p align="justify" width="100%">
+[50] [51] The function <code>differential_analysis</code> enables the execution of the procedure. This method involves subtracting On and Off-field hysteresis curves, then a line passing through zero is obtained. A linear regression is performed to determine the slope, which is then used to divide the vertical offset of the Off-field hysteresis curve to obtain the CPD. This method enables the determination of the entire affine component. It is both robust and precise since it primarily relies on Off-field fits, and it is also easy to implement. Additionally, the differential analysis allows for choosing the voltage domain to perform the linear regression. Indeed, in some cases, it is better to do it in low voltage domain since non linear effects could appear at high voltage as previously mentioned. It can be usefull to study these phenomenons (charge injection, leakage current, joule effect …).
 </p>
 
-Le fit de l'hystérésis permet également de quantifier l'ensemble de la composante électrostatique
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/diff_analysis.png> <br>
+    <em>Workflow of <code>differential_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic.py</a></code> script</em>
+</p>
+
+### VI.4.5) - Fit of both On and Off-field hysteresis
+
+<p align="justify" width="100%">
+The last approach was already developed in INSERER LA SECTION. It consists to fit both hysteresis On and Off-field, which involves extracting the affine component. One advantage of this method is that it is easy to implement since the hysteresis fit is necessarily done during data processing to extract piezo/ferroelectric sample properties. Additionally, this method enables to determine the entire affine component. However, the measurement requires robust On-field hysteresis fitting, which can be challenging for predominant electrostatic effects.
+</p>
 
 ### VI.5) - cKPFM
 
