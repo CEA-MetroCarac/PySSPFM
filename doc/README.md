@@ -853,10 +853,16 @@ The mask can be ascertained: <br>
 
 ### VII.2) - Interpolation 2D
 
+<p align="justify" width="100%">
+All the functions responsible for conducting 2D interpolations can be found in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/interpolate.py">utils/map/interpolate.py</a></code>. <br>
+The <code>grid_interp</code> function performs a 2D interpolation on a map using the <a>href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html">griddata</a> function from scipy.interpolate. The <code>interp_func</code> parameter allows you to choose the interpolation function (<code>'linear'</code> or <code>'cubic'</code>). <br>
+The <code>interp_2d_treated</code> function oversees the entire calibration procedure. Initially, by calling the <code>grid_interp</code> function, the map is interpolated with an interpolation coefficient of 1 to correct any defective or masked values (<code>nan</code>). Next, the dimensions of this map are expanded based on the <code>interp_fact</code> parameter with new <code>nan</code> values. Then, a new 2D interpolation is performed by invoking the <code>grid_interp</code> function once more.
+</p>
+
 ### VII.3) - Figures
 
 <p align="justify" width="100%">
-The entirety of the displayed figures corresponds to: <br>
+The entirety of the displayed figures est assuré par la fonction plot_and_save_image du script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> and corresponds to: <br>
 <br>
 &#8226 Image 3: Step 1 of measure: raw measure map (no selection criterion) <br>
 &#8226 Image 4: Step 1bis: interpolation of step 1 <br>
