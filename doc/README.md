@@ -691,7 +691,7 @@ An initialization of the fitting parameters is conducted with the function <code
         <li>Definition Interval:</li>
             <ul>
                 <li>$c^i \in \left[0, +\infty\right[$ </li>
-                <li>Sign of $G \in \left[0, +\infty\right[$ for a "counterclockwise" loop and $G \in \left]-\infty, 0\right]$ for a "clockwise" loop.</li>
+                <li>$G \in \left[0, +\infty\right[$ for a "counterclockwise" loop and $G \in \left]-\infty, 0\right]$ for a "clockwise" loop.</li>
                 <li>$V_0^i \in \left[min(V), max(V)\right]$ </li>
                 <li>$b \in \left[min(PR), max(PR)\right]$ </li>
                 <li>$a$:</li>
@@ -700,7 +700,7 @@ An initialization of the fitting parameters is conducted with the function <code
                         <li>Otherwise, $a=0$ </li>
                     </ul>
             </ul>
-        <li>The differential of the two branches, <code>diff_hyst</code>, is calculated and subsequently filtered (via the <code>filter_mean</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/noise.py">/utils/core/noise.py</a></code>), effectively forming a dome. This process facilitates the initialization of fit parameter values and is derived from the work of INSERT THE SOURCE. <br>
+        <li>The differential of the two branches, <code>diff_hyst</code>, is calculated and subsequently filtered (via the <code>filter_mean</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/noise.py">utils/core/noise.py</a></code>), effectively forming a dome. This process facilitates the initialization of fit parameter values and is derived from the work of INSERT THE SOURCE. <br>
             <p align="center" width="100%">
                 <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/dIff_hysteresis.PNG> <br>
                 <em>Differntial hysteresis model (dome)</em>
@@ -708,24 +708,24 @@ An initialization of the fitting parameters is conducted with the function <code
         </li>
         <li>Initial Value:</li>
             <ul>
-                <li>The dilation coefficients of the branches are required to be positive.</li>
-                <li>The amplitude value of the hysteresis is ascertained from the maximum of <code>diff_hyst</code>.</li>             
-                <li>The coercive voltages of the two branches are defined as the abscissas corresponding to the minimum and maximum slopes of <code>diff_hyst</code>.</li>
-                <li>For <code>analysis_mode == 'on_f_loop'</code>, the slope is initialized as the ratio: ${max(PR)-min(PR) \over max(voltage)-min(voltage)}$.</li>   
+                <li>$G$ is ascertained from the maximum of <code>diff_hyst</code>.</li>             
+                <li>$V_0^i$ are defined as the abscissas corresponding to the minimum and maximum slopes of <code>diff_hyst</code>.</li>
+                <li>For <code>analysis_mode == 'on_f_loop'</code>, $a$ is initialized as the ratio: ${max(PR)-min(PR) \over max(voltage)-min(voltage)}$.</li>   
             </ul>
     </ul>
 </p>
 
 <p align="justify" width="100%">
-The hysteresis is subsequently fitted using the <code>fit</code> method, considering the coordinates of the best loop's points and selecting the desired <code>method</code>. This approach leverages the lmfit library, enabling the extraction of parameters from the hysteresis model that best converges with the experimental data.
+The hysteresis is subsequently fitted using the <code>fit</code> method, considering the coordinates of the best loop's points and selecting the desired <code>method</code>. This approach leverages the <a href="https://pypi.org/project/lmfit/">lmfit</a> library, enabling the extraction of parameters from the hysteresis model that best converges with the experimental data.
 </p>
 
 <p align="justify" width="100%">
-Following the completion of the fitting process, the 'properties' method facilitates the extraction of the piezo-ferroelectric properties of the hysteresis. All properties are calculated both with and without the electrostatic component: <br>
+Following the completion of the fitting process, the <code>properties</code> method facilitates the extraction of the piezo-ferroelectric properties of the hysteresis. All properties are calculated both with and without the electrostatic component: <br>
 &#8226 The imprint, denoted by <code>x_shift</code>, is defined as the mean of the two coercive voltages of the hysteresis branches. The voltage window, <code>x0_wid</code>, is the difference between these two values. The hysteresis area, <code>area</code>, is simply the product of the voltage window and the hysteresis amplitude. <br>
 &#8226 The intersection points on the abscissa axes (<code>x_inters_l</code>, <code>x_inters_r</code>) and the ordinate axes (<code>y_inters_l</code>, <code>y_inters_r</code>) respectively define the coercive voltages and the remanent piezoresponse voltages. <br>
 &#8226 The inflection points, by default located at 10% and 90% of the branch amplitudes, determine the nucleation voltages (<code>x_infl_l</code>, <code>x_infl_r</code>) and saturation voltages (<code>x_sat_l</code>, <code>x_sat_r</code>). <br>
 &#8226 The relative difference between the expansion coefficients of the right and left branches, denoted as <code>diff_coef</code>, quantifies the level of hysteresis asymmetry.
+&#8226 The quadratic error between the experimental data and the model determined by the fit achieved using the <code>r_square</code> method.
 </p>
 
 ### VI.4) - Artifact decoupling
