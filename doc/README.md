@@ -739,6 +739,11 @@ In the figure above, we can observe the fitting of an asymmetric hysteresis. The
 
 ### VI.4) - Artifact decoupling
 
+<p align="center" width="100%">
+    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/electrostatic_artifacts.png> <br>
+    <em>Electrostatic artifacts</em>
+</p>
+
 <p align="justify" width="100%">
 Artifacts, primarily of electrostatic nature but more generally stemming from quadratic terms (electrostatics, electrostrictive, Joule's effect), become non-negligible here due to the application of a continuous voltage, V_DC, which can influence the measurement in the following ways: <br>
 &#8226 By introducing a vertical offset in off-field measurements (artifacts mainly of electrostatic origin). <br>
