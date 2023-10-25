@@ -692,8 +692,8 @@ An initialization of the fitting parameters is conducted with the function <code
             <ul>
                 <li>$c^i \in \left[0, +\infty\right[$ </li>
                 <li>Sign of $G$ is set positively for a "counterclockwise" loop and negatively for a "clockwise" loop.</li>
-                <li>$V_0^i \in \left[min(V), max(V)]$ </li>
-                <li>$b \in \left[min(PR), max(PR)]$ </li>
+                <li>$V_0^i \in \left[min(V), max(V)\right]$ </li>
+                <li>$b \in \left[min(PR), max(PR)\right]$ </li>
                 <li>The Slope:</li>
                     <ul>
                         <li>For <code>analysis_mode == 'on_f_loop'</code>: In cases where <code>locked_elec_slope = 'positive'</code>, the slope is defined positively; conversely, if <code>locked_elec_slope = 'negative'</code>, the slope is defined negatively. If <code>locked_elec_slope is None</code>, the slope is determined based on the direction of voltage application: <code>grounded_tip is True</code> -> <code>'negative'</code>, <code>grounded_tip is False</code> -> <code>'positive'</code>.</li>
