@@ -855,6 +855,20 @@ The mask can be ascertained: <br>
 
 ### VII.3) - Figures
 
+<p align="justify" width="100%">
+The entirety of the displayed figures corresponds to: <br>
+<br>
+&#8226 Image 3: Step 1 of measure: raw measure map (no selection criterion) <br>
+&#8226 Image 4: Step 1bis: interpolation of step 1 <br>
+&#8226 Image 5: Step 2: add the mask: some pixel are removed <br>
+&#8226 Image 6: Step 3: interpolate removed pixel values (without increasing resolution) to go back to normal values <br>
+&#8226 Image 7: Step 3bis: interpolation of step 3 <br>
+&#8226 Image 8: Step 4: final result: interpolation of step 3 + remove the area corresponding to the removed pixels on the map <br>
+<br>
+&#8226 Image 1: ref meas: step 1 <br>
+&#8226 Image 2: ref meas: step 4 <br>
+</p>
+
 AFFICHER LES CARTO
 
 ## VIII) Toolbox
