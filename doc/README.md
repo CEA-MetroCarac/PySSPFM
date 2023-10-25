@@ -630,7 +630,7 @@ Figures resulting from the processing of the first file are generated with <code
 
 <p align="justify" width="100%">
 For a deeper understanding of the file management in this phase, please refer to the relevant section in the documentation:<br>
-&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii2b---second-step-of-data-analysis">III.2.b) - File Management/Output Files/Second Step of Data Analysis</a></code>
+&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii2b---second-step-of-data-analysis">III.2.b) - File Management / Output Files / Second Step of Data Analysis</a></code>
 </p>
 
 ### VI.1) - Parameters
