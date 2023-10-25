@@ -768,7 +768,7 @@ The function <code>btfly_analysis</code> enables the execution of the procedure.
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/btfly_analysis.png> <br>
-    <em>Result of <code>btfly_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic.py</a></code> script</em>
+    <em>Result of <code>btfly_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic.py</a></code> script (figure generated with <code>plot_btfly_analysis</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/plot.py">utils/hyst_to_map/plot</a></code> script)</em>
 </p>
 
 ### VI.4.2) - Analysis of saturation domain of On-field piezoresponse nanoloop
