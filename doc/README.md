@@ -700,7 +700,7 @@ An initialization of the fitting parameters is conducted with the function <code
                         <li>Otherwise, $a=0$ </li>
                     </ul>
             </ul>
-        <li>The differential of the two branches, <code>diff_hyst</code>, is calculated and subsequently filtered (via the <code>filter_mean</code> function in the script INSERT), effectively forming a dome. This process facilitates the initialization of fit parameter values and is derived from the work of INSERT THE SOURCE. <br>
+        <li>The differential of the two branches, <code>diff_hyst</code>, is calculated and subsequently filtered (via the <code>filter_mean</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/noise.py">/utils/core/noise.py</a></code>), effectively forming a dome. This process facilitates the initialization of fit parameter values and is derived from the work of INSERT THE SOURCE. <br>
             <p align="center" width="100%">
                 <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/dIff_hysteresis.PNG> <br>
                 <em>Differntial hysteresis model (dome)</em>
