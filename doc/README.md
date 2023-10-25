@@ -691,12 +691,12 @@ An initialization of the fitting parameters is conducted with the function <code
         <li>Definition Interval:</li>
             <ul>
                 <li>$c^i \in \left[0, +\infty\right[$ </li>
-                <li>Sign of $G$ is set positively for a "counterclockwise" loop and negatively for a "clockwise" loop.</li>
+                <li>Sign of $G \in \left[0, +\infty\right[$ for a "counterclockwise" loop and $G \in \left]-\infty, 0\right]$ for a "clockwise" loop.</li>
                 <li>$V_0^i \in \left[min(V), max(V)\right]$ </li>
                 <li>$b \in \left[min(PR), max(PR)\right]$ </li>
-                <li>The Slope:</li>
+                <li>$a$:</li>
                     <ul>
-                        <li>For <code>analysis_mode == 'on_f_loop'</code>: In cases where <code>locked_elec_slope = 'positive'</code>, the slope is defined positively; conversely, if <code>locked_elec_slope = 'negative'</code>, the slope is defined negatively. If <code>locked_elec_slope is None</code>, the slope is determined based on the direction of voltage application: <code>grounded_tip is True</code> -> <code>'negative'</code>, <code>grounded_tip is False</code> -> <code>'positive'</code>.</li>
+                        <li>For <code>analysis_mode == 'on_f_loop'</code>: In cases where <code>locked_elec_slope = 'positive'</code>, $a \in \left[0, +\infty\right[$; conversely, if <code>locked_elec_slope = 'negative'</code>, $a \in \left]-\infty, 0\right]$. If <code>locked_elec_slope is None</code>, the slope is determined based on the direction of voltage application: <code>grounded_tip is True</code> -> <code>'negative'</code>, <code>grounded_tip is False</code> -> <code>'positive'</code>.</li>
                         <li>Otherwise, the slope is fixed at 0.</li>
                     </ul>
             </ul>
