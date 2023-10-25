@@ -869,7 +869,10 @@ The entirety of the displayed figures corresponds to: <br>
 &#8226 Image 2: ref meas: step 4 <br>
 </p>
 
-AFFICHER LES CARTO
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/ssfpm_map_amplitude.PNG> <br>
+    <em>cKPFM analysis result (figure generated with <code>plot_ckpfm</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot.py</a></code> script)</em>
+</p>
 
 ## VIII) Toolbox
 
