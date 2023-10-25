@@ -823,18 +823,14 @@ INSERER les sections dans lesquelles le mode 'multi_loop' a été discuté
     <em>cKPFM analysis result (figure generated with <code>plot_ckpfm</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot.py</a></code> script)</em>
 </p>
 
-INSERER FIGURE CKPFM
-
 ## VII) - SSPFM mapping
 
-La création et le traitement des carographies SSPFM est assuré par l'ensemble des scripts contenus dans: <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map>utils/map</a></code>.
-
-Les cartographies SSPFM constituent les résultats principaux de l'analyse des mesures. Elles ne peuvent être déterminées qu'une fois l'ensemble des deux étapes de traitement effectuées, étant donnée que les propriétés des hystérésis et des artefacts électrostatiques doivent être déterminées.
+La création et le traitement des carographies SSPFM est assuré par l'ensemble des scripts contenus dans: <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map>utils/map</a></code>. Les cartographies SSPFM constituent les résultats principaux de l'analyse des mesures. Elles ne peuvent être déterminées qu'une fois l'ensemble des deux étapes de traitement effectuées, étant donnée que les propriétés des hystérésis et des artefacts électrostatiques doivent être déterminées, au préalable d'être cartographiées.
 
 Le script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py>utils/map/main.py</a></code> permet de coordonner et gérer l'ensemble de la création et du traitement des cartographies SSPFM, en s'appuyant nottament sur les scripts <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/annotate.py>utils/map/annotate.py</a></code> qui permet de gérer l'annotation des cartographies, <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/interpolate.py>utils/map/interpolate.py</a></code> pour l'interpolation 2D et
 <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/matrix_formatting.py>utils/map/matrix_formatting.py</a></code> pour la mise en forme des mesures sous la forme de cartographies.
 
-Les cartographies sont générées via les codes exécutables list_map_reader et global_map_reader.
+Les cartographies sont générées via les codes exécutables <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader</a></code> et <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader</a></code>.
 
 ### VII.1) - Mask
 
