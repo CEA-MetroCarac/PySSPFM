@@ -577,14 +577,14 @@ Phase values are then adjusted according to the phase calibration dictionary.
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/multiloop_amplitude.PNG> <br>
-    <em><code>MultiLoop</code> of amplitude (figure generated with <code>plot_all_loop</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot</a></code script)</em> <br>
+    <em><code>MultiLoop</code> of amplitude (figure generated with <code>plot_all_loop</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot</a></code> script)</em> <br>
      <br>
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/multiloop_phase.PNG> <br>
-    <em><code>MultiLoop</code> of phase (figure generated with <code>plot_all_loop</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot</a></code script)</em>
+    <em><code>MultiLoop</code> of phase (figure generated with <code>plot_all_loop</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
-Subsequently, based on the amplitude ( $R$ ) and phase ($\phi$) loops, piezoresponse ($PR$) loops are generated. The user selects the function ($func_{pha}$) for calculating the piezoresponse with the parameter <code>pha_func</code>: $PR=R*func_{pha}(\phi)$. For phase values such as <code>pha_rev</code>=-90° and <code>pha_fwd</code>=90°, the chosen function should be <code>np.sin()</code>, whereas for phase values like <code>pha_rev</code>=180° and <code>pha_fwd</code>=0°, the selected function should be <code>np.cos()</code>.
+Subsequently, based on the amplitude ($R$) and phase ($\phi$) loops, piezoresponse ($PR$) loops are generated. The user selects the function ($func_{pha}$) for calculating the piezoresponse with the parameter <code>pha_func</code>: $PR=R*func_{pha}(\phi)$. For phase values such as <code>pha_rev</code>=-90° and <code>pha_fwd</code>=90°, the chosen function should be <code>np.sin()</code>, whereas for phase values like <code>pha_rev</code>=180° and <code>pha_fwd</code>=0°, the selected function should be <code>np.cos()</code>.
 </p>
 
 <p align="center" width="100%">
