@@ -747,18 +747,18 @@ Artifacts, primarily of electrostatic nature but more generally stemming from qu
 </p>
 
 <p align="justify" width="100%">
-Dans le script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic.py</a></code>, des protocoles de décorélation ont été mis au point: <br>
+Within the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic.py</a></code>, protocols for artifact decorrelation have been developed: <br>
 <br>
-&#8226 1) fonction <code>btfly_analysis</code>:<br>
+&#8226 1) <code>btfly_analysis</code> function:<br>
 Analysis of On-field PFM amplitude loop: The first method used to isolate the influence of artifacts on the piezo/ferroelectric component involves analyzing the On-field PFM amplitude loop. The method is simple, as the coercive voltages correspond to the points where the amplitude of the curve are the lower. The two points are then determined, and their average corresponds to a measurement of the CPD. However, this method has some drawbacks. It cannot determine the slope of the electrostatic component, and it is only valid when the affine component predominates over the hysteresis component. Moreover, imprint effect can interfere with the measurement accuracy, which is already limited since the signal-to-noise ratio is low at the points of interest [24]. Additionally, the measurement of amplitude vanishing points is rare in practice because of the influence of noise on measurements [25] [48]. <br>
 <br>
-&#8226 2) fonction <code>sat_analysis</code> <br>
+&#8226 2) <code>sat_analysis</code> function: <br>
 Analysis of saturation domain analysis of On-field hysteresis [49]: This method involves isolating the two saturation domains of the On-field hysteresis, performing a linear regression of these domains, and measuring the line passing through them, which constitutes the affine component. This method is easy to implement and provides the entire affine component due to the artifacts. However, it requires reaching the saturation domain of the hysteresis, which is not always the case, especially for thick samples or those with high coercive voltages requiring high pulses voltages. Additionally, the influence of artifacts can be more significant in the saturation domains, especially for On-field measurement, and other phenomena can play a significant role, such as charge injection [45], leakage current [52], joules heating [45], surface or tip degradation [27], etc [27] [45] [53]. The analysis domain is limited, resulting in less precise measurements. <br> 
 <br>
-&#8226 3) fonction <code>offset_analysis</code> <br>
+&#8226 3) <code>offset_analysis</code> function: <br>
 Multi read voltages of Off-field hysteresis: this method involves measuring multiple off-field hysteresis curves at different read voltages (equivalent of c-KPFM method introduced by N.Balke et al. [8]). Bruker recommends this technique [20]. For each curve, a vertical offset is extracted by fitting Off-field hysteresis. Then vertical offset is determined as a function of the read voltage, which constitutes the affine component. This approach is robust and precise as it is based solely on the off-field fits, with a broad range of validity. Moreover, it allows obtaining the whole affine component. However, the implementation of this method necessitates measuring several off-field hysteresis curves at various voltages, which is time-consuming and can disrupt the analysis of the hysteresis reproducibility. <br>
 <br>
-&#8226 4) fonction <code>differential_analysis</code> <br>
+&#8226 4) <code>differential_analysis</code> function: <br>
 Differential analysis of On and Off-field hysteresis [50] [51]: this method involves subtracting On and Off-field hysteresis curves, then a line passing through zero is obtained. A linear regression is performed to determine the slope, which is then used to divide the vertical offset of the Off-field hysteresis curve to obtain the CPD. This method enables the determination of the entire affine component. It is both robust and precise since it primarily relies on Off-field fits, and it is also easy to implement. Additionally, the differential analysis allows for choosing the voltage domain to perform the linear regression. Indeed, in some cases, it is better to do it in low voltage domain since non linear effects could appear at high voltage as previously mentioned. It can be usefull to study these phenomenons (charge injection, leakage current, joule effect …).
 </p>
 
