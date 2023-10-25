@@ -728,6 +728,15 @@ Following the completion of the fitting process, the <code>properties</code> met
 &#8226 The quadratic error between the experimental data and the model determined by the fit achieved using the <code>r_square</code> method.
 </p>
 
+<p align="center" width="100%">
+    <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/asymmetric_hysteresis_fit_and_properties.PNG> <br>
+    <em>Asymmetric hysteresis fit and properties</em>
+</p>
+
+<p align="justify" width="100%">
+In the figure above, we can observe the fitting of an asymmetric hysteresis. The model is determined both with and without the affine component representing the electrostatic part. Here, the properties of the hysteresis are displayed on the model without the electrostatic component.
+</p>
+
 ### VI.4) - Artifact decoupling
 
 Les artefacts, princiapelemnt électrostatique mais plus généralement les termes d'origine quadratique (électrostatics, électrostrictif, effet Joules), non nuls ici par application d'une tension continue V_DC peuvent influencer la mesure:
