@@ -845,10 +845,9 @@ For cartographies, it is possible to establish a mask in order to: <br>
 &#8226 Isolate specific ferroelectric phases or areas on the sample's surface.
 </p>
 
-Le masque peut être déterminé:
-
 <p align="justify" width="100%">
-&#8226 Manually, through the <code>man_mask</code> parameter, which contains a list of pixels provided by the user.
+The mask can be ascertained: </p>
+&#8226 Manually, through the <code>man_mask</code> parameter, which contains a list of pixels provided by the user. <br>
 &#8226 Using a reference property, in case <code>man_mask is None</code>, with parameters specified in the <code>ref</code> dictionary. The latter is chosen through the <code>'mode'</code> (<code>'off'</code>, <code>'on'</code>, or <code>'coupled'</code>) and <code>'meas'</code>, which contains the name of the reference property. The user then selects a measurement range using the <code>'min value'</code> and <code>'max value'</code> parameters. If either of the two values is <code>None</code>, the corresponding boundary is not considered. The <code>'interactive'</code> parameter allows interactive selection of the reference measurement boundaries, with an iterative display of the masked map and user keyboard input. This interactive procedure is provided by the <code>select_pixel</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. The entire procedure is executed by the <code>mask_ref</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>.
 </p>
 
