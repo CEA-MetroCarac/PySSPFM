@@ -436,7 +436,7 @@ This entire process enhances the precision of the measured values. The robustnes
 
 <p align="center" width="100%">
     <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/dfrt_segment.PNG> <br>
-    <em>Segment treatment in dfrt mode (figure generated with <code>plt_seg_dfrt</code> function of <code>utils/seg_to_loop/plot</code> script)</em>
+    <em>Segment treatment in dfrt mode (figure generated with <code>plt_seg_dfrt</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/plot.py">utils/seg_to_loop/plot</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
@@ -538,7 +538,7 @@ For the second part of the <code>phase_calibration</code> function, an in-depth 
 
 <p align="center" width="100%">
     <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_histogram.png> <br>
-    <em>Phase histogram of SSPFM measurement (figure generated with <code>histo_init</code> function of <code>utils/nanoloop/phase</code> script)</em>
+    <em>Phase histogram of SSPFM measurement (figure generated with <code>histo_init</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
@@ -551,7 +551,7 @@ A potential phase inversion can be detected by examining the variation in the me
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_variation_with_voltage.png> <br>
-    <em>Detection of phase inversion with phase variation with voltage (figure generated with <code>phase_analysis</code> function of <code>utils/nanoloop/phase</code> script)</em>
+    <em>Detection of phase inversion with phase variation with voltage (figure generated with <code>phase_analysis</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
@@ -589,7 +589,7 @@ Subsequently, based on the amplitude ($R$) and phase ($\phi$) loops, piezorespon
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/multiloop_piezoresponse.PNG> <br>
-    <em><code>MultiLoop</code> of piezoresponse (figure generated with <code>plot_all_loop</code> function of <code>utils/nanoloop/plot</code> script)</em>
+    <em><code>MultiLoop</code> of piezoresponse (figure generated with <code>plot_all_loop</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot</a></code> script)</em>
 </p>
 
 ### V.3) - MeanLoop
@@ -600,13 +600,13 @@ The <code>MeanLoop</code> object is defined within the <code><a href="https://gi
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/meanloop_amplitude.PNG> <br>
-    <em><code>MeanLoop</code> of amplitude (figure generated with <code>plot_meanloop</code> function of <code>utils/nanoloop/plot</code> script)</em> <br>
+    <em><code>MeanLoop</code> of amplitude (figure generated with <code>plot_meanloop</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot</a></code> script)</em> <br>
      <br>
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/meanloop_phase.PNG> <br>
-    <em><code>MeanLoop</code> of phase (figure generated with <code>plot_meanloop</code> function of <code>utils/nanoloop/plot</code> script)</em> <br>
+    <em><code>MeanLoop</code> of phase (figure generated with <code>plot_meanloop</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot</a></code> script)</em> <br>
      <br>
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/meanloop_piezoresponse.PNG> <br>
-    <em><code>MeanLoop</code> of piezoresponse (figure generated with <code>plot_meanloop</code> function of <code>utils/nanoloop/plot</code> script)</em>
+    <em><code>MeanLoop</code> of piezoresponse (figure generated with <code>plot_meanloop</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot</a></code> script)</em>
 </p>
 
 ## VI) - Second step of data analysis
