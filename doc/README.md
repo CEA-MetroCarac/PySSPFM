@@ -812,35 +812,62 @@ The last approach was already developed in INSERER LA SECTION. It consists to fi
 
 ### VI.5) - cKPFM
 
-Parler de nanoloop/analysis --> fonction cKPFM
-Parler de nanoloop/plot --> fonction cKPFM
-INSERER FIGURE CKPFM
+<p align="justify" width="100%">
+The <code>'multi_loop'</code> analysis mode is equivalent to the cKPFM mode: different read voltage values are employed for each hysteresis. Consequently, we can investigate the evolution of piezoresponse not with respect to the writing voltage, but with the reading voltage. To accomplish this, the <code>gen_ckpfm_meas</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis</a></code> script is utilized to transform data initially in the form of nanoloops into cKPFM measurements. This mode allows for a more profound exploration of measurement artifacts, distinguishing between ferroelectric phenomena, electrostatic effects, charge injection, and more.
+</p>
+
+INSERER les sections dans lesquelles le mode 'multi_loop' a été discuté
+
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/cKPFM_analysis.PNG> <br>
+    <em>cKPFM analysis result (figure generated with <code>plot_ckpfm</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot.py</a></code> script)</em>
+</p>
 
 ## VII) - SSPFM mapping
 
-La création et le traitement des carographies SSPFM est assuré par l'ensemble des scripts contenus dans: <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map>utils/map</a></code>.
+<p align="justify" width="100%">
+The creation and processing of SSPFM maps are overseen by the set of scripts contained within: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">utils/map</a></code>. SSPFM maps represent the primary outcomes of measurement analysis. They can only be determined once both processing stages are completed, as the properties of hysteresis and electrostatic artifacts must first be ascertained before they are mapped.
+</p>
 
-Les cartographies SSPFM constituent les résultats principaux de l'analyse des mesures. Elles ne peuvent être déterminées qu'une fois l'ensemble des deux étapes de traitement effectuées, étant donnée que les propriétés des hystérésis et des artefacts électrostatiques doivent être déterminées.
+<p align="justify" width="100%">
+The script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> orchestrates and manages the entire process of creating and processing SSPFM maps. It relies significantly on scripts such as <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/annotate.py">utils/map/annotate.py</a></code> for annotating maps, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/interpolate.py">utils/map/interpolate.py</a></code> for 2D interpolation, and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/matrix_formatting.py">utils/map/matrix_formatting.py</a></code> for formatting measurements into map representations.
+</p>
 
-Le script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py>utils/map/main.py</a></code> permet de coordonner et gérer l'ensemble de la création et du traitement des cartographies SSPFM, en s'appuyant nottament sur les scripts <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/annotate.py>utils/map/annotate.py</a></code> qui permet de gérer l'annotation des cartographies, <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/interpolate.py>utils/map/interpolate.py</a></code> pour l'interpolation 2D et
-<code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/matrix_formatting.py>utils/map/matrix_formatting.py</a></code> pour la mise en forme des mesures sous la forme de cartographies.
-
-Les cartographies sont générées via les codes exécutables list_map_reader et global_map_reader.
+<p align="justify" width="100%">
+The maps are generated using the executable codes <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader</a></code>.
+</p>
 
 ### VII.1) - Mask
 
-Pour les cartoraphies, il est possible de déterminer un masque pour:
-- Inhiber l'influence de pixels problématiques / défectueux de la mesure
-- Isoler certaines phases ferroélectriques ou zones spécifiques en surface de l'échantillon
+<p align="justify" width="100%">
+For cartographies, it is possible to establish a mask in order to: <br>
+&#8226 Mitigate the influence of problematic or defective pixels in the measurement.<br>
+&#8226 Isolate specific ferroelectric phases or areas on the sample's surface.
+</p>
 
-Le masque peut être déterminé:
-
-- Manuellement via une liste de pixel rensiegnée par l'utilisateur
-- 
+<p align="justify" width="100%">
+The mask can be ascertained: <br>
+&#8226 Manually, through the <code>man_mask</code> parameter, which contains a list of pixels provided by the user. <br>
+&#8226 Using a reference property, in case <code>man_mask is None</code>, with parameters specified in the <code>ref</code> dictionary. The latter is chosen through the <code>'mode'</code> (<code>'off'</code>, <code>'on'</code>, or <code>'coupled'</code>) and <code>'meas'</code>, which contains the name of the reference property. The user then selects a measurement range using the <code>'min value'</code> and <code>'max value'</code> parameters. If either of the two values is <code>None</code>, the corresponding boundary is not considered. The <code>'interactive'</code> parameter allows interactive selection of the reference measurement boundaries, with an iterative display of the masked map and user keyboard input. This interactive procedure is provided by the <code>select_pixel</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. The entire procedure is executed by the <code>mask_ref</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>.
+</p>
 
 ### VII.2) - Interpolation 2D
 
 ### VII.3) - Figures
+
+<p align="justify" width="100%">
+The entirety of the displayed figures corresponds to: <br>
+<br>
+&#8226 Image 3: Step 1 of measure: raw measure map (no selection criterion) <br>
+&#8226 Image 4: Step 1bis: interpolation of step 1 <br>
+&#8226 Image 5: Step 2: add the mask: some pixel are removed <br>
+&#8226 Image 6: Step 3: interpolate removed pixel values (without increasing resolution) to go back to normal values <br>
+&#8226 Image 7: Step 3bis: interpolation of step 3 <br>
+&#8226 Image 8: Step 4: final result: interpolation of step 3 + remove the area corresponding to the removed pixels on the map <br>
+<br>
+&#8226 Image 1: ref meas: step 1 <br>
+&#8226 Image 2: ref meas: step 4 <br>
+</p>
 
 AFFICHER LES CARTO
 
