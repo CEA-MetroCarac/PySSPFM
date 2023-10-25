@@ -768,7 +768,7 @@ The function <code>btfly_analysis</code> enables the execution of the procedure.
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/btfly_analysis.png> <br>
-    <em>Result of <code>btfly_analysis</code> function</em>
+    <em>Result of <code>btfly_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic.py</a></code> script</em>
 </p>
 
 ### VI.4.2) - Analysis of saturation domain of On-field piezoresponse nanoloop
@@ -779,7 +779,7 @@ The function <code>btfly_analysis</code> enables the execution of the procedure.
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/sat_analysis.png> <br>
-    <em>Result of <code>sat_analysis</code> function</em>
+    <em>Result of <code>sat_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic.py</a></code> script</em>
 </p>
 
 ### VI.4.2) - Multi read voltages of Off-field hysteresis
@@ -790,7 +790,7 @@ The function <code>offset_analysis</code> enables the execution of the procedure
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/offset_analysis.png> <br>
-    <em>Result of <code>offset_analysis</code> function</em>
+    <em>Result of <code>offset_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic.py</a></code> script</em>
 </p>
 
 &#8226 4) <code>differential_analysis</code> function: <br>
