@@ -524,7 +524,7 @@ The entirety of these steps, including the determination of the direction of hys
 </p>
 
 <p align="justify" width="100%">
-It is worth noting that in some cases of On-Field measurements, where the electrostatic and ferroelectric components are closely related, multiple phase transitions may occur during the cycle.
+It is worth noting that in some cases of On-Field measurements, where the electrostatic and ferroelectric components intensities are quite similar, multiple phase switching may occur during the cycle. In this case the calibration procedure is no longer valid.
 </p>
 
 <p align="center" width="100%">
@@ -555,7 +555,7 @@ A potential phase inversion can be detected by examining the variation in the me
 </p>
 
 <p align="justify" width="100%">
-Following the calibration process and the identification of the positions of the two peaks on the histogram, as well as the phase difference, phase correction performed by <code>corr_phase</code> function can be achieved through four distinct protocols:<br>
+Following the calibration process and the identification of the positions of the two peaks on the histogram, as well as the phase difference, phase correction performed by <code>corr_phase</code> function can be achieved through four distinct protocols, chosen with <code>pha_corr</code> parameter:<br>
 &#8226 <code>raw_phase</code>: The raw phase is retained, and no processing is applied (suitable for use in pre-measurement phase calibration).<br>
 &#8226 <code>offset</code>: A phase offset is determined through calibration, and the phase difference between the two peaks remains unchanged (a treatment method that aims to preserve the initial measurement as faithfully as possible).<br>
 &#8226 <code>affine</code>: An affine relationship is applied to all phase values, adjusting the phase difference to 180°.<br>
@@ -630,7 +630,7 @@ Figures resulting from the processing of the first file are generated with <code
 
 <p align="justify" width="100%">
 For a deeper understanding of the file management in this phase, please refer to the relevant section in the documentation:<br>
-&#8226 File Management/Output Files/Second Step of Data Analysis.
+&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii2b---second-step-of-data-analysis">III.2.b) - File Management/Output Files/Second Step of Data Analysis</a></code>
 </p>
 
 ### VI.1) - Parameters
@@ -724,6 +724,8 @@ Des protocoles de décorélation ont été mis au point :
 LES LISTER
 
 La fonction electrostatic_analysis du script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> permet d'effectuer l'ensemble du découplage des artefacts en fonction des différents protocoles.
+
+### VI.5) - cKPFM
 
 ## VII) - SSPFM mapping
 
