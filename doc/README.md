@@ -310,8 +310,8 @@ The initial step of the process may be initiated either through the <a href="htt
 
 <p align="justify" width="100%">
 For a deeper understanding of the file management in this phase, please refer to the relevant section in the documentation:<br>
-&#8226 Input: File Management/Input Files.<br>
-&#8226 Output: File Management/Output Files/First Step of Data Analysis.
+&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1) - File Management / Input Files</a></code> <br>
+&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii2a---first-step-of-data-analysis">III.2.a) - File Management / Output Files / First Step of Data Analysis</a></code>
 </p>
 
 ### IV.1) - Parameters
