@@ -812,8 +812,17 @@ The last approach was already developed in INSERER LA SECTION. It consists to fi
 
 ### VI.5) - cKPFM
 
-Parler de nanoloop/analysis --> fonction cKPFM
-Parler de nanoloop/plot --> fonction cKPFM
+<p align="justify" width="100%">
+The <code>'multi_loop'</code> analysis mode is equivalent to the cKPFM mode: different read voltage values are employed for each hysteresis. Consequently, we can investigate the evolution of piezoresponse not with respect to the writing voltage, but with the reading voltage. To accomplish this, the <code>gen_ckpfm_meas</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis</a></code> script is utilized to transform data initially in the form of nanoloops into cKPFM measurements. This mode allows for a more profound exploration of measurement artifacts, distinguishing between ferroelectric phenomena, electrostatic effects, charge injection, and more.
+</p>
+
+INSERER les sections dans lesquelles le mode 'multi_loop' a été discuté
+
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/cKPFM_analysis.PNG> <br>
+    <em>cKPFM analysis result (figure generated with <code>plot_ckpfm</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot.py</a></code> script)</em>
+</p>
+
 INSERER FIGURE CKPFM
 
 ## VII) - SSPFM mapping
