@@ -748,10 +748,10 @@ Artifacts, primarily of electrostatic nature but more generally stemming from qu
 
 <p align="justify" width="100%">
 Dans le script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic.py</a></code>, des protocoles de décorélation ont été mis au point:
-&#8226 1) fonction <code>btfly_analysis</code>
-&#8226 2) fonction <code>sat_analysis</code>
-&#8226 3) fonction <code>offset_analysis</code>
-&#8226 4) fonction <code>differential_analysis</code>
+&#8226 1) fonction <code>btfly_analysis</code> <br>
+&#8226 2) fonction <code>sat_analysis</code> <br>
+&#8226 3) fonction <code>offset_analysis</code> <br>
+&#8226 4) fonction <code>differential_analysis</code> <br>
 </p>
 
 La fonction electrostatic_analysis du script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> permet d'effectuer l'ensemble du découplage des artefacts en fonction des différents protocoles.
