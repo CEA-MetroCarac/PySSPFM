@@ -739,13 +739,20 @@ In the figure above, we can observe the fitting of an asymmetric hysteresis. The
 
 ### VI.4) - Artifact decoupling
 
-Les artefacts, princiapelemnt électrostatique mais plus généralement les termes d'origine quadratique (électrostatics, électrostrictif, effet Joules), non nuls ici par application d'une tension continue V_DC peuvent influencer la mesure:
-- par un offset vertical pour la mesure off field (artefacts uniquement électrostatics)
-- par une composante affine pour la mesure on field (influencé par terme d'origine quadratiques)
-- de manière non linéaire, lorsque l'effet est activé après une certaine tension de seuil en on field
+<p align="justify" width="100%">
+Artifacts, primarily of electrostatic nature but more generally stemming from quadratic terms (electrostatics, electrostrictive, Joule's effect), become non-negligible here due to the application of a continuous voltage, V_DC, which can influence the measurement in the following ways: <br>
+&#8226 By introducing a vertical offset in off-field measurements (artifacts mainly of electrostatic origin). <br>
+&#8226 By introducing an affine component in on-field measurements (influenced by quadratic terms). <br>
+&#8226 Non-linearly, when the effect becomes active after a certain threshold voltage is reached in the on-field scenario.
+</p>
 
-Des protocoles de décorélation ont été mis au point :
-LES LISTER
+<p align="justify" width="100%">
+Dans le script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic.py</a></code>, des protocoles de décorélation ont été mis au point:
+&#8226 1) fonction <code>btfly_analysis</code>
+&#8226 2) fonction <code>sat_analysis</code>
+&#8226 3) fonction <code>offset_analysis</code>
+&#8226 4) fonction <code>differential_analysis</code>
+</p>
 
 La fonction electrostatic_analysis du script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> permet d'effectuer l'ensemble du découplage des artefacts en fonction des différents protocoles.
 
