@@ -402,7 +402,7 @@ The segmentation process is performed with <code>cut_function</code> in the scri
 
 <p align="center" width="100%">
     <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/max_resonance_segment.PNG> <br>
-    <em>Segment treatment in max mode (figure generated with <code>plt_seg_max</code> function of <code>utils/seg_to_loop/plot</code> script)</em>
+    <em>Segment treatment in max mode (figure generated with <code>plt_seg_max</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/plot.py">utils/seg_to_loop/plot</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
@@ -423,7 +423,7 @@ $$ \phi(f) = arctan({f * f_0 \over Q * (f_0^2 - f^2)}) + \phi_0 $$
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/resonance_peak_segment.png> <br>
-    <em>Segment treatment in fit mode (figure generated with <code>plt_seg_fit</code> function of <code>utils/seg_to_loop/plot</code> script)</em>
+    <em>Segment treatment in fit mode (figure generated with <code>plt_seg_fit</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/plot.py">utils/seg_to_loop/plot</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
@@ -445,7 +445,7 @@ All segments (in the Off Field mode) can be visualized on this map:
 
 <p align="center" width="100%">
     <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/segment_map.PNG> <br>
-    <em>Segment map (Off Field) (figure generated with <code>amp_pha_map</code> function of <code>utils/seg_to_loop/plot</code> script)</em>
+    <em>Segment map (Off Field) (figure generated with <code>amp_pha_map</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/plot.py">utils/seg_to_loop/plot</a></code> script)</em>
 </p>
 
 ## V) - Nanoloop
