@@ -696,11 +696,16 @@ An initialization of the fitting parameters is conducted with the function <code
                 <li>$b \in \left[min(PR), max(PR)\right]$ </li>
                 <li>$a$:</li>
                     <ul>
-                        <li>For <code>analysis_mode == 'on_f_loop'</code>: In cases where <code>locked_elec_slope = 'positive'</code>, $a \in \left[0, +\infty\right[$; conversely, if <code>locked_elec_slope = 'negative'</code>, $a \in \left]-\infty, 0\right]$. If <code>locked_elec_slope is None</code>, the slope is determined based on the direction of voltage application: <code>grounded_tip is True</code> -> <code>'negative'</code>, <code>grounded_tip is False</code> -> <code>'positive'</code>.</li>
-                        <li>Otherwise, the slope is fixed at 0.</li>
+                        <li>For <code>analysis_mode == 'on_f_loop'</code>: In cases where <code>locked_elec_slope = 'positive'</code>, $a \in \left[0, +\infty\right[$, conversely, if <code>locked_elec_slope = 'negative'</code>, $a \in \left]-\infty, 0\right]$. If <code>locked_elec_slope is None</code>, $a$ is determined based on the direction of voltage application: <code>grounded_tip is True</code> -> <code>'negative'</code>, <code>grounded_tip is False</code> -> <code>'positive'</code>.</li>
+                        <li>Otherwise,$a=0$.</li>
                     </ul>
             </ul>
-        <li>The differential of the two branches, <code>diff_hyst</code>, is calculated and subsequently filtered (via the <code>filter_mean</code> function in the script INSERT), effectively forming a dome. This process facilitates the initialization of fit parameter values and is derived from the work of INSERT THE SOURCE.</li>
+        <li>The differential of the two branches, <code>diff_hyst</code>, is calculated and subsequently filtered (via the <code>filter_mean</code> function in the script INSERT), effectively forming a dome. This process facilitates the initialization of fit parameter values and is derived from the work of INSERT THE SOURCE. <br>
+            <p align="center" width="100%">
+                <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/dIff_hysteresis.PNG> <br>
+                <em>Differntial hysteresis model (dome)</em>
+            </p>
+        </li>
         <li>Initial Value:</li>
             <ul>
                 <li>The dilation coefficients of the branches are required to be positive.</li>
