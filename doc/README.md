@@ -669,25 +669,34 @@ There are three distinct measurement processing modes, each involving the extrac
 <p align="justify" width="100%">
 The script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/curve_hysteresis.py>utils/core/curve_hysteresis</a></code> introduces and processes a novel entity known as the <code>Hysteresis</code> object. This object is initialized through the variable <code>model</code>, encapsulating the mathematical formulations for both of its branches: <br>
 &#8226 <code>'sigmoid'</code> (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script): $PR(V) = G * ({1 \over 1. + exp(-c^i * (V - V_0^i))} - 0.5) + a*V + b$ <br>
-&#8226 <code>'arctan'</code> (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script): $PR(V) = G * arctan(c^i * (V - V_0^i))$ <br>
-$i$ serves as the index designating the branch: $i=L$ for the left branch, and $i=R$ for the right branch.
-A boolean variable, <code>asymmetric</code>, holds the responsibility of deciding whether to apportion distinct dilation coefficients to these bifurcated branches. Additionally, an affine component becomes an integral part of this model.
+&#8226 <code>'arctan'</code> (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script): $PR(V) = G * arctan(c^i * (V - V_0^i)) + a*V + b$ <br>
+$i$ serves as the index designating the branch: $i=L$ for the left branch, and $i=R$ for the right branch. <br>
+The boolean variable, <code>asymmetric</code>, holds the responsibility of deciding whether to apportion distinct dilation coefficients to these bifurcated branches. 
+If <code>asymmetric is False</code>, then $c^L = c^R$, while if <code>asymmetric is True</code>, $c^L \ne c^R$.
+Artangent or sigmoid terms representing the influence of ferroelectric component, while the affine component representing the influence of the quadratic terms of artifacts is added to the the model.
 </p>
 
-La fonction <code>hyst_analysis</code> du script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> permet d'effectuer l'ensemble de l'analyse de l'hystérésis.
+<p align="center" width="100%">
+    <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Hysteresis_model.PNG> <br>
+    <em>Hysteresis model used for the fit</em>
+</p>
 
 <p align="justify" width="100%">
-An initialization of the fitting parameters is meticulously conducted with the function <code>init_pars</code> of the <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> script:
+The <code>hyst_analysis</code> function within the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> facilitates the comprehensive analysis of hysteresis.
+</p>
+
+<p align="justify" width="100%">
+An initialization of the fitting parameters is conducted with the function <code>init_pars</code> of the <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code> script:
     <ul>
         <li>Definition Interval:</li>
             <ul>
-                <li>The dilation coefficients of the branches are constrained to be positive.</li>
-                <li>The amplitude sign of the hysteresis is set positively for a "counterclockwise" loop and negatively for a "clockwise" loop.</li>
-                <li>The coercive voltages of both branches are bounded within the range of the polarization voltage measurement.</li>
-                <li>The offset of the affine component is bounded within the piezoresponse measurement range.</li>
-                <li>The Slope:</li>
+                <li>$c^i \in \left[0, +\infty\right[$ </li>
+                <li>Sign of $G \in \left[0, +\infty\right[$ for a "counterclockwise" loop and $G \in \left]-\infty, 0\right]$ for a "clockwise" loop.</li>
+                <li>$V_0^i \in \left[min(V), max(V)\right]$ </li>
+                <li>$b \in \left[min(PR), max(PR)\right]$ </li>
+                <li>$a$:</li>
                     <ul>
-                        <li>For <code>analysis_mode == 'on_f_loop'</code>: In cases where <code>locked_elec_slope = 'positive'</code>, the slope is defined positively; conversely, if <code>locked_elec_slope = 'negative'</code>, the slope is defined negatively. If <code>locked_elec_slope is None</code>, the slope is determined based on the direction of voltage application: <code>grounded_tip is True</code> -> <code>'negative'</code>, <code>grounded_tip is False</code> -> <code>'positive'</code>.</li>
+                        <li>For <code>analysis_mode == 'on_f_loop'</code>: In cases where <code>locked_elec_slope = 'positive'</code>, $a \in \left[0, +\infty\right[$; conversely, if <code>locked_elec_slope = 'negative'</code>, $a \in \left]-\infty, 0\right]$. If <code>locked_elec_slope is None</code>, the slope is determined based on the direction of voltage application: <code>grounded_tip is True</code> -> <code>'negative'</code>, <code>grounded_tip is False</code> -> <code>'positive'</code>.</li>
                         <li>Otherwise, the slope is fixed at 0.</li>
                     </ul>
             </ul>
