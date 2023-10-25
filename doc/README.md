@@ -855,7 +855,7 @@ The mask can be ascertained: <br>
 
 <p align="justify" width="100%">
 All the functions responsible for conducting 2D interpolations can be found in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/interpolate.py">utils/map/interpolate.py</a></code>. <br>
-The <code>grid_interp</code> function performs a 2D interpolation on a map using the <a>href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html">griddata</a> function from scipy.interpolate. The <code>interp_func</code> parameter allows you to choose the interpolation function (<code>'linear'</code> or <code>'cubic'</code>). <br>
+The <code>grid_interp</code> function performs a 2D interpolation on a map using the <ahref="https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html">griddata</a> function from scipy.interpolate. The <code>interp_func</code> parameter allows you to choose the interpolation function (<code>'linear'</code> or <code>'cubic'</code>). <br>
 The <code>interp_2d_treated</code> function oversees the entire calibration procedure. Initially, by calling the <code>grid_interp</code> function, the map is interpolated with an interpolation coefficient of 1 to correct any defective or masked values (<code>nan</code>). Next, the dimensions of this map are expanded based on the <code>interp_fact</code> parameter with new <code>nan</code> values. Then, a new 2D interpolation is performed by invoking the <code>grid_interp</code> function once more.
 </p>
 
