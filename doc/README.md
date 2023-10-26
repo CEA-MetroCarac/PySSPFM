@@ -1243,7 +1243,8 @@ For <code>best_loop</code> detrmination, please refer to section <code><a href="
 </p>
 
 <p align="justify" width="100%">
-For hysteresis fitting, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vi3---hysteresis-and-properties">VI.3) - Second step of data analysis / Hysteresis and properties</a></code> in the documentation.
+For more precisions on <code>MeanLoop</code> object, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#v3---meanloop">V.3) Nanoloop / MeanLoop</a></code> of the documentation. <br>
+For hysteresis fitting, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vi3---hysteresis-and-properties">VI.3) - Second step of data analysis / Hysteresis and properties</a></code> in the documentation. <br>
 For artifact decoupling, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vi4---artifact-decoupling">VI.4) - Second step of data analysis / Artifact decoupling</a></code> in the documentation.
 </p>
 
