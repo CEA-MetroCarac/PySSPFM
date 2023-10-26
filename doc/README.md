@@ -1133,17 +1133,59 @@ For each mode (On Field, Off Field, and coupled), three figures are generated, e
 
 ### Mean loop
 
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_loop.py">toolbox/mean_loop.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/mean_loop.py">gui/mean_loop.py</a></code>.
+</p>
+
 #### Parameters
 
 ### 2D cross correlation
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">toolbox/map_correlation.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/map_correlation.py">gui/map_correlation.py</a></code>.
+</p>
 
 #### Parameters
 
 ### Pixel extremum
 
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/plot_pixel_extrem.py">toolbox/plot_pixel_extrem.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/plot_pixel_extrem.py">gui/plot_pixel_extrem.py</a></code>.
+</p>
+
 #### Parameters
 
 ### SPM converter
+
+<p align="justify" width="100%">
+User parameters:
+</p>
+
+```
+    default_user_parameters = {
+        'dir path in': '',
+        'dir path out': '',
+        'mode': "classic",
+        'extension': "txt",
+        'verbose': True,
+    }
+```
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">toolbox/spm_converter.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/spm_converter.py">gui/spm_converter.py</a></code>.
+</p>
+
+<p align="justify" width="100%">
+As input, SSPFM datacube measurement file is open, and its data is extracted (see Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1.c) - File Management / Input Files / Extraction</a></code> of the documentation) and plotted. The selection of the measurement mode is facilitated through the 'mode' parameter, with options including: <br>
+&#8226 <code>'classic'</code> (Sweep Resonance) <br>
+&#8226 <code>'dfrt'</code>
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/raw_signals.png> <br>
+    <em>Raw measurement of an datacube file (figure generated with <code>plt_signals</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/seg_to_loop/plot.py">utils/seg_to_loop/plot</a></code> script)</em>
+</p>
+
 
 #### Parameters
 
