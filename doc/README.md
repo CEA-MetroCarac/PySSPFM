@@ -910,6 +910,10 @@ Each cartography is rendered using the functions <code>sub_image</code> or <code
 
 #### VIII.1.a) Raw file
 
+<p align="justify" width="100%">
+User parameters:
+</p>
+
 ```
     default_user_parameters = {
         'file path in': '',
@@ -937,6 +941,10 @@ As input, SSPFM datacube measurement file is open, and its data is extracted (se
 </p>
 
 #### VIII.1.b) Loop file
+
+<p align="justify" width="100%">
+User parameters:
+</p>
 
 ```
     default_user_parameters = {
@@ -971,7 +979,7 @@ For more precisions on post-measurement phase calibration, <code>MultiLoop</code
 #### VIII.1.c) Global map reader
 
 <p align="justify" width="100%">
-Global map reader:
+User parameters:
 </p>
 
 ```
@@ -1013,15 +1021,15 @@ In input, the directory <code>txt_ferro_meas</code> (generated after the second 
 </p>
 
 <p align="justify" width="100%">
-For the creation of SSPFM cartographies, please consult Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii---sspfm-mapping">VII) - SSPFM mapping</a></code> in the documentation.
-For mask creation, please refer to Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii1---sspem-mapping/mask">VII.1) - SSPFM mapping / Mask</a></code> in the documentation.
-For cross-correlative analysis, please refer to Section A INSERER of the documentation.
+For the creation of SSPFM cartographies, please consult section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii---sspfm-mapping">VII) - SSPFM mapping</a></code> in the documentation. <br>
+For mask creation, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii1---sspem-mapping/mask">VII.1) - SSPFM mapping / Mask</a></code> in the documentation. <br>
+For cross-correlative analysis, please refer to section A INSERER of the documentation.
 </p>
 
 #### VIII.1.d) List map reader
 
 <p align="justify" width="100%">
-List map reader:
+User parameters:
 </p>
 
 ```
@@ -1049,11 +1057,14 @@ List map reader:
 ```
 
 <p align="justify" width="100%">
-List map reader: <br>
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/list_map_reader.py">gui/list_map_reader</a></code>.
 </p>
 
-Le principe fonctionnement de ces deux readers est similaire, la seule différence réside dans le fait que list_map_reader permet de lire une liste de cartographies déterminée par l'utilisateur tandis que le global map reader permet de lire l'ensemble des cartographies pour chaques mode (On et Off field, coupled).
+<p align="justify" width="100%">
+The operating principle of this reader differs slightly from that of the global map reader (see Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii1c-global-map-reader">VIII.1.c) - Toolbox / Viewers / Global map reader</a></code> in the documentation). In this case, a single mask can be defined by the user, and a list of measures to be mapped is provided by the user. The concept behind this reader is to observe multiple maps of different measurements simultaneously (rather than one by one). Therefore, the <code>main_mapping</code> function is not used. In the main function of the script, <code>main_list_map_reader</code>, the mask is constructed, and cross-correlative analysis is performed only between the mapped measures. Then, the figure containing all the different maps is formatted using the <code>formatting_fig</code> function. For each map, the <code>treat_and_plot</code> function is used to carry out treatments (masking, interpolation, etc.) and generate the map of the corresponding measurement, making use of functions from the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">SSPFM mapping</a> scripts.
+</p>
+
+INSERER LA FIGURE
 
 ### VIII.2) Hysteresis clustering (K-Means)
 
