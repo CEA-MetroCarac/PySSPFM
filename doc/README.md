@@ -1256,7 +1256,7 @@ The SSPFM mappings, highlighting the selected pixels, are displayed. <br>
 &#8226 For <code>mode = 'coupled'</code>: the mean differential loop and its linear regression are exhibited using the <code>plot_differential_analysis</code> function from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/plot.py">utils/hyst_to_map/plot</a></code>.
 </p>
 
-### 2D cross correlation
+### VIII.4) 2D cross correlation
 
 <p align="justify" width="100%">
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">toolbox/map_correlation.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/map_correlation.py">gui/map_correlation.py</a></code>. Correlation between different maps of the sample's properties allow to gain a better understanding of the origin of the signals and the interactions between different physical phenomena. The Pearson product-moment correlation coefficients, which enables us to express the correlation between two maps as a scalar value varying between 1 (perfect correlation, and -1 perfect anti-correlation). For maps with a coefficient close to 0, the correlation between the map is low. The relationship between the correlation coefficient matrix, R, and the covariance matrix, c, is:
@@ -1264,7 +1264,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 
 $$ R_{ij} = {c_{ij} \over \sqrt{c_{ii} * c_{jj}}} $$
 
-#### Parameters
+#### VIII.4.a) Parameters
 
 ```
     ind_maps = [['off', 'charac tot fit: area'],
@@ -1284,7 +1284,48 @@ $$ R_{ij} = {c_{ij} \over \sqrt{c_{ii} * c_{jj}}} $$
     }
 ```
 
-### Pixel extremum
+<p align="justify" width="100%">
+&#8226 File Management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: <code>txt_ferro_meas</code> for ferroelectric measurements, <code>txt_loops</code> containing measurements in the form of nanoloops (generated after the first processing step), and the text file containing measurement and processing parameters, <code>results/saving_parameters.txt</code>.<br>
+&#8226 Measurement selection parameters<br>
+&#8226 Mask Parameters<br>
+&#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of results. <br>
+</p>
+
+#### VIII.4.b) Workflow
+
+<p align="justify" width="100%">
+The <code>cross_corr_arr</code> function in the script takes as input a list of property mappings of the sample. It generates a square matrix filled with zeros, with dimensions equal to the number of mappings in the list. For each combination of pairs of measurements, the Pearson product-moment correlation coefficient is calculated using the <code>corrcoef</code> function from NumPy, allowing the completion of the correlation matrix.
+</p>
+
+<p align="justify" width="100%">
+As for the <code>cross_corr_table</code> function, it takes as input a correlation matrix and generates a figure of it. A correlation matrix is then displayed with indices corresponding to each of the mappings. A gradual color code is associated with the correlation between them. If the cell tends towards:
+&#8226 Red: &R_{ij} \underset 1&, the two mappings are completely correlated <br>
+&#8226 White: &R_{ij} \underset 0&, the two mappings are not correlated at all <br>
+&#8226 Blue: &R_{ij} \underset -1&, the two mappings are completely anti-correlated <br>
+</p>
+
+<p align="justify" width="100%">
+La fonction <code>cross_corr_arr</code> du script prend en entrée une liste de cartographies des propriétés de l'échantillon. Elle créé un tableau carré rempli de zéros, de dimension égale au nombre de cartographies dans la liste. pour chacune des différentes combinaison de couple de mesures, The Pearson product-moment correlation coefficients est calculée avec la fonction corrcoef de numpy, permettant de compléter le tableau de corrélation.
+</p>
+
+<p align="justify" width="100%">
+La fonction cross_corr_table prend quant à en entrée un tableau de corrélation et créé un figure de ce dernier. Une matrice de corrélation est alors affichée avec ses indices correspondants à cahcune des cartographies. Un code couleur graduel est associée à la corrélation entre ces dernières. Si la cellule tend vers :
+&#8226 Rouge : &R_{ij} \underset 1&, les deux cartographies sont totalement corrélées <br>
+&#8226 Blanc : &R_{ij} \underset 0&, les deux cartographies ne sont pas du tout corellées <br>
+&#8226 Bleu : &R_{ij} \underset -1&, les deux cartographies sont totalement anti-corrélées <br>
+</p>
+
+extract_measures
+si 'ind maps' est renseigné par l'utilisateur comme une liste de nom de propriétés, cross_corr_arr et cross_corr_table sont successivement appelés effectuer l'analyse.
+
+cross_corr_arr + cross_corr_table --> Cross correlation analysis between list of maps
+si 'ind maps' is None la fonction cross_corr_sspfm est appelée, permettant d'effectuer la cross correlation analysis between all maps
+
+cross_corr_sspfm : 
+Separated correlation analysis for all off field maps & on field maps: pour on et off, appelle cross_corr_arr pour l'ensemble des mesures et créé la figure avec cross_corr_table
+Correlation analysis between off and on field maps: créé un tableau de corrélation entre chaque cartographies on et off et créé la figure avec cross_corr_table
+
+### VIII.5) Pixel extremum
 
 <p align="justify" width="100%">
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/plot_pixel_extrem.py">toolbox/plot_pixel_extrem.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/plot_pixel_extrem.py">gui/plot_pixel_extrem.py</a></code>.
@@ -1312,7 +1353,7 @@ The script can be executed directly using the executable file: <code><a href="ht
     }
 ```
 
-### SPM converter
+### VIII.6) SPM converter
 
 <p align="justify" width="100%">
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">toolbox/spm_converter.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/spm_converter.py">gui/spm_converter.py</a></code>.
