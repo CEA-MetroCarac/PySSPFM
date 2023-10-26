@@ -1012,9 +1012,11 @@ The script can be executed directly using the executable file: <code><a href="ht
 In input, the directory <code>txt_ferro_meas</code> (generated after the second processing step), containing the property measurements in the form of text files for all modes (On and Off field, coupled), is specified. Subsequently, the data is extracted, and a cross-correlation analysis is conducted between the different cartographies. The cartographies are then generated for each of the modes (On and Off Field, and coupled) and displayed using the <code>main_mapping</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. It's worth noting that a different mask is constructed for each mode.
 </p>
 
-Pour la création de masque, se référer à la section INSERER LA SECTION de la documentation.
-Pour la création de cartographies SSPFM, se référer à la section INSERER LA SECTION de la documentation.
-Pour l'analyse corss corrélative, se référer à la section INSERER LA SECTION de la documentation.
+<p align="justify" width="100%">
+For the creation of SSPFM cartographies, please consult Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii---sspfm-mapping">VII) - SSPFM mapping</a></code> in the documentation.
+For mask creation, please refer to Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii1---sspem-mapping/mask">VII.1) - SSPFM mapping / Mask</a></code> in the documentation.
+For cross-correlative analysis, please refer to Section A INSERER of the documentation.
+</p>
 
 #### VIII.1.d) List map reader
 
