@@ -1299,9 +1299,9 @@ The <code>cross_corr_arr</code> function in the script takes as input a list of 
 
 <p align="justify" width="100%">
 As for the <code>cross_corr_table</code> function, it takes as input a correlation matrix and generates a figure of it. A correlation matrix is then displayed with indices corresponding to each of the mappings. A gradual color code is associated with the correlation between them. If the cell tends towards: <br>
-&#8226 Red: $R_{ij} \underset 1$, the two mappings are completely correlated <br>
-&#8226 White: $R_{ij} \underset 0$, the two mappings are not correlated at all <br>
-&#8226 Blue: $R_{ij} \underset -1$, the two mappings are completely anti-correlated <br>
+&#8226 Red: $R_{ij} \longrightarrow 1$, the two mappings are completely correlated <br>
+&#8226 White: $R_{ij} \longrightarrow 0$, the two mappings are not correlated at all <br>
+&#8226 Blue: $R_{ij} \longrightarrow -1$, the two mappings are completely anti-correlated <br>
 </p>
 
 <p align="justify" width="100%">
