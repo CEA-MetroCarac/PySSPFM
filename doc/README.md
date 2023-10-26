@@ -1204,15 +1204,15 @@ The script can be executed directly using the executable file: <code><a href="ht
 ```
 
 <p align="justify" width="100%">
-&#8226 File Management: As an input, the algorithm takes le dossier généré après la deuxième étape de traitement. Peuvent être renseignés respectivement les dossiers txt_ferro_meas de mesures ferroélectriques, txt_loops contenant les mesures sous forme de nanoloop (généré après la première étape de traitement) et le fichier texte des paramètres de mesures et de traitement results/saving_parameters.txt.<br>
-&#8226 Mode: 'off', 'on', 'coupled'<br>
-&#8226 Mask parameters<br>
-&#8226 Hysteresis treatment parameters: to perform fit of the mean hysteresis<br>
-&#8226 Phase calibration parameters: used for nanoloop treatment.<br>
-&#8226 Differential parameters: to perform differential analysis<br>
-&#8226 Saturation parameters: to perform arifcats decoupling with saturation analysis<br>
-&#8226 Map interpolation parameters<br>
-&#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of outcomes. <br>
+&#8226 File Management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: txt_ferro_meas for ferroelectric measurements, txt_loops containing measurements in the form of nanoloops (generated after the first processing step), and the text file containing measurement and processing parameters, results/saving_parameters.txt.<br>
+&#8226 Mode: Choose from 'off,' 'on,' or 'coupled.'<br>
+&#8226 Mask Parameters<br>
+&#8226 Hysteresis Treatment Parameters: Utilized for fitting the mean hysteresis.<br>
+&#8226 Phase Calibration Parameters: Employed in nanoloop treatment.<br>
+&#8226 Differential Parameters: Essential for differential analysis.<br>
+&#8226 Saturation Parameters: Used to decouple artifacts through saturation analysis.<br>
+&#8226 Map Interpolation Parameters<br>
+&#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of results. <br>
 </p>
 
 #### VIII.3.b) Extraction 
