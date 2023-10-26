@@ -1131,7 +1131,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 #### VIII.2.b) Extraction 
 
 <p align="justify" width="100%">
-The entirety of data stemming from the best hysteresis loops, both in the On Field and Off Field modes, is extracted from the files residing within the <code>txt_best_loops</code> directory (</code>with the function extract_data<code> of the script). <br>
+The entirety of data stemming from the best hysteresis loops, both in the On Field and Off Field modes, is extracted from the files residing within the <code>txt_best_loops</code> directory (</code>with the function extract_data</code> of the script). <br>
 Vertical offset measurements in the Off Field mode and the dimensions of the mappings are drawn from the files within the <code>txt_ferro_meas</code> directory (with <code>extract_measures</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a></code>). <br>
 The coupled measurements are subsequently generated through the process of differential analysis of On Field and Off Field measurements, with the flexibility to incorporate the vertical offset in the Off Field mode, a component influenced by the sample's surface contact potential.
 </p>
