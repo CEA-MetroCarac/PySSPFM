@@ -1250,9 +1250,11 @@ For artifact decoupling, please refer to section <code><a href="https://github.c
 
 #### VIII.3.e) Figures
 
-Les cartographies SSPFM, mettant en évidence les pixels sélectionnés sont affichées. 
-Pour les mode 'on' et 'off', les MeanLoop associées à la sélection (en amplitude, phase et piezoresponse), l'hystérésis moyenne fitée et les analyses électrostatiques sont 
-Pour mode = 'coupled', la loop différentielle et sa regression lin'aire sont affcihées avec la fonction plot_differential_analysis.
+<p align="justify" width="100%">
+The SSPFM mappings, highlighting the selected pixels, are displayed. <br>
+&#8226 For <code>mode = 'on'</code> or <code> mode = 'off'</code>: the <code>MeanLoops</code> associated with the selection (in amplitude, phase, and piezoresponse), the fitted mean hysteresis, and the corresponding electrostatic analyses are presented. <br>
+&#8226 For <code>mode = 'coupled'</code>: the mean differential loop and its linear regression are exhibited using the <code>plot_differential_analysis</code> function from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/plot.py">utils/hyst_to_map/plot</a></code>.
+</p>
 
 ### 2D cross correlation
 
