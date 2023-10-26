@@ -1065,7 +1065,7 @@ The operating principle of this reader differs slightly from that of the global 
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/cross_correlation_map_list_map_reader.PNG> <br>
+    <img align="center" width="70%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/cross_correlation_map_list_map_reader.PNG> <br>
     <em>Result of cross correlation analysis (figure generated with <code>cross_corr_table</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">toolbox/map_correlation.py</a></code> script)</em>
 </p>
 
