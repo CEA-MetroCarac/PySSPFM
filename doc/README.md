@@ -1228,16 +1228,25 @@ For mask creation, please refer to section <code><a href="https://github.com/CEA
 #### VIII.3.c) Find best loop
 
 <p align="justify" width="100%">
-Subsequently, for each of the selected measurement points, the finest among the loops is to be extracted with the aid of the <code>find_best_loops</code> function. This function acquires the measurement parameters from the <code>results/parameters.txt</code> file and invokes the <code>single_script</code> function found in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">data_processing/hyst_to_map_s2.py</a></code> to retrieve data from the <code>txt_loops</code> files and determine the optimum loop, referred to as the <code>best_loop</code>. In the case of a coupled measurement (<code>mode = 'coupled'</code>), this protocol is repeated for the 'on' and 'off field' modes. If the <code>electrostatic_offset is True</code>, the offsets in the 'off field' mode are utilized to reconstruct the entirety of the electrostatic component (accounting for the CPD).
+Subsequently, for each of the selected measurement points, the finest among the loops is to be extracted with the aid of the <code>find_best_loops</code> function. This function acquires the measurement parameters from the <code>results/parameters.txt</code> file and invokes the <code>single_script</code> function found in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">data_processing/hyst_to_map_s2.py</a></code> to retrieve data from the <code>txt_loops</code> files and determine the optimum loop, referred to as the <code>best_loop</code>. In the case of a coupled measurement (<code>mode = 'coupled'</code>), this protocol is repeated for the 'on' and 'off field' modes. If the setting <code>electrostatic_offset is True</code>, the offsets in the 'off field' mode are utilized to reconstruct the entirety of the electrostatic component (accounting for the CPD).
 </p>
 
 <p align="justify" width="100%">
-For mask creation, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii1---sspem-mapping/mask">VII.1) - SSPFM mapping / Mask</a></code> in the documentation.
+For <code>best_loop</code> detrmination, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vi2---best-loop">VI.2) - Second step of data analysis / Best loop</a></code> in the documentation.
 </p>
 
 #### VIII.3.d) Mean analysis
 
-si on ou off field, mean_analysis_on_off, si coupled, mean_analysis_coupled
+<p align="justify" width="100%">
+&#8226 mode 'on' ou 'off' : La fonction mean_analysis_on_off commence par créer un object MeanLoop constitué de l'ensemble de best_loop associé à chaques points de mesures. L'hystérésis moyenne est alors construite et fitée avec la fonction hyst_analysis, en fonction des paramètres utilisateurs de l'hystérésis. L'ensemble des propriétés associées à cette hystérésis moyenne sont extraites et une analyse des artefacts electrostatiques est effectuée avec la fonction electrostatic_analysis. <br>
+&#8226 mode 'coupled', La fonction mean_analysis_on_off détermine l'ensemble des best loop différentielle à partir de l'ensemble des couples de best_loop on et off field, en prenant en compte l'offset off field si celui ci a été précisé. L'ensemble des best loop différentielle est moyennée en une unique loop différentielle et une régression lin'aire est effectuée sur cette dernière.
+</p>
+
+#### VIII.3.e) Figures
+
+Les cartographies SSPFM, mettant en évidence les pixels sélectionnés sont affichées. 
+Pour les mode 'on' et 'off', les MeanLoop associées à la sélection (en amplitude, phase et piezoresponse), l'hystérésis moyenne fitée et les analyses électrostatiques sont 
+Pour mode = 'coupled', la loop différentielle et sa regression lin'aire sont affcihées avec la fonction plot_differential_analysis.
 
 ### 2D cross correlation
 
