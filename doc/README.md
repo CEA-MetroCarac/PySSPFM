@@ -1227,11 +1227,13 @@ For mask creation, please refer to section <code><a href="https://github.com/CEA
 
 #### VIII.3.c) Find best loop
 
-Ensuite, pour chacun des points de mesures sélectionnées, la best loop va être extraite avec la fonction find_best_loops. 
+<p align="justify" width="100%">
+Subsequently, for each of the selected measurement points, the finest among the loops is to be extracted with the aid of the <code>find_best_loops</code> function. This function acquires the measurement parameters from the <code>results/parameters.txt</code> file and invokes the <code>single_script</code> function found in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">data_processing/hyst_to_map_s2.py</a></code> to retrieve data from the <code>txt_loops</code> files and determine the optimum loop, referred to as the <code>best_loop</code>. In the case of a coupled measurement (<code>mode = 'coupled'</code>), this protocol is repeated for the 'on' and 'off field' modes. If the <code>electrostatic_offset is True</code>, the offsets in the 'off field' mode are utilized to reconstruct the entirety of the electrostatic component (accounting for the CPD).
+</p>
 
-Cette fonction extrait les paramètres de mesures du fichier parameters.txt appelle la fonction single_script de hysteresis_to_map_s2 pour ouvrir permet d'extraire les txt_loops des fichiers correspondants, et elle 
-
-Dans le cas d'une mesure couplée, ce protocole est répété pour les modes on et off field, puis la propriétés de offset en mode off field est également extraite, afin de reconstruire l'ensemble de la composante électrosattique (prise en compte du CPD).
+<p align="justify" width="100%">
+For mask creation, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii1---sspem-mapping/mask">VII.1) - SSPFM mapping / Mask</a></code> in the documentation.
+</p>
 
 #### VIII.3.d) Mean analysis
 
