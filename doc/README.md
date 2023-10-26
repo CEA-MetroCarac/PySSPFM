@@ -1310,9 +1310,9 @@ La fonction <code>cross_corr_arr</code> du script prend en entrée une liste de 
 
 <p align="justify" width="100%">
 La fonction cross_corr_table prend quant à en entrée un tableau de corrélation et créé un figure de ce dernier. Une matrice de corrélation est alors affichée avec ses indices correspondants à cahcune des cartographies. Un code couleur graduel est associée à la corrélation entre ces dernières. Si la cellule tend vers :
-&#8226 Rouge : &R_{ij} \underset 1&, les deux cartographies sont totalement corrélées <br>
-&#8226 Blanc : &R_{ij} \underset 0&, les deux cartographies ne sont pas du tout corellées <br>
-&#8226 Bleu : &R_{ij} \underset -1&, les deux cartographies sont totalement anti-corrélées <br>
+&#8226 Rouge : &R_{ij} \longrightarrow 1&, les deux cartographies sont totalement corrélées <br>
+&#8226 Blanc : &R_{ij} \longrightarrow 0&, les deux cartographies ne sont pas du tout corellées <br>
+&#8226 Bleu : &R_{ij} \longrightarrow -1&, les deux cartographies sont totalement anti-corrélées <br>
 </p>
 
 extract_measures
