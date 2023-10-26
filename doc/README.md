@@ -1315,12 +1315,12 @@ The data from <code>txt_ferro_meas</code>, constituting the property mappings, i
 #### VIII.4.d) Figures
 
 <p align="center" width="100%">
-    <img align="center" width="70%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/cross_corr_analysis_off_field.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/cross_corr_analysis_off_field.PNG> <br>
     <em>Result of cross correlation analysis of off field measurements (figure generated with <code>cross_corr_table</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">toolbox/map_correlation.py</a></code> script)</em>
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="70%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/cross_corr_analysis_off_field.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/cross_corr_analysis_off_and_on_field.PNG> <br>
     <em>Result of cross correlation analysis of off and off field measurements (figure generated with <code>cross_corr_table</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">toolbox/map_correlation.py</a></code> script)</em>
 </p>
 
