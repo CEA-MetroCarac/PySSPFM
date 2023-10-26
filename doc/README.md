@@ -1238,8 +1238,13 @@ For <code>best_loop</code> detrmination, please refer to section <code><a href="
 #### VIII.3.d) Mean analysis
 
 <p align="justify" width="100%">
-&#8226 mode 'on' ou 'off' : La fonction mean_analysis_on_off commence par créer un object MeanLoop constitué de l'ensemble de best_loop associé à chaques points de mesures. L'hystérésis moyenne est alors construite et fitée avec la fonction hyst_analysis, en fonction des paramètres utilisateurs de l'hystérésis. L'ensemble des propriétés associées à cette hystérésis moyenne sont extraites et une analyse des artefacts electrostatiques est effectuée avec la fonction electrostatic_analysis. <br>
-&#8226 mode 'coupled', La fonction mean_analysis_on_off détermine l'ensemble des best loop différentielle à partir de l'ensemble des couples de best_loop on et off field, en prenant en compte l'offset off field si celui ci a été précisé. L'ensemble des best loop différentielle est moyennée en une unique loop différentielle et une régression lin'aire est effectuée sur cette dernière.
+&#8226 For <code>mode = 'on'</code> or <code> mode = 'off'</code>: The <code>mean_analysis_on_off</code> function commences by creating a <code>MeanLoop</code> object, composed of the collection of <code>best_loop</code> associated with each measurement point. The mean hysteresis is then constructed and fitted using the <code>hyst_analysis</code> function from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code>, based on the user-defined hysteresis parameters. All properties associated with this mean hysteresis are extracted, and an analysis of electrostatic artifacts is performed using the <code>electrostatic_analysis</code> function from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/analysis.py">utils/hyst_to_map/analysis</a></code>. <br>
+&#8226 For <code>mode = 'coupled'</code>: The <code>mean_analysis_coupled</code> function determines the entire differential <code>best_loop</code> set from the combined 'on' and 'off field' pairs, taking into account the 'off field' offset if specified. The complete set of differential <code>best_loop</code> is averaged into a single differential loop, and linear regression is performed on the latter.
+</p>
+
+<p align="justify" width="100%">
+For hysteresis fitting, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vi3---hysteresis-and-properties">VI.3) - Second step of data analysis / Hysteresis and properties</a></code> in the documentation.
+For artifact decoupling, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vi4---artifact-decoupling">VI.4) - Second step of data analysis / Artifact decoupling</a></code> in the documentation.
 </p>
 
 #### VIII.3.e) Figures
