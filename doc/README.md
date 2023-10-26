@@ -927,8 +927,8 @@ The script can be executed directly using the executable file: <code><a href="ht
 
 <p align="justify" width="100%">
 As input, SSPFM datacube measurement file is open, and its data is extracted (see Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1.c) - File Management / Input Files / Extraction</a></code> of the documentation) and plotted. The selection of the measurement mode is facilitated through the 'mode' parameter, with options including: <br>
-&#8226 'classic' (Sweep Resonance) <br>
-&#8226 'dfrt'
+&#8226 <code>'classic'</code> (Sweep Resonance) <br>
+&#8226 <code>'dfrt'</code>
 </p>
 
 <p align="center" width="100%">
@@ -966,7 +966,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 In input, a measurement file in the form of a <code>txt_loop</code> file (generated after the first processing step) is opened employing the <code>extract_loop</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file">utils/nanoloop/file</a></code>. Additionally, the corresponding CSV measurement record is accessed to extract the parameters of the polarization voltage signal. An ex-situ calibration of the phase is performed, using the comprehensive set of user-defined phase processing parameters. Furthermore, the user has the option to exclude the first hysteresis curve from the generated figures if it differs from the others due to the pristine state of the film. Subsequently, the objects <code>MultiLoop</code> and <code>MeanLoop</code> associated with the file are constructed, and the corresponding figures are generated and displayed.
 </p>
 
-For more precisions on Post-measurement phase calibration, MultiLoop and MeanLoop objects, please refer to Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#v---nanoloop">V) Nanoloop</a></code> of the documentation.
+For more precisions on post-measurement phase calibration, <code>MultiLoop</code> and <code>MeanLoop</code> objects, please refer to Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#v---nanoloop">V) Nanoloop</a></code> of the documentation.
 
 #### VIII.1.c) Global map reader
 
@@ -1004,14 +1004,17 @@ Global map reader:
     }
 ```
 
-Pour chacun des modes (On et Off Field et coupled), un masque correspondant est construit. INSERER LA SECTION CORRESPONDANTE DE LA DOCUMENTATION.
-
 <p align="justify" width="100%">
-Global map reader: <br>
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/global_map_reader.py">gui/global_map_reader</a></code>.
 </p>
 
-En entrée, le dossier txt_ferro_meas, contenant les mesures des propriétés sous forme de fichiers texte pour l'ensemble des modes (On et Off field, coupled) est reseigné et les données sont extraites. Puis une analyse cross correlative est effectuée entre les différentes cartographies : INSERER LA SECTION CORRESPONDANTE DE LA DOCUMENTATION. Les cartographies sont alors générées et affichées avec la fonction main_mapping du script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. INSERER LA SECTION CORRESPONDANTE DE LA DOCUMENTATION.
+<p align="justify" width="100%">
+In input, the directory <code>txt_ferro_meas</code> (generated after the second processing step), containing the property measurements in the form of text files for all modes (On and Off field, coupled), is specified. Subsequently, the data is extracted, and a cross-correlation analysis is conducted between the different cartographies. The cartographies are then generated for each of the modes (On and Off Field, and coupled) and displayed using the <code>main_mapping</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. It's worth noting that a different mask is constructed for each mode.
+</p>
+
+Pour la création de masque, se référer à la section INSERER LA SECTION de la documentation.
+Pour la création de cartographies SSPFM, se référer à la section INSERER LA SECTION de la documentation.
+Pour l'analyse corss corrélative, se référer à la section INSERER LA SECTION de la documentation.
 
 #### VIII.1.d) List map reader
 
