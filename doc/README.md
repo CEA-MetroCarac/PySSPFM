@@ -1227,7 +1227,11 @@ For mask creation, please refer to section <code><a href="https://github.com/CEA
 
 #### VIII.3.c) Find best loop
 
-Ensuite, pour chacun des points de mesures sélectionnées, la best loop va être extraite avec la fonction find_best_loops. Dans le cas d'une mesure couplée, ce protocole est répété pour les modes on et off field, puis la propriétés de offset en mode off field est également extraite, afin de reconstruire l'ensemble de la composante électrosattique (prise en compte du CPD).
+Ensuite, pour chacun des points de mesures sélectionnées, la best loop va être extraite avec la fonction find_best_loops. 
+
+Cette fonction extrait les paramètres de mesures du fichier parameters.txt appelle la fonction single_script de hysteresis_to_map_s2 pour ouvrir permet d'extraire les txt_loops des fichiers correspondants, et elle 
+
+Dans le cas d'une mesure couplée, ce protocole est répété pour les modes on et off field, puis la propriétés de offset en mode off field est également extraite, afin de reconstruire l'ensemble de la composante électrosattique (prise en compte du CPD).
 
 #### VIII.3.d) Mean analysis
 
