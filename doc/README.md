@@ -926,7 +926,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 </p>
 
 <p align="justify" width="100%">
-As input, SSPFM datacube measurement file is open, and its data is extracted and plotted. The selection of the measurement mode is facilitated through the 'mode' parameter, with options including: <br>
+As input, SSPFM datacube measurement file is open, and its data is extracted and plotted (see Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1.c) - File Management / Input Files / Extraction</a></code>). The selection of the measurement mode is facilitated through the 'mode' parameter, with options including: <br>
 &#8226 'classic' (Sweep Resonance) <br>
 &#8226 'dfrt'
 </p>
@@ -1002,13 +1002,14 @@ Global map reader:
     }
 ```
 
+Pour chacun des modes (On et Off Field et coupled), un masque correspondant est construit. INSERER LA SECTION CORRESPONDANTE DE LA DOCUMENTATION.
 
 <p align="justify" width="100%">
 Global map reader: <br>
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/global_map_reader.py">gui/global_map_reader</a></code>.
 </p>
 
-En entrée, le dossier txt_ferro_meas, contenant les mesures des propriétés sous forme de fichiers texte pour l'ensemble des modes (On et Off field, coupled) est reseigné et les données sont extraites. Puis une analyse cross correlative est effectuée entre les différentes cartographies : INSERER LA SECTION CORRESPONDANTE DE LA DOCUMENTATION
+En entrée, le dossier txt_ferro_meas, contenant les mesures des propriétés sous forme de fichiers texte pour l'ensemble des modes (On et Off field, coupled) est reseigné et les données sont extraites. Puis une analyse cross correlative est effectuée entre les différentes cartographies : INSERER LA SECTION CORRESPONDANTE DE LA DOCUMENTATION. Les cartographies sont alors générées et affichées avec la fonction main_mapping du script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. INSERER LA SECTION CORRESPONDANTE DE LA DOCUMENTATION.
 
 #### VIII.1.d) List map reader
 
