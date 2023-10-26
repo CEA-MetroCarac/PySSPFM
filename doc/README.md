@@ -1176,19 +1176,9 @@ User parameters:
 ```
 
 <p align="justify" width="100%">
-As input, SSPFM datacube measurement folder is selected. A new folder is created, et la fiche de mesure CSV est copié dans ce dernier. Par la suite, chacun des fichier datacube SPM (Bruker) est lu and its data is extracted (see Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1.c) - File Management / Input Files / Extraction</a></code> of the documentation). The selection of the measurement mode is facilitated through the 'mode' parameter, with options including: <br>
-&#8226 <code>'classic'</code> (Sweep Resonance) <br>
-&#8226 <code>'dfrt'</code>
-Un nouveau fichier datacube correspondant est ensuite généré, d'extension choisie par l'utilisateur, et est complété avec les données raw data du fichier d'entrée. Les extensions disponibles sont: <br>
-&#8226 <code>'txt'</code> (créé avec la fonction np.savetxt) <br>
-&#8226 <code>'csv'</code> (avec la librairie pandas un objet DataFrame contenant les donné est créé et le fichier est enregistré avec la méthode to_csv) <br>
-&#8226 <code>'xlsx'</code> (avec la librairie pandas un objet DataFrame contenant les donné est créé et le fichier est enregistré avec la méthode ExcelWriter) <br>
-</p>
-
-<p align="justify" width="100%">
 As input, SSPFM datacube measurement folder is selected. A new directory is created ('input_directory_name'_datacube_'extension'), and the CSV measurement sheet is copied from the input directory into it. Subsequently, each of the SPM datacube files (Bruker) is read, and its data is extracted (refer to Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1.c) - File Management / Input Files / Extraction</a></code> in the documentation). The choice of measurement mode is simplified through the <code>'mode'</code> parameter, which offers the following options: <br>
 &#8226 <code>'classic'</code> (Sweep Resonance) <br>
-&#8226 <code>'dfrt'</code>
+&#8226 <code>'dfrt'</code> <br>
 Following this, a corresponding new datacube file is generated, with an extension chosen by the user, and is complemented with the raw data from the input file. The available extensions are: <br>
 &#8226 <code>'txt'</code> (created using the <a href="https://numpy.org/doc/stable/reference/generated/numpy.savetxt.html">savetxt</a> function of numpy library) <br>
 &#8226 <code>'csv'</code> (with the pandas library, a <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html">DataFrame</a> object containing the data is created, and the file is saved using the <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_csv.html">to_csv</a> method) <br>
