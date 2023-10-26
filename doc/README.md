@@ -1252,15 +1252,17 @@ For artifact decoupling, please refer to section <code><a href="https://github.c
 
 <p align="justify" width="100%">
 The SSPFM mappings, highlighting the selected pixels, are displayed. <br>
-&#8226 For <code>mode = 'on'</code> or <code> mode = 'off'</code>: the <code>MeanLoops</code> associated with the selection (in amplitude, phase, and piezoresponse), the fitted mean hysteresis, and the corresponding electrostatic analyses are presented. <br>
+&#8226 For <code>mode = 'on'</code> or <code> mode = 'off'</code>: the <code>MeanLoop</code> object associated with the selection (in amplitude, phase, and piezoresponse), the fitted mean hysteresis, and the corresponding electrostatic analyses are presented. <br>
 &#8226 For <code>mode = 'coupled'</code>: the mean differential loop and its linear regression are exhibited using the <code>plot_differential_analysis</code> function from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/plot.py">utils/hyst_to_map/plot</a></code>.
 </p>
 
 ### 2D cross correlation
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">toolbox/map_correlation.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/map_correlation.py">gui/map_correlation.py</a></code>.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">toolbox/map_correlation.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/map_correlation.py">gui/map_correlation.py</a></code>. Correlation between different maps of the sample's properties allow to gain a better understanding of the origin of the signals and the interactions between different physical phenomena. The Pearson product-moment correlation coefficients, which enables us to express the correlation between two maps as a scalar value varying between 1 (perfect correlation, and -1 perfect anti-correlation). For maps with a coefficient close to 0, the correlation between the map is low. The relationship between the correlation coefficient matrix, R, and the covariance matrix, c, is:
 </p>
+
+$$ R_{ij} = c_{ij} \over \sqrt{c_{ii} * c_{jj}} $$
 
 #### Parameters
 
