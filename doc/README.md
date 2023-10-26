@@ -911,7 +911,7 @@ Each cartography is rendered using the functions <code>sub_image</code> or <code
 #### VIII.1.a) Raw file
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">toolbox/raw_file_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/raw_file_reader.py">gui/raw_file_reader</a></code>.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">toolbox/raw_file_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/raw_file_reader.py">gui/raw_file_reader</a></code>. It allows the graphical visualization of raw measurements from an SSPFM datacube file.
 </p>
 
 <p align="justify" width="100%">
@@ -948,7 +948,7 @@ As input, SSPFM datacube measurement file is open, and its data is extracted (se
 #### VIII.1.b) Loop file
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox/loop_file_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/loop_file_reader.py">gui/loop_file_reader</a></code>.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox/loop_file_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/loop_file_reader.py">gui/loop_file_reader</a></code>. It enables the visualization of data from a measurement file in the form of a nanoloop (txt extension).
 </p>
 
 <p align="justify" width="100%">
@@ -990,7 +990,7 @@ For more precisions on post-measurement phase calibration, <code>MultiLoop</code
 #### VIII.1.c) Global map reader
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/global_map_reader.py">gui/global_map_reader</a></code>.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/global_map_reader.py">gui/global_map_reader</a></code>. It enables the visualization of all material properties measured in the form of cartographies.
 </p>
 
 <p align="justify" width="100%">
@@ -1035,7 +1035,7 @@ User parameters:
 </p>
 
 <p align="justify" width="100%">
-In input, the directory <code>txt_ferro_meas</code> (generated after the second processing step), containing the property measurements in the form of text files for all modes (On and Off field, coupled), is specified. Subsequently, the data is extracted, and a cross-correlation analysis is conducted between the different cartographies. The cartographies are then generated for each of the modes (On and Off Field, and coupled) and displayed using the <code>main_mapping</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. It's worth noting that a different mask is constructed for each mode.
+In input, the directory <code>txt_ferro_meas</code> (generated after the second processing step), containing the property measurements in the form of text files for all modes (On and Off field, coupled), is specified. Subsequently, the data is extracted, with <code>extract_measures</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a></code> and a cross-correlation analysis is conducted between the different cartographies. The cartographies are then generated for each of the modes (On and Off Field, and coupled) and displayed using the <code>main_mapping</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. It's worth noting that a different mask is constructed for each mode.
 </p>
 
 <p align="justify" width="100%">
@@ -1047,7 +1047,7 @@ For cross-correlative analysis, please refer to section A INSERER of the documen
 #### VIII.1.d) List map reader
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/list_map_reader.py">gui/list_map_reader</a></code>.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/list_map_reader.py">gui/list_map_reader</a></code>. It allows for the visualization of a selection of measured properties in the form of cartography on a single figure.
 </p>
 
 <p align="justify" width="100%">
@@ -1103,7 +1103,7 @@ The operating principle of this reader differs slightly from that of the global 
 ### VIII.2) Hysteresis clustering (K-Means)
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox/hysteresis_clustering</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hysteresis_clustering.py">gui/hysteresis_clustering</a></code>.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox/hysteresis_clustering</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hysteresis_clustering.py">gui/hysteresis_clustering</a></code>. It facilitates the classification of hysteresis loops associated with each measurement point into clusters. This tool can enable phase separation or the distinction of the influences of physically distinct phenomena, such as measurement artifacts.
 </p>
 
 #### VIII.2.a) Parameters
@@ -1131,8 +1131,8 @@ The script can be executed directly using the executable file: <code><a href="ht
 #### VIII.2.b) Extraction 
 
 <p align="justify" width="100%">
-The entirety of data stemming from the best hysteresis loops, both in the On Field and Off Field modes, is extracted from the files residing within the <code>txt_best_loops</code> directory. <br>
-Vertical offset measurements in the Off Field mode and the dimensions of the mappings are drawn from the files within the <code>txt_ferro_meas</code> directory. <br>
+The entirety of data stemming from the best hysteresis loops, both in the On Field and Off Field modes, is extracted from the files residing within the <code>txt_best_loops</code> directory (</code>with the function extract_data<code> of the script). <br>
+Vertical offset measurements in the Off Field mode and the dimensions of the mappings are drawn from the files within the <code>txt_ferro_meas</code> directory (with <code>extract_measures</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a></code>). <br>
 The coupled measurements are subsequently generated through the process of differential analysis of On Field and Off Field measurements, with the flexibility to incorporate the vertical offset in the Off Field mode, a component influenced by the sample's surface contact potential.
 </p>
 
@@ -1157,13 +1157,13 @@ For each mode (On Field, Off Field, and coupled), three figures are generated, e
 &#8226 A spatial cartography displaying the assigned clusters. <br>
 </p>
 
-### Mean loop
+### VIII.3) Mean loop
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_loop.py">toolbox/mean_loop.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/mean_loop.py">gui/mean_loop.py</a></code>.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_loop.py">toolbox/mean_loop.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/mean_loop.py">gui/mean_loop.py</a></code>. A portion of each of the hysteresis loops associated with each measurement point can be selected using a criterion chosen by the user, and then they are averaged. This algorithm enables phase separation and extraction of the average properties associated with it.
 </p>
 
-#### Parameters
+#### VIII.3.a) Parameters
 
 ```
     default_user_parameters = {
@@ -1204,14 +1204,32 @@ The script can be executed directly using the executable file: <code><a href="ht
 ```
 
 <p align="justify" width="100%">
-&#8226 File Management: As an input, the algorithm takes a <code>txt_ferro_meas</code> SSPFM datacube measurement file.<br>
-&#8226 Measurement selection parameters<br>
-&#8226 Map interpolation parameters<br>
+&#8226 File Management: As an input, the algorithm takes le dossier généré après la deuxième étape de traitement. Peuvent être renseignés respectivement les dossiers txt_ferro_meas de mesures ferroélectriques, txt_loops contenant les mesures sous forme de nanoloop (généré après la première étape de traitement) et le fichier texte des paramètres de mesures et de traitement results/saving_parameters.txt.<br>
+&#8226 Mode: 'off', 'on', 'coupled'<br>
 &#8226 Mask parameters<br>
+&#8226 Hysteresis treatment parameters: to perform fit of the mean hysteresis<br>
+&#8226 Phase calibration parameters: used for nanoloop treatment.<br>
+&#8226 Differential parameters: to perform differential analysis<br>
+&#8226 Saturation parameters: to perform arifcats decoupling with saturation analysis<br>
+&#8226 Map interpolation parameters<br>
 &#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of outcomes. <br>
 </p>
 
-Extraction des mesures
+#### VIII.3.b) Extraction 
+
+<p align="justify" width="100%">
+The data of the measured properties (generated after the second processing step) is extracted from the folder <code>txt_ferro_meas</code> with <code>extract_measures</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a></code>. Subsequently, a selection mask is created based on user-provided parameters (either through a list of pixels directly determined by the user, <code>'man mask'</code>, or a condition on the values of a reference property, <code>'ref'</code>). This mask enables the determination of a selection of hysteresis loops associated with the corresponding measurement points.
+</p>
+
+INSERER
+
+#### VIII.3.c) Find best loop
+
+Ensuite, pour chacun des points de mesures sélectionnées, la best loop va être extraite avec la fonction find_best_loops. Dans le cas d'une mesure couplée, ce protocole est répété pour les modes on et off field, puis la propriétés de offset en mode off field est également extraite, afin de reconstruire l'ensemble de la composante électrosattique (prise en compte du CPD).
+
+#### VIII.3.d) Mean analysis
+
+si on ou off field, mean_analysis_on_off, si coupled, mean_analysis_coupled
 
 ### 2D cross correlation
 
