@@ -1204,8 +1204,8 @@ The script can be executed directly using the executable file: <code><a href="ht
 ```
 
 <p align="justify" width="100%">
-&#8226 File Management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: txt_ferro_meas for ferroelectric measurements, txt_loops containing measurements in the form of nanoloops (generated after the first processing step), and the text file containing measurement and processing parameters, results/saving_parameters.txt.<br>
-&#8226 Mode: Choose from 'off,' 'on,' or 'coupled.'<br>
+&#8226 File Management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: <code>txt_ferro_meas</code> for ferroelectric measurements, <code>txt_loops</code> containing measurements in the form of nanoloops (generated after the first processing step), and the text file containing measurement and processing parameters, <code>results/saving_parameters.txt</code>.<br>
+&#8226 Mode: Choose from <code>'off'</code>, <code>'on'</code>, or <code>'coupled'.</code><br>
 &#8226 Mask Parameters<br>
 &#8226 Hysteresis Treatment Parameters: Utilized for fitting the mean hysteresis.<br>
 &#8226 Phase Calibration Parameters: Employed in nanoloop treatment.<br>
@@ -1221,7 +1221,9 @@ The script can be executed directly using the executable file: <code><a href="ht
 The data of the measured properties (generated after the second processing step) is extracted from the folder <code>txt_ferro_meas</code> with <code>extract_measures</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a></code>. Subsequently, a selection mask is created based on user-provided parameters (either through a list of pixels directly determined by the user, <code>'man mask'</code>, or a condition on the values of a reference property, <code>'ref'</code>). This mask enables the determination of a selection of hysteresis loops associated with the corresponding measurement points.
 </p>
 
-INSERER
+<p align="justify" width="100%">
+For mask creation, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii1---sspem-mapping/mask">VII.1) - SSPFM mapping / Mask</a></code> in the documentation.
+</p>
 
 #### VIII.3.c) Find best loop
 
