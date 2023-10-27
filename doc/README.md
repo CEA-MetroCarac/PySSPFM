@@ -1415,12 +1415,12 @@ Then, for each of the files:
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/plot_pixel_extrem_map.PNG> <br>
-    <em>>Mapping of reference property (figure generated with <code>plot_and_save_image</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> script)</em>
+    <em>>Mapping of reference property (hysteresis amplitude) (figure generated with <code>plot_and_save_image</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> script)</em>
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/plot_pixel_extrem_histo.PNG> <br>
-    <em>Histogram of reference property (figure generated with <code>main_plot_pix_extrem</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/plot_pixel_extrem.py">toolbox/plot_pixel_extrem.py</a></code> script)</em>
+    <img align="center" width="75%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/plot_pixel_extrem_histo.PNG> <br>
+    <em>Histogram of reference property (hysteresis amplitude) (figure generated with <code>main_plot_pix_extrem</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/plot_pixel_extrem.py">toolbox/plot_pixel_extrem.py</a></code> script)</em>
 </p>
 
 ### VIII.6) SPM converter
