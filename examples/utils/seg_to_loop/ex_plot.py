@@ -2,12 +2,12 @@
 Example of plot methods
 """
 
-from examples.utils.seg_to_loop.ex_gen_datas import \
+from examples.utils.datacube_to_nanoloop.ex_gen_datas import \
     ex_gen_segments, pars_segment
-from examples.utils.seg_to_loop.ex_analysis import ex_segments, list_segs
+from examples.utils.datacube_to_nanoloop.ex_analysis import ex_segments, list_segs
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
-from PySSPFM.utils.seg_to_loop.plot import \
+from PySSPFM.utils.datacube_to_nanoloop.plot import \
     amp_pha_map, plt_bias, plt_amp, plt_signals
 
 

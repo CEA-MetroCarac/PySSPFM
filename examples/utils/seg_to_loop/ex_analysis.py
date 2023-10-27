@@ -4,13 +4,13 @@ Example of analysis methods
 import numpy as np
 import matplotlib.pyplot as plt
 
-from examples.utils.seg_to_loop.ex_gen_datas import \
+from examples.utils.datacube_to_nanoloop.ex_gen_datas import \
     ex_gen_segments, pars_segment
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots, plot_graph
-from PySSPFM.utils.seg_to_loop.plot import \
+from PySSPFM.utils.datacube_to_nanoloop.plot import \
     plt_seg_max, plt_seg_fit, plt_seg_dfrt
-from PySSPFM.utils.seg_to_loop.analysis import \
+from PySSPFM.utils.datacube_to_nanoloop.analysis import \
     Segment, zi_calib, init_parameters
 
 from PySSPFM.settings import FIGSIZE

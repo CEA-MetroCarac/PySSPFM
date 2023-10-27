@@ -1,7 +1,7 @@
 """
 Example of seg_to_loop_s1 methods
 """
-from examples.utils.seg_to_loop.ex_gen_datas import pars_segment
+from examples.utils.datacube_to_nanoloop.ex_gen_datas import pars_segment
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.data_processing.seg_to_loop_s1 import single_script
 

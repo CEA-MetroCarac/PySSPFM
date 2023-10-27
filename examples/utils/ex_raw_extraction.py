@@ -5,7 +5,7 @@ import os
 
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
-from PySSPFM.utils.seg_to_loop.plot import plt_signals
+from PySSPFM.utils.datacube_to_nanoloop.plot import plt_signals
 from PySSPFM.utils.raw_extraction import data_extraction, csv_meas_sheet_extract
 
 from PySSPFM import EXAMPLE_ROOT_PATH_IN
