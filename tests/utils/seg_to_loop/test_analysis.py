@@ -4,7 +4,7 @@ Test analysis methods
 from pytest import approx
 import numpy as np
 
-from examples.utils.seg_to_loop.ex_analysis import \
+from examples.utils.datacube_to_nanoloop.ex_analysis import \
     ex_calib, ex_init_parameters, ex_segments
 
 

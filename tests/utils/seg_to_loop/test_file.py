@@ -2,7 +2,7 @@
 Test file methods
 """
 
-from examples.utils.seg_to_loop.ex_file import example_file
+from examples.utils.datacube_to_nanoloop.ex_file import example_file
 
 
 # class TestFile(unittest.TestCase):

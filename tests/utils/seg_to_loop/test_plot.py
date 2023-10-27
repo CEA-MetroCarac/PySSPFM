@@ -2,7 +2,7 @@
 Test plot methods
 """
 
-from examples.utils.seg_to_loop.ex_plot import \
+from examples.utils.datacube_to_nanoloop.ex_plot import \
     ex_plt_bias, ex_plt_amp, ex_plt_signals, ex_amp_pha_map, ex_segments
 
 
