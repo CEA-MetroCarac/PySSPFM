@@ -75,7 +75,7 @@ def main():
 
     # Toolbox - 2 - Map / multi-loop tools
     labels = ["Map correlation", "Hysteresis clustering", "Mean loop",
-              "Plot pixel extremums"]
+              "Plot sort pixel"]
     functions = [main_tool_2_a, main_tool_2_b, main_tool_2_c,
                  main_tool_2_d]
     strg_title = "Map and multi-loop tools allow to go deeper into sspfm " \
