@@ -19,7 +19,7 @@ from sklearn.metrics import pairwise_distances
 
 from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.figure import print_plots, plot_graph
-from PySSPFM.utils.hyst_to_map.file import extract_measures
+from PySSPFM.utils.nanoloop_to_hyst.file import extract_measures
 from PySSPFM.utils.map.main import main_mapping
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 

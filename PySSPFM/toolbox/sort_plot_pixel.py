@@ -19,11 +19,11 @@ from PySSPFM.utils.nanoloop.file import extract_loop
 from PySSPFM.utils.nanoloop.analysis import treat_loop, gen_ckpfm_meas
 from PySSPFM.utils.map.main import plot_and_save_image
 from PySSPFM.utils.map.interpolate import remove_val
-from PySSPFM.utils.hyst_to_map.file import \
+from PySSPFM.utils.nanoloop_to_hyst.file import \
     generate_file_paths, extract_measures, read_plot_parameters
-from PySSPFM.utils.hyst_to_map.gen_datas import gen_datas_dict
-from PySSPFM.utils.hyst_to_map.electrostatic import differential_analysis
-from PySSPFM.utils.hyst_to_map.analysis import \
+from PySSPFM.utils.nanoloop_to_hyst.gen_datas import gen_datas_dict
+from PySSPFM.utils.nanoloop_to_hyst.electrostatic import differential_analysis
+from PySSPFM.utils.nanoloop_to_hyst.analysis import \
     gen_analysis_mode, find_best_loop, hyst_analysis
 from PySSPFM.toolbox.mean_hyst import main_mean_hyst
 from PySSPFM.toolbox.mean_hyst import single_script

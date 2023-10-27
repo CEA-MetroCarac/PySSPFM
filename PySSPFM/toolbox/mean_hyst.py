@@ -19,12 +19,12 @@ from PySSPFM.utils.nanoloop.file import extract_loop
 from PySSPFM.utils.nanoloop.analysis import treat_loop, MeanLoop
 from PySSPFM.utils.nanoloop.phase import gen_dict_pha
 from PySSPFM.utils.map.main import mask_ref, plot_and_save_image
-from PySSPFM.utils.hyst_to_map.file import \
+from PySSPFM.utils.nanoloop_to_hyst.file import \
     generate_file_paths, read_plot_parameters, extract_measures
-from PySSPFM.utils.hyst_to_map.plot import plot_differential_analysis
-from PySSPFM.utils.hyst_to_map.analysis import gen_analysis_mode
-from PySSPFM.utils.hyst_to_map.electrostatic import diff_loop, linreg_diff
-from PySSPFM.utils.hyst_to_map.analysis import \
+from PySSPFM.utils.nanoloop_to_hyst.plot import plot_differential_analysis
+from PySSPFM.utils.nanoloop_to_hyst.analysis import gen_analysis_mode
+from PySSPFM.utils.nanoloop_to_hyst.electrostatic import diff_loop, linreg_diff
+from PySSPFM.utils.nanoloop_to_hyst.analysis import \
     find_best_loop, hyst_analysis, electrostatic_analysis
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 

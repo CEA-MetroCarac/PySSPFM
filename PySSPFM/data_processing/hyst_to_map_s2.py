@@ -16,13 +16,13 @@ from PySSPFM.utils.nanoloop.file import extract_loop
 from PySSPFM.utils.nanoloop.plot import plot_ckpfm
 from PySSPFM.utils.nanoloop.phase import gen_dict_pha
 from PySSPFM.utils.nanoloop.analysis import treat_loop, gen_ckpfm_meas
-from PySSPFM.utils.hyst_to_map.file import \
+from PySSPFM.utils.nanoloop_to_hyst.file import \
     (generate_file_paths, read_plot_parameters, complete_txt_file,
      save_measurement, save_best_loops)
-from PySSPFM.utils.hyst_to_map.plot import plot_on_off_field
-from PySSPFM.utils.hyst_to_map.electrostatic import differential_analysis
-from PySSPFM.utils.hyst_to_map.gen_datas import gen_datas_dict
-from PySSPFM.utils.hyst_to_map.analysis import \
+from PySSPFM.utils.nanoloop_to_hyst.plot import plot_on_off_field
+from PySSPFM.utils.nanoloop_to_hyst.electrostatic import differential_analysis
+from PySSPFM.utils.nanoloop_to_hyst.gen_datas import gen_datas_dict
+from PySSPFM.utils.nanoloop_to_hyst.analysis import \
     gen_analysis_mode, find_best_loop, hyst_analysis, electrostatic_analysis
 
 DEFAULT_LIMIT = {'min': -5., 'max': 5.}

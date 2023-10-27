@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.nanoloop.plot import subplots_dim
-from PySSPFM.utils.hyst_to_map.file import extract_measures
+from PySSPFM.utils.nanoloop_to_hyst.file import extract_measures
 from PySSPFM.utils.map.annotate import disable_ax
 from PySSPFM.utils.map.main import mask_ref, final_image, sub_image
 from PySSPFM.utils.map.matrix_formatting import formatting_measure

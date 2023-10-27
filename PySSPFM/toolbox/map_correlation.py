@@ -9,7 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from PySSPFM.utils.core.figure import print_plots, plot_map
-from PySSPFM.utils.hyst_to_map.file import extract_measures
+from PySSPFM.utils.nanoloop_to_hyst.file import extract_measures
 from PySSPFM.utils.map.interpolate import remove_val
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
