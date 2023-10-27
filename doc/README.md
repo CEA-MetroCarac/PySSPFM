@@ -1381,22 +1381,22 @@ The script can be executed directly using the executable file: <code><a href="ht
 </p>
 
 <p align="justify" width="100%">
-The initial step entails the extraction of properties generated after the second processing step, residing within the folder <code>'txt_ferro_meas'</code>, accomplished by the <code>extract_measures</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a></code>. The property selected by the user through the <code>'meas key'</code> parameter, serving as a sorting reference, is then singled out among all others. The extraction of processing and measurement parameters from the file <code>'results/parameters.txt'</code> is carried out using the <code>generate_pars</code> function from the script. The measurement files are then sorted under two scenarios: <br>
+The initial step entails the extraction of properties generated after the second processing step, residing within the folder <code>'txt_ferro_meas'</code>, accomplished by the <code>extract_measures</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/file.py">utils/hyst_to_map/file</a></code>. The property selected by the user through the <code>'meas key'</code> parameter, serving as a sorting reference, is then singled out among all others. The extraction of processing and measurement parameters from the file <code>'results/parameters.txt'</code> is carried out using the <code>extract_txt_pars</code> function from the script. The measurement files are then sorted under two scenarios: <br>
 &#8226 If the <code>list_pixels</code> parameter is <code>None</code>: based on values of the user-chosen reference property. <br>
 &#8226 If the <code>list_pixels</code> parameter is <code>[]</code>: according to the file index. If the list is empty, all pixels are considered; otherwise, only the indices listed are considered. <br>
 Then, for each of the files:
     <ul>
         <li>If <code>mode = 'on'</code> or <code>mode = 'off'</code>:</li>
             <ul>
-                <li>An analysis of the entire file selection is performed using the <code>mean_loop</code> tool (the main function <code>main_mean_loop</code> from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_loop.py">toolbox/mean_loop.py</a></code> is called). The average hysteresis and properties are then determined.</li>
+                <li>An analysis of the entire file selection is performed using the <code>mean_loop</code> tool (the main function <code>main_mean_hyst</code> from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_loop.py">toolbox/mean_loop.py</a></code> is called). The average hysteresis and properties are then determined.</li>
                 <li>The nanoloop of the corresponding file (located in the <code>'txt_loops'</code> folder) is extracted with the <code>extract_loop</code> function from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file">utils/nanoloop/file</a></code>, and the main function <code>main_loop_file_reader</code> from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox/loop_file_reader</a></code> is utilized to create figures in the form of nanoloops.</li>
                 <li>The <code>single_analysis</code> function from the script is called, enabling the extraction of the <code>best_loop</code>, the construction, and analysis of the <code>Hysteresis</code> object (fitting and property extraction).</li>
-                <li>A comparative figure between the average hysteresis and that of the respective file is constructed with the <code>construct_hyst_comp</code> function from the script.</li>
+                <li>A comparative figure between the average hysteresis and that of the respective file is constructed with the <code>plot_comparative_hyst</code> function from the script.</li>
             </ul>
         <li>If <code>mode = 'coupled'</code>:</li>
             <ul>
                 <li>For each mode (<code>'on'</code> and <code>'off'</code>): The nanoloop of the corresponding file (located in the <code>'txt_loops'</code> folder) is extracted with the <code>extract_loop</code> function from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file">utils/nanoloop/file</a></code>, and the <code>best_loop</code> is extracted with the <code>single_script</code> function from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">data_processing/hyst_to_map_s2.py</a></code>. The main function <code>main_loop_file_reader</code> from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox/loop_file_reader</a></code> is employed to create figures in the form of nanoloops.</li>
-                <li>An analysis of the entire file selection is performed using the <code>mean_loop</code> tool (the main function <code>main_mean_loop</code> from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_loop.py">toolbox/mean_loop.py</a></code> is called). The differential component and average properties are then determined.</li>
+                <li>An analysis of the entire file selection is performed using the <code>mean_loop</code> tool (the main function <code>main_mean_hyst</code> from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_loop.py">toolbox/mean_loop.py</a></code> is called). The differential component and average properties are then determined.</li>
                 <li>The <code>differential_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/hyst_to_map/electrostatic.py">utils/hyst_to_map/electrostatic.py</a></code> is employed to
 
  conduct the differential analysis for the respective file.</li>
@@ -1407,6 +1407,21 @@ Then, for each of the files:
 </p>
     
 #### VIII.5.c) Figures
+
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/plot_pixel_extrem_hyst.PNG> <br>
+    <em>Compartive analysis between mean and single file hysteresis (figure generated with <code>plot_comparative_hyst</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/plot_pixel_extrem.py">toolbox/plot_pixel_extrem.py</a></code> script)</em>
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/plot_pixel_extrem_map.PNG> <br>
+    <em>>Mapping of reference property (hysteresis amplitude) (figure generated with <code>plot_and_save_image</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> script)</em>
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="75%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/plot_pixel_extrem_histo.PNG> <br>
+    <em>Histogram of reference property (hysteresis amplitude) (figure generated with <code>main_sort_plot_pixel</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/plot_pixel_extrem.py">toolbox/plot_pixel_extrem.py</a></code> script)</em>
+</p>
 
 ### VIII.6) SPM converter
 
