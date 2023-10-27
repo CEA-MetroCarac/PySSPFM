@@ -13,7 +13,7 @@ from PySSPFM.gui.loop_file_reader import main as main_tool_1_c
 from PySSPFM.gui.raw_file_reader import main as main_tool_1_d
 from PySSPFM.gui.map_correlation import main as main_tool_2_a
 from PySSPFM.gui.hysteresis_clustering import main as main_tool_2_b
-from PySSPFM.gui.mean_loop import main as main_tool_2_c
+from PySSPFM.gui.mean_hyst import main as main_tool_2_c
 from PySSPFM.gui.sort_plot_pixel import main as main_tool_2_d
 from PySSPFM.gui.spm_converter import main as main_tool_3_a
 from PySSPFM.gui.utils import \
@@ -74,7 +74,7 @@ def main():
                    strg_title=strg_title, strg_functions=strg_functions)
 
     # Toolbox - 2 - Map / multi-loop tools
-    labels = ["Map correlation", "Hysteresis clustering", "Mean loop",
+    labels = ["Map correlation", "Hysteresis clustering", "Mean hysteresis",
               "Plot sort pixel"]
     functions = [main_tool_2_a, main_tool_2_b, main_tool_2_c,
                  main_tool_2_d]

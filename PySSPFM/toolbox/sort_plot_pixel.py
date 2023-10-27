@@ -25,8 +25,8 @@ from PySSPFM.utils.hyst_to_map.gen_datas import gen_datas_dict
 from PySSPFM.utils.hyst_to_map.electrostatic import differential_analysis
 from PySSPFM.utils.hyst_to_map.analysis import \
     gen_analysis_mode, find_best_loop, hyst_analysis
-from PySSPFM.toolbox.mean_loop import main_mean_loop
-from PySSPFM.toolbox.mean_loop import single_script
+from PySSPFM.toolbox.mean_hyst import main_mean_hyst
+from PySSPFM.toolbox.mean_hyst import single_script
 from PySSPFM.toolbox.loop_file_reader import main_loop_file_reader
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
@@ -442,7 +442,7 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
             # On // off mode
             if user_pars['meas key']['mode'] in ['off', 'on']:
                 # Mean hysteresis measurement
-                res = main_mean_loop(treat_pars, verbose=False,
+                res = main_mean_hyst(treat_pars, verbose=False,
                                      make_plots=False)
                 (mean_loop, mean_hyst) = res
                 loop_file_name = str(user_pars['meas key']['mode']) + '_f_'
@@ -489,7 +489,7 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
                         loop_file_path, dict_pha=dict_pha,
                         del_1st_loop=user_pars['del 1st loop'],
                         verbose=False, make_plots=make_plots)
-                multi_figures = main_mean_loop(treat_pars, verbose=False,
+                multi_figures = main_mean_hyst(treat_pars, verbose=False,
                                                make_plots=True)
                 offsets_off = measurements['off']['charac tot fit: y shift']
                 elec_offset = get_setting('elec offset')

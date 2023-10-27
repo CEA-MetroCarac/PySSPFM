@@ -6,7 +6,7 @@ import numpy as np
 
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
-from PySSPFM.toolbox.mean_loop import main_mean_loop
+from PySSPFM.toolbox.mean_hyst import main_mean_hyst
 
 from PySSPFM import EXAMPLE_ROOT_PATH_IN
 
@@ -104,19 +104,19 @@ def example_mean_loop(phase='1', mode='off', verbose=False, make_plots=False):
     user_pars['dir path in loop'] = dir_path_in_loop
     user_pars['file path in pars'] = file_path_in_pars
 
-    # ex main_mean_loop
+    # ex main_mean_hyst
     if make_plots:
-        figures = main_mean_loop(
+        figures = main_mean_hyst(
             user_pars, verbose=verbose, make_plots=make_plots)
         for fig in figures:
             fig.sfn += f"_{phase}_{mode}"
         return figures
     elif mode in ['on', 'off']:
-        mean_best_loop, best_hysts = main_mean_loop(
+        mean_best_loop, best_hysts = main_mean_hyst(
             user_pars, verbose=verbose, make_plots=make_plots)
         return mean_best_loop, best_hysts
     else:
-        mean_diff_piezorep, fit_res = main_mean_loop(
+        mean_diff_piezorep, fit_res = main_mean_hyst(
             user_pars, verbose=verbose, make_plots=make_plots)
         return mean_diff_piezorep, fit_res
 
