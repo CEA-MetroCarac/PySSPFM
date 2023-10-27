@@ -1375,6 +1375,11 @@ The script can be executed directly using the executable file: <code><a href="ht
 
 #### VIII.5.b) Workflow
 
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_plot_pixel_extrem.PNG> <br>
+    <em>Workflow: Pixel extremum</em>
+</p>
+
 extract_measures
 generate_pars results/parameters.txt
 selectionne la propriété en question
