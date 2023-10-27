@@ -304,6 +304,12 @@ The <code>save_test_example</code> settings provide the option to determine whet
     <em>GUI: First step of data analysis</em>
 </p>
 
+<p align="center" width="100%">
+    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_first_step.PNG>
+    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_first_step_single_script.PNG> <br>
+    <em>Workflow: First step of data analysis (left: global, right: single script)</em>
+</p>
+
 <p align="justify" width="100%">
 The initial step of the process may be initiated either through the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/seg_to_loop_s1.py">executable source code</a> or via the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/seg_to_loop_s1.py">graphical user interface</a>. At the outset, an SSPFM datacube measurement file is selected as input. Subsequently, the data is extracted, including the information contained within the measurement record. The file is then processed based on specified parameters, and a set of graphical representations is presented. Following this, each measurement file within the input directory is processed automatically, without graphical output. The data is transformed into nanoloops and stored in text files.
 </p>
@@ -1327,10 +1333,10 @@ The data from <code>txt_ferro_meas</code>, constituting the property mappings, i
 ### VIII.5) Pixel extremum
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/plot_pixel_extrem.py">toolbox/plot_pixel_extrem.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/plot_pixel_extrem.py">gui/plot_pixel_extrem.py</a></code>.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/plot_pixel_extrem.py">toolbox/plot_pixel_extrem.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/plot_pixel_extrem.py">gui/plot_pixel_extrem.py</a></code>. This tool, enables to find the extreme pixel values for a material property and perform analysis on it.
 </p>
 
-#### Parameters
+#### VIII.5.a) Parameters
 
 ```
     default_user_parameters = {
@@ -1351,6 +1357,30 @@ The script can be executed directly using the executable file: <code><a href="ht
         'save': False
     }
 ```
+
+<p align="justify" width="100%">
+&#8226 File Management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: <code>txt_ferro_meas</code> for ferroelectric measurements, <code>txt_loops</code> containing measurements in the form of nanoloops (generated after the first processing step), and the text file containing measurement and processing parameters, <code>results/saving_parameters.txt</code>.<br>
+&#8226 Measurement selection parameters<br>
+&#8226 Pixel selection parameters<br>
+&#8226 Loop plotting parameter (<code>del_first_loop</code>)<br>
+&#8226 Mask Parameters<br>
+&#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of results. <br>
+</p>
+
+#### VIII.5.b) Workflow
+
+extract_measures
+generate_pars results/parameters.txt
+selectionne la propriété en question
+trie les fichiers
+list_pixels is None: en fonction de la valeur de cette dernière
+list_pixels = [] : en fonction de l'indice. Si la liste est remplie par les indices, considère uniquement les indices renseigné
+Puis pour chacun des fichiers:
+mode on ou off : main_mean_loop , extract_loop, main_loop_file_reader, single_analysis --> extract la best loop + hysteresis fitting, construct_hyst_comp
+mode coupled : pour chaque mode (on et off) --> (best_loop, main_loop_file_reader), main_mean_loop, offset si elec offset, differential_analysis
+Affichage carto + histo
+
+#### VIII.5.c) Figures
 
 ### VIII.6) SPM converter
 
