@@ -5,7 +5,7 @@ Main graphical interface (window) of PySSPFM: call all other exe of PySSPFM
 
 from tkinter import ttk
 
-from PySSPFM.gui.seg_to_loop_s1 import main as main_data_proc_1
+from PySSPFM.gui.datacube_to_nanoloop_s1 import main as main_data_proc_1
 from PySSPFM.gui.nanoloop_to_hyst_s2 import main as main_data_proc_2
 from PySSPFM.gui.global_map_reader import main as main_tool_1_a
 from PySSPFM.gui.list_map_reader import main as main_tool_1_b
