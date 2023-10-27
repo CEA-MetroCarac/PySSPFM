@@ -14,9 +14,9 @@ import matplotlib.pyplot as plt
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.nanoloop.plot import subplots_dim
 from PySSPFM.utils.nanoloop_to_hyst.file import extract_measures
-from PySSPFM.utils.map.annotate import disable_ax
+from PySSPFM.utils.map.plot import disable_ax
 from PySSPFM.utils.map.main import mask_ref, final_image, sub_image
-from PySSPFM.utils.map.matrix_formatting import formatting_measure
+from PySSPFM.utils.map.matrix_processing import formatting_measure
 from PySSPFM.toolbox.map_correlation import cross_corr_arr, cross_corr_table
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 

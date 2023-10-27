@@ -9,10 +9,10 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 
 from PySSPFM.utils.core.iterable import arg_cond
-from PySSPFM.utils.map.matrix_formatting import \
+from PySSPFM.utils.map.matrix_processing import \
     formatting_measure, sub_formatting_measure, cleared_measure
 from PySSPFM.utils.map.interpolate import interp_2d_treated
-from PySSPFM.utils.map.annotate import annotate
+from PySSPFM.utils.map.plot import annotate
 
 from PySSPFM.settings import COLOR_SSPFM_MAP, FIGSIZE
 
