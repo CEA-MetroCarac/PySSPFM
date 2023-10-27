@@ -626,6 +626,12 @@ The <code>MeanLoop</code> object is defined within the <code><a href="https://gi
     <em>GUI: Second step of data analysis</em>
 </p>
 
+<p align="center" width="100%">
+    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_second_step.PNG>
+    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_second_step_single_script.PNG> <br>
+    <em>Workflow: Second step of data analysis (left: global, right: single script)</em>
+</p>
+
 <p align="justify" width="100%">
 The second step of the process may be initiated either through the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">executable source code</a> or via the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hyst_to_map_s2.py">graphical user interface</a>. 
 </p>
