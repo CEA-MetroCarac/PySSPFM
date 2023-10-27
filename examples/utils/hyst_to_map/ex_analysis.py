@@ -10,8 +10,8 @@ from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.nanoloop.plot import plot_all_loop
 from PySSPFM.utils.nanoloop.analysis import treat_loop
 from PySSPFM.utils.nanoloop.phase import gen_dict_pha
-from PySSPFM.utils.hyst_to_map.gen_datas import gen_datas_dict
-from PySSPFM.utils.hyst_to_map.analysis import \
+from PySSPFM.utils.nanoloop_to_hyst.gen_datas import gen_datas_dict
+from PySSPFM.utils.nanoloop_to_hyst.analysis import \
     (sort_meas, gen_analysis_mode, find_best_loop, hyst_analysis,
      electrostatic_analysis)
 

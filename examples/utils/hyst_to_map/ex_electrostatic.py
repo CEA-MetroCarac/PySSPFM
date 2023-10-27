@@ -9,8 +9,8 @@ from PySSPFM.utils.core.basic_func import linear
 from PySSPFM.utils.core.noise import noise
 from PySSPFM.utils.nanoloop.gen_datas import gen_loops
 from PySSPFM.utils.nanoloop.analysis import MultiLoop
-from PySSPFM.utils.hyst_to_map.plot import plot_on_off_field
-from PySSPFM.utils.hyst_to_map.electrostatic import \
+from PySSPFM.utils.nanoloop_to_hyst.plot import plot_on_off_field
+from PySSPFM.utils.nanoloop_to_hyst.electrostatic import \
     btfly_analysis, sat_analysis, offset_analysis, differential_analysis
 
 

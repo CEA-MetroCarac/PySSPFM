@@ -4,7 +4,7 @@ Example of gen_datas methods
 import numpy as np
 
 from PySSPFM.utils.path_for_runable import save_path_example
-from PySSPFM.utils.hyst_to_map.gen_datas import gen_datas_dict
+from PySSPFM.utils.nanoloop_to_hyst.gen_datas import gen_datas_dict
 from PySSPFM.utils.nanoloop.analysis import treat_loop
 from PySSPFM.utils.nanoloop.plot import plot_all_loop
 from PySSPFM.utils.core.figure import print_plots

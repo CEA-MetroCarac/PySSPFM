@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from examples.utils.hyst_to_map.ex_analysis import ex_sort_meas
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots, plot_graph
-from PySSPFM.utils.hyst_to_map.file import \
+from PySSPFM.utils.nanoloop_to_hyst.file import \
     (generate_file_paths, read_plot_parameters, complete_txt_file,
      save_measurement, extract_measures)
 
