@@ -627,8 +627,8 @@ The <code>MeanLoop</code> object is defined within the <code><a href="https://gi
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_second_step.PNG>
-    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_second_step_single_script.PNG> <br>
+    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_second_step.PNG>
+    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_second_step_single_script.PNG> <br>
     <em>Workflow: Second step of data analysis (left: global, right: single script)</em>
 </p>
 
