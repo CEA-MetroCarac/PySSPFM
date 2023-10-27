@@ -6,7 +6,7 @@ Inspired by SS_PFM script, Nanoscope, Bruker
 import tkinter.filedialog as tkf
 
 from PySSPFM.utils.core.figure import print_plots
-from PySSPFM.utils.seg_to_loop.plot import plt_signals
+from PySSPFM.utils.datacube_to_nanoloop.plot import plt_signals
 from PySSPFM.utils.raw_extraction import data_extraction
 from PySSPFM.utils.path_for_runable import save_path_management
 

@@ -20,13 +20,13 @@ from PySSPFM.utils.nanoloop.plot import plot_sspfm_loops
 from PySSPFM.utils.nanoloop.file import txt_loop, sort_loop
 from PySSPFM.utils.nanoloop.phase import phase_calibration, gen_dict_pha
 from PySSPFM.utils.nanoloop.analysis import MultiLoop
-from PySSPFM.utils.seg_to_loop.gen_datas import gen_segments
-from PySSPFM.utils.seg_to_loop.plot import \
+from PySSPFM.utils.datacube_to_nanoloop.gen_datas import gen_segments
+from PySSPFM.utils.datacube_to_nanoloop.plot import \
     (plt_seg_max, plt_seg_fit, plt_seg_dfrt,  plt_signals, plt_amp, plt_bias,
      amp_pha_map)
-from PySSPFM.utils.seg_to_loop.file import save_txt_file, print_pars
+from PySSPFM.utils.datacube_to_nanoloop.file import save_txt_file, print_pars
 from PySSPFM.utils.raw_extraction import csv_meas_sheet_extract
-from PySSPFM.utils.seg_to_loop.analysis import \
+from PySSPFM.utils.datacube_to_nanoloop.analysis import \
     init_parameters, zi_calib, Segment
 
 mpl.rcParams.update({'figure.max_open_warning': 0})

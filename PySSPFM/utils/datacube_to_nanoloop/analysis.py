@@ -8,7 +8,7 @@ import numpy as np
 from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.noise import filter_mean
 from PySSPFM.utils.core.peak import width_peak
-from PySSPFM.utils.seg_to_loop.plot import plt_seg
+from PySSPFM.utils.datacube_to_nanoloop.plot import plt_seg
 from PySSPFM.utils.core.fitting import ShoPeakFit, ShoPhaseFit
 
 
