@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from lmfit import Model, Parameters, minimize, report_fit
 
-from PySSPFM.utils.utils import get_setting
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.basic_func import \
     linear, gaussian, sho, sho_phase, sho_phase_switch
 from PySSPFM.utils.core.peak import width_peak

@@ -10,7 +10,7 @@ import time
 from datetime import datetime
 import numpy as np
 
-from PySSPFM.utils.utils import get_setting
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.nanoloop.file import extract_loop
 from PySSPFM.utils.nanoloop.plot import plot_ckpfm

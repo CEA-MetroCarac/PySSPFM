@@ -5,7 +5,7 @@ Module used for the scripts of sspfm 1st step data analysis (conv seg to hyst)
 
 import numpy as np
 
-from PySSPFM.utils.utils import get_setting
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.noise import filter_mean
 from PySSPFM.utils.core.peak import width_peak
 from PySSPFM.utils.seg_to_loop.plot import plt_seg

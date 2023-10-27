@@ -10,7 +10,7 @@ from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 
-from PySSPFM.utils.utils import get_setting
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.figure import print_plots, plot_hist, ax_formating
 from PySSPFM.utils.core.basic_func import linear
 from PySSPFM.utils.nanoloop.plot import plot_ckpfm

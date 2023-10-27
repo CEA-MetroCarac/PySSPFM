@@ -5,7 +5,7 @@ Module used for nanoloop: - phase calibration
 import numpy as np
 import matplotlib.pyplot as plt
 
-from PySSPFM.utils.utils import get_setting
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.figure import plot_graph
 from PySSPFM.utils.core.peak import find_main_peaks
 from PySSPFM.utils.core.fitting import GaussianPeakFit

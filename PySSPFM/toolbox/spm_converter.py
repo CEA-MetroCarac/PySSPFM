@@ -12,7 +12,7 @@ import time
 import pandas as pd
 import numpy as np
 
-from PySSPFM.utils.utils import get_setting
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.raw_extraction import data_extraction
 
 

@@ -17,7 +17,7 @@ import matplotlib.colors as mcolors
 from sklearn.cluster import KMeans
 from sklearn.metrics import pairwise_distances
 
-from PySSPFM.utils.utils import get_setting
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.hyst_to_map.file import extract_measures
 from PySSPFM.utils.map.main import main_mapping
