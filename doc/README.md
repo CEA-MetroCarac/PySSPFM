@@ -305,8 +305,8 @@ The <code>save_test_example</code> settings provide the option to determine whet
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_first_step.PNG>
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_first_step_single_script.PNG> <br>
+    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_first_step.PNG>
+    <img align="center" width="35%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_first_step_single_script.PNG> <br>
     <em>Workflow: First step of data analysis (left: global, right: single script)</em>
 </p>
 
