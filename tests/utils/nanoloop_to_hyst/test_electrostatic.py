@@ -4,7 +4,7 @@ Test electrostatic methods
 from pytest import approx
 import numpy as np
 
-from examples.utils.hyst_to_map.ex_electrostatic import \
+from examples.utils.nanoloop_to_hyst.ex_electrostatic import \
     (ex_btfly_analysis, ex_offset_analysis, ex_plot_on_off_field,
      ex_differential_analysis, ex_sat_analysis)
 

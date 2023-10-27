@@ -4,7 +4,7 @@ Test of analysis, gen_datas and plot methods
 from pytest import approx
 import numpy as np
 
-from examples.utils.hyst_to_map.ex_analysis import \
+from examples.utils.nanoloop_to_hyst.ex_analysis import \
     example_analysis, ex_sort_meas
 
 

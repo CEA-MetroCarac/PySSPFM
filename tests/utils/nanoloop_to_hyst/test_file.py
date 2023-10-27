@@ -3,7 +3,7 @@ Test file methods
 """
 import numpy as np
 
-from examples.utils.hyst_to_map.ex_file import example_file
+from examples.utils.nanoloop_to_hyst.ex_file import example_file
 
 
 # class TestFile(unittest.TestCase):
