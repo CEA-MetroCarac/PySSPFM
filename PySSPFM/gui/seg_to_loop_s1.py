@@ -29,7 +29,8 @@ def main(parent=None):
     """
     # Create the main or secondary window
     app = init_secondary_wdw(
-        parent=parent, wdw_title="SSPFM Data Analysis: Step 1 = seg to hyst")
+        parent=parent,
+        wdw_title="SSPFM Data Analysis: Step 1 = datacube to nanoloop")
 
     # Set default parameter values
     default_seg_params = {'cut seg [%]': {'start': 5, 'end': 5},
