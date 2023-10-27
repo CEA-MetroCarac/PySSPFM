@@ -1,5 +1,5 @@
 """
-Example of plot_extrem methods
+Example of sort_plot methods
 """
 import os
 
@@ -9,9 +9,9 @@ from PySSPFM.toolbox.sort_plot_pixel import main_sort_plot_pixel
 from PySSPFM import EXAMPLE_ROOT_PATH_IN
 
 
-def example_plot_extrem(verbose=False, make_plots=False):
+def example_sort_plot(verbose=False, make_plots=False):
     """
-    Example of plot_extrem functions.
+    Example of sort_plot functions.
 
     Parameters
     ----------
@@ -45,7 +45,7 @@ def example_plot_extrem(verbose=False, make_plots=False):
 
     # saving path management
     dir_path_out, save_plots = save_path_example(
-        "plot_extrem", save_example_exe=make_plots, save_test_exe=False)
+        "sort_plot", save_example_exe=make_plots, save_test_exe=False)
     # ex main_sort_plot_pixel
     list_file = main_sort_plot_pixel(
         user_pars, dir_path_in, verbose=verbose, show_plots=make_plots,
@@ -56,4 +56,4 @@ def example_plot_extrem(verbose=False, make_plots=False):
 
 if __name__ == '__main__':
     figs = []
-    example_plot_extrem(verbose=True, make_plots=True)
+    example_sort_plot(verbose=True, make_plots=True)
