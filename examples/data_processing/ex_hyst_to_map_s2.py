@@ -182,7 +182,8 @@ def ex_multi_script(make_plots=False, verbose=False):
 
     # saving path management
     dir_path_out, save = save_path_example(
-        "hyst_to_map_s2", save_example_exe=make_plots, save_test_exe=False)
+        "hyst_to_map_s2", save_example_exe=make_plots,
+        save_test_exe=not make_plots)
     # ex multi_script
     multi_script(user_pars, '', meas_pars, sign_pars, 0, '',
                  test_dicts=loop_dicts, verbose=verbose, show_plots=make_plots,
