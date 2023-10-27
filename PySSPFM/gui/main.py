@@ -14,7 +14,7 @@ from PySSPFM.gui.raw_file_reader import main as main_tool_1_d
 from PySSPFM.gui.map_correlation import main as main_tool_2_a
 from PySSPFM.gui.hysteresis_clustering import main as main_tool_2_b
 from PySSPFM.gui.mean_loop import main as main_tool_2_c
-from PySSPFM.gui.plot_pixel_extrem import main as main_tool_2_d
+from PySSPFM.gui.sort_plot_pixel import main as main_tool_2_d
 from PySSPFM.gui.spm_converter import main as main_tool_3_a
 from PySSPFM.gui.utils import \
     add_section_separator, init_main_wdw, create_section

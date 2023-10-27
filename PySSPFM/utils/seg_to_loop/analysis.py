@@ -145,8 +145,6 @@ class Segment:
         None
         """
         fit_pars = fit_pars or {
-            'filter': False,
-            'filter ord': 1,
             'sens peak detect': 1.5,
             'detect peak': False,
             'fit pha': False
