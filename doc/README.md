@@ -4,12 +4,11 @@
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/logoPySSPFM_white.PNG> <br>
 </p>
 
-1. [Introduction](#introduction)
-2. [Installation](#installation)
-3. 
 ## Table of Contents
-1. [I) - Overview](## I) - Overview)
 
+- [I) Overview](#i-overview)
+  - [I.1) Workflow](#i1-workflow)
+  - 
 ## I) - Overview
 
 ### I.1) - Workflow
