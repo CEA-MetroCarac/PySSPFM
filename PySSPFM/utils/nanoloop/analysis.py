@@ -275,7 +275,7 @@ class MultiLoop:
 class MeanLoop:
     """Mean loop of a Multiloop, for amplitude, phase, and piezoresponse"""
 
-    def __init__(self, multi_loops, pha_calib=None):
+    def __init__(self, multi_loops, pha_calib=None, del_1st_loop=True):
         """
         Main function of the class
 
@@ -285,10 +285,13 @@ class MeanLoop:
             Multiloop object
         pha_calib: dict, optional
             Dict of phase calibration parameters
+        del_1st_loop: bool, optional
+            If True, remove first loop for analysis
         """
-        start_ind = 1 if len(multi_loops) > 0 else 0
+        start_ind = 1 if len(multi_loops) > 1 and del_1st_loop else 0
 
-        loop = multi_loops[start_ind]
+        multi_loops = multi_loops[start_ind:]
+        loop = multi_loops[0]
 
         self.write_volt = loop.write_volt
         self.write_volt_left = loop.write_volt_left
