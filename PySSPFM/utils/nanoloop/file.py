@@ -7,8 +7,8 @@ import os
 import numpy as np
 
 
-def sort_loop(ss_pfm_bias, write_nb_voltages, read_nb_voltages, dict_res,
-              unit='a.u'):
+def sort_nanoloop_data(ss_pfm_bias, write_nb_voltages, read_nb_voltages,
+                       dict_res, unit='a.u'):
     """
     Generate a nanoloop 2D array of multi measurements (amplitude, phase ...)
 
@@ -30,12 +30,12 @@ def sort_loop(ss_pfm_bias, write_nb_voltages, read_nb_voltages, dict_res,
     Returns
     -------
     loop: list(n*m) of float
-        2d list of (m) datas (index, read and write voltage, amplitude,
+        2d list of (m) data (index, read and write voltage, amplitude,
         phase ...) of length n, organized in terms of nanoloop structure
     fmt: tuple(m) of string
         Tuple of data saving format
     header: str
-        Title of datas to save
+        Title of data to save
     """
     # Create fmt and header for saving results in txt file
     meas_label = {'Amplitude': {'unit': f'{unit}', 'fmt': '%.3e'},
@@ -75,10 +75,10 @@ def sort_loop(ss_pfm_bias, write_nb_voltages, read_nb_voltages, dict_res,
     return loop, tuple(fmt), header
 
 
-def txt_loop(dir_path_out, file_name_root, loop_tab, fmt, header,
-             mode='Off field'):
+def save_nanoloop_file(dir_path_out, file_name_root, loop_tab, fmt, header,
+                       mode='Off field'):
     """
-    Save loop datas in a text file
+    Save nanoloop data in a text file
 
     Parameters
     ----------
@@ -87,11 +87,11 @@ def txt_loop(dir_path_out, file_name_root, loop_tab, fmt, header,
     file_name_root: str
         Name of root for the file (out)
     loop_tab: list(n*m) or numpy.array(n*m) of float
-        2D array of loop datas
+        2D array of loop data
     fmt: tuple(n) of string
         Tuple of data saving format
     header: str
-        Title of datas to save
+        Title of data to save
     mode: str, optional
         'Off field' or 'On field'
 
@@ -138,9 +138,9 @@ def txt_loop(dir_path_out, file_name_root, loop_tab, fmt, header,
     return file_path_out
 
 
-def extract_loop(file_path_in):
+def extract_nanoloop_data(file_path_in):
     """
-    Extract loop of txt saving file
+    Extract nanoloop data of txt saving file
 
     Parameters
     ----------
@@ -149,21 +149,21 @@ def extract_loop(file_path_in):
 
     Returns
     -------
-    datas_dict: dict
+    data_dict: dict
         Object containing all the data loop
     dict_str: dict
         Used for figure annotation
     """
     assert os.path.isfile(file_path_in)
 
-    datas_tab = np.transpose(np.genfromtxt(file_path_in, delimiter='\t\t',
-                                           skip_header=3))
+    data_tab = np.transpose(np.genfromtxt(file_path_in, delimiter='\t\t',
+                                          skip_header=3))
     with open(file_path_in, encoding='latin-1') as data_file:
         lines = data_file.readlines()
     header = lines[2]
     split_header = header.split('\t')
 
-    datas_dict = {}
+    data_dict = {}
     key_labs = ['index', 'read', 'write', 'amplitude', 'phase', 'freq',
                 'q fact', 'inc amp', 'inc pha']
     index = -1
@@ -174,10 +174,10 @@ def extract_loop(file_path_in):
             if lab in key.lower():
                 name = lab
                 index += 1
-        data_values = datas_tab[index]
+        data_values = data_tab[index]
         data_values = [np.nan if np.isnan(value) else value for value in
                        data_values]
-        datas_dict[name] = data_values
+        data_dict[name] = data_values
 
     unit = ''
     for elem in split_header:
@@ -193,4 +193,4 @@ def extract_loop(file_path_in):
 
     data_file.close()
 
-    return datas_dict, dict_str
+    return data_dict, dict_str
