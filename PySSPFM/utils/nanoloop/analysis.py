@@ -6,7 +6,7 @@ import numpy as np
 
 from PySSPFM.utils.core.iterable import sort_2d_arr
 from PySSPFM.utils.signal_bias import write_vec
-from PySSPFM.utils.nanoloop.phase import phase_calibration, corr_phase
+from PySSPFM.utils.nanoloop.phase import phase_calibration, correct_phase_val
 
 
 class MultiLoop:
@@ -54,7 +54,7 @@ class MultiLoop:
         self.write_mode = ''
         self.guess_write_mode()
         self.find_marker()
-        self.left_right()
+        self.divide_left_right()
 
         self.treat_pha = self.pha
         self.treat_pha_left = self.pha_left
@@ -143,7 +143,7 @@ class MultiLoop:
             raise IOError('write_mode should be "Zero, up", or "Zero, down", '
                           'or "High, down", or "Low, up"')
 
-    def left_right(self, closed=True):
+    def divide_left_right(self, closed=True):
         """
         Divide the loop into 2 segments: left and right
 
@@ -254,19 +254,19 @@ class MultiLoop:
             except KeyError:
                 coef_a = None
                 coef_b = None
-            self.treat_pha, _ = corr_phase(
+            self.treat_pha, _ = correct_phase_val(
                 self.pha, pha_calib['dict phase meas'],
                 pha_calib['dict phase target'], pha_corr=pha_calib['corr'],
                 coef_a=coef_a, coef_b=coef_b, reverted=pha_calib['reverse'])
-            self.treat_pha_left, _ = corr_phase(
+            self.treat_pha_left, _ = correct_phase_val(
                 self.pha_left, pha_calib['dict phase meas'],
                 pha_calib['dict phase target'], pha_corr=pha_calib['corr'],
                 coef_a=coef_a, coef_b=coef_b, reverted=pha_calib['reverse'])
-            self.treat_pha_right, _ = corr_phase(
+            self.treat_pha_right, _ = correct_phase_val(
                 self.pha_right, pha_calib['dict phase meas'],
                 pha_calib['dict phase target'], pha_corr=pha_calib['corr'],
                 coef_a=coef_a, coef_b=coef_b, reverted=pha_calib['reverse'])
-            self.treat_pha_marker, _ = corr_phase(
+            self.treat_pha_marker, _ = correct_phase_val(
                 self.pha_marker, pha_calib['dict phase meas'],
                 pha_calib['dict phase target'], pha_corr=pha_calib['corr'],
                 coef_a=coef_a, coef_b=coef_b, reverted=pha_calib['reverse'])
@@ -382,14 +382,14 @@ class MeanLoop:
             self.pha = treat_pha
 
 
-def treat_loop(datas_dict, sign_pars, dict_pha=None, dict_str=None,
-               q_fact=100.):
+def nanoloop_treatment(data_dict, sign_pars, dict_pha=None, dict_str=None,
+                       q_fact=100.):
     """
     Perform treatment value on nanoloops
 
     Parameters
     ----------
-    datas_dict: dict
+    data_dict: dict
         Dict containing all the data loop
     sign_pars: dict
         SSPFM voltage signal parameters
@@ -413,11 +413,11 @@ def treat_loop(datas_dict, sign_pars, dict_pha=None, dict_str=None,
 
     # Perform phase treatment and get pha_calib
     (_, pha_calib, _) = phase_calibration(
-        datas_dict['phase'], datas_dict['write'], dict_pha, dict_str=dict_str)
+        data_dict['phase'], data_dict['write'], dict_pha, dict_str=dict_str)
     loop_tab = []
-    for num in range(1, int(max(datas_dict['index']) + 1)):
+    for num in range(1, int(max(data_dict['index']) + 1)):
         # Extract values for the current loop
-        out = extract_value(datas_dict, sign_pars, num)
+        out = extract_value(data_dict, sign_pars, num)
         (read_v, write_volt, amplitude, phase, quality_factors) = out
         # Perform amplitude / quality factor calculation
         amplitude = amp_div_q(amplitude, list_q=quality_factors, mean_q=q_fact)
@@ -431,13 +431,13 @@ def treat_loop(datas_dict, sign_pars, dict_pha=None, dict_str=None,
     return loop_tab, pha_calib, {'amp': amp_0, 'pha': pha_0}
 
 
-def extract_value(datas_dict, sign_pars, num):
+def extract_value(data_dict, sign_pars, num):
     """
-    Extract value of datas_dict for a single loop
+    Extract value of data_dict for a single loop
 
     Parameters
     ----------
-    datas_dict: dict
+    data_dict: dict
         Object containing all the data loop
     sign_pars: dict
         SSPFM voltage signal parameters
@@ -458,15 +458,15 @@ def extract_value(datas_dict, sign_pars, num):
         Array of quality factor values of the loop
     """
     write_volt = write_vec(sign_pars)
-    read_v = next((datas_dict['read'][cont] for cont, index in
-                   enumerate(datas_dict['index']) if index == num), 0)
-    amplitude = [datas_dict['amplitude'][cont] for cont, index in
-                 enumerate(datas_dict['index']) if index == num]
-    phase = [datas_dict['phase'][cont] for cont, index in
-             enumerate(datas_dict['index']) if index == num]
-    quality_factors = [datas_dict['q fact'][cont] for cont, index in
-                       enumerate(datas_dict['index']) if index == num
-                       and 'q fact' in datas_dict]
+    read_v = next((data_dict['read'][cont] for cont, index in
+                   enumerate(data_dict['index']) if index == num), 0)
+    amplitude = [data_dict['amplitude'][cont] for cont, index in
+                 enumerate(data_dict['index']) if index == num]
+    phase = [data_dict['phase'][cont] for cont, index in
+             enumerate(data_dict['index']) if index == num]
+    quality_factors = [data_dict['q fact'][cont] for cont, index in
+                       enumerate(data_dict['index']) if index == num
+                       and 'q fact' in data_dict]
 
     return read_v, write_volt, amplitude, phase, quality_factors
 
