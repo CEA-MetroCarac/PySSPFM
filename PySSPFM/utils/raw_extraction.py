@@ -1,5 +1,5 @@
 """
-Module used for extraction of .spm or .txt datacube file (SS PFM) datas and
+Module used for extraction of .spm or .txt datacube file (SS PFM) data and
 csv measurement sheet
 Inspired by SS_PFM script, Nanoscope, Bruker
 """
@@ -27,7 +27,7 @@ class NanoscopeError(Exception):
         super().__init__(self.message)
 
 
-def datas_identification(raw_dict, type_file, mode_dfrt=False):
+def data_identification(raw_dict, type_file, mode_dfrt=False):
     """
     Extract and identify all the measurements contained in a table file
     (txt, csv, xlsx)
@@ -92,7 +92,7 @@ def extr_bias_pars(file_path_in_bias):
     return script_dict
 
 
-def data_extr_spm(file_path_in, mode_dfrt=False, verbose=False):
+def extr_data_spm(file_path_in, mode_dfrt=False, verbose=False):
     """
     Data extraction from spm file and identification
 
@@ -142,13 +142,13 @@ def data_extr_spm(file_path_in, mode_dfrt=False, verbose=False):
         print(f'Measurement in spm file: {list(raw_dict.keys())}\n')
 
     # Data identification
-    dict_meas = datas_identification(
+    dict_meas = data_identification(
         raw_dict, type_file='spm', mode_dfrt=mode_dfrt)
 
     return dict_meas, script_dict
 
 
-def data_extr_table(file_path_in, mode_dfrt=False):
+def extr_data_table(file_path_in, mode_dfrt=False):
     """
     Extract and identify data from a raw measurement table file
     (txt, csv, xlsx).
@@ -201,7 +201,7 @@ def data_extr_table(file_path_in, mode_dfrt=False):
     else:
         raise IOError("file_type should be 'txt', 'csv', or 'xlsx'")
     raw_dict = dict(zip(meas_names, raw_data))
-    dict_meas = datas_identification(
+    dict_meas = data_identification(
         raw_dict, type_file='table', mode_dfrt=mode_dfrt)
 
     return dict_meas, script_dict
@@ -231,10 +231,10 @@ def data_extraction(file_path_in, mode_dfrt=False, verbose=False):
     assert os.path.isfile(file_path_in)
 
     if file_path_in.endswith('.spm'):
-        dict_meas, script_dict = data_extr_spm(
+        dict_meas, script_dict = extr_data_spm(
             file_path_in, mode_dfrt=mode_dfrt, verbose=verbose)
     else:
-        dict_meas, script_dict = data_extr_table(
+        dict_meas, script_dict = extr_data_table(
             file_path_in, mode_dfrt=mode_dfrt)
 
     return dict_meas, script_dict
