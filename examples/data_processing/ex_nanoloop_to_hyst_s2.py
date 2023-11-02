@@ -1,5 +1,5 @@
 """
-Example of hyst_to_map_s2 methods
+Example of nanoloop_to_hyst_s2 methods
 """
 import numpy as np
 
@@ -86,7 +86,7 @@ def main_pars():
 
 def loop_dict_gen(ferro_pars, sign_pars):
     """
-    Generate loop_dict to construct a loop.
+    Generate loop_dict to construct a nanoloop.
 
     Parameters
     ----------
@@ -98,13 +98,13 @@ def loop_dict_gen(ferro_pars, sign_pars):
     Returns
     -------
     loop_dict: dict
-        Dictionary representing the loop.
+        Dictionary representing the nanoloop.
     """
     # Set random seed
     np.random.seed(0)
 
-    # Define loop noise parameters
-    loop_noise_pars = {'type': 'normal', 'ampli': 10}
+    # Define nanoloop noise parameters
+    nanoloop_noise_pars = {'type': 'normal', 'ampli': 10}
 
     # Define electrode parameters
     elec_pars = {'cpd': 0.3, 'slope': -3}
@@ -122,13 +122,13 @@ def loop_dict_gen(ferro_pars, sign_pars):
         'nb': sign_pars['Nb volt (R)']
     }
 
-    # Construct the loop dictionary
+    # Construct the nanoloop dictionary
     loop_dict = {
         'write': write_pars,
         'read': read_pars,
         'elec': elec_pars,
         'ferro': ferro_pars,
-        'noise': loop_noise_pars,
+        'noise': nanoloop_noise_pars,
         'mode': ''
     }
 
@@ -167,7 +167,7 @@ def ex_multi_script(make_plots=False, verbose=False):
 
     loop_dicts = []
 
-    # Generate loop dictionaries for each pixel and mode
+    # Generate nanoloop dictionaries for each pixel and mode
     for i in range(nb_file):
         for mode in modes:
             # Select ferro phase parameters
@@ -175,14 +175,14 @@ def ex_multi_script(make_plots=False, verbose=False):
             if i in index_pix_phase_2:
                 ferro_pars = ferro_pars_2
 
-            # Generate loop dictionary
+            # Generate nanoloop dictionary
             loop_dict = loop_dict_gen(ferro_pars, sign_pars)
             loop_dict['mode'] = mode
             loop_dicts.append(loop_dict)
 
     # saving path management
     dir_path_out, save = save_path_example(
-        "hyst_to_map_s2", save_example_exe=make_plots,
+        "nanoloop_to_hyst_s2", save_example_exe=make_plots,
         save_test_exe=not make_plots)
     # ex multi_script
     multi_script(user_pars, '', meas_pars, sign_pars, 0, '',
