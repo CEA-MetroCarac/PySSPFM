@@ -303,10 +303,10 @@ def plot_meanloop(loops_tab, pha_calib, dict_str=None, del_1st_loop=False):
     else:
         unit, mode = dict_str["unit"], dict_str["label"]
 
+    mean_loop = MeanLoop(
+        loops_tab, pha_calib=pha_calib, del_1st_loop=del_1st_loop)
     if del_1st_loop:
         loops_tab = loops_tab[1:]
-
-    mean_loop = MeanLoop(loops_tab, pha_calib=pha_calib)
 
     titles = ['Amplitude Loops', 'Phase Loops', 'Piezorep Loops']
     label_x = 'Write voltage [V]'
@@ -349,9 +349,9 @@ def plot_meanloop(loops_tab, pha_calib, dict_str=None, del_1st_loop=False):
 
         for cont, (elem_left, elem_right) in enumerate(zip(measure_left,
                                                            measure_right)):
-            ax_1.plot(loops_tab[1].write_volt_left, elem_left, ls='-', lw=1,
+            ax_1.plot(loops_tab[0].write_volt_left, elem_left, ls='-', lw=1,
                       c=cmap(cont / len(measure_left)))
-            ax_1.plot(loops_tab[1].write_volt_right, elem_right, ls='-',
+            ax_1.plot(loops_tab[0].write_volt_right, elem_right, ls='-',
                       lw=1, c=cmap(cont / len(measure_left)))
 
         plot_dict['title'] = 'mean loop'

@@ -173,7 +173,7 @@ def mean_analysis_on_off(user_pars, best_loops, analysis_mode='mean_loop',
     figures = []
 
     # Compute the mean of all best_loops
-    mean_best_loop = MeanLoop(best_loops)
+    mean_best_loop = MeanLoop(best_loops, del_1st_loop=False)
 
     x_hyst = [np.array(mean_best_loop.write_volt_right),
               np.array(mean_best_loop.write_volt_left)]

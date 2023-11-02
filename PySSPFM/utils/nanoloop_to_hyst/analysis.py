@@ -268,10 +268,7 @@ def find_best_nanoloop(loop_tab, counterclockwise, grounded_tip,
         y_hyst = xy_hyst_tab[best_idx][1]
 
     elif analysis_mode in ['mean_loop', 'on_f_loop']:
-        start_ind = 0
-        if del_1st_loop:
-            start_ind = 1
-        best_loop = MeanLoop(loop_tab[start_ind:])
+        best_loop = MeanLoop(loop_tab, del_1st_loop=del_1st_loop)
         x_hyst = [np.array(best_loop.write_volt_right),
                   np.array(best_loop.write_volt_left)]
         y_hyst = [np.array(best_loop.piezorep_right),
