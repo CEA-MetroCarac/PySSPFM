@@ -12,7 +12,7 @@ import os
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.toolbox.raw_file_reader import main_raw_file_reader as main_script
 from PySSPFM.gui.utils import \
-    (add_separator_grid, grid_item, show_tooltip, extract_var,
+    (add_grid_separator, grid_item, show_tooltip, extract_var,
      init_secondary_wdw, wdw_main_title)
 from PySSPFM.utils.path_for_runable import save_path_management
 
@@ -31,7 +31,8 @@ def main(parent=None):
     None
     """
     # Create the main or secondary window
-    app = init_secondary_wdw(parent=parent, wdw_title="Raw file reader")
+    title = "Raw file reader"
+    app = init_secondary_wdw(parent=parent, wdw_title=title)
 
     # Set default parameter values
     default_user_parameters = {
@@ -79,7 +80,7 @@ def main(parent=None):
         dir_path_out_var.set(dir_path_out)
 
     # Window title: Raw file reader
-    wdw_main_title(app, "Raw file reader")
+    wdw_main_title(app, title)
 
     row = 3
 
@@ -147,7 +148,7 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(entry_out, mess))
     browse_button_out = ttk.Button(app, text="Select", command=browse_dir_out)
     row = grid_item(browse_button_out, row, column=2)
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Analysis mode
     label_analysis = ttk.Label(app, text="Analysis mode",
@@ -170,7 +171,7 @@ def main(parent=None):
            "'classic' (sweep) or 'dfrt'"
     mode_var.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(mode_var, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Save and plot
     label_chck = ttk.Label(app, text="Save and plot", font=("Helvetica", 14))
@@ -222,7 +223,7 @@ def main(parent=None):
            "- Value: Boolean (True or False)."
     chck_save.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(chck_save, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Submit button
     submit_button = ttk.Button(app, text="Start", command=launch)
