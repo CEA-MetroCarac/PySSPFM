@@ -27,7 +27,7 @@ def ex_gaussian_peak_fit(verbose=False, make_plots=False):
 
     # Gaussian fitting
     gaussian_peak = GaussianPeakFit()
-    gaussian_peak.fit(x, y, init_pars=None)
+    gaussian_peak.fit(x, y, init_params=None)
     gaussian_pars = gaussian_peak.report_fit_results()
 
     if verbose:
@@ -57,7 +57,7 @@ def ex_sho_peak_fit(verbose=False, make_plots=False):
 
     # Sho fitting
     sho_peak = ShoPeakFit()
-    sho_peak.fit(x, y, init_pars=None)
+    sho_peak.fit(x, y, init_params=None)
     sho_pars = sho_peak.report_fit_results()
 
     if verbose:
@@ -87,7 +87,7 @@ def ex_sho_phase_fit(verbose=False, make_plots=False):
 
     # Sho phase fitting
     sho_phase_obj = ShoPhaseFit()
-    sho_phase_obj.fit(x, y, init_pars=None)
+    sho_phase_obj.fit(x, y, init_params=None)
     sho_phase_pars = sho_phase_obj.report_fit_results()
 
     if verbose:
@@ -117,7 +117,7 @@ def ex_sho_phase_switch_fit(verbose=False, make_plots=False):
 
     # Sho phase switch fitting
     sho_phase_switch_obj = ShoPhaseFit(switch=True)
-    sho_phase_switch_obj.fit(x, y, init_pars=None)
+    sho_phase_switch_obj.fit(x, y, init_params=None)
     sho_phase_switch_pars = sho_phase_switch_obj.report_fit_results()
 
     if verbose:
