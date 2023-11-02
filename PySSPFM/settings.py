@@ -5,11 +5,11 @@ Parameters
 ----------
 EXAMPLE_ROOT_PATH_IN : str
     The root path for example input data.
-    Default is r".../examples/datas/PySSPFM_example_in"
+    Default is r".../examples/data/PySSPFM_example_in"
 
 EXAMPLE_ROOT_PATH_OUT : str
     The root path for example output data.
-    Default is r".../examples/datas/PySSPFM_example_out"
+    Default is r".../examples/data/PySSPFM_example_out"
 
 DEFAULT_DATA_PATH_OUT: str
     The default root path for saved output data (figures ...).
@@ -22,6 +22,29 @@ DEFAULT_LOGO_PATH: str
 DEFAULT_ICON_PATH: str
     The default path of the icon PySSPFM for GUI.
     Default is r".../PySSPFM/logo_icon/iconPySSPFM.png"
+
+DEFAULT_PARAMETERS_FILE_NAME: str
+    The default name of txt file saving parameters (processing and measure)
+    Default is r'parameters.txt'
+
+DEFAULT_FIGURES_FOLDER_NAME: str
+    The default name of saving folder figures
+    Default is r'figs'
+
+DEFAULT_NANOLOOPS_FOLDER_NAME: str
+    The default name of saving folder for txt nanoloops
+    (generated after first step of data processing)
+    Default is r'nanoloops'
+
+DEFAULT_BEST_NANOLOOP_FOLDER_NAME: str
+    The default name of saving folder for txt best nanoloops
+    (generated after second step of data processing)
+    Default is r'best_nanoloops'
+
+DEFAULT_PROPERTIES_FOLDER_NAME: str
+    The default name of saving folder for txt sample properties
+    (generated after second step of data processing)
+    Default is r'properties'
 
 SAVE_TEST_EXAMPLE: bool
     Flag to control whether to save generated data (figures ...) with tests
@@ -105,8 +128,8 @@ COLOR_HYSTERESIS_CLUSTERING: str
     Default is 'turbo'.
 
 ELECTROSTATIC_OFFSET: bool
-    Key to chose if offset off field loop should be considered for the coupled
-    analysis. Coupled analysis is used in order to study artifacts
+    Key to chose if offset off field nanoloop should be considered for the
+    coupled analysis. Coupled analysis is used in order to study artifacts
     (mainly electrostatics) in the measurements. If the main origin of the
     offset of off field measurements is electrostatics and not ferroelectric
     effects (like frozen polarization), this parameter should be True.
@@ -151,11 +174,16 @@ def get_setting(key):
 
 ROOT = pathlib.Path(__file__).parent.parent
 EXAMPLES = ROOT / 'examples'
-EXAMPLE_ROOT_PATH_IN = EXAMPLES / 'datas' / 'PySSPFM_example_in'
-EXAMPLE_ROOT_PATH_OUT = EXAMPLES / 'datas' / 'PySSPFM_example_out'
+EXAMPLE_ROOT_PATH_IN = EXAMPLES / 'data' / 'PySSPFM_example_in'
+EXAMPLE_ROOT_PATH_OUT = EXAMPLES / 'data' / 'PySSPFM_example_out'
 DEFAULT_DATA_PATH_OUT = ROOT / 'PySSPFM_data_out'
 DEFAULT_LOGO_PATH = ROOT / 'PySSPFM' / 'logo_icon' / 'logoPySSPFM.png'
 DEFAULT_ICON_PATH = ROOT / 'PySSPFM' / 'logo_icon' / 'iconPySSPFM.png'
+DEFAULT_PARAMETERS_FILE_NAME = 'parameters.txt'
+DEFAULT_FIGURES_FOLDER_NAME = 'figs'
+DEFAULT_NANOLOOPS_FOLDER_NAME = 'nanoloops'
+DEFAULT_BEST_NANOLOOP_FOLDER_NAME = 'best_nanoloops'
+DEFAULT_PROPERTIES_FOLDER_NAME = 'properties'
 SAVE_TEST_EXAMPLE = True
 KEY_MEASUREMENT_EXTRACTION = {
     'spm': {
@@ -191,11 +219,18 @@ COLOR_SSPFM_MAP_HIGHLIGHTED_PIXEL = 'red'
 COLOR_HYSTERESIS_CLUSTERING = 'turbo'
 ELECTROSTATIC_OFFSET = True
 
-SETTINGS_DICT = {'key meas extract': KEY_MEASUREMENT_EXTRACTION,
-                 'header lines': HEADER_LINES,
-                 'index line meas name': INDEX_LINE_MEAS_NAME,
-                 'delimiter': DELIMITER,
-                 'detect bug segments': DETECT_BUG_SEGMENTS,
-                 'fit method': FIT_METHOD,
-                 'histo phase method': HISTO_PHASE_METHOD,
-                 'elec offset': ELECTROSTATIC_OFFSET}
+SETTINGS_DICT = {
+    'parameters file name': DEFAULT_PARAMETERS_FILE_NAME,
+    'figures folder name': DEFAULT_FIGURES_FOLDER_NAME,
+    'nanoloops folder name': DEFAULT_NANOLOOPS_FOLDER_NAME,
+    'best nanoloops folder name': DEFAULT_BEST_NANOLOOP_FOLDER_NAME,
+    'properties folder name': DEFAULT_PROPERTIES_FOLDER_NAME,
+    'key meas extract': KEY_MEASUREMENT_EXTRACTION,
+    'header lines': HEADER_LINES,
+    'index line meas name': INDEX_LINE_MEAS_NAME,
+    'delimiter': DELIMITER,
+    'detect bug segments': DETECT_BUG_SEGMENTS,
+    'fit method': FIT_METHOD,
+    'histo phase method': HISTO_PHASE_METHOD,
+    'elec offset': ELECTROSTATIC_OFFSET
+}
