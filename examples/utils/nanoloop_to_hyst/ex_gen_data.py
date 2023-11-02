@@ -1,18 +1,18 @@
 """
-Example of gen_datas methods
+Example of gen_data methods
 """
 import numpy as np
 
 from PySSPFM.utils.path_for_runable import save_path_example
-from PySSPFM.utils.nanoloop_to_hyst.gen_datas import gen_datas_dict
-from PySSPFM.utils.nanoloop.analysis import treat_loop
+from PySSPFM.utils.nanoloop_to_hyst.gen_data import gen_data_dict
+from PySSPFM.utils.nanoloop.analysis import nanoloop_treatment
 from PySSPFM.utils.nanoloop.plot import plot_all_loop
 from PySSPFM.utils.core.figure import print_plots
 
 
 def gen_pars(read_volt_range=None):
     """
-    Generate all parameters of the loop and sspfm voltage signal.
+    Generate all parameters of the nanoloop and sspfm voltage signal.
 
     Parameters
     ----------
@@ -79,9 +79,9 @@ def gen_pars(read_volt_range=None):
     return pars, sign_pars, pha_val
 
 
-def example_gen_datas(analysis='mean_off', make_plots=False, verbose=False):
+def example_gen_data(analysis='mean_off', make_plots=False, verbose=False):
     """
-    Example of gen_datas function.
+    Example of gen_data function.
 
     Parameters
     ----------
@@ -120,16 +120,16 @@ def example_gen_datas(analysis='mean_off', make_plots=False, verbose=False):
     # Gen pars
     pars, sign_pars, pha_val = gen_pars(read_volt_range=read_volt_range)
 
-    # ex gen_datas_dict
-    datas_dict, dict_str = gen_datas_dict(pars, q_fact=100., mode=mode,
-                                          pha_val=pha_val)
+    # ex gen_data_dict
+    datas_dict, dict_str = gen_data_dict(
+        pars, q_fact=100., mode=mode, pha_val=pha_val)
 
     if verbose:
         print(f'\t\tdict_str: {dict_str}')
 
     if make_plots:
         # Perform treatment and generate plots
-        out = treat_loop(datas_dict, sign_pars, dict_str=dict_str)
+        out = nanoloop_treatment(datas_dict, sign_pars, dict_str=dict_str)
         loop_tab, pha_calib, _ = out
         figs_loop = plot_all_loop(loop_tab, pha_calib=pha_calib,
                                   dict_str=dict_str)
@@ -143,12 +143,11 @@ def example_gen_datas(analysis='mean_off', make_plots=False, verbose=False):
 if __name__ == '__main__':
     # saving path management
     dir_path_out, save_plots = save_path_example(
-        "hyst_to_map_gen_datas", save_example_exe=True, save_test_exe=False)
+        "nanoloop_to_hyst_gen_data", save_example_exe=True, save_test_exe=False)
     figs = []
-    figs += example_gen_datas(analysis='multi_off', make_plots=True,
-                              verbose=True)
-    figs += example_gen_datas(analysis='mean_off', make_plots=True,
-                              verbose=True)
-    figs += example_gen_datas(analysis='mean_on', make_plots=True, verbose=True)
+    figs += example_gen_data(analysis='multi_off', make_plots=True,
+                             verbose=True)
+    figs += example_gen_data(analysis='mean_off', make_plots=True, verbose=True)
+    figs += example_gen_data(analysis='mean_on', make_plots=True, verbose=True)
     print_plots(figs, save_plots=save_plots, show_plots=True,
                 dirname=dir_path_out, transparent=False)
