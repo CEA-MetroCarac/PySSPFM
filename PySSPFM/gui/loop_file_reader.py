@@ -1,6 +1,6 @@
 """
 --> Executable Script
-Graphical interface for loop file reader
+Graphical interface for nanoloop file reader
 (run loop_file_reader.main_loop_file_reader)
 """
 
@@ -15,7 +15,7 @@ from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.toolbox.loop_file_reader import \
     main_loop_file_reader as main_script
 from PySSPFM.gui.utils import \
-    (add_separator_grid, grid_item, show_tooltip, extract_var,
+    (add_grid_separator, grid_item, show_tooltip, extract_var,
      init_secondary_wdw, wdw_main_title)
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
@@ -34,7 +34,8 @@ def main(parent=None):
     None
     """
     # Create the main or secondary window
-    app = init_secondary_wdw(parent=parent, wdw_title="Loop file reader")
+    title = "Loop file reader"
+    app = init_secondary_wdw(parent=parent, wdw_title=title)
 
     # Set default parameter values
     default_user_parameters = {
@@ -119,7 +120,7 @@ def main(parent=None):
         dir_path_out_var.set(dir_path_out)
 
     # Window title: List map reader
-    wdw_main_title(app, "Loop file reader")
+    wdw_main_title(app, title)
 
     row = 3
 
@@ -135,11 +136,11 @@ def main(parent=None):
     entry_in = ttk.Entry(app, textvariable=file_path_in_var)
     row = grid_item(entry_in, row, column=1, sticky="ew", increment=False)
     strg = "- Name: file_path_in\n" \
-           "- Summary: File path for text loop file generated after " \
+           "- Summary: File path for text nanoloop file generated after " \
            "the first step of the analysis " \
-           "(default: in 'txt_loops' directory)\n" \
+           "(default: in 'nanoloops' directory)\n" \
            "- Description: This parameter specifies the file path" \
-           " where the text loop file generated after the first step of " \
+           " where the text nanoloop file generated after the first step of " \
            "the analysis is located.\n" \
            "- Value: String (file path)."
     entry_in.bind("<Enter>",
@@ -234,9 +235,9 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(entry_out, mess))
     browse_button_out = ttk.Button(app, text="Select", command=browse_dir_out)
     row = grid_item(browse_button_out, row, column=2)
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
-    # Section title: Loop plotting
+    # Section title: Nanoloop plotting
     label_pha = ttk.Label(app, text="Loop plotting", font=("Helvetica", 14))
     row = grid_item(label_pha, row, column=0, sticky="ew", columnspan=3)
 
@@ -250,17 +251,18 @@ def main(parent=None):
     strg = "- Name: del_1st_loop\n" \
            "- Summary: Delete First Loop\n" \
            "- Description: If this parameter is set to True, it " \
-           "deletes the first loop of the analysis, which is typically " \
+           "deletes the first nanoloop of the analysis, which is typically " \
            "used for calculating the mean hysteresis.\nThis can be " \
            "useful when the first write voltage values are equal to " \
            "zero, indicating that the material is in a pristine state, " \
-           "and the loop shape would be different from the polarized state. " \
-           "Deleting the first loop helps to avoid artifacts in the " \
+           "and the nanoloop shape would be different from the polarized " \
+           "state. " \
+           "Deleting the first nanoloop helps to avoid artifacts in the " \
            "analysis.\nThis parameter has influence only on figure.\n" \
            "- Value: Boolean (True or False)"
     chck_del.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(chck_del, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Phase treatment
     label_pha = ttk.Label(app, text="Phase treatment", font=("Helvetica", 14))
@@ -348,7 +350,7 @@ def main(parent=None):
            "- Description: It determines whether the electrostatics are " \
            "higher than ferroelectric effects. In other words, it " \
            "indicates if the electrostatics are responsible for the " \
-           "phase loop's sense of rotation in the On Field mode.\n" \
+           "phase nanoloop's sense of rotation in the On Field mode.\n" \
            "- Value: Boolean\n" \
            "- Active if: On Field mode is selected."
     chck_elec.bind("<Enter>",
@@ -397,14 +399,14 @@ def main(parent=None):
     strg = "- Name: locked_elec_slope\n" \
            "- Summary: Locked Electrostatic Slope\n" \
            "- Description: It specifies and locked the sign of the " \
-           "electrostatic slope in the loop whatever measurement " \
+           "electrostatic slope in the nanoloop whatever measurement " \
            "parameters (theory: grounded tip: negative, bottom: positive).\n" \
            "- Value: 'negative', 'positive', or None\n" \
            "- Active if: On Field mode is selected."
     locked_elec_slope_var.bind(
         "<Enter>",
         lambda event, mess=strg: show_tooltip(locked_elec_slope_var, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Save and plot
     label_chck = ttk.Label(app, text="Save and plot", font=("Helvetica", 14))
@@ -456,7 +458,7 @@ def main(parent=None):
            "- Value: Boolean (True or False)."
     chck_save.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(chck_save, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Submit button
     submit_button = ttk.Button(app, text="Start", command=launch)
