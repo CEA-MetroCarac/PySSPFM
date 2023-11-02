@@ -8,7 +8,7 @@ from PySSPFM.utils.core.basic_func import sigmoid
 from PySSPFM.utils.core.noise import noise
 
 
-def gen_loops(pars, noise_pars=None, pha_val=None):
+def gen_nanoloops(pars, noise_pars=None, pha_val=None):
     """
     Generate nanoloops amplitude and phase data with associated voltage from
     ferroelectric and electrostatic physical equations
