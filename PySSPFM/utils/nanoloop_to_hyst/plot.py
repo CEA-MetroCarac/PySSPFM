@@ -1,5 +1,6 @@
 """
-Module used for the scripts of sspfm 2d step data analysis (conv hyst to map)
+Module used for the scripts of sspfm 2d step data analysis
+(convert nanoloop to hyst)
 - plot functions
 """
 
@@ -24,9 +25,9 @@ def plot_btfly_analysis(write, amp, mini, imprint, dict_str=None):
     amp: dict
         Amplitude values for left and right segment (in a.u or nm)
     mini: dict
-        Minimum point on butterfly loop
+        Minimum point on butterfly nanoloop
     imprint: float
-        Imprint of butterfly loop (in V)
+        Imprint of butterfly nanoloop (in V)
     dict_str: dict, optional
         Dict used for figure annotation
 
@@ -44,8 +45,8 @@ def plot_btfly_analysis(write, amp, mini, imprint, dict_str=None):
     plot_dict = {'title': 'imprint: butterfly analysis',
                  'x lab': 'Write voltage [V]',
                  'y lab': f'Amplitude [{unit}]'}
-    tab_dict_1 = {'legend': 'amplitude datas (left)', 'form': 'r.-'}
-    tab_dict_2 = {'legend': 'amplitude datas (right)', 'form': 'b.-'}
+    tab_dict_1 = {'legend': 'amplitude data (left)', 'form': 'r.-'}
+    tab_dict_2 = {'legend': 'amplitude data (right)', 'form': 'b.-'}
     plot_graph(ax, [write['left'], write['right']],
                [amp['left'], amp['right']], plot_dict=plot_dict,
                tabs_dict=[tab_dict_1, tab_dict_2], plot_leg=False)
@@ -92,17 +93,17 @@ def plot_sat_analysis(write, amp, piezorep, a_elec, y_0, x_0, r_square, sat,
         R² of saturation line regression
     sat: dict
         Dict of left and right results of linear regression for saturation of
-        the loop
+        the nanoloop
     ind_sat_right: int
-        Index corresponding to the right saturation of the loop
+        Index corresponding to the right saturation of the nanoloop
     ind_sat_left: int
-        Index corresponding to the left saturation of the loop
+        Index corresponding to the left saturation of the nanoloop
     y_fit: dict
         Dict corresponding to the fit of left, right and mean containing the
         list of point of the fit
     elec_fit: dict
         Dict of left and right mean results of linear regression for
-        saturation of the loop
+        saturation of the nanoloop
     dict_str: dict, optional
         Dict used for figure annotation
 
@@ -127,25 +128,25 @@ def plot_sat_analysis(write, amp, piezorep, a_elec, y_0, x_0, r_square, sat,
     plot_dict = {'x lab': 'Write voltage [V]',
                  'y lab': f'Amplitude [{unit}]',
                  'edgew': 3, 'tickl': 5, 'gridw': 1}
-    tab_dict_1 = {'legend': 'amplitude datas (left)', 'form': 'r.',
+    tab_dict_1 = {'legend': 'amplitude data (left)', 'form': 'r.',
                   'mec': 'r', 'ms': 2}
-    tab_dict_2 = {'legend': 'amplitude datas (right)', 'form': 'b.',
+    tab_dict_2 = {'legend': 'amplitude data (right)', 'form': 'b.',
                   'mec': 'b', 'ms': 2}
     plot_graph(axs[0], [write['left'], write['right']],
                [amp['left'], amp['right']], plot_dict=plot_dict,
                tabs_dict=[tab_dict_1, tab_dict_2], plot_leg=False)
 
-    # Plot piezorep loop
+    # Plot piezorep nanoloop
     plot_dict['y lab'] = f'Piezoresponse [{unit}]'
-    tab_dict_1 = {'legend': 'piezorep datas (left)', 'form': 'r+',
+    tab_dict_1 = {'legend': 'piezorep data (left)', 'form': 'r+',
                   'mec': 'r', 'ms': 5}
-    tab_dict_2 = {'legend': 'piezorep datas (right)', 'form': 'b+',
+    tab_dict_2 = {'legend': 'piezorep data (right)', 'form': 'b+',
                   'mec': 'b', 'ms': 5}
     plot_graph(axs[1], [write['left'], write['right']],
                [piezorep['left'], piezorep['right']], plot_dict=plot_dict,
                tabs_dict=[tab_dict_1, tab_dict_2], plot_leg=False)
 
-    # Plot linear regression on butterfly and piezorep loop
+    # Plot linear regression on butterfly and piezorep nanoloop
     for key, form in zip(['left', 'right'], ['m-', 'c-']):
         axs[0].plot(sat[key]['x fit'], sat[key]['y fit'], form, lw=3)
     axs[0].axvspan(write['right'][0], write['right'][ind_sat_right],
@@ -178,11 +179,11 @@ def plot_sat_analysis(write, amp, piezorep, a_elec, y_0, x_0, r_square, sat,
     add = dict_str["label"].lower().replace(' ', '_')
     fig2.sfn = f'sat_analysis_fig2_{add}'
 
-    # Plot piezoresponse loop with saturation analysis
+    # Plot piezoresponse nanoloop with saturation analysis
     plot_dict = {'title': title, 'x lab': 'Write voltage [V]',
                  'y lab': f'Piezoresponse [{unit}]'}
-    tab_dict_1 = {'legend': 'piezorep datas (left)', 'form': 'r.-'}
-    tab_dict_2 = {'legend': 'piezorep datas (right)', 'form': 'b.-'}
+    tab_dict_1 = {'legend': 'piezorep data (left)', 'form': 'r.-'}
+    tab_dict_2 = {'legend': 'piezorep data (right)', 'form': 'b.-'}
     tab_dict_3 = {'legend': 'linereg sat (left)', 'form': 'm:'}
     tab_dict_4 = {'legend': 'linereg sat (right)', 'form': 'c:'}
     lab = f'fit : ({a_elec:.2e})*x+({y_0:.2e})\nR² = {r_square:.5f}'
@@ -249,7 +250,7 @@ def plot_offset_analysis(a_elec, y_0, x_0, r_square, read_volt, elec_fit,
     plot_dict = {'title': title, 'x lab': 'Read voltage [V]',
                  'y lab': f'Hyst offset [{unit}]'}
     lab = f'fit : ({a_elec:.2e})*x+({y_0:.2e})\nR² = {r_square:.5f}'
-    tab_dict_1 = {'legend': 'datas', 'form': 'm-o'}
+    tab_dict_1 = {'legend': 'data', 'form': 'm-o'}
     tab_dict_2 = {'legend': lab, 'form': 'g--'}
     plot_graph(ax, [read_volt, elec_fit['x fit']], [offset, elec_fit['y fit']],
                plot_dict=plot_dict, tabs_dict=[tab_dict_1, tab_dict_2],
@@ -331,9 +332,9 @@ def plot_differential_analysis(write_volt_left, write_volt_right, diff_fit,
                  'edgew': 3, 'tickl': 5, 'gridw': 1}
 
     # Tab dictionaries for plotting
-    tab_dict_1 = {'legend': 'piezoresponse datas (left)', 'form': 'r-.',
+    tab_dict_1 = {'legend': 'piezoresponse data (left)', 'form': 'r-.',
                   'lw': 1}
-    tab_dict_2 = {'legend': 'piezoresponse datas (right)', 'form': 'b-.',
+    tab_dict_2 = {'legend': 'piezoresponse data (right)', 'form': 'b-.',
                   'lw': 1}
     tab_dict_3 = {'legend': 'mean piezoresponse', 'form': 'm.-'}
     lab = f'fit : ({a_diff:.2e})*x+({y_0_diff:.2e})\nR² = {r_square:.5f}'
@@ -372,9 +373,9 @@ def plot_differential_analysis(write_volt_left, write_volt_right, diff_fit,
     return fig
 
 
-def plot_on_off_field(loop_on, loop_off, dict_str=None):
+def plot_nanoloop_on_off(loop_on, loop_off, dict_str=None):
     """
-    Plot on and off field amplitude and piezoresponse loop
+    Plot on and off field amplitude and piezoresponse nanoloop
 
     Parameters
     ----------
@@ -432,7 +433,7 @@ def plot_on_off_field(loop_on, loop_off, dict_str=None):
 def plot_hysteresis(best_hyst, x_hyst, y_hyst, bckgnd=None, infl_threshold=10,
                     sat_threshold=90, dict_str=None):
     """
-    Generate hysteresis analysis figure (fit + properties + datas)
+    Generate hysteresis analysis figure (fit + properties + data)
 
     Parameters
     ----------
@@ -440,7 +441,7 @@ def plot_hysteresis(best_hyst, x_hyst, y_hyst, bckgnd=None, infl_threshold=10,
         Hysteresis object associated to the best hysteresis (minimum of
         electrostatic component or mean of all hysteresis depending on analysis)
     x_hyst: list(2*n) of float
-        List of left and right array of hysteresis datas corresponding to write
+        List of left and right array of hysteresis data corresponding to write
         voltage for best_hyst (V)
     y_hyst: list(2*n) of float
         List of left and right array of hysteresis corresponding to
