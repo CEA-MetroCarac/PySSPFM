@@ -67,7 +67,7 @@ filter ord: 10
 ### Treatment parameters: second step ###
 
 - Info
-start of analysis: 2023-11-02 12;47
+start of analysis: 2023-11-02 17;12
 analysis duration: 00h:00m:00s
 
 - Hysteresis / loop treatment parameters
@@ -76,7 +76,7 @@ fit hyst method: leastsq
 fit hyst asym: False
 threshold value (in percent) for the calculation of nucleation bias: 10
 threshold value (in percent) for the calculation of saturation domain: 90
-first nanoloop deleted for the analysis ?: True
+first nanoloop deleted for analysis ?: True
 
 - Phase treatment parameters
 phase correction: offset
