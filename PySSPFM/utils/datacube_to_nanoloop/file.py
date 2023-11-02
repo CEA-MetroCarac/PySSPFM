@@ -1,5 +1,6 @@
 """
-Module used for the scripts of sspfm 1st step data analysis (conv seg to hyst)
+Module used for the scripts of sspfm 1st step data analysis
+(convert datacube to nanoloop)
     - Open and read files
     - Print info
     - Save measurements and parameters
@@ -8,9 +9,11 @@ Module used for the scripts of sspfm 1st step data analysis (conv seg to hyst)
 import time
 import os
 
+from PySSPFM.settings import get_setting
 
-def save_txt_file(dir_path_out, t0, date, user_pars, meas_pars, sign_pars,
-                  nb_file):
+
+def save_parameters(dir_path_out, t0, date, user_pars, meas_pars, sign_pars,
+                    nb_file):
     """
     Save all measurement and treatment parameters in a txt file
 
@@ -49,7 +52,8 @@ def save_txt_file(dir_path_out, t0, date, user_pars, meas_pars, sign_pars,
         'nb file analyzed': nb_file
     }
 
-    file_path_out = os.path.join(dir_path_out, 'saving_parameters.txt')
+    parameters_file_name = get_setting('parameters file name')
+    file_path_out = os.path.join(dir_path_out, parameters_file_name)
 
     with open(file_path_out, 'w', encoding='utf-8') as file:
         titles = ['### Experiment parameters ###\n',
@@ -77,7 +81,7 @@ def save_txt_file(dir_path_out, t0, date, user_pars, meas_pars, sign_pars,
                     break
 
 
-def print_pars(meas_pars, sign_pars, user_pars, verbose=False):
+def print_params(meas_pars, sign_pars, user_pars, verbose=False):
     """
     Print all parameters of the measure and treatment
 
