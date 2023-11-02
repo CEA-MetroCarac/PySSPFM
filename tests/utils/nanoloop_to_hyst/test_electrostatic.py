@@ -5,7 +5,7 @@ from pytest import approx
 import numpy as np
 
 from examples.utils.nanoloop_to_hyst.ex_electrostatic import \
-    (ex_btfly_analysis, ex_offset_analysis, ex_plot_on_off_field,
+    (ex_btfly_analysis, ex_offset_analysis, ex_plot_nanoloop_on_off,
      ex_differential_analysis, ex_sat_analysis)
 
 
@@ -44,9 +44,9 @@ def test_differential_analysis():
     assert np.sum(list(diff_res.values())) == approx(-4.011985086147616)
 
 
-def test_plot_on_off_field():
-    """ Test ex_plot_on_off_field """
+def test_plot_nanoloop_on_off():
+    """ Test ex_plot_nanoloop_on_off """
 
-    fig = ex_plot_on_off_field()
+    fig = ex_plot_nanoloop_on_off()
 
     assert len(list(fig)) == 1
