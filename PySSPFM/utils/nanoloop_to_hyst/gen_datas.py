@@ -2,10 +2,10 @@
 Module used to generate nanoloops and sspfm maps from physical equation
 """
 
-from PySSPFM.utils.nanoloop.gen_datas import gen_loops
+from PySSPFM.utils.nanoloop.gen_data import gen_loops
 
 
-def gen_datas_dict(pars, q_fact=100., mode='off', pha_val=None):
+def gen_data_dict(pars, q_fact=100., mode='off', pha_val=None):
     """
     Generate txt loop file data form.
 
@@ -23,7 +23,7 @@ def gen_datas_dict(pars, q_fact=100., mode='off', pha_val=None):
 
     Returns
     -------
-    datas_dict: dict
+    data_dict: dict
         Dictionary containing all the data of the loop (txt loop file data
         form).
     dict_str: dict
@@ -32,22 +32,22 @@ def gen_datas_dict(pars, q_fact=100., mode='off', pha_val=None):
     assert mode in ['off', 'on']
     pha_val = pha_val or {'fwd': 0, 'rev': 180}
 
-    datas_dict = {}
+    data_dict = {}
     out = gen_loops(pars, noise_pars=pars['noise'], pha_val=pha_val)
     write_voltage, read_voltage, amplitude, phase = out
     key_labs = ['index', 'read', 'write', 'amplitude', 'phase', 'freq',
                 'q fact', 'inc amp', 'inc pha']
     for lab in key_labs:
-        datas_dict[lab] = []
+        data_dict[lab] = []
 
     for cont, tab in enumerate(amplitude[mode]):
         for i, _ in enumerate(tab):
             for key, meas in zip(['amplitude', 'phase'], [amplitude, phase]):
-                datas_dict[key].append(meas[mode][cont][i])
-            datas_dict['index'].append(cont + 1)
-            datas_dict['read'].append(read_voltage[cont])
-            datas_dict['write'].append(write_voltage[cont][i])
-            datas_dict['q fact'].append(q_fact)
+                data_dict[key].append(meas[mode][cont][i])
+            data_dict['index'].append(cont + 1)
+            data_dict['read'].append(read_voltage[cont])
+            data_dict['write'].append(write_voltage[cont][i])
+            data_dict['q fact'].append(q_fact)
 
     if mode == 'on':
         label, col = 'On field', 'y'
@@ -58,4 +58,4 @@ def gen_datas_dict(pars, q_fact=100., mode='off', pha_val=None):
                 'label': label,
                 'col': col}
 
-    return datas_dict, dict_str
+    return data_dict, dict_str
