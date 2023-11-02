@@ -2,9 +2,10 @@
 Example of plot methods
 """
 
-from examples.utils.datacube_to_nanoloop.ex_gen_datas import \
+from examples.utils.datacube_to_nanoloop.ex_gen_data import \
     ex_gen_segments, pars_segment
-from examples.utils.datacube_to_nanoloop.ex_analysis import ex_segments, list_segs
+from examples.utils.datacube_to_nanoloop.ex_analysis import \
+    ex_segments, list_segs
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.datacube_to_nanoloop.plot import \
@@ -83,7 +84,7 @@ def ex_amp_pha_map(analysis, mode):
 if __name__ == '__main__':
     # saving path management
     dir_path_out, save_plots = save_path_example(
-        "seg_to_loop_plot", save_example_exe=True, save_test_exe=False)
+        "datacube_to_nanoloop_plot", save_example_exe=True, save_test_exe=False)
     figs = []
     figs += ex_plt_bias()
     figs += ex_plt_amp()
