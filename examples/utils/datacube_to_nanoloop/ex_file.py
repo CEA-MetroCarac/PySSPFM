@@ -6,9 +6,10 @@ import shutil
 import time
 from datetime import datetime
 
-from examples.utils.datacube_to_nanoloop.ex_gen_datas import pars_segment
+from examples.utils.datacube_to_nanoloop.ex_gen_data import pars_segment
 from PySSPFM.utils.raw_extraction import csv_meas_sheet_extract
-from PySSPFM.utils.datacube_to_nanoloop.file import print_pars, save_txt_file
+from PySSPFM.utils.datacube_to_nanoloop.file import \
+    print_params, save_parameters
 
 from PySSPFM import \
     EXAMPLE_ROOT_PATH_IN, EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT
@@ -54,13 +55,13 @@ def example_file(verbose=False):
     user_pars['f path'] = dir_path_in
     meas_pars, sign_pars = csv_meas_sheet_extract(user_pars['f path'])
 
-    # ex print_pars
+    # ex print_params
     if verbose:
-        print('- ex print_pars:')
-    print_pars(meas_pars, sign_pars, user_pars, verbose=verbose)
+        print('- ex print_params:')
+    print_params(meas_pars, sign_pars, user_pars, verbose=verbose)
 
-    # ex save_txt_file
-    save_txt_file(dir_path_out, t0, date, user_pars, meas_pars, sign_pars, 0)
+    # ex save_parameters
+    save_parameters(dir_path_out, t0, date, user_pars, meas_pars, sign_pars, 0)
 
 
 if __name__ == '__main__':
