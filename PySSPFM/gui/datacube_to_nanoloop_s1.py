@@ -1,7 +1,7 @@
 """
 --> Executable Script
 Graphical interface for 1st step of SSPFM data analysis
-(run seg_to_loop_s1.main_script)
+(run datacube_to_nanoloop_s1.main_script)
 """
 
 import tkinter as tk
@@ -10,7 +10,7 @@ from tkinter import filedialog
 
 from PySSPFM.data_processing.datacube_to_nanoloop_s1 import main_script
 from PySSPFM.gui.utils import \
-    (add_separator_grid, grid_item, show_tooltip, extract_var,
+    (add_grid_separator, grid_item, show_tooltip, extract_var,
      init_secondary_wdw, wdw_main_title)
 
 
@@ -28,9 +28,8 @@ def main(parent=None):
     None
     """
     # Create the main or secondary window
-    app = init_secondary_wdw(
-        parent=parent,
-        wdw_title="SSPFM Data Analysis: Step 1 = datacube to nanoloop")
+    title = "SSPFM Data Analysis: Step 1 = datacube to nanoloop"
+    app = init_secondary_wdw(parent=parent, wdw_title=title)
 
     # Set default parameter values
     default_seg_params = {'cut seg [%]': {'start': 5, 'end': 5},
@@ -85,7 +84,7 @@ def main(parent=None):
         file_path_in_var.set(file_path_in)
 
     # Window title: SSPFM Data Analysis: Step 1 = seg to hyst
-    wdw_main_title(app, "SSPFM Data Analysis: Step 1 = seg to hyst")
+    wdw_main_title(app, title)
 
     row = 3
 
@@ -101,9 +100,9 @@ def main(parent=None):
     entry_in = ttk.Entry(app, textvariable=file_path_in_var)
     row = grid_item(entry_in, row, column=1, sticky="ew", increment=False)
     strg = "- Name: file_path_in\n" \
-           "- Summary: Path of datacube SSPFM raw file measurements.\n" \
+           "- Summary: Path of datacube SSPFM raw file propurements.\n" \
            "- Description: This parameter specifies the path where " \
-           "datacube SSPFM raw file measurements are located. " \
+           "datacube SSPFM raw file propurements are located. " \
            "It is used to indicate the path to the file containing " \
            "these measurement.\n" \
            "- Value: A string representing the file path."
@@ -130,7 +129,7 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(entry_out, mess))
     browse_button_out = ttk.Button(app, text="Select", command=browse_directory)
     row = grid_item(browse_button_out, row, column=2)
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Segments
     label_seg = ttk.Label(app, text="Segments", font=("Helvetica", 14))
@@ -250,7 +249,7 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(scale_order, mess))
     filter_ord_label = ttk.Label(app, text=str(filter_ord_var.get()))
     row = grid_item(filter_ord_label, row, column=2, sticky="w")
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Fit
     label_fit = ttk.Label(app, text="Fit", font=("Helvetica", 14))
@@ -316,7 +315,7 @@ def main(parent=None):
            "selected and peak detection is enabled."
     entry_fwd.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(entry_fwd, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Save and plot
     label_chck = ttk.Label(app, text="Plot and save", font=("Helvetica", 14))
@@ -368,7 +367,7 @@ def main(parent=None):
            "- Value: Boolean (True or False)."
     chck_save.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(chck_save, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Submit button
     submit_button = ttk.Button(app, text="Start", command=launch)
