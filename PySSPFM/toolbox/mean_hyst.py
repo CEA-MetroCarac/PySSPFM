@@ -1,9 +1,9 @@
 """
 --> Executable Script
-Perform mean of hysteresis loops (on / off / coupled) by reading a certain set
-of txt file loops defined by the user
+Perform mean of hysteresis nanoloops (on / off / coupled) by reading a
+certain set of txt file nanoloops defined by the user
 The set of files can be chosen manually or with a mask application of a chosen
-condition on a chosen reference measurement
+condition on a chosen reference property
 Inspired by: Kelley et al. "Ferroelectricity in Hafnia Controlled via Surface
 Electrochemical State". 10.48550/arXiv.2207.12525
 """
@@ -15,29 +15,30 @@ import numpy as np
 
 from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.figure import print_plots
-from PySSPFM.utils.nanoloop.file import extract_loop
-from PySSPFM.utils.nanoloop.analysis import treat_loop, MeanLoop
+from PySSPFM.utils.nanoloop.file import extract_nanoloop_data
+from PySSPFM.utils.nanoloop.analysis import nanoloop_treatment, MeanLoop
 from PySSPFM.utils.nanoloop.phase import gen_dict_pha
-from PySSPFM.utils.map.main import mask_ref, plot_and_save_image
+from PySSPFM.utils.map.main import gen_mask_ref, plot_and_save_maps
 from PySSPFM.utils.nanoloop_to_hyst.file import \
-    generate_file_paths, read_plot_parameters, extract_measures
+    generate_file_nanoloop_paths, print_parameters, extract_properties
 from PySSPFM.utils.nanoloop_to_hyst.plot import plot_differential_analysis
 from PySSPFM.utils.nanoloop_to_hyst.analysis import gen_analysis_mode
-from PySSPFM.utils.nanoloop_to_hyst.electrostatic import diff_loop, linreg_diff
+from PySSPFM.utils.nanoloop_to_hyst.electrostatic import \
+    gen_differential_loop, linreg_differential
 from PySSPFM.utils.nanoloop_to_hyst.analysis import \
-    find_best_loop, hyst_analysis, electrostatic_analysis
+    find_best_nanoloop, hyst_analysis, electrostatic_analysis
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
 
 def single_script(file, user_pars, meas_pars, sign_pars,
                   analysis_mode='mean_loop'):
     """
-    Find the best loop for a single considered txt loop file
+    Find the best nanoloop for a single considered txt nanoloop file
 
     Parameters
     ----------
     file: str
-        Path of the single considered file (txt loop save) (in)
+        Path of the single considered file (txt nanoloop save) (in)
     user_pars: dict
         All user parameters for the treatment
     meas_pars: dict
@@ -55,13 +56,13 @@ def single_script(file, user_pars, meas_pars, sign_pars,
     Returns
     -------
     best_loop: loop (MultiLoop or MeanLoop) object
-        Best loop depending on the analysis mode
+        Best nanoloop depending on the analysis mode
     dict_str: dict
         Used for figure annotation
     """
     assert analysis_mode in ['multi_loop', 'mean_loop', 'on_f_loop']
 
-    datas_dict, dict_str = extract_loop(file)
+    data_dict, dict_str = extract_nanoloop_data(file)
 
     dict_pha = gen_dict_pha(meas_pars, user_pars['pha corr'],
                             pha_fwd=user_pars['pha fwd'],
@@ -70,10 +71,10 @@ def single_script(file, user_pars, meas_pars, sign_pars,
                             main_elec=user_pars['main elec'],
                             locked_elec_slope=user_pars['locked elec slope'])
 
-    loop_tab, _, _ = treat_loop(
-        datas_dict, sign_pars, dict_pha=dict_pha, dict_str=dict_str,
+    loop_tab, _, _ = nanoloop_treatment(
+        data_dict, sign_pars, dict_pha=dict_pha, dict_str=dict_str,
         q_fact=meas_pars['Q factor'])
-    _, _, best_loop, _, _ = find_best_loop(
+    _, _, best_loop, _, _ = find_best_nanoloop(
         loop_tab, dict_pha['counterclockwise'],
         grounded_tip=dict_pha['grounded tip'], analysis_mode=analysis_mode,
         del_1st_loop=user_pars['del 1st loop'], model=user_pars['func'],
@@ -83,9 +84,9 @@ def single_script(file, user_pars, meas_pars, sign_pars,
     return best_loop, dict_str
 
 
-def find_best_loops(user_pars, mask, mode='off', verbose=False):
+def find_best_nanoloops(user_pars, mask, mode='off', verbose=False):
     """
-    Find the best loops for all considered txt loop files
+    Find the best nanoloops for all considered txt loop files
 
     Parameters
     ----------
@@ -112,10 +113,10 @@ def find_best_loops(user_pars, mask, mode='off', verbose=False):
     dict_str: dict
         Used for figure annotation
     """
-    res = read_plot_parameters(user_pars['file path in pars'])
+    res = print_parameters(user_pars['file path in pars'])
     meas_pars, sign_pars, _, _, _ = res
 
-    file_paths_in = generate_file_paths(
+    file_paths_in = generate_file_nanoloop_paths(
         user_pars['dir path in loop'], mode=f'{mode}_f')
     file_paths_in_sel = [path[0] for cont, path in enumerate(file_paths_in)
                          if cont not in mask]
@@ -179,7 +180,7 @@ def mean_analysis_on_off(user_pars, best_loops, analysis_mode='mean_loop',
     y_hyst = [np.array(mean_best_loop.piezorep_right),
               np.array(mean_best_loop.piezorep_left)]
 
-    res = read_plot_parameters(user_pars['file path in pars'])
+    res = print_parameters(user_pars['file path in pars'])
     meas_pars, _, _, _, _ = res
     dict_pha = gen_dict_pha(meas_pars, user_pars['pha corr'],
                             pha_fwd=user_pars['pha fwd'],
@@ -203,15 +204,15 @@ def mean_analysis_on_off(user_pars, best_loops, analysis_mode='mean_loop',
     (mean_best_hyst, props_tot, props_no_bckgnd, hyst_figs) = res
     figures += hyst_figs
 
-    measures = {}
+    props = {}
     for key, value in zip(
             ['offset', 'slope', 'ampli_0', 'ampli_1', 'coef_0', 'coef_1',
              'x0_0', 'x0_1'], mean_best_hyst.params):
-        measures[f'fit pars: {key}'] = value
+        props[f'fit pars: {key}'] = value
     for key, value in props_tot.items():
-        measures[f'charac tot fit: {key}'] = value
+        props[f'charac tot fit: {key}'] = value
     for key, value in props_no_bckgnd.items():
-        measures[f'charac ferro fit: {key}'] = value
+        props[f'charac ferro fit: {key}'] = value
 
     if user_pars['sat mode'] == 'auto':
         sat_domain = [min([props_tot['x sat r'], props_tot['x sat l']]),
@@ -227,7 +228,7 @@ def mean_analysis_on_off(user_pars, best_loops, analysis_mode='mean_loop',
                                  func=user_pars['pha func'])
     (electrostatic_dict, figs_elec) = res
     for key, value in electrostatic_dict.items():
-        measures[key] = value
+        props[key] = value
     figures += figs_elec
 
     return mean_best_loop, mean_best_hyst, figures
@@ -270,7 +271,8 @@ def mean_analysis_coupled(best_loops, bias_min=-5., bias_max=5.,
             offset_off = selected_offsets_off[cont]
         else:
             offset_off = 0.0
-        res = diff_loop(best_loop_on, best_loop_off, offset_off=offset_off)
+        res = gen_differential_loop(
+            best_loop_on, best_loop_off, offset_off=offset_off)
         (write_volt_left, diff_piezorep_left, write_volt_right,
          diff_piezorep_right, _) = res
         all_diff_piezorep_left.append(diff_piezorep_left)
@@ -287,7 +289,8 @@ def mean_analysis_coupled(best_loops, bias_min=-5., bias_max=5.,
 
     mean_piezorep_grad = np.gradient(mean_diff_piezorep, write_volt_right)
 
-    res = linreg_diff(write_volt_right, mean_diff_piezorep, bias_min, bias_max)
+    res = linreg_differential(
+        write_volt_right, mean_diff_piezorep, bias_min, bias_max)
     (_, _, fit_res) = res
     (a_diff, y_0_diff, _, r_square, diff_fit) = fit_res
 
@@ -320,8 +323,8 @@ def main_mean_hyst(user_pars, verbose=False, make_plots=False):
     -------
     Figures or data of analysis result
     """
-    assert os.path.exists(user_pars['dir path in meas']), \
-        f"{user_pars['dir path in meas']} doesn't exist"
+    assert os.path.exists(user_pars['dir path in prop']), \
+        f"{user_pars['dir path in prop']} doesn't exist"
     assert os.path.exists(user_pars['dir path in loop']), \
         f"{user_pars['dir path in loop']} doesn't exist"
     assert os.path.exists(user_pars['file path in pars']), \
@@ -333,8 +336,8 @@ def main_mean_hyst(user_pars, verbose=False, make_plots=False):
                 'off': ['off_f', 'w', 'Off Field'],
                 'coupled': ['coupled', 'r', 'Coupled']}
 
-    measurements, dim_pix, dim_mic = extract_measures(
-        user_pars['dir path in meas'])
+    properties, dim_pix, dim_mic = extract_properties(
+        user_pars['dir path in prop'])
     mean_best_loop, mean_best_hyst = None, None
     mean_diff_piezorep = []
     fit_res = ()
@@ -342,31 +345,29 @@ def main_mean_hyst(user_pars, verbose=False, make_plots=False):
     if mask is None:
         dict_map = {'label': lab_dict[mode][2], 'col': lab_dict[mode][1]}
         ref_mode = user_pars['mask']['ref']['mode']
-        ref = measurements[ref_mode][mask_pars['ref']['meas']]
-        _, _, mask = mask_ref(ref, dim_pix, dim_mic=dim_mic,
-                              min_val=mask_pars['ref']['min val'],
-                              max_val=mask_pars['ref']['max val'],
-                              mode_man=mask_pars['ref']['interactive'],
-                              ref_str=mask_pars['ref']["meas"],
-                              dict_map=dict_map)
+        ref = properties[ref_mode][mask_pars['ref']['prop']]
+        _, _, mask = gen_mask_ref(
+            ref, dim_pix, dim_mic=dim_mic, min_val=mask_pars['ref']['min val'],
+            max_val=mask_pars['ref']['max val'],
+            mode_man=mask_pars['ref']['interactive'],
+            ref_str=mask_pars['ref']["prop"], dict_map=dict_map)
 
         if make_plots:
             dict_interp = {'fact': user_pars['interp fact'],
                            'func': user_pars['interp func']}
-            meas_key = {'mode': ref_mode, 'meas': mask_pars['ref']['meas']}
+            prop_key = {'mode': ref_mode, 'prop': mask_pars['ref']['prop']}
             full_mask = np.arange(len(ref))
             highlight_pix = [indx for indx in full_mask if indx not in mask]
-            fig_map = plot_and_save_image(ref, dim_pix, dim_mic=dim_mic,
-                                          dict_interp=dict_interp, mask=[],
-                                          measure_str=meas_key['meas'],
-                                          highlight_pix=highlight_pix)
+            fig_map = plot_and_save_maps(
+                ref, dim_pix, dim_mic=dim_mic, dict_interp=dict_interp, mask=[],
+                prop_str=prop_key['prop'], highlight_pix=highlight_pix)
             figures.append(fig_map)
 
     if verbose:
         print(f'mask: {mask}')
 
     if mode in ['on', 'off']:
-        res = find_best_loops(user_pars, mask, mode=mode, verbose=verbose)
+        res = find_best_nanoloops(user_pars, mask, mode=mode, verbose=verbose)
         best_loops, analysis_mode, dict_str = res
         res = mean_analysis_on_off(user_pars, best_loops, analysis_mode,
                                    dict_str, make_plots=make_plots)
@@ -376,10 +377,10 @@ def main_mean_hyst(user_pars, verbose=False, make_plots=False):
     elif mode == 'coupled':
         best_loops = {}
         for mode_lab in ['on', 'off']:
-            res = find_best_loops(user_pars, mask, mode=mode_lab,
-                                  verbose=verbose)
+            res = find_best_nanoloops(
+                user_pars, mask, mode=mode_lab, verbose=verbose)
             best_loops[mode_lab], analysis_mode, dict_str = res
-        offsets_off = measurements['off']['charac tot fit: y shift']
+        offsets_off = properties['off']['charac tot fit: y shift']
         selected_offsets_off = [val for cont, val in enumerate(offsets_off) if
                                 cont not in mask]
         elec_offset = get_setting('elec offset')
@@ -416,14 +417,14 @@ def parameters():
         This parameter is a list of pixel indices.
         - If the list of pixels is empty ( [] ), all files are selected.
         - If the list of pixels is None, the criterion of selection is made
-        with the reference measurement.
+        with the reference property.
         - If the list of pixels is [a, b, c ...], files of index a, b, c [...]
         are not selected.
     - ref: dict
         --> construct a mask with a criterion selection on ref values
         (valid if man_mask is None)
-        - mode: str --> mode of reference measurement chosen
-        - meas: str --> reference measurement chosen
+        - mode: str --> mode of reference property chosen
+        - prop: str --> reference property chosen
         - min val: float --> minimum value of ref required (if None no minimum
         value criterion) (valid if interactive is False)
         - max val: float --> maximum value of ref required (if None no maximum
@@ -530,14 +531,14 @@ def parameters():
         Interpolation factor for sspfm maps interpolation.
         This parameter determines the level of interpolation to be applied to
         SSPFM maps.
-        Active if: Mask is built on ref measurement (i.e. list of pixels is
+        Active if: Mask is built on ref property (i.e. list of pixels is
         None)."
     - interp_func: str
         Interpolation function
         This parameter specifies the interpolation function used for sspfm
         maps interpolation. It can take one of the following values:
         'linear', or 'cubic'.
-        Active if: Mask is built on ref measurement (i.e. list of pixels is
+        Active if: Mask is built on ref property (i.e. list of pixels is
         None)."
 
     - dir_path_in: str
@@ -550,21 +551,21 @@ def parameters():
         (optional, default: toolbox directory in the same root)
         This parameter specifies the directory where the figures
         generated as a result of the analysis will be saved.
-    - dir_path_in_meas: str
-        Ferroelectric measurements files directory
-        This parameter specifies the directory containing the ferroelectric
-         measurements text files generated after the 2nd step of the analysis.
-        Optional, Default: 'txt_ferro_meas'
+    - dir_path_in_prop: str
+        Properties files directory
+        This parameter specifies the directory containing the properties text
+        files generated after the 2nd step of the analysis.
+        Optional, Default: 'properties'
     - dir_path_in_loop: str
         Txt loop files directory.
         This parameter specifies the directory containing the loop text files
         generated after the 1st step of the analysis.
-        Optional, Default: 'txt_loops'
+        Optional, Default: 'nanoloops'
     - file_path_in_pars: str
         Measurement and analysis parameters txt file.
         This parameter specifies the file containing measurement and analysis
         parameters generated after the 2nd step of the analysis.
-        Optional, Default: 'results/saving_parameters.txt'
+        Optional, Default: 'parameters.txt'
 
     - verbose: bool
         Activation key for printing verbosity during analysis.
@@ -581,12 +582,14 @@ def parameters():
     """
     dir_path_in = tkf.askdirectory()
     # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt
-    dir_path_in_meas = os.path.join(dir_path_in, 'txt_ferro_meas')
-    # dir_path_in_meas = r'...\KNN500n_15h18m02-10-2023_out_dfrt\txt_ferro_meas
-    dir_path_in_loop = os.path.join(dir_path_in, 'txt_loops')
-    # dir_path_in_loop = r'...\KNN500n_15h18m02-10-2023_out_dfrt\txt_loops
-    file_path_in_pars = os.path.join(dir_path_in, 'results',
-                                     'saving_parameters.txt')
+    properties_folder_name = get_setting('properties folder name')
+    dir_path_in_prop = os.path.join(dir_path_in, properties_folder_name)
+    # dir_path_in_prop = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
+    nanoloops_folder_name = get_setting('nanoloops folder name')
+    dir_path_in_loop = os.path.join(dir_path_in, nanoloops_folder_name)
+    # dir_path_in_loop = r'...\KNN500n_15h18m02-10-2023_out_dfrt\nanoloops
+    parameters_file_name = get_setting('parameters file name')
+    file_path_in_pars = os.path.join(dir_path_in, parameters_file_name)
     # file_path_in_pars = r'...\KNN500n_15h18m02-10-2023_out_dfrt\results\
     # saving_parameters.txt
     dir_path_out = None
@@ -596,12 +599,12 @@ def parameters():
     show_plots = True
     save = False
 
-    user_pars = {'dir path in meas': dir_path_in_meas,
+    user_pars = {'dir path in prop': dir_path_in_prop,
                  'dir path in loop': dir_path_in_loop,
                  'file path in pars': file_path_in_pars,
                  'mode': 'off',
                  'mask': {'man mask': None,
-                          'ref': {'meas': 'charac tot fit: area',
+                          'ref': {'prop': 'charac tot fit: area',
                                   'mode': 'off',
                                   'min val': 0.005,
                                   'max val': None,
