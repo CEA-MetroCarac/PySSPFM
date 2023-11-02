@@ -29,7 +29,7 @@ def ex_map_correlation(verbose=False, make_plots=False):
     """
     dir_path_in = os.path.join(
         EXAMPLE_ROOT_PATH_IN, "KNN500n_2023-10-05-17h23m_out_dfrt",
-        "txt_ferro_meas")
+        "properties")
     ind_maps = None
 
     user_pars = {'dir path in': dir_path_in,
