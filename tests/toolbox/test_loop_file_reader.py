@@ -7,7 +7,7 @@ import numpy as np
 from examples.toolbox.ex_loop_file_reader import example_loop_file_reader
 
 
-# class TestNanoloopReader(unittest.TestCase):
+# class TestLoopFileReader(unittest.TestCase):
 
 
 def test_loop_file_reader():
