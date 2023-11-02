@@ -14,7 +14,7 @@ def test_file():
 
     out = example_file()
     (file_paths, meas_pars, sign_pars, dict_analysis_1, nb_write_per_read,
-     write_segment, measurements, dim_pix, dim_mic) = out
+     write_segment, properties, dim_pix, dim_mic) = out
 
     assert nb_write_per_read == 100
     assert len(list(write_segment)) == 100
@@ -24,6 +24,6 @@ def test_file():
     assert len(sign_pars) == 12
     assert np.sum(list(dim_pix.values())) == 16
     assert np.sum(list(dim_mic.values())) == 7
-    assert np.sum(list(measurements['on'].values())) == 6269
-    assert np.sum(list(measurements['off'].values())) == 6408
-    assert np.sum(list(measurements['coupled'].values())) == 6565
+    assert np.sum(list(properties['on'].values())) == 6269
+    assert np.sum(list(properties['off'].values())) == 6408
+    assert np.sum(list(properties['coupled'].values())) == 6565
