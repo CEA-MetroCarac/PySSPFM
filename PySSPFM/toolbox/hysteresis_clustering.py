@@ -19,20 +19,20 @@ from sklearn.metrics import pairwise_distances
 
 from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.figure import print_plots, plot_graph
-from PySSPFM.utils.nanoloop_to_hyst.file import extract_measures
+from PySSPFM.utils.nanoloop_to_hyst.file import extract_properties
 from PySSPFM.utils.map.main import main_mapping
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
 from PySSPFM.settings import FIGSIZE, COLOR_HYSTERESIS_CLUSTERING
 
 
-def hyst_2d(datas):
+def gen_hyst_data(data):
     """
     Extract 2D hysteresis data from a 3-row data array.
 
     Parameters
     ----------
-    datas : numpy.ndarray
+    data : numpy.ndarray
         3-row data array where the first row contains indices,
         the second row contains voltage values, and the third
         row contains piezorepsonse values.
@@ -40,15 +40,15 @@ def hyst_2d(datas):
     Returns
     -------
     hysts_x : list of list
-        Object containing voltage data for each hysteresis loop.
+        Object containing voltage data for each hysteresis nanoloop.
     hysts_y : list of list
-        Object containing piezorep data for each hysteresis loop.
+        Object containing piezorep data for each hysteresis nanoloop.
     """
 
     cont = 1
     hysts_x = [[]]
     hysts_y = [[]]
-    for index, voltage, piezorep in zip(datas[0], datas[1], datas[2]):
+    for index, voltage, piezorep in zip(data[0], data[1], data[2]):
         if cont != index:
             cont += 1
             hysts_x.append([])
@@ -92,13 +92,14 @@ def extract_data(dir_path_in, name_files, modes):
         if mode_cluster:
             if mode_cluster != "coupled":
                 path = os.path.join(dir_path_in, name_file)
-                datas = np.loadtxt(path, skiprows=2).T
-                hysts_x[mode_cluster], hysts_y[mode_cluster] = hyst_2d(datas)
+                data = np.loadtxt(path, skiprows=2).T
+                res = gen_hyst_data(data)
+                hysts_x[mode_cluster], hysts_y[mode_cluster] = res
 
     return hysts_x, hysts_y
 
 
-def coupled_data(hysts_x, hysts_y, offsets=None):
+def gen_coupled_data(hysts_x, hysts_y, offsets=None):
     """
     Generate coupled data by subtracting 'off' from 'on' field measurements.
 
@@ -244,7 +245,7 @@ def cluster_kmeans(hysteresis_data, num_clusters=3):
 def main_hysteresis_clustering(
         user_pars, dir_path_in, verbose=False, show_plots=True,
         save_plots=False, dir_path_out=None, dim_pix=None, dim_mic=None,
-        dir_path_in_meas=None):
+        dir_path_in_props=None):
     """
     Perform hysteresis clustering analysis.
 
@@ -253,7 +254,7 @@ def main_hysteresis_clustering(
     user_pars : dict
         User parameters.
     dir_path_in : str
-        Path of best loops measurements txt directory (in).
+        Path of best nanoloops measurements txt directory (in).
     verbose : bool, optional
         Activation key for verbosity.
     show_plots : bool, optional
@@ -266,8 +267,8 @@ def main_hysteresis_clustering(
         Dictionary of pixel dimensions.
     dim_mic : dict, optional
         Dictionary of micron dimensions.
-    dir_path_in_meas : str, optional
-        Directory path for input measurements.
+    dir_path_in_props : str, optional
+        Directory path for input properties.
 
     Returns
     -------
@@ -295,17 +296,18 @@ def main_hysteresis_clustering(
 
     # Extract extra analysis info (scan dim + vertical offset (off field))
     if dir_path_in is not None:
-        if dir_path_in_meas is None:
+        if dir_path_in_props is None:
             root = os.path.split(dir_path_in)[0]
-            dir_path_in_meas = os.path.join(root, "txt_ferro_meas")
-        measurements, dim_pix, dim_mic = extract_measures(dir_path_in_meas)
+            properties_folder_name = get_setting('properties folder name')
+            dir_path_in_props = os.path.join(root, properties_folder_name)
+        properties, dim_pix, dim_mic = extract_properties(dir_path_in_props)
         elec_offset = get_setting('elec offset')
-        offsets = measurements['off']['fit pars: offset'] \
+        offsets = properties['off']['fit pars: offset'] \
             if elec_offset else None
 
     # If "coupled" mode is present, calculate coupled hysteresis
     if "coupled" in modes:
-        hysts_x, hysts_y = coupled_data(hysts_x, hysts_y, offsets=offsets)
+        hysts_x, hysts_y = gen_coupled_data(hysts_x, hysts_y, offsets=offsets)
 
     # Perform clustering for each mode
     for mode in modes:
@@ -392,11 +394,11 @@ def main_hysteresis_clustering(
                                 dirname=dir_path_out)
 
                 # Plot 3 : cluster mapping
-                measurements = {"Clustering (K-Means)": cluster_labels[mode]}
+                properties = {"Clustering (K-Means)": cluster_labels[mode]}
                 colors_lab = {"Clustering (K-Means)": cmap}
                 indx = lab_tab[0].index(mode)
                 dict_map = {'label': lab_tab[2][indx], 'col': lab_tab[1][indx]}
-                main_mapping(measurements, dim_pix, dim_mic=dim_mic,
+                main_mapping(properties, dim_pix, dim_mic=dim_mic,
                              colors=colors_lab, cbar_lab=cbar_lab,
                              dict_map=dict_map, mask=[], show_plots=show_plots,
                              save_plots=save_plots, dir_path_out=dir_path_out)
@@ -413,9 +415,9 @@ def parameters():
     To complete by user of the script: return parameters for analysis
 
     - nb_clusters_off: int
-        Number of Clusters for Off-Field Hysteresis Loop.
+        Number of Clusters for Off-Field Hysteresis Nanoloop.
         This parameter determines the number of clusters for the
-        off-field hysteresis loop using a machine learning algorithm
+        off-field hysteresis nanoloop using a machine learning algorithm
         of clustering (K-Means).
         Used in the analysis of off-field hysteresis loop.
     - nb_clusters_on: int
@@ -432,7 +434,7 @@ def parameters():
         Used in the analysis of differential hysteresis loop.
 
     - dir_path_in: str
-        Input Directory for Best Loop TXT Files (default: 'txt_best_loops').
+        Input Directory for Best Loop TXT Files (default: 'best_nanoloops').
         This parameter specifies the directory path for the best loop .txt
         files generated after the second step of the analysis.
     - dir_path_out: str
@@ -440,11 +442,11 @@ def parameters():
         (optional, default: toolbox directory in the same root)
         This parameter specifies the directory where the figures
         generated as a result of the analysis will be saved.
-    - dir_path_in_meas: str
-        Ferroelectric measurements files directory
-        (optional, default: txt_ferro_meas).
-        This parameter specifies the directory containing the ferroelectric
-         measurements text files generated after the 2nd step of the analysis.
+    - dir_path_in_props: str
+        Properties files directory
+        (optional, default: properties).
+        This parameter specifies the directory containing the properties text
+        files generated after the 2nd step of the analysis.
     - verbose: bool
         Activation key for printing verbosity during analysis.
         This parameter serves as an activation key for printing verbose
@@ -460,12 +462,12 @@ def parameters():
     """
     # Select txt best loops folder (.txt)
     dir_path_in = tkf.askdirectory()
-    # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\txt_best_loops
+    # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\best_nanoloops
     dir_path_out = None
     # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
     # hysteresis_clustering_2023-10-02-16h38m
-    dir_path_in_meas = None
-    # dir_path_in_meas = r'...\KNN500n_15h18m02-10-2023_out_dfrt\txt_ferro_meas
+    dir_path_in_props = None
+    # dir_path_in_props = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
     verbose = True
     show_plots = True
     save = False
@@ -474,7 +476,7 @@ def parameters():
                  'nb clusters on': 4,
                  'nb clusters coupled': 4}
 
-    return user_pars, dir_path_in, dir_path_out, dir_path_in_meas, verbose, \
+    return user_pars, dir_path_in, dir_path_out, dir_path_in_props, verbose, \
         show_plots, save
 
 
@@ -482,7 +484,7 @@ def main():
     """ Main function for data analysis. """
     # Extract parameters
     out = parameters()
-    (user_pars, dir_path_in, dir_path_out, dir_path_in_meas, verbose,
+    (user_pars, dir_path_in, dir_path_out, dir_path_in_props, verbose,
      show_plots, save) = out
     # Generate default path out
     dir_path_out = save_path_management(
@@ -493,7 +495,7 @@ def main():
     main_hysteresis_clustering(
         user_pars, dir_path_in, verbose=verbose, show_plots=show_plots,
         save_plots=save, dir_path_out=dir_path_out,
-        dir_path_in_meas=dir_path_in_meas)
+        dir_path_in_props=dir_path_in_props)
     # Save parameters
     if save:
         save_user_pars(user_pars, dir_path_out, start_time=start_time,
