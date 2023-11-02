@@ -27,7 +27,7 @@ def ex_list_map_reader(verbose=False):
     """
     dir_path_in = os.path.join(
         EXAMPLE_ROOT_PATH_IN, "KNN500n_2023-10-05-17h23m_out_dfrt",
-        "txt_ferro_meas")
+        "properties")
 
     ind_maps = [['off', 'fit pars: ampli_0'],
                 ['off', 'fit pars: slope'],
@@ -41,7 +41,7 @@ def ex_list_map_reader(verbose=False):
                  'interp func': 'linear',
                  'man mask': None,
                  'ref': {'mode': 'off',
-                         'meas': 'charac tot fit: R_2 hyst',
+                         'prop': 'charac tot fit: R_2 hyst',
                          'fmt': '.5f',
                          'min val': 0.90,
                          'max val': None,
