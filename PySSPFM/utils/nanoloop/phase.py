@@ -197,7 +197,7 @@ def phase_calibration(phase, write_voltage, dict_pha, dict_str=None,
                           c='c', size=15, weight='heavy')
 
         # Calibrated phase
-        calibrated_phase, result = corr_phase(
+        calibrated_phase, result = correct_phase_val(
             phase, bias_pha_meas, bias_pha_target, pha_corr=pha_corr,
             reverted=reverted, make_plots=make_plots, fig=fig_hist)
         result["func"] = dict_pha["func"]
@@ -435,8 +435,9 @@ def fit_peak_hist(res, hist_vect, hist, make_plots=False, ax=None):
     return peak_1_pha, peak_2_pha
 
 
-def corr_phase(phase, bias_pha_meas, bias_pha_target, pha_corr, coef_a=None,
-               coef_b=None, reverted=False, make_plots=False, fig=None):
+def correct_phase_val(phase, bias_pha_meas, bias_pha_target, pha_corr,
+                      coef_a=None, coef_b=None, reverted=False,
+                      make_plots=False, fig=None):
     """
     Perform phase value treatment with selected mode and calibration parameters
 
