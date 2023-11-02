@@ -1,0 +1,93 @@
+### Experiment parameters ###
+
+- Global parameters
+Grid x [pix]: 8
+Grid x [um]: 3.55
+Grid y [pix]: 8
+Grid y [um]: 3.55
+Hold time [ms]: 250
+Hold force [nN]: 100
+Pressure [MPa]: 50.929581789406505
+Calibration: No
+Calib fact [nm/V]: 1
+Q factor: 43.73134328358209
+P [kHz/V]: 125.4
+I [MHz/(V.s)]: 308.8
+Center [kHz]: 290
+Range [kHz]: 20
+Sideband amp [V]: 1
+Sideband freq [kHz]: 3
+Sens 1: 100
+Offset 1 [V]: 0
+Sens 2 [mV/°]: 5
+Offset 2 [V]: 0
+Bias app: Sample
+V_AC [V]: 1
+Date [hh : dd/mm/yyyy]: 13H : 27/06/2022
+Pix durat [sec]: 80.15
+Grid durat [sec]: 5129.6
+Tip: SCM-PIT-V2
+Sign of d33: positive
+Sample ref: KNN03
+nb seg: 1600
+exp time [s]: 80.34471979714908
+start hold time exp [s]: 0.09671999975580547
+end hold time exp [s]: 0.2479999993738602
+theoretic time [s]: 80.34471999912967
+
+- SS PFM parameters
+Min volt (W) [V]: -10
+Max volt (W) [V]: 10
+Nb volt (W): 51
+Mode (W): Zero, up
+Seg durat (W) [ms]: 50
+Seg sample (W): 100
+Min volt (R) [V]: 0
+Max volt (R) [V]: 0
+Nb volt (R): 8
+Mode (R): Single Read Step
+Seg durat (R) [ms]: 50
+Seg sample (R): 100
+
+
+### Treatment parameters: first step ###
+
+- Info
+start of analysis: 2023-10-17 09;56
+analysis duration: 00h:00m:28s
+nb file analyzed: 63
+
+- Segment parameters
+cut seg [%]: {'start': 5, 'end': 5}
+mode: dfrt
+filter: False
+filter ord: 10
+
+
+### Treatment parameters: second step ###
+
+- Info
+start of analysis: 2023-10-17 09;57
+analysis duration: 00h:00m:22s
+
+- Hysteresis / loop treatment parameters
+fit hyst func: sigmoid
+fit hyst method: least_square
+fit hyst asym: False
+threshold value (in percent) for the calculation of nucleation bias: 10
+threshold value (in percent) for the calculation of saturation domain: 90
+first loop deleted for the analysis ?: True
+
+- Phase treatment parameters
+phase correction: offset
+phase value (forward): 0
+phase value (reverse): 180
+phase function: cos
+main electrostatic component (on field): True
+locked electrostatic slope (on field): None
+
+- Other parameters
+differential domain between on/off field loops: {'min': -5.0, 'max': 5.0}
+differential domain between on/off field loops, mode ?: set
+saturation domain for electrostatic decoupling procedure: {'min': -9.0, 'max': 9.0}
+saturation domain for electrostatic decoupling procedure, mode ?: set
