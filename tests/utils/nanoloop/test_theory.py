@@ -9,7 +9,7 @@ from examples.utils.nanoloop.ex_theory import example_theory
 
 
 def test_theory():
-    """ Test example_file """
+    """ Test example_theory """
 
     figs = example_theory()
     assert len(list(figs)) == 3
