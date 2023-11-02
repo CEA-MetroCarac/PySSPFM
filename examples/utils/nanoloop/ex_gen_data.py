@@ -1,5 +1,5 @@
 """
-Example of gen_datas methods
+Example of gen_data methods
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,14 +7,14 @@ import matplotlib.pyplot as plt
 from examples.utils.nanoloop.ex_analysis import init_pars
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import plot_graph, print_plots
-from PySSPFM.utils.nanoloop.gen_data import gen_loops
+from PySSPFM.utils.nanoloop.gen_data import gen_nanoloops
 
 from PySSPFM.settings import FIGSIZE
 
 
-def ex_gen_loops(mode, make_plots=False):
+def ex_gen_nanoloops(mode, make_plots=False):
     """
-    Example of gen_loops function.
+    Example of gen_nanoloops function.
 
     Parameters
     ----------
@@ -27,7 +27,7 @@ def ex_gen_loops(mode, make_plots=False):
     -------
     output: tuple or list
         Depending on the value of `make_plots`, either a list of figures or a
-        tuple of loop-related results.
+        tuple of nanoloop-related results.
     """
     assert mode in ['on', 'off']
 
@@ -35,8 +35,8 @@ def ex_gen_loops(mode, make_plots=False):
     pars, _, pha_val, noise_pars = init_pars()
     np.random.seed(0)
 
-    # ex gen_loops
-    out = gen_loops(pars, noise_pars=noise_pars, pha_val=pha_val)
+    # ex gen_nanoloops
+    out = gen_nanoloops(pars, noise_pars=noise_pars, pha_val=pha_val)
     write_voltage, read_voltage, amp, pha = out
 
     # Plot
@@ -44,7 +44,7 @@ def ex_gen_loops(mode, make_plots=False):
         figs_genloop = []
         plot_dict = {'fs': 13, 'edgew': 3, 'tickl': 5, 'gridw': 1}
         fig, axs = plt.subplots(2, pars['read']['nb'], figsize=FIGSIZE)
-        fig.sfn = f'ex_gen_loops_{mode}_field'
+        fig.sfn = f'ex_gen_nanoloops_{mode}_field'
         fig.suptitle(f'{mode} field', size=plot_dict['fs'], weight='heavy')
         for i in range(pars['read']['nb']):
             plot_dict['y lab'] = 'Amplitude [nm]' if i == 0 else ''
@@ -65,9 +65,9 @@ def ex_gen_loops(mode, make_plots=False):
 if __name__ == '__main__':
     # saving path management
     dir_path_out, save_plots = save_path_example(
-        "nanoloop_gen_datas", save_example_exe=True, save_test_exe=False)
+        "nanoloop_gen_data", save_example_exe=True, save_test_exe=False)
     figs = []
-    figs += ex_gen_loops('on', make_plots=True)
-    figs += ex_gen_loops('off', make_plots=True)
+    figs += ex_gen_nanoloops('on', make_plots=True)
+    figs += ex_gen_nanoloops('off', make_plots=True)
     print_plots(figs, save_plots=save_plots, show_plots=True,
                 dirname=dir_path_out, transparent=False)
