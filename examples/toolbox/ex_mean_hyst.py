@@ -31,7 +31,7 @@ def example_mean_hyst(phase='1', mode='off', verbose=False, make_plots=False):
     figures: list or None
         List of figures when make_plots is True, None otherwise.
     mean_best_loop: array or None
-        Array of mean best loops if mode is 'on' or 'off', None otherwise.
+        Array of mean best nanoloops if mode is 'on' or 'off', None otherwise.
     best_hysts: dict or None
         Dictionary of the best hysteresis if mode is 'on' or 'off',
         None otherwise.
@@ -46,7 +46,7 @@ def example_mean_hyst(phase='1', mode='off', verbose=False, make_plots=False):
 
     user_pars = {'mode': mode,
                  'mask': {'man mask': None,
-                          'ref': {'meas': 'fit pars: ampli_0',
+                          'ref': {'prop': 'fit pars: ampli_0',
                                   'mode': mode,
                                   'min val': None,
                                   'max val': None,
@@ -71,7 +71,7 @@ def example_mean_hyst(phase='1', mode='off', verbose=False, make_plots=False):
                  'interp func': 'linear'}
 
     if mode == 'coupled':
-        user_pars['mask']['ref']['meas'] = 'a'
+        user_pars['mask']['ref']['prop'] = 'a'
         # Select ferro phase 1 or 2 measurement or not depending on mode
         if phase == '1':
             user_pars['mask']['ref']['max val'] = -0.0001
@@ -96,11 +96,10 @@ def example_mean_hyst(phase='1', mode='off', verbose=False, make_plots=False):
     # file management
     dir_path_in = os.path.join(
         EXAMPLE_ROOT_PATH_IN, "KNN500n_2023-10-05-17h23m_out_dfrt")
-    dir_path_in_meas = os.path.join(dir_path_in, "txt_ferro_meas")
-    dir_path_in_loop = os.path.join(dir_path_in, "txt_loops")
-    file_path_in_pars = os.path.join(
-        dir_path_in, "results", "saving_parameters.txt")
-    user_pars['dir path in meas'] = dir_path_in_meas
+    dir_path_in_props = os.path.join(dir_path_in, "properties")
+    dir_path_in_loop = os.path.join(dir_path_in, "nanoloops")
+    file_path_in_pars = os.path.join(dir_path_in, "parameters.txt")
+    user_pars['dir path in prop'] = dir_path_in_props
     user_pars['dir path in loop'] = dir_path_in_loop
     user_pars['file path in pars'] = file_path_in_pars
 
