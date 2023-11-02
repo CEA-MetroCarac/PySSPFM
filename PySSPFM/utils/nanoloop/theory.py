@@ -12,9 +12,10 @@ from PySSPFM.utils.core.basic_func import sigmoid
 from PySSPFM.settings import FIGSIZE
 
 
-def analysis(write_voltage, pr_elec, pr_ferro, mode='off field', pha_val=None):
+def plot_nanoloops_contribution(write_voltage, pr_elec, pr_ferro,
+                                mode='off field', pha_val=None):
     """
-    Plot amplitude, phase and piezoresponse for all contributions
+    Plot amplitude, phase and piezoresponse nanoloops for all contributions
     (ferroelectric, electrostatic, and sum)
 
     Parameters
@@ -79,8 +80,8 @@ def main(pars, pha_val=None):
     Parameters
     ----------
     pars: dict
-        Dict of parameters for write and read voltage, and for ferro loop and
-        electrostatic physical characteristics
+        Dict of parameters for write and read voltage, and for ferro nanoloop
+        and electrostatic physical characteristics
     pha_val: dict, optional
         Dict of phase forward and reverse value.
 
@@ -105,10 +106,12 @@ def main(pars, pha_val=None):
     pr_ferro = {'left': hyst_p + pars['ferro']['offset'],
                 'right': hyst_m + pars['ferro']['offset']}
 
-    pr_tot_on, figs_1 = analysis(write_voltage, pr_elec['on'], pr_ferro,
-                                 mode='on field', pha_val=pha_val)
-    pr_tot_off, figs_2 = analysis(write_voltage, pr_elec['off'], pr_ferro,
-                                  mode='off field', pha_val=pha_val)
+    pr_tot_on, figs_1 = plot_nanoloops_contribution(
+        write_voltage, pr_elec['on'], pr_ferro, mode='on field',
+        pha_val=pha_val)
+    pr_tot_off, figs_2 = plot_nanoloops_contribution(
+        write_voltage, pr_elec['off'], pr_ferro, mode='off field',
+        pha_val=pha_val)
 
     figs.extend(figs_1 + figs_2)
 
