@@ -10,7 +10,7 @@ from PySSPFM.utils.core.noise import noise
 
 def gen_loops(pars, noise_pars=None, pha_val=None):
     """
-    Generate nanoloops amplitude and phase datas with associated voltage from
+    Generate nanoloops amplitude and phase data with associated voltage from
     ferroelectric and electrostatic physical equations
 
     Parameters
@@ -86,18 +86,18 @@ def gen_loops(pars, noise_pars=None, pha_val=None):
                                               relative=True)
 
     amp_loop, pha_loop = {}, {}
-    write_voltage_loop, amp_loop['on'] = transform_datas(
+    write_voltage_loop, amp_loop['on'] = transform_data(
         write_voltage, amp['on'], read_voltage)
-    _, pha_loop['on'] = transform_datas(write_voltage, pha['on'], read_voltage)
-    _, amp_loop['off'] = transform_datas(
+    _, pha_loop['on'] = transform_data(write_voltage, pha['on'], read_voltage)
+    _, amp_loop['off'] = transform_data(
         write_voltage, amp['off'], read_voltage)
-    _, pha_loop['off'] = transform_datas(
+    _, pha_loop['off'] = transform_data(
         write_voltage, pha['off'], read_voltage)
 
     return write_voltage_loop, read_voltage, amp_loop, pha_loop
 
 
-def transform_datas(write_volt, signal, read_volt):
+def transform_data(write_volt, signal, read_volt):
     """
     Transform 'left' and 'right' write voltage and signal in real measure shape
     (Zero, Up)
