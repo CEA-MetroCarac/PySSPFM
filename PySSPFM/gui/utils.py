@@ -139,7 +139,7 @@ def add_section_separator(root):
     separator.pack(fill='x', padx=10, pady=10)
 
 
-def add_separator_grid(root, row):
+def add_grid_separator(root, row):
     """
     Add a separator label in a grid layout.
 
@@ -324,7 +324,7 @@ def wdw_main_title(root, label, logo_path=None):
     label_title = ttk.Label(root, text=label, font=("Helvetica", 16))
     label_title.grid(row=1, column=0, columnspan=3, sticky="ew")
 
-    add_separator_grid(root, row=2)
+    add_grid_separator(root, row=2)
 
 
 def create_section(app, title, labs, funcs, strg_title=None,
