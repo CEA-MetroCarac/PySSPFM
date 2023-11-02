@@ -10,7 +10,7 @@ from tkinter import filedialog
 
 from PySSPFM.toolbox.spm_converter import main_spm_converter as main_script
 from PySSPFM.gui.utils import \
-    (add_separator_grid, grid_item, show_tooltip, extract_var,
+    (add_grid_separator, grid_item, show_tooltip, extract_var,
      init_secondary_wdw, wdw_main_title)
 
 
@@ -28,7 +28,8 @@ def main(parent=None):
     None
     """
     # Create the main or secondary window
-    app = init_secondary_wdw(parent=parent, wdw_title="SPM converter")
+    title = "SPM converter"
+    app = init_secondary_wdw(parent=parent, wdw_title=title)
 
     # Set default parameter values
     default_user_parameters = {
@@ -63,7 +64,7 @@ def main(parent=None):
         dir_path_out_var.set(dir_path_out)
 
     # Window title: SSPFM Data Analysis: Step 1 = seg to hyst
-    wdw_main_title(app, "SPM converter")
+    wdw_main_title(app, title)
 
     row = 3
 
@@ -110,7 +111,7 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(entry_out, mess))
     browse_button_out = ttk.Button(app, text="Select", command=browse_dir_out)
     row = grid_item(browse_button_out, row, column=2)
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Analysis mode
     label_analysis = ttk.Label(app, text="Analysis mode",
@@ -133,7 +134,7 @@ def main(parent=None):
            "'classic' (sweep) or 'dfrt'"
     mode_var.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(mode_var, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Extension of conversion
     label_conv = ttk.Label(app, text="Extension of conversion",
@@ -154,7 +155,7 @@ def main(parent=None):
            "'txt' or 'csv' or 'xlsx'"
     extension_var.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(extension_var, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Plot
     label_chck = ttk.Label(app, text="Plot", font=("Helvetica", 14))
@@ -175,7 +176,7 @@ def main(parent=None):
            "- Value: Boolean (True or False)."
     chck_verb.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(chck_verb, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Submit button
     submit_button = ttk.Button(app, text="Start", command=launch)
