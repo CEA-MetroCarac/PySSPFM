@@ -1,6 +1,6 @@
 """
 --> Executable Script
-Generate SSPFM maps from TXT loops by reading data from TXT files.
+Generate hysteresis properties from nanoloops by reading data from TXT files.
 Inspired by SS_PFM script, Nanoscope, Bruker
 """
 
@@ -12,18 +12,18 @@ import numpy as np
 
 from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.figure import print_plots
-from PySSPFM.utils.nanoloop.file import extract_loop
+from PySSPFM.utils.nanoloop.file import extract_nanoloop_data
 from PySSPFM.utils.nanoloop.plot import plot_ckpfm
 from PySSPFM.utils.nanoloop.phase import gen_dict_pha
-from PySSPFM.utils.nanoloop.analysis import treat_loop, gen_ckpfm_meas
+from PySSPFM.utils.nanoloop.analysis import nanoloop_treatment, gen_ckpfm_meas
 from PySSPFM.utils.nanoloop_to_hyst.file import \
-    (generate_file_paths, read_plot_parameters, complete_txt_file,
-     save_measurement, save_best_loops)
-from PySSPFM.utils.nanoloop_to_hyst.plot import plot_on_off_field
+    (generate_file_nanoloop_paths, print_parameters, complete_txt_file,
+     save_properties, save_best_nanoloops)
+from PySSPFM.utils.nanoloop_to_hyst.plot import plot_nanoloop_on_off
 from PySSPFM.utils.nanoloop_to_hyst.electrostatic import differential_analysis
-from PySSPFM.utils.nanoloop_to_hyst.gen_datas import gen_datas_dict
+from PySSPFM.utils.nanoloop_to_hyst.gen_data import gen_data_dict
 from PySSPFM.utils.nanoloop_to_hyst.analysis import \
-    gen_analysis_mode, find_best_loop, hyst_analysis, electrostatic_analysis
+    gen_analysis_mode, find_best_nanoloop, hyst_analysis, electrostatic_analysis
 
 DEFAULT_LIMIT = {'min': -5., 'max': 5.}
 DEFAULT_FRACTION_LIMIT = 4
@@ -33,14 +33,16 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars,
                     analysis_mode='on_f_loop', cont=1, test_dict=None,
                     make_plots=False):
     """
-    Analyze data from a measurement file (pixel), extract loop data from a txt
-    file, find the best hysteresis loop based on the analysis mode, fit and
-    extract properties, and analyze the electrostatic component.
+    Analyze data from a measurement file (pixel), extract nanoloop data from
+    a txt
+    file, find the best nanoloop based on the analysis mode, fit and
+    extract properties from hysteresis, and analyze the electrostatic
+    component.
 
     Parameters
     ----------
     file_path_in: str
-        Path of the txt loop file (input).
+        Path of the txt nanoloop file (input).
     user_pars: dict
         User-defined parameters for the analysis.
     meas_pars: dict
@@ -60,9 +62,9 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars,
     Returns
     -------
     best_loop: loop (MultiLoop or MeanLoop) object
-        Best loop depending on the analysis mode for the pixel.
-    measures: dict
-        Measurements of the pixel (result of single analysis).
+        Best nanoloop depending on the analysis mode for the pixel.
+    properties: dict
+        Properties of the pixel (result of single analysis).
     dict_str: dict
         Dictionary used for figure annotation.
     figs: list of matplotlib.pyplot.Figure
@@ -70,13 +72,13 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars,
     """
     assert analysis_mode in ['multi_loop', 'mean_loop', 'on_f_loop']
 
-    figs, bckgnd_tab, read_volt, measures = [], [], [], {}
+    figs, bckgnd_tab, read_volt, properties = [], [], [], {}
 
     if test_dict is None:
-        datas_dict, dict_str = extract_loop(file_path_in)
+        data_dict, dict_str = extract_nanoloop_data(file_path_in)
     else:
         pha_val = {"fwd": user_pars["pha fwd"], "rev": user_pars["pha rev"]}
-        datas_dict, dict_str = gen_datas_dict(
+        data_dict, dict_str = gen_data_dict(
             test_dict, meas_pars['Q factor'], mode=test_dict['mode'],
             pha_val=pha_val)
     dict_str['index'] = cont
@@ -87,13 +89,14 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars,
         main_elec=user_pars['main elec'],
         locked_elec_slope=user_pars['locked elec slope'])
 
-    par = treat_loop(datas_dict, sign_pars, dict_pha=dict_pha,
-                     dict_str=dict_str, q_fact=meas_pars['Q factor'])
+    par = nanoloop_treatment(
+        data_dict, sign_pars, dict_pha=dict_pha, dict_str=dict_str,
+        q_fact=meas_pars['Q factor'])
     loop_tab, _, init_meas = par
 
     if analysis_mode == 'mean_loop':
-        measures['amp 0'] = init_meas['amp']
-        measures['pha 0'] = init_meas['pha']
+        properties['amp 0'] = init_meas['amp']
+        properties['pha 0'] = init_meas['pha']
 
     if analysis_mode == 'multi_loop':
         ckpfm_dict = gen_ckpfm_meas(loop_tab)
@@ -101,7 +104,7 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars,
             fig = plot_ckpfm(ckpfm_dict, dict_str=dict_str)
             figs.append(fig)
 
-    par = find_best_loop(
+    par = find_best_nanoloop(
         loop_tab, dict_pha['counterclockwise'], dict_pha['grounded tip'],
         analysis_mode=analysis_mode, del_1st_loop=user_pars['del 1st loop'],
         model=user_pars['func'], method=user_pars['method'],
@@ -135,11 +138,11 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars,
 
     for key in ['offset', 'slope', 'ampli_0', 'ampli_1', 'coef_0', 'coef_1',
                 'x0_0', 'x0_1']:
-        measures[f'fit pars: {key}'] = best_hyst.params[key].value
+        properties[f'fit pars: {key}'] = best_hyst.params[key].value
     for key, value in props_tot.items():
-        measures[f'charac tot fit: {key}'] = value
+        properties[f'charac tot fit: {key}'] = value
     for key, value in props_no_bckgnd.items():
-        measures[f'charac ferro fit: {key}'] = value
+        properties[f'charac ferro fit: {key}'] = value
 
     if user_pars['sat mode'] == 'auto':
         sat_domain = [min([props_tot['x sat r'], props_tot['x sat l']]),
@@ -155,10 +158,10 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars,
         bckgnd_tab=bckgnd_tab, func=user_pars['pha func'])
     electrostatic_dict, figs_elec = par
     for key, value in electrostatic_dict.items():
-        measures[key] = value
+        properties[key] = value
     figs += figs_elec
 
-    return best_loop, measures, dict_str, figs
+    return best_loop, properties, dict_str, figs
 
 
 def coupled_analysis(best_loops, offset_off=0.0, limit=None, dict_str=None,
@@ -169,10 +172,10 @@ def coupled_analysis(best_loops, offset_off=0.0, limit=None, dict_str=None,
     Parameters
     ----------
     best_loops: dict
-        Dictionary containing on and off field best loops (MultiLoop or
+        Dictionary containing on and off field best nanoloops (MultiLoop or
         MeanLoop).
     offset_off: float, optional
-        Offset of off field fit loop (electrostatic constant component).
+        Offset of off field fit hysteresis (electrostatic constant component).
     limit: dict of float, optional
         Initial values of the write voltage axis range for the differential
         analysis (in V).
@@ -183,25 +186,25 @@ def coupled_analysis(best_loops, offset_off=0.0, limit=None, dict_str=None,
 
     Returns
     -------
-    measures: dict
-        Dictionary of measurements of the pixel (result of coupled analysis).
+    properties: dict
+        Dictionary of properties of the pixel (result of coupled analysis).
     figs: list of matplotlib.pyplot.Figure
         Figures of coupled analysis.
     """
     limit = limit or DEFAULT_LIMIT
     figs = []
-    _, _, measures, fig = differential_analysis(
+    _, _, properties, fig = differential_analysis(
         best_loops['on'], best_loops['off'], offset_off=offset_off,
         bias_min=limit['min'], bias_max=limit['max'], dict_str=dict_str,
         make_plots=make_plots)
 
     if make_plots:
         figs.append(fig)
-        fig = plot_on_off_field(best_loops['on'], best_loops['off'],
-                                dict_str=dict_str)
+        fig = plot_nanoloop_on_off(
+            best_loops['on'], best_loops['off'], dict_str=dict_str)
         figs.append(fig)
 
-    return measures, figs
+    return properties, figs
 
 
 def single_script(tab_path_in, user_pars, meas_pars, sign_pars, cont=1,
@@ -235,13 +238,13 @@ def single_script(tab_path_in, user_pars, meas_pars, sign_pars, cont=1,
     -------
     best_loops: dict
         Best loops depending on analysis mode.
-    measures: dict
+    properties: dict
         Measurements of the pixel (result of single script analysis).
     figs: list of matplotlib.pyplot.Figure
         Figures of single and coupled analysis.
     """
     best_loops = {'on': [], 'off': []}
-    figs, add_str, dict_str, measures = [], '', '', {}
+    figs, add_str, dict_str, properties = [], '', '', {}
 
     for sub_cont, file_path_in in enumerate(tab_path_in):
         file_name_in = os.path.split(file_path_in)[1]
@@ -263,26 +266,26 @@ def single_script(tab_path_in, user_pars, meas_pars, sign_pars, cont=1,
             analysis_mode=analysis_mode, cont=cont, test_dict=test_dict,
             make_plots=make_plots)
 
-        best_loops[mode], measures[mode], dict_str, single_figs = par
+        best_loops[mode], properties[mode], dict_str, single_figs = par
         figs.extend(single_figs)
 
     if add_str == 'b':
         elec_offset = get_setting('elec offset')
-        offset_off = measures['off']['charac tot fit: y shift'] \
+        offset_off = properties['off']['charac tot fit: y shift'] \
             if elec_offset else 0
         par = coupled_analysis(
             best_loops, offset_off=offset_off, limit=limit, dict_str=dict_str,
             make_plots=make_plots)
-        measures['coupled'], coupled_figs = par
+        properties['coupled'], coupled_figs = par
         figs.extend(coupled_figs)
 
-    return best_loops, measures, figs
+    return best_loops, properties, figs
 
 
 def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
                  test_dicts=None, verbose=False, show_plots=False, save=False,
                  root_out=None, dir_path_out_fig=None,
-                 dir_path_out_txt_meas=None, dir_path_out_best_loops=None,
+                 dir_path_out_props=None, dir_path_out_best_loops=None,
                  file_path_out_txt_save=None):
     """
     Data analysis of txt files list in a directory by using single script
@@ -316,8 +319,8 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
         Path of saving directory for sspfm analysis (out).
     dir_path_out_fig: str, optional
         Path of the saving directory for figures.
-    dir_path_out_txt_meas: str, optional
-        Path of the saving directory for txt ferro meas.
+    dir_path_out_props: str, optional
+        Path of the saving directory for txt properties.
     dir_path_out_best_loops: str, optional
         Path of the saving directory for best loops.
     file_path_out_txt_save: str, optional
@@ -327,11 +330,11 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
         root_out, _ = os.path.split(dir_path_in)
 
     if save:
-        root_results = os.path.join(root_out, 'results')
-        if not os.path.isdir(root_results):
-            os.makedirs(root_results)
+        if not os.path.isdir(root_out):
+            os.makedirs(root_out)
+        figures_folder_name = get_setting('figures folder name')
         dir_path_out_fig = dir_path_out_fig or os.path.join(
-            root_results, 'figs')
+            root_out, figures_folder_name)
         if not os.path.isdir(dir_path_out_fig):
             os.makedirs(dir_path_out_fig)
 
@@ -346,13 +349,13 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
                 file_path_in.append(f'{mode}_f_file{i + 1}.txt')
 
     else:
-        file_paths_in = generate_file_paths(dir_path_in)
+        file_paths_in = generate_file_nanoloop_paths(dir_path_in)
 
     if verbose:
         print('\nSingle script analysis in progress ...')
         print('Single script for:')
 
-    measurements = {'on': {}, 'off': {}, 'coupled': {}}
+    all_properties = {'on': {}, 'off': {}, 'coupled': {}}
     tab_best_loops = {'on': [], 'off': []}
     if user_pars['diff mode'] == 'auto':
         write_range = sign_pars['Max volt (W) [V]'] - \
@@ -363,21 +366,21 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
     else:
         limit = user_pars['diff domain']
     make_plots = bool(show_plots or save)
-    _, measures, figs = single_script(
+    _, properties, figs = single_script(
         file_paths_in[0], user_pars, meas_pars, sign_pars, cont=1, limit=limit,
         test_dicts=test_dicts, make_plots=make_plots, verbose=verbose)
     print_plots(figs, save_plots=save, show_plots=show_plots,
                 dirname=dir_path_out_fig, transparent=False)
-    for key, value in measures.items():
-        measurements[key] = {sub_key: [] for sub_key in value}
+    for key, value in properties.items():
+        all_properties[key] = {sub_key: [] for sub_key in value}
 
     for cont, tab_path_in in enumerate(file_paths_in):
-        best_loops, measures, _ = single_script(
+        best_loops, properties, _ = single_script(
             tab_path_in, user_pars, meas_pars, sign_pars, cont=cont,
             test_dicts=test_dicts, verbose=verbose)
-        for key, value in measures.items():
+        for key, value in properties.items():
             for sub_key, sub_value in value.items():
-                measurements[key][sub_key].append(sub_value)
+                all_properties[key][sub_key].append(sub_value)
         for key, value in best_loops.items():
             tab_best_loops[key].append(value)
 
@@ -387,20 +390,22 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
                'y': meas_pars['Grid y [um]']}
 
     if save:
-        dir_path_out_txt_meas = dir_path_out_txt_meas or os.path.join(
-            root_out, 'txt_ferro_meas')
+        properties_folder_name = get_setting('properties folder name')
+        dir_path_out_props = dir_path_out_props or os.path.join(
+            root_out, properties_folder_name)
+        best_nanoloops_folder_name = get_setting('best nanoloops folder name')
         dir_path_out_best_loops = dir_path_out_best_loops or os.path.join(
-            root_out, 'txt_best_loops')
-        save_best_loops(tab_best_loops, dir_path_out_best_loops)
-        save_measurement(measurements, dir_path_out_txt_meas, dim_pix=dim_pix,
-                         dim_mic=dim_mic)
+            root_out, best_nanoloops_folder_name)
+        save_best_nanoloops(tab_best_loops, dir_path_out_best_loops)
+        save_properties(all_properties, dir_path_out_props, dim_pix=dim_pix,
+                        dim_mic=dim_mic)
 
     if save and test_dicts is None:
         root_in = os.path.split(dir_path_in)[0]
-        file_path_in_txt = os.path.join(root_in, 'results',
-                                        'saving_parameters.txt')
+        parameters_file_name = get_setting('parameters file name')
+        file_path_in_txt = os.path.join(root_in, parameters_file_name)
         file_path_out_txt_save = file_path_out_txt_save or os.path.join(
-            root_out, 'results', 'saving_parameters.txt')
+            root_out, parameters_file_name)
         complete_txt_file(file_path_in_txt, user_pars, t0, date,
                           file_path_out=file_path_out_txt_save)
 
@@ -433,10 +438,10 @@ def main_script(user_pars, dir_path_in, verbose=False, show_plots=False,
     t0, date = time.time(), datetime.now().strftime('%Y-%m-%d %H;%M')
     if root_out is None:
         root_out, _ = os.path.split(dir_path_in)
-    file_path_out_txt_save = os.path.join(root_out, 'results',
-                                          'saving_parameters.txt')
-    meas_pars, sign_pars, _, _, _ = read_plot_parameters(file_path_out_txt_save,
-                                                         verbose=verbose)
+    parameters_file_name = get_setting('parameters file name')
+    file_path_out_txt_save = os.path.join(root_out, parameters_file_name)
+    meas_pars, sign_pars, _, _, _ = print_parameters(
+        file_path_out_txt_save, verbose=verbose)
 
     multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
                  verbose=verbose, show_plots=show_plots, save=save,
@@ -564,7 +569,7 @@ def parameters():
 
     - dir_path_in: str
         Directory path for text loop files generated after the first step of
-        the analysis (default: 'txt_loops')
+        the analysis (default: 'nanoloops')
         This parameter specifies the directory path where the text loop files
         generated after the first step of the analysis are located
     - root_out: str
@@ -586,7 +591,7 @@ def parameters():
     """
 
     dir_path_in = tkf.askdirectory()
-    # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_max\txt_loops
+    # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_max\nanoloops
     root_out = None
     # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_max
     verbose = True
