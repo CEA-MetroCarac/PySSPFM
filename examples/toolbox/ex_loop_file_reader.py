@@ -30,7 +30,7 @@ def example_loop_file_reader(verbose=False, make_plots=False):
     """
     # Input and output file management
     file_path_in = os.path.join(
-        EXAMPLE_ROOT_PATH_IN, "KNN500n_2023-10-05-17h21m_out_dfrt", "txt_loops",
+        EXAMPLE_ROOT_PATH_IN, "KNN500n_2023-10-05-17h21m_out_dfrt", "nanoloops",
         "off_f_KNN500n_SSPFM.0_00056.txt")
     csv_path = os.path.join(EXAMPLE_ROOT_PATH_IN, "KNN500n")
 
@@ -58,7 +58,7 @@ def example_loop_file_reader(verbose=False, make_plots=False):
 if __name__ == '__main__':
     # saving path management
     dir_path_out, save_plots = save_path_example(
-        "nanoloop_reader", save_example_exe=True, save_test_exe=False)
+        "loop_file_reader", save_example_exe=True, save_test_exe=False)
     figs = []
     figs += example_loop_file_reader(verbose=True, make_plots=True)
     print_plots(figs, save_plots=save_plots, show_plots=True,
