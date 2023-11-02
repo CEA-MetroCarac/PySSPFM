@@ -13,18 +13,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.raw_extraction import data_extraction
 from PySSPFM.utils.signal_bias import sspfm_time, sspfm_generator, write_vec
 from PySSPFM.utils.nanoloop.plot import plot_sspfm_loops
-from PySSPFM.utils.nanoloop.file import txt_loop, sort_loop
+from PySSPFM.utils.nanoloop.file import save_nanoloop_file, sort_nanoloop_data
 from PySSPFM.utils.nanoloop.phase import phase_calibration, gen_dict_pha
 from PySSPFM.utils.nanoloop.analysis import MultiLoop
-from PySSPFM.utils.datacube_to_nanoloop.gen_datas import gen_segments
+from PySSPFM.utils.datacube_to_nanoloop.gen_data import gen_segments
 from PySSPFM.utils.datacube_to_nanoloop.plot import \
     (plt_seg_max, plt_seg_fit, plt_seg_dfrt,  plt_signals, plt_amp, plt_bias,
      amp_pha_map)
-from PySSPFM.utils.datacube_to_nanoloop.file import save_txt_file, print_pars
+from PySSPFM.utils.datacube_to_nanoloop.file import \
+    save_parameters, print_params
 from PySSPFM.utils.raw_extraction import csv_meas_sheet_extract
 from PySSPFM.utils.datacube_to_nanoloop.analysis import \
     init_parameters, zi_calib, Segment
@@ -41,12 +43,12 @@ DEL_1ST_LOOP = True
 
 def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='dfrt',
                   root_out=None, dir_path_out_fig=None,
-                  dir_path_out_txt_loops=None, test_dict=None,
+                  dir_path_out_nanoloops=None, test_dict=None,
                   verbose=False, show_plots=False, save_plots=False,
                   txt_save=False):
     """
     Data analysis of a measurement file (i.e., a pixel), print the graphs +
-    info and save the loop data in a txt file.
+    info and save the nanoloop data in a txt file.
 
     Parameters
     ----------
@@ -67,8 +69,8 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='dfrt',
         Path of the saving directory (out).
     dir_path_out_fig: str, optional
         Path of the saving directory for the figure (out).
-    dir_path_out_txt_loops: str, optional
-        Path of the saving directory for the txt loops (out).
+    dir_path_out_nanoloops: str, optional
+        Path of the saving directory for the txt nanoloops (out).
     test_dict: dict, optional
         Dictionary of test parameters (used for the test of the module).
     verbose: bool, optional
@@ -78,14 +80,14 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='dfrt',
     save_plots: bool, optional
         Activation key for figure save.
     txt_save: bool, optional
-        Activation key for txt loop save.
+        Activation key for txt nanoloop save.
 
     Returns
     -------
     None
     """
     assert mode in ['max', 'fit', 'dfrt']
-    assert root_out or (dir_path_out_txt_loops and dir_path_out_fig)
+    assert root_out or (dir_path_out_nanoloops and dir_path_out_fig)
     make_plots = bool(show_plots or save_plots)
     figs = []
 
@@ -111,7 +113,7 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='dfrt',
     par = init_parameters(dict_meas, sign_pars, verbose=verbose)
     cut_dict, sign_pars['Mode (R)'] = par
     # Print SS PFM bias info
-    print_pars(meas_pars, sign_pars, user_pars, verbose=verbose)
+    print_params(meas_pars, sign_pars, user_pars, verbose=verbose)
 
     # Find unit and calculate new amplitude value if a calibration is performed
     calibration = bool(meas_pars['Calibration'].lower == 'yes')
@@ -242,8 +244,9 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='dfrt',
                     'Phase': [elem.pha for elem in seg_tab],
                     'Freq res': [elem.res_freq for elem in seg_tab],
                     'Q fact': [elem.q_fact for elem in seg_tab]}
-        par = sort_loop(ss_pfm_bias, sign_pars['Nb volt (W)'],
-                        sign_pars['Nb volt (R)'], dict_res, unit=unit)
+        par = sort_nanoloop_data(
+            ss_pfm_bias, sign_pars['Nb volt (W)'], sign_pars['Nb volt (R)'],
+            dict_res, unit=unit)
         (nanoloops, fmt, header) = par
 
         if make_plots:
@@ -255,7 +258,7 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='dfrt',
             (_, pha_calib, figs_1) = par
             for fig in figs_1:
                 figs.append(fig)
-            # Create list of loops
+            # Create list of nanoloops
             read_volt = 0
             amplitude, phase, loop_tab = [], [], []
             for i in range(1, sign_pars['Nb volt (R)'] + 1):
@@ -271,15 +274,18 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='dfrt',
                                           phase[i - 1], read_volt, pha_calib,
                                           label[cont_list]))
 
-        # Save loop data in txt file
+        # Save nanoloop data in txt file
         if txt_save:
             save_dict = {'label': label[cont_list],
                          'unit': unit,
                          'mode': mode}
-            if dir_path_out_txt_loops is None:
-                dir_path_out_txt_loops = os.path.join(root_out, 'txt_loops')
-            txt_loop(dir_path_out_txt_loops, file_name_in[:-4], nanoloops,
-                     fmt, header, mode=save_dict['label'])
+            if dir_path_out_nanoloops is None:
+                nanoloops_folder_name = get_setting('nanoloops folder name')
+                dir_path_out_nanoloops = os.path.join(
+                    root_out, nanoloops_folder_name)
+            save_nanoloop_file(
+                dir_path_out_nanoloops, file_name_in[:-4], nanoloops, fmt,
+                header, mode=save_dict['label'])
 
         # Plot loops
         if make_plots:
@@ -292,15 +298,15 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='dfrt',
                 figs.append(fig)
 
     if dir_path_out_fig is None:
-        dir_path_out_fig = os.path.join(root_out, 'results', 'figs')
+        figures_folder_name = get_setting('parameters file name')
+        dir_path_out_fig = os.path.join(root_out, figures_folder_name)
     print_plots(figs, save_plots=save_plots, show_plots=show_plots,
                 dirname=dir_path_out_fig, transparent=False)
     plt.close('all')
 
 
 def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='dfrt',
-                 file_format='.spm', root_out=None, dir_path_out_res=None,
-                 verbose=False, save=False):
+                 file_format='.spm', root_out=None, verbose=False, save=False):
     """
     Data analysis of a list of spm files in a directory by using the single
     script for each file and save the parameters in a text file.
@@ -324,8 +330,6 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='dfrt',
         Format of the measurement file analyzed: '.spm' or '.txt'
     root_out: str, optional
         Path of the saving directory (out)
-    dir_path_out_res: str, optional
-        Path of the saving directory for results (out)
     verbose: bool, optional
         Activation key for verbosity
     save: bool, optional
@@ -335,7 +339,7 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='dfrt',
     -------
     None
     """
-    assert root_out or dir_path_out_res
+    assert root_out
 
     # Create the saving folder, init date and starting time
     t0, date = time.time(), datetime.now()
@@ -369,10 +373,7 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='dfrt',
         meas_pars['theoretic time [s]'] = cut_dict['theoretical time']
 
         # Save all the parameters in a text file
-        if dir_path_out_res is None:
-            dir_path_out_res = os.path.join(root_out, 'results')
-        save_txt_file(dir_path_out_res, t0, date, user_pars, meas_pars,
-                      sign_pars, i)
+        save_parameters(root_out, t0, date, user_pars, meas_pars, sign_pars, i)
 
 
 def main_script(user_pars, file_path_in, verbose=False, show_plots=False,
