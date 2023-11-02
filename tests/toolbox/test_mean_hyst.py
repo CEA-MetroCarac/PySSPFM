@@ -25,9 +25,9 @@ def test_mean_hyst_1_on():
         0.013894300140924453, abs=1e-8)
     assert np.sum(mean_best_loop.pha) == approx(8162.9121683673475, abs=1e-2)
     assert np.sum(mean_best_loop.amp) == approx(0.07878820642891968, abs=1e-8)
-    assert np.sum(best_hysts.params) == approx(2.7083908411461195, abs=1e-6)
+    assert np.sum(best_hysts.params) == approx(4.067187819604506, abs=1e-6)
     assert np.sum(list(best_hysts.props.values())) == approx(
-        12.554442526538555, abs=1e-6)
+        30.56948929368734, abs=1e-6)
 
 
 def test_mean_hyst_1_off():
@@ -83,9 +83,9 @@ def test_mean_hyst_2_on():
         0.008748704931341604, abs=1e-8)
     assert np.sum(mean_best_loop.pha) == approx(8432.661070699709, abs=1e-2)
     assert np.sum(mean_best_loop.amp) == approx(0.09628777682066487, abs=1e-8)
-    assert np.sum(best_hysts.params) == approx(2.3476624929724266, abs=1e-6)
+    assert np.sum(best_hysts.params) == approx(4.100863790210216, abs=1e-6)
     assert np.sum(list(best_hysts.props.values())) == approx(
-        12.145800505900846, abs=1e-6)
+        32.27809421702815, abs=1e-6)
 
 
 def test_mean_hyst_2_off():

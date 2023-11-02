@@ -91,15 +91,14 @@ def init_hysteresis_params(hyst, counterclockwise, grounded_tip,
 
     # Amplitude of hysteresis is set to a negative value for counterclockwise
     # loop and vice versa (Neumayer et al. : doi: 10.1063/5.0011631)
-    if analysis_mode != 'on_f_loop':
-        if counterclockwise:
-            hyst.params['ampli_0'].set(min=0)
-            hyst.params['ampli_1'].set(min=0)
-            amp_fact = 1
-        else:
-            hyst.params['ampli_0'].set(max=0)
-            hyst.params['ampli_1'].set(max=0)
-            amp_fact = -1
+    if counterclockwise:
+        hyst.params['ampli_0'].set(min=0)
+        hyst.params['ampli_1'].set(min=0)
+        amp_fact = 1
+    else:
+        hyst.params['ampli_0'].set(max=0)
+        hyst.params['ampli_1'].set(max=0)
+        amp_fact = -1
 
     # Set x0_0 and x0_1 based on x_hyst min and max values
     if x_hyst is not None:
@@ -147,9 +146,8 @@ def init_hysteresis_params(hyst, counterclockwise, grounded_tip,
         diff_hyst = filter_mean(diff_hyst, window_size=5)
 
         # Set ampli_0: max of differential hysteresis loop
-        if analysis_mode != 'on_f_loop':
-            guess_amp = max(diff_hyst)
-            hyst.params['ampli_0'].set(value=amp_fact * guess_amp)
+        guess_amp = max(diff_hyst)
+        hyst.params['ampli_0'].set(value=amp_fact * guess_amp)
 
         # Set x0_0 and x0_1: max(abs(slopes)) of differential hysteresis loop
         slopes = np.diff(diff_hyst)
