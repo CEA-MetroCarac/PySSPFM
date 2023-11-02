@@ -7,9 +7,9 @@ from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.core.basic_func import linear
 from PySSPFM.utils.core.noise import noise
-from PySSPFM.utils.nanoloop.gen_datas import gen_loops
+from PySSPFM.utils.nanoloop.gen_data import gen_nanoloops
 from PySSPFM.utils.nanoloop.analysis import MultiLoop
-from PySSPFM.utils.nanoloop_to_hyst.plot import plot_on_off_field
+from PySSPFM.utils.nanoloop_to_hyst.plot import plot_nanoloop_on_off
 from PySSPFM.utils.nanoloop_to_hyst.electrostatic import \
     btfly_analysis, sat_analysis, offset_analysis, differential_analysis
 
@@ -80,7 +80,7 @@ def multiloop_gen():
     pars, dict_str = pars_gen()
 
     # Generate loop data
-    out = gen_loops(pars, noise_pars=noise_pars, pha_val=pha_val)
+    out = gen_nanoloops(pars, noise_pars=noise_pars, pha_val=pha_val)
     write_voltage, read_voltage, amplitude, phase = out
 
     mode = ['On field', 'Off field']
@@ -301,9 +301,9 @@ def ex_differential_analysis(make_plots=False, verbose=False):
         return diff_res
 
 
-def ex_plot_on_off_field():
+def ex_plot_nanoloop_on_off():
     """
-    Example of plot_on_off_field function.
+    Example of plot_nanoloop_on_off function.
 
     Returns
     -------
@@ -313,9 +313,9 @@ def ex_plot_on_off_field():
     # Generate Multiloop objects
     loop, dict_str = multiloop_gen()
 
-    # ex plot_on_off_field
-    fig = plot_on_off_field(loop['on'], loop['off'], dict_str=dict_str['on'])
-    fig.sfn = 'ex_plot_on_off_field'
+    # ex plot_nanoloop_on_off
+    fig = plot_nanoloop_on_off(loop['on'], loop['off'], dict_str=dict_str['on'])
+    fig.sfn = 'ex_plot_nanoloop_on_off'
 
     return [fig]
 
@@ -323,12 +323,13 @@ def ex_plot_on_off_field():
 if __name__ == '__main__':
     # saving path management
     dir_path_out, save_plots = save_path_example(
-        "hyst_to_map_electrostatic", save_example_exe=True, save_test_exe=False)
+        "nanoloop_to_hyst_electrostatic", save_example_exe=True,
+        save_test_exe=False)
     figs = []
     figs += ex_btfly_analysis(make_plots=True, verbose=True)
     figs += ex_sat_analysis(make_plots=True, verbose=True)
     figs += ex_offset_analysis(make_plots=True, verbose=True)
     figs += ex_differential_analysis(make_plots=True, verbose=True)
-    figs += ex_plot_on_off_field()
+    figs += ex_plot_nanoloop_on_off()
     print_plots(figs, save_plots=save_plots, show_plots=True,
                 dirname=dir_path_out, transparent=False)
