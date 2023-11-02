@@ -1,18 +1,18 @@
 """
-Test sort_plot methods
+Test sort_plot_pixel methods
 """
 import os
 
-from examples.toolbox.ex_sort_plot_pixel import example_sort_plot
+from examples.toolbox.ex_sort_plot_pixel import example_sort_plot_pixel
 
 
 # class TestPlotExtremum(unittest.TestCase):
 
 
-def test_sort_plot():
-    """ Test example_sort_plot """
+def test_sort_plot_pixel():
+    """ Test example_sort_plot_pixel """
 
-    list_file_path = example_sort_plot()
+    list_file_path = example_sort_plot_pixel()
     list_file_name = [os.path.split(file_path)[1]
                       for file_path in list_file_path]
     target_f_name = ['KNN500n_SSPFM.0_00058.spm', 'KNN500n_SSPFM.0_00060.spm',
