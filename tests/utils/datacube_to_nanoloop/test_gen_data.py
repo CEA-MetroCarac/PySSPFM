@@ -1,5 +1,5 @@
 """
-Test gen_datas methods
+Test gen_data methods
 """
 from pytest import approx
 import numpy as np
