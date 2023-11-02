@@ -3,6 +3,11 @@ All default constants for PySSPFM examples and tests
 Default settings must not be modified
 """
 
+DEFAULT_PARAMETERS_FILE_NAME = 'parameters.txt'
+DEFAULT_FIGURES_FOLDER_NAME = 'figs'
+DEFAULT_NANOLOOPS_FOLDER_NAME = 'nanoloops'
+DEFAULT_BEST_NANOLOOP_FOLDER_NAME = 'best_nanoloops'
+DEFAULT_PROPERTIES_FOLDER_NAME = 'properties'
 KEY_MEASUREMENT_EXTRACTION = {
     'spm': {
         'classic': {'time': 'times',
@@ -31,11 +36,18 @@ FIT_METHOD = 'nelder'
 HISTO_PHASE_METHOD = 'fit'
 ELECTROSTATIC_OFFSET = True
 
-DEF_SETTINGS_DICT = {'key meas extract': KEY_MEASUREMENT_EXTRACTION,
-                     'header lines': HEADER_LINES,
-                     'index line meas name': INDEX_LINE_MEAS_NAME,
-                     'delimiter': DELIMITER,
-                     'detect bug segments': DETECT_BUG_SEGMENTS,
-                     'fit method': FIT_METHOD,
-                     'histo phase method': HISTO_PHASE_METHOD,
-                     'elec offset': ELECTROSTATIC_OFFSET}
+DEF_SETTINGS_DICT = {
+    'parameters file name': DEFAULT_PARAMETERS_FILE_NAME,
+    'figures folder name': DEFAULT_FIGURES_FOLDER_NAME,
+    'nanoloops folder name': DEFAULT_NANOLOOPS_FOLDER_NAME,
+    'best nanoloops folder name': DEFAULT_BEST_NANOLOOP_FOLDER_NAME,
+    'properties folder name': DEFAULT_PROPERTIES_FOLDER_NAME,
+    'key meas extract': KEY_MEASUREMENT_EXTRACTION,
+    'header lines': HEADER_LINES,
+    'index line meas name': INDEX_LINE_MEAS_NAME,
+    'delimiter': DELIMITER,
+    'detect bug segments': DETECT_BUG_SEGMENTS,
+    'fit method': FIT_METHOD,
+    'histo phase method': HISTO_PHASE_METHOD,
+    'elec offset': ELECTROSTATIC_OFFSET
+}
