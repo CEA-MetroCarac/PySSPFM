@@ -1,6 +1,6 @@
 """
 --> Executable Script
-Find extremum value of sspfm map of a reference measurement and plot hysteresis
+Find extremum value of sspfm map of a reference property and plot hysteresis
 of associated files
 """
 
@@ -15,16 +15,16 @@ from PySSPFM.utils.core.figure import print_plots, plot_hist, ax_formating
 from PySSPFM.utils.core.basic_func import linear
 from PySSPFM.utils.nanoloop.plot import plot_ckpfm
 from PySSPFM.utils.nanoloop.phase import gen_dict_pha
-from PySSPFM.utils.nanoloop.file import extract_loop
-from PySSPFM.utils.nanoloop.analysis import treat_loop, gen_ckpfm_meas
-from PySSPFM.utils.map.main import plot_and_save_image
+from PySSPFM.utils.nanoloop.file import extract_nanoloop_data
+from PySSPFM.utils.nanoloop.analysis import nanoloop_treatment, gen_ckpfm_meas
+from PySSPFM.utils.map.main import plot_and_save_maps
 from PySSPFM.utils.map.interpolate import remove_val
 from PySSPFM.utils.nanoloop_to_hyst.file import \
-    generate_file_paths, extract_measures, read_plot_parameters
-from PySSPFM.utils.nanoloop_to_hyst.gen_datas import gen_datas_dict
+    generate_file_nanoloop_paths, extract_properties, print_parameters
+from PySSPFM.utils.nanoloop_to_hyst.gen_data import gen_data_dict
 from PySSPFM.utils.nanoloop_to_hyst.electrostatic import differential_analysis
 from PySSPFM.utils.nanoloop_to_hyst.analysis import \
-    gen_analysis_mode, find_best_loop, hyst_analysis
+    gen_analysis_mode, find_best_nanoloop, hyst_analysis
 from PySSPFM.toolbox.mean_hyst import main_mean_hyst
 from PySSPFM.toolbox.mean_hyst import single_script
 from PySSPFM.toolbox.loop_file_reader import main_loop_file_reader
@@ -62,7 +62,7 @@ def plot_comparative_hyst(mean_hyst, mean_loop, hyst, loop, bckgnd=None,
                           infl_threshold=10, sat_threshold=90, pixel_ind=1,
                           dict_str=None):
     """
-    Generate hysteresis analysis figure (fit + properties + datas)
+    Generate hysteresis analysis figure (fit + properties + data)
 
     Parameters
     ----------
@@ -145,7 +145,7 @@ def plot_comparative_hyst(mean_hyst, mean_loop, hyst, loop, bckgnd=None,
     return fig
 
 
-def extract_txt_pars(file_path_in=None):
+def extract_params(file_path_in=None):
     """
     Generate all dict parameters from saving parameters measurement txt file
 
@@ -301,17 +301,18 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars, dict_pha,
 
     # Data extraction
     if test_dict is None:
-        datas_dict, dict_str = extract_loop(file_path_in)
+        data_dict, dict_str = extract_nanoloop_data(file_path_in)
     else:
         pha_val = {"fwd": user_pars["pha fwd"], "rev": user_pars["pha rev"]}
-        datas_dict, dict_str = gen_datas_dict(test_dict, meas_pars['Q factor'],
-                                              mode=test_dict['mode'],
-                                              pha_val=pha_val)
+        data_dict, dict_str = gen_data_dict(
+            test_dict, meas_pars['Q factor'], mode=test_dict['mode'],
+            pha_val=pha_val)
     dict_str['index'] = cont
 
     # List of MultiLoop object
-    res = treat_loop(datas_dict, sign_pars, dict_pha=dict_pha,
-                     dict_str=dict_str, q_fact=meas_pars['Q factor'])
+    res = nanoloop_treatment(
+        data_dict, sign_pars, dict_pha=dict_pha, dict_str=dict_str,
+        q_fact=meas_pars['Q factor'])
     (loop_tab, _, _) = res
 
     # cKPFM analysis if multiloop
@@ -322,7 +323,7 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars, dict_pha,
             figs.append(fig)
 
     # Find best loop depending on analysis mode
-    res = find_best_loop(
+    res = find_best_nanoloop(
         loop_tab, dict_pha['counterclockwise'], dict_pha['grounded tip'],
         analysis_mode=analysis_mode, del_1st_loop=user_pars['del 1st loop'],
         model=user_pars['func'], asymmetric=user_pars['asymmetric'],
@@ -350,7 +351,7 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
                          show_plots=False, save_plots=False, dirname=None):
     """
     Main function used to find extremum value of sspfm map of a reference
-    measurement and plot hysteresis of associated files
+    property and plot hysteresis of associated files
 
     Parameters
     ----------
@@ -377,11 +378,11 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
 
     # Extract and init parameters
     make_plots = bool(show_plots or save_plots)
-    meas_pars, sign_pars, treat_pars = extract_txt_pars(
+    meas_pars, sign_pars, treat_pars = extract_params(
         user_pars['file path in pars'])
     treat_pars.update({
-        'mode': user_pars['meas key']['mode'],
-        'dir path in meas': user_pars['dir path in meas'],
+        'mode': user_pars['prop key']['mode'],
+        'dir path in prop': user_pars['dir path in prop'],
         'dir path in loop': user_pars['dir path in loop'],
         'file path in pars': user_pars['file path in pars'],
         'mask': {'man mask': []}
@@ -397,18 +398,18 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
     tab_path_raw = dir_path_in.split('_')[:-3]
     dir_path_raw = '_'.join(tab_path_raw)
     file_paths_raw = [elem[0]
-                      for elem in generate_file_paths(dir_path_raw)]
+                      for elem in generate_file_nanoloop_paths(dir_path_raw)]
     dict_file = {file: cont for cont, file in enumerate(file_paths_raw)}
 
-    # Extract measurement value
-    measurements, dim_pix, dim_mic = extract_measures(
-        user_pars['dir path in meas'])
-    measurement = measurements[
-        user_pars['meas key']['mode']][user_pars['meas key']['meas']]
+    # Extract property value
+    properties, dim_pix, dim_mic = extract_properties(
+        user_pars['dir path in prop'])
+    sel_property = properties[
+        user_pars['prop key']['mode']][user_pars['prop key']['prop']]
 
     # Associate file with corresponding value and sort it in ascending order
     dictio = {}
-    for elem_file, elem_val in zip(file_paths_raw, measurement):
+    for elem_file, elem_val in zip(file_paths_raw, sel_property):
         dictio[elem_file] = elem_val
     dictio = dict(sorted(dictio.items(), key=lambda item: item[1]))
     sorted_files = list(dictio.keys())
@@ -425,9 +426,9 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
         files = [list(dict_file.keys())[pix] for pix in
                  user_pars['list pixels']]
 
-    # Mean measurement value
+    # Mean sel_property value
     if verbose:
-        mean = np.mean(remove_val(measurement, mask=user_pars["list pixels"],
+        mean = np.mean(remove_val(sel_property, mask=user_pars["list pixels"],
                                   reverse=True))
         print(f'mean value: {mean}')
 
@@ -440,18 +441,18 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
                   f'{dictio[file]}, pixel_index={dict_file[file]}')
         if make_plots:
             # On // off mode
-            if user_pars['meas key']['mode'] in ['off', 'on']:
+            if user_pars['prop key']['mode'] in ['off', 'on']:
                 # Mean hysteresis measurement
                 res = main_mean_hyst(treat_pars, verbose=False,
                                      make_plots=False)
                 (mean_loop, mean_hyst) = res
-                loop_file_name = str(user_pars['meas key']['mode']) + '_f_'
+                loop_file_name = str(user_pars['prop key']['mode']) + '_f_'
                 loop_file_name += os.path.split(file)[1][:-4] + '.txt'
                 loop_file_path = os.path.join(user_pars['dir path in loop'],
                                               loop_file_name)
-                _, dict_str = extract_loop(loop_file_path)
+                _, dict_str = extract_nanoloop_data(loop_file_path)
                 analysis_mode = gen_analysis_mode(
-                    mode=user_pars['meas key']['mode'],
+                    mode=user_pars['prop key']['mode'],
                     read_mode=sign_pars['Mode (R)'])
                 tab = ['mean_loop', 'multi_loop']
                 bckgnd = 'offset' if analysis_mode in tab else 'linear'
@@ -471,9 +472,9 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
                     pixel_ind=dict_file[file])
                 figs = figs_nanoloop + [fig_hyst]
             # Coupled mode
-            elif user_pars['meas key']['mode'] == 'coupled':
+            elif user_pars['prop key']['mode'] == 'coupled':
                 best_loop, figs_nanoloop = {}, {}
-                res = read_plot_parameters(treat_pars['file path in pars'])
+                res = print_parameters(treat_pars['file path in pars'])
                 meas_pars, sign_pars, _, _, _ = res
                 for mode in ['off', 'on']:
                     loop_file_name = mode + '_f_' + \
@@ -491,7 +492,7 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
                         verbose=False, make_plots=make_plots)
                 multi_figures = main_mean_hyst(treat_pars, verbose=False,
                                                make_plots=True)
-                offsets_off = measurements['off']['charac tot fit: y shift']
+                offsets_off = properties['off']['charac tot fit: y shift']
                 elec_offset = get_setting('elec offset')
                 offset_off = offsets_off[dict_file[file]] if elec_offset else 0
                 _, _, _, single_fig = differential_analysis(
@@ -503,21 +504,21 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
                 figs = figs_nanoloop['off'] + figs_nanoloop['on']
                 figs += multi_figures + [single_fig]
             else:
-                raise IOError("'user_pars['meas key']['mode']' should be "
+                raise IOError("'user_pars['prop key']['mode']' should be "
                               "'on' or 'off' or 'coupled'")
 
             dict_interp = {'fact': user_pars['interp fact'],
                            'func': user_pars['interp func']}
-            fig_map = plot_and_save_image(
-                measurement, dim_pix, dim_mic=dim_mic, dict_interp=dict_interp,
-                mask=[], measure_str=user_pars['meas key']['meas'],
+            fig_map = plot_and_save_maps(
+                sel_property, dim_pix, dim_mic=dim_mic, dict_interp=dict_interp,
+                mask=[], prop_str=user_pars['prop key']['prop'],
                 highlight_pix=[dict_file[file]])
             fig_map.sfn += f'_pixel_{dict_file[file]}'
             add_txt(fig_map, dict_str)
             histo, ax = plt.subplots(figsize=FIGSIZE)
             histo.sfn = f'histo_pixel_{dict_file[file]}'
             plot_dict = {'title': f'histo: pixel {dict_file[file]}',
-                         'x lab': f'{user_pars["meas key"]["meas"]}',
+                         'x lab': f'{user_pars["prop key"]["prop"]}',
                          'bins': 20, 'fs': 15, 'edgew': 5, 'tickl': 5,
                          'gridw': 2}
             plot_hist(ax, list(dictio.values()), plot_dict=plot_dict)
@@ -534,10 +535,10 @@ def parameters():
     """
     To complete by user of the script: return parameters for analysis
 
-    - meas key: dict
-        --> measurement key to ordered pixel
-        - mode: str --> Mode of meas key ('on', 'off', 'coupled')
-        - meas: str --> Name of meas key
+    - prop key: dict
+        --> property key to ordered pixel
+        - mode: str --> Mode of prop key ('on', 'off', 'coupled')
+        - prop: str --> Name of prop key
     - list_pix: list[int]
         List of pixel indices to analyze.
         This parameter is used to specify a list of pixel indices for analysis.
@@ -545,7 +546,7 @@ def parameters():
         - A list of integers: If the list_pix is [a, b, c ...],
         files of index a, b, c [...] are analyzed.
         - If list_pix is None, all pixels are analyzed in ascending order in
-        terms of the value of the measurement.
+        terms of the value of the property.
         - If list_pix is an empty list (list_pix=[]), all pixels are analyzed
         in ascending order in terms of the index.
     - reverse: bool
@@ -577,21 +578,21 @@ def parameters():
         This parameter specifies the directory containing the results of
         analysis generated after the 1st and 2nd step of the analysis.
         Default: 'title_meas_out_mode'
-    - dir_path_in_meas: str
-        Ferroelectric measurements files directory
+    - dir_path_in_prop: str
+        Properties files directory
         This parameter specifies the directory containing the ferroelectric
-         measurements text files generated after the 2nd step of the analysis.
-        Optional, Default: 'txt_ferro_meas'
+         properties text files generated after the 2nd step of the analysis.
+        Optional, Default: 'properties'
     - dir_path_in_loop: str
         Txt loop files directory.
         This parameter specifies the directory containing the loop text files
         generated after the 1st step of the analysis.
-        Optional, Default: 'txt_loops'
+        Optional, Default: 'nanoloops'
     - file_path_in_pars: str
         Measurement and analysis parameters txt file.
         This parameter specifies the file containing measurement and analysis
         parameters generated after the 2nd step of the analysis.
-        Optional, Default: 'results/saving_parameters.txt'
+        Optional, Default: 'parameters.txt'
     - dir_path_out: str
         Saving directory for analysis results figures
         (optional, default: toolbox directory in the same root)
@@ -612,25 +613,26 @@ def parameters():
     """
     dir_path_in = tkf.askdirectory()
     # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt
-    dir_path_in_meas = os.path.join(dir_path_in, 'txt_ferro_meas')
-    # dir_path_in_meas = r'...\KNN500n_15h18m02-10-2023_out_dfrt\txt_ferro_meas
-    dir_path_in_loop = os.path.join(dir_path_in, 'txt_loops')
-    # dir_path_in_loop = r'...\KNN500n_15h18m02-10-2023_out_dfrt\txt_loops
-    file_path_in_pars = os.path.join(dir_path_in, 'results',
-                                     'saving_parameters.txt')
-    # file_path_in_pars = r'...\KNN500n_15h18m02-10-2023_out_dfrt\results\
-    # saving_parameters.txt
+    properties_folder_name = get_setting('properties folder name')
+    dir_path_in_prop = os.path.join(dir_path_in, properties_folder_name)
+    # dir_path_in_prop = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
+    nanoloops_folder_name = get_setting('nanoloops folder name')
+    dir_path_in_loop = os.path.join(dir_path_in, nanoloops_folder_name)
+    # dir_path_in_loop = r'...\KNN500n_15h18m02-10-2023_out_dfrt\nanoloops
+    parameters_file_name = get_setting('parameters file name')
+    file_path_in_pars = os.path.join(dir_path_in, parameters_file_name)
+    # file_path_in_pars = r'...\KNN500n_15h18m02-10-2023_out_dfrt\parameters.txt
     dir_path_out = None
     # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
     # plot_pix_extrem_2023-10-02-16h38m
     verbose = True
     show_plots = True
     save = False
-    user_pars = {'dir path in meas': dir_path_in_meas,
+    user_pars = {'dir path in prop': dir_path_in_prop,
                  'dir path in loop': dir_path_in_loop,
                  'file path in pars': file_path_in_pars,
-                 'meas key': {'mode': 'off',
-                              'meas': 'charac tot fit: area'},
+                 'prop key': {'mode': 'off',
+                              'prop': 'charac tot fit: area'},
                  'list pixels': [],
                  'reverse': False,
                  'del 1st loop': True,
