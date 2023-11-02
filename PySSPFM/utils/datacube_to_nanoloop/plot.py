@@ -1,5 +1,6 @@
 """
-Module used for the scripts of sspfm 1st step data analysis (conv seg to hyst)
+Module used for the scripts of sspfm 1st step data analysis
+(convert datacube to nanoloop)
     - Plot functions
 """
 
