@@ -91,8 +91,7 @@ def print_plots(figs, save_plots=True, show_plots=True, dirname=None,
 def init_y(init_y_tabs, ax):
     """
     Function used for plot_graph function:
-    Init y values and in 2D array for loop plotting and create corresponding
-    ax array
+    Init y values and in 2D array for plotting and create corresponding ax array
 
     Parameters
     ----------
