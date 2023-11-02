@@ -1,5 +1,6 @@
 """
-Module used for the scripts of sspfm 2d step data analysis (conv hyst to map)
+Module used for the scripts of sspfm 2d step data analysis
+(convert nanoloop to hyst)
     - Open and read files
     - Print info
     - Save measurements and parameters
@@ -12,14 +13,14 @@ import numpy as np
 from PySSPFM.utils.signal_bias import write_vec
 
 
-def generate_file_paths(dir_path_in, mode=''):
+def generate_file_nanoloop_paths(dir_path_in, mode=''):
     """
-    Generate paths of all hysteresis txt loop files (i.e. pixel)
+    Generate paths of all nanoloop txt loop files (i.e. pixel)
 
     Parameters
     ----------
     dir_path_in: str
-        Path of the txt loop files directory (in)
+        Path of the txt nanoloop files directory (in)
     mode: str, optional
         To not have a restricted selection, mode = ''
         To select only Off Field measurement: mode = 'off_f'
@@ -28,7 +29,7 @@ def generate_file_paths(dir_path_in, mode=''):
     Returns
     ----------
     file_paths_in: list of str
-        List of all txt loop file paths (in)
+        List of all txt nanoloop file paths (in)
     """
     assert os.path.isdir(dir_path_in)
     assert mode in ['', 'off_f', 'on_f']
@@ -57,7 +58,7 @@ def generate_file_paths(dir_path_in, mode=''):
     return file_paths_in
 
 
-def read_plot_parameters(file_path_in, verbose=False):
+def print_parameters(file_path_in, verbose=False):
     """
     Extract, identifies and print measurement + treatment parameters of
     the txt file in the main directory
@@ -189,7 +190,7 @@ def complete_txt_file(file_path_in, user_pars, t0, date, file_path_out=None):
         f'bias: {user_pars["inf thresh"]}',
         f'threshold value (in percent) for the calculation of saturation '
         f'domain: {user_pars["sat thresh"]}',
-        f'first loop deleted for the analysis ?: {user_pars["del 1st loop"]}',
+        f'first nanoloop deleted for analysis ?: {user_pars["del 1st loop"]}',
         '- Phase treatment parameters',
         f'phase correction: {user_pars["pha corr"]}',
         f'phase value (forward): {user_pars["pha fwd"]}',
@@ -199,9 +200,9 @@ def complete_txt_file(file_path_in, user_pars, t0, date, file_path_out=None):
         f'locked electrostatic slope (on field): '
         f'{user_pars["locked elec slope"]}',
         '- Other parameters',
-        f'differential domain between on/off field loops: '
+        f'differential domain between on/off field nanoloops: '
         f'{user_pars["diff domain"]}',
-        f'differential domain between on/off field loops, mode ?: '
+        f'differential domain between on/off field nanoloops, mode ?: '
         f'{user_pars["diff mode"]}',
         f'saturation domain for electrostatic decoupling procedure: '
         f'{user_pars["sat domain"]}',
@@ -222,29 +223,29 @@ def complete_txt_file(file_path_in, user_pars, t0, date, file_path_out=None):
     file.close()
 
 
-def save_measurement(measurements, dir_path_out, dim_pix=None, dim_mic=None,
-                     file_prefix_out=None):
+def save_properties(properties, dir_path_out, dim_pix=None, dim_mic=None,
+                    file_prefix_out=None):
     """
-    Save measurements for sspfm maps in a text file
+    Save properties for sspfm maps in a text file
 
     Parameters
     ----------
-    measurements: dict
-        Dictionary of measurements of sspfm maps
+    properties: dict
+        Dictionary of properties of sspfm maps
     dir_path_out: str
-        Path of the directory for saving the measurement files (output)
+        Path of the directory for saving the property files (output)
     dim_pix: dict('x': ,'y':) of int, optional
         Dictionary of map dimensions for 'x' and 'y' axis (in pixels)
     dim_mic: dict('x': ,'y':) of float, optional
         Dictionary of map dimensions for 'x' and 'y' axis (in microns)
     file_prefix_out: str, optional
-        Prefix for the names of the measurement files (output)
+        Prefix for the names of the property files (output)
 
     Returns
     -------
     None
     """
-    file_prefix_out = file_prefix_out or "measurements_"
+    file_prefix_out = file_prefix_out or "properties_"
     if not os.path.isdir(dir_path_out):
         os.makedirs(dir_path_out)
 
@@ -255,24 +256,25 @@ def save_measurement(measurements, dir_path_out, dim_pix=None, dim_mic=None,
         header_lab_tab = [f'{key}={val}, ' for key, val in dict_dim.items()]
         header_lab_add = ''.join(header_lab_tab)
 
-    for key, values in measurements.items():
+    for key, values in properties.items():
         file_path_out = os.path.join(dir_path_out,
                                      file_prefix_out + key + '.txt')
         header = f'{key}\n{header_lab_add}\n'
         # fmt = '%.5e'
-        tab_meas = []
+        tab_props = []
 
         for sub_key, sub_values in values.items():
             header += f'{sub_key}\t\t'
-            tab_meas.append(np.array(list(sub_values), dtype=float).ravel())
-        tab_meas = np.where(np.isnan(tab_meas), 'nan', tab_meas)
-        np.savetxt(file_path_out, np.array(tab_meas).T, delimiter='\t\t',
+            tab_props.append(np.array(list(sub_values), dtype=float).ravel())
+        tab_props = np.where(np.isnan(tab_props), 'nan', tab_props)
+        np.savetxt(file_path_out, np.array(tab_props).T, delimiter='\t\t',
                    newline='\n', header=header, fmt='%s')
 
 
-def save_best_loops(tab_best_loops, dir_path_out, file_prefix_out="best_loop_"):
+def save_best_nanoloops(tab_best_loops, dir_path_out,
+                        file_prefix_out="best_loop_"):
     """
-    Save measurements for sspfm maps in a text file
+    Save best nanoloops in a text file
 
     Parameters
     ----------
@@ -308,25 +310,25 @@ def save_best_loops(tab_best_loops, dir_path_out, file_prefix_out="best_loop_"):
                    delimiter='\t\t', newline='\n', header=header, fmt=fmt)
 
 
-def extract_measures(dir_path_in):
+def extract_properties(dir_path_in):
     """
-    Extract measurements from txt saving files in the specified directory.
+    Extract properties from txt saving files in the specified directory.
 
     Parameters
     ----------
     dir_path_in: str
-        Path of the directory containing the measurement files.
+        Path of the directory containing the property files.
 
     Returns
     -------
-    measurements: dict
-        Dictionary of measurements of sspfm maps.
+    properties: dict
+        Dictionary of properties of sspfm maps.
     dim_pix: dict('x': ,'y':) of int
         Dictionary of map dimensions for 'x' and 'y' axis (in pixels).
     dim_mic: dict('x': ,'y':) of float
         Dictionary of map dimensions for 'x' and 'y' axis (in microns).
     """
-    (measurements, dim_pix, dim_mic) = ({}, {}, {})
+    (properties, dim_pix, dim_mic) = ({}, {}, {})
     dim = ''
 
     for file_name_in in os.listdir(dir_path_in):
@@ -338,14 +340,14 @@ def extract_measures(dir_path_in):
         mode = lines[0][2:-1]
         dim = lines[1][2:-3].split(', ')
 
-        # Measurements extraction
-        meas_keys = lines[2][2:].split('\t\t')[:-1]
-        measures = np.genfromtxt(
+        # Properties extraction
+        prop_keys = lines[2][2:].split('\t\t')[:-1]
+        props = np.genfromtxt(
             file_path_in, dtype=float, delimiter='\t\t', skip_header=3,
             encoding='utf-8')
-        measurements[mode] = {}
-        for key, meas in zip(meas_keys, np.array(measures).T):
-            measurements[mode][key] = list(meas)
+        properties[mode] = {}
+        for key, prop in zip(prop_keys, np.array(props).T):
+            properties[mode][key] = list(prop)
 
         # Close the file
         file.close()
@@ -362,4 +364,4 @@ def extract_measures(dir_path_in):
     if not dim_mic:
         dim_mic = None
 
-    return measurements, dim_pix, dim_mic
+    return properties, dim_pix, dim_mic
