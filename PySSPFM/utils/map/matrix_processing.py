@@ -67,7 +67,7 @@ def formatting_measure(measure, dim_pix, dim_mic=None, dict_interp=None,
     # Initiate measure: sorted, cleared, and sized 2D matrix in agreement with
     # the scan and plotted element
     (_, _, nb_bug, sorted_matrix, tab_all_index, tab_plotted_index,
-     directions) = sub_formatting_measure(measure, dim_pix, dim_mic=dim_mic)
+     directions) = init_formatting_measure(measure, dim_pix, dim_mic=dim_mic)
 
     # Dimensions of the maps in pixels
     (raw_ext, raw_dim_fact, interp_ext, interp_dim_fact) = extent(
@@ -98,7 +98,7 @@ def formatting_measure(measure, dim_pix, dim_mic=None, dict_interp=None,
             index_blank, tab_all_index, tab_plotted_index, directions)
 
 
-def sub_formatting_measure(measure, dim_pix, dim_mic=None):
+def init_formatting_measure(measure, dim_pix, dim_mic=None):
     """
     Initialize measure formatting for plotting maps.
 
@@ -143,14 +143,14 @@ def sub_formatting_measure(measure, dim_pix, dim_mic=None):
     # with the scan size
     sorted_matrix = np.resize(measure, new_shape=(dim_pix['x'], dim_pix['y']))
     sorted_matrix[-1, -(1 + np.arange(nb_bug))] = np.NaN
-    sorted_matrix = rearrangement_matrix(sorted_matrix)
+    sorted_matrix = rearrange_matrix(sorted_matrix)
 
     # Organize the indices in a 2D matrix, sorted and shaped in agreement with
     # the scan size
     index_matrix = np.resize(np.arange(len(measure)),
                              new_shape=(dim_pix['y'], dim_pix['x']))
     index_matrix[-1, -(1 + np.arange(nb_bug))] = -1
-    rearranged_index_matrix = rearrangement_matrix(index_matrix)
+    rearranged_index_matrix = rearrange_matrix(index_matrix)
     tab_all_index = [elem for sublist in rearranged_index_matrix
                      for elem in sublist]
 
@@ -175,7 +175,7 @@ def sub_formatting_measure(measure, dim_pix, dim_mic=None):
             tab_plotted_index, directions)
 
 
-def rearrangement_matrix(matrix):
+def rearrange_matrix(matrix):
     """
     Sort the matrix of measurement according to the tip travel on the surface
     sample
@@ -242,7 +242,7 @@ def cleared_measure(measure, dim_pix, nb_bug=0, mask=None):
         cleared_matrix[-1][-(1 + i)] = np.NaN
 
     # Organize and sort the matrix in agreement with scan
-    cleared_matrix = rearrangement_matrix(cleared_matrix)
+    cleared_matrix = rearrange_matrix(cleared_matrix)
 
     return cleared_matrix
 
