@@ -8,7 +8,7 @@ import numpy as np
 from PySSPFM.utils.core.noise import noise
 from PySSPFM.utils.core.basic_func import sho, sho_phase
 from PySSPFM.utils.signal_bias import sspfm_generator, sspfm_time
-from PySSPFM.utils.nanoloop.gen_datas import gen_loops
+from PySSPFM.utils.nanoloop.gen_data import gen_loops
 
 
 def alea_targets(meas_range, ite=1):
