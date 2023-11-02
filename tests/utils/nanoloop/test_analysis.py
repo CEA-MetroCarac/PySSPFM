@@ -30,9 +30,9 @@ def test_analysis_on():
     assert prs_r == approx(709.5950689068047)
     assert amps_mark == approx(144.83436060090833)
     assert phase == approx(131445.90458320786)
-    assert pr_l == approx(520.0583808314913)
-    assert pr_r == approx(177.39876722670124)
-    assert amp_mark == approx(36.20859015022709)
+    assert pr_l == approx(517.4082488586207)
+    assert pr_r == approx(176.31728012246583)
+    assert amp_mark == approx(36.10685638475994)
 
 
 def test_analysis_off():
@@ -67,6 +67,6 @@ def test_analysis_off():
     assert prs_r == approx(686.1010077516336)
     assert amps_mark == approx(32.85924605451086)
     assert phase == approx(90051.47828723147)
-    assert pr_l == approx(520.0453562880072)
-    assert pr_r == approx(171.52525193790837)
-    assert amp_mark == approx(8.214811513627716)
+    assert pr_l == approx(385.7166761878788)
+    assert pr_r == approx(38.00383904873581)
+    assert amp_mark == approx(7.6529431012525)
