@@ -1,5 +1,6 @@
 """
-Module used for the scripts of sspfm 2d step data analysis (conv hyst to map)
+Module used for the scripts of sspfm 2d step data analysis
+(convert nanoloop to hyst)
     - Data analysis toolbox
 """
 
@@ -49,8 +50,9 @@ def gen_analysis_mode(mode='off', read_mode='Single Read Step'):
     return analysis_mode
 
 
-def init_pars(hyst, counterclockwise, grounded_tip, analysis_mode='mean_loop',
-              locked_elec_slope=None, x_hyst=None, y_hyst=None):
+def init_hysteresis_params(hyst, counterclockwise, grounded_tip,
+                           analysis_mode='mean_loop', locked_elec_slope=None,
+                           x_hyst=None, y_hyst=None):
     """
     Initiate hysteresis parameters and bckgnd function from analysis_mode for
     the hysteresis fit
@@ -194,12 +196,12 @@ def init_pars(hyst, counterclockwise, grounded_tip, analysis_mode='mean_loop',
     return bckgnd
 
 
-def find_best_loop(loop_tab, counterclockwise, grounded_tip,
-                   analysis_mode='mean_loop', del_1st_loop=False,
-                   model='sigmoid', asymmetric=False, method='leastsq',
-                   locked_elec_slope=None):
+def find_best_nanoloop(loop_tab, counterclockwise, grounded_tip,
+                       analysis_mode='mean_loop', del_1st_loop=False,
+                       model='sigmoid', asymmetric=False, method='leastsq',
+                       locked_elec_slope=None):
     """
-    Function used to find the best hysteresis loop.
+    Function used to find the best piezoresponse nanoloop.
 
     Parameters
     ----------
@@ -254,10 +256,11 @@ def find_best_loop(loop_tab, counterclockwise, grounded_tip,
                         np.array(loop.piezorep_left)]
             xy_hyst_tab.append([x_hyst_i, y_hyst_i])
             hyst = Hysteresis(model=model, asymmetric=asymmetric)
-            _ = init_pars(hyst, counterclockwise, grounded_tip,
-                          analysis_mode=analysis_mode,
-                          locked_elec_slope=locked_elec_slope,
-                          x_hyst=x_hyst_i, y_hyst=y_hyst_i)
+            _ = init_hysteresis_params(
+                hyst, counterclockwise, grounded_tip,
+                analysis_mode=analysis_mode,
+                locked_elec_slope=locked_elec_slope,
+                x_hyst=x_hyst_i, y_hyst=y_hyst_i)
             hyst.fit(x_hyst_i, y_hyst_i, verbosity=False, method=method)
             bckgnd_tab.append(hyst.params['offset'].value)
             read_volt.append(loop.read_volt)
@@ -347,10 +350,9 @@ def hyst_analysis(x_hyst, y_hyst, best_loop, counterclockwise, grounded_tip,
 
     # Hysteresis object and fit
     best_hyst = Hysteresis(model=model, asymmetric=asymmetric)
-    bckgnd = init_pars(best_hyst, counterclockwise, grounded_tip,
-                       analysis_mode=analysis_mode,
-                       locked_elec_slope=locked_elec_slope,
-                       x_hyst=x_hyst, y_hyst=y_hyst)
+    bckgnd = init_hysteresis_params(
+        best_hyst, counterclockwise, grounded_tip, analysis_mode=analysis_mode,
+        locked_elec_slope=locked_elec_slope, x_hyst=x_hyst, y_hyst=y_hyst)
     try:
         best_hyst.fit(x_hyst, y_hyst, verbosity=False, method=method)
     except ValueError:
@@ -469,24 +471,24 @@ def electrostatic_analysis(best_loop, analysis_mode='mean_loop',
     return electrostatic_dict, figs
 
 
-def sort_meas(measurements):
+def sort_prop(properties):
     """
-    Transform measurement dict to be plotted in sspfm map
+    Transform property dict to be plotted in sspfm map
 
     Parameters
     ----------
-    measurements: dict
-        Initial measurement --> measurement[mode][- file n°i][meas]
+    properties: dict
+        Initial property --> property[mode][- file n°i][prop]
 
     Returns
     -------
     result_dict: dict
-        Final measurement --> measurement[mode][meas] = [all file n°]
+        Final property --> property[mode][prop] = [all file n°]
     """
     result_dict = {key: {
-        sub_key: [] for sub_key in measurements[key][' - file n°1'].keys()}
-        for key in measurements}
-    for key, files in measurements.items():
+        sub_key: [] for sub_key in properties[key][' - file n°1'].keys()}
+        for key in properties}
+    for key, files in properties.items():
         for file in files.values():
             for sub_key, value in file.items():
                 result_dict[key][sub_key].append(value)
