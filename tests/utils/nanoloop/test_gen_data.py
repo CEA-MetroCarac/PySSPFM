@@ -1,19 +1,19 @@
 """
-Test gen_datas methods
+Test gen_data methods
 """
 from pytest import approx
 import numpy as np
 
-from examples.utils.nanoloop.ex_gen_data import ex_gen_loops
+from examples.utils.nanoloop.ex_gen_data import ex_gen_nanoloops
 
 
 # class TestGenDatas(unittest.TestCase):
 
 
-def test_gen_loops_on():
-    """ Test ex_gen_loops 'on' field """
+def test_gen_nanoloops_on():
+    """ Test ex_gen_nanoloops 'on' field """
 
-    write_voltage, read_voltage, amp, pha = ex_gen_loops('on')
+    write_voltage, read_voltage, amp, pha = ex_gen_nanoloops('on')
 
     sum_1 = sum(np.sum(tab) for tab in amp)
     sum_2 = sum(np.sum(tab) for tab in pha)
@@ -25,10 +25,10 @@ def test_gen_loops_on():
     assert sum(read_voltage) == approx(-2.220446049250313e-16)
 
 
-def test_gen_loops_off():
-    """ Test ex_gen_loops 'off' field """
+def test_gen_nanoloops_off():
+    """ Test ex_gen_nanoloops 'off' field """
 
-    write_voltage, read_voltage, amp, pha = ex_gen_loops('off')
+    write_voltage, read_voltage, amp, pha = ex_gen_nanoloops('off')
 
     sum_1 = sum(np.sum(tab) for tab in amp)
     sum_2 = sum(np.sum(tab) for tab in pha)
