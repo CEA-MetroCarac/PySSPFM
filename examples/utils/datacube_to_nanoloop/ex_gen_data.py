@@ -7,7 +7,7 @@ import numpy as np
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.datacube_to_nanoloop.plot import plt_signals
-from PySSPFM.utils.datacube_to_nanoloop.gen_datas import gen_segments
+from PySSPFM.utils.datacube_to_nanoloop.gen_data import gen_segments
 
 
 def pars_segment():
