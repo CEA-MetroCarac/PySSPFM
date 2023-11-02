@@ -38,7 +38,7 @@ class CurveFit:
         """
         raise NotImplementedError("Subclasses must implement init_parameters.")
 
-    def fit(self, x_val, y_val, init_pars=None):
+    def fit(self, x_val, y_val, init_params=None):
         """
         Perform curve fitting using the defined model.
 
@@ -48,18 +48,18 @@ class CurveFit:
             The x-values of the data.
         y_val : array-like
             The y-values of the data.
-        init_pars: dict of dict, optional
+        init_params: dict of dict, optional
             Initial guesses for the fit parameters
 
         Returns
         -------
         None
         """
-        if init_pars is None:
+        if init_params is None:
             self.init_parameters(x_val, y_val)
         else:
             self.params = Parameters()
-            for param_name, param_settings in init_pars.items():
+            for param_name, param_settings in init_params.items():
                 self.params.add(param_name, **param_settings)
 
         def objective(params):
