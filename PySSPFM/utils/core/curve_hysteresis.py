@@ -1,5 +1,5 @@
 """
-module dedicated to hysteresis
+Module dedicated to hysteresis
 """
 import numpy as np
 import matplotlib.pyplot as plt
