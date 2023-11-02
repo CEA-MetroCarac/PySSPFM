@@ -1,7 +1,7 @@
 """
 --> Executable Script
 Graphical interface for 2nd step of SSPFM data analysis
-(run hyst_to_map_s2.main_script)
+(run nanoloop_to_hyst_s2.main_script)
 """
 
 import os
@@ -12,7 +12,7 @@ import numpy as np
 
 from PySSPFM.data_processing.nanoloop_to_hyst_s2 import main_script
 from PySSPFM.gui.utils import \
-    (grid_item, add_separator_grid, show_tooltip, extract_var,
+    (grid_item, add_grid_separator, show_tooltip, extract_var,
      init_secondary_wdw, wdw_main_title)
 
 
@@ -30,9 +30,8 @@ def main(parent=None):
     None
     """
     # Create the main or secondary window
-    app = init_secondary_wdw(
-        parent=parent,
-        wdw_title="SSPFM Data Analysis: Step 2 = nanoloop to hyst")
+    title = "SSPFM Data Analysis: Step 2 = nanoloop to hyst"
+    app = init_secondary_wdw(parent=parent, wdw_title=title)
 
     # Set default parameter values
     default_user_parameters = {
@@ -100,7 +99,7 @@ def main(parent=None):
         dir_path_in_var.set(dir_path_in)
 
     # Window title: SSPFM Data Analysis: Step 2 = hyst to map
-    wdw_main_title(app, "SSPFM Data Analysis: Step 2 = hyst to map")
+    wdw_main_title(app, title)
 
     row = 3
 
@@ -116,11 +115,11 @@ def main(parent=None):
     entry_in = ttk.Entry(app, textvariable=dir_path_in_var)
     row = grid_item(entry_in, row, column=1, sticky="ew", increment=False)
     strg = "- Name: dir_path_in\n" \
-           "- Summary: Directory path for text loop files generated after " \
-           "the first step of the analysis (default: 'txt_loops')\n" \
+           "- Summary: Directory path for text nanoloop files generated " \
+           "after the first step of the analysis (default: 'nanoloops')\n" \
            "- Description: This parameter specifies the directory path" \
-           " where the text loop files generated after the first step of " \
-           "the analysis are located.\n" \
+           " where the text nanoloop files generated after the first step " \
+           "of the analysis are located.\n" \
            "- Value: String (directory path)."
     entry_in.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(entry_in, mess))
@@ -156,7 +155,7 @@ def main(parent=None):
     row = grid_item(entry_out, row, column=1, sticky="ew", increment=False)
     strg = "- Name: root_out\n" \
            "- Summary: Saving directory for the result of the analysis " \
-           "(optional, default: 'title_meas'_'yyyy-mm-dd-HHhMMm'_out_'mode'" \
+           "(optional, default: 'title_'_'yyyy-mm-dd-HHhMMm'_out_'mode'" \
            " directory in the same root)\n" \
            "- Description: This parameter specifies the directory where " \
            "the results of the analysis will be saved.\n" \
@@ -165,7 +164,7 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(entry_out, mess))
     browse_button_out = ttk.Button(app, text="Select", command=browse_directory)
     row = grid_item(browse_button_out, row, column=2)
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Hysteresis treatment
     label_hyst = ttk.Label(app, text="Hysteresis treatment",
@@ -294,7 +293,7 @@ def main(parent=None):
            "- Value: Boolean (True or False)"
     chck_del.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(chck_del, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Phase treatment
     label_pha = ttk.Label(app, text="Phase treatment", font=("Helvetica", 14))
@@ -408,7 +407,7 @@ def main(parent=None):
     locked_elec_slope_var.bind(
         "<Enter>",
         lambda event, mess=strg: show_tooltip(locked_elec_slope_var, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Differential treatment
     label_diff = ttk.Label(app, text="Differential treatment",
@@ -483,7 +482,7 @@ def main(parent=None):
            "(diff_domain_man is set to False)."
     entry_max.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(entry_max, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Electrostatic decoupling saturation treatment
     label_sat = ttk.Label(app, text="Electrostatic decoupling (saturation)",
@@ -556,7 +555,7 @@ def main(parent=None):
            "set to 'set'."
     entry_sat_max.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(entry_sat_max, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Plot and save
     label_chck = ttk.Label(app, text="Plot and save", font=("Helvetica", 14))
@@ -608,7 +607,7 @@ def main(parent=None):
            "- Value: Boolean (True or False)."
     chck_save.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(chck_save, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Submit button
     submit_button = ttk.Button(app, text="Start", command=launch)
