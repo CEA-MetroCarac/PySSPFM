@@ -1,8 +1,7 @@
 """
 --> Executable Script
-Module used to generate sspfm maps of selected ferroelectric measurements
-    - Generate multi sspfm maps from extraction of ferro measurements in txt
-    files
+Module used to generate sspfm maps of selected sample properties
+    - Generate multi sspfm maps from extraction of property in txt files
 """
 
 import os
@@ -13,11 +12,12 @@ import matplotlib.pyplot as plt
 
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.nanoloop.plot import subplots_dim
-from PySSPFM.utils.nanoloop_to_hyst.file import extract_measures
-from PySSPFM.utils.map.plot import disable_ax
-from PySSPFM.utils.map.main import mask_ref, final_image, sub_image
+from PySSPFM.utils.nanoloop_to_hyst.file import extract_properties
+from PySSPFM.utils.map.plot import disable_ax, final_map, intermediate_map
+from PySSPFM.utils.map.main import gen_mask_ref
 from PySSPFM.utils.map.matrix_processing import formatting_measure
-from PySSPFM.toolbox.map_correlation import cross_corr_arr, cross_corr_table
+from PySSPFM.toolbox.map_correlation import \
+    gen_correlation_array, plot_correlation_table
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
 from PySSPFM.settings import FIGSIZE
@@ -25,14 +25,14 @@ from PySSPFM.settings import FIGSIZE
 
 def main_list_map_reader(user_pars, dir_path_in, verbose=False):
     """
-    Generate multi sspfm maps from extraction of ferro measurements in txt files
+    Generate multi sspfm maps from extraction of properties in txt files
 
     Parameters
     ----------
     user_pars: dict
         Dict of all user parameters for the treatment
     dir_path_in: str
-        Path of ferro measurements txt directory (in)
+        Path of properties txt directory (in)
     verbose: bool, optional
         Activation key for verbosity
 
@@ -43,19 +43,19 @@ def main_list_map_reader(user_pars, dir_path_in, verbose=False):
     """
     assert os.path.isdir(dir_path_in)
 
-    # Extract all measurements
-    all_meas, dim_pix, dim_mic = extract_measures(dir_path_in)
+    # Extract all properties
+    all_prop, dim_pix, dim_mic = extract_properties(dir_path_in)
 
-    # Select multi measurements of interest
-    multi_meas = {f'{elem[1]} ({elem[0]})': all_meas[elem[0]][elem[1]]
+    # Select multi properties of interest
+    multi_prop = {f'{elem[1]} ({elem[0]})': all_prop[elem[0]][elem[1]]
                   for elem in user_pars['ind maps']}
 
-    coef_corr_arr = cross_corr_arr(list(multi_meas.values()))
-    corr_table = cross_corr_table(coef_corr_arr, multi_meas.keys())
+    coef_corr_arr = gen_correlation_array(list(multi_prop.values()))
+    corr_table = plot_correlation_table(coef_corr_arr, multi_prop.keys())
 
     # Define ref
     if user_pars['man mask'] is None:
-        ref = all_meas[user_pars['ref']['mode']][user_pars['ref']['meas']]
+        ref = all_prop[user_pars['ref']['mode']][user_pars['ref']['prop']]
     else:
         user_pars['ref'], ref = None, None
 
@@ -69,10 +69,10 @@ def main_list_map_reader(user_pars, dir_path_in, verbose=False):
 
     # Mask with condition on ref
     if user_pars['man mask'] is None:
-        res = mask_ref(ref, dim_pix, dim_mic=dim_mic,
-                       min_val=dict_ref["min val"], max_val=dict_ref["max val"],
-                       mode_man=dict_ref["interactive"],
-                       ref_str=dict_ref["meas"], dict_map=dict_map)
+        res = gen_mask_ref(
+            ref, dim_pix, dim_mic=dim_mic, min_val=dict_ref["min val"],
+            max_val=dict_ref["max val"], mode_man=dict_ref["interactive"],
+            ref_str=dict_ref["prop"], dict_map=dict_map)
         (min_val, max_val, mask) = res
         if dict_ref is not None:
             dict_ref["min val"], dict_ref["max val"] = min_val, max_val
@@ -82,7 +82,7 @@ def main_list_map_reader(user_pars, dir_path_in, verbose=False):
                 'max': f'{dict_ref["max val"]:.5f}' if
                 dict_ref["max val"] is not None else '_'
             }
-            lab = f'{dict_ref["meas"]} in [{string["min"]};{string["max"]}]'
+            lab = f'{dict_ref["prop"]} in [{string["min"]};{string["max"]}]'
             dict_ref['crit sel lab'] = lab
     # Manual mask
     else:
@@ -93,37 +93,38 @@ def main_list_map_reader(user_pars, dir_path_in, verbose=False):
     # Plot ref
     if ref:
         if verbose:
-            print('# reference meas')
+            print('# reference property')
         fig_ref = plt.figure(figsize=FIGSIZE)
         fig_ref.sfn = "list_map_reader_ref"
         axs_ref = formatting_fig(fig_ref, [1, 1], mask, nb_map=1,
                                  dict_map=None, dict_ref=None, dim_mic=None)
-        ref_str = f'ref meas: {user_pars["ref"]["meas"]}' \
+        ref_str = f'ref prop: {user_pars["ref"]["prop"]}' \
                   f' ({user_pars["ref"]["mode"]})'
-        treat_and_plot(fig_ref, axs_ref[0], ref, dim_pix, dim_mic=dim_mic,
-                       dict_interp=dict_interp, mask=mask, measure_str=ref_str,
-                       plot_ind=True)
+        tratment_plot_map(
+            fig_ref, axs_ref[0], ref, dim_pix, dim_mic=dim_mic,
+            dict_interp=dict_interp, mask=mask, prop_str=ref_str, plot_ind=True)
         fig_ref.tight_layout()
         maps += [fig_ref]
 
-    # Plot multi_meas
+    # Plot multi_prop
     if verbose:
         print('# multi mapping')
-    nb_map = len(list(multi_meas.keys()))
+    nb_map = len(list(multi_prop.keys()))
     fig_maps_dim = subplots_dim(nb_map)
     fig_maps = plt.figure(figsize=FIGSIZE)
     fig_maps.sfn = "list_map_reader_maps"
     axs_maps = formatting_fig(fig_maps, fig_maps_dim, mask, nb_map=nb_map,
                               dict_map=None, dict_ref=None, dim_mic=None)
-    # Generate a map for each ferro measurement
+    # Generate a map for each properties
     plot_ind = len(axs_maps) <= 10
-    for i, (lab_meas, meas) in enumerate(multi_meas.items()):
+    for i, (lab_prop, prop) in enumerate(multi_prop.items()):
         if verbose:
-            print(f'\t- {lab_meas}')
-        # Treat and plot map: measure
-        treat_and_plot(fig_maps, axs_maps[i], meas, dim_pix, dim_mic=dim_mic,
-                       dict_interp=dict_interp, mask=mask, measure_str=lab_meas,
-                       plot_ind=plot_ind)
+            print(f'\t- {lab_prop}')
+        # Treat and plot map: property
+        tratment_plot_map(
+            fig_maps, axs_maps[i], prop, dim_pix, dim_mic=dim_mic,
+            dict_interp=dict_interp, mask=mask, prop_str=lab_prop,
+            plot_ind=plot_ind)
     fig_maps.tight_layout()
     maps += [fig_maps]
     figures = corr_table + maps
@@ -131,10 +132,11 @@ def main_list_map_reader(user_pars, dir_path_in, verbose=False):
     return figures
 
 
-def treat_and_plot(fig, ax, measure, dim_pix, dim_mic=None, dict_interp=None,
-                   mask=None, measure_str=None, plot_ind=False):
+def tratment_plot_map(fig, ax, propertie, dim_pix, dim_mic=None,
+                      dict_interp=None, mask=None, prop_str=None,
+                      plot_ind=False):
     """
-    Treat measure map (interpolation, mask ...) and plot it
+    Treat property map (interpolation, mask ...) and plot it
 
     Parameters
     ----------
@@ -142,8 +144,8 @@ def treat_and_plot(fig, ax, measure, dim_pix, dim_mic=None, dict_interp=None,
         Figure object
     ax: plt.axes
         Axes object of the figure
-    measure: numpy.array(p) of float
-        Array of values for the considered measure
+    propertie: numpy.array(p) of float
+        Array of values for the considered property
     dim_pix: dict('x': ,'y':) of int
         Dict of map dimension for 'x' and 'y' axis (in pixel)
     dim_mic: dict('x': ,'y':) of float, optional
@@ -152,8 +154,8 @@ def treat_and_plot(fig, ax, measure, dim_pix, dim_mic=None, dict_interp=None,
         Dict of map interpolation parameters
     mask: list(q) or numpy.array(q) of int, optional
         List of index corresponding to the mask (q<p)
-    measure_str: str, optional
-        Title of ax: i.e. name of the measured parameter
+    prop_str: str, optional
+        Title of ax: i.e. name of the property parameter
     plot_ind: bool, optional
         If True, index in tab_plotted_index are plotted on the sub image
 
@@ -165,22 +167,22 @@ def treat_and_plot(fig, ax, measure, dim_pix, dim_mic=None, dict_interp=None,
     (raw_ext, raw_dim_fact, _, _, matrix_step2, interp_ext,
      _, _, matrix_step3b, index_blank, tab_all_index, tab_plotted_index,
      directions) = formatting_measure(
-        np.array(measure, dtype='f'), dim_pix, dim_mic=dim_mic,
+        np.array(propertie, dtype='f'), dim_pix, dim_mic=dim_mic,
         dict_interp=dict_interp, mask=mask)
 
     # Plot map
     if dict_interp is None:
-        sub_image(fig, ax, matrix_step2, dim_pix, ext=raw_ext,
-                  dim_fact=raw_dim_fact, tab_all_index=tab_all_index,
-                  tab_plotted_index=tab_plotted_index,
-                  directions=directions, plot_ind=plot_ind,
-                  ax_title=measure_str, highlight_pix=None)
+        intermediate_map(
+            fig, ax, matrix_step2, dim_pix, ext=raw_ext, dim_fact=raw_dim_fact,
+            tab_all_index=tab_all_index, tab_plotted_index=tab_plotted_index,
+            directions=directions, plot_ind=plot_ind, ax_title=prop_str,
+            highlight_pix=None)
     else:
-        final_image(fig, ax, matrix_step3b, dim_pix, ext=interp_ext,
-                    dim_fact=raw_dim_fact, tab_all_index=tab_all_index,
-                    tab_plotted_index=tab_plotted_index,
-                    directions=directions, index_blank=index_blank,
-                    ax_title=measure_str, highlight_pix=None)
+        final_map(
+            fig, ax, matrix_step3b, dim_pix, ext=interp_ext,
+            dim_fact=raw_dim_fact, tab_all_index=tab_all_index,
+            tab_plotted_index=tab_plotted_index, directions=directions,
+            index_blank=index_blank, ax_title=prop_str, highlight_pix=None)
 
 
 def formatting_fig(fig, fig_dim, mask, nb_map=None, dict_map=None,
@@ -201,7 +203,7 @@ def formatting_fig(fig, fig_dim, mask, nb_map=None, dict_map=None,
     dict_map: dict, optional
         Dict used for map annotation
     dict_ref: dict, optional
-        Dict on ref measurement condition to generate the mask
+        Dict on ref property condition to generate the mask
     dim_mic: dict('x': ,'y':) of float, optional
         Dict of map dimension for 'x' and 'y' axis (in microns)
 
@@ -261,8 +263,8 @@ def parameters():
     To complete by user of the script: return parameters for analysis
 
     - ind_maps: list(n, 2) of str
-        List of Measurement Modes and Names for Plotting.
-        It contains pairs of measurement modes and associated names in the
+        List of Property Modes and Names for Plotting.
+        It contains pairs of property modes and associated names in the
         format [['mode', 'name']].
         For example,
         [['off', 'charac tot fit: area'],
@@ -283,14 +285,14 @@ def parameters():
         This parameter is a list of pixel indices.
         - If the list of pixels is empty ( [] ), all files are selected.
         - If the list of pixels is None, the criterion of selection is made
-        with the reference measurement.
+        with the reference property.
         - If the list of pixels is [a, b, c ...], files of index a, b, c [...]
         are not selected.
     - ref: dict
         --> construct a mask with a criterion selection on ref values
         (valid if man_mask is None)
-        - mode: str --> mode of reference measurement chosen
-        - meas: str --> reference measurement chosen
+        - mode: str --> mode of reference property chosen
+        - prop: str --> reference property chosen
         - min val: float --> minimum value of ref required (if None no minimum
         value criterion) (valid if interactive is False)
         - max val: float --> maximum value of ref required (if None no maximum
@@ -300,9 +302,9 @@ def parameters():
         selection
 
     - dir_path_in: str
-        Ferroelectric measurements files directory (default: txt_ferro_meas)
-        This parameter specifies the directory containing the ferroelectric
-        measurements text files generated after the 2nd step of the analysis.
+        Properties files directory (default: properties)
+        This parameter specifies the directory containing the properties text
+        files generated after the 2nd step of the analysis.
     - dir_path_out: str
         Saving directory for analysis results figures
         (optional, default: toolbox directory in the same root)
@@ -322,7 +324,7 @@ def parameters():
         generated during the analysis process.
     """
     dir_path_in = tkf.askdirectory()
-    # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\txt_ferro_meas
+    # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
     dir_path_out = None
     # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
     # list_map_reader_2023-10-02-16h38m
@@ -340,7 +342,7 @@ def parameters():
                  'interp func': 'linear',
                  'man mask': [],
                  'ref': {'mode': 'off',
-                         'meas': 'charac tot fit: R_2 hyst',
+                         'prop': 'charac tot fit: R_2 hyst',
                          'fmt': '.5f',
                          'min val': 0.95,
                          'max val': None,
