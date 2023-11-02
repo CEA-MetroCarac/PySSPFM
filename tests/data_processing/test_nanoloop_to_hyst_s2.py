@@ -1,5 +1,5 @@
 """
-Test hyst_to_map_s2 methods
+Test nanoloop_to_hyst_s2 methods
 """
 
 import pytest
