@@ -1,6 +1,6 @@
 """
 --> Executable Script
-Graphical interface for pixel extremum analysis
+Graphical interface for sort and plot pixel extremum analysis
 (run sort_plot_pixel.main_sort_plot_pixel)
 """
 
@@ -10,9 +10,10 @@ from tkinter import ttk
 from tkinter import filedialog
 from datetime import datetime
 
+from PySSPFM.settings import get_setting
 from PySSPFM.toolbox.sort_plot_pixel import main_sort_plot_pixel as main_script
 from PySSPFM.gui.utils import \
-    (add_separator_grid, grid_item, show_tooltip,
+    (add_grid_separator, grid_item, show_tooltip,
      extract_var, init_secondary_wdw, wdw_main_title)
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
@@ -31,17 +32,18 @@ def main(parent=None):
     None
     """
     # Create the main or secondary window
-    app = init_secondary_wdw(parent=parent, wdw_title="Pixel extremum analysis")
+    title = "Sort and plot pixels"
+    app = init_secondary_wdw(parent=parent, wdw_title=title)
 
     # Set default parameter values
     default_user_parameters = {
         'dir path in': '',
         'dir path out': '',
-        'dir path in meas': '',
+        'dir path in prop': '',
         'dir path in loop': '',
         'dir path in pars': '',
-        'meas key': {'mode': 'off',
-                     'meas': 'charac tot fit: area'},
+        'prop key': {'mode': 'off',
+                     'prop': 'charac tot fit: area'},
         'list pixels': None,
         'reverse': False,
         'del 1st loop': True,
@@ -57,12 +59,12 @@ def main(parent=None):
         # Update the user_parameters with the new values from the widgets
         user_parameters['dir path in'] = dir_path_in_var.get()
         user_parameters['dir path out'] = extract_var(dir_path_out_var)
-        user_parameters['dir path in meas'] = extract_var(dir_path_in_meas_var)
+        user_parameters['dir path in prop'] = extract_var(dir_path_in_prop_var)
         user_parameters['dir path in loop'] = extract_var(dir_path_in_loop_var)
         user_parameters['file path in pars'] = \
             extract_var(file_path_in_pars_var)
-        user_parameters['meas key']['mode'] = mode_var.get()
-        user_parameters['meas key']['meas'] = meas_var.get()
+        user_parameters['prop key']['mode'] = mode_var.get()
+        user_parameters['prop key']['prop'] = prop_var.get()
         user_parameters['list pixels'] = extract_var(list_pix_var)
         user_parameters['reverse'] = reverse_var.get()
         user_parameters['del 1st loop'] = del_1st_loop_var.get()
@@ -97,9 +99,9 @@ def main(parent=None):
         dir_path_in = filedialog.askdirectory()
         dir_path_in_var.set(dir_path_in)
 
-    def browse_dir_meas():
-        dir_path_meas = filedialog.askdirectory()
-        dir_path_in_meas_var.set(dir_path_meas)
+    def browse_dir_prop():
+        dir_path_prop = filedialog.askdirectory()
+        dir_path_in_prop_var.set(dir_path_prop)
 
     def browse_dir_loop():
         dir_path_loop = filedialog.askdirectory()
@@ -114,7 +116,7 @@ def main(parent=None):
         dir_path_out_var.set(dir_path_out)
 
     # Window title: Pixel extremum analysis
-    wdw_main_title(app, "Pixel extremum analysis")
+    wdw_main_title(app, title)
 
     row = 3
 
@@ -146,33 +148,35 @@ def main(parent=None):
         if input_dir != "":
             output_dir = save_path_management(
                 input_dir, dir_path_out=None, save=True,
-                dirname="plot_pix_extrem", lvl=0, create_path=False,
+                dirname="sort_plot_pixel", lvl=0, create_path=False,
                 post_analysis=True)
         else:
             output_dir = ""
         return output_dir
 
-    # Function to generate the default input meas directory path
-    def generate_default_input_meas_dir(input_dir):
+    # Function to generate the default input properties directory path
+    def generate_default_input_props_dir(input_dir):
+        properties_folder_name = get_setting('properties folder name')
         if input_dir != "":
-            input_meas_dir = os.path.join(input_dir, 'txt_ferro_meas')
+            input_props_dir = os.path.join(input_dir, properties_folder_name)
         else:
-            input_meas_dir = ""
-        return input_meas_dir
+            input_props_dir = ""
+        return input_props_dir
 
     # Function to generate the default input loop directory path
     def generate_default_input_loop_dir(input_dir):
+        nanoloops_folder_name = get_setting('nanoloops folder name')
         if input_dir != "":
-            input_loop_dir = os.path.join(input_dir, 'txt_loops')
+            input_loop_dir = os.path.join(input_dir, nanoloops_folder_name)
         else:
             input_loop_dir = ""
         return input_loop_dir
 
     # Function to generate the default input pars file path
     def generate_default_input_pars_file(input_dir):
+        parameters_file_name = get_setting('parameters file name')
         if input_dir != "":
-            input_pars_file = os.path.join(input_dir, 'results',
-                                           'saving_parameters.txt')
+            input_pars_file = os.path.join(input_dir, parameters_file_name)
         else:
             input_pars_file = ""
         return input_pars_file
@@ -183,11 +187,12 @@ def main(parent=None):
         def_output_dir = generate_default_output_dir(input_dir)
         dir_path_out_var.set(def_output_dir)
 
-    # Function to update the default input meas dir path when input dir changes
-    def update_default_input_meas_dir():
+    # Function to update the default input properties dir path when input
+    # dir changes
+    def update_default_input_props_dir():
         input_dir = dir_path_in_var.get()
-        def_input_meas_dir = generate_default_input_meas_dir(input_dir)
-        dir_path_in_meas_var.set(def_input_meas_dir)
+        def_input_props_dir = generate_default_input_props_dir(input_dir)
+        dir_path_in_prop_var.set(def_input_props_dir)
 
     # Function to update the default input loop dir path when input dir changes
     def update_default_input_loop_dir():
@@ -205,9 +210,9 @@ def main(parent=None):
     dir_path_in_var.trace_add("write",
                               lambda *args: update_default_output_dir())
 
-    # Bind the function (input meas dir) to the input directory widget
+    # Bind the function (input prop dir) to the input directory widget
     dir_path_in_var.trace_add("write",
-                              lambda *args: update_default_input_meas_dir())
+                              lambda *args: update_default_input_props_dir())
 
     # Bind the function (input loop dir) to the input directory widget
     dir_path_in_var.trace_add("write",
@@ -217,41 +222,41 @@ def main(parent=None):
     dir_path_in_var.trace_add(
         "write", lambda *args: update_default_input_pars_file())
 
-    # Directory measurements (in)
+    # Directory properties (in)
     default_input_dir = dir_path_in_var.get()
-    default_input_meas_dir = generate_default_output_dir(default_input_dir)
-    label_meas = ttk.Label(app, text="Directory measurements (in) (*):")
-    row = grid_item(label_meas, row, column=0, sticky="e", increment=False)
-    dir_path_in_meas_var = tk.StringVar()
-    dir_path_in_meas_var.set(default_input_meas_dir)
-    entry_meas = ttk.Entry(app, textvariable=dir_path_in_meas_var)
-    row = grid_item(entry_meas, row, column=1, sticky="ew", increment=False)
-    strg = "- Name: dir_path_in_meas\n" \
-           "- Summary: Ferroelectric measurements files directory " \
-           "(optional, default: txt_ferro_meas)\n" \
+    default_input_props_dir = generate_default_output_dir(default_input_dir)
+    label_prop = ttk.Label(app, text="Directory properties (in) (*):")
+    row = grid_item(label_prop, row, column=0, sticky="e", increment=False)
+    dir_path_in_prop_var = tk.StringVar()
+    dir_path_in_prop_var.set(default_input_props_dir)
+    entry_prop = ttk.Entry(app, textvariable=dir_path_in_prop_var)
+    row = grid_item(entry_prop, row, column=1, sticky="ew", increment=False)
+    strg = "- Name: dir_path_in_prop\n" \
+           "- Summary: Properties files directory " \
+           "(optional, default: properties)\n" \
            "- Description: This parameter specifies the directory containing " \
-           "the ferroelectric measurements text files generated after the " \
-           "2nd step of the analysis.\n" \
+           "the properties text files generated after the 2nd step of the " \
+           "analysis.\n" \
            "- Value: It should be a string representing a directory path."
-    entry_meas.bind("<Enter>",
-                    lambda event, mess=strg: show_tooltip(entry_meas, mess))
-    browse_button_meas = ttk.Button(app, text="Browse", command=browse_dir_meas)
-    row = grid_item(browse_button_meas, row, column=2)
+    entry_prop.bind("<Enter>",
+                    lambda event, mess=strg: show_tooltip(entry_prop, mess))
+    browse_button_prop = ttk.Button(app, text="Browse", command=browse_dir_prop)
+    row = grid_item(browse_button_prop, row, column=2)
 
     # Directory txt loop (in)
     default_input_dir = dir_path_in_var.get()
     default_input_loop_dir = generate_default_output_dir(default_input_dir)
-    label_loop = ttk.Label(app, text="Directory txt loops (in) (*):")
+    label_loop = ttk.Label(app, text="Directory nanoloops (in) (*):")
     row = grid_item(label_loop, row, column=0, sticky="e", increment=False)
     dir_path_in_loop_var = tk.StringVar()
     dir_path_in_loop_var.set(default_input_loop_dir)
     entry_loop = ttk.Entry(app, textvariable=dir_path_in_loop_var)
     row = grid_item(entry_loop, row, column=1, sticky="ew", increment=False)
     strg = "- Name: dir_path_in_loop\n" \
-           "- Summary: Txt loop files directory " \
-           "(optional, default: txt_loops)\n" \
+           "- Summary: Txt nanoloop files directory " \
+           "(optional, default: nanoloops)\n" \
            "- Description: This parameter specifies the directory containing " \
-           "the loop text files generated after the " \
+           "the nanoloop text files generated after the " \
            "1st step of the analysis.\n" \
            "- Value: It should be a string representing a directory path."
     entry_loop.bind("<Enter>",
@@ -271,7 +276,7 @@ def main(parent=None):
     row = grid_item(entry_pars, row, column=1, sticky="ew", increment=False)
     strg = "- Name: file_path_in_pars\n" \
            "- Summary: Measurement and analysis parameters txt file " \
-           "(optional, default: results/saving_parameters.txt)\n" \
+           "(optional, default: parameters.txt)\n" \
            "- Description: This parameter specifies the file containing " \
            "measurement and analysis parameters generated after the " \
            "2nd step of the analysis.\n" \
@@ -301,42 +306,42 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(entry_out, mess))
     browse_button_out = ttk.Button(app, text="Select", command=browse_dir_out)
     row = grid_item(browse_button_out, row, column=2)
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
-    # Section title: Measurement
-    label_meas = ttk.Label(app, text="Measurement", font=("Helvetica", 14))
-    row = grid_item(label_meas, row, column=0, sticky="ew", columnspan=3)
+    # Section title: Property
+    label_prop = ttk.Label(app, text="Property", font=("Helvetica", 14))
+    row = grid_item(label_prop, row, column=0, sticky="ew", columnspan=3)
 
     # Mode
     label_mode = ttk.Label(app, text="Mode:")
     row = grid_item(label_mode, row, column=0, sticky="e", increment=False)
     mode_var = ttk.Combobox(app, values=["off", "on", "coupled"])
-    mode_var.set(user_parameters["meas key"]['mode'])
+    mode_var.set(user_parameters["prop key"]['mode'])
     row = grid_item(mode_var, row, column=1, sticky="ew")
     strg = "- Name: mode\n" \
-           "- Summary: Mode used for measurement.\n" \
+           "- Summary: Mode used for property.\n" \
            "- Description: This parameter specifies the mode used for " \
-           "measurement.\n" \
+           "property.\n" \
            "- Value: A string with three possible values: 'on,' 'off,' or " \
            "'coupled.'"
     mode_var.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(mode_var, mess))
 
-    # Measurement
-    label_meas_name = ttk.Label(app, text="Measurement:")
-    row = grid_item(label_meas_name, row, column=0, sticky="e", increment=False)
-    meas_var = tk.StringVar()
-    meas_var.set(user_parameters['meas key']['meas'])
-    entry_meas_name = ttk.Entry(app, textvariable=meas_var)
-    row = grid_item(entry_meas_name, row, column=1, sticky="ew")
-    strg = "- Name: meas\n" \
-           "- Summary: Name of the measurement.\n" \
+    # Property
+    label_prop_name = ttk.Label(app, text="Property:")
+    row = grid_item(label_prop_name, row, column=0, sticky="e", increment=False)
+    prop_var = tk.StringVar()
+    prop_var.set(user_parameters['prop key']['prop'])
+    entry_prop_name = ttk.Entry(app, textvariable=prop_var)
+    row = grid_item(entry_prop_name, row, column=1, sticky="ew")
+    strg = "- Name: prop\n" \
+           "- Summary: Name of the propurement.\n" \
            "- Description: This parameter represents the name of the " \
-           "measurement.\n" \
-           "- Value: A string that contains the name of the measurement."
-    entry_meas_name.bind(
-        "<Enter>", lambda event, mess=strg: show_tooltip(entry_meas_name, mess))
-    row = add_separator_grid(app, row=row)
+           "property.\n" \
+           "- Value: A string that contains the name of the property."
+    entry_prop_name.bind(
+        "<Enter>", lambda event, mess=strg: show_tooltip(entry_prop_name, mess))
+    row = add_grid_separator(app, row=row)
 
     # Section title: Pixel selection
     label_meas = ttk.Label(app, text="Pixel selection", font=("Helvetica", 14))
@@ -359,7 +364,7 @@ def main(parent=None):
            "\t--> if list_pix is [a, b, c ...] file of index a, b, c [...] " \
            "are analyzed\n" \
            "\t--> if list_pix is None: all pixels are analyzed in ascending " \
-           "order in term of value of meas"
+           "order in term of value of prop"
     entry_list_pix.bind("<Enter>",
                         lambda event, mess=strg: show_tooltip(entry_list_pix,
                                                               mess))
@@ -379,7 +384,7 @@ def main(parent=None):
            "- Value: Boolean (True or False)."
     chck_reverse.bind("<Enter>",
                       lambda event, mess=strg: show_tooltip(chck_reverse, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Loop plotting
     label_pha = ttk.Label(app, text="Loop plotting", font=("Helvetica", 14))
@@ -405,7 +410,7 @@ def main(parent=None):
            "- Value: Boolean (True or False)"
     chck_del.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(chck_del, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Map
     label_title_map = ttk.Label(app, text="Map", font=("Helvetica", 14))
@@ -441,7 +446,7 @@ def main(parent=None):
            " 'linear', or 'cubic'."
     interp_func_var.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(interp_func_var, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Save and plot
     label_chck = ttk.Label(app, text="Save and plot", font=("Helvetica", 14))
@@ -493,7 +498,7 @@ def main(parent=None):
            "- Value: Boolean (True or False)."
     chck_save.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(chck_save, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Submit button
     submit_button = ttk.Button(app, text="Start", command=launch)
