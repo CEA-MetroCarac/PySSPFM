@@ -46,6 +46,13 @@ def phase_calibration(phase, write_voltage, dict_pha, dict_str=None,
     assert pha_corr in ['raw', 'affine', 'offset', 'up_down'], \
         "'pha_corr' should be 'raw', 'affine', 'offset', 'up_down'"
 
+    if 'counterclockwise' not in dict_pha.keys():
+        dict_pha = gen_dict_pha(
+            dict_pha, pha_corr, pha_fwd=dict_pha["pha fwd"],
+            pha_rev=dict_pha["pha rev"], func=dict_pha['func'],
+            main_elec=dict_pha["main elec"],
+            locked_elec_slope=dict_pha["locked elec slope"])
+
     # No calibration for raw mode
     if pha_corr == 'raw':
         result = {'corr': pha_corr, 'func': dict_pha['func']}
@@ -55,44 +62,41 @@ def phase_calibration(phase, write_voltage, dict_pha, dict_str=None,
     # Hysteresis analysis rotation / polarisation analysis
     # (Neumayer et al.: doi: 10.1063 / 5.0011631)
     else:
-        bias_pola_target, pola_pha_target, bias_pha_target = {}, {}, {}
+        bias_pola_target, bias_pha_target = {}, {}
         if dict_pha["grounded tip"]:
             bias_pola_target["low"] = "down"
             bias_pola_target["high"] = "up"
         else:
             bias_pola_target["low"] = "up"
             bias_pola_target["high"] = "down"
-
-        # Valid only for a majority electrostatic component
+        # Valid only for a majority electrostatic component in on field
         # (the electrostatic component imposes the phase value)
         if dict_str["label"] == 'On field' and dict_pha["main elec"]:
-            if dict_pha["locked elec slope"] is None:
+            if dict_pha["locked elec slope"] == "positive":
+                bias_pha_target["low"] = dict_pha["pha rev"]
+                bias_pha_target["high"] = dict_pha["pha fwd"]
+            elif dict_pha["locked elec slope"] == "negative":
+                bias_pha_target["low"] = dict_pha["pha fwd"]
+                bias_pha_target["high"] = dict_pha["pha rev"]
+            elif dict_pha["locked elec slope"] is None:
                 # Grounded tip -> negative slope of electrostatic component
                 if dict_pha["grounded tip"]:
-                    pola_pha_target["down"] = dict_pha["pha fwd"]
-                    pola_pha_target["up"] = dict_pha["pha rev"]
+                    bias_pha_target["low"] = dict_pha["pha fwd"]
+                    bias_pha_target["high"] = dict_pha["pha rev"]
                 # Grounded bottom -> positive slope of electrostatic component
                 else:
-                    pola_pha_target["down"] = dict_pha["pha rev"]
-                    pola_pha_target["up"] = dict_pha["pha fwd"]
-            elif dict_pha["locked elec slope"] == "positive":
-                pola_pha_target["down"] = dict_pha["pha rev"]
-                pola_pha_target["up"] = dict_pha["pha fwd"]
-            elif dict_pha["locked elec slope"] == "negative":
-                pola_pha_target["down"] = dict_pha["pha fwd"]
-                pola_pha_target["up"] = dict_pha["pha rev"]
+                    bias_pha_target["low"] = dict_pha["pha rev"]
+                    bias_pha_target["high"] = dict_pha["pha fwd"]
             else:
                 raise NotImplementedError("locked_elec_slope should be None "
                                           "or 'negative' or 'positive'")
         else:
-            if dict_pha["positive d33"]:
-                pola_pha_target["down"] = dict_pha["pha rev"]
-                pola_pha_target["up"] = dict_pha["pha fwd"]
+            if dict_pha['counterclockwise']:
+                bias_pha_target["low"] = dict_pha["pha rev"]
+                bias_pha_target["high"] = dict_pha["pha fwd"]
             else:
-                pola_pha_target["down"] = dict_pha["pha fwd"]
-                pola_pha_target["up"] = dict_pha["pha rev"]
-        for key, value in bias_pola_target.items():
-            bias_pha_target[key] = pola_pha_target[value]
+                bias_pha_target["low"] = dict_pha["pha fwd"]
+                bias_pha_target["high"] = dict_pha["pha rev"]
 
         # Variation of phase with bias
         fig_pha, positive_pha_grad = phase_analysis(
@@ -616,21 +620,28 @@ def gen_dict_pha(meas_pars, pha_corr, pha_fwd=0, pha_rev=180, func=None,
     """
     func = func or np.cos
 
-    if meas_pars['Bias app'].lower() == 'sample':
-        grounded_tip = True
-    elif meas_pars['Bias app'].lower() == 'tip':
-        grounded_tip = False
-    else:
-        raise IOError('"Bias app" in [\'Sample\',\'Tip\']')
+    try:
+        if meas_pars['Bias app'].lower() == 'sample':
+            grounded_tip = True
+        elif meas_pars['Bias app'].lower() == 'tip':
+            grounded_tip = False
+        else:
+            raise IOError('"Bias app" in [\'Sample\',\'Tip\']')
+    except KeyError:
+        grounded_tip = meas_pars['grounded tip']
 
-    if meas_pars['Sign of d33'].lower() == 'positive':
-        positive_d33 = True
-    elif meas_pars['Sign of d33'].lower() == 'negative':
-        positive_d33 = False
-    else:
-        raise IOError('"Sign of d33" in [\'positive\',\'negative\']')
+    try:
+        if meas_pars['Sign of d33'].lower() == 'positive':
+            positive_d33 = True
+        elif meas_pars['Sign of d33'].lower() == 'negative':
+            positive_d33 = False
+        else:
+            raise IOError('"Sign of d33" in [\'positive\',\'negative\']')
+    except KeyError:
+        positive_d33 = meas_pars['positive d33']
 
-    counterclockwise = bool(positive_d33) if grounded_tip else not positive_d33
+    counterclockwise = (positive_d33 and grounded_tip) or \
+                       (not positive_d33 and not grounded_tip)
 
     dict_pha = {
         'grounded tip': grounded_tip,
