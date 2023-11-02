@@ -1,5 +1,6 @@
 """
-Module used for the scripts of sspfm 1st step data analysis (conv seg to hyst)
+Module used for the scripts of sspfm 1st step data analysis
+(convert datacube to nanoloop)
     - Data analysis toolbox
 """
 
@@ -195,7 +196,7 @@ class Segment:
         """
         sho_peak = ShoPeakFit()
         if guess_init:
-            init_pars = {
+            init_params = {
                 "ampli": {"value": guess_init[0], "vary": True, "min": 0,
                           "max": None},
                 "coef": {"value": guess_init[1], "vary": True, "min": 0,
@@ -207,8 +208,8 @@ class Segment:
                 "slope": {"value": guess_init[4], "vary": False, "min": None,
                           "max": None}}
         else:
-            init_pars = None
-        sho_peak.fit(self.freq_tab, self.amp_tab, init_pars=init_pars)
+            init_params = None
+        sho_peak.fit(self.freq_tab, self.amp_tab, init_params=init_params)
         peak_pars = sho_peak.report_fit_results()
 
         # Extraction of parameters
@@ -248,7 +249,7 @@ class Segment:
         # Detect if there is a switch or not and sign of the function
         switch, coef_func = self.phase_fit_analysis(y)
         # Free parameters and guess init
-        init_pars = {
+        init_params = {
             "ampli": {"value": coef_func * 180 / np.pi, "vary": True,
                       "min": 0 if coef_func == 1 else 2*coef_func * 180/np.pi,
                       "max": 0 if coef_func == -1 else 2*coef_func * 180/np.pi},
@@ -261,7 +262,7 @@ class Segment:
             "slope": {"value": 0, "vary": False, "min": None, "max": None}}
         # Creation of Curve and fit
         sho_phase = ShoPhaseFit(switch=switch)
-        sho_phase.fit(x, y, init_pars=init_pars)
+        sho_phase.fit(x, y, init_params=init_params)
         # Extraction of parameters
         self.pha_best_fit = sho_phase.eval(self.freq_tab)
         self.pha = sho_phase.eval(self.res_freq)
