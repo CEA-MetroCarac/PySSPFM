@@ -4,7 +4,7 @@ Test gen_datas methods
 from pytest import approx
 import numpy as np
 
-from examples.utils.nanoloop.ex_gen_datas import ex_gen_loops
+from examples.utils.nanoloop.ex_gen_data import ex_gen_loops
 
 
 # class TestGenDatas(unittest.TestCase):
