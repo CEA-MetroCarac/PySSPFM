@@ -1,5 +1,5 @@
 """
-Example of gen_datas methods
+Example of gen_data methods
 """
 import random
 import numpy as np
@@ -104,7 +104,8 @@ def ex_gen_segments(mode, make_plots=False):
 if __name__ == '__main__':
     # saving path management
     dir_path_out, save_plots = save_path_example(
-        "seg_to_loop_gen_datas", save_example_exe=True, save_test_exe=False)
+        "datacube_to_nanoloop_gen_data", save_example_exe=True,
+        save_test_exe=False)
     figs = []
     figs += ex_gen_segments('fit', make_plots=True)
     figs += ex_gen_segments('dfrt', make_plots=True)
