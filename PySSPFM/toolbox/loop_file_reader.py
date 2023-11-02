@@ -1,6 +1,6 @@
 r"""
 --> Executable Script
-Extraction of .txt local hysteresis of the sample surface file datas and
+Extraction of .txt local nanoloop of the sample surface file data and
 visualisation
 Inspired by SS_PFM script, Nanoscope, Bruker
 """
@@ -13,8 +13,8 @@ import numpy as np
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.raw_extraction import csv_meas_sheet_extract
 from PySSPFM.utils.nanoloop.plot import plot_sspfm_loops
-from PySSPFM.utils.nanoloop.file import extract_loop
-from PySSPFM.utils.nanoloop.analysis import treat_loop
+from PySSPFM.utils.nanoloop.file import extract_nanoloop_data
+from PySSPFM.utils.nanoloop.analysis import nanoloop_treatment
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
 
@@ -27,13 +27,13 @@ def main_loop_file_reader(file_path, csv_path=None, dict_pha=None,
     Parameters
     ----------
     file_path: str
-        Path of txt loop file (in)
+        Path of txt nanoloop file (in)
     csv_path: str, optional
         Path of csv params measurement file (in)
     dict_pha: dict, optional
         Dict used for phase treatment
     del_1st_loop: bool, optional
-        If True, remove the first loop for analysis
+        If True, remove the first nanoloop for analysis
     verbose: bool, optional
         Activation key for verbosity
     make_plots: bool, optional
@@ -59,17 +59,17 @@ def main_loop_file_reader(file_path, csv_path=None, dict_pha=None,
     # SSPFM params extraction
     _, sign_pars = csv_meas_sheet_extract(csv_path, verbose=verbose)
 
-    # Extract loop data
-    datas_dict, dict_str = extract_loop(file_path)
-    # Treat loop data
-    res = treat_loop(datas_dict, sign_pars, dict_pha=dict_pha,
-                     dict_str=dict_str)
+    # Extract nanoloop data
+    data_dict, dict_str = extract_nanoloop_data(file_path)
+    # Treat nanoloop data
+    res = nanoloop_treatment(
+        data_dict, sign_pars, dict_pha=dict_pha, dict_str=dict_str)
     (loop_tab, pha_calib, _) = res
 
-    # Plot loops
+    # Plot nanoloops
     if make_plots:
-        figures = plot_sspfm_loops(loop_tab, pha_calib, dict_str=dict_str,
-                                   del_1st_loop=del_1st_loop)
+        figures = plot_sspfm_loops(
+            loop_tab, pha_calib, dict_str=dict_str, del_1st_loop=del_1st_loop)
         return figures
     else:
         return loop_tab
@@ -81,12 +81,12 @@ def parameters():
 
     - del_1st_loop: bool
         Delete First Loop
-        If this parameter is set to True, it deletes the first loop of the
+        If this parameter is set to True, it deletes the first nanoloop of the
         analysis, which is typically used for calculating the mean hysteresis.
         This can be useful when the first write voltage values are equal to
         zero, indicating that the material is in a pristine state, and the
-        loop shape would be different from the polarized state.
-        Deleting the first loop helps to avoid artifacts in the analysis.
+        nanoloop shape would be different from the polarized state.
+        Deleting the first nanoloop helps to avoid artifacts in the analysis.
         This parameter has influence only on figure.
     - corr: str
         Phase Correction Mode
@@ -139,7 +139,7 @@ def parameters():
 
     - file_path_in: str
         File path for the text loop file generated after the first step of
-        the analysis (default: in the 'txt_loops' directory).
+        the analysis (default: in the 'nanoloops' directory).
         This parameter specifies the file path where the text loop file
         generated after the first step of the analysis is located.
     - dir_path_out: str
@@ -169,7 +169,7 @@ def parameters():
 
     # Get file path
     file_path_in = tkf.askopenfilename()
-    # file_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\txt_loops\
+    # file_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\nanoloops\
     # off_f_KNN500n.0_00001.txt
     dir_path_out = None
     # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
