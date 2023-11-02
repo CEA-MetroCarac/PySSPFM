@@ -7,7 +7,7 @@ from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.nanoloop.plot import \
     plot_sspfm_loops, plot_multiloop, plot_ckpfm
-from PySSPFM.utils.nanoloop.gen_datas import gen_loops
+from PySSPFM.utils.nanoloop.gen_data import gen_nanoloops
 from PySSPFM.utils.nanoloop.analysis import MultiLoop, MeanLoop, gen_ckpfm_meas
 
 
@@ -86,8 +86,8 @@ def example_analysis(mode, make_plots=False, verbose=False):
     pars, pha_calib, pha_val, noise_pars = init_pars()
     np.random.seed(0)
 
-    # Generate loop data
-    out = gen_loops(pars, noise_pars=noise_pars, pha_val=pha_val)
+    # Generate nanoloop data
+    out = gen_nanoloops(pars, noise_pars=noise_pars, pha_val=pha_val)
     write_voltage, read_voltage, amp, pha = out
 
     # Set plot properties based on the mode
@@ -108,7 +108,7 @@ def example_analysis(mode, make_plots=False, verbose=False):
             list(elem_volt), list(elem_amp), list(elem_pha),
             read_voltage[len(loop_tab)], pha_calib, mode=plot_dict['label']))
 
-    # Generate and plot SSPFM loops
+    # Generate and plot SSPFM nanoloops
     figs_loop = plot_sspfm_loops(loop_tab, pha_calib, dict_str=plot_dict)
     figs_analysis.extend(figs_loop)
 
