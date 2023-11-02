@@ -298,7 +298,7 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='dfrt',
                 figs.append(fig)
 
     if dir_path_out_fig is None:
-        figures_folder_name = get_setting('parameters file name')
+        figures_folder_name = get_setting('figures folder name')
         dir_path_out_fig = os.path.join(root_out, figures_folder_name)
     print_plots(figs, save_plots=save_plots, show_plots=show_plots,
                 dirname=dir_path_out_fig, transparent=False)
