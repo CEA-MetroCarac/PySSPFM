@@ -1,5 +1,6 @@
 """
-Module used for the scripts of sspfm 2d step data analysis (conv hyst to map)
+Module used for the scripts of sspfm 2d step data analysis
+(convert nanoloop to hyst)
     - Electrostatic analysis toolbox
 """
 
@@ -30,7 +31,7 @@ def btfly_analysis(write, amp, make_plots=False, dict_str=None):
     Returns
     -------
     imprint: float
-        Imprint of butterfly loop (in V)
+        Imprint of butterfly nanoloop (in V)
     fig: plt.figure
         Figure of butterfly analysis
     """
@@ -192,10 +193,10 @@ def offset_analysis(read_volt, offset, make_plots=False, dict_str=None):
 def differential_analysis(loop_on, loop_off, offset_off=0, bias_min=-5.,
                           bias_max=5., dict_str=None, make_plots=False):
     """
-    Electrostatic analysis: method based on 'on' and 'off' field hysteresis loop
-    difference to decouple electrostatic from ferroelectric contribution
-    (x_0=CPD valid if the only origin of offset for off field measurement is
-    electrostatic)
+    Electrostatic analysis: method based on 'on' and 'off' field hysteresis
+    nanoloop difference to decouple electrostatic from ferroelectric
+    contribution (x_0=CPD valid if the only origin of offset for off field
+    measurement is electrostatic)
     N. Balke et al. « Current and Surface Charge Modified Hysteresis Loops in
     Ferroelectric Thin Films ». Journal of Applied Physics 118, nᵒ 7 2015.
     https://doi.org/10.1063/1.4927811.
@@ -240,15 +241,15 @@ def differential_analysis(loop_on, loop_off, offset_off=0, bias_min=-5.,
             R² of differential line regression
     fig: plt.figure
     """
-    out = diff_loop(loop_on, loop_off, offset_off=offset_off)
+    out = gen_differential_loop(loop_on, loop_off, offset_off=offset_off)
     (write_volt_left, diff_piezorep_left, write_volt_right, diff_piezorep_right,
      diff_piezorep_mean) = out
 
     diff_piezorep_grad = np.gradient(diff_piezorep_mean, write_volt_right)
 
     fig = []
-    (_, _, fit_res) = linreg_diff(write_volt_right, diff_piezorep_mean,
-                                  bias_min, bias_max)
+    (_, _, fit_res) = linreg_differential(
+        write_volt_right, diff_piezorep_mean, bias_min, bias_max)
     (a_diff, y_0_diff, x_0_diff, r_square, diff_fit) = fit_res
     if make_plots:
         fig = plot_differential_analysis(
@@ -267,7 +268,7 @@ def differential_analysis(loop_on, loop_off, offset_off=0, bias_min=-5.,
     return mean_voltage, diff_piezorep_mean, diff_res, fig
 
 
-def linreg_diff(write_volt, piezorep_diff, bias_min=-5., bias_max=5.):
+def linreg_differential(write_volt, piezorep_diff, bias_min=-5., bias_max=5.):
     """
     Linear regression analysis for differential piezoresponse
 
@@ -311,7 +312,7 @@ def linreg_diff(write_volt, piezorep_diff, bias_min=-5., bias_max=5.):
     return red_write_volt, red_piezorep_diff, fit_res
 
 
-def diff_loop(loop_on, loop_off, offset_off=0):
+def gen_differential_loop(loop_on, loop_off, offset_off=0):
     """
     Construct differential on / off field piezoresponse loop
 
@@ -341,11 +342,11 @@ def diff_loop(loop_on, loop_off, offset_off=0):
         field difference (in a.u or nm)
     """
     # Subtract on and off field hysteresis loop
-    write_volt_left, diff_piezorep_left = on_off_sub(
+    write_volt_left, diff_piezorep_left = substract_on_off_loop(
         loop_off.write_volt_left, loop_off.piezorep_left,
         loop_on.write_volt_left, loop_on.piezorep_left,
         offset_off=offset_off)
-    write_volt_right, diff_piezorep_right = on_off_sub(
+    write_volt_right, diff_piezorep_right = substract_on_off_loop(
         loop_off.write_volt_right, loop_off.piezorep_right,
         loop_on.write_volt_right, loop_on.piezorep_right,
         offset_off=offset_off)
@@ -358,8 +359,8 @@ def diff_loop(loop_on, loop_off, offset_off=0):
             diff_piezorep_right, diff_piezorep_mean)
 
 
-def on_off_sub(write_voltage_off, pr_off, write_voltage_on, pr_on,
-               offset_off=0):
+def substract_on_off_loop(write_voltage_off, pr_off, write_voltage_on, pr_on,
+                          offset_off=0):
     """
     Find the difference between on and off field piezoresponse
 
