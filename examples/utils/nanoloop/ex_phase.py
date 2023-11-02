@@ -6,7 +6,7 @@ import numpy as np
 from examples.utils.nanoloop.ex_analysis import init_pars
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
-from PySSPFM.utils.nanoloop.gen_datas import gen_loops
+from PySSPFM.utils.nanoloop.gen_data import gen_nanoloops
 from PySSPFM.utils.nanoloop.phase import phase_calibration, gen_dict_pha
 
 
@@ -46,9 +46,9 @@ def ex_phase_calibration(pha_corr='raw', make_plots=False):
     plot_dict = [plot_dict_on, plot_dict_off]
 
     for cont, mode in enumerate(['on', 'off']):
-        # Generate loop datas
-        write_voltage, _, _, pha = gen_loops(pars, noise_pars=noise_pars,
-                                             pha_val=pha_val)
+        # Generate nanoloop data
+        write_voltage, _, _, pha = gen_nanoloops(
+            pars, noise_pars=noise_pars, pha_val=pha_val)
 
         # Add affine background to phase signal
         pha[mode] = [elem * affine_bck_pha['a'] + affine_bck_pha['b']
