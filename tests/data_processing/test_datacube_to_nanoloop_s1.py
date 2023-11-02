@@ -1,5 +1,5 @@
 """
-Test seg_to_loop_s1 methods
+Test datacube_to_nanoloop_s1 methods
 """
 
 from examples.data_processing.ex_datacube_to_nanoloop_s1 import ex_single_script
