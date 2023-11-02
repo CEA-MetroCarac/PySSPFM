@@ -13,7 +13,7 @@ from datetime import datetime
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.toolbox.map_correlation import main_map_correlation as main_script
 from PySSPFM.gui.utils import \
-    (add_separator_grid, grid_item, show_tooltip, extract_var,
+    (add_grid_separator, grid_item, show_tooltip, extract_var,
      init_secondary_wdw, wdw_main_title)
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
@@ -32,7 +32,8 @@ def main(parent=None):
     None
     """
     # Create the main or secondary window
-    app = init_secondary_wdw(parent=parent, wdw_title="Map correlation")
+    title = "Map correlation"
+    app = init_secondary_wdw(parent=parent, wdw_title=title)
 
     # Set default parameter values
     ind_maps = [['off', 'charac tot fit: area'],
@@ -42,7 +43,7 @@ def main(parent=None):
     default_user_parameters = {
         'dir path in': '',
         'dir path out': '',
-        'dir path in meas': '',
+        'dir path in prop': '',
         'dir path in loop': '',
         'dir path in pars': '',
         'ind maps': ind_maps,
@@ -91,7 +92,7 @@ def main(parent=None):
         dir_path_out_var.set(dir_path_out)
 
     # Window title: Map correlation
-    wdw_main_title(app, "Map correlation")
+    wdw_main_title(app, title)
 
     row = 3
 
@@ -107,11 +108,11 @@ def main(parent=None):
     entry_in = ttk.Entry(app, textvariable=dir_path_in_var)
     row = grid_item(entry_in, row, column=1, sticky="ew", increment=False)
     strg = "- Name: dir_path_in\n" \
-           "- Summary: Ferroelectric measurements files directory " \
-           "(default: txt_ferro_meas)\n" \
+           "- Summary: Properties files directory " \
+           "(default: properties)\n" \
            "- Description: This parameter specifies the directory containing " \
-           "the ferroelectric measurements text files generated after the " \
-           "2nd step of the analysis.\n" \
+           "the properties text files generated after the 2nd step of the " \
+           "analysis.\n" \
            "- Value: It should be a string representing a directory path."
     entry_in.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(entry_in, mess))
@@ -158,34 +159,34 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(entry_out, mess))
     browse_button_out = ttk.Button(app, text="Select", command=browse_dir_out)
     row = grid_item(browse_button_out, row, column=2)
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
-    # Section title: Measurements
-    label_meas = ttk.Label(app, text="Measurements", font=("Helvetica", 14))
-    row = grid_item(label_meas, row, column=0, sticky="ew", columnspan=3)
+    # Section title: Properties
+    label_prop = ttk.Label(app, text="Properties", font=("Helvetica", 14))
+    row = grid_item(label_prop, row, column=0, sticky="ew", columnspan=3)
 
-    # Measurement
-    label_ind = ttk.Label(app, text="Measurement:")
+    # Property
+    label_ind = ttk.Label(app, text="Property:")
     row = grid_item(label_ind, row, column=0, sticky="e", increment=False)
     ind_maps_var = tk.StringVar()
     ind_maps_var.set(str(user_parameters['ind maps']))
     entry_ref_ind = ttk.Entry(app, textvariable=ind_maps_var)
     row = grid_item(entry_ref_ind, row, column=1, sticky="ew")
     strg = "- Name: ind_maps\n" \
-           "- Summary: List of Measurement Modes and Names for " \
+           "- Summary: List of Property Modes and Names for " \
            "Cross Correlation Analysis\n" \
            "- Description: This parameter is a list that specifies which " \
-           "measurement modes and their corresponding names should be " \
+           "property modes and their corresponding names should be " \
            "used for cross correlation analysis.\n" \
            "- Value: A list with dimensions (n, 2) containing strings.\n" \
-           "\t- It contains pairs of measurement modes and associated " \
+           "\t- It contains pairs of property modes and associated " \
            "names in the format [['mode', 'name']].\n" \
            "\t- For example, [['off', 'charac tot fit: area'], " \
            "['off', 'fit pars: ampli_0'], ['on', 'charac tot fit: area'], " \
            "['on', 'fit pars: ampli_0']]"
     entry_ref_ind.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(entry_ref_ind, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Mask (manual)
     label_man = ttk.Label(app, text="Mask (manual):", font=("Helvetica", 14))
@@ -207,7 +208,7 @@ def main(parent=None):
            "a, b, c [...] are masked for the analysis"
     entry_mask.bind("<Enter>",
                     lambda event, mess=strg: show_tooltip(entry_mask, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Plot and save
     label_chck = ttk.Label(app, text="Plot and save", font=("Helvetica", 14))
@@ -243,7 +244,7 @@ def main(parent=None):
            "- Value: Boolean (True or False)."
     chck_save.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(chck_save, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Submit button
     submit_button = ttk.Button(app, text="Start", command=launch)
