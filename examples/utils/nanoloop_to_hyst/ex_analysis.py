@@ -4,21 +4,21 @@ Example of analysis and plot methods
 import random as rand
 import numpy as np
 
-from examples.utils.nanoloop_to_hyst.ex_gen_datas import gen_pars
+from examples.utils.nanoloop_to_hyst.ex_gen_data import gen_pars
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.nanoloop.plot import plot_all_loop
-from PySSPFM.utils.nanoloop.analysis import treat_loop
+from PySSPFM.utils.nanoloop.analysis import nanoloop_treatment
 from PySSPFM.utils.nanoloop.phase import gen_dict_pha
-from PySSPFM.utils.nanoloop_to_hyst.gen_datas import gen_datas_dict
+from PySSPFM.utils.nanoloop_to_hyst.gen_data import gen_data_dict
 from PySSPFM.utils.nanoloop_to_hyst.analysis import \
-    (sort_meas, gen_analysis_mode, find_best_loop, hyst_analysis,
+    (sort_prop, gen_analysis_mode, find_best_nanoloop, hyst_analysis,
      electrostatic_analysis)
 
 
-def ex_sort_meas(verbose=False):
+def ex_sort_prop(verbose=False):
     """
-    Example of ex_sort_meas function.
+    Example of ex_sort_prop function.
 
     Parameters
     ----------
@@ -27,30 +27,30 @@ def ex_sort_meas(verbose=False):
 
     Returns
     -------
-    measurement: dict
-        Sorted measurement dictionary.
+    properties: dict
+        Sorted properties dictionary.
     """
     rand.seed(0)
 
-    # Generate measurement dictionary
-    measurement = {}
+    # Generate properties dictionary
+    properties = {}
     for lab in ['on', 'off', 'coupled']:
-        measurement[lab] = {}
+        properties[lab] = {}
         for i in range(1, 65):
-            measurement[lab][f' - file n°{i}'] = {}
+            properties[lab][f' - file n°{i}'] = {}
             for j in range(20):
-                measurement[lab][f' - file n°{i}'][f'meas n°{j}'] = \
+                properties[lab][f' - file n°{i}'][f'prop n°{j}'] = \
                     float(rand.randint(0, 10))
 
-    # ex sort_meas
-    measurement = sort_meas(measurement)
+    # ex sort_prop
+    properties = sort_prop(properties)
 
     if verbose:
-        print('\t- ex sort_meas:')
-        for key, value in measurement['on'].items():
+        print('\t- ex sort_prop:')
+        for key, value in properties['on'].items():
             print(f'\t\t{key}: {value}')
 
-    return measurement
+    return properties
 
 
 def example_analysis(analysis='mean_off', make_plots=False, verbose=False):
@@ -105,16 +105,16 @@ def example_analysis(analysis='mean_off', make_plots=False, verbose=False):
         print('\t- ex analysis_mode:')
         print(f'\t\tanalysis_mode: {analysis_mode}')
 
-    # ex gen_datas_dict
-    datas_dict, dict_str = gen_datas_dict(pars, q_fact=1., mode=mode,
-                                          pha_val=pha_val)
+    # ex gen_data_dict
+    datas_dict, dict_str = gen_data_dict(
+        pars, q_fact=1., mode=mode, pha_val=pha_val)
 
     if verbose:
-        print('\t- ex gen_datas_dict:')
+        print('\t- ex gen_data_dict:')
         print(f'\t\tdict_str: {dict_str}')
 
-    # Treat loop data
-    loop_tab, pha_calib, _ = treat_loop(
+    # Treat nanoloop data
+    loop_tab, pha_calib, _ = nanoloop_treatment(
         datas_dict, sign_pars, dict_pha=dict_pha, dict_str=dict_str)
 
     if make_plots:
@@ -123,15 +123,15 @@ def example_analysis(analysis='mean_off', make_plots=False, verbose=False):
     else:
         figs_loop = []
 
-    # ex find_best_loop
-    out = find_best_loop(loop_tab, dict_pha['counterclockwise'],
-                         dict_pha['grounded tip'], analysis_mode=analysis_mode,
-                         del_1st_loop=False, model='sigmoid', asymmetric=False,
-                         method="least_square", locked_elec_slope=None)
+    # ex find_best_nanoloop
+    out = find_best_nanoloop(
+        loop_tab, dict_pha['counterclockwise'], dict_pha['grounded tip'],
+        analysis_mode=analysis_mode, del_1st_loop=False, model='sigmoid',
+        asymmetric=False, method="least_square", locked_elec_slope=None)
     x_hyst, y_hyst, best_loop, read_volt, bckgnd_tab = out
 
     if verbose:
-        print('\t- ex find_best_loop:')
+        print('\t- ex find_best_nanoloop:')
         print(f'\t\tread_volt: {read_volt}')
         print(f'\t\tbckgnd_tab: {bckgnd_tab}')
 
@@ -175,9 +175,10 @@ def example_analysis(analysis='mean_off', make_plots=False, verbose=False):
 if __name__ == '__main__':
     # saving path management
     dir_path_out, save_plots = save_path_example(
-        "hyst_to_map_analysis", save_example_exe=True, save_test_exe=False)
+        "nanoloop_to_hyst_analysis", save_example_exe=True,
+        save_test_exe=False)
     figs = []
-    ex_sort_meas(verbose=True)
+    ex_sort_prop(verbose=True)
     figs += example_analysis(analysis='multi_off', make_plots=True,
                              verbose=True)
     figs += example_analysis(analysis='mean_off', make_plots=True,
