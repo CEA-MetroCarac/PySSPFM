@@ -1,25 +1,25 @@
 """
-Test of analysis, gen_datas and plot methods
+Test of analysis, gen_data and plot methods
 """
 from pytest import approx
 import numpy as np
 
 from examples.utils.nanoloop_to_hyst.ex_analysis import \
-    example_analysis, ex_sort_meas
+    example_analysis, ex_sort_prop
 
 
 # class TestAnalysis(unittest.TestCase):
 
 
-def test_sort_meas():
-    """ Test ex_sort_meas """
+def test_sort_prop():
+    """ Test ex_sort_prop """
 
-    measurement = ex_sort_meas()
+    prop = ex_sort_prop()
 
-    assert len(list(measurement.keys())) == 3
-    assert len(list(measurement['on'].keys())) == 20
-    assert len(list(measurement['off'].keys())) == 20
-    assert len(list(measurement['coupled'].keys())) == 20
+    assert len(list(prop.keys())) == 3
+    assert len(list(prop['on'].keys())) == 20
+    assert len(list(prop['off'].keys())) == 20
+    assert len(list(prop['coupled'].keys())) == 20
 
 
 def test_analysis_multi_off():
