@@ -1,6 +1,6 @@
 """
 --> Executable Script
-Viewing of raw signal of a sspfm file
+Viewing of raw signal of a sspfm datacube file
 Inspired by SS_PFM script, Nanoscope, Bruker
 """
 import tkinter.filedialog as tkf
