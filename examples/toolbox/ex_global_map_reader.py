@@ -29,24 +29,24 @@ def ex_global_map_reader(verbose=False, make_plots=False):
     """
     dir_path_in = os.path.join(
         EXAMPLE_ROOT_PATH_IN, "KNN500n_2023-10-05-17h23m_out_dfrt",
-        "txt_ferro_meas")
+        "properties")
 
     user_params = {'interp fact': 4,
                    'interp func': 'linear',
                    'man mask': {'on': None,
                                 'off': None,
                                 'coupled': None},
-                   'ref': {'on': {'meas': 'charac tot fit: R_2 hyst',
+                   'ref': {'on': {'prop': 'charac tot fit: R_2 hyst',
                                   'fmt': '.5f',
                                   'min val': 0.99,
                                   'max val': None,
                                   'interactive': False},
-                           'off': {'meas': 'charac tot fit: R_2 hyst',
+                           'off': {'prop': 'charac tot fit: R_2 hyst',
                                    'fmt': '.5f',
                                    'min val': 0.90,
                                    'max val': None,
                                    'interactive': False},
-                           'coupled': {'meas': 'r_2',
+                           'coupled': {'prop': 'r_2',
                                        'fmt': '.5f',
                                        'min val': 0.995,
                                        'max val': None,
