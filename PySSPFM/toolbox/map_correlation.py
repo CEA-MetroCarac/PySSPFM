@@ -9,16 +9,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from PySSPFM.utils.core.figure import print_plots, plot_map
-from PySSPFM.utils.nanoloop_to_hyst.file import extract_measures
+from PySSPFM.utils.nanoloop_to_hyst.file import extract_properties
 from PySSPFM.utils.map.interpolate import remove_val
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
 from PySSPFM.settings import FIGSIZE
 
 
-def cross_corr_table(arr, map_label=None, add_txt=''):
+def plot_correlation_table(arr, map_label=None, add_txt=''):
     """
-    Construct a table of cross correlation coefficient for a list of maps
+    Plot a table of cross correlation coefficient for a list of maps
 
     Parameters
     ----------
@@ -75,7 +75,7 @@ def cross_corr_table(arr, map_label=None, add_txt=''):
     return [fig]
 
 
-def cross_corr_arr(maps, mask=None):
+def gen_correlation_array(maps, mask=None):
     """
     Generate cross correlation coefficient array of a list of maps
 
@@ -87,7 +87,7 @@ def cross_corr_arr(maps, mask=None):
         --> if mask is [a, b, c ...] pixels of index a, b, c [...] are
         masked for the analysis
         --> if mask is None: all pixels are analyzed in ascending order in
-        terms of value of meas
+        terms of value of prop
 
     Returns
     -------
@@ -103,19 +103,19 @@ def cross_corr_arr(maps, mask=None):
     return coef_arr
 
 
-def cross_corr_sspfm(measurements, mask=None):
+def correlation_analysis_all_maps(properties, mask=None):
     """
-    Correlation analysis for sspfm measurements
+    Correlation analysis for all sspfm properties
 
     Parameters
     ----------
-    measurements: dict
-        Dict of measurements of sspfm maps
+    properties: dict
+        Dict of properties of sspfm maps
     mask: list of int, optional
         --> if mask is [a, b, c ...] pixels of index a, b, c [...] are
         masked for the analysis
         --> if mask is None: all pixels are analyzed in ascending order in
-        terms of value of meas
+        terms of value of prop
 
     Returns
     -------
@@ -129,36 +129,36 @@ def cross_corr_sspfm(measurements, mask=None):
 
     # Separated correlation analysis for all off field maps & on field maps
     for mode in ['on', 'off']:
-        if mode in measurements:
-            dict_map = measurements[mode]
+        if mode in properties:
+            dict_map = properties[mode]
             # Add coupled maps
-            if 'coupled' in measurements:
-                dict_map.update(measurements['coupled'])
+            if 'coupled' in properties:
+                dict_map.update(properties['coupled'])
             maps = list(dict_map.values())
             key_map = list(dict_map.keys())
-            coef_arr[mode] = cross_corr_arr(maps, mask=mask)
-            figures.extend(cross_corr_table(coef_arr[mode], key_map,
-                                            add_txt=mode))
+            coef_arr[mode] = gen_correlation_array(maps, mask=mask)
+            figures.extend(plot_correlation_table(
+                coef_arr[mode], key_map, add_txt=mode))
 
     # Correlation analysis between off and on field maps
-    if 'on' in measurements and 'off' in measurements:
-        keys_off = measurements['off'].keys()
-        keys_on = measurements['on'].keys()
+    if 'on' in properties and 'off' in properties:
+        keys_off = properties['off'].keys()
+        keys_on = properties['on'].keys()
         keys = list(set(keys_off).intersection(keys_on))
         coef_arr['off on'] = np.array([
-            np.corrcoef(remove_val(measurements['off'][key], mask=mask),
-                        y=remove_val(measurements['on'][key], mask=mask))[0][1]
+            np.corrcoef(remove_val(properties['off'][key], mask=mask),
+                        y=remove_val(properties['on'][key], mask=mask))[0][1]
             for key in keys
         ])
-        figures.extend(cross_corr_table(coef_arr['off on'], keys,
-                                        add_txt='on off field'))
+        figures.extend(plot_correlation_table(
+            coef_arr['off on'], keys, add_txt='on off field'))
 
     return coef_arr, figures
 
 
 def main_map_correlation(user_pars, dir_path_in):
     """
-    Correlation analysis for sspfm measurements with the possibility to use a
+    Correlation analysis for sspfm properties with the possibility to use a
     mask taken into account in the analysis
 
     Parameters
@@ -176,20 +176,21 @@ def main_map_correlation(user_pars, dir_path_in):
         Associated table of cross correlation coefficient arrays
     """
 
-    # Extract all measurements
-    all_meas, _, _ = extract_measures(dir_path_in)
+    # Extract all properties
+    all_props, _, _ = extract_properties(dir_path_in)
 
     if user_pars['ind maps'] is not None:
-        # Select multi measurements of interest
-        multi_meas = {f'{elem[1]} ({elem[0]})': all_meas[elem[0]][elem[1]]
+        # Select multi properties of interest
+        multi_prop = {f'{elem[1]} ({elem[0]})': all_props[elem[0]][elem[1]]
                       for elem in user_pars['ind maps']}
-        coef_arr = cross_corr_arr(list(multi_meas.values()),
-                                  mask=user_pars['mask'])
-        figures = cross_corr_table(coef_arr, multi_meas.keys())
+        coef_arr = gen_correlation_array(
+            list(multi_prop.values()), mask=user_pars['mask'])
+        figures = plot_correlation_table(coef_arr, multi_prop.keys())
         coef_arr = {'single': coef_arr}
     else:
         # Cross correlation analysis between all maps
-        coef_arr, figures = cross_corr_sspfm(all_meas, mask=user_pars['mask'])
+        coef_arr, figures = correlation_analysis_all_maps(
+            all_props, mask=user_pars['mask'])
 
     return coef_arr, figures
 
@@ -199,10 +200,10 @@ def parameters():
     To complete by user of the script: return parameters for analysis
 
     - ind_maps: list(n, 2) of str
-        List of Measurement Modes and Names for Cross Correlation Analysis.
-        This parameter is a list that specifies which measurement modes and
+        List of Properties Modes and Names for Cross Correlation Analysis.
+        This parameter is a list that specifies which property modes and
         their corresponding names should be used for cross-correlation analysis.
-        - It contains pairs of measurement modes and associated names in the
+        - It contains pairs of property modes and associated names in the
         format [['mode', 'name']].
         - For example,
         [['off', 'charac tot fit: area'],
@@ -217,9 +218,9 @@ def parameters():
         are masked for the analysis.
 
     - dir_path_in: str
-        Ferroelectric measurements files directory (default: txt_ferro_meas)
-        This parameter specifies the directory containing the ferroelectric
-        measurements text files generated after the 2nd step of the analysis.
+        Properties files directory (default: properties)
+        This parameter specifies the directory containing the properties text
+        files generated after the 2nd step of the analysis.
     - dir_path_out: str
         Saving directory for analysis results figures
         (optional, default: toolbox directory in the same root)
@@ -235,7 +236,7 @@ def parameters():
         generated during the analysis process.
     """
     dir_path_in = tkf.askdirectory()
-    # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\txt_ferro_meas
+    # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
     dir_path_out = None
     # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
     # map_correlation_2023-10-02-16h38m
