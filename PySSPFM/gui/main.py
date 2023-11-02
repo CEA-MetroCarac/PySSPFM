@@ -42,13 +42,12 @@ def main():
     functions = [main_data_proc_1, main_data_proc_2]
     strg_title = "SSPFM data processing from raw sspfm files in two steps"
     strg_functions = [
-        "Step 1: seg to loop:\n"
+        "Step 1: datacube to nanoloop:\n"
         "PFM amplitude and phase are extracted for each segment, "
-        "piezoresponse nanoloops / hysteresis are constructed from these "
-        "points",
-        "Step 2: hyst to map:\n"
-        "piezoresponse nanoloops / hysteresis are fitted to extract "
-        "ferroelectric measurement and are plotted it in map",
+        "piezoresponse nanoloops are constructed from these points",
+        "Step 2: nanoloop to hyst:\n"
+        "piezoresponse nanoloops are extracted to construct hysteresis which "
+        "are fitted to extract sample properties",
     ]
     create_section(root, "Data processing", labels, functions,
                    strg_title=strg_title, strg_functions=strg_functions)
@@ -59,14 +58,13 @@ def main():
                  main_tool_1_d]
     strg_title = "Readers are usefull to create figures of sspfm results"
     strg_functions = [
-        "Generate all sspfm maps of ferroelectric sample properties\n"
-        "- Generate all sspfm maps from extraction of ferroelectric "
-        "measurements in txt files",
-        "Module used to generate sspfm maps of selected ferroelectric "
-        "measurements\n"
-        "- Generate multi sspfm maps from extraction of ferroelectric "
-        "measurements in txt files",
-        "Extraction and visualisation of .txt file datas of local hysteresis "
+        "Generate all sspfm maps of sample properties\n"
+        "- Generate all sspfm maps from extraction of sample properties "
+        "in txt files",
+        "Module used to generate sspfm maps of selected sample properties\n"
+        "- Generate multi sspfm maps from extraction of sample properties"
+        " in txt files",
+        "Extraction and visualisation of .txt file data of local nanoloops "
         "of the sample surface",
         "Viewing of raw signal of a sspfm file in a graphic",
     ]
@@ -84,16 +82,16 @@ def main():
     strg_functions = [
         "Cross correlation coefficient analysis for sspfm maps\n"
         "- Generate cross correlation coefficient array between a selected "
-        "set of ferroelectric measurements in order to determine origins "
-        "of contrast mapping",
+        "set of sample properties in order to determine origins of contrast "
+        "mapping",
         "Clustering with machine learning approach (K-Means) of hysteresis:\n"
         "- Perform a clustering analysis (K-Means) for all best hysteresis "
         "(for each pixel, one hysteresis for each mode) of a sspfm measurement "
         "in order to separate phases and different physical signal "
         "contributions",
         "Perform mean of hysteresis loops (on / off / coupled) by reading a "
-        "set of txt file loops defined by the user",
-        "Find extremum value of sspfm map of a measurement and "
+        "set of txt file nanoloops defined by the user",
+        "Find extremum value of sspfm map of a property and "
         "plot hysteresis of associated files"
     ]
     create_section(root, "Toolbox - 2 - Map / multi-loop tools", labels,
@@ -103,7 +101,7 @@ def main():
     # Toolbox - 3 - File management
     strg_title = "File management tools allow to manipulate sspfm data files."
     strg_functions = [
-        "Conversion of raw_datas.spm (sspfm datacube file) to raw_datas.txt"
+        "Conversion of raw_data.spm (sspfm datacube file) to raw_data.txt"
     ]
     create_section(root, "Toolbox - 3 - File management", ["SPM converter"],
                    [main_tool_3_a], strg_title=strg_title,
