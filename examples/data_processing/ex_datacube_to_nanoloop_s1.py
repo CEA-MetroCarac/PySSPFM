@@ -1,7 +1,7 @@
 """
-Example of seg_to_loop_s1 methods
+Example of datacube_to_nanoloop_s1 methods
 """
-from examples.utils.datacube_to_nanoloop.ex_gen_datas import pars_segment
+from examples.utils.datacube_to_nanoloop.ex_gen_data import pars_segment
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.data_processing.datacube_to_nanoloop_s1 import single_script
 
@@ -49,8 +49,8 @@ def ex_single_script(make_plots=False, verbose=False):
         'pha': [0, 180]
     }
 
-    # Loop noise parameters
-    loop_noise_pars = {
+    # Nanoloop noise parameters
+    nanoloop_noise_pars = {
         'type': 'normal',
         'lvl': 10
     }
@@ -83,13 +83,13 @@ def ex_single_script(make_plots=False, verbose=False):
         'nb': sign_pars['Nb volt (R)']
     }
 
-    # Loop parameters
-    loop_pars = {
+    # Nanoloop parameters
+    nanoloop_pars = {
         'write': write_pars,
         'read': read_pars,
         'elec': elec_pars,
         'ferro': ferro_pars,
-        'noise': loop_noise_pars
+        'noise': nanoloop_noise_pars
     }
 
     # Segment dictionary based on target mode
@@ -105,11 +105,11 @@ def ex_single_script(make_plots=False, verbose=False):
             'seg noise': seg_noise_pars,
             'hold pars': hold_dict,
             'alea target range': None,
-            'loop pars': loop_pars
+            'loop pars': nanoloop_pars
         }
     # saving path management
     dir_path_out, save_plots = save_path_example(
-        "seg_to_loop_s1", save_example_exe=make_plots,
+        "datacube_to_nanoloop_s1", save_example_exe=make_plots,
         save_test_exe=not make_plots)
     txt_save = save_plots
     # ex single_script
