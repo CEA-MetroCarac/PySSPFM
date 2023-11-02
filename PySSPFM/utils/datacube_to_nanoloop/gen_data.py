@@ -1,5 +1,5 @@
 """
-Module used to generate segment of sspfm measurement
+Module used to generate segment of sspfm datacube measure
 """
 
 import random
@@ -8,7 +8,7 @@ import numpy as np
 from PySSPFM.utils.core.noise import noise
 from PySSPFM.utils.core.basic_func import sho, sho_phase
 from PySSPFM.utils.signal_bias import sspfm_generator, sspfm_time
-from PySSPFM.utils.nanoloop.gen_data import gen_loops
+from PySSPFM.utils.nanoloop.gen_data import gen_nanoloops
 
 
 def alea_targets(meas_range, ite=1):
@@ -59,8 +59,8 @@ def loop_targets(loop_pars, noise_pars=None, pha_val=None):
     noise_pars = noise_pars or {'type': 'normal', 'ampli': 0.}
     pha_val = pha_val or {'fwd': 0, 'rev': 180}
 
-    _, _, amp, pha = gen_loops(loop_pars, noise_pars=noise_pars,
-                               pha_val=pha_val)
+    _, _, amp, pha = gen_nanoloops(
+        loop_pars, noise_pars=noise_pars, pha_val=pha_val)
 
     targets = {'on': {'amp': [], 'pha': []}, 'off': {'amp': [], 'pha': []}}
 
