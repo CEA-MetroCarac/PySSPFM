@@ -8,12 +8,12 @@ from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 
-from examples.utils.nanoloop_to_hyst.ex_analysis import ex_sort_meas
+from examples.utils.nanoloop_to_hyst.ex_analysis import ex_sort_prop
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.nanoloop_to_hyst.file import \
-    (generate_file_paths, read_plot_parameters, complete_txt_file,
-     save_measurement, extract_measures)
+    (generate_file_nanoloop_paths, print_parameters, complete_txt_file,
+     save_properties, extract_properties)
 
 from PySSPFM import \
     EXAMPLE_ROOT_PATH_IN, EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT
@@ -45,8 +45,8 @@ def example_file(make_plots=False, verbose=False):
         Number of writes per read.
     write_segment: list
         Write segment data.
-    measurements: list
-        Ferroelectric measurements.
+    properties: list
+        Sample properties.
     dim_pix: dict
         Dimension in pixels.
     dim_mic: dict
@@ -55,11 +55,13 @@ def example_file(make_plots=False, verbose=False):
     # Define input and output file paths
     root_data = os.path.join(
         EXAMPLE_ROOT_PATH_IN, "KNN500n_2023-10-05-17h21m_out_dfrt")
-    dir_path_in = os.path.join(root_data, "txt_loops")
+    dir_path_in = os.path.join(root_data, "nanoloops")
     if make_plots:
-        root_out = os.path.join(EXAMPLE_ROOT_PATH_OUT, "ex_hyst_to_map_file")
+        root_out = os.path.join(
+            EXAMPLE_ROOT_PATH_OUT, "ex_nanoloop_to_hyst_file")
     else:
-        root_out = os.path.join(DEFAULT_DATA_PATH_OUT, "test_hyst_to_map_file")
+        root_out = os.path.join(
+            DEFAULT_DATA_PATH_OUT, "test_nanoloop_to_hyst_file")
 
     # Remove existing output directory and copy the data
     if os.path.isdir(root_out):
@@ -88,26 +90,24 @@ def example_file(make_plots=False, verbose=False):
     date = date.strftime('%Y-%m-%d %H;%M')
 
     # Generate file paths
-    file_paths = generate_file_paths(dir_path_in)
+    file_paths = generate_file_nanoloop_paths(dir_path_in)
     if verbose:
-        print('\t- ex generate_file_paths')
+        print('\t- ex generate_file_nanoloop_paths')
         for cont, elem in enumerate(file_paths):
             print(f'\t\tpath n°{cont + 1}: {elem}')
         print('\n')
 
-    # ex read_plot_parameters
-    file_path_in_txt_save = os.path.join(
-        root_data, 'results', 'saving_parameters.txt')
-    out = read_plot_parameters(file_path_in_txt_save, verbose=verbose)
+    # ex print_parameters
+    file_path_in_txt_save = os.path.join(root_data, 'parameters.txt')
+    out = print_parameters(file_path_in_txt_save, verbose=verbose)
     (meas_pars, sign_pars, dict_analysis_1, nb_write_per_read,
      write_segment) = out
     if verbose:
-        print('\n\t- ex read_plot_parameters')
+        print('\n\t- ex print_parameters')
         print(f'\t\tnb write per read: {nb_write_per_read}')
 
     # ex complete_txt_file
-    file_path_out_txt_save = os.path.join(
-        root_out, 'results', 'saving_parameters.txt')
+    file_path_out_txt_save = os.path.join(root_data, 'parameters.txt')
     complete_txt_file(file_path_out_txt_save, user_pars, t0, date)
 
     fig = []
@@ -119,25 +119,24 @@ def example_file(make_plots=False, verbose=False):
         plot_graph(ax, range(len(np.array(write_segment))), write_segment,
                    plot_dict=plot_dict)
 
-    dir_path_out_meas = os.path.join(
-        root_out, "txt_ferro_meas")
+    dir_path_out_prop = os.path.join(root_out, "properties")
 
-    measurements = ex_sort_meas()
+    properties = ex_sort_prop()
     dim_pix = {'x': 8,
                'y': 8}
     dim_mic = {'x': 3.5,
                'y': 3.5}
 
-    # ex save_measurement
-    save_measurement(measurements, dir_path_out_meas, dim_pix=dim_pix,
-                     dim_mic=dim_mic)
+    # ex save_properties
+    save_properties(properties, dir_path_out_prop, dim_pix=dim_pix,
+                    dim_mic=dim_mic)
 
-    # ex extract_measures
-    measurements, dim_pix, dim_mic = extract_measures(dir_path_out_meas)
+    # ex extract_properties
+    properties, dim_pix, dim_mic = extract_properties(dir_path_out_prop)
 
     if verbose:
-        print('\n\t- ex extract_measures')
-        print(f'\t\tmeasurements: {measurements}')
+        print('\n\t- ex extract_properties')
+        print(f'\t\tproperties: {properties}')
         print(f'\t\tdim pix: {dim_pix}')
         print(f'\t\tdim mic: {dim_mic}')
 
@@ -145,14 +144,14 @@ def example_file(make_plots=False, verbose=False):
         return [fig]
     else:
         return (file_paths, meas_pars, sign_pars, dict_analysis_1,
-                nb_write_per_read, write_segment, measurements, dim_pix,
+                nb_write_per_read, write_segment, properties, dim_pix,
                 dim_mic)
 
 
 if __name__ == '__main__':
     # saving path management
     dir_path_out, save_plots = save_path_example(
-        "hyst_to_map_file", save_example_exe=True, save_test_exe=False)
+        "nanoloop_to_hyst_file", save_example_exe=True, save_test_exe=False)
     figs = []
     figs += example_file(make_plots=True, verbose=True)
     print_plots(figs, save_plots=save_plots, show_plots=True,
