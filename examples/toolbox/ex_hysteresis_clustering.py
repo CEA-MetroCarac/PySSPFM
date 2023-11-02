@@ -33,7 +33,7 @@ def ex_hysteresis_clustering(verbose=False, make_plots=False):
     """
     dir_path_in = os.path.join(
         EXAMPLE_ROOT_PATH_IN, "KNN500n_2023-10-05-17h23m_out_dfrt",
-        "txt_best_loops")
+        "best_nanoloops")
     user_pars = {'nb clusters off': 5,
                  'nb clusters on': 2,
                  'nb clusters coupled': 4}
