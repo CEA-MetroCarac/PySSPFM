@@ -13,7 +13,7 @@ from datetime import datetime
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.toolbox.list_map_reader import main_list_map_reader as main_script
 from PySSPFM.gui.utils import \
-    (add_separator_grid, grid_item, show_tooltip, extract_var,
+    (add_grid_separator, grid_item, show_tooltip, extract_var,
      init_secondary_wdw, wdw_main_title)
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
@@ -32,7 +32,8 @@ def main(parent=None):
     None
     """
     # Create the main or secondary window
-    app = init_secondary_wdw(parent=parent, wdw_title="List map reader")
+    title = "List map reader"
+    app = init_secondary_wdw(parent=parent, wdw_title=title)
 
     # Set default parameter values
     ind_maps = [['off', 'charac tot fit: area'],
@@ -47,7 +48,7 @@ def main(parent=None):
         'interp func': 'linear',
         'man mask': [],
         'ref': {'mode': 'off',
-                'meas': 'charac tot fit: R_2 hyst',
+                'prop': 'charac tot fit: R_2 hyst',
                 'min val': 0.95,
                 'max val': None,
                 'fmt': '.5f',
@@ -66,7 +67,7 @@ def main(parent=None):
         user_parameters['interp fact'] = interp_fact_var.get()
         user_parameters['interp func'] = interp_func_var.get()
         user_parameters['man mask'] = extract_var(man_mask_var)
-        user_parameters['ref']['meas'] = ref_meas_var.get()
+        user_parameters['ref']['prop'] = ref_prop_var.get()
         user_parameters['ref']['mode'] = ref_mode_var.get()
         user_parameters['ref']['min val'] = extract_var(ref_min_var)
         user_parameters['ref']['max val'] = extract_var(ref_max_var)
@@ -107,7 +108,7 @@ def main(parent=None):
         dir_path_out_var.set(dir_path_out)
 
     # Window title: List map reader
-    wdw_main_title(app, "List map reader")
+    wdw_main_title(app, title)
 
     row = 3
 
@@ -123,11 +124,11 @@ def main(parent=None):
     entry_in = ttk.Entry(app, textvariable=dir_path_in_var)
     row = grid_item(entry_in, row, column=1, sticky="ew", increment=False)
     strg = "- Name: dir_path_in\n" \
-           "- Summary: Ferroelectric measurements files directory " \
-           "(txt_ferro_meas)\n" \
+           "- Summary: Properties files directory " \
+           "(properties)\n" \
            "- Description: This parameter specifies the directory containing " \
-           "the ferroelectric measurements text files generated after the " \
-           "2nd step of the analysis.\n" \
+           "the properties text files generated after the 2nd step of the " \
+           "analysis.\n" \
            "- Value: It should be a string representing a directory path."
     entry_in.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(entry_in, mess))
@@ -174,13 +175,13 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(entry_out, mess))
     browse_button_out = ttk.Button(app, text="Select", command=browse_dir_out)
     row = grid_item(browse_button_out, row, column=2)
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
-    # Section title: Measurements
-    label_meax = ttk.Label(app, text="Measurements", font=("Helvetica", 14))
+    # Section title: Properties
+    label_meax = ttk.Label(app, text="Properties", font=("Helvetica", 14))
     row = grid_item(label_meax, row, column=0, sticky="ew", columnspan=3)
 
-    # Measurement
+    # Property
     label_ind = ttk.Label(app, text="Map to plot:")
     row = grid_item(label_ind, row, column=0, sticky="e", increment=False)
     ind_maps_var = tk.StringVar()
@@ -188,12 +189,12 @@ def main(parent=None):
     entry_ref_ind = ttk.Entry(app, textvariable=ind_maps_var)
     row = grid_item(entry_ref_ind, row, column=1, sticky="ew")
     strg = "- Name: ind_maps\n" \
-           "- Summary: List of Measurement Modes and Names for Plotting\n" \
+           "- Summary: List of Property Modes and Names for Plotting\n" \
            "- Description: This parameter is a list that specifies which " \
-           "measurement modes and their corresponding names should be " \
+           "property modes and their corresponding names should be " \
            "used for plotting.\n" \
            "- Value: A list with dimensions (n, 2) containing strings.\n" \
-           "\t- It contains pairs of measurement modes and associated " \
+           "\t- It contains pairs of property modes and associated " \
            "names in the format [['mode', 'name']].\n" \
            "\t- For example, [['off', 'charac tot fit: area'], " \
            "['off', 'fit pars: ampli_0'], ['on', 'charac tot fit: area'], " \
@@ -201,7 +202,7 @@ def main(parent=None):
     entry_ref_ind.bind(
         "<Enter>",
         lambda event, mess=strg: show_tooltip(entry_ref_ind, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Map
     label_map = ttk.Label(app, text="Map", font=("Helvetica", 14))
@@ -236,12 +237,12 @@ def main(parent=None):
            " 'linear', or 'cubic'."
     interp_func_var.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(interp_func_var, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Mask
     label_mask = ttk.Label(app, text="Mask:", font=("Helvetica", 14))
     row = grid_item(label_mask, row, column=0, sticky="ew", columnspan=3)
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Subsection title
     label_man = ttk.Label(app, text="Mode manual", font=("Helvetica", 12))
@@ -264,21 +265,21 @@ def main(parent=None):
            "values.\n" \
            "\t--> if list of pixels is []: all files are selected.\n" \
            "\t--> if list of pixels is None: criterion of selection " \
-           "is made with reference measurement.\n" \
+           "is made with reference property.\n" \
            "\t--> if list of pixels is [a, b, c ...] file of index " \
            "a, b, c [...] are not selected"
     entry_man_mask.bind(
         "<Enter>",
         lambda event, mess=strg: show_tooltip(entry_man_mask, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Annotation
     label_annot = ttk.Label(app, text="OR", font=("Helvetica", 12))
     row = grid_item(label_annot, row, column=0, sticky="ew", columnspan=3)
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
-    # Subsection title: Mode reference measurement
-    label_ref = ttk.Label(app, text="Mode reference measurement (*)",
+    # Subsection title: Mode reference property
+    label_ref = ttk.Label(app, text="Mode reference property (*)",
                           font=("Helvetica", 12))
     strg = "Construct a mask with a criterion selection on ref values.\n" \
            "Active only if list of pixels is None"
@@ -293,29 +294,29 @@ def main(parent=None):
     ref_mode_var.set(user_parameters['ref']['mode'])
     row = grid_item(ref_mode_var, row, column=1, sticky="ew")
     strg = "- Name: mode\n" \
-           "- Summary: Mode for Reference Measurement\n" \
+           "- Summary: Mode for Reference Property\n" \
            "- Description: This parameter determines the mode used for " \
-           "the reference measurement.\n" \
+           "the reference property.\n" \
            "- Value: String indicating the chosen mode of reference " \
-           "measurement ('off', 'on', or 'coupled')."
+           "property ('off', 'on', or 'coupled')."
     ref_mode_var.bind("<Enter>",
                       lambda event, mess=strg: show_tooltip(ref_mode_var, mess))
 
-    # Reference Measurement
-    label_meas = ttk.Label(app, text="Measurement:")
-    row = grid_item(label_meas, row, column=0, sticky="e", increment=False)
-    ref_meas_var = tk.StringVar()
-    ref_meas_var.set(user_parameters['ref']['meas'])
-    entry_ref_meas = ttk.Entry(app, textvariable=ref_meas_var)
-    row = grid_item(entry_ref_meas, row, column=1, sticky="ew")
-    strg = "- Name: meas\n" \
-           "- Summary: Reference measurement for mask determination\n" \
+    # Reference Property
+    label_prop = ttk.Label(app, text="Property:")
+    row = grid_item(label_prop, row, column=0, sticky="e", increment=False)
+    ref_prop_var = tk.StringVar()
+    ref_prop_var.set(user_parameters['ref']['prop'])
+    entry_ref_prop = ttk.Entry(app, textvariable=ref_prop_var)
+    row = grid_item(entry_ref_prop, row, column=1, sticky="ew")
+    strg = "- Name: prop\n" \
+           "- Summary: Reference property for mask determination\n" \
            "- Description: This parameter specifies the name of the " \
-           "reference measurement used to determine the mask.\n" \
-           "- Value: String, representing the chosen reference measurement."
-    entry_ref_meas.bind(
+           "reference property used to determine the mask.\n" \
+           "- Value: String, representing the chosen reference property."
+    entry_ref_prop.bind(
         "<Enter>",
-        lambda event, mess=strg: show_tooltip(entry_ref_meas, mess))
+        lambda event, mess=strg: show_tooltip(entry_ref_prop, mess))
 
     # Min Value
     label_min = ttk.Label(app, text="Min Value (*):")
@@ -365,9 +366,9 @@ def main(parent=None):
     entry_ref_fmt = ttk.Entry(app, textvariable=ref_fmt_var)
     row = grid_item(entry_ref_fmt, row, column=1, sticky="ew")
     strg = "- Name: fmt\n" \
-           "- Summary: Format for measurement reference (number of decimal)\n" \
+           "- Summary: Format for property reference (number of decimal)\n" \
            "- Description: This parameter specifies the format for the " \
-           "measurement reference with a specified number of decimal " \
+           "property reference with a specified number of decimal " \
            "places.\n" \
            "- Value: String, representing the format of the printed value " \
            "in the map."
@@ -387,12 +388,12 @@ def main(parent=None):
            "reference.\n" \
            "- Description: This parameter enables interactive mode, " \
            "which allows users to determine mask limits interactively " \
-           "using the reference measurement.\n" \
+           "using the reference property.\n" \
            "- Value: Boolean (True or False)."
     chck_ref_interact.bind(
         "<Enter>",
         lambda event, mess=strg: show_tooltip(chck_ref_interact, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Section title: Save and plot
     label_chck = ttk.Label(app, text="Save and plot", font=("Helvetica", 14))
@@ -444,7 +445,7 @@ def main(parent=None):
            "- Value: Boolean (True or False)."
     chck_save.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(chck_save, mess))
-    row = add_separator_grid(app, row=row)
+    row = add_grid_separator(app, row=row)
 
     # Submit button
     submit_button = ttk.Button(app, text="Start", command=launch)
