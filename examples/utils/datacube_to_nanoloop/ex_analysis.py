@@ -4,7 +4,7 @@ Example of analysis methods
 import numpy as np
 import matplotlib.pyplot as plt
 
-from examples.utils.datacube_to_nanoloop.ex_gen_datas import \
+from examples.utils.datacube_to_nanoloop.ex_gen_data import \
     ex_gen_segments, pars_segment
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots, plot_graph
@@ -237,7 +237,8 @@ def ex_segments(analysis, mode, make_plots=False):
 if __name__ == '__main__':
     # saving path management
     dir_path_out, save_plots = save_path_example(
-        "seg_to_loop_analysis", save_example_exe=True, save_test_exe=False)
+        "datacube_to_nanoloop_analysis", save_example_exe=True,
+        save_test_exe=False)
     figs = []
     figs += ex_calib(make_plots=True)
     figs += ex_init_parameters(make_plots=True, verbose=True)
