@@ -2,17 +2,18 @@
 Module used to generate nanoloops and sspfm maps from physical equation
 """
 
-from PySSPFM.utils.nanoloop.gen_data import gen_loops
+from PySSPFM.utils.nanoloop.gen_data import gen_nanoloops
 
 
 def gen_data_dict(pars, q_fact=100., mode='off', pha_val=None):
     """
-    Generate txt loop file data form.
+    Generate txt nanoloop file data form.
 
     Parameters
     ----------
     pars: dict
-        Dictionary of parameters for write and read voltage, and for ferro loop
+        Dictionary of parameters for write and read voltage, and for ferro
+        nanoloop
         and electrostatic physical characteristics.
     q_fact: float, optional
         Quality factor value.
@@ -24,8 +25,8 @@ def gen_data_dict(pars, q_fact=100., mode='off', pha_val=None):
     Returns
     -------
     data_dict: dict
-        Dictionary containing all the data of the loop (txt loop file data
-        form).
+        Dictionary containing all the data of the nanoloop (txt nanoloop file
+        data form).
     dict_str: dict
         Dictionary used for figure annotation.
     """
@@ -33,7 +34,7 @@ def gen_data_dict(pars, q_fact=100., mode='off', pha_val=None):
     pha_val = pha_val or {'fwd': 0, 'rev': 180}
 
     data_dict = {}
-    out = gen_loops(pars, noise_pars=pars['noise'], pha_val=pha_val)
+    out = gen_nanoloops(pars, noise_pars=pars['noise'], pha_val=pha_val)
     write_voltage, read_voltage, amplitude, phase = out
     key_labs = ['index', 'read', 'write', 'amplitude', 'phase', 'freq',
                 'q fact', 'inc amp', 'inc pha']
