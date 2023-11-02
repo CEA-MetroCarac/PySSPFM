@@ -9,8 +9,9 @@ import matplotlib.pyplot as plt
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.signal_bias import sspfm_generator
-from PySSPFM.utils.nanoloop.gen_datas import gen_loops
-from PySSPFM.utils.nanoloop.file import sort_loop, txt_loop, extract_loop
+from PySSPFM.utils.nanoloop.gen_data import gen_nanoloops
+from PySSPFM.utils.nanoloop.file import \
+    sort_nanoloop_data, save_nanoloop_file, extract_nanoloop_data
 
 from PySSPFM import EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT
 from PySSPFM.settings import FIGSIZE
@@ -83,8 +84,8 @@ def example_file(make_plots=False, verbose=False):
             'ferro': ferro_pars}
 
     np.random.seed(0)
-    # Generate loop data
-    _, _, amp, pha = gen_loops(pars, noise_pars=noise_pars, pha_val=pha_val)
+    # Generate nanoloop data
+    _, _, amp, pha = gen_nanoloops(pars, noise_pars=noise_pars, pha_val=pha_val)
 
     plt_dict_on = {'label': 'On field',
                    'col': 'y',
@@ -106,16 +107,18 @@ def example_file(make_plots=False, verbose=False):
         amp[mode] = np.concatenate(amp[mode])
         pha[mode] = np.concatenate(pha[mode])
         dict_res = {'Amplitude': amp[mode], 'Phase': pha[mode]}
-        # ex sort_loop
-        out = sort_loop(sspfm_bias, sign_pars['Nb volt (W)'],
-                        sign_pars['Nb volt (R)'], dict_res, unit='nm')
+        # ex sort_nanoloop_data
+        out = sort_nanoloop_data(
+            sspfm_bias, sign_pars['Nb volt (W)'], sign_pars['Nb volt (R)'],
+            dict_res, unit='nm')
         (loop_tab, fmt, header) = out
 
-        # ex txt_loop
-        file_path_out = txt_loop(dir_path_out_data, f_name_out, loop_tab, fmt,
-                                 header, mode=plt_dict[cont]['label'])
-        # ex extract_loop
-        datas_dict, dict_str = extract_loop(file_path_out)
+        # ex save_nanoloop_file
+        file_path_out = save_nanoloop_file(
+            dir_path_out_data, f_name_out, loop_tab, fmt, header,
+            mode=plt_dict[cont]['label'])
+        # ex extract_nanoloop_data
+        datas_dict, dict_str = extract_nanoloop_data(file_path_out)
         if verbose:
             print(f'dict_str: {dict_str}')
 
