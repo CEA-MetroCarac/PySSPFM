@@ -664,7 +664,7 @@ For a deeper understanding of the file management in this phase, please refer to
 ### VI.2) - Best loop
 
 <p align="justify" width="100%">
-The nanoloops data is extracted from the files within the corresponding <code>nanoloops</code> directory, and a <code>MultiLoop</code> object is instantiated for each file. Subsequently, with the <code>nanoloop_treatment</code> function of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis</a></code> script the amplitude and phase data are divided by the quality factor, calibrated ex-situ, and the amplitude and phase values at the first measurement point are extracted. These form two of the mapped piezo-ferroelectric properties, corresponding to the electrical polarization of the pristine state of the film.
+The nanoloops data is extracted from the files within the corresponding <code>nanoloops</code> directory, and a <code>MultiLoop</code> object is instantiated for each file. Subsequently, with the <code>nanoloop_treatment</code> function of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/analysis.py">utils/nanoloop/analysis.py</a></code> script the amplitude and phase data are divided by the quality factor, calibrated ex-situ, and the amplitude and phase values at the first measurement point are extracted. These form two of the mapped piezo-ferroelectric properties, corresponding to the electrical polarization of the pristine state of the film.
 </p>
 
 <p align="justify" width="100%">
