@@ -4,89 +4,17 @@
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/logoPySSPFM_white.PNG> <br>
 </p>
 
-## Table of Contents
-
-- [I) Overview](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i---overview)
-  - [I.1) Workflow](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [I.2) Code architecture](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [I.3) Examples & Tests](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-- [II) GUI](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [II.1) Main window](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [II.2) Secondary window](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-- [III) File management](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [III.1) Input files](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [III.1.a) SSPFM measurement files](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [III.1.b) Measurement sheet](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [III.1.c) Extraction](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [III.1.d) Examples & Tests](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [III.2) Output files](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [III.2.a) First step of data analysis](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [III.2.b) Second step of data analysis](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [III.2.c) Toolbox](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [III.2.d) Examples & Tests](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-- [IV) First step of data analysis](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [IV.1) Parameters](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [IV.2) Polarization voltage](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [IV.3) Pre-measurement calibration](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [IV.4) Segment](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-- [V) Nanoloop](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [V.1) Post-measurement phase calibration](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [V.2) MultiLoop](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [V.3) MeanLoop](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-- [VI) Second step of data analysis](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [VI.1) Parameters](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [VI.2) Best loop](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [VI.3) Hysteresis and properties](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [VI.4) Artifact decoupling](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VI.4.a) Analysis of On-field amplitude nanoloop](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VI.4.b) Analysis of saturation domain of On-field piezoresponse nanoloop](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VI.4.c) Multi read voltages of Off-field hysteresis](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VI.4.d) Differential analysis of On and Off-field hysteresis](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VI.4.e) Fit of both On and Off-field hysteresis](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [VI.5) cKPFM](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-- [VII) SSPFM mapping](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [VII.1) Mask](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [VII.2) Interpolation 2D](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [VII.3) Figures](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-- [VIII) Toolbox](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [VIII.1) Viewers](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.1.a) Raw file](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.1.b) Loop file](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.1.c) Global map reader](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.1.d) List map reader](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [VIII.2) Hysteresis clustering (K-Means)](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.2.a) Parameters](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.2.b) Extraction](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.2.c) Treatment](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.2.d) Figures](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [VIII.3) Mean loop](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.3.a) Parameters](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.3.b) Extraction](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.3.c) Find best loop](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.3.d) Mean analysis](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.3.e) Figures](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [VIII.4) 2D cross correlation](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.4.a) Parameters](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.4.b) Correlation matrix](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.4.c) Workflow](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.4.d) Figures](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [VIII.5) 2D cross correlation](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.5.a) Parameters](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.5.b) Workflow](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-      - [VIII.5.c) Figures](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  - [VIII.6) SPM converter](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#i1---workflow)
-  
 ## I) - Overview
 
 ### I.1) - Workflow
 
 <p align="center" width="100%">
-    <img align="center" width=80%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20worflow.PNG> <br>
+    <img align="center" width=100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20worflow.PNG> <br>
     <em>PySSPFM workflow</em>
 </p>
 
 <p align="justify" width="100%">
-Following the SSPFM measurement, one or more SSPFM files are generated. A measurement form should be completed by the user (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). 
+Following the SSPFM measurement, one or more SSPFM datacube files are generated. A measurement form should be completed by the user (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). 
 The PySSPFM application then proceeds with two stages of measurement processing. In the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/seg_to_loop_s1.py">first step</a> of data analysis, amplitude and phase measurements are extracted and calibrated for each segment and nanoloops are determined. The <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">second step</a> creates the piezoresponse hysteresis loop, and extracts piezoelectric and ferroelectric properties using an algorithm based on the <a href="https://pypi.org/project/lmfit/">lmfit</a> library. Various artifact decorrelation protocols improve measurement accuracy. Then, <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">SSPFM mapping</a> can be performed. A <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">toolbox</a> is provided including:
 </p>
 
@@ -107,9 +35,9 @@ The PySSPFM application then proceeds with two stages of measurement processing.
 <p align="justify" width="100%">
 Here is the simplified architectural overview of the PySSPFM application's source code (path and file management, data extraction and storage, settings, and polarization signal management are not included in the diagram). Nevertheless, it provides a fairly accurate representation of the overall interaction between the various components of the code. <br>
 &#8226 The functions within the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code> are quite generic and not specific to SSPFM. They exhibit relative independence from the rest of the code and serve as fundamental building blocks for the execution of all other functions. <br>
-&#8226 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/seg_to_loop">seg_to_loop</a></code> module facilitates the conversion of measurements into nanoloops. It relies on the use of both <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop">nanoloop</a></code> functions. <br>
+&#8226 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/datacube_to_nanoloop">datacube_to_nanoloop</a></code> module facilitates the conversion of raw datacube measurements into nanoloops. It relies on the use of both <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop">nanoloop</a></code> functions. <br>
 &#8226 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop">nanoloop</a></code> module enables the creation and processing of nanoloops. It relies on the utilization of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code> functions. <br>
-&#8226 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/hyst_to_map">hyst_to_map</a></code> module is responsible for extracting material properties from nanoloops. It relies on the utilization of functions from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop">nanoloop</a></code>. <br>
+&#8226 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop_to_hyst">nanoloop_to_hyst</a></code> module is responsible for extracting material properties from nanoloops. It relies on the utilization of functions from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop">nanoloop</a></code>. <br>
 &#8226 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">map</a></code> module formats material properties into a map. It depends on the use of functions from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code>. <br>
 &#8226 The The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/seg_to_loop_s1.py">seg_to_loop_s1</a></code> executable file performs the initial stage of SSPFM measurements processing. It assembles and relies upon functions from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/seg_to_loop">seg_to_loop</a></code>, and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop">nanoloop</a></code>. <br>
 &#8226 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/hyst_to_map_s2.py">hyst_to_map_s2</a></code> executable file accomplishes the second stage of SSPFM measurements processing. It assembles and relies upon functions from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/hyst_to_map">hyst_to_map</a></code>, and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop">nanoloop</a></code>. <br>
