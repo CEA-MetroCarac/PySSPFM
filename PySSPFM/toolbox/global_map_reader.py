@@ -103,7 +103,8 @@ def main_global_map_reader(
         mask[mode] = main_mapping(
             properties[mode], dim_pix, dim_mic=dim_mic, dict_interp=dict_interp,
             dict_map=dict_map, ref=ref, dict_ref=user_pars['ref'][mode],
-            mask=user_pars['man mask'][mode], verbose=verbose,
+            mask=user_pars['man mask'][mode],
+            revert_mask=user_pars['revert mask'][mode], verbose=verbose,
             show_plots=show_plots, save_plots=save_plots,
             dir_path_out=dir_path_out)
 
@@ -126,6 +127,10 @@ def parameters():
         This parameter specifies the interpolation function used for sspfm
         maps interpolation. It can take one of the following values:
         'linear', or 'cubic'.
+    - revert_mask: bool
+        Revert option of the mask for selecting specific files.
+        This parameter specifies if the mask should be reverted (True), or not
+        (False)
     - man_mask: dict [for each mode] of list
         Manual mask for selecting specific files.
         This parameter is a list of pixel indices.
@@ -179,6 +184,9 @@ def parameters():
     save = False
     user_pars = {'interp fact': 4,
                  'interp func': 'linear',
+                 'revert mask': {'on': False,
+                                 'off': False,
+                                 'coupled': False},
                  'man mask': {'on': [],
                               'off': [],
                               'coupled': []},

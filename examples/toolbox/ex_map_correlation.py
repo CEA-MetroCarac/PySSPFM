@@ -35,7 +35,8 @@ def ex_map_correlation(verbose=False, make_plots=False):
     user_pars = {'dir path in': dir_path_in,
                  'dir path out': None,
                  'ind maps': ind_maps,
-                 'mask': None}
+                 'mask': None,
+                 'revert mask': False}
 
     # ex main_map_correlation
     coef_arr, figures = main_map_correlation(user_pars, dir_path_in)

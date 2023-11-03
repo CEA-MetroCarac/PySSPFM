@@ -48,6 +48,7 @@ def main(parent=None):
         'dir path in pars': '',
         'ind maps': ind_maps,
         'mask': None,
+        'revert mask': False,
         'show plots': True,
         'save': False,
     }
@@ -58,6 +59,7 @@ def main(parent=None):
         user_parameters['dir path in'] = dir_path_in_var.get()
         user_parameters['dir path out'] = extract_var(dir_path_out_var)
         user_parameters['mask'] = extract_var(mask_var)
+        user_parameters['revert mask'] = revert_mask_var.get()
         user_parameters['ind maps'] = extract_var(ind_maps_var)
         user_parameters['show plots'] = show_plots_var.get()
         user_parameters['save'] = save_var.get()
@@ -208,6 +210,23 @@ def main(parent=None):
            "a, b, c [...] are masked for the analysis"
     entry_mask.bind("<Enter>",
                     lambda event, mess=strg: show_tooltip(entry_mask, mess))
+
+    # Revert Mask
+    label_rev = ttk.Label(app, text="Revert:")
+    row = grid_item(label_rev, row, column=0, sticky="e", increment=False)
+    revert_mask_var = tk.BooleanVar()
+    revert_mask_var.set(user_parameters['revert mask'])
+    chck_revert_mask = ttk.Checkbutton(app, variable=revert_mask_var)
+    row = grid_item(chck_revert_mask, row, column=1, sticky="w")
+    strg = "- Name: revert_mask\n" \
+           "- Summary: Revert option of the mask for selecting specific " \
+           "files.\n" \
+           "- Description: This parameter specifies if the mask should be " \
+           "reverted (True), or not (False).\n" \
+           "- Value: Boolean (True or False)."
+    chck_revert_mask.bind(
+        "<Enter>",
+        lambda event, mess=strg: show_tooltip(chck_revert_mask, mess))
     row = add_grid_separator(app, row=row)
 
     # Section title: Plot and save

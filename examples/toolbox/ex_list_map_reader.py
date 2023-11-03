@@ -39,6 +39,7 @@ def ex_list_map_reader(verbose=False):
 
     user_pars = {'interp fact': 4,
                  'interp func': 'linear',
+                 'revert mask': False,
                  'man mask': None,
                  'ref': {'mode': 'off',
                          'prop': 'charac tot fit: R_2 hyst',

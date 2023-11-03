@@ -352,22 +352,31 @@ def main_mean_hyst(user_pars, verbose=False, make_plots=False):
             mode_man=mask_pars['ref']['interactive'],
             ref_str=mask_pars['ref']["prop"], dict_map=dict_map)
 
+        applied_mask = [index for index in range(len(ref)) if
+                        index not in mask] if mask_pars['revert mask'] else mask
+
         if make_plots:
             dict_interp = {'fact': user_pars['interp fact'],
                            'func': user_pars['interp func']}
             prop_key = {'mode': ref_mode, 'prop': mask_pars['ref']['prop']}
             full_mask = np.arange(len(ref))
-            highlight_pix = [indx for indx in full_mask if indx not in mask]
+            highlight_pix = [indx for indx in full_mask
+                             if indx not in applied_mask]
             fig_map = plot_and_save_maps(
                 ref, dim_pix, dim_mic=dim_mic, dict_interp=dict_interp, mask=[],
                 prop_str=prop_key['prop'], highlight_pix=highlight_pix)
             figures.append(fig_map)
+    else:
+        applied_mask = [index for index in range(int(dim_pix['x']*dim_pix['y']))
+                        if index not in mask] \
+            if mask_pars['revert mask'] else mask
 
     if verbose:
-        print(f'mask: {mask}')
+        print(f'mask: {applied_mask}')
 
     if mode in ['on', 'off']:
-        res = find_best_nanoloops(user_pars, mask, mode=mode, verbose=verbose)
+        res = find_best_nanoloops(
+            user_pars, applied_mask, mode=mode, verbose=verbose)
         best_loops, analysis_mode, dict_str = res
         res = mean_analysis_on_off(user_pars, best_loops, analysis_mode,
                                    dict_str, make_plots=make_plots)
@@ -378,11 +387,11 @@ def main_mean_hyst(user_pars, verbose=False, make_plots=False):
         best_loops = {}
         for mode_lab in ['on', 'off']:
             res = find_best_nanoloops(
-                user_pars, mask, mode=mode_lab, verbose=verbose)
+                user_pars, applied_mask, mode=mode_lab, verbose=verbose)
             best_loops[mode_lab], analysis_mode, dict_str = res
         offsets_off = properties['off']['charac tot fit: y shift']
         selected_offsets_off = [val for cont, val in enumerate(offsets_off) if
-                                cont not in mask]
+                                cont not in applied_mask]
         elec_offset = get_setting('elec offset')
         selected_offsets_off = selected_offsets_off if elec_offset else None
         res = mean_analysis_coupled(
@@ -412,6 +421,10 @@ def parameters():
         Measurement mode used for analysis.
         This parameter specifies the mode used for analysis.
         Three possible values: 'on,' 'off,' or 'coupled.'
+    - revert_mask: bool
+        Revert option of the mask for selecting specific files.
+        This parameter specifies if the mask should be reverted (True), or not
+        (False)
     - man_mask: list
         Manual mask for selecting specific files.
         This parameter is a list of pixel indices.
@@ -603,7 +616,8 @@ def parameters():
                  'dir path in loop': dir_path_in_loop,
                  'file path in pars': file_path_in_pars,
                  'mode': 'off',
-                 'mask': {'man mask': None,
+                 'mask': {'revert mask': False,
+                          'man mask': None,
                           'ref': {'prop': 'charac tot fit: area',
                                   'mode': 'off',
                                   'min val': 0.005,

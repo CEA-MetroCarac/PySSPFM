@@ -45,7 +45,8 @@ def example_mean_hyst(phase='1', mode='off', verbose=False, make_plots=False):
     assert mode in ['off', 'on', 'coupled']
 
     user_pars = {'mode': mode,
-                 'mask': {'man mask': None,
+                 'mask': {'revert mask': False,
+                          'man mask': None,
                           'ref': {'prop': 'fit pars: ampli_0',
                                   'mode': mode,
                                   'min val': None,

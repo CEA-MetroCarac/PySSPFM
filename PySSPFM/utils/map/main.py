@@ -17,8 +17,8 @@ from PySSPFM.settings import COLOR_SSPFM_MAP, FIGSIZE
 
 def main_mapping(properties, dim_pix, dim_mic=None, dict_interp=None,
                  colors=None, cbar_lab=None, dict_map=None, ref=None,
-                 dict_ref=None, mask=None, verbose=False, show_plots=False,
-                 save_plots=False, dir_path_out=None):
+                 dict_ref=None, mask=None, revert_mask=False, verbose=False,
+                 show_plots=False, save_plots=False, dir_path_out=None):
     """
     Main function to construct the maps
 
@@ -44,6 +44,8 @@ def main_mapping(properties, dim_pix, dim_mic=None, dict_interp=None,
         Ref property condition to generate the mask of the map
     mask: list or numpy.array, optional
         Index corresponding to the mask
+    revert_mask: bool, optional
+        This parameter specifies if the mask should be reverted or not
     verbose: bool, optional
         Activation key for verbosity
     show_plots: bool, optional
@@ -91,8 +93,9 @@ def main_mapping(properties, dim_pix, dim_mic=None, dict_interp=None,
 
         fig = plot_and_save_maps(
             prop, dim_pix, dim_mic=dim_mic, dict_interp=dict_interp,
-            dict_map=dict_map, prop_str=key, mask=mask, ref=ref,
-            dict_ref=dict_ref, color=color, cbar_lab=cbar_lab)
+            dict_map=dict_map, prop_str=key, mask=mask,
+            revert_mask=revert_mask, ref=ref, dict_ref=dict_ref, color=color,
+            cbar_lab=cbar_lab)
         if show_plots:
             plt.show()
         if save_plots:

@@ -46,6 +46,7 @@ def main(parent=None):
         'ind maps': ind_maps,
         'interp fact': 4,
         'interp func': 'linear',
+        'revert mask': False,
         'man mask': [],
         'ref': {'mode': 'off',
                 'prop': 'charac tot fit: R_2 hyst',
@@ -66,6 +67,7 @@ def main(parent=None):
         user_parameters['ind maps'] = extract_var(ind_maps_var)
         user_parameters['interp fact'] = interp_fact_var.get()
         user_parameters['interp func'] = interp_func_var.get()
+        user_parameters['revert mask'] = revert_mask_var.get()
         user_parameters['man mask'] = extract_var(man_mask_var)
         user_parameters['ref']['prop'] = ref_prop_var.get()
         user_parameters['ref']['mode'] = ref_mode_var.get()
@@ -393,6 +395,24 @@ def main(parent=None):
     chck_ref_interact.bind(
         "<Enter>",
         lambda event, mess=strg: show_tooltip(chck_ref_interact, mess))
+    row = add_grid_separator(app, row=row)
+
+    # Revert Mask
+    label_rev = ttk.Label(app, text="Revert:")
+    row = grid_item(label_rev, row, column=0, sticky="e", increment=False)
+    revert_mask_var = tk.BooleanVar()
+    revert_mask_var.set(user_parameters['revert mask'])
+    chck_revert_mask = ttk.Checkbutton(app, variable=revert_mask_var)
+    row = grid_item(chck_revert_mask, row, column=1, sticky="w")
+    strg = "- Name: revert_mask\n" \
+           "- Summary: Revert option of the mask for selecting specific " \
+           "files.\n" \
+           "- Description: This parameter specifies if the mask should be " \
+           "reverted (True), or not (False).\n" \
+           "- Value: Boolean (True or False)."
+    chck_revert_mask.bind(
+        "<Enter>",
+        lambda event, mess=strg: show_tooltip(chck_revert_mask, mess))
     row = add_grid_separator(app, row=row)
 
     # Section title: Save and plot

@@ -33,6 +33,9 @@ def ex_global_map_reader(verbose=False, make_plots=False):
 
     user_params = {'interp fact': 4,
                    'interp func': 'linear',
+                   'revert mask': {'on': False,
+                                   'off': False,
+                                   'coupled': False},
                    'man mask': {'on': None,
                                 'off': None,
                                 'coupled': None},

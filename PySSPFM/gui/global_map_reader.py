@@ -41,6 +41,9 @@ def main(parent=None):
         'dir path out': '',
         'interp fact': 4,
         'interp func': 'linear',
+        'revert mask': {'on': False,
+                        'off': False,
+                        'coupled': False},
         'man mask': {'on': [],
                      'off': [],
                      'coupled': []},
@@ -71,6 +74,10 @@ def main(parent=None):
         user_parameters['dir path out'] = extract_var(dir_path_out_var)
         user_parameters['interp fact'] = interp_fact_var.get()
         user_parameters['interp func'] = interp_func_var.get()
+        user_parameters['revert mask']['off'] = revert_mask_off_var.get()
+        user_parameters['revert mask']['on'] = revert_mask_on_var.get()
+        user_parameters['revert mask']['coupled'] = \
+            revert_mask_coupled_var.get()
         user_parameters['man mask']['off'] = extract_var(man_mask_off_var)
         user_parameters['man mask']['on'] = extract_var(man_mask_on_var)
         user_parameters['man mask']['coupled'] = \
@@ -394,6 +401,25 @@ def main(parent=None):
         lambda event, mess=strg: show_tooltip(chck_ref_interact_off, mess))
     row = add_grid_separator(left_frame, row=row)
 
+    # Revert Mask
+    label_rev = ttk.Label(left_frame, text="Revert:")
+    row = grid_item(label_rev, row, column=0, sticky="e", increment=False)
+    revert_mask_off_var = tk.BooleanVar()
+    revert_mask_off_var.set(user_parameters['revert mask']['off'])
+    chck_revert_mask_off = ttk.Checkbutton(left_frame,
+                                           variable=revert_mask_off_var)
+    row = grid_item(chck_revert_mask_off, row, column=1, sticky="w")
+    strg = "- Name: revert_mask\n" \
+           "- Summary: Revert option of the mask for selecting specific " \
+           "files.\n" \
+           "- Description: This parameter specifies if the mask should be " \
+           "reverted (True), or not (False).\n" \
+           "- Value: Boolean (True or False)."
+    chck_revert_mask_off.bind(
+        "<Enter>",
+        lambda event, mess=strg: show_tooltip(chck_revert_mask_off, mess))
+    row = add_grid_separator(left_frame, row=row)
+
     # Create center frame
     center_frame = ttk.Frame(app)
     center_frame.grid(row=1, column=1, padx=10, pady=10, sticky="ns")
@@ -542,6 +568,25 @@ def main(parent=None):
     chck_ref_interact_on.bind(
         "<Enter>",
         lambda event, mess=strg: show_tooltip(chck_ref_interact_on, mess))
+    row = add_grid_separator(center_frame, row=row)
+
+    # Revert Mask
+    label_rev = ttk.Label(center_frame, text="Revert:")
+    row = grid_item(label_rev, row, column=0, sticky="e", increment=False)
+    revert_mask_on_var = tk.BooleanVar()
+    revert_mask_on_var.set(user_parameters['revert mask']['on'])
+    chck_revert_mask_on = ttk.Checkbutton(
+        center_frame, variable=revert_mask_on_var)
+    row = grid_item(chck_revert_mask_on, row, column=1, sticky="w")
+    strg = "- Name: revert_mask\n" \
+           "- Summary: Revert option of the mask for selecting specific " \
+           "files.\n" \
+           "- Description: This parameter specifies if the mask should be " \
+           "reverted (True), or not (False).\n" \
+           "- Value: Boolean (True or False)."
+    chck_revert_mask_on.bind(
+        "<Enter>",
+        lambda event, mess=strg: show_tooltip(chck_revert_mask_on, mess))
     row = add_grid_separator(center_frame, row=row)
 
     # Create right frame
@@ -702,6 +747,25 @@ def main(parent=None):
     chck_ref_interact_coupled.bind(
         "<Enter>",
         lambda event, mess=strg: show_tooltip(chck_ref_interact_coupled, mess))
+    row = add_grid_separator(right_frame, row=row)
+
+    # Revert Mask
+    label_rev = ttk.Label(right_frame, text="Revert:")
+    row = grid_item(label_rev, row, column=0, sticky="e", increment=False)
+    revert_mask_coupled_var = tk.BooleanVar()
+    revert_mask_coupled_var.set(user_parameters['revert mask']['coupled'])
+    chck_revert_mask_coupled = ttk.Checkbutton(
+        right_frame, variable=revert_mask_coupled_var)
+    row = grid_item(chck_revert_mask_coupled, row, column=1, sticky="w")
+    strg = "- Name: revert_mask\n" \
+           "- Summary: Revert option of the mask for selecting specific " \
+           "files.\n" \
+           "- Description: This parameter specifies if the mask should be " \
+           "reverted (True), or not (False).\n" \
+           "- Value: Boolean (True or False)."
+    chck_revert_mask_coupled.bind(
+        "<Enter>",
+        lambda event, mess=strg: show_tooltip(chck_revert_mask_coupled, mess))
     row = add_grid_separator(right_frame, row=row)
 
     # Create bottom frame

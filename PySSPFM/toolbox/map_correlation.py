@@ -179,18 +179,23 @@ def main_map_correlation(user_pars, dir_path_in):
     # Extract all properties
     all_props, _, _ = extract_properties(dir_path_in)
 
+    nb_elem = sum(len(sublist) for sublist in list(all_props.items())[0])
+    applied_mask = [index for index in range(nb_elem) if
+                    index not in user_pars['mask']] \
+        if user_pars['revert mask'] else user_pars['mask']
+
     if user_pars['ind maps'] is not None:
         # Select multi properties of interest
         multi_prop = {f'{elem[1]} ({elem[0]})': all_props[elem[0]][elem[1]]
                       for elem in user_pars['ind maps']}
         coef_arr = gen_correlation_array(
-            list(multi_prop.values()), mask=user_pars['mask'])
+            list(multi_prop.values()), mask=applied_mask)
         figures = plot_correlation_table(coef_arr, multi_prop.keys())
         coef_arr = {'single': coef_arr}
     else:
         # Cross correlation analysis between all maps
         coef_arr, figures = correlation_analysis_all_maps(
-            all_props, mask=user_pars['mask'])
+            all_props, mask=applied_mask)
 
     return coef_arr, figures
 
@@ -216,6 +221,10 @@ def parameters():
         - If list of pixels is None: no masked pixels.
         - If list of pixels is [a, b, c ...]: files of index a, b, c [...]
         are masked for the analysis.
+    - revert_mask: bool
+        Revert option of the mask for selecting specific files.
+        This parameter specifies if the mask should be reverted (True), or not
+        (False)
 
     - dir_path_in: str
         Properties files directory (default: properties)
@@ -249,7 +258,8 @@ def parameters():
                 ['on', 'fit pars: ampli_0']]
 
     user_pars = {'ind maps': ind_maps,
-                 'mask': None}
+                 'mask': None,
+                 'revert mask': False}
 
     return user_pars, dir_path_in, dir_path_out, show_plots, save
 

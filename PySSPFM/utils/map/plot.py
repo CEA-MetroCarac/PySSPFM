@@ -17,7 +17,7 @@ from PySSPFM.settings import \
 
 def plot_and_save_maps(property_arr, dim_pix, dim_mic=None, dict_interp=None,
                        dict_map=None, save=False, dir_path_out=None, mask=None,
-                       prop_str='', ref=None, dict_ref=None,
+                       revert_mask=False, prop_str='', ref=None, dict_ref=None,
                        color=COLOR_SSPFM_MAP, cbar_lab=None,
                        highlight_pix=None):
     """
@@ -42,6 +42,8 @@ def plot_and_save_maps(property_arr, dim_pix, dim_mic=None, dict_interp=None,
         Path of the property matrix txt directory.
     mask: list or numpy.ndarray, optional
         List of index corresponding to the mask.
+    revert_mask: bool, optional
+        This parameter specifies if the mask should be reverted or not.
     prop_str: str, optional
         Title of the figure: i.e. name of the measured parameter.
     ref: numpy.ndarray, optional
@@ -59,6 +61,10 @@ def plot_and_save_maps(property_arr, dim_pix, dim_mic=None, dict_interp=None,
     -------
     fig: plt.figure
     """
+
+    applied_mask = [index for index in range(len(property_arr)) if
+                    index not in mask] if revert_mask else mask
+
     property_arr = np.array(property_arr, dtype='f')
 
     # Initialize the figure
@@ -81,8 +87,9 @@ def plot_and_save_maps(property_arr, dim_pix, dim_mic=None, dict_interp=None,
         # Measure processing on the ref array to plot the maps
         (raw_ext, raw_dim_fact, matrix_step1, _, matrix_step2, interp_ext,
          _, _, matrix_step3b, index_blank, tab_all_index, tab_plotted_index,
-         directions) = formatting_measure(ref, dim_pix, dim_mic=dim_mic,
-                                          dict_interp=dict_interp, mask=mask)
+         directions) = formatting_measure(
+            ref, dim_pix, dim_mic=dim_mic, dict_interp=dict_interp,
+            mask=applied_mask)
 
         # Step 1 of ref: raw ref map (no selection criterion)
         title_ax1 = f'{dict_map["mask mode"]}: step 1 (init)' \
@@ -119,7 +126,7 @@ def plot_and_save_maps(property_arr, dim_pix, dim_mic=None, dict_interp=None,
      matrix_step3, matrix_step3b, index_blank, tab_all_index,
      tab_plotted_index, directions) = formatting_measure(
         property_arr, dim_pix, dim_mic=dim_mic, dict_interp=dict_interp,
-        mask=mask)
+        mask=applied_mask)
 
     # Step 1 of measure: raw map (no selection criterion)
     title_ax3 = 'Step 1: Raw data'
@@ -203,15 +210,16 @@ def plot_and_save_maps(property_arr, dim_pix, dim_mic=None, dict_interp=None,
     fig.text(0.03, 0.77, "Slow scan axis", rotation=270, size=10,
              bbox=bbox_props_slow)
 
-    if len(mask) < 15:
+    if len(applied_mask) < 15:
         # Add mask information
-        fig.text(0.01, 0.04, f'mask, pixel removed: {str(mask)}', size=12,
-                 weight='heavy')
+        fig.text(0.01, 0.04, f'mask, pixel removed: {str(applied_mask)}',
+                 size=12, weight='heavy')
 
     if dict_ref:
         # Add pixel selection criterion information
         fig.text(0.01, 0.02,
-                 f'pixel selection criterion: {dict_ref["crit sel lab"]}',
+                 f'pixel selection criterion: {dict_ref["crit sel lab"]}, '
+                 f'revert mode is {revert_mask}',
                  size=12, weight='heavy')
 
     # Save .txt image data

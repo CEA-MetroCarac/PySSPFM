@@ -88,21 +88,25 @@ def main_list_map_reader(user_pars, dir_path_in, verbose=False):
     else:
         mask, dict_map["mask mode"] = user_pars['man mask'], 'man mask'
 
-    maps = []
+    applied_mask = [index for index in range(int(dim_pix['x']*dim_pix['y']))
+                    if index not in mask] \
+        if user_pars['revert mask'] else mask
 
+    maps = []
     # Plot ref
     if ref:
         if verbose:
             print('# reference property')
         fig_ref = plt.figure(figsize=FIGSIZE)
         fig_ref.sfn = "list_map_reader_ref"
-        axs_ref = formatting_fig(fig_ref, [1, 1], mask, nb_map=1,
+        axs_ref = formatting_fig(fig_ref, [1, 1], applied_mask, nb_map=1,
                                  dict_map=None, dict_ref=None, dim_mic=None)
         ref_str = f'ref prop: {user_pars["ref"]["prop"]}' \
                   f' ({user_pars["ref"]["mode"]})'
         tratment_plot_map(
             fig_ref, axs_ref[0], ref, dim_pix, dim_mic=dim_mic,
-            dict_interp=dict_interp, mask=mask, prop_str=ref_str, plot_ind=True)
+            dict_interp=dict_interp, mask=applied_mask, prop_str=ref_str,
+            plot_ind=True)
         fig_ref.tight_layout()
         maps += [fig_ref]
 
@@ -113,8 +117,9 @@ def main_list_map_reader(user_pars, dir_path_in, verbose=False):
     fig_maps_dim = subplots_dim(nb_map)
     fig_maps = plt.figure(figsize=FIGSIZE)
     fig_maps.sfn = "list_map_reader_maps"
-    axs_maps = formatting_fig(fig_maps, fig_maps_dim, mask, nb_map=nb_map,
-                              dict_map=None, dict_ref=None, dim_mic=None)
+    axs_maps = formatting_fig(
+        fig_maps, fig_maps_dim, applied_mask,  nb_map=nb_map, dict_map=None,
+        dict_ref=None, dim_mic=None)
     # Generate a map for each properties
     plot_ind = len(axs_maps) <= 10
     for i, (lab_prop, prop) in enumerate(multi_prop.items()):
@@ -123,7 +128,7 @@ def main_list_map_reader(user_pars, dir_path_in, verbose=False):
         # Treat and plot map: property
         tratment_plot_map(
             fig_maps, axs_maps[i], prop, dim_pix, dim_mic=dim_mic,
-            dict_interp=dict_interp, mask=mask, prop_str=lab_prop,
+            dict_interp=dict_interp, mask=applied_mask, prop_str=lab_prop,
             plot_ind=plot_ind)
     fig_maps.tight_layout()
     maps += [fig_maps]
@@ -196,7 +201,7 @@ def formatting_fig(fig, fig_dim, mask, nb_map=None, dict_map=None,
         Figure object
     fig_dim: list(2) of int
         List of figure dimension [nb of line, mb of column]
-    mask: list(q) or numpy.array(q) of int, optional
+    mask: list(q) or numpy.array(q) of int
         List of index corresponding to the mask (q<p)
     nb_map: int, optional
         Number of plotted map
@@ -280,6 +285,10 @@ def parameters():
         This parameter specifies the interpolation function used for sspfm
         maps interpolation. It can take one of the following values:
         'linear', or 'cubic'.
+    - revert_mask: bool
+        Revert option of the mask for selecting specific files.
+        This parameter specifies if the mask should be reverted (True), or not
+        (False)
     - man_mask: list
         Manual mask for selecting specific files.
         This parameter is a list of pixel indices.
@@ -340,6 +349,7 @@ def parameters():
     user_pars = {'ind maps': ind_maps,
                  'interp fact': 3,
                  'interp func': 'linear',
+                 'revert mask': False,
                  'man mask': [],
                  'ref': {'mode': 'off',
                          'prop': 'charac tot fit: R_2 hyst',

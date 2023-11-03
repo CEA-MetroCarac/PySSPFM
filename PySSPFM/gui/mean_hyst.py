@@ -44,7 +44,8 @@ def main(parent=None):
         'dir path in loop': '',
         'file path in pars': '',
         'mode': 'off',
-        'mask': {'man mask': None,
+        'mask': {'revert mask': False,
+                 'man mask': None,
                  'ref': {'prop': 'charac tot fit: area',
                          'mode': 'off',
                          'min val': 0.005,
@@ -83,6 +84,7 @@ def main(parent=None):
         user_parameters['file path in pars'] = \
             extract_var(file_path_in_pars_var)
         user_parameters['mode'] = mode_var.get()
+        user_parameters['mask']['revert mask'] = revert_mask_var.get()
         user_parameters['mask']['man mask'] = extract_var(man_mask_var)
         user_parameters['mask']['ref']['prop'] = ref_prop_var.get()
         user_parameters['mask']['ref']['mode'] = ref_mode_var.get()
@@ -540,6 +542,24 @@ def main(parent=None):
     chck_ref_interact.bind(
         "<Enter>",
         lambda event, mess=strg: show_tooltip(chck_ref_interact, mess))
+    row = add_grid_separator(left_frame, row=row)
+
+    # Revert Mask
+    label_rev = ttk.Label(left_frame, text="Revert:")
+    row = grid_item(label_rev, row, column=0, sticky="e", increment=False)
+    revert_mask_var = tk.BooleanVar()
+    revert_mask_var.set(user_parameters['mask']['revert mask'])
+    chck_revert_mask = ttk.Checkbutton(left_frame, variable=revert_mask_var)
+    row = grid_item(chck_revert_mask, row, column=1, sticky="w")
+    strg = "- Name: revert_mask\n" \
+           "- Summary: Revert option of the mask for selecting specific " \
+           "files.\n" \
+           "- Description: This parameter specifies if the mask should be " \
+           "reverted (True), or not (False).\n" \
+           "- Value: Boolean (True or False)."
+    chck_revert_mask.bind(
+        "<Enter>",
+        lambda event, mess=strg: show_tooltip(chck_revert_mask, mess))
     row = add_grid_separator(left_frame, row=row)
 
     # Section title: Map
