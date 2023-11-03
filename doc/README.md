@@ -753,7 +753,7 @@ Following the completion of the fitting process, the <code>properties</code> met
 </p>
 
 <p align="justify" width="100%">
-The quality of the fit is expressed as the R-squared value, determined by the fit achieved using the <code>r_square</code> method. It represents the mean square deviation between the fit and measurements. During the analysis of piezo-ferroelectric properties, it is important to always consider the R-squared value. This is because variations in these properties can arise from both physical nanoscale effects and poor quality fitting. For hysteresis curves with abnormally low R-squared values, it is recommended to inspect each measurement individually to identify potential issues with the data. 
+The quality of the fit is expressed as the R-squared value, determined by the fit achieved using the <code>r_square</code> method. It represents the mean square deviation between the fit and measurements. During the analysis of piezo-ferroelectric properties, it is important to always consider the R-squared value. This is because variations in these properties can arise from both physical nanoscale effects and poor quality fitting. For hysteresis curves with abnormally low R-squared values, it is recommended to inspect each property individually to identify potential issues with the data. 
 </p>
 
 <p align="center" width="100%">
@@ -858,7 +858,7 @@ The creation and processing of SSPFM maps are overseen by the set of scripts con
 </p>
 
 <p align="justify" width="100%">
-The script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> orchestrates and manages the entire process of creating and processing SSPFM maps. It relies significantly on scripts such as <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/annotate.py">utils/map/annotate.py</a></code> for annotating maps, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/interpolate.py">utils/map/interpolate.py</a></code> for 2D interpolation, and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/matrix_formatting.py">utils/map/matrix_formatting.py</a></code> for formatting measurements into map representations.
+The script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> orchestrates and manages the entire process of creating and processing SSPFM maps. It relies significantly on scripts such as <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/annotate.py">utils/map/annotate.py</a></code> for annotating maps, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/interpolate.py">utils/map/interpolate.py</a></code> for 2D interpolation, and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/matrix_formatting.py">utils/map/matrix_formatting.py</a></code> for formatting properties into map representations.
 </p>
 
 <p align="justify" width="100%">
@@ -869,7 +869,7 @@ The maps are generated using the executable codes <code><a href="https://github.
 
 <p align="justify" width="100%">
 For cartographies, it is possible to establish a mask in order to: <br>
-&#8226 Mitigate the influence of problematic or defective pixels in the measurement.<br>
+&#8226 Mitigate the influence of problematic or defective pixels in the map.<br>
 &#8226 Isolate specific ferroelectric phases or areas on the sample's surface.
 </p>
 
@@ -890,21 +890,21 @@ The <code>interp_2d_treated</code> function oversees the entire calibration proc
 ### VII.3) - Figures
 
 <p align="justify" width="100%">
-The SSPFM matrices are determined using the main function <code>formatting_measure</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/matrix_formatting.py">utils/map/matrix_formatting.py</a></code>. The measurement is initially in the form of a 1D array. Initially, it needs to be transformed into a matrix based on the probe's path. This process is partially handled by the <code>rearrangement_matrix</code> function. The main function <code>formatting_measure</code> numerically applies masks, determines if pixel values correspond to errors, generates matrices specific to map annotations. It also calls the <code>interp_2d_treated</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/interpolate.py">utils/map/interpolate.py</a></code> to perform 2D interpolation. In summary, the entire script is responsible for generating all the matrices (measurements, annotations, etc.) and values displayed in the figures.
+The SSPFM matrices are determined using the main function <code>formatting_measure</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/matrix_formatting.py">utils/map/matrix_formatting.py</a></code>. The data is initially in the form of a 1D array. Initially, it needs to be transformed into a matrix based on the probe's path. This process is partially handled by the <code>rearrangement_matrix</code> function. The main function <code>formatting_measure</code> numerically applies masks, determines if pixel values correspond to errors, generates matrices specific to map annotations. It also calls the <code>interp_2d_treated</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/interpolate.py">utils/map/interpolate.py</a></code> to perform 2D interpolation. In summary, the entire script is responsible for generating all the matrices (properties, annotations, etc.) and values displayed in the figures.
 </p>
 
 <p align="justify" width="100%">
 The complete set of displayed figures is orchestrated by the function <code>plot_and_save_image</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>, and it represents: <br>
 <br>
-&#8226 Image 3: Step 1: raw measurement map (no selection criterion) <br>
+&#8226 Image 3: Step 1: raw property map (no selection criterion) <br>
 &#8226 Image 4: Step 1bis: interpolation of step 1 <br>
 &#8226 Image 5: Step 2: add the mask (some pixel are removed) <br>
 &#8226 Image 6: Step 3: interpolate removed pixel values (without increasing resolution) to go back to normal values <br>
 &#8226 Image 7: Step 3bis: interpolation of step 3 <br>
 &#8226 Image 8: Step 4: final result: interpolation of step 3 and remove the area corresponding to the removed pixels on the map <br>
 <br>
-&#8226 Image 1: reference measurement: step 1 <br>
-&#8226 Image 2: reference measurement: step 4 <br>
+&#8226 Image 1: reference property: step 1 <br>
+&#8226 Image 2: reference property: step 4 <br>
 </p>
 
 <p align="justify" width="100%">
@@ -913,7 +913,7 @@ Each cartography is rendered using the functions <code>sub_image</code> or <code
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/ssfpm_map_amplitude.PNG> <br>
-    <em>SSPFM map of hysteresis amplitude, with R² in reference measurement (figure generated with <code>plot_and_save_image</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> script)</em>
+    <em>SSPFM map of hysteresis amplitude, with R² in reference property (figure generated with <code>plot_and_save_image</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> script)</em>
 </p>
 
 ## VIII) Toolbox
@@ -1099,7 +1099,7 @@ User parameters:
 </p>
 
 <p align="justify" width="100%">
-The operating principle of this reader differs slightly from that of the global map reader (see Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii1c-global-map-reader">VIII.1.c) - Toolbox / Viewers / Global map reader</a></code> in the documentation). In this case, a single mask can be defined by the user, and a list of measures to be mapped is provided by the user. The concept behind this reader is to observe multiple maps of different measurements simultaneously (rather than one by one). Therefore, the <code>main_mapping</code> function is not used. In the main function of the script, <code>main_list_map_reader</code>, the mask is constructed, and cross-correlative analysis is performed only between the mapped measures (for cross-correlative analysis, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii4-2d-cross-correlation">VII.4) - 2D cross correlation</a></code> of the documentation.). Then, the figure containing all the different maps is formatted using the <code>formatting_fig</code> function. For each map, the <code>treat_and_plot</code> function is used to carry out treatments (masking, interpolation, etc.) and generate the map of the corresponding measurement, making use of functions from the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">SSPFM mapping</a> scripts.
+The operating principle of this reader differs slightly from that of the global map reader (see Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii1c-global-map-reader">VIII.1.c) - Toolbox / Viewers / Global map reader</a></code> in the documentation). In this case, a single mask can be defined by the user, and a list of measures to be mapped is provided by the user. The concept behind this reader is to observe multiple maps of different properties simultaneously (rather than one by one). Therefore, the <code>main_mapping</code> function is not used. In the main function of the script, <code>main_list_map_reader</code>, the mask is constructed, and cross-correlative analysis is performed only between the mapped measures (for cross-correlative analysis, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii4-2d-cross-correlation">VII.4) - 2D cross correlation</a></code> of the documentation.). Then, the figure containing all the different maps is formatted using the <code>formatting_fig</code> function. For each map, the <code>treat_and_plot</code> function is used to carry out treatments (masking, interpolation, etc.) and generate the map of the corresponding property, making use of functions from the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">SSPFM mapping</a> scripts.
 </p>
 
 <p align="center" width="100%">
@@ -1216,7 +1216,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 ```
 
 <p align="justify" width="100%">
-&#8226 File Management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: <code>txt_ferro_meas</code> for ferroelectric measurements, <code>txt_loops</code> containing measurements in the form of nanoloops (generated after the first processing step), and the text file containing measurement and processing parameters, <code>results/saving_parameters.txt</code>.<br>
+&#8226 File Management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: <code>txt_ferro_meas</code> for ferroelectric properties, <code>txt_loops</code> containing measurements in the form of nanoloops (generated after the first processing step), and the text file containing measurement and processing parameters, <code>results/saving_parameters.txt</code>.<br>
 &#8226 Mode: Choose from <code>'off'</code>, <code>'on'</code>, or <code>'coupled'.</code><br>
 &#8226 Mask Parameters<br>
 &#8226 Hysteresis Treatment Parameters: Utilized for fitting the mean hysteresis.<br>
@@ -1297,7 +1297,7 @@ $$ R_{ij} = {c_{ij} \over \sqrt{c_{ii} * c_{jj}}} $$
 ```
 
 <p align="justify" width="100%">
-&#8226 File Management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: <code>txt_ferro_meas</code> for ferroelectric measurements, <code>txt_loops</code> containing measurements in the form of nanoloops (generated after the first processing step), and the text file containing measurement and processing parameters, <code>results/saving_parameters.txt</code>.<br>
+&#8226 File Management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: <code>txt_ferro_meas</code> for ferroelectric properties, <code>txt_loops</code> containing measurements in the form of nanoloops (generated after the first processing step), and the text file containing measurement and processing parameters, <code>results/saving_parameters.txt</code>.<br>
 &#8226 Measurement selection parameters<br>
 &#8226 Mask Parameters<br>
 &#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of results. <br>
@@ -1365,7 +1365,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 ```
 
 <p align="justify" width="100%">
-&#8226 File Management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: <code>txt_ferro_meas</code> for ferroelectric measurements, <code>txt_loops</code> containing measurements in the form of nanoloops (generated after the first processing step), and the text file containing measurement and processing parameters, <code>results/saving_parameters.txt</code>.<br>
+&#8226 File Management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: <code>txt_ferro_meas</code> for ferroelectric properties, <code>txt_loops</code> containing measurements in the form of nanoloops (generated after the first processing step), and the text file containing measurement and processing parameters, <code>results/saving_parameters.txt</code>.<br>
 &#8226 Measurement selection parameters<br>
 &#8226 Pixel selection parameters<br>
 &#8226 Loop plotting parameter (<code>del_first_loop</code>)<br>
