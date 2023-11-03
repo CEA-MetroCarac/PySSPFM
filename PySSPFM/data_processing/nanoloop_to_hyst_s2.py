@@ -17,7 +17,7 @@ from PySSPFM.utils.nanoloop.plot import plot_ckpfm
 from PySSPFM.utils.nanoloop.phase import gen_dict_pha
 from PySSPFM.utils.nanoloop.analysis import nanoloop_treatment, gen_ckpfm_meas
 from PySSPFM.utils.nanoloop_to_hyst.file import \
-    (generate_file_nanoloop_paths, print_parameters, complete_txt_file,
+    (generate_file_nanoloop_paths, print_parameters, complete_parameters,
      save_properties, save_best_nanoloops)
 from PySSPFM.utils.nanoloop_to_hyst.plot import plot_nanoloop_on_off
 from PySSPFM.utils.nanoloop_to_hyst.electrostatic import differential_analysis
@@ -406,7 +406,7 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
         file_path_in_txt = os.path.join(root_in, parameters_file_name)
         file_path_out_txt_save = file_path_out_txt_save or os.path.join(
             root_out, parameters_file_name)
-        complete_txt_file(file_path_in_txt, user_pars, t0, date,
+        complete_parameters(file_path_in_txt, user_pars, t0, date,
                           file_path_out=file_path_out_txt_save)
 
 

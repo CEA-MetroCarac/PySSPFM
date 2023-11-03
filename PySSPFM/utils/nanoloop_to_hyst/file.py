@@ -139,7 +139,7 @@ def print_parameters(file_path_in, verbose=False):
             write_segment)
 
 
-def complete_txt_file(file_path_in, user_pars, t0, date, file_path_out=None):
+def complete_parameters(file_path_in, user_pars, t0, date, file_path_out=None):
     """
     Fill second step analysis parameters in the saving txt file
 

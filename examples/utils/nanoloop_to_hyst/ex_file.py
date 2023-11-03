@@ -12,7 +12,7 @@ from examples.utils.nanoloop_to_hyst.ex_analysis import ex_sort_prop
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.nanoloop_to_hyst.file import \
-    (generate_file_nanoloop_paths, print_parameters, complete_txt_file,
+    (generate_file_nanoloop_paths, print_parameters, complete_parameters,
      save_properties, extract_properties)
 
 from PySSPFM import \
@@ -106,9 +106,9 @@ def example_file(make_plots=False, verbose=False):
         print('\n\t- ex print_parameters')
         print(f'\t\tnb write per read: {nb_write_per_read}')
 
-    # ex complete_txt_file
+    # ex complete_parameters
     file_path_out_txt_save = os.path.join(root_data, 'parameters.txt')
-    complete_txt_file(file_path_out_txt_save, user_pars, t0, date)
+    complete_parameters(file_path_out_txt_save, user_pars, t0, date)
 
     fig = []
     if make_plots:
