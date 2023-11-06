@@ -4,6 +4,131 @@
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/logoPySSPFM_white.PNG> <br>
 </p>
 
+<div id="table-of-contents">
+    <h2>Table of Contents</h2>
+    <ul>
+        <li><a href="#section-i">I) - Overview</a>
+            <ul>
+                <li><a href="#section-i-1">I.1) - Workflow</a></li>
+                <li><a href="#section-i-2">I.2) - Code architecture</a></li>
+                <li><a href="#section-i-3">I.3) - Examples & Tests</a></li>
+            </ul>
+        </li>
+        <li><a href="#section-ii">II) - GUI</a>
+            <ul>
+                <li><a href="#section-ii-1">II.1) - Main window</a></li>
+                <li><a href="#section-ii-2">II.2) - Secondary window</a></li>
+            </ul>
+        </li>
+        <li><a href="#section-iii">III) - File management</a>
+            <ul>
+                <li><a href="#section-iii-1">III.1) - Input files</a>
+                    <ul>
+                        <li><a href="#section-iii-1-a">III.1.a) - SSPFM measurement files</a></li>
+                        <li><a href="#section-iii-1-b">III.1.b) - Measurement sheet</a></li>
+                        <li><a href="#section-iii-1-c">III.1.c) - Extraction</a></li>
+                        <li><a href="#section-iii-1-d">III.1.d) - Examples & Tests</a></li>
+                    </ul>
+                </li>
+                <li><a href="#section-iii-2">III.2) - Output files</a>
+                    <ul>
+                        <li><a href="#section-iii-2-a">III.2.a) - First step of data analysis</a></li>
+                        <li><a href="#section-iii-2-b">III.2.b) - Second step of data analysis</a></li>
+                        <li><a href="#section-iii-2-c">III.2.c) - Toolbox</a></li>
+                        <li><a href="#section-iii-2-d">III.2.d) - Examples & Tests</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><a href="#section-iv">IV) - First step of data analysis</a>
+            <ul>
+                <li><a href="#section-iv-1">IV.1) - Parameters</a></li>
+                <li><a href="#section-iv-2">IV.2) - Polarization voltage</a></li>
+                <li><a href="#section-iv-3">IV.3) - Pre-measurement calibration</a></li>
+                <li><a href="#section-iv-4">IV.4) - Segment</a></li>
+            </ul>
+        </li>
+        <li><a href="#section-v">V) - Nanoloop</a>
+            <ul>
+                <li><a href="#section-v-1">V.1) - Post-measurement phase calibration</a></li>
+                <li><a href="#section-v-2">V.2) - MultiLoop</a></li>
+                <li><a href="#section-v-3">V.3) - MeanLoop</a></li>
+            </ul>
+        </li>
+        <li><a href="#section-vi">VI) - Second step of data analysis</a>
+            <ul>
+                <li><a href="#section-vi-1">VI.1) - Parameters</a></li>
+                <li><a href="#section-vi-2">VI.2) - Best loop</a></li>
+                <li><a href="#section-vi-3">VI.3) - Hysteresis and properties</a></li>
+                <li><a href="#section-vi-4">VI.4) - Artifact decoupling</a>
+                    <ul>
+                        <li><a href="#section-vi-4-a">VI.4.a) - Analysis of on field amplitude nanoloop</a></li>
+                        <li><a href="#section-vi-4-b">VI.4.b) - Analysis of saturation domain of on field piezoresponse nanoloop</a></li>
+                        <li><a href="#section-vi-4-c">VI.4.c) - Multi read voltages of off field hysteresis</a></li>
+                        <li><a href="#section-vi-4-d">VI.4.d) - Differential analysis of on and off field hysteresis</a></li>
+                        <li><a href="#section-vi-4-e">VI.4.e) - Fit of both on and off field hysteresis</a></li>
+                    </ul>
+                </li>
+                <li><a href="#section-vi-5">VI.5) - cKPFM</a></li>
+            </ul>
+        </li>
+        <li><a href="#section-vii">VII) - SSPFM mapping</a>
+            <ul>
+                <li><a href="#section-vii-1">VII.1) - Mask</a></li>
+                <li><a href="#section-vii-2">VII.2) - Interpolation 2D</a></li>
+                <li><a href="#section-vii-3">VII.3) - Figures</a></li>
+            </ul>
+        </li>
+        <li><a href="#section-viii">VIII) - Toolbox</a>
+            <ul>
+                <li><a href="#section-viii-1">VIII.1) Viewers</a>
+                    <ul>
+                        <li><a href="#section-viii-1-a">VIII.1.a) Raw file</a></li>
+                        <li><a href="#section-viii-1-b">VIII.1.b) Loop file</a></li>
+                        <li><a href="#section-viii-1-c">VIII.1.c) Global map reader</a></li>
+                        <li><a href="#section-viii-1-d">VIII.1.d) List map reader</a></li>
+                    </ul>
+                </li>
+                <li><a href="#section-viii-2">VIII.2) Hysteresis clustering (K-Means)</a>
+                    <ul>
+                        <li><a href="#section-viii-2-a">VIII.2.a) Parameters</a></li>
+                        <li><a href="#section-viii-2-b">VIII.2.b) Extraction</a></li>
+                        <li><a href="#section-viii-2-c">VIII.2.c) Treatment</a></li>
+                        <li><a href="#section-viii-2-d">VIII.2.d) Figures</a></li>
+                    </ul>
+                </li>
+                <li><a href="#section-viii-3">VIII.3) Mean loop</a>
+                    <ul>
+                        <li><a href="#section-viii-3-a">VIII.3.a) Parameters</a></li>
+                        <li><a href="#section-viii-3-b">VIII.3.b) Extraction</a></li>
+                        <li><a href="#section-viii-3-c">VIII.3.c) Find best loop</a></li>
+                        <li><a href="#section-viii-3-d">VIII.3.d) Mean analysis</a></li>
+                        <li><a href="#section-viii-3-e">VIII.3.e) Figures</a></li>
+                    </ul>
+                </li>
+                <li><a href="#section-viii-4">VIII.4) 2D cross correlation</a>
+                    <ul>
+                        <li><a href="#section-viii-4-a">VIII.4.a) Parameters</a></li>
+                        <li><a href="#section-viii-4-b">VIII.4.b) Correlation matrix</a></li>
+                        <li><a href="#section-viii-4-c">VIII.4.c) Workflow</a></li>
+                        <li><a href="#section-viii-4-d">VIII.4.d) Figures</a></li>
+                    </ul>
+                </li>
+                <li><a href="#section-viii-5">VIII.5) Pixel extremum</a>
+                    <ul>
+                        <li><a href="#section-viii-5-a">VIII.5.a) Parameters</a></li>
+                        <li><a href="#section-viii-5-b">VIII.5.b) Workflow</a></li>
+                        <li><a href="#section-viii-5-c">VIII.5.c) Figures</a></li>
+                    </ul>
+                </li>
+                <li><a href="#section-viii-6">VIII.6) SPM converter</a></li>
+            </ul>
+        </li>
+        <li><a href="#section-ix">IX) Overall settings</a></li>
+        <li><a href="#section-x">X) Core scripts</a></li>
+    </ul>
+</div>
+
 ## I) - Overview
 
 ### I.1) - Workflow
@@ -791,7 +916,7 @@ Artifacts, primarily of electrostatic nature but more generally stemming from qu
 Within the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic.py</a></code>, protocols for artifact decorrelation have been developed.
 </p>
 
-### VI.4.1) - Analysis of on field amplitude nanoloop
+### VI.4.a) - Analysis of on field amplitude nanoloop
 
 <p align="justify" width="100%">
 The function <code>btfly_analysis</code> enables the execution of the procedure. The first method used to isolate the influence of artifacts on the ferroelectric component involves analyzing the on field amplitude nanoloop. The method is simple, as the coercive voltages correspond to the points where the amplitude of the curve are the lower. The two points are then determined, and their average corresponds to a measurement of the CPD. However, this method has some drawbacks. It cannot determine the slope of the electrostatic component, and it is only valid when the affine component predominates over the hysteresis component. Moreover, imprint effect can interfere with the measurement accuracy, which is already limited since the signal-to-noise ratio is low at the points of interest [24]. Additionally, the measurement of amplitude vanishing points is rare in practice because of the influence of noise on measurements [25] [48].
@@ -802,7 +927,7 @@ The function <code>btfly_analysis</code> enables the execution of the procedure.
     <em>Result of <code>btfly_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic.py</a></code> script (figure generated with <code>plot_btfly_analysis</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/plot.py">utils/nanoloop_to_hyst/plot</a></code> script)</em>
 </p>
 
-### VI.4.2) - Analysis of saturation domain of on field piezoresponse nanoloop
+### VI.4.b) - Analysis of saturation domain of on field piezoresponse nanoloop
 
 <p align="justify" width="100%">
 [49]. The function <code>sat_analysis</code> enables the execution of the procedure. This method involves isolating the two saturation domains of the on field hysteresis, performing a linear regression of these domains, and measuring the line passing through them, which constitutes the affine component. The saturation domain can be determined in two modes. If the parameter <code>sat_mode = 'set'</code> is selected, it is defined by the user through the values <code>'min'</code> and <code>'max'</code> within the <code>sat_domain</code> dictionary. On the other hand, if <code>sat_mode = 'auto'</code> is chosen, it is automatically determined following the fitting process (voltages at which 90% (default value of <code>sat_thresh</code>) of the switch is achieved for both branches, respectively). This method is easy to implement and provides the entire affine component due to the artifacts. However, it requires reaching the saturation domain of the hysteresis, which is not always the case, especially for thick samples or those with high coercive voltages requiring high pulses voltages. Additionally, the influence of artifacts can be more significant in the saturation domains, especially for on field measurement, and other phenomena can play a significant role, such as charge injection [45], leakage current [52], joules heating [45], surface or tip degradation [27], etc [27] [45] [53]. The analysis domain is limited, resulting in less precise measurements.
@@ -813,7 +938,7 @@ The function <code>btfly_analysis</code> enables the execution of the procedure.
     <em>Result of <code>sat_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic.py</a></code> script (figure generated with <code>plot_sat_analysis</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/plot.py">utils/nanoloop_to_hyst/plot</a></code> script)</em>
 </p>
 
-### VI.4.3) - Multi read voltages of off field hysteresis
+### VI.4.c) - Multi read voltages of off field hysteresis
 
 <p align="justify" width="100%">
 The function <code>offset_analysis</code> enables the execution of the procedure. This method involves measuring multiple off field hysteresis curves at different read voltages (equivalent of c-KPFM method introduced by N.Balke et al. [8]). Bruker recommends this technique [20]. For each curve, a vertical offset is extracted by fitting off field hysteresis. Then vertical offset is determined as a function of the read voltage, which constitutes the affine component. A linear regression is conducted using the <code>linregress</code> function from the <a href="https://docs.scipy.org/doc/scipy/reference/stats.html">scipy.stats</a> library, enabling the deduction of the affine component. This approach is robust and precise as it is based solely on the off field fits, with a broad range of validity. Moreover, it allows obtaining the whole affine component. However, the implementation of this method necessitates measuring several off field hysteresis curves at various voltages, which is time-consuming and can disrupt the analysis of the hysteresis reproducibility. <br>
@@ -824,7 +949,7 @@ The function <code>offset_analysis</code> enables the execution of the procedure
     <em>Result of <code>offset_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic.py</a></code> script (figure generated with <code>plot_offset_analysis</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/plot.py">utils/nanoloop_to_hyst/plot</a></code> script)</em>
 </p>
 
-### VI.4.4) - Differential analysis of on and off field hysteresis
+### VI.4.d) - Differential analysis of on and off field hysteresis
 
 <p align="justify" width="100%">
 [50] [51] The function <code>differential_analysis</code> enables the execution of the procedure. This method involves subtracting on and off field hysteresis curves, then a line passing through zero is obtained. At times, the differential component is no longer linear beyond certain threshold voltages where phenomena manifest. Thus, a voltage range must be defined within which the differential component remains linear. If the <code>diff_mode</code> parameter is set to <code>'set'</code>, the user defines this range using the <code>'min'</code> and <code>'max'</code> values within the <code>diff_domain</code> dictionary. However, if the <code>diff_mode</code> parameter is set to <code>'auto'</code>, half of the voltage range is considered, centered around 0. Then, a linear regression is performed to determine the slope, which is then used to divide the vertical offset of the off field hysteresis curve to obtain the CPD. This method enables the determination of the entire affine component. It is both robust and precise since it primarily relies on off field fits, and it is also easy to implement. Additionally, the differential analysis allows for choosing the voltage domain to perform the linear regression. Indeed, in some cases, it is better to do it in low voltage domain since non linear effects could appear at high voltage as previously mentioned. It can be usefull to study these phenomenons (charge injection, leakage current, joule effect …).
@@ -835,7 +960,7 @@ The function <code>offset_analysis</code> enables the execution of the procedure
     <em>Workflow of <code>differential_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic.py</a></code> script</em>
 </p>
 
-### VI.4.5) - Fit of both on and off field hysteresis
+### VI.4.e) - Fit of both on and off field hysteresis
 
 <p align="justify" width="100%">
 The last approach was already developed in INSERER LA SECTION. It consists to fit both hysteresis on and off field, which involves extracting the affine component. One advantage of this method is that it is easy to implement since the hysteresis fit is necessarily done during data processing to extract ferroelectric sample properties. Additionally, this method enables to determine the entire affine component. However, the measurement requires robust on field hysteresis fitting, which can be challenging for predominant electrostatic effects.
