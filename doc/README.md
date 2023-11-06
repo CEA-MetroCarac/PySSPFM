@@ -861,11 +861,11 @@ The creation and processing of SSPFM maps are overseen by the set of scripts con
 </p>
 
 <p align="justify" width="100%">
-The script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> orchestrates and manages the entire process of creating and processing SSPFM maps. It relies significantly on scripts such as <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/plot.py">utils/map/plot.py</a></code> for plotting maps, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/interpolate.py">utils/map/interpolate.py</a></code> for 2D interpolation, and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/matrix_processing.py">utils/map/matrix_processing.py</a></code> for formatting properties into map representations.
+The script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> orchestrates and manages the entire process of creating and processing SSPFM maps. It relies significantly on scripts such as <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/plot.py">utils/map/plot.py</a></code> for plotting maps, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/interpolate.py">utils/map/interpolate.py</a></code> for 2D interpolation, and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/matrix_processing.py">utils/map/matrix_processing.py</a></code> for formatting material properties into map representations.
 </p>
 
 <p align="justify" width="100%">
-The maps are generated using the executable codes <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader</a></code>.
+The maps are generated using the executable codes <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader</a></code> (voir la section INSERER LA SECTION DE LA DOCUMENTATION CORRESPONDANTE).
 </p>
 
 ### VII.1) - Mask
@@ -879,7 +879,7 @@ For cartographies, it is possible to establish a mask in order to: <br>
 <p align="justify" width="100%">
 The mask can be ascertained: <br>
 &#8226 Manually, through the <code>man_mask</code> parameter, which contains a list of pixels provided by the user. <br>
-&#8226 Using a reference property, in case <code>man_mask is None</code>, with parameters specified in the <code>ref</code> dictionary. The latter is chosen through the <code>'mode'</code> (<code>'off'</code>, <code>'on'</code>, or <code>'coupled'</code>) and <code>'meas'</code>, which contains the name of the reference property. The user then selects a measurement range using the <code>'min value'</code> and <code>'max value'</code> parameters. If either of the two values is <code>None</code>, the corresponding boundary is not considered. The <code>'interactive'</code> parameter allows interactive selection of the reference measurement boundaries, with an iterative display of the masked map and user keyboard input. This interactive procedure is provided by the <code>select_pixel</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. The entire procedure is executed by the <code>mask_ref</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>.
+&#8226 Using a reference property, in case <code>man_mask is None</code>, with parameters specified in the <code>ref</code> dictionary. The latter is chosen through the <code>'mode'</code> (<code>'off'</code>, <code>'on'</code>, or <code>'coupled'</code>) and <code>'meas'</code>, which contains the name of the reference property. The user then selects a measurement range using the <code>'min value'</code> and <code>'max value'</code> parameters. If either of the two values is <code>None</code>, the corresponding boundary is not considered. The <code>'interactive'</code> parameter allows interactive selection of the reference measurement boundaries, with an iterative display of the masked map and user keyboard input. This interactive procedure is provided by the <code>select_pixel</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. The entire procedure is executed by the <code>mask_ref</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. <br>
 &#8226 The mask can be reverted by assigning the value <code>True</code> to the user parameter <code>revert_mask</code>.
 </p>
 
@@ -900,15 +900,37 @@ The SSPFM matrices are determined using the main function <code>formatting_measu
 <p align="justify" width="100%">
 The complete set of displayed figures is orchestrated by the function <code>plot_and_save_maps</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/plot.py">utils/map/plot.py</a></code>, and it represents: <br>
 <br>
-&#8226 Image 3: Step 1: raw property map (no selection criterion) <br>
-&#8226 Image 4: Step 1bis: interpolation of step 1 <br>
-&#8226 Image 5: Step 2: add the mask (some pixel are removed) <br>
-&#8226 Image 6: Step 3: interpolate removed pixel values (without increasing resolution) to go back to normal values <br>
-&#8226 Image 7: Step 3bis: interpolation of step 3 <br>
-&#8226 Image 8: Step 4: final result: interpolation of step 3 and remove the area corresponding to the removed pixels on the map <br>
+    <ul>
+        <li>Map of material property:</li>
+            <ul>
+                <li>Image 3: Step 1: raw property map (no selection criterion).</li>
+                <li>Image 4: Step 1bis: interpolation of step 1.</li>
+                <li>Image 5: Step 2: add the mask (some pixel are removed).</li>
+                <li>Image 6: Step 3: interpolate removed pixel values (without increasing resolution) to go back to normal values.</li>
+                <li>Image 7: Step 3bis: interpolation of step 3.</li>
+                <li>Image 8: Step 4: final result: interpolation of step 3 and remove the area corresponding to the removed pixels on the map.</li>
+            </ul>
+        <li>Map of reference property:</li>
+            <ul>
+                <li>Image 1: reference property: step 1.</li>
+                <li>Image 2: reference property: step 4.</li>
+            </ul>
+        <li>A new <code>properties</code> folder contains all material properties measured for each measurement file, both in on-field and off-field conditions, as well as in differential (or coupled) measurements. The data is recorded using the function <code>save_properties</code> of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>. These properties are extracted during the hysteresis fitting stage and artifact analysis, accomplished by the scripts <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/analysis.py">utils/nanoloop_to_hyst/analysis</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic</a></code>, respectively.</li>
+        <li>A <code>best_nanoloops</code> directory that contains the singular nanoloop for each mode (on-field and off-field) per measurement file. The data is recorded using the function <code>save_best_loops</code> of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>.</li>
+     </ul>
+</p>
+
+<p align="justify" width="100%">
+
+&#8226  <br>
+&#8226  <br>
+&#8226  <br>
+&#8226  <br>
+&#8226  <br>
+&#8226  <br>
 <br>
-&#8226 Image 1: reference property: step 1 <br>
-&#8226 Image 2: reference property: step 4 <br>
+&#8226  <br>
+&#8226  <br>
 </p>
 
 <p align="justify" width="100%">
