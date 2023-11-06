@@ -1,7 +1,7 @@
 # PySSPFM
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/logoPySSPFM_white.PNG> <br>
+    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/pysspfm_white_logo.PNG> <br>
 </p>
 
 <p align="justify" width="100%"> 
@@ -44,7 +44,7 @@ If you encounter any bugs or issues, you can kindly bring them to the developer'
 ## Overview
 
 <p align="center" width="100%">
-    <img align="center" width=80%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20worflow.PNG> <br>
+    <img align="center" width=80%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/scheme_workflow_pysspfm.PNG> <br>
     <em>PySSPFM workflow</em>
 </p>
 
@@ -96,7 +96,7 @@ See the [documentation](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc)
 ## Usage
 
 <p align="center" width="100%">
-    <img align="center" width="15%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20main%20GUI.PNG> <br>
+    <img align="center" width="15%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/gui_main.PNG> <br>
     <em>PySSPFM GUI main window</em>
 </p>
 
