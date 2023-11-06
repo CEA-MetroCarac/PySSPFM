@@ -209,7 +209,7 @@ In most instances, they encompass a primary file management section to select th
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/User%20Parameters%20Section.PNG> <br>
+    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/gui_user_parameters_section.PNG> <br>
     <em>GUI: Treatment parameter section</em>
 </p>
 
@@ -218,7 +218,7 @@ Following this, sections are allocated to parameters relevant to the processing 
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Tooltip.png> <br>
+    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/gui_tooltip.PNG> <br>
     <em>GUI: Tooltip</em>
 </p>
 
@@ -227,7 +227,7 @@ Users are guided through tooltips when hovering the mouse over the button. The p
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Plot%20and%20save%20section.PNG> <br>
+    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/gui_plot_save_section.PNG> <br>
     <em>GUI: Plot and save section</em>
 </p>
 
@@ -236,7 +236,7 @@ Lastly, in most cases, a final section allows the user to choose whether to disp
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Start%20and%20Exit%20section.PNG> <br>
+    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/gui_start_exit_section.PNG> <br>
     <em>GUI: Start and Exit buttons</em>
 </p>
 
@@ -247,7 +247,7 @@ The processing can be executed with the <code>Start</code> button, and the inter
 ## III) - File management
 
 <p align="center" width="100%">
-    <img align="center" width=100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20File%20Management.PNG> <br>
+    <img align="center" width=100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/file_management_pysspfm.PNG> <br>
     <em>PySSPFM file management</em>
 </p>
 
@@ -360,7 +360,7 @@ A default data processing path management is provided, but the user has the opti
 #### III.2.a) - First step of data analysis
 
 <p align="center" width="100%">
-    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_First_Step.PNG> <br>
+    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/file_management_first_step.PNG> <br>
     <em>File management after first step of data analysis</em>
 </p>
 
@@ -376,7 +376,7 @@ Following the first processing step, by default, a new directory is created at t
 #### III.2.b) - Second step of data analysis
 
 <p align="center" width="100%">
-    <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_Second_Step.PNG> <br>
+    <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/file_management_second_step.PNG> <br>
     <em>File management after second step of data analysis</em>
 </p>
 
@@ -393,7 +393,7 @@ Following the second stage of processing, the processing folder is augmented as 
 #### III.2.c) - Toolbox
 
 <p align="center" width="100%">
-    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_Toolbox.PNG> <br>
+    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/file_management_toolbox.PNG> <br>
     <em>File management for toolbox scripts</em>
 </p>
 
@@ -419,7 +419,7 @@ The <code>save_test_example</code> settings provide the option to determine whet
 ## IV) - First step of data analysis
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/GUI_first_step.PNG> <br>
+    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/gui_first_step.PNG> <br>
     <em>GUI: First step of data analysis</em>
 </p>
 
@@ -442,7 +442,7 @@ For a deeper understanding of the file management in this phase, please refer to
 ### IV.1) - Parameters
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Parameters_first_step.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/parameters_first_step.PNG> <br>
 </p>
 
 ### IV.2) - Polarization voltage
@@ -452,7 +452,7 @@ In cases where the acquisition of polarization voltage is not conducted, it can 
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Polarization%20bias.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/bias_sspfm_polarization.PNG> <br>
     <em>Polarization voltage</em>
 </p>
 
@@ -482,12 +482,12 @@ The code also includes other polarization voltage form that can be utilized for 
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Increasing%20polarization%20bias.PNG>
-    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/dynamic%20switching%20bias.PNG> <br>
+    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/bias_increasing_polarization.PNG>
+    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/bias_dynamic_switching.PNG> <br>
 </p>
 <p align="center" width="100%">*
-    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/ckpfm_bias_1.PNG>
-    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/ckpfm_bias_2.PNG> <br>
+    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/bias_ckpfm_1.PNG>
+    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/bias_ckpfm_2.PNG> <br>
 </p>
 <p align="center" width="100%">
     <em>1 - Increasing polarization voltage</em> <br>
@@ -526,7 +526,7 @@ The segmentation process is performed with <code>cut_function</code> in the scri
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/max_resonance_segment.PNG> <br>
+    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/segment_max_peak.PNG> <br>
     <em>Segment treatment in max mode (figure generated with <code>plt_seg_max</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/plot.py">utils/datacube_to_nanoloop/plot</a></code> script)</em>
 </p>
 
@@ -547,7 +547,7 @@ The phase $\phi$ can be extracted simply at the index of the resonance frequency
 $$ \phi(f) = arctan({f * f_0 \over Q * (f_0^2 - f^2)}) + \phi_0 $$
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/resonance_peak_segment.png> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/segment_fit_peak.PNG> <br>
     <em>Segment treatment in fit mode (figure generated with <code>plt_seg_fit</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/plot.py">utils/datacube_to_nanoloop/plot</a></code> script)</em>
 </p>
 
@@ -560,7 +560,7 @@ This entire process enhances the precision of the measured values. The robustnes
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/dfrt_segment.PNG> <br>
+    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/segment_dfrt.PNG> <br>
     <em>Segment treatment in dfrt mode (figure generated with <code>plt_seg_dfrt</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/plot.py">utils/datacube_to_nanoloop/plot</a></code> script)</em>
 </p>
 
@@ -573,7 +573,7 @@ All segments (in the off field mode) can be visualized on this map:
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/segment_map.PNG> <br>
+    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/amp_pha_segment_map.PNG> <br>
     <em>Segment map (off field) (figure generated with <code>amp_pha_map</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/plot.py">utils/datacube_to_nanoloop/plot</a></code> script)</em>
 </p>
 
@@ -644,7 +644,7 @@ Here are the various hysteresis configurations in the on field mode, depending o
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/calibration_hysteresis_on_field.PNG.PNG> <br>
+    <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/calibration_hysteresis_on_field.PNG> <br>
     <em>Hysteresis (on field) configuration depending on sign of d33 and direction of voltage</em>
 </p>
 
@@ -741,7 +741,7 @@ The <code>MeanLoop</code> object is defined within the <code><a href="https://gi
 ## VI) - Second step of data analysis
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/GUI_second_step.PNG> <br>
+    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/gui_second_step.PNG> <br>
     <em>GUI: Second step of data analysis</em>
 </p>
 
@@ -771,19 +771,19 @@ For a deeper understanding of the file management in this phase, please refer to
 ### VI.1) - Parameters
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Parameters_second_step_1.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/parameters_second_step_1.PNG> <br>
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Parameters_second_step_2.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/parameters_second_step_2.PNG> <br>
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Parameters_second_step_3.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/parameters_second_step_3.PNG> <br>
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Parameters_second_step_4.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/parameters_second_step_4.PNG> <br>
 </p>
 
 ### VI.2) - Best loop
@@ -816,7 +816,7 @@ Artangent or sigmoid terms representing the influence of ferroelectric component
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Hysteresis_model.PNG> <br>
+    <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/hysteresis_model.PNG> <br>
     <em>Hysteresis model used for the fit</em>
 </p>
 
@@ -850,7 +850,7 @@ An initialization of the fitting parameters is conducted with the function <code
             </ul>
         <li>The differential of the two branches, <code>diff_hyst</code>, is calculated and subsequently filtered (via the <code>filter_mean</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/noise.py">utils/core/noise.py</a></code>), effectively forming a dome. This process facilitates the initialization of fit parameter values and is derived from the work of INSERT THE SOURCE. <br>
             <p align="center" width="100%">
-                <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/dIff_hysteresis.PNG> <br>
+                <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/diff_hysteresis.PNG> <br>
                 <em>Differntial hysteresis model (dome)</em>
             </p>
         </li>
@@ -885,7 +885,7 @@ The quality of the fit is expressed as the R-squared value, determined by the fi
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/asymmetric_hysteresis_fit_and_properties.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/hysteresis_asymmetric_fit_and_properties.PNG> <br>
     <em>Asymmetric hysteresis fit and properties (figure generated with <code>plot</code> and <code>plot_properties</code> functions of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/curve_hysteresis.py">utils/core/curve_hysteresis.py</a></code> script)</em>
 </p>
 
@@ -896,7 +896,7 @@ In the figure above, we can observe the fitting of an asymmetric hysteresis. The
 ### VI.4) - Artifact decoupling
 
 <p align="center" width="100%">
-    <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/electrostatic_artifacts.png> <br>
+    <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/artifacts_electrostatics.PNG> <br>
     <em>Electrostatic artifacts</em>
 </p>
 
@@ -923,7 +923,7 @@ The function <code>btfly_analysis</code> enables the execution of the procedure.
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/btfly_analysis.png> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/artifacts_btfly_analysis.PNG> <br>
     <em>Result of <code>btfly_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic.py</a></code> script (figure generated with <code>plot_btfly_analysis</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/plot.py">utils/nanoloop_to_hyst/plot</a></code> script)</em>
 </p>
 
@@ -934,7 +934,7 @@ The function <code>btfly_analysis</code> enables the execution of the procedure.
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/sat_analysis.png> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/artifacts_sat_analysis.PNG> <br>
     <em>Result of <code>sat_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic.py</a></code> script (figure generated with <code>plot_sat_analysis</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/plot.py">utils/nanoloop_to_hyst/plot</a></code> script)</em>
 </p>
 
@@ -945,7 +945,7 @@ The function <code>offset_analysis</code> enables the execution of the procedure
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/offset_analysis.png> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/artifacts_offset_analysis.PNG> <br>
     <em>Result of <code>offset_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic.py</a></code> script (figure generated with <code>plot_offset_analysis</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/plot.py">utils/nanoloop_to_hyst/plot</a></code> script)</em>
 </p>
 
@@ -956,7 +956,7 @@ The function <code>offset_analysis</code> enables the execution of the procedure
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/diff_analysis.png> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/artifacts_diff_analysis.PNG> <br>
     <em>Workflow of <code>differential_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic.py</a></code> script</em>
 </p>
 
@@ -975,7 +975,7 @@ The <code>'multi_loop'</code> analysis mode is equivalent to the cKPFM mode: dif
 INSERER les sections dans lesquelles le mode 'multi_loop' a été discuté
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/cKPFM_analysis.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/ckpfm_analysis.PNG> <br>
     <em>cKPFM analysis result (figure generated with <code>plot_ckpfm</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot.py</a></code> script)</em>
 </p>
 
@@ -1048,7 +1048,7 @@ Each cartography is rendered using the functions <code>intermediate_map</code> o
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/ssfpm_map_amplitude.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/map_reader_global.PNG> <br>
     <em>SSPFM map of hysteresis amplitude, with R² in reference property (figure generated with <code>plot_and_save_maps</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/plot.py">utils/map/plot.py</a></code> script)</em>
 </p>
 
@@ -1089,7 +1089,7 @@ As input, SSPFM datacube measurement file is open, and its data is extracted (se
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/raw_signals.png> <br>
+    <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/raw_signals.PNG> <br>
     <em>Raw measurement of an datacube file (figure generated with <code>plt_signals</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/plot.py">utils/datacube_to_nanoloop/plot</a></code> script)</em>
 </p>
 
@@ -1243,12 +1243,12 @@ The operating principle of this reader differs slightly from that of the global 
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="70%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/cross_correlation_map_list_map_reader.PNG> <br>
+    <img align="center" width="70%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/cross_correlation_list_off_field.PNG> <br>
     <em>Result of cross correlation analysis (figure generated with <code>cross_corr_table</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">toolbox/map_correlation.py</a></code> script)</em>
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/list_map_reader.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/map_reader_list.PNG> <br>
     <em>Result of list_map_reader (figure generated with <code>main_list_map_reader</code> function of <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader.py</a></code> script)</em>
 </p>
 
@@ -1297,9 +1297,9 @@ For each of the modes (on field, off field, and coupled), and for each of the hy
 #### VIII.2.d) Figures
 
 <p align="center" width="100%">
-    <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/hysteresis_clustering_all_hyst.PNG>
-    <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/hysteresis_clustering_mean_hyst.PNG>
-    <img align="center" width="19%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/hysteresis_clustering_carto.PNG> <br>
+    <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_all_hyst.PNG>
+    <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_mean_hyst.PNG>
+    <img align="center" width="19%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_carto.PNG> <br>
     <em>Result of hysteresis_clustering (figure generated with <code>main_hysteresis_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox/hysteresis_clustering.py</a></code> script)</em>
 </p>
 
@@ -1470,12 +1470,12 @@ The data from <code>properties</code>, constituting the property mappings, is ex
 #### VIII.4.d) Figures
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/cross_corr_analysis_off_field.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/cross_correlation_off_field.PNG> <br>
     <em>Result of cross correlation analysis for all off field material properties (figure generated with <code>plot_correlation_table</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">toolbox/map_correlation.py</a></code> script)</em>
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/cross_corr_analysis_off_and_on_field.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/cross_correlation_off_on_field.PNG> <br>
     <em>Result of cross correlation analysis between all on and off field material properties (figure generated with <code>plot_correlation_table</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">toolbox/map_correlation.py</a></code> script)</em>
 </p>
 
