@@ -154,7 +154,7 @@ The PySSPFM application then proceeds with two stages of measurement processing.
 
 <p align="center" width="100%">
     <img align="center" width=50%" src="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_pysspfm.PNG"> <br>
-    <em>Simplified code architecture diagram</em>
+    <em>Simplified PySSPFM architecture diagram</em>
 </p>
 
 <p align="justify" width="100%">
