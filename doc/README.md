@@ -7,125 +7,125 @@
 <div id="table-of-contents">
     <h2>Table of Contents</h2>
     <ul>
-        <li><a href="#section-i">I) - Overview</a>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#i---overview">I) - Overview</a>
             <ul>
-                <li><a href="#section-i-1">I.1) - Workflow</a></li>
-                <li><a href="#section-i-2">I.2) - Code architecture</a></li>
-                <li><a href="#section-i-3">I.3) - Examples & Tests</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#i1---workflow">I.1) - Workflow</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#i2---code-architecture">I.2) - Code architecture</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#i3---examples--tests">I.3) - Examples & Tests</a></li>
             </ul>
         </li>
-        <li><a href="#section-ii">II) - GUI</a>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#ii---gui">II) - GUI</a>
             <ul>
-                <li><a href="#section-ii-1">II.1) - Main window</a></li>
-                <li><a href="#section-ii-2">II.2) - Secondary window</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#ii1---main-window">II.1) - Main window</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#ii2---secondary-window">II.2) - Secondary window</a></li>
             </ul>
         </li>
-        <li><a href="#section-iii">III) - File management</a>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii---file-management">III) - File management</a>
             <ul>
-                <li><a href="#section-iii-1">III.1) - Input files</a>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii1---input-files">III.1) - Input files</a>
                     <ul>
-                        <li><a href="#section-iii-1-a">III.1.a) - SSPFM measurement files</a></li>
-                        <li><a href="#section-iii-1-b">III.1.b) - Measurement sheet</a></li>
-                        <li><a href="#section-iii-1-c">III.1.c) - Extraction</a></li>
-                        <li><a href="#section-iii-1-d">III.1.d) - Examples & Tests</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii1a---sspfm-measurement-files">III.1.a) - SSPFM measurement files</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii1b---measurement-sheet">III.1.b) - Measurement sheet</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii1c---extraction">III.1.c) - Extraction</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii1d---examples--tests">III.1.d) - Examples & Tests</a></li>
                     </ul>
                 </li>
-                <li><a href="#section-iii-2">III.2) - Output files</a>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2---output-files">III.2) - Output files</a>
                     <ul>
-                        <li><a href="#section-iii-2-a">III.2.a) - First step of data analysis</a></li>
-                        <li><a href="#section-iii-2-b">III.2.b) - Second step of data analysis</a></li>
-                        <li><a href="#section-iii-2-c">III.2.c) - Toolbox</a></li>
-                        <li><a href="#section-iii-2-d">III.2.d) - Examples & Tests</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2a---first-step-of-data-analysis">III.2.a) - First step of data analysis</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2b---second-step-of-data-analysis">III.2.b) - Second step of data analysis</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2c---toolbox">III.2.c) - Toolbox</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2d---examples--tests">III.2.d) - Examples & Tests</a></li>
                     </ul>
                 </li>
             </ul>
         </li>
-        <li><a href="#section-iv">IV) - First step of data analysis</a>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv---first-step-of-data-analysis">IV) - First step of data analysis</a>
             <ul>
-                <li><a href="#section-iv-1">IV.1) - Parameters</a></li>
-                <li><a href="#section-iv-2">IV.2) - Polarization voltage</a></li>
-                <li><a href="#section-iv-3">IV.3) - Pre-measurement calibration</a></li>
-                <li><a href="#section-iv-4">IV.4) - Segment</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv1---parameters">IV.1) - Parameters</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv2---polarization-voltage">IV.2) - Polarization voltage</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv3---pre-measurement-calibration">IV.3) - Pre-measurement calibration</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv4---segment">IV.4) - Segment</a></li>
             </ul>
         </li>
-        <li><a href="#section-v">V) - Nanoloop</a>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#v---nanoloop">V) - Nanoloop</a>
             <ul>
-                <li><a href="#section-v-1">V.1) - Post-measurement phase calibration</a></li>
-                <li><a href="#section-v-2">V.2) - MultiLoop</a></li>
-                <li><a href="#section-v-3">V.3) - MeanLoop</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#v1---post-measurement-phase-calibration">V.1) - Post-measurement phase calibration</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#v2---multiloop">V.2) - MultiLoop</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#v3---meanloop">V.3) - MeanLoop</a></li>
             </ul>
         </li>
-        <li><a href="#section-vi">VI) - Second step of data analysis</a>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi---second-step-of-data-analysis">VI) - Second step of data analysis</a>
             <ul>
-                <li><a href="#section-vi-1">VI.1) - Parameters</a></li>
-                <li><a href="#section-vi-2">VI.2) - Best loop</a></li>
-                <li><a href="#section-vi-3">VI.3) - Hysteresis and properties</a></li>
-                <li><a href="#section-vi-4">VI.4) - Artifact decoupling</a>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi1---parameters">VI.1) - Parameters</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi2---best-loop">VI.2) - Best loop</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi3---hysteresis-and-properties">VI.3) - Hysteresis and properties</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4---artifact-decoupling">VI.4) - Artifact decoupling</a>
                     <ul>
-                        <li><a href="#section-vi-4-a">VI.4.a) - Analysis of on field amplitude nanoloop</a></li>
-                        <li><a href="#section-vi-4-b">VI.4.b) - Analysis of saturation domain of on field piezoresponse nanoloop</a></li>
-                        <li><a href="#section-vi-4-c">VI.4.c) - Multi read voltages of off field hysteresis</a></li>
-                        <li><a href="#section-vi-4-d">VI.4.d) - Differential analysis of on and off field hysteresis</a></li>
-                        <li><a href="#section-vi-4-e">VI.4.e) - Fit of both on and off field hysteresis</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4a---analysis-of-on-field-amplitude-nanoloop">VI.4.a) - Analysis of on field amplitude nanoloop</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4b---analysis-of-saturation-domain-of-on-field-piezoresponse-nanoloop">VI.4.b) - Analysis of saturation domain of on field piezoresponse nanoloop</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4c---multi-read-voltages-of-off-field-hysteresis">VI.4.c) - Multi read voltages of off field hysteresis</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4d---differential-analysis-of-on-and-off-field-hysteresis">VI.4.d) - Differential analysis of on and off field hysteresis</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4e---fit-of-both-on-and-off-field-hysteresis">VI.4.e) - Fit of both on and off field hysteresis</a></li>
                     </ul>
                 </li>
-                <li><a href="#section-vi-5">VI.5) - cKPFM</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi5---ckpfm">VI.5) - cKPFM</a></li>
             </ul>
         </li>
-        <li><a href="#section-vii">VII) - SSPFM mapping</a>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vii---sspfm-mapping">VII) - SSPFM mapping</a>
             <ul>
-                <li><a href="#section-vii-1">VII.1) - Mask</a></li>
-                <li><a href="#section-vii-2">VII.2) - Interpolation 2D</a></li>
-                <li><a href="#section-vii-3">VII.3) - Figures</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vii1---mask">VII.1) - Mask</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vii2---interpolation-2d">VII.2) - Interpolation 2D</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vii3---figures">VII.3) - Figures</a></li>
             </ul>
         </li>
-        <li><a href="#section-viii">VIII) - Toolbox</a>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii-toolbox">VIII) - Toolbox</a>
             <ul>
-                <li><a href="#section-viii-1">VIII.1) Viewers</a>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1-viewers">VIII.1) Viewers</a>
                     <ul>
-                        <li><a href="#section-viii-1-a">VIII.1.a) Raw file</a></li>
-                        <li><a href="#section-viii-1-b">VIII.1.b) Loop file</a></li>
-                        <li><a href="#section-viii-1-c">VIII.1.c) Global map reader</a></li>
-                        <li><a href="#section-viii-1-d">VIII.1.d) List map reader</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1a-raw-file">VIII.1.a) Raw file</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1b-loop-file">VIII.1.b) Loop file</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1c-global-map-reader">VIII.1.c) Global map reader</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1d-list-map-reader">VIII.1.d) List map reader</a></li>
                     </ul>
                 </li>
-                <li><a href="#section-viii-2">VIII.2) Hysteresis clustering (K-Means)</a>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2-hysteresis-clustering-k-means">VIII.2) Hysteresis clustering (K-Means)</a>
                     <ul>
-                        <li><a href="#section-viii-2-a">VIII.2.a) Parameters</a></li>
-                        <li><a href="#section-viii-2-b">VIII.2.b) Extraction</a></li>
-                        <li><a href="#section-viii-2-c">VIII.2.c) Treatment</a></li>
-                        <li><a href="#section-viii-2-d">VIII.2.d) Figures</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2a-parameters">VIII.2.a) Parameters</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2b-extraction">VIII.2.b) Extraction</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2c-treatment">VIII.2.c) Treatment</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2d-figures">VIII.2.d) Figures</a></li>
                     </ul>
                 </li>
-                <li><a href="#section-viii-3">VIII.3) Mean loop</a>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3-mean-loop">VIII.3) Mean loop</a>
                     <ul>
-                        <li><a href="#section-viii-3-a">VIII.3.a) Parameters</a></li>
-                        <li><a href="#section-viii-3-b">VIII.3.b) Extraction</a></li>
-                        <li><a href="#section-viii-3-c">VIII.3.c) Find best loop</a></li>
-                        <li><a href="#section-viii-3-d">VIII.3.d) Mean analysis</a></li>
-                        <li><a href="#section-viii-3-e">VIII.3.e) Figures</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3a-parameters">VIII.3.a) Parameters</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3b-extraction">VIII.3.b) Extraction</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3c-find-best-loop">VIII.3.c) Find best loop</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3d-mean-analysis">VIII.3.d) Mean analysis</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3e-figures">VIII.3.e) Figures</a></li>
                     </ul>
                 </li>
-                <li><a href="#section-viii-4">VIII.4) 2D cross correlation</a>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4-2d-cross-correlation">VIII.4) 2D cross correlation</a>
                     <ul>
-                        <li><a href="#section-viii-4-a">VIII.4.a) Parameters</a></li>
-                        <li><a href="#section-viii-4-b">VIII.4.b) Correlation matrix</a></li>
-                        <li><a href="#section-viii-4-c">VIII.4.c) Workflow</a></li>
-                        <li><a href="#section-viii-4-d">VIII.4.d) Figures</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4a-parameters">VIII.4.a) Parameters</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4b-correlation-matrix">VIII.4.b) Correlation matrix</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4c-worflow">VIII.4.c) Workflow</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4d-figures">VIII.4.d) Figures</a></li>
                     </ul>
                 </li>
-                <li><a href="#section-viii-5">VIII.5) Pixel extremum</a>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii5-pixel-extremum">VIII.5) Pixel extremum</a>
                     <ul>
-                        <li><a href="#section-viii-5-a">VIII.5.a) Parameters</a></li>
-                        <li><a href="#section-viii-5-b">VIII.5.b) Workflow</a></li>
-                        <li><a href="#section-viii-5-c">VIII.5.c) Figures</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii5a-parameters">VIII.5.a) Parameters</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii5b-workflow">VIII.5.b) Workflow</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii5c-figures">VIII.5.c) Figures</a></li>
                     </ul>
                 </li>
-                <li><a href="#section-viii-6">VIII.6) SPM converter</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii6-spm-converter">VIII.6) SPM converter</a></li>
             </ul>
         </li>
-        <li><a href="#section-ix">IX) Overall settings</a></li>
-        <li><a href="#section-x">X) Core scripts</a></li>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#ix-overall-settings">IX) Overall settings</a></li>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#x-core-scripts">X) Core scripts</a></li>
     </ul>
 </div>
 
