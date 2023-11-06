@@ -298,7 +298,7 @@ Furthermore, completing the form is a mandatory prerequisite for the subsequent 
 #### III.1.c) - Extraction
 
 <p align="justify" width="100%">
-All measurement files and the measurement sheet must be placed within the same directory. The data contained in these file types are then extracted using the file <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/raw_extraction.py">utils/raw_extraction</a></code>. The functions <a href="https://numpy.org/doc/stable/reference/generated/numpy.genfromtxt.html">genfromtxt</a> (from numpy), <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html">read_csv</a> (from pandas), and <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_excel.html">read_excel</a> (from pandas) are employed, respectively, to extract data from files with extensions 'txt,' 'csv,' and 'xlsx.' For files with the <code>.spm</code> extension (Bruker), the extraction script relies on a second file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_reader.py">utils/datacube_reader</a></code>, which employs the <code>DataExtraction</code> object with the <a href="https://pypi.org/project/nanoscope/">nanoscope</a> library. However, the nanoscope library alone is insufficient for data extraction, as it requires the use of DLL files installed with the Nanoscope Analysis software (Bruker). In the event that the DLL files are not present, the <code>NanoscopeError</code> object has been created to handle the error.
+All measurement files and the measurement sheet must be placed within the same directory. The data contained in these file types are then extracted using the file <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/raw_extraction.py">utils/raw_extraction</a></code>. The functions <a href="https://numpy.org/doc/stable/reference/generated/numpy.genfromtxt.html">genfromtxt</a> (from NumPy), <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html">read_csv</a> (from pandas), and <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_excel.html">read_excel</a> (from pandas) are employed, respectively, to extract data from files with extensions 'txt,' 'csv,' and 'xlsx.' For files with the <code>.spm</code> extension (Bruker), the extraction script relies on a second file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_reader.py">utils/datacube_reader</a></code>, which employs the <code>DataExtraction</code> object with the <a href="https://pypi.org/project/nanoscope/">nanoscope</a> library. However, the nanoscope library alone is insufficient for data extraction, as it requires the use of DLL files installed with the Nanoscope Analysis software (Bruker). In the event that the DLL files are not present, the <code>NanoscopeError</code> object has been created to handle the error.
 </p>
 
 #### III.1.d) - Examples & Tests
@@ -556,7 +556,7 @@ This entire process enhances the precision of the measured values. The robustnes
 </p>
 
 <p align="justify" width="100%">
-&#8226 <code>dfrt</code> : The average of the arrays of measurements in amplitude and phase maintained at resonance through the use of dfrt, defines the unique values of the segment in amplitude and phase, respectively. The uncertainty in these two quantities can be determined based on their variance within the segment. This process is swift, robust, and highly precise.
+&#8226 <code>dfrt</code> : The average of the arrays of measurements in amplitude and phase maintained at resonance through the use of dfrt, defines the unique values of the segment in amplitude and phase, respectively. The uncertainty in these two quantities can be determined based on their variance (with <a href="https://numpy.org/doc/stable/reference/generated/numpy.var.html">var</a> function of NumPy library) within the segment. This process is swift, robust, and highly precise.
 </p>
 
 <p align="center" width="100%">
@@ -1449,7 +1449,7 @@ $$ R_{ij} = {c_{ij} \over \sqrt{c_{ii} * c_{jj}}} $$
 #### VIII.4.b) Correlation matrix
 
 <p align="justify" width="100%">
-The <code>gen_correlation_array</code> function in the script takes as input a list of property mappings of the sample. It generates a square matrix filled with zeros, with dimensions equal to the number of mappings in the list. For each combination of pairs of measurements, the Pearson product-moment correlation coefficient is calculated using the <code>corrcoef</code> function from NumPy, allowing the completion of the correlation matrix.
+The <code>gen_correlation_array</code> function in the script takes as input a list of property mappings of the sample. It generates a square matrix filled with zeros, with dimensions equal to the number of mappings in the list. For each combination of pairs of measurements, the Pearson product-moment correlation coefficient is calculated using the <a href="https://numpy.org/doc/stable/reference/generated/numpy.corrcoef.html">corrcoef</a> function from NumPy, allowing the completion of the correlation matrix.
 </p>
 
 <p align="justify" width="100%">
@@ -1592,7 +1592,7 @@ As input, SSPFM datacube measurement folder is selected. A new directory is crea
 &#8226 <code>'classic'</code> (sweep resonance) <br>
 &#8226 <code>'dfrt'</code> <br>
 Following this, a corresponding new datacube file is generated, with an extension chosen by the user, and is complemented with the raw data from the input file. The available extensions are: <br>
-&#8226 <code>'txt'</code> (created using the <a href="https://numpy.org/doc/stable/reference/generated/numpy.savetxt.html">savetxt</a> function of numpy library) <br>
+&#8226 <code>'txt'</code> (created using the <a href="https://numpy.org/doc/stable/reference/generated/numpy.savetxt.html">savetxt</a> function of NumPy library) <br>
 &#8226 <code>'csv'</code> (with the pandas library, a <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html">DataFrame</a> object containing the data is created, and the file is saved using the <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_csv.html">to_csv</a> method) <br>
 &#8226 <code>'xlsx'</code> (with the pandas library, a <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html">DataFrame</a> object containing the data is created, and the file is saved using the <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_excel.html">to_excel</a> method) <br>
 </p>
