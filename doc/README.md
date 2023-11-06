@@ -899,7 +899,6 @@ The SSPFM matrices are determined using the main function <code>formatting_measu
 
 <p align="justify" width="100%">
 The complete set of displayed figures is orchestrated by the function <code>plot_and_save_maps</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/plot.py">utils/map/plot.py</a></code>, and it represents: <br>
-<br>
     <ul>
         <li>Map of material property:</li>
             <ul>
@@ -909,7 +908,7 @@ The complete set of displayed figures is orchestrated by the function <code>plot
                 <li>Image 6: Step 3: interpolate removed pixel values (without increasing resolution) to go back to normal values.</li>
                 <li>Image 7: Step 3bis: interpolation of step 3.</li>
                 <li>Image 8: Step 4: final result: interpolation of step 3 and remove the area corresponding to the removed pixels on the map.</li>
-            </ul>
+            </ul> <br>
         <li>Map of reference property:</li>
             <ul>
                 <li>Image 1: reference property: step 1.</li>
