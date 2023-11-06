@@ -4,6 +4,131 @@
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/logoPySSPFM_white.PNG> <br>
 </p>
 
+<div id="table-of-contents">
+    <h2>Table of Contents</h2>
+    <ul>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#i---overview">I) - Overview</a>
+            <ul>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#i1---workflow">I.1) - Workflow</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#i2---code-architecture">I.2) - Code architecture</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#i3---examples--tests">I.3) - Examples & Tests</a></li>
+            </ul>
+        </li>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#ii---gui">II) - GUI</a>
+            <ul>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#ii1---main-window">II.1) - Main window</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#ii2---secondary-window">II.2) - Secondary window</a></li>
+            </ul>
+        </li>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii---file-management">III) - File management</a>
+            <ul>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii1---input-files">III.1) - Input files</a>
+                    <ul>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii1a---sspfm-measurement-files">III.1.a) - SSPFM measurement files</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii1b---measurement-sheet">III.1.b) - Measurement sheet</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii1c---extraction">III.1.c) - Extraction</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii1d---examples--tests">III.1.d) - Examples & Tests</a></li>
+                    </ul>
+                </li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2---output-files">III.2) - Output files</a>
+                    <ul>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2a---first-step-of-data-analysis">III.2.a) - First step of data analysis</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2b---second-step-of-data-analysis">III.2.b) - Second step of data analysis</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2c---toolbox">III.2.c) - Toolbox</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2d---examples--tests">III.2.d) - Examples & Tests</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv---first-step-of-data-analysis">IV) - First step of data analysis</a>
+            <ul>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv1---parameters">IV.1) - Parameters</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv2---polarization-voltage">IV.2) - Polarization voltage</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv3---pre-measurement-calibration">IV.3) - Pre-measurement calibration</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv4---segment">IV.4) - Segment</a></li>
+            </ul>
+        </li>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#v---nanoloop">V) - Nanoloop</a>
+            <ul>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#v1---post-measurement-phase-calibration">V.1) - Post-measurement phase calibration</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#v2---multiloop">V.2) - MultiLoop</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#v3---meanloop">V.3) - MeanLoop</a></li>
+            </ul>
+        </li>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi---second-step-of-data-analysis">VI) - Second step of data analysis</a>
+            <ul>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi1---parameters">VI.1) - Parameters</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi2---best-loop">VI.2) - Best loop</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi3---hysteresis-and-properties">VI.3) - Hysteresis and properties</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4---artifact-decoupling">VI.4) - Artifact decoupling</a>
+                    <ul>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4a---analysis-of-on-field-amplitude-nanoloop">VI.4.a) - Analysis of on field amplitude nanoloop</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4b---analysis-of-saturation-domain-of-on-field-piezoresponse-nanoloop">VI.4.b) - Analysis of saturation domain of on field piezoresponse nanoloop</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4c---multi-read-voltages-of-off-field-hysteresis">VI.4.c) - Multi read voltages of off field hysteresis</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4d---differential-analysis-of-on-and-off-field-hysteresis">VI.4.d) - Differential analysis of on and off field hysteresis</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4e---fit-of-both-on-and-off-field-hysteresis">VI.4.e) - Fit of both on and off field hysteresis</a></li>
+                    </ul>
+                </li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi5---ckpfm">VI.5) - cKPFM</a></li>
+            </ul>
+        </li>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vii---sspfm-mapping">VII) - SSPFM mapping</a>
+            <ul>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vii1---mask">VII.1) - Mask</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vii2---interpolation-2d">VII.2) - Interpolation 2D</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vii3---figures">VII.3) - Figures</a></li>
+            </ul>
+        </li>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii-toolbox">VIII) - Toolbox</a>
+            <ul>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1-viewers">VIII.1) Viewers</a>
+                    <ul>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1a-raw-file">VIII.1.a) Raw file</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1b-loop-file">VIII.1.b) Loop file</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1c-global-map-reader">VIII.1.c) Global map reader</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1d-list-map-reader">VIII.1.d) List map reader</a></li>
+                    </ul>
+                </li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2-hysteresis-clustering-k-means">VIII.2) Hysteresis clustering (K-Means)</a>
+                    <ul>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2a-parameters">VIII.2.a) Parameters</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2b-extraction">VIII.2.b) Extraction</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2c-treatment">VIII.2.c) Treatment</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2d-figures">VIII.2.d) Figures</a></li>
+                    </ul>
+                </li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3-mean-loop">VIII.3) Mean loop</a>
+                    <ul>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3a-parameters">VIII.3.a) Parameters</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3b-extraction">VIII.3.b) Extraction</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3c-find-best-loop">VIII.3.c) Find best loop</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3d-mean-analysis">VIII.3.d) Mean analysis</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3e-figures">VIII.3.e) Figures</a></li>
+                    </ul>
+                </li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4-2d-cross-correlation">VIII.4) 2D cross correlation</a>
+                    <ul>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4a-parameters">VIII.4.a) Parameters</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4b-correlation-matrix">VIII.4.b) Correlation matrix</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4c-worflow">VIII.4.c) Workflow</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4d-figures">VIII.4.d) Figures</a></li>
+                    </ul>
+                </li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii5-pixel-extremum">VIII.5) Pixel extremum</a>
+                    <ul>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii5a-parameters">VIII.5.a) Parameters</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii5b-workflow">VIII.5.b) Workflow</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii5c-figures">VIII.5.c) Figures</a></li>
+                    </ul>
+                </li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii6-spm-converter">VIII.6) SPM converter</a></li>
+            </ul>
+        </li>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#ix-overall-settings">IX) Overall settings</a></li>
+        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#x-core-scripts">X) Core scripts</a></li>
+    </ul>
+</div>
+
 ## I) - Overview
 
 ### I.1) - Workflow
@@ -14,7 +139,7 @@
 </p>
 
 <p align="justify" width="100%">
-Following the SSPFM measurement, one or more SSPFM datacube files are generated. A measurement form should be completed by the user (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). 
+Following the SSPFM (Switching Spectroscopy Piezoresponse Force Microscopy) measurement, one or more SSPFM datacube files are generated. A measurement form should be completed by the user (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a> (Dual Frequency Resonance Tracking)). 
 The PySSPFM application then proceeds with two stages of measurement processing. In the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/datacube_to_nanoloop_s1.py">first step</a> of data analysis, amplitude and phase measurements are extracted and calibrated for each segment and nanoloops are determined. The <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/nanoloop_to_hyst_s2.py">second step</a> creates the piezoresponse hysteresis loop, and extracts piezoelectric and ferroelectric properties using an algorithm based on the <a href="https://pypi.org/project/lmfit/">lmfit</a> library. Various artifact decorrelation protocols improve measurement accuracy. Then, <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">SSPFM mapping</a> can be performed. A <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">toolbox</a> is provided including:
 </p>
 
@@ -29,7 +154,7 @@ The PySSPFM application then proceeds with two stages of measurement processing.
 
 <p align="center" width="100%">
     <img align="center" width=50%" src="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20architecture.PNG"> <br>
-    <em>Simplified code architecture diagram</em>
+    <em>Simplified PySSPFM architecture diagram</em>
 </p>
 
 <p align="justify" width="100%">
@@ -54,7 +179,7 @@ Here is the simplified architectural overview of the PySSPFM application's sourc
 ## II) - GUI
 
 <p align="justify" width="100%"> 
-The <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/gui">graphical user interface codes</a> have been crafted using the <a href="https://docs.python.org/fr/3/library/tkinter.html">Tkinter</a> library. The <a href="https://pypi.org/project/Pillow">PIL library</a> is employed to open and display the application's logo and icon on the graphical interfaces.
+The <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/gui">graphical user interface (gui) codes</a> have been crafted using the <a href="https://docs.python.org/fr/3/library/tkinter.html">Tkinter</a> library. The <a href="https://pypi.org/project/Pillow">PIL library</a> is employed to open and display the application's logo and icon on the graphical interfaces.
 </p>
 
 ### II.1) - Main window
@@ -123,7 +248,7 @@ The processing can be executed with the <code>Start</code> button, and the inter
 
 <p align="center" width="100%">
     <img align="center" width=100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20File%20Management.PNG> <br>
-    <em>PySSPFM file management</em>
+    <em>PySSPFM file management worflow</em>
 </p>
 
 ### III.1) - Input files
@@ -173,7 +298,7 @@ Furthermore, completing the form is a mandatory prerequisite for the subsequent 
 #### III.1.c) - Extraction
 
 <p align="justify" width="100%">
-All measurement files and the measurement sheet must be placed within the same directory. The data contained in these file types are then extracted using the file <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/raw_extraction.py">utils/raw_extraction</a></code>. For files with the <code>.spm</code> extension (Bruker), the extraction script relies on a second file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_reader.py">utils/datacube_reader</a></code>, which employs the <code>DataExtraction</code> object with the <a href="https://pypi.org/project/nanoscope/">nanoscope</a> library. However, the nanoscope library alone is insufficient for data extraction, as it requires the use of DLL files installed with the Nanoscope Analysis software (Bruker). In the event that the DLL files are not present, the <code>NanoscopeError</code> object has been created to handle the error.
+All measurement files and the measurement sheet must be placed within the same directory. The data contained in these file types are then extracted using the file <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/raw_extraction.py">utils/raw_extraction</a></code>. The functions <a href="https://numpy.org/doc/stable/reference/generated/numpy.genfromtxt.html">genfromtxt</a> (from NumPy), <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html">read_csv</a> (from pandas), and <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_excel.html">read_excel</a> (from pandas) are employed, respectively, to extract data from files with extensions 'txt,' 'csv,' and 'xlsx.' For files with the <code>.spm</code> extension (Bruker), the extraction script relies on a second file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_reader.py">utils/datacube_reader</a></code>, which employs the <code>DataExtraction</code> object with the <a href="https://pypi.org/project/nanoscope/">nanoscope</a> library. However, the nanoscope library alone is insufficient for data extraction, as it requires the use of DLL (Dynamic Link Library) files installed with the Nanoscope Analysis software (Bruker). In the event that the DLL files are not present, the <code>NanoscopeError</code> object has been created to handle the error.
 </p>
 
 #### III.1.d) - Examples & Tests
@@ -181,7 +306,7 @@ All measurement files and the measurement sheet must be placed within the same d
 <p align="justify" width="100%">
 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples">examples</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests">tests</a></code> inherently rely upon input data, which may assume one of two distinct forms:
 
-1. Authentic data stemming from SSPFM measurements conducted on a KNN sample, which are located within the directory: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in">examples/data/PySSPFM_example_in</a></code>. This repository encompasses several subdirectories, specifically:
+1. Authentic data stemming from SSPFM measurements conducted on a KNN (potassium sodium niobate) sample, which are located within the directory: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in">examples/data/PySSPFM_example_in</a></code>. This repository encompasses several subdirectories, specifically:
     - <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/KNN500n">KNN500n</a></code>: housing an assemblage of SSPFM datacube measurement files, bearing the spm extension (Bruker), alongside their corresponding measurement records. This serves the following purpose:
         - <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/datacube_to_nanoloop/ex_file.py">examples/utils/datacube_to_nanoloop/ex_file</a></code>.
     - <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/KNN500n_2023-10-05-17h21m_out_dfrt">KNN500n_2023-10-05-17h21m_out_dfrt</a></code>: signifying the measurement output subsequent to the initial processing phase. This facilitates the following:
@@ -236,7 +361,7 @@ A default data processing path management is provided, but the user has the opti
 
 <p align="center" width="100%">
     <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_First_Step.PNG> <br>
-    <em>File management after first step of data analysis</em>
+    <em>File management worflow after first step of data analysis</em>
 </p>
 
 <p align="justify" width="100%">
@@ -244,7 +369,7 @@ Following the first processing step, by default, a new directory is created at t
     <ul>
         <li>The <code>parameters.txt</code> text file saves all the measurement parameters initially present in the measurement form, along with parameters and information about the first measurement processing step. It is generated by the function <code>save_parameters</code> of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/file.py">utils/datacube_to_nanoloop/file</a></code>.</li>
         <li>The <code>figs</code> directory contains all the figures generated during the first step, including various graphical representations of the raw data and segments managed by the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/plot.py">utils/datacube_to_nanoloop/plot</a></code> script, phase histograms used for calibration managed by the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase</a></code> script, and phase, amplitude, and piezoresponse nanoloops managed by the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot</a></code> scripts.</li>
-        <li>The <code>nanoloops</code> directory contains the processed data following the first step of processing in the form of amplitude and phase nanoloops as a function of polarization voltage, both in Off and On Field modes, for each measurement file. This directory is generated using the functions <code>sort_nanoloop_data</code> and <code>save_nanoloop_file</code> of the script located in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file.py">utils/nanoloop/file</a></code>.</li>
+        <li>The <code>nanoloops</code> directory contains the processed data following the first step of processing in the form of amplitude and phase nanoloops as a function of polarization voltage, both in off and on field modes, for each measurement file. This directory is generated using the functions <code>sort_nanoloop_data</code> and <code>save_nanoloop_file</code> of the script located in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file.py">utils/nanoloop/file</a></code>.</li>
     </ul>
 </p>
 
@@ -252,16 +377,16 @@ Following the first processing step, by default, a new directory is created at t
 
 <p align="center" width="100%">
     <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_Second_Step.PNG> <br>
-    <em>File management after second step of data analysis</em>
+    <em>File management worflow after second step of data analysis</em>
 </p>
 
 <p align="justify" width="100%">
 Following the second stage of processing, the processing folder is augmented as follows:
     <ul>
         <li>The text file <code>parameters.txt</code> enriched with parameters and information pertaining to the second stage of measurement processing. This stage is conducted by the function <code>complete_parameters</code> of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>.</li>
-        <li>The <code>figs</code> directory houses the visual representations generated during the second stage of processing, encompassing off and on-field hysteresis with fitting and parameter extraction, along with the extraction of the artifact-related component through multiple protocols. This stage is executed by the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/plot.py">utils/nanoloop_to_hyst/plot</a></code>.</li>
-        <li>A new <code>properties</code> folder contains all material properties measured for each measurement file, both in on-field and off-field conditions, as well as in differential (or coupled) measurements. The data is recorded using the function <code>save_properties</code> of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>. These properties are extracted during the hysteresis fitting stage and artifact analysis, accomplished by the scripts <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/analysis.py">utils/nanoloop_to_hyst/analysis</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic</a></code>, respectively.</li>
-        <li>A <code>best_nanoloops</code> directory that contains the singular nanoloop for each mode (on-field and off-field) per measurement file. The data is recorded using the function <code>save_best_loops</code> of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>.</li>
+        <li>The <code>figs</code> directory houses the visual representations generated during the second stage of processing, encompassing off and on field hysteresis with fitting and parameter extraction, along with the extraction of the artifact-related component through multiple protocols. This stage is executed by the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/plot.py">utils/nanoloop_to_hyst/plot</a></code>.</li>
+        <li>A new <code>properties</code> folder contains all material properties measured for each measurement file, both in on field and off field conditions, as well as in differential (or coupled) measurements. The data is recorded using the function <code>save_properties</code> of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>. These properties are extracted during the hysteresis fitting stage and artifact analysis, accomplished by the scripts <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/analysis.py">utils/nanoloop_to_hyst/analysis</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic</a></code>, respectively.</li>
+        <li>A <code>best_nanoloops</code> directory that contains the singular nanoloop for each mode (on field and off field) per measurement file. The data is recorded using the function <code>save_best_loops</code> of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>.</li>
      </ul>
 </p>
 
@@ -269,7 +394,7 @@ Following the second stage of processing, the processing folder is augmented as 
 
 <p align="center" width="100%">
     <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/Path_Management_Toolbox.PNG> <br>
-    <em>File management for toolbox scripts</em>
+    <em>File management worflow for toolbox scripts</em>
 </p>
 
 <p align="justify" width="100%">
@@ -323,7 +448,7 @@ For a deeper understanding of the file management in this phase, please refer to
 ### IV.2) - Polarization voltage
 
 <p align="justify" width="100%">
-In cases where the acquisition of polarization voltage is not conducted, it can be reconstructed from a property dictionary containing the following information for both write (On Field) and read (Off Field) segments: their duration, the number of samples per segment, the number of segments, their direction of variation, and their voltage limits. These parameters are specified in the measurement sheet and are subsequently employed during the processing step. The script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/signal_bias.py">utils/signal_bias</a></code> is responsible for generating the polarization signal based on these parameters and vice versa.
+In cases where the acquisition of polarization voltage is not conducted, it can be reconstructed from a property dictionary containing the following information for both write (on field) and read (off field) segments: their duration, the number of samples per segment, the number of segments, their direction of variation, and their voltage limits. These parameters are specified in the measurement sheet and are subsequently employed during the processing step. The script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/signal_bias.py">utils/signal_bias</a></code> is responsible for generating the polarization signal based on these parameters and vice versa.
 </p>
 
 <p align="center" width="100%">
@@ -427,11 +552,11 @@ $$ \phi(f) = arctan({f * f_0 \over Q * (f_0^2 - f^2)}) + \phi_0 $$
 </p>
 
 <p align="justify" width="100%">
-This entire process enhances the precision of the measured values. The robustness of the treatment can be increased with <code>treatment_fit</code> method in which a peak detection algorithm is used (activated with <code>detect_peak</code> and with order of <code>filter_ord</code>), allowing a choice regarding whether to perform the fit. All fits are conducted using the <a href="https://pypi.org/project/lmfit/">lmfit</a> library, and methods like <code>least_sq</code>, <code>least_square</code> (prioritizing speed), or <code>nelder</code> (prioritizing convergence) can be selected with the <code>fit_method</code> setting.
+This entire process enhances the precision of the measured values. The robustness of the treatment can be increased with <code>treatment_fit</code> method in which a peak detection algorithm is used (activated with <code>detect_peak</code> and with order of <code>filter_ord</code>), allowing a choice regarding whether to perform the fit.
 </p>
 
 <p align="justify" width="100%">
-&#8226 <code>dfrt</code> : The average of the arrays of measurements in amplitude and phase maintained at resonance through the use of dfrt, defines the unique values of the segment in amplitude and phase, respectively. The uncertainty in these two quantities can be determined based on their variance within the segment. This process is swift, robust, and highly precise.
+&#8226 <code>dfrt</code> : The average of the arrays of measurements in amplitude and phase maintained at resonance through the use of dfrt, defines the unique values of the segment in amplitude and phase, respectively. The uncertainty in these two quantities can be determined based on their variance (with <a href="https://numpy.org/doc/stable/reference/generated/numpy.var.html">var</a> function of NumPy library) within the segment. This process is swift, robust, and highly precise.
 </p>
 
 <p align="center" width="100%">
@@ -444,12 +569,12 @@ Note that SSPFM can also allow to investigate nanomechanical properties as a fun
 </p>
 
 <p align="justify" width="100%">
-All segments (in the Off Field mode) can be visualized on this map:
+All segments (in the off field mode) can be visualized on this map:
 </p>
 
 <p align="center" width="100%">
     <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/segment_map.PNG> <br>
-    <em>Segment map (Off Field) (figure generated with <code>amp_pha_map</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/plot.py">utils/datacube_to_nanoloop/plot</a></code> script)</em>
+    <em>Segment map (off field) (figure generated with <code>amp_pha_map</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/plot.py">utils/datacube_to_nanoloop/plot</a></code> script)</em>
 </p>
 
 ## V) - Nanoloop
@@ -490,16 +615,16 @@ From these two initial tables, one can ascertain the subsequent table depicting 
 </p>
 
 <p align="justify" width="100%">
-Here are the various hysteresis configurations in the Off-Field mode, depending on the experimental parameters:
+Here are the various hysteresis configurations in the off field mode, depending on the experimental parameters:
 </p>
 
 <p align="center" width="100%">
     <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/calibration_hysteresis_off_field.PNG> <br>
-    <em>Hysteresis (Off Field) configuration depending on sign of d33 and direction of voltage</em>
+    <em>Hysteresis (off field) configuration depending on sign of d33 and direction of voltage</em>
 </p>
 
 <p align="justify" width="100%">
-In the specific scenario of On Field measurements with a predominant electrostatic component (where the electrostatic component determines the direction of hysteresis rotation), the sign of the electrostatic component's slope is contingent on the direction of the applied voltage, as established in the following table:
+In the specific scenario of on field measurements with a predominant electrostatic component (where the electrostatic component determines the direction of hysteresis rotation), the sign of the electrostatic component's slope is contingent on the direction of the applied voltage, as established in the following table:
 </p>
 
 <p align="center" width="100%">
@@ -515,12 +640,12 @@ The voltage value can then be directly correlated with the phase according to th
 </p>
 
 <p align="justify" width="100%">
-Here are the various hysteresis configurations in the On-Field mode, depending on the experimental parameters:
+Here are the various hysteresis configurations in the on field mode, depending on the experimental parameters:
 </p>
 
 <p align="center" width="100%">
     <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/calibration_hysteresis_on_field.PNG.PNG> <br>
-    <em>Hysteresis (On Field) configuration depending on sign of d33 and direction of voltage</em>
+    <em>Hysteresis (on field) configuration depending on sign of d33 and direction of voltage</em>
 </p>
 
 <p align="justify" width="100%">
@@ -528,12 +653,12 @@ The entirety of these steps, including the determination of the direction of hys
 </p>
 
 <p align="justify" width="100%">
-It is worth noting that in some cases of On-Field measurements, where the electrostatic and ferroelectric components intensities are quite similar, multiple phase switching may occur during the cycle. In this case the calibration procedure is no longer valid.
+It is worth noting that in some cases of on field measurements, where the electrostatic and ferroelectric components intensities are quite similar, multiple phase switching may occur during the cycle. In this case the calibration procedure is no longer valid.
 </p>
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/problematic_case_on_field_nanoloop.PNG> <br>
-    <em>Problematic case of nanoloop: same order of magnitude for both ferroelectric and electrostatic component (On Field, grounded tip, positive d33) (figure generated with <code><a href="https://github.com/CEA MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop/theory">utils/nanoloop/theory</a></code> script)</em>
+    <em>Problematic case of nanoloop: same order of magnitude for both ferroelectric and electrostatic component (on field, grounded tip, positive d33) (figure generated with <code><a href="https://github.com/CEA MetroCarac/PySSPFM/tree/main/PySSPFM/utils/nanoloop/theory">utils/nanoloop/theory</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
@@ -546,7 +671,7 @@ For the second part of the <code>phase_calibration</code> function, an in-depth 
 </p>
 
 <p align="justify" width="100%">
-In the PySSPFM application, users can concretely assign the desired phase values for both forward and reverse directions using the <code>pha_fwd</code> and <code>pha_rev</code> parameters. It is essential for the user to identify whether they are dealing with a predominant electrostatic component in the On-Field mode through the <code>main_electrostatic</code> parameter. Additionally, they can opt to specify the sign for the electrostatic component's slope with the parameter <code>locked_elec_slope</code>. The user should also provide information about the piezoelectric coefficient sign of the material in the measurement record. With these provided parameters and the calibration protocol, phase values can be attributed to the two peaks in the histogram.
+In the PySSPFM application, users can concretely assign the desired phase values for both forward and reverse directions using the <code>pha_fwd</code> and <code>pha_rev</code> parameters. It is essential for the user to identify whether they are dealing with a predominant electrostatic component in the on field mode through the <code>main_electrostatic</code> parameter. Additionally, they can opt to specify the sign for the electrostatic component's slope with the parameter <code>locked_elec_slope</code>. The user should also provide information about the piezoelectric coefficient sign of the material in the measurement record. With these provided parameters and the calibration protocol, phase values can be attributed to the two peaks in the histogram.
 </p>
 
 <p align="justify" width="100%">
@@ -569,7 +694,7 @@ Following the calibration process and the identification of the positions of the
 ### V.2) - MultiLoop
 
 <p align="justify" width="100%">
-For each measurement file, the acquisition of multiple nanoloop curves is possible, enabling the study of measurement repeatability and the reduction of measurement noise (by averaging all nanoloops within the file). This process involves the creation of a <code>MultiLoop</code> object with the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis</a></code> script, initialized with arrays of sub-arrays (the number of sub-arrays corresponding to the number of loops). These sub-arrays contain measurements such as polarization voltage, extracted amplitude, and phase values. Additionally, a voltage reading array is provided (with values corresponding to each nanoloop), a dictionary of phase calibration results, and the measurement mode (On or Off Field).
+For each measurement file, the acquisition of multiple nanoloop curves is possible, enabling the study of measurement repeatability and the reduction of measurement noise (by averaging all nanoloops within the file). This process involves the creation of a <code>MultiLoop</code> object with the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis</a></code> script, initialized with arrays of sub-arrays (the number of sub-arrays corresponding to the number of loops). These sub-arrays contain measurements such as polarization voltage, extracted amplitude, and phase values. Additionally, a voltage reading array is provided (with values corresponding to each nanoloop), a dictionary of phase calibration results, and the measurement mode (on or off field).
 </p>
 
 <p align="justify" width="100%">
@@ -631,11 +756,11 @@ The second step of the process may be initiated either through the <a href="http
 </p>
 
 <p align="justify" width="100%">
-As an initial step, the <code>nanoloops</code> folder obtained is selected. The entirety of the files within it is arranged using the <code>generate_file_nanoloop_paths</code> function found in the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code> script. Subsequently, data extraction is carried out for each file, employing the <code>extract_loop</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file.py">utils/nanoloop/file.py</a></code>. The measurement and processing parameters from the <code>result/parameters.txt</code> file are also read and extracted using the <code>read_plot_parameters</code> function within the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>.
+As an initial step, the <code>nanoloops</code> folder obtained is selected. The entirety of the files within it is arranged using the <code>generate_file_nanoloop_paths</code> function found in the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code> script. Subsequently, data extraction is carried out for each file, employing the <code>extract_nanoloop_data</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file.py">utils/nanoloop/file.py</a></code>. The measurement and processing parameters from the <code>parameters.txt</code> file are also read and extracted using the <code>print_parameters</code> function within the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>.
 </p>
 
 <p align="justify" width="100%">
-Figures resulting from the processing of the first file are generated with <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/plot.py">utils/nanoloop_to_hyst/plot</a></code> scripts. Subsequently, each of the files is automatically analyzed without displaying the figures. For each mode (On Field, Off Field, and coupled), a hysteresis loop is selected and associated with each pixel, and a set of ferroelectric piezo properties is extracted. Other properties are obtained through the analysis of measurement artifacts. The entirety of these properties contributes to the creation of SSPFM mappings.
+Figures resulting from the processing of the first file are generated with <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/plot.py">utils/nanoloop_to_hyst/plot</a></code> scripts. Subsequently, each of the files is automatically analyzed without displaying the figures. For each mode (on field, off field, and coupled), a hysteresis loop is selected and associated with each pixel, and a set of ferroelectric properties is extracted. Additional properties are obtained through the analysis of measurement artifacts. The entirety of these properties contributes to the creation of SSPFM mappings.
 </p>
 
 <p align="justify" width="100%">
@@ -664,20 +789,20 @@ For a deeper understanding of the file management in this phase, please refer to
 ### VI.2) - Best loop
 
 <p align="justify" width="100%">
-The nanoloops data is extracted from the files within the corresponding <code>nanoloops</code> directory, and a <code>MultiLoop</code> object is instantiated for each file. Subsequently, with the <code>treat_loop</code> function of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis</a></code> script the amplitude and phase data are divided by the quality factor, calibrated ex-situ, and the amplitude and phase values at the first measurement point are extracted. These form two of the mapped piezo-ferroelectric properties, corresponding to the electrical polarization of the pristine state of the film.
+The nanoloops data is extracted from the files within the corresponding <code>nanoloops</code> directory, and a <code>MultiLoop</code> object is instantiated for each file. Subsequently, with the <code>nanoloop_treatment</code> function of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis.py</a></code> script the amplitude and phase data are divided by the quality factor, calibrated ex-situ, and the amplitude and phase values at the first measurement point are extracted. These form two of the mapped ferroelectric properties, corresponding to the electrical polarization of the pristine state of the film.
 </p>
 
 <p align="justify" width="100%">
-There are three distinct measurement processing modes, each involving the extraction of a <code>best_loop</code> using the <code>find_best_loop</code> function from the <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/analysis.py">utils/nanoloop_to_hyst/analysis</a></code> script: <br>
-&#8226 <code>'multi_loop'</code>: Measurements are conducted in Off Field, and various reading voltage values are applied. This mode corresponds to the cKPFM mode introduced by N. Balke and his colleagues (INSERT REFERENCE). All loops are fitted using the <code>Hysteresis</code> object (refer to Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vi3---hysteresis-and-properties">IV.3) - Second step of data analysis / Hysteresis and properties</a></code> in the documentation), and the best loop is the one that minimizes the vertical offset associated with the electrostatic component in Off Field. <br>
-&#8226 <code>'mean_loop'</code>: Measurements are conducted in Off Field with a single reading voltage value, often set at 0 volts. The best loop is the average of all the loops (sometimes the first loop is not considered do to its pre-polarized state), determined through the creation of the <code>MeanLoop</code> object. <br>
-&#8226 <code>'on_field'</code>: Measurements are conducted in On Field. The best loop, in this case, is the average of all the loops, determined through the creation of the <code>MeanLoop</code> object.
+There are three distinct measurement processing modes, each involving the extraction of a <code>best_loop</code> using the <code>find_best_nanoloop</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/analysis.py">utils/nanoloop_to_hyst/analysis</a></code> script: <br>
+&#8226 <code>'multi_loop'</code>: Measurements are conducted in off field, and various reading voltage values are applied. This mode corresponds to the cKPFM mode introduced by N. Balke and his colleagues (INSERT REFERENCE). All loops are fitted using the <code>Hysteresis</code> object (refer to Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vi3---hysteresis-and-properties">IV.3) - Second step of data analysis / Hysteresis and properties</a></code> in the documentation), and the best loop is the one that minimizes the vertical offset associated with the electrostatic component in off field. <br>
+&#8226 <code>'mean_loop'</code>: Measurements are conducted in off field with a single reading voltage value, often set at 0 volts. The best loop is the average of all the loops (sometimes the first loop is not considered do to its pre-polarized state), determined through the creation of the <code>MeanLoop</code> object. <br>
+&#8226 <code>'on_field'</code>: Measurements are conducted in on field. The best loop, in this case, is the average of all the loops, determined through the creation of the <code>MeanLoop</code> object.
 </p>
 
 ### VI.3) - Hysteresis and properties
 
 <p align="justify" width="100%">
-The process of fitting hysteresis curves is a crucial step in determining the piezo/ferro properties of a material. However, it is also a delicate part of the data processing that can greatly influence quality of the results. In many cases, the shape of the PFM hysteresis nanoloop can be deformed compared to macroscopic polarization hysteresis P(E).
+The process of fitting hysteresis curves is a crucial step in determining the ferroelectric properties of a material. However, it is also a delicate part of the data processing that can greatly influence quality of the results. In many cases, the shape of the PFM hysteresis nanoloop can be deformed compared to macroscopic polarization hysteresis P(E).
 </p>
 
 <p align="justify" width="100%">
@@ -700,7 +825,7 @@ The <code>hyst_analysis</code> function within the script <code><a href="https:/
 </p>
 
 <p align="justify" width="100%">
-An initialization of the fitting parameters is conducted with the function <code>init_pars</code> of the <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/analysis.py">utils/nanoloop_to_hyst/analysis</a></code> script:
+An initialization of the fitting parameters is conducted with the function <code>init_hysteresis_params</code> of the <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/analysis.py">utils/nanoloop_to_hyst/analysis</a></code> script:
     <ul>
         <li>Definition Interval:</li>
             <ul>
@@ -710,14 +835,23 @@ An initialization of the fitting parameters is conducted with the function <code
                 <li>$b \in \left[min(PR), max(PR)\right]$ </li>
                 <li>$a$:</li>
                     <ul>
-                        <li>For <code>analysis_mode == 'on_f_loop'</code>: In cases where <code>locked_elec_slope = 'positive'</code>, $a \in \left[0, +\infty\right[$, conversely, if <code>locked_elec_slope = 'negative'</code>, $a \in \left]-\infty, 0\right]$. If <code>locked_elec_slope is None</code>, $a$ is determined based on the direction of voltage application: <code>grounded_tip is True</code> -> $a \in \left]-\infty, 0\right]$, <code>grounded_tip is False</code> -> $a \in \left[0, +\infty\right[$.</li>
+                        <li>For <code>analysis_mode == 'on_f_loop'</code>: In cases where:
+                                <ul>
+                                    <li><code>locked_elec_slope = 'positive'</code>, $a \in \left[0, +\infty\right[$</li>
+                                    <li><code>locked_elec_slope = 'negative'</code>, $a \in \left]-\infty, 0\right]$</li>
+                                    <li><code>locked_elec_slope is None</code>, $a$ is determined based on the direction of voltage application:</li>
+                                        <ul>
+                                            <li><code>grounded_tip is True</code> -> $a \in \left]-\infty, 0\right]$</li>
+                                            <li><code>grounded_tip is False</code> -> $a \in \left[0, +\infty\right[$</li>
+                                        </ul>
+                                </ul>
                         <li>Otherwise, $a=0$ </li>
                     </ul>
             </ul>
         <li>The differential of the two branches, <code>diff_hyst</code>, is calculated and subsequently filtered (via the <code>filter_mean</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/noise.py">utils/core/noise.py</a></code>), effectively forming a dome. This process facilitates the initialization of fit parameter values and is derived from the work of INSERT THE SOURCE. <br>
             <p align="center" width="100%">
                 <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/dIff_hysteresis.PNG> <br>
-                <em>Differntial hysteresis model (dome)</em>
+                <em>Differential hysteresis model (dome)</em>
             </p>
         </li>
         <li>Initial Value:</li>
@@ -738,7 +872,7 @@ It should be noted that the fitting process (based on minimization of mean squar
 </p>
 
 <p align="justify" width="100%">
-Following the completion of the fitting process, the <code>properties</code> method facilitates the extraction of the piezo-ferroelectric properties of the hysteresis. All properties are calculated both with and without the electrostatic component: <br>
+Following the completion of the fitting process, the <code>properties</code> method facilitates the extraction of the ferroelectric properties of the hysteresis. All properties are calculated both with and without the electrostatic component: <br>
 &#8226 The imprint, denoted by <code>x_shift</code>, is defined as the mean of the two coercive voltages of the hysteresis branches. The voltage window, <code>x0_wid</code>, is the difference between these two values. The hysteresis area, <code>area</code>, is simply the product of the voltage window and the hysteresis amplitude. <br>
 &#8226 The intersection points on the abscissa axes (<code>x_inters_l</code>, <code>x_inters_r</code>) and the ordinate axes (<code>y_inters_l</code>, <code>y_inters_r</code>) respectively define the coercive voltages and the remanent piezoresponse voltages. <br>
 &#8226 The inflection points, by default located at 10% and 90% of the branch amplitudes, determine the nucleation voltages (<code>x_infl_l</code>, <code>x_infl_r</code>) and saturation voltages (<code>x_sat_l</code>, <code>x_sat_r</code>). <br>
@@ -747,7 +881,7 @@ Following the completion of the fitting process, the <code>properties</code> met
 </p>
 
 <p align="justify" width="100%">
-The quality of the fit is expressed as the R-squared value, determined by the fit achieved using the <code>r_square</code> method. It represents the mean square deviation between the fit and measurements. During the analysis of piezo-ferroelectric properties, it is important to always consider the R-squared value. This is because variations in these properties can arise from both physical nanoscale effects and poor quality fitting. For hysteresis curves with abnormally low R-squared values, it is recommended to inspect each property individually to identify potential issues with the data. 
+The quality of the fit is expressed as the R-squared value, determined by the fit achieved using the <code>r_square</code> method. It represents the mean square deviation between the fit and measurements. During the analysis of ferroelectric properties, it is important to always consider the R-squared value. This is because variations in these properties can arise from both physical nanoscale effects and poor quality fitting. For hysteresis curves with abnormally low R-squared values, it is recommended to inspect each property individually to identify potential issues with the data. 
 </p>
 
 <p align="center" width="100%">
@@ -768,9 +902,9 @@ In the figure above, we can observe the fitting of an asymmetric hysteresis. The
 
 <p align="justify" width="100%">
 Artifacts, primarily of electrostatic nature but more generally stemming from quadratic terms (electrostatics (both local and capacitive, electrostrictive, Joule's effect), become non-negligible here due to the application of a continuous voltage, V_DC, which can influence the measurement in the following ways: <br>
-&#8226 By introducing a vertical offset in off-field measurements (artifacts mainly of electrostatic origin). <br>
-&#8226 By introducing an affine component in on-field measurements (influenced by quadratic terms). <br>
-&#8226 Non-linearly, when the effect becomes active after a certain threshold voltage is reached in the on-field scenario.
+&#8226 By introducing a vertical offset in off field measurements (artifacts mainly of electrostatic origin). <br>
+&#8226 By introducing an affine component in on field measurements (influenced by quadratic terms). <br>
+&#8226 Non-linearly, when the effect becomes active after a certain threshold voltage is reached in the on field scenario.
 </p>
 
 <p align="center" width="100%">
@@ -782,10 +916,10 @@ Artifacts, primarily of electrostatic nature but more generally stemming from qu
 Within the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic.py</a></code>, protocols for artifact decorrelation have been developed.
 </p>
 
-### VI.4.1) - Analysis of On-field amplitude nanoloop
+### VI.4.a) - Analysis of on field amplitude nanoloop
 
 <p align="justify" width="100%">
-The function <code>btfly_analysis</code> enables the execution of the procedure. The first method used to isolate the influence of artifacts on the piezo/ferroelectric component involves analyzing the On-field amplitude nanoloop. The method is simple, as the coercive voltages correspond to the points where the amplitude of the curve are the lower. The two points are then determined, and their average corresponds to a measurement of the CPD. However, this method has some drawbacks. It cannot determine the slope of the electrostatic component, and it is only valid when the affine component predominates over the hysteresis component. Moreover, imprint effect can interfere with the measurement accuracy, which is already limited since the signal-to-noise ratio is low at the points of interest [24]. Additionally, the measurement of amplitude vanishing points is rare in practice because of the influence of noise on measurements [25] [48].
+The function <code>btfly_analysis</code> enables the execution of the procedure. The first method used to isolate the influence of artifacts on the ferroelectric component involves analyzing the on field amplitude nanoloop. The method is simple, as the coercive voltages correspond to the points where the amplitude of the curve are the lower. The two points are then determined, and their average corresponds to a measurement of the CPD. However, this method has some drawbacks. It cannot determine the slope of the electrostatic component, and it is only valid when the affine component predominates over the hysteresis component. Moreover, imprint effect can interfere with the measurement accuracy, which is already limited since the signal-to-noise ratio is low at the points of interest [24]. Additionally, the measurement of amplitude vanishing points is rare in practice because of the influence of noise on measurements [25] [48].
 </p>
 
 <p align="center" width="100%">
@@ -793,10 +927,10 @@ The function <code>btfly_analysis</code> enables the execution of the procedure.
     <em>Result of <code>btfly_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic.py</a></code> script (figure generated with <code>plot_btfly_analysis</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/plot.py">utils/nanoloop_to_hyst/plot</a></code> script)</em>
 </p>
 
-### VI.4.2) - Analysis of saturation domain of On-field piezoresponse nanoloop
+### VI.4.b) - Analysis of saturation domain of on field piezoresponse nanoloop
 
 <p align="justify" width="100%">
-[49]. The function <code>sat_analysis</code> enables the execution of the procedure. This method involves isolating the two saturation domains of the On-field hysteresis, performing a linear regression of these domains, and measuring the line passing through them, which constitutes the affine component. The saturation domain can be determined in two modes. If the parameter <code>sat_mode = 'set'</code> is selected, it is defined by the user through the values <code>'min'</code> and <code>'max'</code> within the <code>sat_domain</code> dictionary. On the other hand, if <code>sat_mode = 'auto'</code> is chosen, it is automatically determined following the fitting process (voltages at which 90% (default value of <code>sat_thresh</code>) of the switch is achieved for both branches, respectively). This method is easy to implement and provides the entire affine component due to the artifacts. However, it requires reaching the saturation domain of the hysteresis, which is not always the case, especially for thick samples or those with high coercive voltages requiring high pulses voltages. Additionally, the influence of artifacts can be more significant in the saturation domains, especially for On-field measurement, and other phenomena can play a significant role, such as charge injection [45], leakage current [52], joules heating [45], surface or tip degradation [27], etc [27] [45] [53]. The analysis domain is limited, resulting in less precise measurements.
+[49]. The function <code>sat_analysis</code> enables the execution of the procedure. This method involves isolating the two saturation domains of the on field hysteresis, performing a linear regression of these domains, and measuring the line passing through them, which constitutes the affine component. The saturation domain can be determined in two modes. If the parameter <code>sat_mode = 'set'</code> is selected, it is defined by the user through the values <code>'min'</code> and <code>'max'</code> within the <code>sat_domain</code> dictionary. On the other hand, if <code>sat_mode = 'auto'</code> is chosen, it is automatically determined following the fitting process (voltages at which 90% (default value of <code>sat_thresh</code>) of the switch is achieved for both branches, respectively). This method is easy to implement and provides the entire affine component due to the artifacts. However, it requires reaching the saturation domain of the hysteresis, which is not always the case, especially for thick samples or those with high coercive voltages requiring high pulses voltages. Additionally, the influence of artifacts can be more significant in the saturation domains, especially for on field measurement, and other phenomena can play a significant role, such as charge injection [45], leakage current [52], joules heating [45], surface or tip degradation [27], etc [27] [45] [53]. The analysis domain is limited, resulting in less precise measurements.
 </p>
 
 <p align="center" width="100%">
@@ -804,10 +938,10 @@ The function <code>btfly_analysis</code> enables the execution of the procedure.
     <em>Result of <code>sat_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic.py</a></code> script (figure generated with <code>plot_sat_analysis</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/plot.py">utils/nanoloop_to_hyst/plot</a></code> script)</em>
 </p>
 
-### VI.4.3) - Multi read voltages of Off-field hysteresis
+### VI.4.c) - Multi read voltages of off field hysteresis
 
 <p align="justify" width="100%">
-The function <code>offset_analysis</code> enables the execution of the procedure. This method involves measuring multiple off-field hysteresis curves at different read voltages (equivalent of c-KPFM method introduced by N.Balke et al. [8]). Bruker recommends this technique [20]. For each curve, a vertical offset is extracted by fitting Off-field hysteresis. Then vertical offset is determined as a function of the read voltage, which constitutes the affine component. A linear regression is conducted using the <code>linregress</code> function from the <a href="https://docs.scipy.org/doc/scipy/reference/stats.html">scipy.stats</a> library, enabling the deduction of the affine component. This approach is robust and precise as it is based solely on the off-field fits, with a broad range of validity. Moreover, it allows obtaining the whole affine component. However, the implementation of this method necessitates measuring several off-field hysteresis curves at various voltages, which is time-consuming and can disrupt the analysis of the hysteresis reproducibility. <br>
+The function <code>offset_analysis</code> enables the execution of the procedure. This method involves measuring multiple off field hysteresis curves at different read voltages (equivalent of c-KPFM method introduced by N.Balke et al. [8]). Bruker recommends this technique [20]. For each curve, a vertical offset is extracted by fitting off field hysteresis. Then vertical offset is determined as a function of the read voltage, which constitutes the affine component. A linear regression is conducted using the <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.linregress.html#scipy.stats.linregress">linregress</a> function of the scipy.stats library, enabling the deduction of the affine component. This approach is robust and precise as it is based solely on the off field fits, with a broad range of validity. Moreover, it allows obtaining the whole affine component. However, the implementation of this method necessitates measuring several off field hysteresis curves at various voltages, which is time-consuming and can disrupt the analysis of the hysteresis reproducibility. <br>
 </p>
 
 <p align="center" width="100%">
@@ -815,10 +949,10 @@ The function <code>offset_analysis</code> enables the execution of the procedure
     <em>Result of <code>offset_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic.py</a></code> script (figure generated with <code>plot_offset_analysis</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/plot.py">utils/nanoloop_to_hyst/plot</a></code> script)</em>
 </p>
 
-### VI.4.4) - Differential analysis of On and Off-field hysteresis
+### VI.4.d) - Differential analysis of on and off field hysteresis
 
 <p align="justify" width="100%">
-[50] [51] The function <code>differential_analysis</code> enables the execution of the procedure. This method involves subtracting On and Off-field hysteresis curves, then a line passing through zero is obtained. At times, the differential component is no longer linear beyond certain threshold voltages where phenomena manifest. Thus, a voltage range must be defined within which the differential component remains linear. If the <code>diff_mode</code> parameter is set to <code>'set'</code>, the user defines this range using the <code>'min'</code> and <code>'max'</code> values within the <code>diff_domain</code> dictionary. However, if the <code>diff_mode</code> parameter is set to <code>'auto'</code>, half of the voltage range is considered, centered around 0. Then, a linear regression is performed to determine the slope, which is then used to divide the vertical offset of the Off-field hysteresis curve to obtain the CPD. This method enables the determination of the entire affine component. It is both robust and precise since it primarily relies on Off-field fits, and it is also easy to implement. Additionally, the differential analysis allows for choosing the voltage domain to perform the linear regression. Indeed, in some cases, it is better to do it in low voltage domain since non linear effects could appear at high voltage as previously mentioned. It can be usefull to study these phenomenons (charge injection, leakage current, joule effect …).
+[50] [51] The function <code>differential_analysis</code> enables the execution of the procedure. This method involves subtracting on and off field hysteresis curves, then a line passing through zero is obtained. At times, the differential component is no longer linear beyond certain threshold voltages where phenomena manifest. Thus, a voltage range must be defined within which the differential component remains linear. If the <code>diff_mode</code> parameter is set to <code>'set'</code>, the user defines this range using the <code>'min'</code> and <code>'max'</code> values within the <code>diff_domain</code> dictionary. However, if the <code>diff_mode</code> parameter is set to <code>'auto'</code>, half of the voltage range is considered, centered around 0. Then, a linear regression is performed to determine the slope, which is then used to divide the vertical offset of the off field hysteresis curve to obtain the CPD. This method enables the determination of the entire affine component. It is both robust and precise since it primarily relies on off field fits, and it is also easy to implement. Additionally, the differential analysis allows for choosing the voltage domain to perform the linear regression. Indeed, in some cases, it is better to do it in low voltage domain since non linear effects could appear at high voltage as previously mentioned. It can be usefull to study these phenomenons (charge injection, leakage current, joule effect …).
 </p>
 
 <p align="center" width="100%">
@@ -826,10 +960,10 @@ The function <code>offset_analysis</code> enables the execution of the procedure
     <em>Workflow of <code>differential_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic.py</a></code> script</em>
 </p>
 
-### VI.4.5) - Fit of both On and Off-field hysteresis
+### VI.4.e) - Fit of both on and off field hysteresis
 
 <p align="justify" width="100%">
-The last approach was already developed in INSERER LA SECTION. It consists to fit both hysteresis On and Off-field, which involves extracting the affine component. One advantage of this method is that it is easy to implement since the hysteresis fit is necessarily done during data processing to extract piezo/ferroelectric sample properties. Additionally, this method enables to determine the entire affine component. However, the measurement requires robust On-field hysteresis fitting, which can be challenging for predominant electrostatic effects.
+The last approach was already developed in INSERER LA SECTION. It consists to fit both hysteresis on and off field, which involves extracting the affine component. One advantage of this method is that it is easy to implement since the hysteresis fit is necessarily done during data processing to extract ferroelectric sample properties. Additionally, this method enables to determine the entire affine component. However, the measurement requires robust on field hysteresis fitting, which can be challenging for predominant electrostatic effects.
 </p>
 
 ### VI.5) - cKPFM
@@ -852,11 +986,11 @@ The creation and processing of SSPFM maps are overseen by the set of scripts con
 </p>
 
 <p align="justify" width="100%">
-The script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> orchestrates and manages the entire process of creating and processing SSPFM maps. It relies significantly on scripts such as <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/annotate.py">utils/map/annotate.py</a></code> for annotating maps, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/interpolate.py">utils/map/interpolate.py</a></code> for 2D interpolation, and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/matrix_formatting.py">utils/map/matrix_formatting.py</a></code> for formatting properties into map representations.
+The script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> orchestrates and manages the entire process of creating and processing SSPFM maps. It relies significantly on scripts such as <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/plot.py">utils/map/plot.py</a></code> for plotting maps, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/interpolate.py">utils/map/interpolate.py</a></code> for 2D interpolation, and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/matrix_processing.py">utils/map/matrix_processing.py</a></code> for formatting material properties into map representations.
 </p>
 
 <p align="justify" width="100%">
-The maps are generated using the executable codes <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader</a></code>.
+The maps are generated using the executable codes <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader</a></code> (voir la section INSERER LA SECTION DE LA DOCUMENTATION CORRESPONDANTE).
 </p>
 
 ### VII.1) - Mask
@@ -870,7 +1004,8 @@ For cartographies, it is possible to establish a mask in order to: <br>
 <p align="justify" width="100%">
 The mask can be ascertained: <br>
 &#8226 Manually, through the <code>man_mask</code> parameter, which contains a list of pixels provided by the user. <br>
-&#8226 Using a reference property, in case <code>man_mask is None</code>, with parameters specified in the <code>ref</code> dictionary. The latter is chosen through the <code>'mode'</code> (<code>'off'</code>, <code>'on'</code>, or <code>'coupled'</code>) and <code>'meas'</code>, which contains the name of the reference property. The user then selects a measurement range using the <code>'min value'</code> and <code>'max value'</code> parameters. If either of the two values is <code>None</code>, the corresponding boundary is not considered. The <code>'interactive'</code> parameter allows interactive selection of the reference measurement boundaries, with an iterative display of the masked map and user keyboard input. This interactive procedure is provided by the <code>select_pixel</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. The entire procedure is executed by the <code>mask_ref</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>.
+&#8226 Using a reference property, in case <code>man_mask is None</code>, with parameters specified in the <code>ref</code> dictionary. The latter is chosen through the <code>'mode'</code> (<code>'off'</code>, <code>'on'</code>, or <code>'coupled'</code>) and <code>'meas'</code>, which contains the name of the reference property. The user then selects a measurement range using the <code>'min value'</code> and <code>'max value'</code> parameters. If either of the two values is <code>None</code>, the corresponding boundary is not considered. The <code>'interactive'</code> parameter allows interactive selection of the reference measurement boundaries, with an iterative display of the masked map and user keyboard input. This interactive procedure is provided by the <code>select_pixel</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. The entire procedure is executed by the <code>mask_ref</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. <br>
+&#8226 The mask can be reverted by assigning the value <code>True</code> to the user parameter <code>revert_mask</code>.
 </p>
 
 ### VII.2) - Interpolation 2D
@@ -884,30 +1019,37 @@ The <code>interp_2d_treated</code> function oversees the entire calibration proc
 ### VII.3) - Figures
 
 <p align="justify" width="100%">
-The SSPFM matrices are determined using the main function <code>formatting_measure</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/matrix_formatting.py">utils/map/matrix_formatting.py</a></code>. The data is initially in the form of a 1D array. Initially, it needs to be transformed into a matrix based on the probe's path. This process is partially handled by the <code>rearrangement_matrix</code> function. The main function <code>formatting_measure</code> numerically applies masks, determines if pixel values correspond to errors, generates matrices specific to map annotations. It also calls the <code>interp_2d_treated</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/interpolate.py">utils/map/interpolate.py</a></code> to perform 2D interpolation. In summary, the entire script is responsible for generating all the matrices (properties, annotations, etc.) and values displayed in the figures.
+The SSPFM matrices are determined using the main function <code>formatting_measure</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/matrix_processing.py">utils/map/matrix_processing.py</a></code>. The data is initially in the form of a 1D array. Initially, it needs to be transformed into a matrix based on the probe's path. This process is partially handled by the <code>rearrange_matrix</code> function. The main function <code>formatting_measure</code> numerically applies masks, determines if pixel values correspond to errors, generates matrices specific to map annotations. It also calls the <code>interp_2d_treated</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/interpolate.py">utils/map/interpolate.py</a></code> to perform 2D interpolation. In summary, the entire script is responsible for generating all the matrices (properties, annotations, etc.) and values displayed in the figures.
 </p>
 
 <p align="justify" width="100%">
-The complete set of displayed figures is orchestrated by the function <code>plot_and_save_image</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>, and it represents: <br>
-<br>
-&#8226 Image 3: Step 1: raw property map (no selection criterion) <br>
-&#8226 Image 4: Step 1bis: interpolation of step 1 <br>
-&#8226 Image 5: Step 2: add the mask (some pixel are removed) <br>
-&#8226 Image 6: Step 3: interpolate removed pixel values (without increasing resolution) to go back to normal values <br>
-&#8226 Image 7: Step 3bis: interpolation of step 3 <br>
-&#8226 Image 8: Step 4: final result: interpolation of step 3 and remove the area corresponding to the removed pixels on the map <br>
-<br>
-&#8226 Image 1: reference property: step 1 <br>
-&#8226 Image 2: reference property: step 4 <br>
+The complete set of displayed figures is orchestrated by the function <code>plot_and_save_maps</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/plot.py">utils/map/plot.py</a></code>, and it represents: <br>
+    <ul>
+        <li>Map of material property:</li>
+            <ul>
+                <li>Image 3: Step 1: raw property map (no selection criterion).</li>
+                <li>Image 4: Step 1bis: interpolation of step 1.</li>
+                <li>Image 5: Step 2: add the mask (some pixel are removed).</li>
+                <li>Image 6: Step 3: interpolate removed pixel values (without increasing resolution) to go back to normal values.</li>
+                <li>Image 7: Step 3bis: interpolation of step 3.</li>
+                <li>Image 8: Step 4: final result: interpolation of step 3 and remove the area corresponding to the removed pixels on the map.</li>
+            </ul> <br>
+        <li>Map of reference property:</li>
+            <ul>
+                <li>Image 1: reference property: step 1.</li>
+                <li>Image 2: reference property: step 4.</li>
+            </ul>
+     </ul>
 </p>
 
+
 <p align="justify" width="100%">
-Each cartography is rendered using the functions <code>sub_image</code> or <code>final_image</code> (for step 4). Annotations are incorporated into the cartography figures generated by <code>final_image</code> through the <code>annotate</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/annotate.py">utils/map/annotate.py</a></code>. These annotations include the positions of all measurement points and the probe's trajectory directions. Furthermore, the determination of x and y-axis values is accomplished (for original or interpolated cartographies) using the <code>extent</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/annotate.py">utils/map/annotate.py</a></code>. The resulting figures can be saved in both 'png' and 'txt' formats using the <code>save</code> parameter.
+Each cartography is rendered using the functions <code>intermediate_map</code> or <code>final_map</code> (for step 4). Annotations are incorporated into the cartography figures generated by <code>final_map</code> through the <code>annotate</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/plot.py">utils/map/plot.py</a></code>. These annotations include the positions of all measurement points and the probe's trajectory directions. Furthermore, the determination of x and y-axis values is accomplished (for original or interpolated cartographies) using the <code>extent</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/matrix_processing.py">utils/map/matrix_processing.py</a></code>. The resulting figures can be saved in both 'png' and 'txt' formats using the <code>save</code> parameter.
 </p>
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/ssfpm_map_amplitude.PNG> <br>
-    <em>SSPFM map of hysteresis amplitude, with R² in reference property (figure generated with <code>plot_and_save_image</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> script)</em>
+    <em>SSPFM map of hysteresis amplitude, with R² in reference property (figure generated with <code>plot_and_save_maps</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/plot.py">utils/map/plot.py</a></code> script)</em>
 </p>
 
 ## VIII) Toolbox
@@ -936,8 +1078,8 @@ User parameters:
 ```
 
 <p align="justify" width="100%">
-&#8226 File Management: In input, the algorithm take a SSPFM datacube measurement file. <br>
-&#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of outcomes. <br>
+&#8226 File management: In input, the algorithm take a SSPFM datacube measurement file. <br>
+&#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. <br>
 </p>
 
 <p align="justify" width="100%">
@@ -982,13 +1124,13 @@ User parameters:
 ```
 
 <p align="justify" width="100%">
-&#8226 File Management: As an input, the algorithm takes a <code>txt_loop</code> file. The CSV measurement sheet path can be specified, otherwise, it is generated by default.<br>
+&#8226 File management: As an input, the algorithm takes a <code>txt_loop</code> file, containing measurement data in the form of nanoloop. The CSV measurement sheet path can be specified by the user, otherwise, it is generated by default.<br>
 &#8226 Phase calibration parameters: used for nanoloop treatment.<br>
-&#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of outcomes. <br>
+&#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. <br>
 </p>
 
 <p align="justify" width="100%">
-In input, a measurement file in the form of a <code>txt_loop</code> file (generated after the first processing step) is opened employing the <code>extract_loop</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file">utils/nanoloop/file</a></code>. Additionally, the corresponding CSV measurement record is accessed to extract the parameters of the polarization voltage signal. An ex-situ calibration of the phase is performed, using the comprehensive set of user-defined phase processing parameters. Furthermore, the user has the option to exclude the first hysteresis curve from the generated figures if it differs from the others due to the pristine state of the film. Subsequently, the objects <code>MultiLoop</code> and <code>MeanLoop</code> associated with the file are constructed, and the corresponding figures are generated and displayed.
+In input, a measurement file in the form of a <code>nanoloop</code> file (generated after the first processing step) is opened employing the <code>extract_nanoloop_data</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file.py">utils/nanoloop/file.py</a></code>. Additionally, the corresponding CSV measurement record is accessed to extract the parameters of the polarization voltage signal. An ex-situ calibration of the phase is performed, using the comprehensive set of user-defined phase processing parameters. Furthermore, the user has the option to exclude the first hysteresis curve from the generated figures if it differs from the others due to the pristine state of the film. Subsequently, the objects <code>MultiLoop</code> and <code>MeanLoop</code> associated with the file are constructed, and the corresponding figures are generated and displayed.
 </p>
 
 For more precisions on post-measurement phase calibration, <code>MultiLoop</code> and <code>MeanLoop</code> objects, please refer to Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#v---nanoloop">V) Nanoloop</a></code> of the documentation.
@@ -1009,6 +1151,9 @@ User parameters:
         'dir path out': '',
         'interp fact': 4,
         'interp func': 'linear',
+        'revert mask': {'on': False,
+                        'off': False,
+                        'coupled': False},
         'man mask': {'on': [],
                      'off': [],
                      'coupled': []},
@@ -1034,20 +1179,20 @@ User parameters:
 ```
 
 <p align="justify" width="100%">
-&#8226 File Management: As an input, the algorithm takes a <code>properties</code> SSPFM datacube measurement file.<br>
+&#8226 File management: As an input, the algorithm takes a <code>properties</code> SSPFM datacube measurement file.<br>
 &#8226 Map interpolation parameters<br>
 &#8226 Mask parameters<br>
-&#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of outcomes. <br>
+&#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. <br>
 </p>
 
 <p align="justify" width="100%">
-In input, the directory <code>properties</code> (generated after the second processing step), containing the property measurements in the form of text files for all modes (On and Off field, coupled), is specified. Subsequently, the data is extracted, with <code>extract_measures</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code> and a cross-correlation analysis is conducted between the different cartographies. The cartographies are then generated for each of the modes (On and Off Field, and coupled) and displayed using the <code>main_mapping</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. It's worth noting that a different mask is constructed for each mode.
+In input, the directory <code>properties</code> (generated after the second processing step), containing the property measurements in the form of text files for all modes (on and off field, coupled), is specified. Subsequently, the data is extracted, with <code>extract_properties</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code> and a cross-correlation analysis is conducted between the different cartographies. The cartographies are then generated for each of the modes (on and off field, and coupled) and displayed using the <code>main_mapping</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. It's worth noting that a different mask is constructed for each mode.
 </p>
 
 <p align="justify" width="100%">
-For the creation of SSPFM cartographies, please consult section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii---sspfm-mapping">VII) - SSPFM mapping</a></code> in the documentation. <br>
-For mask creation, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii1---sspem-mapping/mask">VII.1) - SSPFM mapping / Mask</a></code> in the documentation. <br>
-For cross-correlative analysis, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii4-2d-cross-correlation">VII.4) - 2D cross correlation</a></code> of the documentation.
+&#8226 For the creation of SSPFM cartographies, please consult section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii---sspfm-mapping">VII) - SSPFM mapping</a></code> in the documentation. <br>
+&#8226 For mask creation, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii1---sspem-mapping/mask">VII.1) - SSPFM mapping / Mask</a></code> in the documentation. <br>
+&#8226 For cross-correlative analysis, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii4-2d-cross-correlation">VII.4) - 2D cross correlation</a></code> of the documentation.
 </p>
 
 #### VIII.1.d) List map reader
@@ -1071,6 +1216,7 @@ User parameters:
         'ind maps': ind_maps,
         'interp fact': 4,
         'interp func': 'linear',
+        'revert mask': False,
         'man mask': [],
         'ref': {'mode': 'off',
                 'meas': 'charac tot fit: R_2 hyst',
@@ -1085,15 +1231,15 @@ User parameters:
 ```
 
 <p align="justify" width="100%">
-&#8226 File Management: As an input, the algorithm takes a <code>properties</code> SSPFM datacube measurement file.<br>
+&#8226 File management: As an input, the algorithm takes a <code>properties</code> SSPFM datacube measurement file.<br>
 &#8226 Measurement selection parameters<br>
 &#8226 Map interpolation parameters<br>
 &#8226 Mask parameters<br>
-&#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of outcomes. <br>
+&#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. <br>
 </p>
 
 <p align="justify" width="100%">
-The operating principle of this reader differs slightly from that of the global map reader (see Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii1c-global-map-reader">VIII.1.c) - Toolbox / Viewers / Global map reader</a></code> in the documentation). In this case, a single mask can be defined by the user, and a list of measures to be mapped is provided by the user. The concept behind this reader is to observe multiple maps of different properties simultaneously (rather than one by one). Therefore, the <code>main_mapping</code> function is not used. In the main function of the script, <code>main_list_map_reader</code>, the mask is constructed, and cross-correlative analysis is performed only between the mapped measures (for cross-correlative analysis, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii4-2d-cross-correlation">VII.4) - 2D cross correlation</a></code> of the documentation.). Then, the figure containing all the different maps is formatted using the <code>formatting_fig</code> function. For each map, the <code>treat_and_plot</code> function is used to carry out treatments (masking, interpolation, etc.) and generate the map of the corresponding property, making use of functions from the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">SSPFM mapping</a> scripts.
+The operating principle of this reader differs slightly from that of the global map reader (see Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii1c-global-map-reader">VIII.1.c) - Toolbox / Viewers / Global map reader</a></code> in the documentation). In this case, a single mask can be defined by the user, and a list of measures to be mapped is provided by the user. The concept behind this reader is to observe multiple maps of different properties simultaneously (rather than one by one). Therefore, the <code>main_mapping</code> function is not used. In the main function of the script, <code>main_list_map_reader</code>, the mask is constructed, and cross-correlative analysis is performed only between the mapped measures (for cross-correlative analysis, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii4-2d-cross-correlation">VII.4) - 2D cross correlation</a></code> of the documentation.). Then, the figure containing all the different maps is formatted using the <code>formatting_fig</code> function. For each map, the <code>tratment_plot_map</code> function is used to carry out treatments (masking, interpolation, etc.) and generate the map of the corresponding property, making use of functions from the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">SSPFM mapping</a> scripts.
 </p>
 
 <p align="center" width="100%">
@@ -1109,7 +1255,7 @@ The operating principle of this reader differs slightly from that of the global 
 ### VIII.2) Hysteresis clustering (K-Means)
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox/hysteresis_clustering</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hysteresis_clustering.py">gui/hysteresis_clustering</a></code>. It facilitates the classification of hysteresis loops associated with each measurement point into clusters. This tool can enable phase separation or the distinction of the influences of physically distinct phenomena, such as measurement artifacts.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox/hysteresis_clustering</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hysteresis_clustering.py">gui/hysteresis_clustering</a></code>. It facilitates the classification of hysteresis loops associated with each measurement point into clusters. This tool can enable phase separation or the separation of the influences of physically distinct phenomena, such as measurement artifacts.
 </p>
 
 #### VIII.2.a) Parameters
@@ -1129,23 +1275,23 @@ The script can be executed directly using the executable file: <code><a href="ht
 ```
 
 <p align="justify" width="100%">
-&#8226 File Management: In the initial phase, the algorithm ingests the <code>best_nanoloops</code> directory along with the <code>properties</code> directory. <br>
-&#8226 Clusters: For each measurement (On Field, Off Field, and coupled), the user specifies the number of clusters. <br>
-&#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of outcomes. <br>
+&#8226 File management: In the initial phase, the algorithm ingests the <code>best_nanoloops</code> directory along with the <code>properties</code> directory. <br>
+&#8226 Clusters: For each measurement (on field, off field, and coupled), the user specifies the number of clusters. <br>
+&#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. <br>
 </p>
 
 #### VIII.2.b) Extraction 
 
 <p align="justify" width="100%">
-The entirety of data stemming from the best hysteresis loops, both in the On Field and Off Field modes, is extracted from the files residing within the <code>best_nanoloops</code> directory (</code>with the function extract_data</code> of the script). <br>
-Vertical offset measurements in the Off Field mode and the dimensions of the mappings are drawn from the files within the <code>properties</code> directory (with <code>extract_measures</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>). <br>
-The coupled measurements are subsequently generated through the process of differential analysis of On Field and Off Field measurements, with the flexibility to incorporate the vertical offset in the Off Field mode, a component influenced by the sample's surface contact potential.
+The entirety of data stemming from the best hysteresis loops, both in the on field and off field modes, is extracted from the files residing within the <code>best_nanoloops</code> directory (with the function <code>extract_data</code> of the script). <br>
+Vertical offset measurements in the off field mode and the dimensions of the mappings are drawn from the files within the <code>properties</code> directory (with <code>extract_properties</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>). <br>
+The coupled measurements are subsequently generated through the process of differential analysis of on field and off field measurements, with the flexibility to incorporate the vertical offset in the off field mode, a component influenced by the sample's surface contact potential.
 </p>
 
 #### VIII.2.c) Treatment
 
 <p align="justify" width="100%">
-For each of the modes (On Field, Off Field, and coupled), and for each of the hysteresis associated with each data point, a cluster is assigned using the K-Means methodology. To accomplish this, we import the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">KMeans</a> function from <a href="https://scikit-learn.org/stable/modules/clustering.html#clustering">sklearn.cluster</a>. A reference cluster is established, identified as the one encompassing the maximum number of data points. The index assigned to the other clusters is then computed as the distance between their centroid and that of the reference cluster, respectively. Subsequently, an average hysteresis for each cluster is computed.
+For each of the modes (on field, off field, and coupled), and for each of the hysteresis associated with each data point, a cluster is assigned using the K-Means methodology. To accomplish this, we import the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">KMeans</a> function from <a href="https://scikit-learn.org/stable/modules/clustering.html#clustering">sklearn.cluster</a>. A reference cluster is established, identified as the one encompassing the maximum number of data points. The index assigned to the other clusters is then computed as the distance between their centroid and that of the reference cluster, respectively. Subsequently, an average hysteresis for each cluster is computed.
 </p>
 
 #### VIII.2.d) Figures
@@ -1153,11 +1299,12 @@ For each of the modes (On Field, Off Field, and coupled), and for each of the hy
 <p align="center" width="100%">
     <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/hysteresis_clustering_all_hyst.PNG>
     <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/hysteresis_clustering_mean_hyst.PNG>
-    <img align="center" width="19%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/hysteresis_clustering_carto.PNG>
+    <img align="center" width="19%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/hysteresis_clustering_carto.PNG> <br>
+    <em>Result of hysteresis_clustering (figure generated with <code>main_hysteresis_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox/hysteresis_clustering.py</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
-For each mode (On Field, Off Field, and coupled), three figures are generated, each containing: <br>
+For each mode (on field, off field, and coupled), three figures are generated, each containing: <br>
 &#8226 The complete array of hysteresis loops from all datasets, distinguished by colors assigned based on their cluster index. <br>
 &#8226 The average hysteresis loops for each cluster, distinguished by colors assigned according to their cluster index. <br>
 &#8226 A spatial cartography displaying the assigned clusters. <br>
@@ -1179,8 +1326,9 @@ The script can be executed directly using the executable file: <code><a href="ht
         'dir path in loop': '',
         'file path in pars': '',
         'mode': 'off',
-        'mask': {'man mask': None,
-                 'ref': {'meas': 'charac tot fit: area',
+        'mask': {'revert mask': False,
+                 'man mask': None,
+                 'ref': {'prop': 'charac tot fit: area',
                          'mode': 'off',
                          'min val': 0.005,
                          'max val': None,
@@ -1210,21 +1358,21 @@ The script can be executed directly using the executable file: <code><a href="ht
 ```
 
 <p align="justify" width="100%">
-&#8226 File Management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: <code>properties</code> for ferroelectric properties, <code>nanoloops</code> containing measurements in the form of nanoloops (generated after the first processing step), and the text file containing measurement and processing parameters, <code>results/parameters.txt</code>.<br>
+&#8226 File management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: <code>properties</code> for material properties, <code>nanoloops</code> containing measurements in the form of nanoloops (generated after the first processing step), and the text file containing measurement and processing parameters, <code>parameters.txt</code>.<br>
 &#8226 Mode: Choose from <code>'off'</code>, <code>'on'</code>, or <code>'coupled'.</code><br>
-&#8226 Mask Parameters<br>
-&#8226 Hysteresis Treatment Parameters: Utilized for fitting the mean hysteresis.<br>
-&#8226 Phase Calibration Parameters: Employed in nanoloop treatment.<br>
-&#8226 Differential Parameters: Essential for differential analysis.<br>
-&#8226 Saturation Parameters: Used to decouple artifacts through saturation analysis.<br>
-&#8226 Map Interpolation Parameters<br>
-&#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of results. <br>
+&#8226 Mask parameters<br>
+&#8226 Hysteresis treatment parameters: Utilized for fitting the mean hysteresis.<br>
+&#8226 Phase calibration parameters: Employed in nanoloop treatment.<br>
+&#8226 Differential parameters: Essential for differential analysis.<br>
+&#8226 Saturation parameters: Used to decouple artifacts through saturation analysis.<br>
+&#8226 Map interpolation parameters<br>
+&#8226 Save and plot parameters: Pertaining to the management of display and the preservation of results. <br>
 </p>
 
 #### VIII.3.b) Extraction 
 
 <p align="justify" width="100%">
-The data of the measured properties (generated after the second processing step) is extracted from the folder <code>properties</code> with <code>extract_measures</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>. Subsequently, a selection mask is created based on user-provided parameters (either through a list of pixels directly determined by the user, <code>'man mask'</code>, or a condition on the values of a reference property, <code>'ref'</code>). This mask enables the determination of a selection of hysteresis loops associated with the corresponding measurement points.
+The data of the measured properties (generated after the second processing step) is extracted from the folder <code>properties</code> with <code>extract_properties</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>. Subsequently, a selection mask is created based on user-provided parameters (either through a list of pixels directly determined by the user, <code>'man mask'</code>, or a condition on the values of a reference property, <code>'ref'</code>). This mask enables the determination of a selection of hysteresis loops associated with the corresponding measurement points.
 </p>
 
 <p align="justify" width="100%">
@@ -1234,7 +1382,7 @@ For mask creation, please refer to section <code><a href="https://github.com/CEA
 #### VIII.3.c) Find best loop
 
 <p align="justify" width="100%">
-Subsequently, for each of the selected measurement points, the finest among the loops is to be extracted with the aid of the <code>find_best_loops</code> function. This function acquires the measurement parameters from the <code>results/parameters.txt</code> file and invokes the <code>single_script</code> function found in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/nanoloop_to_hyst_s2.py">data_processing/nanoloop_to_hyst_s2.py</a></code> to retrieve data from the <code>nanoloops</code> files and determine the optimum loop, referred to as the <code>best_loop</code>. In the case of a coupled measurement (<code>mode = 'coupled'</code>), this protocol is repeated for the 'on' and 'off field' modes. If the setting <code>electrostatic_offset is True</code>, the offsets in the 'off field' mode are utilized to reconstruct the entirety of the electrostatic component (accounting for the CPD).
+Subsequently, for each of the selected measurement points, the finest among the loops is to be extracted with the aid of the <code>find_best_loops</code> function. This function acquires the measurement parameters from the <code>parameters.txt</code> file and invokes the <code>single_script</code> function found in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/nanoloop_to_hyst_s2.py">data_processing/nanoloop_to_hyst_s2.py</a></code> to retrieve data from the <code>nanoloops</code> files and determine the optimum loop, referred to as the <code>best_loop</code>. In the case of a coupled measurement (<code>mode = 'coupled'</code>), this protocol is repeated for the on and off field modes. If the setting <code>electrostatic_offset is True</code>, the offsets in the 'off field' mode are utilized to reconstruct the entirety of the electrostatic component (accounting for the CPD).
 </p>
 
 <p align="justify" width="100%">
@@ -1245,13 +1393,13 @@ For <code>best_loop</code> detrmination, please refer to section <code><a href="
 
 <p align="justify" width="100%">
 &#8226 For <code>mode = 'on'</code> or <code> mode = 'off'</code>: The <code>mean_analysis_on_off</code> function commences by creating a <code>MeanLoop</code> object, composed of the collection of <code>best_loop</code> associated with each measurement point. The mean hysteresis is then constructed and fitted using the <code>hyst_analysis</code> function from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/analysis.py">utils/nanoloop_to_hyst/analysis</a></code>, based on the user-defined hysteresis parameters. All properties associated with this mean hysteresis are extracted, and an analysis of electrostatic artifacts is performed using the <code>electrostatic_analysis</code> function from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/analysis.py">utils/nanoloop_to_hyst/analysis</a></code>. <br>
-&#8226 For <code>mode = 'coupled'</code>: The <code>mean_analysis_coupled</code> function determines the entire differential <code>best_loop</code> set from the combined 'on' and 'off field' pairs, taking into account the 'off field' offset if specified. The complete set of differential <code>best_loop</code> is averaged into a single differential loop, and linear regression is performed on the latter.
+&#8226 For <code>mode = 'coupled'</code>: The <code>mean_analysis_coupled</code> function determines the entire differential <code>best_loop</code> set from the combined on and off field pairs, taking into account the off field offset if specified. The complete set of differential <code>best_loop</code> is averaged into a single differential loop, and linear regression is performed on the latter.
 </p>
 
 <p align="justify" width="100%">
-For more precisions on <code>MeanLoop</code> object, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#v3---meanloop">V.3) Nanoloop / MeanLoop</a></code> of the documentation. <br>
-For hysteresis fitting, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vi3---hysteresis-and-properties">VI.3) - Second step of data analysis / Hysteresis and properties</a></code> in the documentation. <br>
-For artifact decoupling, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vi4---artifact-decoupling">VI.4) - Second step of data analysis / Artifact decoupling</a></code> in the documentation.
+&#8226 For more precisions on <code>MeanLoop</code> object, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#v3---meanloop">V.3) Nanoloop / MeanLoop</a></code> of the documentation. <br>
+&#8226 For hysteresis fitting, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vi3---hysteresis-and-properties">VI.3) - Second step of data analysis / Hysteresis and properties</a></code> in the documentation. <br>
+&#8226 For artifact decoupling, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vi4---artifact-decoupling">VI.4) - Second step of data analysis / Artifact decoupling</a></code> in the documentation.
 </p>
 
 #### VIII.3.e) Figures
@@ -1285,26 +1433,27 @@ $$ R_{ij} = {c_{ij} \over \sqrt{c_{ii} * c_{jj}}} $$
         'dir path in pars': '',
         'ind maps': ind_maps,
         'mask': None,
+        'revert mask': False,
         'show plots': True,
         'save': False,
     }
 ```
 
 <p align="justify" width="100%">
-&#8226 File Management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: <code>properties</code> for ferroelectric properties, <code>nanoloops</code> containing measurements in the form of nanoloops (generated after the first processing step), and the text file containing measurement and processing parameters, <code>results/parameters.txt</code>.<br>
+&#8226 File management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: <code>properties</code> for material properties, <code>nanoloops</code> containing measurements in the form of nanoloops (generated after the first processing step), and the text file containing measurement and processing parameters, <code>parameters.txt</code>.<br>
 &#8226 Measurement selection parameters<br>
-&#8226 Mask Parameters<br>
-&#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of results. <br>
+&#8226 Mask parameters<br>
+&#8226 Save and plot parameters: Pertaining to the management of display and the preservation of results. <br>
 </p>
 
 #### VIII.4.b) Correlation matrix
 
 <p align="justify" width="100%">
-The <code>cross_corr_arr</code> function in the script takes as input a list of property mappings of the sample. It generates a square matrix filled with zeros, with dimensions equal to the number of mappings in the list. For each combination of pairs of measurements, the Pearson product-moment correlation coefficient is calculated using the <code>corrcoef</code> function from NumPy, allowing the completion of the correlation matrix.
+The <code>gen_correlation_array</code> function in the script takes as input a list of property mappings of the sample. It generates a square matrix filled with zeros, with dimensions equal to the number of mappings in the list. For each combination of pairs of measurements, the Pearson product-moment correlation coefficient is calculated using the <a href="https://numpy.org/doc/stable/reference/generated/numpy.corrcoef.html">corrcoef</a> function from NumPy, allowing the completion of the correlation matrix.
 </p>
 
 <p align="justify" width="100%">
-As for the <code>cross_corr_table</code> function, it takes as input a correlation matrix and generates a figure of it. A correlation matrix is then displayed with indices corresponding to each of the mappings. A gradual color code is associated with the correlation between them. If the cell tends towards: <br>
+As for the <code>plot_correlation_table</code> function, it takes as input a correlation matrix and generates a figure of it. A correlation matrix is then displayed with indices corresponding to each of the mappings. A gradual color code is associated with the correlation between them. If the cell tends towards: <br>
 &#8226 Red: $R_{ij} \longrightarrow 1$, the two mappings are completely correlated <br>
 &#8226 White: $R_{ij} \longrightarrow 0$, the two mappings are not correlated at all <br>
 &#8226 Blue: $R_{ij} \longrightarrow -1$, the two mappings are completely anti-correlated <br>
@@ -1313,21 +1462,21 @@ As for the <code>cross_corr_table</code> function, it takes as input a correlati
 #### VIII.4.c) Worflow
 
 <p align="justify" width="100%">
-The data from <code>properties</code>, constituting the property mappings, is extracted using the <code>extract_measures</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>. <br>
-&#8226 When <code>'ind maps'</code> is provided by the user as a list of property names, the functions <code>cross_corr_arr</code> and <code>cross_corr_table</code> are successively called to perform the analysis on the corresponding mappings. <br>
-&#8226 If <code>'ind maps' is None</code>, the <code>cross_corr_sspfm</code> function is called to carry out the cross-correlation analysis between all maps. Initially, separated correlation analysis is performed for all off-field maps and on-field maps for all properties. Here too, the functions <code>cross_corr_arr</code> and <code>cross_corr_table</code> are used to conduct the analysis. Then, a correlation analysis between off-field and on-field maps is executed. A correlation matrix is created between each on-field and off-field mapping (of dimensions 2 times the number of properties), and the corresponding figure is generated using <code>cross_corr_table</code>.
+The data from <code>properties</code>, constituting the property mappings, is extracted using the <code>extract_properties</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>. <br>
+&#8226 When <code>'ind maps'</code> is provided by the user as a list of property names, the functions <code>gen_correlation_array</code> and <code>plot_correlation_table</code> are successively called to perform the analysis on the corresponding mappings. <br>
+&#8226 If <code>'ind maps' is None</code>, the <code>correlation_analysis_all_maps</code> function is called to carry out the cross-correlation analysis between all maps. Initially, separated correlation analysis is performed for all off field maps and on field maps for all properties. Here too, the functions <code>gen_correlation_array</code> and <code>plot_correlation_table</code> are used to conduct the analysis. Then, a correlation analysis between off field and on field maps is executed. A correlation matrix is created between each on field and off field mapping (of dimensions 2 times the number of properties), and the corresponding figure is generated using <code>plot_correlation_table</code>.
 </p>
 
 #### VIII.4.d) Figures
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/cross_corr_analysis_off_field.PNG> <br>
-    <em>Result of cross correlation analysis of off field measurements (figure generated with <code>cross_corr_table</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">toolbox/map_correlation.py</a></code> script)</em>
+    <em>Result of cross correlation analysis for all off field material properties (figure generated with <code>plot_correlation_table</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">toolbox/map_correlation.py</a></code> script)</em>
 </p>
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/cross_corr_analysis_off_and_on_field.PNG> <br>
-    <em>Result of cross correlation analysis of off and off field measurements (figure generated with <code>cross_corr_table</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">toolbox/map_correlation.py</a></code> script)</em>
+    <em>Result of cross correlation analysis between all on and off field material properties (figure generated with <code>plot_correlation_table</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">toolbox/map_correlation.py</a></code> script)</em>
 </p>
 
 ### VIII.5) Pixel extremum
@@ -1359,12 +1508,12 @@ The script can be executed directly using the executable file: <code><a href="ht
 ```
 
 <p align="justify" width="100%">
-&#8226 File Management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: <code>properties</code> for ferroelectric properties, <code>nanoloops</code> containing measurements in the form of nanoloops (generated after the first processing step), and the text file containing measurement and processing parameters, <code>results/parameters.txt</code>.<br>
+&#8226 File management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: <code>properties</code> for material properties, <code>nanoloops</code> containing measurements in the form of nanoloops (generated after the first processing step), and the text file containing measurement and processing parameters, <code>parameters.txt</code>.<br>
 &#8226 Measurement selection parameters<br>
 &#8226 Pixel selection parameters<br>
 &#8226 Loop plotting parameter (<code>del_first_loop</code>)<br>
-&#8226 Mask Parameters<br>
-&#8226 Save and Plot Parameters: Pertaining to the management of display and the preservation of results. <br>
+&#8226 Mask parameters<br>
+&#8226 Save and plot parameters: Pertaining to the management of display and the preservation of results. <br>
 </p>
 
 #### VIII.5.b) Workflow
@@ -1375,27 +1524,28 @@ The script can be executed directly using the executable file: <code><a href="ht
 </p>
 
 <p align="justify" width="100%">
-The initial step entails the extraction of properties generated after the second processing step, residing within the folder <code>'properties'</code>, accomplished by the <code>extract_measures</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>. The property selected by the user through the <code>'meas key'</code> parameter, serving as a sorting reference, is then singled out among all others. The extraction of processing and measurement parameters from the file <code>'results/parameters.txt'</code> is carried out using the <code>extract_txt_pars</code> function from the script. The measurement files are then sorted under two scenarios: <br>
+The initial step entails the extraction of properties generated after the second processing step, residing within the folder <code>'properties'</code>, accomplished by the <code>extract_properties</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>. The property selected by the user through the <code>'meas key'</code> parameter, serving as a sorting reference, is then singled out among all others. The extraction of processing and measurement parameters from the file <code>'parameters.txt'</code> is carried out using the <code>extract_params</code> function from the script. The measurement files are then sorted under two scenarios: <br>
 &#8226 If the <code>list_pixels</code> parameter is <code>None</code>: based on values of the user-chosen reference property. <br>
-&#8226 If the <code>list_pixels</code> parameter is <code>[]</code>: according to the file index. If the list is empty, all pixels are considered; otherwise, only the indices listed are considered. <br>
+&#8226 If the <code>list_pixels</code> parameter is <code>[]</code>: according to the file index. If the list is empty, all pixels are considered; otherwise, only the indices listed are considered.
+</p>
+
+<p align="justify" width="100%">
 Then, for each of the files:
     <ul>
         <li>If <code>mode = 'on'</code> or <code>mode = 'off'</code>:</li>
             <ul>
                 <li>An analysis of the entire file selection is performed using the <code>mean_hyst</code> tool (the main function <code>main_mean_hyst</code> from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_hyst.py">toolbox/mean_hyst.py</a></code> is called). The average hysteresis and properties are then determined.</li>
-                <li>The nanoloop of the corresponding file (located in the <code>'nanoloops'</code> folder) is extracted with the <code>extract_loop</code> function from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file">utils/nanoloop/file</a></code>, and the main function <code>main_loop_file_reader</code> from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox/loop_file_reader</a></code> is utilized to create figures in the form of nanoloops.</li>
+                <li>The nanoloop of the corresponding file (located in the <code>'nanoloops'</code> folder) is extracted with the <code>extract_nanoloop_data</code> function from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file.py">utils/nanoloop/file</a></code>, and the main function <code>main_loop_file_reader</code> from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox/loop_file_reader</a></code> is utilized to create figures in the form of nanoloops.</li>
                 <li>The <code>single_analysis</code> function from the script is called, enabling the extraction of the <code>best_loop</code>, the construction, and analysis of the <code>Hysteresis</code> object (fitting and property extraction).</li>
                 <li>A comparative figure between the average hysteresis and that of the respective file is constructed with the <code>plot_comparative_hyst</code> function from the script.</li>
-            </ul>
+            </ul> <br>
         <li>If <code>mode = 'coupled'</code>:</li>
             <ul>
-                <li>For each mode (<code>'on'</code> and <code>'off'</code>): The nanoloop of the corresponding file (located in the <code>'nanoloops'</code> folder) is extracted with the <code>extract_loop</code> function from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file">utils/nanoloop/file</a></code>, and the <code>best_loop</code> is extracted with the <code>single_script</code> function from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/nanoloop_to_hyst_s2.py">data_processing/nanoloop_to_hyst_s2.py</a></code>. The main function <code>main_loop_file_reader</code> from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox/loop_file_reader</a></code> is employed to create figures in the form of nanoloops.</li>
+                <li>For each mode (<code>'on'</code> and <code>'off'</code>): The nanoloop of the corresponding file (located in the <code>'nanoloops'</code> folder) is extracted with the <code>extract_nanoloop_data</code> function from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file.py">utils/nanoloop/file</a></code>, and the <code>best_loop</code> is extracted with the <code>single_script</code> function from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/nanoloop_to_hyst_s2.py">data_processing/nanoloop_to_hyst_s2.py</a></code>. The main function <code>main_loop_file_reader</code> from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox/loop_file_reader</a></code> is employed to create figures in the form of nanoloops.</li>
                 <li>An analysis of the entire file selection is performed using the <code>mean_hyst</code> tool (the main function <code>main_mean_hyst</code> from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_hyst.py">toolbox/mean_hyst.py</a></code> is called). The differential component and average properties are then determined.</li>
-                <li>The <code>differential_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic.py</a></code> is employed to
-
- conduct the differential analysis for the respective file.</li>
+                <li>The <code>differential_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic.py</a></code> is employed to conduct the differential analysis for the respective file.</li>
                 <li>The differential components (average and of the respective file) are determined during the corresponding analysis steps.</li>
-            </ul>
+            </ul> <br>
         <li>The mapping of the reference property is constructed using the <code>plot_and_save_image</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>, with the pixel corresponding to the highlighted file. A histogram of the reference property is generated, and the value of the property for the respective file is highlighted.</li>
     </ul>
 </p>
@@ -1404,12 +1554,12 @@ Then, for each of the files:
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/plot_pixel_extrem_hyst.PNG> <br>
-    <em>Compartive analysis between mean and single file hysteresis (figure generated with <code>plot_comparative_hyst</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/sort_plot_pixel.py">toolbox/sort_plot_pixel.py</a></code> script)</em>
+    <em>Comparative analysis between mean and single file hysteresis (figure generated with <code>plot_comparative_hyst</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/sort_plot_pixel.py">toolbox/sort_plot_pixel.py</a></code> script)</em>
 </p>
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/plot_pixel_extrem_map.PNG> <br>
-    <em>>Mapping of reference property (hysteresis amplitude) (figure generated with <code>plot_and_save_image</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> script)</em>
+    <em>Mapping of reference property (hysteresis amplitude) (figure generated with <code>plot_and_save_image</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> script)</em>
 </p>
 
 <p align="center" width="100%">
@@ -1439,28 +1589,34 @@ User parameters:
 
 <p align="justify" width="100%">
 As input, SSPFM datacube measurement folder is selected. A new directory is created (<code>'input_directory_name'_datacube_'extension'</code>), and the CSV measurement sheet is copied from the input directory into it. Subsequently, each of the SPM datacube files (Bruker) is read, and its data is extracted (refer to Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1.c) - File Management / Input Files / Extraction</a></code> in the documentation). The choice of measurement mode is simplified through the <code>'mode'</code> parameter, which offers the following options: <br>
-&#8226 <code>'classic'</code> (Sweep Resonance) <br>
+&#8226 <code>'classic'</code> (sweep resonance) <br>
 &#8226 <code>'dfrt'</code> <br>
 Following this, a corresponding new datacube file is generated, with an extension chosen by the user, and is complemented with the raw data from the input file. The available extensions are: <br>
-&#8226 <code>'txt'</code> (created using the <a href="https://numpy.org/doc/stable/reference/generated/numpy.savetxt.html">savetxt</a> function of numpy library) <br>
+&#8226 <code>'txt'</code> (created using the <a href="https://numpy.org/doc/stable/reference/generated/numpy.savetxt.html">savetxt</a> function of NumPy library) <br>
 &#8226 <code>'csv'</code> (with the pandas library, a <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html">DataFrame</a> object containing the data is created, and the file is saved using the <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_csv.html">to_csv</a> method) <br>
 &#8226 <code>'xlsx'</code> (with the pandas library, a <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html">DataFrame</a> object containing the data is created, and the file is saved using the <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_excel.html">to_excel</a> method) <br>
 </p>
 
-## Overall settings
+## IX) Overall settings
 
-### Default settings & management
+<p align="justify" width="100%">
+General settings are linked to the entire PySSPFM application. They are user-modifiable and can be accessed directly in the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/settings.py">settings.py</a></code> file. A comprehensive description is provided for each setting, along with its default value. A collection of settings facilitates the default path management for saved result files as well as for tests and examples (input and output data). Settings are also provided for the extraction and writing of data from SSPFM files. Some settings are linked to the visualization of figures, while others pertain to various processing stages (fitting methods associated with the <code>minimize</code> function of <a href="https://pypi.org/project/lmfit/">lmfit</a> library, etc.).
+</p>
 
-## Core scripts
+<p align="justify" width="100%">
+A second file, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/default_settings.py">default_settings.py</a></code>, contains the default values for some of the settings found in the initial <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/settings.py">settings.py</a></code> file. Only when an example or test is executed will these default settings take precedence over those from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/settings.py">settings.py</a></code> file, as they are tailored to the input files (path and data) and treatment on which the examples and tests rely. The <code>get_setting</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/settings.py">settings.py</a></code> determines whether the execution is from an example or test, or not. Accordingly, it selects the corresponding setting from one of the two dictionaries: the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/settings.py">settings.py</a></code> (<code>setting_dict</code>) or the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/default_settings.py">default_settings.py</a></code> (<code>def_setting_dict</code>). It's crucial not to modify the default values in the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/default_settings.py">default_settings.py</a></code> file, as this could lead to the failure of PySSPFM's example and test executions.
+</p>
+
+## X) Core scripts
 
 <p align="justify" width="100%">
 The entire assemblage of scripts under the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/core">core</a></code> umbrella comprises functions that are relatively generic and form the foundation for most of the PySSPFM application scripts. These scripts encompass: <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">basic_func.py</a></code>, which houses a collection of algebraic models on which the performed fits rely. <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/curve_hysteresis.py">curve_hysteresis.py</a></code>, responsible for initializing and processing the <code>Hysteresis</code> object (refer to Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vi3---hysteresis-and-properties">IV.3) - Second step of data analysis / Hysteresis and properties</a></code> in the documentation). <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/figure.py">figure.py</a></code>, which facilitates the generation of visual representations in a consistent style. This encompasses the creation of graphs, histograms, and mappings through the functions <code>plot_graph</code>, <code>plot_hist</code>, and <code>plot_map</code>. The <code>print_plots</code> function offers advanced control over the display and storage of visual representations. <br>
-&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/curve_hysteresis.py">curve_hysteresis.py</a></code>, which is responsible for executing all fits (excluding hysteresis fitting) based on the <a href="https://pypi.org/project/lmfit/">lmfit</a> library. It includes a parent class <code>CurveFit</code> and three subclasses, namely <code>GaussianPeakFit</code>, <code>ShoPeakFit</code>, and <code>ShoPhaseFit</code>, each built upon the parent class to execute Gaussian, Sho, and Sho phase (arctangent) fitting, respectively. The parent class incorporates a set of methods shared by the subclasses, including <code>eval</code> for evaluating the fitted peak at specified x-values, <code>fit</code>, <code>plot</code>, and more. The subclasses invoke the parent class during initialization and enable parameter initialization for fitting, with model-specific initial guesses. <br>
+&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/fitting.py">fitting.py</a></code>, which is responsible for executing all fits (excluding hysteresis fitting) based on the <a href="https://lmfit.github.io/lmfit-py/fitting.html">minimize</a> function of <a href="https://pypi.org/project/lmfit/">lmfit</a> library. The fit method, like <code>least_sq</code>, <code>least_square</code> (prioritizing speed), or <code>nelder</code> (prioritizing convergence) can be selected with the <code>fit_method</code> setting. <a href="https://lmfit.github.io/lmfit-py/model.html#lmfit.model.Model">Model</a> and <a href="https://lmfit.github.io/lmfit-py/parameters.html#the-parameters-class">Parameters</a> objects of <a href="https://pypi.org/project/lmfit/">lmfit</a> are likewise employed, respectively, for operations on model functions (e.g., adding an affine or constant component that may correspond to noise) and for the management of parameter initialization prior to the fitting process (initial value, range of variation, etc.). It includes a parent class <code>CurveFit</code> and three subclasses, namely <code>GaussianPeakFit</code>, <code>ShoPeakFit</code>, and <code>ShoPhaseFit</code>, each built upon the parent class to execute Gaussian, Sho, and Sho phase (arctangent) fitting, respectively. The parent class incorporates a set of methods shared by the subclasses, including <code>eval</code> for evaluating the fitted peak at specified x-values, <code>fit</code>, <code>plot</code>, and more. The subclasses invoke the parent class during initialization and enable parameter initialization for fitting, with model-specific initial guesses. <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/iterable.py">iterable.py</a></code> for handling iterables. <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/noise.py">noise.py</a></code> for noise management. The <code>filter_mean</code> function serves as a filtering mechanism for averaging, offering a choice of filter order to reduce measurement noise. The <code>noise</code> function is used to generate noise of a specific amplitude (widely employed for examples and tests to recreate the most realistic data) using three distribution models: <code>uniform</code>, <code>normal</code>, and <code>laplace</code>. <br>
-&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/peak.py">peak.py</a></code> contains a set of functions for peak handling. <code>detect_peak</code> and <code>find_peaks</code> automatically identify peaks in an array of values, relying on the <code>find_peaks</code> function from the scipy.signal library. It also includes functions for guessing noise components (linear component with <code>guess_affine</code> and constant with <code>guess_bckgnd</code>) and determining peak width with <code>width_peak</code>. <br>
+&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/peak.py">peak.py</a></code> contains a set of functions for peak handling. <code>detect_peak</code> and <code>find_peaks</code> automatically identify peaks in an array of values, relying on the <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.find_peaks.html#scipy.signal.find_peaks">find_peaks</a> function from the scipy.signal library. It also includes functions for guessing noise components (linear component with <code>guess_affine</code> and constant with <code>guess_bckgnd</code>) and determining peak width with <code>width_peak</code>. <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/signal.py">signal.py</a></code> comprises two functions: <code>line_reg</code> for linear regression and <code>interpolate</code> for 1D interpolation. <br>
 </p>
