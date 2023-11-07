@@ -276,13 +276,13 @@ SSPFM files from other manufacturers are not supported in this application. It i
 #### III.1.b) - Measurement sheet
 
 <p align="justify" width="100%">
-Prior to conducting the SSPFM measurement, the user must complete a measurement form. Templates are available for both the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a> and <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>) modes. This measurement form serves to guide the user in carrying out the SSPFM measurements and to maintain a record of critical measurement parameters. It also automatically generates certain measurement information based on the provided parameters, such as: <br> <br>
+Prior to conducting the SSPFM measurement, the user must complete a measurement form. Templates are available for both the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a> and <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>) modes. This measurement form serves to guide the user in carrying out the SSPFM measurements and to maintain a record of critical measurement parameters. It also automatically generates certain measurement information based on the provided parameters, such as: <br>
 &#8226 total measurement time <br>
 &#8226 tip-induced pressure <br>
 &#8226 lock-in amplifier settings <br>
 &#8226 quality factor <br>
 &#8226 resonance settling time <br> <br>
-Furthermore, completing the form is a mandatory prerequisite for the subsequent measurement processing. The parameters to be employed for measurement processing include: <br> <br>
+Furthermore, completing the form is a mandatory prerequisite for the subsequent measurement processing. The parameters to be employed for measurement processing include: <br>
 &#8226 grid dimensions <br>
 &#8226 calibration coefficients <br>
 &#8226 sign of piezoelectric coeffcient <br>
@@ -294,7 +294,7 @@ Furthermore, completing the form is a mandatory prerequisite for the subsequent 
 #### III.1.c) - Extraction
 
 <p align="justify" width="100%">
-All measurement files and the measurement sheet must be placed within the same directory. The data contained in these file types are then extracted using the file <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/raw_extraction.py">utils/raw_extraction</a></code>. The functions <a href="https://numpy.org/doc/stable/reference/generated/numpy.genfromtxt.html">genfromtxt</a> (from NumPy), <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html">read_csv</a> (from pandas), and <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_excel.html">read_excel</a> (from pandas) are employed, respectively, to extract data from files with extensions txt, csv, and xlsx. For files with the spm extension (Bruker), the extraction script relies on a second file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_reader.py">utils/datacube_reader</a></code>, which employs the <code>DataExtraction</code> object with the <a href="https://pypi.org/project/nanoscope/">nanoscope</a> library. However, the nanoscope library alone is insufficient for data extraction, as it requires the use of DLL files installed with the Nanoscope Analysis software (Bruker). In the event that the DLL files are not present, the <code>NanoscopeError</code> object has been created to handle the error.
+All measurement files and the measurement sheet must be placed within the same directory. The data contained in these file types are then extracted using the file <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/raw_extraction.py">utils/raw_extraction</a></code>. The functions <a href="https://numpy.org/doc/stable/reference/generated/numpy.genfromtxt.html">genfromtxt</a> (from NumPy), <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html">read_csv</a> (from pandas), and <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_excel.html">read_excel</a> (from pandas) are employed, respectively, to extract data from files with extensions txt, csv, and xlsx. For files with the spm extension (Bruker), the extraction script relies on a second file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_reader.py">utils/datacube_reader</a></code>, which employs the <code>DataExtraction</code> object with the <a href="https://pypi.org/project/nanoscope/">nanoscope</a> library. However, the nanoscope library alone is insufficient for data extraction, as it requires the use of DLL (Dynamic Link Library) files installed with the Nanoscope Analysis software (Bruker). In the event that the DLL files are not present, the <code>NanoscopeError</code> object has been created to handle the error.
 </p>
 
 #### III.1.d) - Examples & Tests
@@ -302,7 +302,7 @@ All measurement files and the measurement sheet must be placed within the same d
 <p align="justify" width="100%">
 The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples">examples</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests">tests</a></code> inherently rely upon input data, which may assume one of two distinct forms:
 
-1. Authentic data stemming from SSPFM measurements conducted on a KNN sample, which are located within the directory: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in">examples/data/PySSPFM_example_in</a></code>. This repository encompasses several subdirectories, specifically:
+1. Authentic data stemming from SSPFM measurements conducted on a KNN (potassium sodium niobate) sample, which are located within the directory: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in">examples/data/PySSPFM_example_in</a></code>. This repository encompasses several subdirectories, specifically:
     - <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/KNN500n">KNN500n</a></code>: housing an assemblage of SSPFM datacube measurement files, bearing the spm extension (Bruker), alongside their corresponding measurement records. This serves the following purpose:
         - <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/datacube_to_nanoloop/ex_file.py">examples/utils/datacube_to_nanoloop/ex_file</a></code>.
     - <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/KNN500n_2023-10-05-17h21m_out_dfrt">KNN500n_2023-10-05-17h21m_out_dfrt</a></code>: signifying the measurement output subsequent to the initial processing phase. This facilitates the following:
@@ -552,7 +552,7 @@ This entire process enhances the precision of the measured values. The robustnes
 </p>
 
 <p align="justify" width="100%">
-&#8226 <code>dfrt</code> : The average of the arrays of measurements in amplitude and phase maintained at resonance through the use of DFRT, defines the unique values of the segment in amplitude and phase, respectively. The uncertainty in these two quantities can be determined based on their variance (with <a href="https://numpy.org/doc/stable/reference/generated/numpy.var.html">var</a> function of NumPy library) within the segment. This process is swift, robust, and highly precise.
+&#8226 <code>dfrt</code> : The average of the arrays of measurements in amplitude and phase maintained at resonance through the use of DFRT (Dual Frequency Resonance Tracking), defines the unique values of the segment in amplitude and phase, respectively. The uncertainty in these two quantities can be determined based on their variance (with <a href="https://numpy.org/doc/stable/reference/generated/numpy.var.html">var</a> function of NumPy library) within the segment. This process is swift, robust, and highly precise.
 </p>
 
 <p align="center" width="100%">
