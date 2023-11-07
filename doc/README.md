@@ -257,18 +257,16 @@ The processing can be executed with the <code>Start</code> button, and the inter
 #### III.1.a) - SSPFM measurement files
 
 <p align="justify" width="100%">
-The input processed SSPFM datacube files can be in the form of spreadsheets (columns of value lists for each measurement) with following extensions:
+The input processed SSPFM datacube files can be in the form of spreadsheets (columns of value lists for each measurement) with following extensions: <br>
+&#8226 <code>.txt</code> <br>
+&#8226 <code>.csv</code> <br>
+&#8226 <code>.xlsx</code> <br>
 </p>
-
-* `.txt`
-* `.csv`
-* `.xlsx`
 
 <p align="justify" width="100%">
-Or directly in the format of a Bruker SSPFM file with the extension:
+Or directly in the format of a Bruker SSPFM file with the extension:*
+* <code>.spm</code> (Bruker)
 </p>
-
-* `.spm` (Bruker)
 
 <p align="justify" width="100%">
 SSPFM files from other manufacturers are not supported in this application. It is advisable to extract the measurements from them and place them into a spreadsheet. The header dimensions, the column separator in the spreadsheet files to be extracted, and the measurements to be extracted are customizable. In the current version, deflection, polarization voltage, PFM amplitude and phase are plotted and treated, but the code can be adapted to further parameters measured. A <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">converter</a> from spm files to spreadsheets is also available.
