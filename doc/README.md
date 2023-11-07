@@ -139,7 +139,7 @@
 </p>
 
 <p align="justify" width="100%">
-Following the SSPFM measurement, one or more SSPFM datacube files are generated. A measurement form should be completed by the user (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). 
+Following the SSPFM (Switching Spectroscopy Piezoresponse Force Microscopy) measurement, one or more SSPFM datacube files are generated. A measurement form should be completed by the user (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). 
 The PySSPFM application then proceeds with two stages of measurement processing. In the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/datacube_to_nanoloop_s1.py">first step</a> of data analysis, amplitude and phase measurements are extracted and calibrated for each segment and nanoloops are determined. The <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/nanoloop_to_hyst_s2.py">second step</a> creates the piezoresponse hysteresis loop, and extracts piezoelectric and ferroelectric properties using an algorithm based on the <a href="https://pypi.org/project/lmfit/">lmfit</a> library. Various artifact decorrelation protocols improve measurement accuracy. Then, <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">SSPFM mapping</a> can be performed. A <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">toolbox</a> is provided including:
 </p>
 
@@ -179,7 +179,7 @@ Here is the simplified architectural overview of the PySSPFM application's sourc
 ## II) - GUI
 
 <p align="justify" width="100%"> 
-The <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/gui">graphical user interface codes</a> have been crafted using the <a href="https://docs.python.org/fr/3/library/tkinter.html">Tkinter</a> library. The <a href="https://pypi.org/project/Pillow">PIL</a> library is employed to open and display the application's logo and icon on the graphical interfaces.
+The <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/gui">graphical user interface (gui) codes</a> have been crafted using the <a href="https://docs.python.org/fr/3/library/tkinter.html">Tkinter</a> library. The <a href="https://pypi.org/project/Pillow">PIL</a> library is employed to open and display the application's logo and icon on the graphical interfaces.
 </p>
 
 ### II.1) - Main window
@@ -277,22 +277,18 @@ SSPFM files from other manufacturers are not supported in this application. It i
 
 <p align="justify" width="100%">
 Prior to conducting the SSPFM measurement, the user must complete a measurement form. Templates are available for both the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a> and <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>) modes. This measurement form serves to guide the user in carrying out the SSPFM measurements and to maintain a record of critical measurement parameters. It also automatically generates certain measurement information based on the provided parameters, such as: <br>
-    <ul>
-        <li>total measurement time</li>
-        <li>tip-induced pressure</li>
-        <li>lock-in amplifier settings</li>
-        <li>quality factor</li>
-        <li>resonance settling time</li>
-    </ul>
+&#8226 total measurement time <br>
+&#8226 tip-induced pressure <br>
+&#8226 lock-in amplifier settings <br>
+&#8226 quality factor <br>
+&#8226 resonance settling time <br>
 Furthermore, completing the form is a mandatory prerequisite for the subsequent measurement processing. The parameters to be employed for measurement processing include: <br>
-    <ul>
-        <li>grid dimensions</li>
-        <li>calibration coefficients</li>
-        <li>sign of piezoelectric coeffcient</li>
-        <li>sinusoidal voltage magnitude</li>
-        <li>voltage application direction</li>
-        <li>SSPFM polarization signal parameters</li>
-    </ul>
+&#8226 grid dimensions <br>
+&#8226 calibration coefficients <br>
+&#8226 sign of piezoelectric coeffcient <br>
+&#8226 sinusoidal voltage magnitude <br>
+&#8226 voltage application direction</li>
+&#8226 SSPFM polarization signal parameters <br>
 </p>
 
 #### III.1.c) - Extraction
