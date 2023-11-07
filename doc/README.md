@@ -919,7 +919,7 @@ Within the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/
 The function <code>btfly_analysis</code> enables the execution of the procedure. The first method used to isolate the influence of artifacts on the ferroelectric component involves analyzing the on field amplitude nanoloop. The method is simple, as the coercive voltages correspond to the points where the amplitude of the curve are the lower. The two points are then determined, and their average corresponds to a measurement of the CPD (Contact Potential Difference).
 </p>
 
-$$CPD = {\phi_{Probe} - \phi_{Sample} \over abs(e)}$$
+$$CPD = {\phi_{Probe} - \phi_{Sample} \over |e|}$$
 
 <p align="justify" width="100%">
 However, this method has some drawbacks. It cannot determine the slope of the electrostatic component, and it is only valid when the affine component predominates over the hysteresis component. Moreover, imprint effect can interfere with the measurement accuracy, which is already limited since the signal-to-noise ratio is low at the points of interest [24]. Additionally, the measurement of amplitude vanishing points is rare in practice because of the influence of noise on measurements [25] [48]. (MAJ LIEN BIBLIO)
