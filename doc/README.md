@@ -1132,7 +1132,9 @@ User parameters:
 In input, a measurement file in the form of a <code>nanoloop</code> file (generated after the first processing step (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv---first-step-of-data-analysis">IV) - First step of data analysis</a> of documentation)) is opened employing the <code>extract_nanoloop_data</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file.py">utils/nanoloop/file.py</a></code>. Additionally, the corresponding csv measurement sheet is accessed to extract the parameters of the polarization voltage signal. An ex-situ calibration of the phase is performed, using the comprehensive set of user-defined phase processing parameters. Furthermore, the user has the option to exclude the first hysteresis curve from the generated figures if it differs from the others due to the pristine state of the film. Subsequently, the objects <code>MultiLoop</code> and <code>MeanLoop</code> associated with the file are constructed, and the corresponding figures are generated and displayed.
 </p>
 
+<p align="justify" width="100%">
 For more precisions on post-measurement phase calibration, <code>MultiLoop</code> and <code>MeanLoop</code> objects, please refer to Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#v---nanoloop">V) Nanoloop</a></code> of the documentation.
+</p>
 
 #### VIII.1.c) Global map reader
 
@@ -1185,7 +1187,7 @@ User parameters:
 </p>
 
 <p align="justify" width="100%">
-In input, the directory <code>properties</code> (generated after the second processing step), containing the property measurements in the form of text files for all modes (on and off field, coupled), is specified. Subsequently, the data is extracted, with <code>extract_properties</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code> and a cross-correlation analysis is conducted between the different cartographies. The cartographies are then generated for each of the modes (on and off field, and coupled) and displayed using the <code>main_mapping</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. It's worth noting that a different mask is constructed for each mode.
+In input, the directory <code>properties</code> (generated after the second processing step (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi---second-step-of-data-analysis">VI) - Second step of data analysis</a> of documentation)), containing the property measurements in the form of text files for all modes (on and off field, coupled), is specified. Subsequently, the data is extracted, with <code>extract_properties</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code> and a cross-correlation analysis is conducted between the different cartographies. The cartographies are then generated for each of the modes (on and off field, and coupled) and displayed using the <code>main_mapping</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. It's worth noting that a different mask is constructed for each mode.
 </p>
 
 <p align="justify" width="100%">
@@ -1357,7 +1359,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 ```
 
 <p align="justify" width="100%">
-&#8226 File management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: <code>properties</code> for material properties, <code>nanoloops</code> containing measurements in the form of nanoloops (generated after the first processing step (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv---first-step-of-data-analysis">IV) - First step of data analysis</a> of documentation)), and the text file containing measurement and processing parameters, <code>parameters.txt</code>.<br>
+&#8226 File management: For input, the algorithm requires the directory generated after the second processing step (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi---second-step-of-data-analysis">VI) - Second step of data analysis</a> of documentation). It can be supplemented with the respective folders: <code>properties</code> for material properties, <code>nanoloops</code> containing measurements in the form of nanoloops (generated after the first processing step (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv---first-step-of-data-analysis">IV) - First step of data analysis</a> of documentation)), and the text file containing measurement and processing parameters, <code>parameters.txt</code>.<br>
 &#8226 Mode: Choose from <code>'off'</code>, <code>'on'</code>, or <code>'coupled'.</code><br>
 &#8226 Mask parameters<br>
 &#8226 Hysteresis treatment parameters: Utilized for fitting the mean hysteresis.<br>
@@ -1371,7 +1373,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 #### VIII.3.b) Extraction 
 
 <p align="justify" width="100%">
-The data of the measured properties (generated after the second processing step) is extracted from the folder <code>properties</code> with <code>extract_properties</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>. Subsequently, a selection mask is created based on user-provided parameters (either through a list of pixels directly determined by the user, <code>'man mask'</code>, or a condition on the values of a reference property, <code>'ref'</code>). This mask enables the determination of a selection of hysteresis loops associated with the corresponding measurement points.
+The data of the measured properties (generated after the second processing step (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi---second-step-of-data-analysis">VI) - Second step of data analysis</a> of documentation)) is extracted from the folder <code>properties</code> with <code>extract_properties</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>. Subsequently, a selection mask is created based on user-provided parameters (either through a list of pixels directly determined by the user, <code>'man mask'</code>, or a condition on the values of a reference property, <code>'ref'</code>). This mask enables the determination of a selection of hysteresis loops associated with the corresponding measurement points.
 </p>
 
 <p align="justify" width="100%">
@@ -1439,7 +1441,7 @@ $$ R_{ij} = {c_{ij} \over \sqrt{c_{ii} * c_{jj}}} $$
 ```
 
 <p align="justify" width="100%">
-&#8226 File management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: <code>properties</code> for material properties, <code>nanoloops</code> containing measurements in the form of nanoloops (generated after the first processing step (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv---first-step-of-data-analysis">IV) - First step of data analysis</a> of documentation)), and the text file containing measurement and processing parameters, <code>parameters.txt</code>.<br>
+&#8226 File management: For input, the algorithm requires the directory generated after the second processing step (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi---second-step-of-data-analysis">VI) - Second step of data analysis</a> of documentation). It can be supplemented with the respective folders: <code>properties</code> for material properties, <code>nanoloops</code> containing measurements in the form of nanoloops (generated after the first processing step (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv---first-step-of-data-analysis">IV) - First step of data analysis</a> of documentation)), and the text file containing measurement and processing parameters, <code>parameters.txt</code>.<br>
 &#8226 Measurement selection parameters<br>
 &#8226 Mask parameters<br>
 &#8226 Save and plot parameters: Pertaining to the management of display and the preservation of results. <br>
@@ -1507,7 +1509,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 ```
 
 <p align="justify" width="100%">
-&#8226 File management: For input, the algorithm requires the directory generated after the second processing step. It can be supplemented with the respective folders: <code>properties</code> for material properties, <code>nanoloops</code> containing measurements in the form of nanoloops (generated after the first processing step (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv---first-step-of-data-analysis">IV) - First step of data analysis</a> of documentation)), and the text file containing measurement and processing parameters, <code>parameters.txt</code>.<br>
+&#8226 File management: For input, the algorithm requires the directory generated after the second processing step (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi---second-step-of-data-analysis">VI) - Second step of data analysis</a> of documentation). It can be supplemented with the respective folders: <code>properties</code> for material properties, <code>nanoloops</code> containing measurements in the form of nanoloops (generated after the first processing step (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv---first-step-of-data-analysis">IV) - First step of data analysis</a> of documentation)), and the text file containing measurement and processing parameters, <code>parameters.txt</code>.<br>
 &#8226 Measurement selection parameters<br>
 &#8226 Pixel selection parameters<br>
 &#8226 Loop plotting parameter (<code>del_first_loop</code>)<br>
@@ -1523,7 +1525,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 </p>
 
 <p align="justify" width="100%">
-The initial step entails the extraction of properties generated after the second processing step, residing within the folder <code>'properties'</code>, accomplished by the <code>extract_properties</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>. The property selected by the user through the <code>'meas key'</code> parameter, serving as a sorting reference, is then singled out among all others. The extraction of processing and measurement parameters from the file <code>'parameters.txt'</code> is carried out using the <code>extract_params</code> function from the script. The measurement files are then sorted under two scenarios: <br>
+The initial step entails the extraction of properties generated after the second processing step (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi---second-step-of-data-analysis">VI) - Second step of data analysis</a> of documentation), residing within the folder <code>'properties'</code>, accomplished by the <code>extract_properties</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file</a></code>. The property selected by the user through the <code>'meas key'</code> parameter, serving as a sorting reference, is then singled out among all others. The extraction of processing and measurement parameters from the file <code>'parameters.txt'</code> is carried out using the <code>extract_params</code> function from the script. The measurement files are then sorted under two scenarios: <br>
 &#8226 If the <code>list_pixels</code> parameter is <code>None</code>: based on values of the user-chosen reference property. <br>
 &#8226 If the <code>list_pixels</code> parameter is <code>[]</code>: according to the file index. If the list is empty, all pixels are considered; otherwise, only the indices listed are considered.
 </p>
