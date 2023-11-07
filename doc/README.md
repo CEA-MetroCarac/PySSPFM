@@ -920,9 +920,7 @@ The function <code>btfly_analysis</code> enables the execution of the procedure.
 </p>
 
 <p align="justify" width="100%">
-The study of the contact potential difference (CPD) is useful and can provide further information on the sample. We can find CPD value with the work function of the material [17]: <br>
-$CPD = {\phi_{Probe} - \phi_{Sample} \over |e|}$ <br>
-CPD is sensitive to the nature of the sample but also to the surface charge density of the sample [18].
+The study of the contact potential difference (CPD) is useful and can provide further information on the sample. We can find CPD value with the work function of the material [17]: $CPD = {\phi_{Probe} - \phi_{Sample} \over |e|}$. CPD is sensitive to the nature of the sample but also to the surface charge density of the sample [18].
 </p>
 
 <p align="justify" width="100%">
