@@ -989,7 +989,7 @@ The script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/Py
 </p>
 
 <p align="justify" width="100%">
-The maps are generated using the executable codes <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader</a></code> (voir la section INSERER LA SECTION DE LA DOCUMENTATION CORRESPONDANTE).
+The maps are generated using the executable codes <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader</a></code> (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1c-global-map-reader">VIII.1.c) Global map reader</a> and of <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1d-list-map-reader">VIII.1.d) List map reader</a> documentation).
 </p>
 
 ### VII.1) - Mask
