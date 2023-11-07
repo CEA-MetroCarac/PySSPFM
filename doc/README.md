@@ -4,7 +4,7 @@
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/pysspfm_white_logo.PNG> <br>
 </p>
 
-<div id="table-of-contents">
+<div id="table-of-contents" style="text-align: justify;">
     <h2>Table of Contents</h2>
     <ul>
         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#i---overview">I) - Overview</a>
@@ -1674,7 +1674,7 @@ The entire assemblage of scripts under the <code><a href="https://github.com/CEA
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/signal.py">signal.py</a></code> comprises two functions: <code>line_reg</code> for linear regression and <code>interpolate</code> for 1D interpolation. <br>
 </p>
 
-<div id="references">
+<div id="references" style="text-align: justify;">
     <h2>Reference</h2>
 &#8226 [1] Jesse, Stephen, Arthur P. Baddorf, and Sergei V. Kalinin. "Switching Spectroscopy Piezoresponse Force Microscopy of Ferroelectric Materials", Applied Physics Letters 88, 6 (2006), 062908. https://doi.org/10.1063/1.2172216 <br>
 &#8226 [2] : Huang, Boyuan, Ehsan Nasr Esfahani, et Jiangyu Li. « Mapping Intrinsic Electromechanical Responses at the Nanoscale via Sequential Excitation Scanning Probe Microscopy Empowered by Deep Data ». National Science Review 6, no 1 (1 janvier 2019): 55 63. https://doi.org/10.1093/nsr/nwy096. <br>
