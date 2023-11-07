@@ -571,7 +571,7 @@ The segmentation process is performed with <code>cut_function</code> in the scri
 &#8226 <code>fit</code> (usable for a resonance sweep): The amplitude resonance peak with frequency $R(f)$ is fitted using the SHO (simple harmonic oscillator) model (<code>sho</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) <a href="#ref2">[2]</a>:
 </p>
 
-$ R(f) = A * {f_0^2 \over \sqrt{f_0^2 - f^2)^2 + (f * f_0 / Q)^2}} + bckgnd $
+$$ R(f) = A * {f_0^2 \over \sqrt{f_0^2 - f^2)^2 + (f * f_0 / Q)^2}} + bckgnd $$
 
 <p align="justify" width="100%">
 Parameters such as amplitude $A$, quality factor $Q$, and the center of the peak (corresponding to the resonance frequency $f_0$) can be extracted. The background $bckgnd$ in the fit can be removed from the measurement to improve accuracy. All the peak fit process is performed in <code>peak_fit</code> method.
