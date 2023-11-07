@@ -139,7 +139,7 @@
 </p>
 
 <p align="justify" width="100%">
-Following the SSPFM (Switching Spectroscopy Piezoresponse Force Microscopy) [1] measurement, one or more SSPFM datacube files are generated. A measurement form should be completed by the user (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). 
+Following the SSPFM (Switching Spectroscopy Piezoresponse Force Microscopy) <a href="#ref1">[1]</a> measurement, one or more SSPFM datacube files are generated. A measurement form should be completed by the user (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). 
 The PySSPFM application then proceeds with two stages of measurement processing. In the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/datacube_to_nanoloop_s1.py">first step</a> of data analysis, amplitude and phase measurements are extracted and calibrated for each segment and nanoloops are determined. The <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/nanoloop_to_hyst_s2.py">second step</a> creates the piezoresponse hysteresis loop, and extracts piezoelectric and ferroelectric properties using an algorithm based on the <a href="https://pypi.org/project/lmfit/">lmfit</a> library. Various artifact decorrelation protocols improve measurement accuracy. Then, <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">SSPFM mapping</a> can be performed. A <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">toolbox</a> is provided including:
 </p>
 
@@ -1675,8 +1675,8 @@ The entire assemblage of scripts under the <code><a href="https://github.com/CEA
 </p>
 
 <div id="references" style="text-align: justify;">
-    <h2>Reference</h2>
-    &#8226 [1] Jesse, Stephen, Arthur P. Baddorf, and Sergei V. Kalinin. "Switching Spectroscopy Piezoresponse Force Microscopy of Ferroelectric Materials", Applied Physics Letters 88, 6 (2006), 062908. https://doi.org/10.1063/1.2172216 <br>
+    <h2>References</h2>
+    <span id="ref1">&#8226 [1] Jesse, Stephen, Arthur P. Baddorf, and Sergei V. Kalinin. "Switching Spectroscopy Piezoresponse Force Microscopy of Ferroelectric Materials", Applied Physics Letters 88, 6 (2006), 062908. https://doi.org/10.1063/1.2172216</span><br>
     &#8226 [2] : Huang, Boyuan, Ehsan Nasr Esfahani, et Jiangyu Li. « Mapping Intrinsic Electromechanical Responses at the Nanoscale via Sequential Excitation Scanning Probe Microscopy Empowered by Deep Data ». National Science Review 6, no 1 (1 janvier 2019): 55 63. https://doi.org/10.1093/nsr/nwy096. <br>
     &#8226 [3] : Rodriguez, Brian J, Clint Callahan, Sergei V Kalinin, and Roger Proksch. ‘’Dual-Frequency Resonance-Tracking Atomic Force Microscopy’’ Nanotechnology 18, 47 (2007), 475504. https://doi.org/10.1088/0957-4484/18/47/475504. <br>
     &#8226 [4] : García-Zaldívar, O., F. Calderón-Piñar, C.J. Diliegros-Godines, et F.J. Flores-Ruiz. « Nanomechanical Measurements of PLZT Ceramic during Switching Events ». Ceramics International 48, nᵒ 7 (avril 2022): 10120‑25. https://doi.org/10.1016/j.ceramint.2021.12.222. <br>
