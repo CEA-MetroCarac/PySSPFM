@@ -1289,6 +1289,11 @@ Vertical offset measurements in the off field mode and the dimensions of the map
 The coupled measurements are subsequently generated through the process of differential analysis of on field and off field measurements, with the flexibility to incorporate the vertical offset in the off field mode, a component influenced by the sample's surface contact potential.
 </p>
 
+<p align="justify" width="100%">
+For a deeper understanding of the input file management, please refer to the relevant section in the documentation:<br>
+&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii2b---second-step-of-data-analysis">III.2.b) - File Management / Output Files / Second Step of Data Analysis</a></code>
+</p>
+
 #### VIII.2.c) Treatment
 
 <p align="justify" width="100%">
@@ -1377,7 +1382,8 @@ The data of the measured properties (generated after the second processing step 
 </p>
 
 <p align="justify" width="100%">
-For mask creation, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii1---sspem-mapping/mask">VII.1) - SSPFM mapping / Mask</a></code> in the documentation.
+For a deeper understanding of the input file management, please refer to the relevant section in the documentation:<br> <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii2b---second-step-of-data-analysis">III.2.b) - File Management / Output Files / Second Step of Data Analysis</a></code> <br>
+&#8226 For mask creation, please refer to section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii1---sspem-mapping/mask">VII.1) - SSPFM mapping / Mask</a></code> in the documentation.
 </p>
 
 #### VIII.3.c) Find best loop
