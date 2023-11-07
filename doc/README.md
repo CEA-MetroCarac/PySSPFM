@@ -1698,3 +1698,4 @@ The entire assemblage of scripts under the <code><a href="https://github.com/CEA
 [22] : Thèse - Sergio GONZALEZ CASAL (INL) : Electromechanical control of ferroelectric domains in Pb(Zr,Ti)O3 and BiFeO3 thin films
 [23] : Bruker application note : Characterizing Ferroelectric Materials with SS-PFM and DCUBE PFM
 [24] : Alikin, Denis, Alexander Abramov, Anton Turygin, Anton Ievlev, Victoria Pryakhina, Dmitry Karpinsky, Qingyuan Hu, et al. « Exploring Charged Defects in Ferroelectrics by the Switching Spectroscopy Piezoresponse Force Microscopy ». Small Methods 6, no 2 (février 2022): 2101289. https://doi.org/10.1002/smtd.202101289.
+[25] : Yu, Junxi, Ehsan Nasr Esfahani, Qingfeng Zhu, Dongliang Shan, Tingting Jia, Shuhong Xie, et Jiangyu Li. « Quadratic Electromechanical Strain in Silicon Investigated by Scanning Probe Microscopy ». Journal of Applied Physics 123, no 15 (21 avril 2018): 155104. https://doi.org/10.1063/1.5023407
