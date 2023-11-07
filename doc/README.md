@@ -270,7 +270,7 @@ Or directly in the format of a Bruker SSPFM file with the extension:
 * `.spm` (Bruker)
 
 <p align="justify" width="100%">
-SSPFM files from other manufacturers are not supported in this application. It is advisable to extract the measurements from them and place them into a spreadsheet. The header dimensions, the column separator in the spreadsheet files to be extracted, and the measurements to be extracted are customizable. In the current version, deflection, polarization voltage, PFM amplitude and phase are plotted and treated, but the code can be adapted to further parameters measured. A <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">converter.py</a> from spm files to spreadsheets is also available.
+SSPFM files from other manufacturers are not supported in this application. It is advisable to extract the measurements from them and place them into a spreadsheet. The header dimensions, the column separator in the spreadsheet files to be extracted, and the measurements to be extracted are customizable. In the current version, deflection, polarization voltage, PFM amplitude and phase are plotted and treated, but the code can be adapted to further parameters measured. A <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">converter</a> from spm files to spreadsheets is also available.
 </p>
 
 #### III.1.b) - Measurement sheet
@@ -431,8 +431,8 @@ The initial step of the process may be initiated either through the <a href="htt
 
 <p align="justify" width="100%">
 For a deeper understanding of the file management in this phase, please refer to the relevant section in the documentation:<br>
-&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1) - File Management / Input Files</a></code> <br>
-&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii2a---first-step-of-data-analysis">III.2.a) - File Management / Output Files / First Step of Data Analysis</a></code>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1) - Input files</a> <br>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii2a---first-step-of-data-analysis">III.2.a) - First step of data analysis</a>
 </p>
 
 ### IV.1) - Parameters
@@ -527,7 +527,7 @@ The segmentation process is performed with <code>cut_function</code> in the scri
 </p>
 
 <p align="justify" width="100%">
-&#8226 <code>fit</code> (usable for a resonance sweep): The amplitude resonance peak with frequency $R(f)$ is fitted using the SHO (simple harmonic oscillator) model (<code>sho</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) (INSERER LIEN BIBLIO):
+&#8226 <code>fit</code> (usable for a resonance sweep): The amplitude resonance peak with frequency $R(f)$ is fitted using the SHO (simple harmonic oscillator) model (<code>sho</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) [2]:
 </p>
 
 $$ R(f) = A * {f_0^2 \over \sqrt{f_0^2 - f^2)^2 + (f * f_0 / Q)^2}} + bckgnd $$
@@ -537,7 +537,7 @@ Parameters such as amplitude $A$, quality factor $Q$, and the center of the peak
 </p>
 
 <p align="justify" width="100%">
-The phase $\phi$ can be extracted simply at the index of the resonance frequency $f_0$ or by performing a fit (the process is performed in <code>phase_fit</code> method) in the narrow vicinity of the resonance peak using the <code>fit_pha</code> parameter with an arctangent function model (in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) with (<code>sho_phase_switch</code> function) or without (<code>sho_phase</code> function) a switch (detected with <code>phase_fit_analysis</code> method) (INSERER LIEN BIBLIO):
+The phase $\phi$ can be extracted simply at the index of the resonance frequency $f_0$ or by performing a fit (the process is performed in <code>phase_fit</code> method) in the narrow vicinity of the resonance peak using the <code>fit_pha</code> parameter with an arctangent function model (in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) with (<code>sho_phase_switch</code> function) or without (<code>sho_phase</code> function) a switch (detected with <code>phase_fit_analysis</code> method) [2]:
 </p>
 
 $$ \phi(f) = arctan({f * f_0 \over Q * (f_0^2 - f^2)}) + \phi_0 $$
@@ -552,7 +552,7 @@ This entire process enhances the precision of the measured values. The robustnes
 </p>
 
 <p align="justify" width="100%">
-&#8226 <code>dfrt</code> : The average of the arrays of measurements in amplitude and phase maintained at resonance through the use of DFRT (Dual Frequency Resonance Tracking) (INSERER LIEN BIBLIO), defines the unique values of the segment in amplitude and phase, respectively. The uncertainty in these two quantities can be determined based on their variance (with <a href="https://numpy.org/doc/stable/reference/generated/numpy.var.html">var</a> function of NumPy library) within the segment. This process is swift, robust, and highly precise.
+&#8226 <code>dfrt</code> : The average of the arrays of measurements in amplitude and phase maintained at resonance through the use of DFRT (Dual Frequency Resonance Tracking) [3], defines the unique values of the segment in amplitude and phase, respectively. The uncertainty in these two quantities can be determined based on their variance (with <a href="https://numpy.org/doc/stable/reference/generated/numpy.var.html">var</a> function of NumPy library) within the segment. This process is swift, robust, and highly precise.
 </p>
 
 <p align="center" width="100%">
@@ -561,7 +561,7 @@ This entire process enhances the precision of the measured values. The robustnes
 </p>
 
 <p align="justify" width="100%">
-Note that SSPFM can also allow to investigate nanomechanical properties as a function of applied voltage, by analyzing the resonance frequency and quality factor of the contact resonance peak. Thus, we can gain insights into phase transitions or multi-ferroic material properties INSERER SOURCE.
+Note that SSPFM can also allow to investigate nanomechanical properties as a function of applied voltage, by analyzing the resonance frequency and quality factor of the contact resonance peak. Thus, we can gain insights into phase transitions or multi-ferroic material properties [4].
 </p>
 
 <p align="justify" width="100%">
@@ -583,7 +583,7 @@ Once all the measurements are extracted per segment, phase and amplitude nanoloo
 
 <p align="justify" width="100%">
 Post-measurement phase calibration is performed with <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script.
-To accomplish the calibration, taking inspiration from the publications of Neumayer et al. (INSERER LA SOURCE), a post-measurement calibration protocol has been devised. The underlying physical principles of this protocol are elaborated upon in the publication (INSERER LA SOURCE). We have tailored this protocol for integration into the PySSPFM application, considering the specific user-specific experimental conditions.
+To accomplish the calibration, taking inspiration from the publications of Neumayer et al. [5, 6], a post-measurement calibration protocol has been devised. We have tailored this protocol for integration into the PySSPFM application, considering the specific user-specific experimental conditions.
 </p>
 
 <p align="justify" width="100%">
@@ -658,7 +658,7 @@ It is worth noting that in some cases of on field measurements, where the electr
 </p>
 
 <p align="justify" width="100%">
-For the second part of the <code>phase_calibration</code> function, an in-depth analysis of the phase signal is conducted. An angular histogram is constructed from the complete set of phase values within the file, with <code>histo_init</code> function. In the case of Vertical PFM measurements, it's common to observe two peaks separated by approximately 180° (INSERER LIEN BIBLIO). These two peaks can either be fitted (with <code>fit_peak_hist</code> function) using a <code>Gaussian</code> model (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) for improved precision or their maxima can be directly extracted for enhanced robustness and efficiency. The setting <code>histo_phase_method</code> allows for the selection of either of these methods. In the event of a fitting failure, the <code>maximum</code> method is applied. The phase difference and the positions of these two peaks are then extracted. During PFM measurements, a phase offset is typically present, and phase inversion can occur (INSERER LIEN BIBLIO). Therefore, it's imperative to identify both peaks within the histogram and assign them target phase values.
+For the second part of the <code>phase_calibration</code> function, an in-depth analysis of the phase signal is conducted. An angular histogram is constructed from the complete set of phase values within the file, with <code>histo_init</code> function. In the case of Vertical PFM measurements, it's common to observe two peaks separated by approximately 180° [5, 7]. These two peaks can either be fitted (with <code>fit_peak_hist</code> function) using a <code>Gaussian</code> model (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) for improved precision or their maxima can be directly extracted for enhanced robustness and efficiency. The setting <code>histo_phase_method</code> allows for the selection of either of these methods. In the event of a fitting failure, the <code>maximum</code> method is applied. The phase difference and the positions of these two peaks are then extracted. During PFM measurements, a phase offset is typically present, and phase inversion can occur [6]. Therefore, it's imperative to identify both peaks within the histogram and assign them target phase values.
 </p>
 
 <p align="center" width="100%">
@@ -761,7 +761,7 @@ Figures resulting from the processing of the first file are generated with <code
 
 <p align="justify" width="100%">
 For a deeper understanding of the file management in this phase, please refer to the relevant section in the documentation:<br>
-&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii2b---second-step-of-data-analysis">III.2.b) - File Management / Output Files / Second Step of Data Analysis</a></code>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii2b---second-step-of-data-analysis">III.2.b) Second Step of Data Analysis</a>
 </p>
 
 ### VI.1) - Parameters
@@ -790,7 +790,7 @@ The nanoloops data is extracted from the files within the corresponding <code>na
 
 <p align="justify" width="100%">
 There are three distinct measurement processing modes, each involving the extraction of a <code>best_loop</code> using the <code>find_best_nanoloop</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/analysis.py">utils/nanoloop_to_hyst/analysis.py</a></code> script: <br>
-&#8226 <code>'multi_loop'</code>: Measurements are conducted in off field, and various reading voltage values are applied. This mode corresponds to the cKPFM (contact Kelvin Probe Force Microscopy) mode introduced by N. Balke and his colleagues (INSERT REFERENCE). All loops are fitted using the <code>Hysteresis</code> object (refer to Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vi3---hysteresis-and-properties">IV.3) - Second step of data analysis / Hysteresis and properties</a></code> in the documentation), and the best loop is the one that minimizes the vertical offset associated with the electrostatic component in off field. <br>
+&#8226 <code>'multi_loop'</code>: Measurements are conducted in off field, and various reading voltage values are applied. This mode corresponds to the cKPFM (contact Kelvin Probe Force Microscopy) mode introduced by N. Balke and his colleagues [8]. All loops are fitted using the <code>Hysteresis</code> object (refer to Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vi3---hysteresis-and-properties">IV.3) - Second step of data analysis / Hysteresis and properties</a></code> in the documentation), and the best loop is the one that minimizes the vertical offset associated with the electrostatic component in off field. <br>
 &#8226 <code>'mean_loop'</code>: Measurements are conducted in off field with a single reading voltage value, often set at 0 volts. The best loop is the average of all the loops (sometimes the first loop is not considered do to its pre-polarized state), determined through the creation of the <code>MeanLoop</code> object (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#v3---meanloop">V.3) - MeanLoop</a> of documentation). <br>
 &#8226 <code>'on_field'</code>: Measurements are conducted in on field. The best loop, in this case, is the average of all the loops, determined through the creation of the <code>MeanLoop</code> object.
 </p>
@@ -798,17 +798,17 @@ There are three distinct measurement processing modes, each involving the extrac
 ### VI.3) - Hysteresis and properties
 
 <p align="justify" width="100%">
-The process of fitting hysteresis curves is a crucial step in determining the ferroelectric properties of a material. However, it is also a delicate part of the data processing that can greatly influence quality of the results. In many cases, the shape of the PFM hysteresis nanoloop can be deformed compared to macroscopic polarization hysteresis P(E) (INSERER LIEN BIBLIO).
+The process of fitting hysteresis curves is a crucial step in determining the ferroelectric properties of a material. However, it is also a delicate part of the data processing that can greatly influence quality of the results. In many cases, the shape of the PFM hysteresis nanoloop can be deformed compared to macroscopic polarization hysteresis P(E).
 </p>
 
 <p align="justify" width="100%">
 The script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/curve_hysteresis.py>utils/core/curve_hysteresis</a></code> introduces and processes a novel entity known as the <code>Hysteresis</code> object. This object is initialized through the variable <code>model</code>, encapsulating the mathematical formulations for both of its branches: <br>
-&#8226 <code>'sigmoid'</code> (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) (INSERER LIEN BIBLIO): $PR(V) = G * ({1 \over 1. + exp(-c^i * (V - V_0^i))} - 0.5) + a*V + b$ <br>
+&#8226 <code>'sigmoid'</code> (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) [9]: $PR(V) = G * ({1 \over 1. + exp(-c^i * (V - V_0^i))} - 0.5) + a*V + b$ <br>
 &#8226 <code>'arctan'</code> (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script): $PR(V) = G * arctan(c^i * (V - V_0^i)) + a*V + b$ <br>
 $i$ serves as the index designating the branch: $i=L$ for the left branch, and $i=R$ for the right branch. <br>
 The boolean variable, <code>asymmetric</code>, holds the responsibility of deciding whether to apportion distinct dilation coefficients to these bifurcated branches. 
 If <code>asymmetric is False</code>, then $c^L = c^R$, while if <code>asymmetric is True</code>, $c^L \ne c^R$.
-Artangent or sigmoid terms representing the influence of ferroelectric component, while the affine component representing the influence of the quadratic terms of artifacts is added to the the model (INSERER LIEN BIBLIO).
+Artangent or sigmoid terms representing the influence of ferroelectric component, while the affine component representing the influence of the quadratic terms of artifacts is added to the the model [9].
 </p>
 
 <p align="center" width="100%">
@@ -844,7 +844,7 @@ An initialization of the fitting parameters is conducted with the function <code
                         <li>Otherwise, $a=0$ </li>
                     </ul>
             </ul>
-        <li>The differential of the two branches, <code>diff_hyst</code>, is calculated and subsequently filtered (via the <code>filter_mean</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/noise.py">utils/core/noise.py</a></code>), effectively forming a dome. This process facilitates the initialization of fit parameter values and is derived from the work of (INSERER LIEN BIBLIO). <br>
+        <li>The differential of the two branches, <code>diff_hyst</code>, is calculated and subsequently filtered (via the <code>filter_mean</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/noise.py">utils/core/noise.py</a></code>), effectively forming a dome. This process facilitates the initialization of fit parameter values and is derived from the work of Jesse et al. [9]. <br>
             <p align="center" width="100%">
                 <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/diff_hysteresis.PNG> <br>
                 <em>Differntial hysteresis model (dome)</em>
@@ -868,13 +868,13 @@ It should be noted that the fitting process (based on minimization of mean squar
 </p>
 
 <p align="justify" width="100%">
-Following the completion of the fitting process, the <code>properties</code> method facilitates the extraction of the ferroelectric properties of the hysteresis. All properties are calculated both with and without the electrostatic component: <br>
+Following the completion of the fitting process, the <code>properties</code> method facilitates the extraction of the ferroelectric properties of the hysteresis [9]. All properties are calculated both with and without the electrostatic component: <br>
 &#8226 The imprint, denoted by <code>x_shift</code>, is defined as the mean of the two coercive voltages of the hysteresis branches. The voltage window, <code>x0_wid</code>, is the difference between these two values. The hysteresis area, <code>area</code>, is simply the product of the voltage window and the hysteresis amplitude. <br>
 &#8226 The intersection points on the abscissa axes (<code>x_inters_l</code>, <code>x_inters_r</code>) and the ordinate axes (<code>y_inters_l</code>, <code>y_inters_r</code>) respectively define the coercive voltages and the remanent piezoresponse voltages. <br>
 &#8226 The inflection points, by default located at 10% and 90% of the branch amplitudes, determine the nucleation voltages (<code>x_infl_l</code>, <code>x_infl_r</code>) and saturation voltages (<code>x_sat_l</code>, <code>x_sat_r</code>). <br>
 &#8226 The relative difference between the expansion coefficients of the right and left branches, denoted as <code>diff_coef</code>, quantifies the level of hysteresis asymmetry. <br>
 &#8226 The quadratic error between the experimental data and the model. <br>
-(INSERER LIEN BIBLIO)
+
 </p>
 
 <p align="justify" width="100%">
@@ -898,10 +898,10 @@ In the figure above, we can observe the fitting of an asymmetric hysteresis. The
 </p>
 
 <p align="justify" width="100%">
-Artifacts, primarily of electrostatic nature but more generally stemming from quadratic terms (electrostatics (both local and capacitive, electrostrictive, Joule's effect), become non-negligible here due to the application of a continuous voltage, V_DC, which can influence the measurement in the following ways: <br>
+Artifacts, primarily of electrostatic nature,  but more generally stemming from quadratic terms (electrostatics (both capacitive [10] and local [11], electrostrictive, Joule's effect [12, 13]), become non-negligible here due to the application of a continuous voltage, V_DC, which can influence the measurement in the following ways: <br>
 &#8226 By introducing a vertical offset in off field measurements (artifacts mainly of electrostatic origin). <br>
-&#8226 By introducing an affine component in on field measurements (influenced by quadratic terms). <br>
-&#8226 Non-linearly, when the effect becomes active after a certain threshold voltage is reached in the on field scenario.
+&#8226 By introducing an affine component in on field measurements (influenced by quadratic terms) [14]. <br>
+&#8226 Non-linearly, when the effect becomes active after a certain threshold voltage is reached in the on field scenario [14, 15, 16].
 </p>
 
 <p align="center" width="100%">
@@ -916,7 +916,13 @@ Within the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/
 ### VI.4.a) - Analysis of on field amplitude nanoloop
 
 <p align="justify" width="100%">
-The function <code>btfly_analysis</code> enables the execution of the procedure. The first method used to isolate the influence of artifacts on the ferroelectric component involves analyzing the on field amplitude nanoloop. The method is simple, as the coercive voltages correspond to the points where the amplitude of the curve are the lower. The two points are then determined, and their average corresponds to a measurement of the CPD (Contact Potential Difference). However, this method has some drawbacks. It cannot determine the slope of the electrostatic component, and it is only valid when the affine component predominates over the hysteresis component. Moreover, imprint effect can interfere with the measurement accuracy, which is already limited since the signal-to-noise ratio is low at the points of interest [24]. Additionally, the measurement of amplitude vanishing points is rare in practice because of the influence of noise on measurements [25] [48]. (MAJ LIEN BIBLIO)
+The function <code>btfly_analysis</code> enables the execution of the procedure. The first method used to isolate the influence of artifacts on the ferroelectric component involves analyzing the on field amplitude nanoloop. The method is simple, as the coercive voltages correspond to the points where the amplitude of the curve are the lower. The two points are then determined, and their average corresponds to a measurement of the CPD (Contact Potential Difference).
+</p>
+
+$$CPD = \phi_{Probe} - \phi_{Probe} \under abs(e)$$
+
+<p align="justify" width="100%">
+However, this method has some drawbacks. It cannot determine the slope of the electrostatic component, and it is only valid when the affine component predominates over the hysteresis component. Moreover, imprint effect can interfere with the measurement accuracy, which is already limited since the signal-to-noise ratio is low at the points of interest [24]. Additionally, the measurement of amplitude vanishing points is rare in practice because of the influence of noise on measurements [25] [48]. (MAJ LIEN BIBLIO)
 </p>
 
 <p align="center" width="100%">
@@ -966,7 +972,7 @@ The last approach was already developed in (see section <a href="https://github.
 ### VI.5) - cKPFM
 
 <p align="justify" width="100%">
-The <code>'multi_loop'</code> analysis mode is equivalent to the cKPFM mode (INSERER LIEN BIBLIO): different read voltage values are employed for each hysteresis. Consequently, we can investigate the evolution of piezoresponse not with respect to the writing voltage, but with the reading voltage. To accomplish this, the <code>gen_ckpfm_meas</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis.py</a></code> script is utilized to transform data initially in the form of nanoloops into cKPFM measurements. This mode allows for a more profound exploration of measurement artifacts, distinguishing between ferroelectric phenomena, electrostatic effects, charge injection, and more.
+The <code>'multi_loop'</code> analysis mode is equivalent to the cKPFM mode [8]: different read voltage values are employed for each hysteresis. Consequently, we can investigate the evolution of piezoresponse not with respect to the writing voltage, but with the reading voltage. To accomplish this, the <code>gen_ckpfm_meas</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/analysis.py">utils/nanoloop/analysis.py</a></code> script is utilized to transform data initially in the form of nanoloops into cKPFM measurements. This mode allows for a more profound exploration of measurement artifacts, distinguishing between ferroelectric phenomena, electrostatic effects, charge injection, and more.
 </p>
 
 <p align="justify" width="100%">
@@ -1667,3 +1673,19 @@ The entire assemblage of scripts under the <code><a href="https://github.com/CEA
 </p>
 
 [1] Jesse, Stephen, Arthur P. Baddorf, and Sergei V. Kalinin. "Switching Spectroscopy Piezoresponse Force Microscopy of Ferroelectric Materials", Applied Physics Letters 88, 6 (2006), 062908. https://doi.org/10.1063/1.2172216
+[2] : Huang, Boyuan, Ehsan Nasr Esfahani, et Jiangyu Li. « Mapping Intrinsic Electromechanical Responses at the Nanoscale via Sequential Excitation Scanning Probe Microscopy Empowered by Deep Data ». National Science Review 6, no 1 (1 janvier 2019): 55 63. https://doi.org/10.1093/nsr/nwy096.
+[3] : Rodriguez, Brian J, Clint Callahan, Sergei V Kalinin, and Roger Proksch. ‘’Dual-Frequency Resonance-Tracking Atomic Force Microscopy’’ Nanotechnology 18, 47 (2007), 475504. https://doi.org/10.1088/0957-4484/18/47/475504.
+[4] : García-Zaldívar, O., F. Calderón-Piñar, C.J. Diliegros-Godines, et F.J. Flores-Ruiz. « Nanomechanical Measurements of PLZT Ceramic during Switching Events ». Ceramics International 48, nᵒ 7 (avril 2022): 10120‑25. https://doi.org/10.1016/j.ceramint.2021.12.222.
+[5] : Neumayer, Sabine M., Sahar Saremi, Lane W. Martin, Liam Collins, Alexander Tselev, Stephen Jesse, Sergei V. Kalinin, et Nina Balke. « Piezoresponse Amplitude and Phase Quantified for Electromechanical Characterization ». Journal of Applied Physics 128, no 17 (7 novembre 2020): 171105. https://doi.org/10.1063/5.0011631.
+[6] : Neumayer, Sabine M, Sahar Saremi, Lane W Martin, Liam Collins, Alexander Tselev, Stephen Jesse, Sergei V Kalinin, et Nina Balke. « Piezoresponse Phase as Variable in Electromechanical Characterization », s. d., 16.
+[7] : Bradler, Stephan, André Schirmeisen, et Bernhard Roling. « Amplitude Quantification in Contact-Resonance-Based Voltage-Modulated Force Spectroscopy ». Journal of Applied Physics 122, no 6 (14 août 2017): 065106. https://doi.org/10.1063/1.4998435.
+[8] : Balke, Nina, Stephen Jesse, Pu Yu, Ben Carmichael, Sergei V Kalinin, and Alexander Tselev. « Quantification of Surface Displacements and Electromechanical Phenomena via Dynamic Atomic Force Microscopy ». Nanotechnology 27, no 42 (21 octobre 2016): 425707. https://doi.org/10.1088/0957-4484/27/42/425707.
+[9] : Jesse S, Lee HN, Kalinin SV. « Quantitative mapping of switching behavior in piezoresponse force microscopy”. REVIEW OF SCIENTIFIC INSTRUMENTS 77, 073702 2006
+[10] : Kim, Sungho, Daehee Seol, Xiaoli Lu, Marin Alexe, et Yunseok Kim. « Electrostatic-Free Piezoresponse Force Microscopy ». Scientific Reports 7, no 1 (mars 2017): 41657. https://doi.org/10.1038/srep41657.
+[11] : Kalinin, Sergei V., et Dawn A. Bonnell. « Local Potential and Polarization Screening on Ferroelectric Surfaces ». Physical Review B 63, no 12 (13 mars 2001): 125411. https://doi.org/10.1103/PhysRevB.63.125411.
+[12] : Chen, Qian Nataly, Yun Ou, Feiyue Ma, et Jiangyu Li. « Mechanisms of Electromechanical Coupling in Strain Based Scanning Probe Microscopy ». Applied Physics Letters 104, no 24 (16 juin 2014): 242907. https://doi.org/10.1063/1.4884422.
+[13] : Kim, Yunseok, Amit Kumar, Alexander Tselev, Ivan I. Kravchenko, Hee Han, Ionela Vrejoiu, Woo Lee, et al. « Nonlinear Phenomena in Multiferroic Nanocapacitors: Joule Heating and Electromechanical Effects ». ACS Nano 5, no 11 (22 novembre 2011): 9104 12. https://doi.org/10.1021/nn203342v.
+[14] : Balke, Nina, Stephen Jesse, Qian Li, Petro Maksymovych, M. Baris Okatan, Evgheni Strelcov, Alexander Tselev, et Sergei V. Kalinin. « Current and Surface Charge Modified Hysteresis Loops in Ferroelectric Thin Films ». Journal of Applied Physics 118, no 7 (21 août 2015): 072013. https://doi.org/10.1063/1.4927811.
+[15] : Kim, Bora, Daehee Seol, Shinbuhm Lee, Ho Nyung Lee, et Yunseok Kim. « Ferroelectric-like Hysteresis Loop Originated from Non-Ferroelectric Effects ». Applied Physics Letters 109, no 10 (5 septembre 2016): 102901. https://doi.org/10.1063/1.4962387.
+[16] : Gautier, Brice, et David Albertini. « Détection et contrôle de la ferroélectricité à l’échelle nanométrique ». Métrologie par imagerie et microscopie, juin 2022. https://doi.org/10.51257/a-v1-r6719
+
