@@ -1701,5 +1701,4 @@ The entire assemblage of scripts under the <code><a href="https://github.com/CEA
     <span id="ref23">&#8226 [23] : Gautier, Brice, et David Albertini. « Détection et contrôle de la ferroélectricité à l’échelle nanométrique ». Métrologie par imagerie et microscopie, juin 2022. https://doi.org/10.51257/a-v1-r6719</span><br>
     <span id="ref24">&#8226 [24] : Bruker application note : Characterizing Ferroelectric Materials with SS-PFM and DCUBE PFM</span><br>
     <span id="ref25">&#8226 [25] : Alikin, Denis, Alexander Abramov, Anton Turygin, Anton Ievlev, Victoria Pryakhina, Dmitry Karpinsky, Qingyuan Hu, et al. « Exploring Charged Defects in Ferroelectrics by the Switching Spectroscopy Piezoresponse Force Microscopy ». Small Methods 6, no 2 (février 2022): 2101289. https://doi.org/10.1002/smtd.202101289. <br>
-    <span id="ref26">&#8226 [26] : Yu, Junxi, Ehsan Nasr Esfahani, Qingfeng Zhu, Dongliang Shan, Tingting Jia, Shuhong Xie, et Jiangyu Li. « Quadratic Electromechanical Strain in Silicon Investigated by Scanning Probe Microscopy ». Journal of Applied Physics 123, no 15 (21 avril 2018): 155104. https://doi.org/10.1063/1.5023407</span><br>
 </div>
