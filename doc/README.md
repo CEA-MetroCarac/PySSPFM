@@ -264,8 +264,8 @@ The input processed SSPFM datacube files can be in the form of spreadsheets (col
 </p>
 
 <p align="justify" width="100%">
-Or directly in the format of a Bruker SSPFM file with the extension:*
-* <code>.spm</code> (Bruker)
+Or directly in the format of a Bruker SSPFM file with the extension: <br>
+&#8226 <code>.spm</code> (Bruker)
 </p>
 
 <p align="justify" width="100%">
@@ -873,7 +873,6 @@ Following the completion of the fitting process, the <code>properties</code> met
 &#8226 The inflection points, by default located at 10% and 90% of the branch amplitudes, determine the nucleation voltages (<code>x_infl_l</code>, <code>x_infl_r</code>) and saturation voltages (<code>x_sat_l</code>, <code>x_sat_r</code>). <br>
 &#8226 The relative difference between the expansion coefficients of the right and left branches, denoted as <code>diff_coef</code>, quantifies the level of hysteresis asymmetry. <br>
 &#8226 The quadratic error between the experimental data and the model. <br>
-
 </p>
 
 <p align="justify" width="100%">
