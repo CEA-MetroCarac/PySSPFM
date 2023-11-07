@@ -919,7 +919,11 @@ Within the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/
 The function <code>btfly_analysis</code> enables the execution of the procedure. The first method used to isolate the influence of artifacts on the ferroelectric component involves analyzing the on field amplitude nanoloop. The method is simple, as the coercive voltages correspond to the points where the amplitude of the curve are the lower. The two points are then determined, and their average corresponds to a measurement of the CPD (Contact Potential Difference).
 </p>
 
-$$CPD = {\phi_{Probe} - \phi_{Sample} \over |e|}$$
+<p align="justify" width="100%">
+The study of the contact potential difference (CPD) is useful and can provide further information on the sample. We can find CPD value with the work function of the material [17]: <br>
+$CPD = {\phi_{Probe} - \phi_{Sample} \over |e|}$ <br>
+CPD is sensitive to the nature of the sample but also to the surface charge density of the sample [18].
+</p>
 
 <p align="justify" width="100%">
 However, this method has some drawbacks. It cannot determine the slope of the electrostatic component, and it is only valid when the affine component predominates over the hysteresis component. Moreover, imprint effect can interfere with the measurement accuracy, which is already limited since the signal-to-noise ratio is low at the points of interest [24]. Additionally, the measurement of amplitude vanishing points is rare in practice because of the influence of noise on measurements [25] [48]. (MAJ LIEN BIBLIO)
@@ -1688,4 +1692,6 @@ The entire assemblage of scripts under the <code><a href="https://github.com/CEA
 [14] : Balke, Nina, Stephen Jesse, Qian Li, Petro Maksymovych, M. Baris Okatan, Evgheni Strelcov, Alexander Tselev, et Sergei V. Kalinin. « Current and Surface Charge Modified Hysteresis Loops in Ferroelectric Thin Films ». Journal of Applied Physics 118, no 7 (21 août 2015): 072013. https://doi.org/10.1063/1.4927811.
 [15] : Kim, Bora, Daehee Seol, Shinbuhm Lee, Ho Nyung Lee, et Yunseok Kim. « Ferroelectric-like Hysteresis Loop Originated from Non-Ferroelectric Effects ». Applied Physics Letters 109, no 10 (5 septembre 2016): 102901. https://doi.org/10.1063/1.4962387.
 [16] : Gautier, Brice, et David Albertini. « Détection et contrôle de la ferroélectricité à l’échelle nanométrique ». Métrologie par imagerie et microscopie, juin 2022. https://doi.org/10.51257/a-v1-r6719
+[17] : Fernández Garrillo, Pablo A., Benjamin Grévin, Nicolas Chevalier, et Łukasz Borowik. « Calibrated Work Function Mapping by Kelvin Probe Force Microscopy ». Review of Scientific Instruments 89, no 4 (avril 2018): 043702. https://doi.org/10.1063/1.5007619.
+[18] : Goswami, Ankur, Kazi M. Alam, Pawan Kumar, Piyush Kar, Thomas Thundat, et Karthik Shankar. « Mapping the Surface Potential, Charge Density and Adhesion of Cellulose Nanocrystals Using Advanced Scanning Probe Microscopy ». Carbohydrate Polymers 246 (octobre 2020): 116393. https://doi.org/10.1016/j.carbpol.2020.116393.
 
