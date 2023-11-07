@@ -1090,7 +1090,7 @@ User parameters:
 </p>
 
 <p align="justify" width="100%">
-As input, SSPFM datacube measurement file is open, and its data is extracted (see Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1.c) - File Management / Input Files / Extraction</a></code> of the documentation) and plotted. The selection of the measurement mode is facilitated through the <code>'mode'</code> parameter, with options including: <br>
+As input, SSPFM datacube measurement file is open, and its data is extracted (see Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1.c) - Extraction</a></code> of the documentation) and plotted. The selection of the measurement mode is facilitated through the <code>'mode'</code> parameter, with options including: <br>
 &#8226 <code>'classic'</code> (Sweep Resonance) <br>
 &#8226 <code>'dfrt'</code>
 </p>
@@ -1637,7 +1637,7 @@ User parameters:
 ```
 
 <p align="justify" width="100%">
-As input, SSPFM datacube measurement folder is selected. A new directory is created (<code>'input_directory_name'_datacube_'extension'</code>), and the csv measurement sheet is copied from the input directory into it. Subsequently, each of the SPM datacube files (Bruker) is read, and its data is extracted (refer to Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1.c) - File Management / Input Files / Extraction</a></code> in the documentation). The choice of measurement mode is simplified through the <code>'mode'</code> parameter, which offers the following options: <br>
+As input, SSPFM datacube measurement folder is selected. A new directory is created (<code>'input_directory_name'_datacube_'extension'</code>), and the csv measurement sheet is copied from the input directory into it. Subsequently, each of the SPM datacube files (Bruker) is read, and its data is extracted (refer to Section <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1.c) - Extraction</a></code> in the documentation). The choice of measurement mode is simplified through the <code>'mode'</code> parameter, which offers the following options: <br>
 &#8226 <code>'classic'</code> (sweep resonance) <br>
 &#8226 <code>'dfrt'</code> <br>
 Following this, a corresponding new datacube file is generated, with an extension chosen by the user, and is complemented with the raw data from the input file. The available extensions are: <br>
