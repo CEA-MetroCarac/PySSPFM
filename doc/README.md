@@ -35,7 +35,8 @@
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2a---first-step-of-data-analysis">III.2.a) - First step of data analysis</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2b---second-step-of-data-analysis">III.2.b) - Second step of data analysis</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2c---toolbox">III.2.c) - Toolbox</a></li>
-                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2d---examples--tests">III.2.d) - Examples & Tests</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2d---examples--tests">III.2.d) - Examples & Tests</a></li>       
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2e---parameters">III.2.e) - Parameters</a></li>
                     </ul>
                 </li>
             </ul>
