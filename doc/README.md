@@ -74,7 +74,7 @@
         </li>
         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vii---sspfm-mapping">VII) - SSPFM mapping</a>
             <ul align="justify" width="100%">
-                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vii1---mask">VII.1) - Mask</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii1---mask">VII.1) - Mask</a></li>
                 <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vii2---interpolation-2d">VII.2) - Interpolation 2D</a></li>
                 <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vii3---figures">VII.3) - Figures</a></li>
             </ul>
