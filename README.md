@@ -9,7 +9,7 @@
 <strong>Py</strong>thon dedicated to perform data analysis on <strong>SSPFM</strong> 
 (Switching Spectroscopy Piezoresponse Force Microscopy) measurements
 with a GUI that aims to be as simple to use as possible and complete to 
-accommodate the user's measurement requirements and conditions. The source code was developed to be easily customizable in order to meet the user's specific needs. Measurements can be processed in both standard SSPFM and SSPFM-DFRT (Dual Amplitude Resonance Tracking) mode.
+accommodate the user's measurement requirements and conditions. The source code was developed to be easily customizable in order to meet the user's specific needs. Measurements can be processed in both standard SSPFM and SSPFM-DFRT (Dual Frequency Resonance Tracking) mode.
 </p>
 
 ## Important
@@ -50,13 +50,12 @@ If you encounter any bugs or issues, you can kindly bring them to the developer'
 
 ### 0) Measures
 <p align="justify" width="100%">
-PySSPFM facilitates the processing of a set of SSPFM measurement data points by simply populating a measurement form (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). The range of measurement files to be processed may have the extensions:
+PySSPFM facilitates the processing of a set of SSPFM measurement data points by simply populating a measurement form (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). The range of measurement files to be processed may have the extensions: <br>
+&#8226 <code>.spm</code> (Bruker)
+&#8226 <code>.txt</code> <br>
+&#8226 <code>.csv</code> <br>
+&#8226 <code>.xlsx</code> <br>
 </p>
-
-* `.spm` (Bruker)
-* `.txt`
-* `.csv`
-* `.xlsx`
 
 ### 1) First step of data analysis
 <p align="justify" width="100%">
