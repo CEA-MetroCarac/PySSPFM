@@ -59,12 +59,11 @@ PySSPFM facilitates the processing of a set of SSPFM measurement data points by 
 
 ### 1) First step of data analysis
 <p align="justify" width="100%">
-For each of the SSPFM measurement files, amplitude and phase are extracted for each segment using a user-selected method:
+For each of the SSPFM measurement files, amplitude and phase are extracted for each segment using a user-selected method: <br>
+&#8226 <code>max</code>: extract maximum or resonance peak (for frequency sweep mode) <br>
+&#8226 <code>fit</code>: perform a fit of the resonance peak based on `SHO` model (for frequency sweep mode) <br>
+&#8226 <code>dfrt</code>: mean of the segment (for dfrt mode) <br>
 </p>
-
-* `max`: extract maximum or resonance peak (for frequency sweep mode)
-* `fit`: perform a fit of the resonance peak based on `SHO` model (for frequency sweep mode)
-* `dfrt`: mean of the segment (for dfrt mode)
 
 ### 2) Second step of data analysis
 <p align="justify" width="100%">
