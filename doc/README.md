@@ -1314,7 +1314,7 @@ The operating principle of this reader differs slightly from that of the global 
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/map_reader_list.PNG> <br>
-    <em>Result of list_map_reader (figure generated with <code>main_list_map_reader</code> function of <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader.py</a></code> script)</em>
+    <em>Result of list_map_reader (figure generated with <code>main_list_map_reader</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader.py</a></code> script)</em>
 </p>
 
 ### VIII.2) Hysteresis clustering (K-Means)
