@@ -1130,7 +1130,7 @@ User parameters:
 </p>
 
 <p align="justify" width="100%">
-As input, SSPFM datacube measurement file is open, and its data is extracted (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1.c) - Extraction</a> of the documentation) and plotted. The selection of the measurement mode is facilitated through the <code>'mode'</code> parameter, with options including: <br>
+As input, SSPFM datacube measurement file is open, and its data is extracted (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1c---extraction">III.1.c) - Extraction</a> of the documentation) and plotted. The selection of the measurement mode is facilitated through the <code>'mode'</code> parameter, with options including: <br>
 &#8226 <code>'classic'</code> (Sweep Resonance) <br>
 &#8226 <code>'dfrt'</code>
 </p>
