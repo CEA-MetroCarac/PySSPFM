@@ -15,7 +15,8 @@ from PySSPFM.utils.raw_extraction import csv_meas_sheet_extract
 from PySSPFM.utils.nanoloop.plot import plot_sspfm_loops
 from PySSPFM.utils.nanoloop.file import extract_nanoloop_data
 from PySSPFM.utils.nanoloop.analysis import nanoloop_treatment
-from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.path_for_runable import \
+    save_path_management, save_user_pars, load_parameters_from_file
 
 
 def main_loop_file_reader(file_path, csv_path=None, dict_pha=None,
@@ -75,7 +76,7 @@ def main_loop_file_reader(file_path, csv_path=None, dict_pha=None,
         return loop_tab
 
 
-def parameters():
+def parameters(file_name_user_params=None):
     """
     To complete by user of the script: return parameters for analysis
 
@@ -165,32 +166,55 @@ def parameters():
         Activation key for saving results of analysis.
         This parameter serves as an activation key for saving results
         generated during the analysis process.
+
+    Parameters
+    ----------
+    file_name_user_params: str, optional
+        Name of user parameters file (json or toml extension), optional
+        (default is None, user parameters are used from original python script)
     """
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    file_path_user_params = os.path.join(
+        script_directory, file_name_user_params) \
+        if file_name_user_params else "no file"
+    if os.path.exists(file_path_user_params):
+        # Load parameters from the specified configuration file
+        print(f"user parameters from {file_name_user_params} file")
+        config_params = load_parameters_from_file(file_path_user_params)
+        file_path_in = config_params['file_path_in']
+        dir_path_out = config_params['dir_path_out']
+        csv_file_path = config_params['csv_file_path']
+        verbose = config_params['verbose']
+        show_plots = config_params['show_plots']
+        save = config_params['save']
+        user_pars = config_params['user_pars']
+    else:
+        print("user parameters from python file")
+        # Get file path
+        file_path_in = tkf.askopenfilename()
+        # file_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\nanoloops\
+        # off_f_KNN500n.0_00001.txt
+        dir_path_out = None
+        # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
+        # loop_file_reader_2023-10-02-16h38m
+        csv_file_path = None
+        # csv_file_path =
+        # r'...\KNN500n\measurement sheet model SSPFM ZI DFRT.csv'
+        verbose = True
+        show_plots = True
+        save = False
 
-    # Get file path
-    file_path_in = tkf.askopenfilename()
-    # file_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\nanoloops\
-    # off_f_KNN500n.0_00001.txt
-    dir_path_out = None
-    # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
-    # loop_file_reader_2023-10-02-16h38m
-    csv_file_path = None
-    # csv_file_path = r'...\KNN500n\measurement sheet model SSPFM ZI DFRT.csv'
-    verbose = True
-    show_plots = True
-    save = False
-
-    user_pars = {
-        'del 1st loop': True,
-        'corr': 'offset',
-        'pha fwd': 0,
-        'pha rev': 180,
-        'func': np.cos,
-        'main elec': True,
-        'grounded tip': True,
-        'positive d33': True,
-        'locked elec slope': None,
-    }
+        user_pars = {
+            'del 1st loop': True,
+            'corr': 'offset',
+            'pha fwd': 0,
+            'pha rev': 180,
+            'func': np.cos,
+            'main elec': True,
+            'grounded tip': True,
+            'positive d33': True,
+            'locked elec slope': None,
+        }
 
     return user_pars, file_path_in, dir_path_out, csv_file_path, verbose, \
         show_plots, save

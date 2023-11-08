@@ -18,7 +18,8 @@ from PySSPFM.utils.map.main import gen_mask_ref
 from PySSPFM.utils.map.matrix_processing import formatting_measure
 from PySSPFM.toolbox.map_correlation import \
     gen_correlation_array, plot_correlation_table
-from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.path_for_runable import \
+    save_path_management, save_user_pars, load_parameters_from_file
 
 from PySSPFM.settings import FIGSIZE
 
@@ -263,7 +264,7 @@ def formatting_fig(fig, fig_dim, mask, nb_map=None, dict_map=None,
     return axs
 
 
-def parameters():
+def parameters(file_name_user_params=None):
     """
     To complete by user of the script: return parameters for analysis
 
@@ -331,32 +332,54 @@ def parameters():
         Activation key for saving results of analysis.
         This parameter serves as an activation key for saving results
         generated during the analysis process.
+
+    Parameters
+    ----------
+    file_name_user_params: str, optional
+        Name of user parameters file (json or toml extension), optional
+        (default is None, user parameters are used from original python script)
     """
-    dir_path_in = tkf.askdirectory()
-    # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
-    dir_path_out = None
-    # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
-    # list_map_reader_2023-10-02-16h38m
-    verbose = True
-    show_plots = True
-    save = False
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    file_path_user_params = os.path.join(
+        script_directory, file_name_user_params) \
+        if file_name_user_params else "no file"
+    if os.path.exists(file_path_user_params):
+        # Load parameters from the specified configuration file
+        print(f"user parameters from {file_name_user_params} file")
+        config_params = load_parameters_from_file(file_path_user_params)
+        dir_path_in = config_params['dir_path_in']
+        dir_path_out = config_params['dir_path_out']
+        verbose = config_params['verbose']
+        show_plots = config_params['show_plots']
+        save = config_params['save']
+        user_pars = config_params['user_pars']
+    else:
+        print("user parameters from python file")
+        dir_path_in = tkf.askdirectory()
+        # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
+        dir_path_out = None
+        # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
+        # list_map_reader_2023-10-02-16h38m
+        verbose = True
+        show_plots = True
+        save = False
 
-    ind_maps = [['off', 'charac tot fit: area'],
-                ['off', 'fit pars: ampli_0'],
-                ['on', 'charac tot fit: area'],
-                ['on', 'fit pars: ampli_0']]
+        ind_maps = [['off', 'charac tot fit: area'],
+                    ['off', 'fit pars: ampli_0'],
+                    ['on', 'charac tot fit: area'],
+                    ['on', 'fit pars: ampli_0']]
 
-    user_pars = {'ind maps': ind_maps,
-                 'interp fact': 3,
-                 'interp func': 'linear',
-                 'revert mask': False,
-                 'man mask': [],
-                 'ref': {'mode': 'off',
-                         'prop': 'charac tot fit: R_2 hyst',
-                         'fmt': '.5f',
-                         'min val': 0.95,
-                         'max val': None,
-                         'interactive': False}}
+        user_pars = {'ind maps': ind_maps,
+                     'interp fact': 3,
+                     'interp func': 'linear',
+                     'revert mask': False,
+                     'man mask': [],
+                     'ref': {'mode': 'off',
+                             'prop': 'charac tot fit: R_2 hyst',
+                             'fmt': '.5f',
+                             'min val': 0.95,
+                             'max val': None,
+                             'interactive': False}}
 
     return user_pars, dir_path_in, dir_path_out, verbose, show_plots, save
 

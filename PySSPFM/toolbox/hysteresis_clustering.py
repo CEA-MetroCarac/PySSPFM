@@ -21,7 +21,8 @@ from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.nanoloop_to_hyst.file import extract_properties
 from PySSPFM.utils.map.main import main_mapping
-from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.path_for_runable import \
+    save_path_management, save_user_pars, load_parameters_from_file
 
 from PySSPFM.settings import FIGSIZE, COLOR_HYSTERESIS_CLUSTERING
 
@@ -410,7 +411,7 @@ def main_hysteresis_clustering(
     return cluster_labels, cluster_info, inertia, avg_hysteresis
 
 
-def parameters():
+def parameters(file_name_user_params=None):
     """
     To complete by user of the script: return parameters for analysis
 
@@ -459,22 +460,45 @@ def parameters():
         Activation key for saving results of analysis.
         This parameter serves as an activation key for saving results
         generated during the analysis process.
-    """
-    # Select txt best loops folder (.txt)
-    dir_path_in = tkf.askdirectory()
-    # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\best_nanoloops
-    dir_path_out = None
-    # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
-    # hysteresis_clustering_2023-10-02-16h38m
-    dir_path_in_props = None
-    # dir_path_in_props = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
-    verbose = True
-    show_plots = True
-    save = False
 
-    user_pars = {'nb clusters off': 4,
-                 'nb clusters on': 4,
-                 'nb clusters coupled': 4}
+    Parameters
+    ----------
+    file_name_user_params: str, optional
+        Name of user parameters file (json or toml extension), optional
+        (default is None, user parameters are used from original python script)
+    """
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    file_path_user_params = os.path.join(
+        script_directory, file_name_user_params) \
+        if file_name_user_params else "no file"
+    if os.path.exists(file_path_user_params):
+        # Load parameters from the specified configuration file
+        print(f"user parameters from {file_name_user_params} file")
+        config_params = load_parameters_from_file(file_path_user_params)
+        dir_path_in = config_params['dir_path_in']
+        dir_path_out = config_params['dir_path_out']
+        dir_path_in_props = config_params['dir_path_in_props']
+        verbose = config_params['verbose']
+        show_plots = config_params['show_plots']
+        save = config_params['save']
+        user_pars = config_params['user_pars']
+    else:
+        print("user parameters from python file")
+        # Select txt best loops folder (.txt)
+        dir_path_in = tkf.askdirectory()
+        # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\best_nanoloops
+        dir_path_out = None
+        # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
+        # hysteresis_clustering_2023-10-02-16h38m
+        dir_path_in_props = None
+        # dir_path_in_props = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
+        verbose = True
+        show_plots = True
+        save = False
+
+        user_pars = {'nb clusters off': 4,
+                     'nb clusters on': 4,
+                     'nb clusters coupled': 4}
 
     return user_pars, dir_path_in, dir_path_out, dir_path_in_props, verbose, \
         show_plots, save

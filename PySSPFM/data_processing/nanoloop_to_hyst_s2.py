@@ -11,6 +11,7 @@ from datetime import datetime
 import numpy as np
 
 from PySSPFM.settings import get_setting
+from PySSPFM.utils.path_for_runable import load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.nanoloop.file import extract_nanoloop_data
 from PySSPFM.utils.nanoloop.plot import plot_ckpfm
@@ -457,7 +458,7 @@ def main_script(user_pars, dir_path_in, verbose=False, show_plots=False,
         print('############################################\n')
 
 
-def parameters():
+def parameters(file_name_user_params=None):
     """
     To complete by user of the script: return parameters for analysis
 
@@ -588,32 +589,53 @@ def parameters():
         Activation key for saving results of the analysis.
         This parameter serves as an activation key for saving results
         generated after the analysis process.
-    """
 
-    dir_path_in = tkf.askdirectory()
-    # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_max\nanoloops
-    root_out = None
-    # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_max
-    verbose = True
-    show_plots = True
-    save = True
-    # interactive, auto, set
-    user_pars = {'func': 'sigmoid',
-                 'method': 'least_square',
-                 'asymmetric': False,
-                 'inf thresh': 10,
-                 'sat thresh': 90,
-                 'del 1st loop': True,
-                 'pha corr': 'offset',
-                 'pha fwd': 0,
-                 'pha rev': 180,
-                 'pha func': np.cos,
-                 'main elec': True,
-                 'locked elec slope': None,
-                 'diff mode': 'set',
-                 'diff domain': {'min': -5., 'max': 5.},
-                 'sat mode': 'set',
-                 'sat domain': {'min': -9., 'max': 9.}}
+    Parameters
+    ----------
+    file_name_user_params: str, optional
+        Name of user parameters file (json or toml extension), optional
+        (default is None, user parameters are used from original python script)
+    """
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    file_path_user_params = os.path.join(
+        script_directory, file_name_user_params) \
+        if file_name_user_params else "no file"
+    if os.path.exists(file_path_user_params):
+        # Load parameters from the specified configuration file
+        print(f"user parameters from {file_name_user_params} file")
+        config_params = load_parameters_from_file(file_path_user_params)
+        dir_path_in = config_params['dir_path_in']
+        root_out = config_params['root_out']
+        verbose = config_params['verbose']
+        show_plots = config_params['show_plots']
+        save = config_params['save']
+        user_pars = config_params['user_pars']
+    else:
+        print("user parameters from python file")
+        dir_path_in = tkf.askdirectory()
+        # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_max\nanoloops
+        root_out = None
+        # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_max
+        verbose = True
+        show_plots = True
+        save = True
+        # interactive, auto, set
+        user_pars = {'func': 'sigmoid',
+                     'method': 'least_square',
+                     'asymmetric': False,
+                     'inf thresh': 10,
+                     'sat thresh': 90,
+                     'del 1st loop': True,
+                     'pha corr': 'offset',
+                     'pha fwd': 0,
+                     'pha rev': 180,
+                     'pha func': np.cos,
+                     'main elec': True,
+                     'locked elec slope': None,
+                     'diff mode': 'set',
+                     'diff domain': {'min': -5., 'max': 5.},
+                     'sat mode': 'set',
+                     'sat domain': {'min': -9., 'max': 9.}}
     return user_pars, dir_path_in, root_out, verbose, show_plots, save
 
 

@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 
 from PySSPFM.settings import get_setting
+from PySSPFM.utils.path_for_runable import load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.raw_extraction import data_extraction
 from PySSPFM.utils.signal_bias import sspfm_time, sspfm_generator, write_vec
@@ -450,7 +451,7 @@ def main_script(user_pars, file_path_in, verbose=False, show_plots=False,
         print('############################################\n')
 
 
-def parameters():
+def parameters(file_name_user_params=None):
     """
     To complete by user of the script: return parameters for analysis
 
@@ -521,26 +522,49 @@ def parameters():
         Activation key for saving results of the analysis.
         This parameter serves as an activation key for saving results
         generated after the analysis process.
+
+    Parameters
+    ----------
+    file_name_user_params: str, optional
+        Name of user parameters file (json or toml extension), optional
+        (default is None, user parameters are used from original python script)
     """
-    # Get file path for single script
-    file_path_in = tkf.askopenfilename()
-    # file_path_in = r'...\KNN500n\KNN500n.0_00001.spm
-    root_out = None
-    # root_out = r'...\KNN500n_15h18m02-10-2023_out_max
-    verbose = True
-    show_plots = True
-    save = True
-    seg_params = {'mode': 'max',
-                  'cut seg [%]': {'start': 5, 'end': 5},
-                  'filter': False,
-                  'filter ord': 10}
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    file_path_user_params = os.path.join(
+        script_directory, file_name_user_params) \
+        if file_name_user_params else "no file"
+    if os.path.exists(file_path_user_params):
+        # Load parameters from the specified configuration file
+        print(f"user parameters from {file_name_user_params} file")
+        config_params = load_parameters_from_file(file_path_user_params)
+        file_path_in = config_params['file_path_in']
+        root_out = config_params['root_out']
+        verbose = config_params['verbose']
+        show_plots = config_params['show_plots']
+        save = config_params['save']
+        user_pars = {'seg pars': config_params['seg_params'],
+                     'fit pars': config_params['fit_params']}
+    else:
+        print("user parameters from python file")
+        # Get file path for single script
+        file_path_in = tkf.askopenfilename()
+        # file_path_in = r'...\KNN500n\KNN500n.0_00001.spm
+        root_out = None
+        # root_out = r'...\KNN500n_15h18m02-10-2023_out_max
+        verbose = True
+        show_plots = True
+        save = True
+        seg_params = {'mode': 'max',
+                      'cut seg [%]': {'start': 5, 'end': 5},
+                      'filter': False,
+                      'filter ord': 10}
 
-    fit_params = {'fit pha': False,
-                  'detect peak': False,
-                  'sens peak detect': 1.5}
+        fit_params = {'fit pha': False,
+                      'detect peak': False,
+                      'sens peak detect': 1.5}
 
-    user_pars = {'seg pars': seg_params,
-                 'fit pars': fit_params}
+        user_pars = {'seg pars': seg_params,
+                     'fit pars': fit_params}
 
     return user_pars, file_path_in, root_out, verbose, show_plots, save
 

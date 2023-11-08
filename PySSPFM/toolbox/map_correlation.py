@@ -3,6 +3,7 @@
 Cross correlation coefficient analysis for sspfm maps
 """
 
+import os
 import tkinter.filedialog as tkf
 from datetime import datetime
 import numpy as np
@@ -11,7 +12,8 @@ import matplotlib.pyplot as plt
 from PySSPFM.utils.core.figure import print_plots, plot_map
 from PySSPFM.utils.nanoloop_to_hyst.file import extract_properties
 from PySSPFM.utils.map.interpolate import remove_val
-from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.path_for_runable import \
+    save_path_management, save_user_pars, load_parameters_from_file
 
 from PySSPFM.settings import FIGSIZE
 
@@ -200,7 +202,7 @@ def main_map_correlation(user_pars, dir_path_in):
     return coef_arr, figures
 
 
-def parameters():
+def parameters(file_name_user_params=None):
     """
     To complete by user of the script: return parameters for analysis
 
@@ -243,23 +245,44 @@ def parameters():
         Activation key for saving results of analysis.
         This parameter serves as an activation key for saving results
         generated during the analysis process.
+
+    Parameters
+    ----------
+    file_name_user_params: str, optional
+        Name of user parameters file (json or toml extension), optional
+        (default is None, user parameters are used from original python script)
     """
-    dir_path_in = tkf.askdirectory()
-    # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
-    dir_path_out = None
-    # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
-    # map_correlation_2023-10-02-16h38m
-    show_plots = True
-    save = False
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    file_path_user_params = os.path.join(
+        script_directory, file_name_user_params) \
+        if file_name_user_params else "no file"
+    if os.path.exists(file_path_user_params):
+        # Load parameters from the specified configuration file
+        print(f"user parameters from {file_name_user_params} file")
+        config_params = load_parameters_from_file(file_path_user_params)
+        dir_path_in = config_params['dir_path_in']
+        dir_path_out = config_params['dir_path_out']
+        show_plots = config_params['show_plots']
+        save = config_params['save']
+        user_pars = config_params['user_pars']
+    else:
+        print("user parameters from python file")
+        dir_path_in = tkf.askdirectory()
+        # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
+        dir_path_out = None
+        # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
+        # map_correlation_2023-10-02-16h38m
+        show_plots = True
+        save = False
 
-    ind_maps = [['off', 'charac tot fit: area'],
-                ['off', 'fit pars: ampli_0'],
-                ['on', 'charac tot fit: area'],
-                ['on', 'fit pars: ampli_0']]
+        ind_maps = [['off', 'charac tot fit: area'],
+                    ['off', 'fit pars: ampli_0'],
+                    ['on', 'charac tot fit: area'],
+                    ['on', 'fit pars: ampli_0']]
 
-    user_pars = {'ind maps': ind_maps,
-                 'mask': None,
-                 'revert mask': False}
+        user_pars = {'ind maps': ind_maps,
+                     'mask': None,
+                     'revert mask': False}
 
     return user_pars, dir_path_in, dir_path_out, show_plots, save
 

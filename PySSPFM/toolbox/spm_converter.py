@@ -14,6 +14,7 @@ import numpy as np
 
 from PySSPFM.settings import get_setting
 from PySSPFM.utils.raw_extraction import data_extraction
+from PySSPFM.utils.path_for_runable import load_parameters_from_file
 
 
 def single_script(dir_path_out, file_path_in, extension='txt', mode='classic',
@@ -201,18 +202,40 @@ def main_spm_converter(dir_path_in, mode='classic', extension='txt',
         print('############################################\n')
 
 
-def main():
-    """ Main function for data analysis. """
-    # Get directory path
-    dir_path_in = tkf.askdirectory()
-    # dir_path_in = r'...\KNN500n
-    dir_path_out = None
-    # dir_path_out = r'...\KNN500n_datacube_txt
-    verbose = True
-    # mode = 'dfrt' or 'classic'
-    mode = 'classic'
-    # extension = 'txt' or 'csv' or 'xlsx'
-    extension = 'txt'
+def main(file_name_user_params=None):
+    """
+    Main function for data analysis
+
+    Parameters
+    ----------
+    file_name_user_params: str, optional
+        Name of user parameters file (json or toml extension), optional
+        (default is None, user parameters are used from original python script)
+    """
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    file_path_user_params = os.path.join(
+        script_directory, file_name_user_params) \
+        if file_name_user_params else "no file"
+    if os.path.exists(file_path_user_params):
+        # Load parameters from the specified configuration file
+        print(f"user parameters from {file_name_user_params} file")
+        config_params = load_parameters_from_file(file_path_user_params)
+        dir_path_in = config_params['dir_path_in']
+        dir_path_out = config_params['dir_path_out']
+        verbose = config_params['verbose']
+        mode = config_params['mode']
+        extension = config_params['extension']
+    else:
+        # Get directory path
+        dir_path_in = tkf.askdirectory()
+        # dir_path_in = r'...\KNN500n
+        dir_path_out = None
+        # dir_path_out = r'...\KNN500n_datacube_txt
+        verbose = True
+        # mode = 'dfrt' or 'classic'
+        mode = 'classic'
+        # extension = 'txt' or 'csv' or 'xlsx'
+        extension = 'txt'
 
     # Main function
     main_spm_converter(dir_path_in, mode=mode, extension=extension,

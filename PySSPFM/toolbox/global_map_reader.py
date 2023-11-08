@@ -12,7 +12,8 @@ from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.map.main import main_mapping
 from PySSPFM.utils.nanoloop_to_hyst.file import extract_properties
 from PySSPFM.toolbox.map_correlation import correlation_analysis_all_maps
-from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.path_for_runable import \
+    save_path_management, save_user_pars, load_parameters_from_file
 
 
 def main_global_map_reader(
@@ -114,7 +115,7 @@ def main_global_map_reader(
     return mask, coef_corr_arr
 
 
-def parameters():
+def parameters(file_name_user_params=None):
     """
     To complete by user of the script: return parameters for analysis
 
@@ -173,38 +174,60 @@ def parameters():
         Activation key for saving results of analysis.
         This parameter serves as an activation key for saving results
         generated during the analysis process.
+
+    Parameters
+    ----------
+    file_name_user_params: str, optional
+        Name of user parameters file (json or toml extension), optional
+        (default is None, user parameters are used from original python script)
     """
-    dir_path_in = tkf.askdirectory()
-    # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
-    dir_path_out = None
-    # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
-    # global_map_reader_2023-10-02-16h38m
-    verbose = True
-    show_plots = True
-    save = False
-    user_pars = {'interp fact': 4,
-                 'interp func': 'linear',
-                 'revert mask': {'on': False,
-                                 'off': False,
-                                 'coupled': False},
-                 'man mask': {'on': [],
-                              'off': [],
-                              'coupled': []},
-                 'ref': {'on': {'prop': 'charac tot fit: area',
-                                'fmt': '.5f',
-                                'min val': None,
-                                'max val': 0.005,
-                                'interactive': False},
-                         'off': {'prop': 'charac tot fit: area',
-                                 'fmt': '.5f',
-                                 'min val': None,
-                                 'max val': 0.005,
-                                 'interactive': False},
-                         'coupled': {'prop': 'r_2',
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    file_path_user_params = os.path.join(
+        script_directory, file_name_user_params) \
+        if file_name_user_params else "no file"
+    if os.path.exists(file_path_user_params):
+        # Load parameters from the specified configuration file
+        print(f"user parameters from {file_name_user_params} file")
+        config_params = load_parameters_from_file(file_path_user_params)
+        dir_path_in = config_params['dir_path_in']
+        dir_path_out = config_params['dir_path_out']
+        verbose = config_params['verbose']
+        show_plots = config_params['show_plots']
+        save = config_params['save']
+        user_pars = config_params['user_pars']
+    else:
+        print("user parameters from python file")
+        dir_path_in = tkf.askdirectory()
+        # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
+        dir_path_out = None
+        # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
+        # global_map_reader_2023-10-02-16h38m
+        verbose = True
+        show_plots = True
+        save = False
+        user_pars = {'interp fact': 4,
+                     'interp func': 'linear',
+                     'revert mask': {'on': False,
+                                     'off': False,
+                                     'coupled': False},
+                     'man mask': {'on': [],
+                                  'off': [],
+                                  'coupled': []},
+                     'ref': {'on': {'prop': 'charac tot fit: area',
+                                    'fmt': '.5f',
+                                    'min val': None,
+                                    'max val': 0.005,
+                                    'interactive': False},
+                             'off': {'prop': 'charac tot fit: area',
                                      'fmt': '.5f',
-                                     'min val': 0.95,
-                                     'max val': None,
-                                     'interactive': False}}}
+                                     'min val': None,
+                                     'max val': 0.005,
+                                     'interactive': False},
+                             'coupled': {'prop': 'r_2',
+                                         'fmt': '.5f',
+                                         'min val': 0.95,
+                                         'max val': None,
+                                         'interactive': False}}}
     return user_pars, dir_path_in, dir_path_out, verbose, show_plots, save
 
 

@@ -27,7 +27,8 @@ from PySSPFM.utils.nanoloop_to_hyst.electrostatic import \
     gen_differential_loop, linreg_differential
 from PySSPFM.utils.nanoloop_to_hyst.analysis import \
     find_best_nanoloop, hyst_analysis, electrostatic_analysis
-from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.path_for_runable import \
+    save_path_management, save_user_pars, load_parameters_from_file
 
 
 def single_script(file, user_pars, meas_pars, sign_pars,
@@ -413,7 +414,7 @@ def main_mean_hyst(user_pars, verbose=False, make_plots=False):
         return mean_diff_piezorep, fit_res
 
 
-def parameters():
+def parameters(file_name_user_params=None):
     """
     To complete by user of the script: return parameters for analysis
 
@@ -592,9 +593,63 @@ def parameters():
         Activation key for saving results of analysis.
         This parameter serves as an activation key for saving results
         generated during the analysis process.
+
+    Parameters
+    ----------
+    file_name_user_params: str, optional
+        Name of user parameters file (json or toml extension), optional
+        (default is None, user parameters are used from original python script)
     """
-    dir_path_in = tkf.askdirectory()
-    # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    file_path_user_params = os.path.join(
+        script_directory, file_name_user_params) \
+        if file_name_user_params else "no file"
+    if os.path.exists(file_path_user_params):
+        # Load parameters from the specified configuration file
+        print(f"user parameters from {file_name_user_params} file")
+        config_params = load_parameters_from_file(file_path_user_params)
+        dir_path_in = config_params['dir_path_in']
+        dir_path_out = config_params['dir_path_out']
+        verbose = config_params['verbose']
+        show_plots = config_params['show_plots']
+        save = config_params['save']
+        user_pars = config_params['user_pars']
+    else:
+        print("user parameters from python file")
+        dir_path_in = tkf.askdirectory()
+        # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt
+        dir_path_out = None
+        # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
+        # mean_loop_2023-10-02-16h38m
+        verbose = True
+        show_plots = True
+        save = False
+        user_pars = {'mode': 'off',
+                     'mask': {'revert mask': False,
+                              'man mask': None,
+                              'ref': {'prop': 'charac tot fit: area',
+                                      'mode': 'off',
+                                      'min val': 0.005,
+                                      'max val': None,
+                                      'fmt': '.2f',
+                                      'interactive': False}},
+                     'func': 'sigmoid',
+                     'method': 'least_square',
+                     'asymmetric': False,
+                     'inf thresh': 10,
+                     'sat thresh': 90,
+                     'del 1st loop': True,
+                     'pha corr': 'offset',
+                     'pha fwd': 0,
+                     'pha rev': 180,
+                     'pha func': np.cos,
+                     'main elec': True,
+                     'locked elec slope': None,
+                     'diff domain': {'min': -5., 'max': 5.},
+                     'sat mode': 'set',
+                     'sat domain': {'min': -9., 'max': 9.},
+                     'interp fact': 4,
+                     'interp func': 'linear'}
     properties_folder_name = get_setting('properties folder name')
     dir_path_in_prop = os.path.join(dir_path_in, properties_folder_name)
     # dir_path_in_prop = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
@@ -605,42 +660,9 @@ def parameters():
     file_path_in_pars = os.path.join(dir_path_in, parameters_file_name)
     # file_path_in_pars = r'...\KNN500n_15h18m02-10-2023_out_dfrt\results\
     # saving_parameters.txt
-    dir_path_out = None
-    # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
-    # mean_loop_2023-10-02-16h38m
-    verbose = True
-    show_plots = True
-    save = False
-
-    user_pars = {'dir path in prop': dir_path_in_prop,
-                 'dir path in loop': dir_path_in_loop,
-                 'file path in pars': file_path_in_pars,
-                 'mode': 'off',
-                 'mask': {'revert mask': False,
-                          'man mask': None,
-                          'ref': {'prop': 'charac tot fit: area',
-                                  'mode': 'off',
-                                  'min val': 0.005,
-                                  'max val': None,
-                                  'fmt': '.2f',
-                                  'interactive': False}},
-                 'func': 'sigmoid',
-                 'method': 'least_square',
-                 'asymmetric': False,
-                 'inf thresh': 10,
-                 'sat thresh': 90,
-                 'del 1st loop': True,
-                 'pha corr': 'offset',
-                 'pha fwd': 0,
-                 'pha rev': 180,
-                 'pha func': np.cos,
-                 'main elec': True,
-                 'locked elec slope': None,
-                 'diff domain': {'min': -5., 'max': 5.},
-                 'sat mode': 'set',
-                 'sat domain': {'min': -9., 'max': 9.},
-                 'interp fact': 4,
-                 'interp func': 'linear'}
+    user_pars['dir path in prop'] = dir_path_in_prop
+    user_pars['dir path in loop'] = dir_path_in_loop
+    user_pars['file path in pars'] = file_path_in_pars
 
     return user_pars, dir_path_in, dir_path_out, verbose, show_plots, save
 

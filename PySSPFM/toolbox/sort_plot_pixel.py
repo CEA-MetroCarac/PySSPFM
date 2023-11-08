@@ -28,7 +28,8 @@ from PySSPFM.utils.nanoloop_to_hyst.analysis import \
 from PySSPFM.toolbox.mean_hyst import main_mean_hyst
 from PySSPFM.toolbox.mean_hyst import single_script
 from PySSPFM.toolbox.loop_file_reader import main_loop_file_reader
-from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.path_for_runable import \
+    save_path_management, save_user_pars, load_parameters_from_file
 
 from PySSPFM.settings import FIGSIZE
 DEFAULT_LIMIT = {'min': -8., 'max': 8.}
@@ -531,7 +532,7 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
     return files
 
 
-def parameters():
+def parameters(file_name_user_params=None):
     """
     To complete by user of the script: return parameters for analysis
 
@@ -610,9 +611,44 @@ def parameters():
         Activation key for saving results of analysis.
         This parameter serves as an activation key for saving results
         generated during the analysis process.
+
+    Parameters
+    ----------
+    file_name_user_params: str, optional
+        Name of user parameters file (json or toml extension), optional
+        (default is None, user parameters are used from original python script)
     """
-    dir_path_in = tkf.askdirectory()
-    # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    file_path_user_params = os.path.join(
+        script_directory, file_name_user_params) \
+        if file_name_user_params else "no file"
+    if os.path.exists(file_path_user_params):
+        # Load parameters from the specified configuration file
+        print(f"user parameters from {file_name_user_params} file")
+        config_params = load_parameters_from_file(file_path_user_params)
+        dir_path_in = config_params['dir_path_in']
+        dir_path_out = config_params['dir_path_out']
+        verbose = config_params['verbose']
+        show_plots = config_params['show_plots']
+        save = config_params['save']
+        user_pars = config_params['user_pars']
+    else:
+        print("user parameters from python file")
+        dir_path_in = tkf.askdirectory()
+        # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt
+        dir_path_out = None
+        # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
+        # plot_pix_extrem_2023-10-02-16h38m
+        verbose = True
+        show_plots = True
+        save = False
+        user_pars = {'prop key': {'mode': 'off',
+                                  'prop': 'charac tot fit: area'},
+                     'list pixels': [],
+                     'reverse': False,
+                     'del 1st loop': True,
+                     'interp fact': 4,
+                     'interp func': 'linear'}
     properties_folder_name = get_setting('properties folder name')
     dir_path_in_prop = os.path.join(dir_path_in, properties_folder_name)
     # dir_path_in_prop = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
@@ -622,22 +658,9 @@ def parameters():
     parameters_file_name = get_setting('parameters file name')
     file_path_in_pars = os.path.join(dir_path_in, parameters_file_name)
     # file_path_in_pars = r'...\KNN500n_15h18m02-10-2023_out_dfrt\parameters.txt
-    dir_path_out = None
-    # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
-    # plot_pix_extrem_2023-10-02-16h38m
-    verbose = True
-    show_plots = True
-    save = False
-    user_pars = {'dir path in prop': dir_path_in_prop,
-                 'dir path in loop': dir_path_in_loop,
-                 'file path in pars': file_path_in_pars,
-                 'prop key': {'mode': 'off',
-                              'prop': 'charac tot fit: area'},
-                 'list pixels': [],
-                 'reverse': False,
-                 'del 1st loop': True,
-                 'interp fact': 4,
-                 'interp func': 'linear'}
+    user_pars['dir path in prop'] = dir_path_in_prop
+    user_pars['dir path in loop'] = dir_path_in_loop
+    user_pars['file path in pars'] = file_path_in_pars
 
     return user_pars, dir_path_in, dir_path_out, verbose, show_plots, save
 
