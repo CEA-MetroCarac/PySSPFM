@@ -1,15 +1,12 @@
 # PySSPFM
 
 <p align="center" width="100%">
-    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/logoPySSPFM_white.PNG> <br>
+    <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/pysspfm_white_logo.PNG> <br>
 </p>
 
 <p align="justify" width="100%"> 
-<strong>PySSFPM</strong> is a specific tool devloped in 
-<strong>Py</strong>thon dedicated to perform data analysis on <strong>SSPFM</strong> 
-(Switching Spectroscopy Piezoresponse Force Microscopy) measurements
-with a GUI that aims to be as simple to use as possible and complete to 
-accommodate the user's measurement requirements and conditions. The source code was developed to be easily customizable in order to meet the user's specific needs. Measurements can be processed in both standard SSPFM and SSPFM-DFRT mode.
+<strong>PySSFPM</strong> is a specific tool developed in 
+<strong>Py</strong>thon dedicated to perform data analysis on <strong>SSPFM</strong> (Switching Spectroscopy Piezoresponse Force Microscopy) measurements with a GUI that aims to be as simple to use as possible and complete to accommodate the user's measurement requirements and conditions. The source code was developed to be easily customizable in order to meet the user's specific needs. Measurements can be processed in both standard SSPFM and SSPFM-DFRT (Dual Frequency Resonance Tracking) mode.
 </p>
 
 ## Important
@@ -31,41 +28,36 @@ This library is provided in its current state and remains under active developme
 </p>
 
 <p align="justify" width="100%">
-However, while it has shown reliable performance with the data used by the 
-library's developer, it's crucial to emphasize that there are no assurances 
-that this library will seamlessly process your unique data.
-Moreover,  it should be noted that in order to extract data from a Bruker 
-SPM file, DLL files must be installed alongside the Nanoscope Analysis 
-software (Bruker).
+However, while it has shown reliable performance with the data used by the library's developer, it's crucial to emphasize that there are no assurances that this library will seamlessly process your unique data. Moreover,  it should be noted that in order to extract data from a Bruker SPM file, DLL (Dynamic Link Library) files must be installed alongside the Nanoscope Analysis software (Bruker).
 </p>
 
-If you encounter any bugs or issues, you can kindly bring them to the developer's attention by visiting: [PySSPFM issues](https://github.com/CEA-MetroCarac/PySSPFM/issues)
+<p align="justify" width="100%">
+If you encounter any bugs or issues, you can kindly bring them to the developer's attention by visiting: <a href="https://github.com/CEA-MetroCarac/PySSPFM/issues">PySSPFM issues</a>.
+</p>
 
 ## Overview
 
 <p align="center" width="100%">
-    <img align="center" width=80%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20worflow.PNG> <br>
+    <img align="center" width=80%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/scheme_workflow_pysspfm.PNG> <br>
     <em>PySSPFM workflow</em>
 </p>
 
 ### 0) Measures
 <p align="justify" width="100%">
-PySSPFM facilitates the processing of a set of SSPFM measurement data points by simply populating a measurement form (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). The range of measurement files to be processed may have the extensions:
+PySSPFM facilitates the processing of a set of SSPFM measurement data points by simply populating a measurement form (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). The range of measurement files to be processed may have the extensions: <br>
+&#8226 <code>.spm</code> (Bruker) <br>
+&#8226 <code>.txt</code> <br>
+&#8226 <code>.csv</code> <br>
+&#8226 <code>.xlsx</code> <br>
 </p>
-
-* `.spm` (Bruker)
-* `.txt`
-* `.csv`
-* `.xlsx`
 
 ### 1) First step of data analysis
 <p align="justify" width="100%">
-For each of the SSPFM measurement files, amplitude and phase are extracted for each segment using a user-selected method:
+For each of the SSPFM measurement files, amplitude and phase are extracted for each segment using a user-selected method: <br>
+&#8226 <code>max</code>: extract maximum or resonance peak (for frequency sweep mode) <br>
+&#8226 <code>fit</code>: perform a fit of the resonance peak based on SHO (Simple Harmonic Oscillator) model (for frequency sweep mode) <br>
+&#8226 <code>dfrt</code>: mean of the segment (for DFRT mode) <br>
 </p>
-
-* `max`: extract maximum or resonance peak (for frequency sweep mode)
-* `fit`: perform a fit of the resonance peak based on `SHO` model (for frequency sweep mode)
-* `dfrt`: mean of the segment (for dfrt mode)
 
 ### 2) Second step of data analysis
 <p align="justify" width="100%">
@@ -74,8 +66,7 @@ The measurements are then automatically calibrated, and the piezoresponse hyster
 
 ### 3) Mapping
 <p align="justify" width="100%">
-Once the processing is complete for all the files, maps are generated. 2D 
-interpolation tools and masks to mitigate the influence of problematic pixels are also available.
+Once the processing is complete for all the files, maps are generated. 2D interpolation tools and masks to mitigate the influence of problematic pixels are also available.
 </p>
 
 ### 4) Toolbox
@@ -84,31 +75,38 @@ Finally, a toolbox is provided for the analysis of processing results: it
 includes algorithms of:
 </p>
 
-* [`Machine learning (K-Means)`](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py)
-* [`Phase separation`](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_loop.py)
-* [`Mapping cross-correlation`](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py)
-* [`SPM file converter`](https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py)
-* `Viewers`
-* `...`
+<p align="justify" width="100%">
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">Machine learning (K-Means)</a> <br>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_hyst.py">Phase separation</a> <br>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">Mapping cross-correlation</a> <br>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">SPM file converter</a> <br>
+&#8226 ...
+</p>
 
-See the [documentation](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc) for more details on PySSPFM workflow.
+<p align="justify" width="100%">
+See the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc">documentation</a> for more details on PySSPFM workflow.
+</p>
 
 ## Usage
 
 <p align="center" width="100%">
-    <img align="center" width="15%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/PySSPFM%20main%20GUI.PNG> <br>
+    <img align="center" width="15%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/gui_main.PNG> <br>
     <em>PySSPFM GUI main window</em>
 </p>
 
-All code executed and parameter adjustments made through the [GUI](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/gui) can be replicated in executable scripts:
-* [Data Processing](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/data_processing)
-* [Toolbox](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox)
+<p align="justify" width="100%">
+All code executed and parameter adjustments made through the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/gui">GUI</a> can be replicated in executable scripts: <br>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/data_processing">Data Processing</a> <br>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">Toolbox</a>
+</p>
 
 <p align="justify" width="100%">
 You can check the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples">examples</a> (based on both real and simulated SSPFM measurements) to grasp the utilization of the scripts, and the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests">tests</a> to ensure the proper functioning of the scripts. The examples and tests follow the same directory structure as the main PySSPFM scripts.
 </p>
 
-See the [documentation](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc) for more details on PySSPFM usage.
+<p align="justify" width="100%">
+See the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc">documentation</a> for more details on PySSPFM usage.
+</p>
 
 ## Installation
 
@@ -133,11 +131,17 @@ pip install git+https://github.com/CEA-MetroCarac/PySSPFM.git
 
 ### Optional dependencies
 
-* [`pytest`](https://pypi.org/project/pytest/) to run [tests](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests) python files.
-* Nanoscope Analysis software (Bruker) installed on computer to extract data from SSPFM Bruker measurement files (`spm` extension).
+<p align="justify" width="100%">
+&#8226 <a href="https://pypi.org/project/pytest/">pytest</a> to run <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests">tests</a> python files. <br>
+&#8226 <a href="https://pypi.org/project/toml/">toml</a> to load user parameters directly from toml file, for excecutable python script. <br>
+&#8226 Nanoscope Analysis software (Bruker) installed on computer to extract data from SSPFM Bruker measurement files (spm extension).
+</p>
 
 ## Citing
 
-In the case you use this library for your work, please think about citing it:
-* DOI (to come)
-* Hugo Valloire, Patrick Quemere, 2023, November 28, PySSPFM (Version 2023.10).
+<p align="justify" width="100%">
+In the case you use this library for your work, please think about citing it: <br>
+&#8226 DOI (to come) <br>
+&#8226 Hugo Valloire, Patrick Quemere, 2023, November 28, PySSPFM (Version 2023.10).
+</p>
+
