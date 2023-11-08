@@ -862,7 +862,7 @@ The <code>hyst_analysis</code> function within the script <code><a href="https:/
 </p>
 
 <p align="justify" width="100%">
-An initialization of the fitting parameters is conducted with the function <code>init_hysteresis_params</code> of the <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/analysis.py">utils/nanoloop_to_hyst/analysis.py</a></code> script:
+An initialization of the fitting parameters is conducted with the function <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/analysis.py">utils/nanoloop_to_hyst/analysis.py</a></code> script:
     <ul align="justify" width="100%">
         <li>Definition Interval:</li>
             <ul align="justify" width="100%">
