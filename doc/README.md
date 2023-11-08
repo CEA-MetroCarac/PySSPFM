@@ -960,7 +960,7 @@ The function <code>btfly_analysis</code> enables the execution of the procedure.
 </p>
 
 <p align="justify" width="100%">
-The study of the CPD is useful and can provide further information on the sample. We can find CPD value with the work function of the material <a href="#ref16">[16]</a>: $CPD = {\phi_{Probe} - \phi_{Sample} \over |e|}$. CPD is sensitive to the nature of the sample but also to the surface charge density of the sample <a href="#ref17">[17]</a>.
+The study of the CPD is useful and can provide further information on the sample. We can find $CPD$ value with the work function of the material <a href="#ref16">[16]</a>: $CPD = {\phi_{Probe} - \phi_{Sample} \over |e|}$. $\phi_{Probe}$ and $\phi_{Sample}$ respectively represents the work function of the probe and sample material and $e$ represents the elementary charge. CPD is sensitive to the nature of the sample but also to the surface charge density of the sample <a href="#ref17">[17]</a>.
 </p>
 
 <p align="justify" width="100%">
