@@ -94,7 +94,7 @@ See the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc">docume
     <em>PySSPFM GUI main window</em>
 </p>
 
-<p align="center" width="100%">
+<p align="justify" width="100%">
 All code executed and parameter adjustments made through the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/gui">GUI</a> can be replicated in executable scripts: <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/data_processing">Data Processing</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">Toolbox</a>
