@@ -1455,7 +1455,7 @@ The data of the measured properties (generated after the second processing step 
 
 <p align="justify" width="100%">
 &#8226 For a deeper understanding of the input file management, please refer to the relevant section in the documentation:<br> <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii2b---second-step-of-data-analysis">III.2.b) - Second Step of Data Analysis</a> <br>
-&#8226 For mask creation, please refer to section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii1---sspem-mapping/mask">VII.1) - Mask</a> in the documentation.
+&#8226 For mask creation, please refer to section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii1---mask">VII.1) - Mask</a> in the documentation.
 </p>
 
 #### VIII.3.c) Find best loop
