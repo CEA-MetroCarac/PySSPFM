@@ -131,14 +131,14 @@ pip install git+https://github.com/CEA-MetroCarac/PySSPFM.git
 
 ### Optional dependencies
 
-<p align="center" width="100%">
+<p align="justify" width="100%">
 &#8226 <a href="https://pypi.org/project/pytest/">pytest</a> to run <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests">tests</a> python files. <br>
 &#8226 Nanoscope Analysis software (Bruker) installed on computer to extract data from SSPFM Bruker measurement files (spm extension).
 </p>
 
 ## Citing
 
-<p align="center" width="100%">
+<p align="justify" width="100%">
 In the case you use this library for your work, please think about citing it: <br>
 &#8226 DOI (to come) <br>
 &#8226 Hugo Valloire, Patrick Quemere, 2023, November 28, PySSPFM (Version 2023.10).
