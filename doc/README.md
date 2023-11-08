@@ -960,7 +960,7 @@ The function <code>btfly_analysis</code> enables the execution of the procedure.
 </p>
 
 <p align="justify" width="100%">
-The study of the CPD is useful and can provide further information on the sample. We can find $CPD$ value with the work function of the material <a href="#ref16">[16]</a>: $CPD = {\phi_{Probe} - \phi_{Sample} \over |e|}$. $\phi_{Probe}$ and $\phi_{Sample}$ respectively represents the work function of the probe and sample material and $e$ represents the elementary charge. CPD is sensitive to the nature of the sample but also to the surface charge density of the sample <a href="#ref17">[17]</a>.
+The study of the CPD is useful and can provide further information on the sample. We can find $CPD$ value with the work function of the material <a href="#ref16">[16]</a>: $CPD = {\phi_{Probe} - \phi_{Sample} \over |e|}$. $\phi_{Probe}$ and $\phi_{Sample}$ respectively represents the work function of the probe and sample material and $e$ the elementary charge. CPD is sensitive to the nature of the sample but also to the surface charge density of the sample <a href="#ref17">[17]</a>.
 </p>
 
 <p align="justify" width="100%">
@@ -1492,7 +1492,7 @@ The SSPFM mappings, highlighting the selected pixels, are displayed. <br>
 ### VIII.4) 2D cross correlation
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">toolbox/map_correlation.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/map_correlation.py">gui/map_correlation.py</a></code>. Correlation between different maps of the sample's properties allow to gain a better understanding of the origin of the signals and the interactions between different physical phenomena. The Pearson product-moment correlation coefficients, which enables us to express the correlation between two maps as a scalar value varying between 1 (perfect correlation, and -1 perfect anti-correlation). For maps with a coefficient close to 0, the correlation between the map is low. The relationship between the correlation coefficient matrix, R, and the covariance matrix, c, is:
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">toolbox/map_correlation.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/map_correlation.py">gui/map_correlation.py</a></code>. Correlation between different maps of the sample's properties allow to gain a better understanding of the origin of the signals and the interactions between different physical phenomena. The Pearson product-moment correlation coefficients, which enables us to express the correlation between two maps as a scalar value varying between 1 (perfect correlation, and -1 perfect anti-correlation). For maps with a coefficient close to 0, the correlation between the map is low. The relationship between the correlation coefficient matrix, $R$, and the covariance matrix, $c$, for two variables $i$ and $j$ is:
 </p>
 
 $$ R_{ij} = {c_{ij} \over \sqrt{c_{ii} * c_{jj}}} $$
