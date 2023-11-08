@@ -92,15 +92,19 @@ See the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc">docume
     <em>PySSPFM GUI main window</em>
 </p>
 
-All code executed and parameter adjustments made through the [GUI](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/gui) can be replicated in executable scripts:
-* [Data Processing](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/data_processing)
-* [Toolbox](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox)
+<p align="center" width="100%">
+All code executed and parameter adjustments made through the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/gui">GUI</a> can be replicated in executable scripts: <br>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/data_processing">Data Processing</a> <br>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">Toolbox</a>
+</p>
 
 <p align="justify" width="100%">
 You can check the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples">examples</a> (based on both real and simulated SSPFM measurements) to grasp the utilization of the scripts, and the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests">tests</a> to ensure the proper functioning of the scripts. The examples and tests follow the same directory structure as the main PySSPFM scripts.
 </p>
 
-See the [documentation](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc) for more details on PySSPFM usage.
+<p align="justify" width="100%">
+See the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc">documentation</a> for more details on PySSPFM usage.
+</p>
 
 ## Installation
 
@@ -125,11 +129,16 @@ pip install git+https://github.com/CEA-MetroCarac/PySSPFM.git
 
 ### Optional dependencies
 
-* [`pytest`](https://pypi.org/project/pytest/) to run [tests](https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests) python files.
-* Nanoscope Analysis software (Bruker) installed on computer to extract data from SSPFM Bruker measurement files (`spm` extension).
+<p align="center" width="100%">
+&#8226 <a href="https://pypi.org/project/pytest/">pytest</a> to run <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests">tests</a> python files. <br>
+&#8226 Nanoscope Analysis software (Bruker) installed on computer to extract data from SSPFM Bruker measurement files (spm extension).
+</p>
 
 ## Citing
 
-In the case you use this library for your work, please think about citing it:
-* DOI (to come)
-* Hugo Valloire, Patrick Quemere, 2023, November 28, PySSPFM (Version 2023.10).
+<p align="center" width="100%">
+In the case you use this library for your work, please think about citing it: <br>
+&#8226 DOI (to come) <br>
+&#8226 Hugo Valloire, Patrick Quemere, 2023, November 28, PySSPFM (Version 2023.10).
+</p>
+
