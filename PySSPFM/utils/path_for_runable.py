@@ -4,9 +4,24 @@ File and directory path management in order to save results from runnable script
 import os
 import shutil
 from datetime import datetime
+import toml
+import json
 
-from PySSPFM import EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT
-from PySSPFM.settings import SAVE_TEST_EXAMPLE
+from PySSPFM.settings import \
+    SAVE_TEST_EXAMPLE, EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT
+
+
+def load_parameters_from_file(file_path):
+    _, file_extension = os.path.splitext(file_path)
+    if file_extension == '.toml':
+        with open(file_path, 'r') as toml_file:
+            return toml.load(toml_file)
+    if file_extension == '.json':
+        with open(file_path, 'r') as json_file:
+            return json.load(json_file)
+    else:
+        raise ValueError(
+            "Invalid file format. Supported formats are .toml and .json.")
 
 
 def save_path_management(dir_path_in, dir_path_out=None, save=False,

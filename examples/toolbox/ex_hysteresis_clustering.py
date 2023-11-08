@@ -6,7 +6,7 @@ import os
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.toolbox.hysteresis_clustering import main_hysteresis_clustering
 
-from PySSPFM import EXAMPLE_ROOT_PATH_IN
+from PySSPFM.settings import EXAMPLE_ROOT_PATH_IN
 
 
 def ex_hysteresis_clustering(verbose=False, make_plots=False):

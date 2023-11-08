@@ -11,7 +11,7 @@ from PySSPFM.utils.raw_extraction import csv_meas_sheet_extract
 from PySSPFM.utils.datacube_to_nanoloop.file import \
     print_params, save_parameters
 
-from PySSPFM import \
+from PySSPFM.settings import \
     EXAMPLE_ROOT_PATH_IN, EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT
 
 

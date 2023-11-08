@@ -13,8 +13,8 @@ from PySSPFM.utils.nanoloop.gen_data import gen_nanoloops
 from PySSPFM.utils.nanoloop.file import \
     sort_nanoloop_data, save_nanoloop_file, extract_nanoloop_data
 
-from PySSPFM import EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT
-from PySSPFM.settings import FIGSIZE
+from PySSPFM.settings import \
+    EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT, FIGSIZE
 
 
 def example_file(make_plots=False, verbose=False):

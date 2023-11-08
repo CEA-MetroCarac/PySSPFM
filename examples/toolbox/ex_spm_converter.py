@@ -11,7 +11,7 @@ from PySSPFM.utils.raw_extraction import data_extraction
 from PySSPFM.toolbox.raw_file_reader import main_raw_file_reader
 from PySSPFM.toolbox.spm_converter import main_spm_converter
 
-from PySSPFM import \
+from PySSPFM.settings import \
     EXAMPLE_ROOT_PATH_IN, EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT
 
 

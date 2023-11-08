@@ -15,9 +15,8 @@ from PySSPFM.utils.nanoloop_to_hyst.file import \
     (generate_file_nanoloop_paths, print_parameters, complete_parameters,
      save_properties, extract_properties)
 
-from PySSPFM import \
-    EXAMPLE_ROOT_PATH_IN, EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT
-from PySSPFM.settings import FIGSIZE
+from PySSPFM.settings import \
+    EXAMPLE_ROOT_PATH_IN, EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT, FIGSIZE
 
 
 def example_file(make_plots=False, verbose=False):

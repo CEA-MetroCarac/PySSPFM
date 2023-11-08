@@ -9,7 +9,7 @@ from matplotlib import axes, legend
 from matplotlib.colors import LogNorm
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-from PySSPFM import DEFAULT_DATA_PATH_OUT
+from PySSPFM.settings import DEFAULT_DATA_PATH_OUT
 
 
 def print_plots(figs, save_plots=True, show_plots=True, dirname=None,

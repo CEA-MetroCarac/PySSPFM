@@ -6,7 +6,7 @@ import os
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.toolbox.sort_plot_pixel import main_sort_plot_pixel
 
-from PySSPFM import EXAMPLE_ROOT_PATH_IN
+from PySSPFM.settings import EXAMPLE_ROOT_PATH_IN
 
 
 def example_sort_plot_pixel(verbose=False, make_plots=False):
