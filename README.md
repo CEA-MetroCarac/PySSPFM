@@ -56,7 +56,7 @@ PySSPFM facilitates the processing of a set of SSPFM measurement data points by 
 For each of the SSPFM measurement files, amplitude and phase are extracted for each segment using a user-selected method: <br>
 &#8226 <code>max</code>: extract maximum or resonance peak (for frequency sweep mode) <br>
 &#8226 <code>fit</code>: perform a fit of the resonance peak based on SHO (Simple Harmonic Oscillator) model (for frequency sweep mode) <br>
-&#8226 <code>dfrt</code>: mean of the segment (for dfrt mode) <br>
+&#8226 <code>dfrt</code>: mean of the segment (for DFRT mode) <br>
 </p>
 
 ### 2) Second step of data analysis
@@ -133,6 +133,7 @@ pip install git+https://github.com/CEA-MetroCarac/PySSPFM.git
 
 <p align="justify" width="100%">
 &#8226 <a href="https://pypi.org/project/pytest/">pytest</a> to run <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests">tests</a> python files. <br>
+&#8226 <a href="https://pypi.org/project/toml/">toml</a> to load user parameters directly from toml file, for excecutable python script.
 &#8226 Nanoscope Analysis software (Bruker) installed on computer to extract data from SSPFM Bruker measurement files (spm extension).
 </p>
 
