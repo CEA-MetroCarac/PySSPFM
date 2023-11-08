@@ -1252,7 +1252,7 @@ In input, the directory <code>properties</code> (generated after the second proc
 
 <p align="justify" width="100%">
 &#8226 For the creation of SSPFM cartographies, please consult section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii---sspfm-mapping">VII) - SSPFM mapping</a> in the documentation. <br>
-&#8226 For mask creation, please refer to section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii1---sspem-mapping/mask">VII.1) - Mask</a> in the documentation. <br>
+&#8226 For mask creation, please refer to section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii1---mask">VII.1) - Mask</a> in the documentation. <br>
 &#8226 For cross-correlative analysis, please refer to section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii4-2d-cross-correlation">VII.4) - 2D cross correlation</a> of the documentation.
 </p>
 
