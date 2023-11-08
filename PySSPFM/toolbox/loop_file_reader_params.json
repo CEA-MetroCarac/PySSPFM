@@ -1,0 +1,19 @@
+{
+    "file_path_in": "path/to/your/loop_file.txt",
+    "dir_path_out": null,
+    "csv_file_path": null,
+    "verbose": true,
+    "show_plots": true,
+    "save": false,
+    "user_pars": {
+        "del 1st loop": true,
+        "corr": "offset",
+        "pha fwd": 0,
+        "pha rev": 180,
+        "func": "np.cos",
+        "main elec": true,
+        "grounded tip": true,
+        "positive d33": true,
+        "locked elec slope": null
+    }
+}

@@ -1,0 +1,44 @@
+{
+    "dir_path_in": "path/to/your/directory",
+    "dir_path_out": null,
+    "verbose": true,
+    "show_plots": true,
+    "save": false,
+    "user_pars": {
+        "interp fact": 4,
+        "interp func": "linear",
+        "revert mask": {
+            "on": false,
+            "off": false,
+            "coupled": false
+        },
+        "man mask": {
+            "on": [],
+            "off": [],
+            "coupled": []
+        },
+        "ref": {
+            "on": {
+                "prop": "charac tot fit: area",
+                "fmt": ".5f",
+                "min val": null,
+                "max val": 0.005,
+                "interactive": false
+            },
+            "off": {
+                "prop": "charac tot fit: area",
+                "fmt": ".5f",
+                "min val": null,
+                "max val": 0.005,
+                "interactive": false
+            },
+            "coupled": {
+                "prop": "r_2",
+                "fmt": ".5f",
+                "min val": 0.95,
+                "max val": null,
+                "interactive": false
+            }
+        }
+    }
+}
