@@ -5,11 +5,11 @@
 </p>
 
 <p align="justify" width="100%"> 
-<strong>PySSFPM</strong> is a specific tool devloped in 
+<strong>PySSFPM</strong> is a specific tool developed in 
 <strong>Py</strong>thon dedicated to perform data analysis on <strong>SSPFM</strong> 
 (Switching Spectroscopy Piezoresponse Force Microscopy) measurements
 with a GUI that aims to be as simple to use as possible and complete to 
-accommodate the user's measurement requirements and conditions. The source code was developed to be easily customizable in order to meet the user's specific needs. Measurements can be processed in both standard SSPFM and SSPFM-DFRT mode.
+accommodate the user's measurement requirements and conditions. The source code was developed to be easily customizable in order to meet the user's specific needs. Measurements can be processed in both standard SSPFM and SSPFM-DFRT (Dual Amplitude Resonance Tracking) mode.
 </p>
 
 ## Important
@@ -35,7 +35,7 @@ However, while it has shown reliable performance with the data used by the
 library's developer, it's crucial to emphasize that there are no assurances 
 that this library will seamlessly process your unique data.
 Moreover,  it should be noted that in order to extract data from a Bruker 
-SPM file, DLL files must be installed alongside the Nanoscope Analysis 
+SPM file, DLL (Dynamic Link Library) files must be installed alongside the Nanoscope Analysis 
 software (Bruker).
 </p>
 
