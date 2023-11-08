@@ -453,6 +453,10 @@ The results of the tests are not automatically stored, except for a few assessme
 The <code>save_test_example</code> settings provide the option to determine whether the outcomes of examples and tests are automatically saved.
 </p>
 
+#### III.2.e) - Parameters
+
+Pour chacun des scripts excécutables de data_processing ou de la toolbox, respectivement deux fichiers d'extension json et toml on été créé afin de gérer les paramètres de traitement de mesure par l'utilisateur. Pour qu'un de ces derniers soit utilisé dans le script python pour définir les paramètres utilisateurs de traitement, il suffit de remplacer dans la fonction parameters, la valeur de la variable d'entrée file_name_user_params par défaut à None par le nom du fichier d'extension json ou toml correspondant, après avoir pris soin d'ajuster les valeurs souhaitées des paramètres dans le fichier en question. Si file_name_user_params est laissé par défaut à None, les paramètres utilisateurs seront ceux définis dans le script excécuté en question. Il faut également noter que pour la lecture d'un fichier toml, il est nécessaire d'installer la librairie toml.
+
 ## IV) - First step of data analysis
 
 <p align="center" width="100%">
