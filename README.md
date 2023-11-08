@@ -133,7 +133,7 @@ pip install git+https://github.com/CEA-MetroCarac/PySSPFM.git
 
 <p align="justify" width="100%">
 &#8226 <a href="https://pypi.org/project/pytest/">pytest</a> to run <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests">tests</a> python files. <br>
-&#8226 <a href="https://pypi.org/project/toml/">toml</a> to load user parameters directly from toml file, for excecutable python script.
+&#8226 <a href="https://pypi.org/project/toml/">toml</a> to load user parameters directly from toml file, for excecutable python script. <br>
 &#8226 Nanoscope Analysis software (Bruker) installed on computer to extract data from SSPFM Bruker measurement files (spm extension).
 </p>
 
