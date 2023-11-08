@@ -4,20 +4,39 @@ File and directory path management in order to save results from runnable script
 import os
 import shutil
 from datetime import datetime
-import toml
 import json
 
 from PySSPFM.settings import \
     SAVE_TEST_EXAMPLE, EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT
 
 
+class TomlError(Exception):
+    """ TomlError object """
+    def __init__(self, message=""):
+        """
+        Object used to generate error when toml files can't be opened
+
+        Parameters
+        ----------
+        message: str, optional
+            Custom error message (default is an empty string).
+        """
+        self.message = message
+        super().__init__(self.message)
+
+
 def load_parameters_from_file(file_path):
     _, file_extension = os.path.splitext(file_path)
     if file_extension == '.toml':
-        with open(file_path, 'r') as toml_file:
+        try:
+            import toml
+        except (NotImplementedError, NameError) as error:
+            message = "To open toml file , toml module is required"
+            raise TomlError(message) from error
+        with open(file_path, 'r', encoding='utf-8') as toml_file:
             return toml.load(toml_file)
     if file_extension == '.json':
-        with open(file_path, 'r') as json_file:
+        with open(file_path, 'r', encoding='utf-8') as json_file:
             return json.load(json_file)
     else:
         raise ValueError(
