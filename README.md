@@ -6,10 +6,7 @@
 
 <p align="justify" width="100%"> 
 <strong>PySSFPM</strong> is a specific tool developed in 
-<strong>Py</strong>thon dedicated to perform data analysis on <strong>SSPFM</strong> 
-(Switching Spectroscopy Piezoresponse Force Microscopy) measurements
-with a GUI that aims to be as simple to use as possible and complete to 
-accommodate the user's measurement requirements and conditions. The source code was developed to be easily customizable in order to meet the user's specific needs. Measurements can be processed in both standard SSPFM and SSPFM-DFRT (Dual Frequency Resonance Tracking) mode.
+<strong>Py</strong>thon dedicated to perform data analysis on <strong>SSPFM</strong> (Switching Spectroscopy Piezoresponse Force Microscopy) measurements with a GUI that aims to be as simple to use as possible and complete to accommodate the user's measurement requirements and conditions. The source code was developed to be easily customizable in order to meet the user's specific needs. Measurements can be processed in both standard SSPFM and SSPFM-DFRT (Dual Frequency Resonance Tracking) mode.
 </p>
 
 ## Important
@@ -31,12 +28,7 @@ This library is provided in its current state and remains under active developme
 </p>
 
 <p align="justify" width="100%">
-However, while it has shown reliable performance with the data used by the 
-library's developer, it's crucial to emphasize that there are no assurances 
-that this library will seamlessly process your unique data.
-Moreover,  it should be noted that in order to extract data from a Bruker 
-SPM file, DLL (Dynamic Link Library) files must be installed alongside the Nanoscope Analysis 
-software (Bruker).
+However, while it has shown reliable performance with the data used by the library's developer, it's crucial to emphasize that there are no assurances that this library will seamlessly process your unique data. Moreover,  it should be noted that in order to extract data from a Bruker SPM file, DLL (Dynamic Link Library) files must be installed alongside the Nanoscope Analysis software (Bruker).
 </p>
 
 If you encounter any bugs or issues, you can kindly bring them to the developer's attention by visiting: [PySSPFM issues](https://github.com/CEA-MetroCarac/PySSPFM/issues)
@@ -72,8 +64,7 @@ The measurements are then automatically calibrated, and the piezoresponse hyster
 
 ### 3) Mapping
 <p align="justify" width="100%">
-Once the processing is complete for all the files, maps are generated. 2D 
-interpolation tools and masks to mitigate the influence of problematic pixels are also available.
+Once the processing is complete for all the files, maps are generated. 2D interpolation tools and masks to mitigate the influence of problematic pixels are also available.
 </p>
 
 ### 4) Toolbox
