@@ -26,6 +26,19 @@ class TomlError(Exception):
 
 
 def load_parameters_from_file(file_path):
+    """
+    Load parameters from a configuration file in either TOML or JSON format.
+
+    Parameters
+    ----------
+    file_path: str
+        Path to the configuration file (in .toml or .json format).
+
+    Returns
+    -------
+    parameters: dict
+        Dictionary containing the loaded parameters.
+    """
     _, file_extension = os.path.splitext(file_path)
     if file_extension == '.toml':
         try:
