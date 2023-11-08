@@ -31,7 +31,9 @@ This library is provided in its current state and remains under active developme
 However, while it has shown reliable performance with the data used by the library's developer, it's crucial to emphasize that there are no assurances that this library will seamlessly process your unique data. Moreover,  it should be noted that in order to extract data from a Bruker SPM file, DLL (Dynamic Link Library) files must be installed alongside the Nanoscope Analysis software (Bruker).
 </p>
 
-If you encounter any bugs or issues, you can kindly bring them to the developer's attention by visiting: [PySSPFM issues](https://github.com/CEA-MetroCarac/PySSPFM/issues)
+<p align="justify" width="100%">
+If you encounter any bugs or issues, you can kindly bring them to the developer's attention by visiting: <a href="https://github.com/CEA-MetroCarac/PySSPFM/issues">PySSPFM issues</a>.
+</p>
 
 ## Overview
 
