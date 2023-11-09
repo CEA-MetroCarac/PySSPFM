@@ -6,10 +6,9 @@ physical equations
 import numpy as np
 import matplotlib.pyplot as plt
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.figure import plot_graph
 from PySSPFM.utils.core.basic_func import sigmoid
-
-from PySSPFM.settings import FIGSIZE
 
 
 def plot_nanoloops_contribution(write_voltage, pr_elec, pr_ferro,
@@ -38,8 +37,9 @@ def plot_nanoloops_contribution(write_voltage, pr_elec, pr_ferro,
     fig: list
         Figures for amplitude, phase, and piezoresponse
     """
+    figsize = get_setting("figsize")
     pha_val = pha_val or {'fwd': 0, 'rev': 180}
-    fig, (ax_1, ax_2, ax_3) = plt.subplots(1, 3, figsize=FIGSIZE)
+    fig, (ax_1, ax_2, ax_3) = plt.subplots(1, 3, figsize=figsize)
     fig.sfn = f'{mode} nanoloops'
     pr_tot = {'left': pr_ferro['left'] + pr_elec,
               'right': pr_ferro['right'] + pr_elec}
@@ -133,7 +133,8 @@ def main(pars, pha_val=None):
                   'ms': 5, 'mec': 'k', 'lw': 2}
     tabs_dict = [tab_dict_1, tab_dict_2, tab_dict_3, tab_dict_4]
     y_tabs = [pr_diff['left'], pr_diff['right'], pr_elec['on'], pr_elec['off']]
-    fig, ax = plt.subplots(figsize=FIGSIZE)
+    figsize = get_setting("figsize")
+    fig, ax = plt.subplots(figsize=figsize)
     fig.sfn = 'diff on off field piezorep'
     plot_graph(ax, write_voltage, y_tabs, plot_dict=plot_dict,
                tabs_dict=tabs_dict)
