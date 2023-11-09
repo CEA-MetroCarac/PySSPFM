@@ -26,7 +26,7 @@ def ex_global_map_reader(verbose=False, make_plots=False):
     coef_arr: array-like
         Coefficient array.
     """
-    example_root_path_in = get_setting("EXAMPLE_ROOT_PATH_IN")
+    example_root_path_in = get_setting("example_root_path_in")
     dir_path_in = os.path.join(
         example_root_path_in, "KNN500n_2023-10-05-17h23m_out_dfrt",
         "properties")
