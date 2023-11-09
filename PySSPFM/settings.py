@@ -1,6 +1,13 @@
 """
 All constants for PySSPFM
 
+For json settings file, paths can be:
+    - A list of path (string) that will be joined
+    - An absolute string corresponding to the path
+ROOT or PARENT corresponds to the parent directory of the analyzed measurement
+folder
+EXAMPLES corresponds to the data root for examples and tests
+
 Parameters
 ----------
 EXAMPLE_ROOT_PATH_IN : str
@@ -139,7 +146,8 @@ import sys
 import os
 import pathlib
 
-from PySSPFM.default_settings import DEF_SETTINGS_DICT
+from PySSPFM.utils.core.extract_params_from_file import \
+    load_parameters_from_file
 
 
 def get_setting(key):
@@ -162,75 +170,88 @@ def get_setting(key):
     """
     origin_path = sys.argv[0]
     sep_origin_path = origin_path.split(os.path.sep)
-
+    settings_dict = get_settings_dict("settings.json")
+    # All default constants for PySSPFM examples and tests
+    # Default settings must not be modified
+    def_settings_dict = get_settings_dict("default_settings.json")
     # Use the default settings if 'examples' or 'test' is in the script path
     settings_to_use = \
-        DEF_SETTINGS_DICT if 'examples' in sep_origin_path or \
-                             'tests' in sep_origin_path else SETTINGS_DICT
-    setting = settings_to_use.get(key)
+        def_settings_dict if 'examples' in sep_origin_path or \
+                             'tests' in sep_origin_path else settings_dict
+    try:
+        setting = settings_to_use.get(key)
+    except KeyError:
+        setting = settings_dict.get(key)
 
     return setting
 
 
-ROOT = pathlib.Path(__file__).parent.parent
-EXAMPLES = ROOT / 'examples'
-EXAMPLE_ROOT_PATH_IN = EXAMPLES / 'data' / 'PySSPFM_example_in'
-EXAMPLE_ROOT_PATH_OUT = EXAMPLES / 'data' / 'PySSPFM_example_out'
-DEFAULT_DATA_PATH_OUT = ROOT / 'PySSPFM_data_out'
-DEFAULT_LOGO_PATH = ROOT / 'PySSPFM' / 'logo_icon' / 'logoPySSPFM.png'
-DEFAULT_ICON_PATH = ROOT / 'PySSPFM' / 'logo_icon' / 'iconPySSPFM.png'
-DEFAULT_PARAMETERS_FILE_NAME = 'parameters.txt'
-DEFAULT_FIGURES_FOLDER_NAME = 'figs'
-DEFAULT_NANOLOOPS_FOLDER_NAME = 'nanoloops'
-DEFAULT_BEST_NANOLOOP_FOLDER_NAME = 'best_nanoloops'
-DEFAULT_PROPERTIES_FOLDER_NAME = 'properties'
-SAVE_TEST_EXAMPLE = True
-KEY_MEASUREMENT_EXTRACTION = {
-    'spm': {
-        'classic': {'time': 'times',
-                    'HS PR Amplitude (nm)': 'amp',
-                    'HS PR Phase (°)': 'pha',
-                    'DeflectionIn1B (nm)': 'deflection'},
-        'dfrt': {'time': 'times',
-                 'Tip Bias (V)': 'amp',
-                 'Input3 (V)': 'pha',
-                 'DeflectionIn1B (nm)': 'deflection'}},
-    'table': {
-        'classic': {'time': 'times',
-                    'Amplitude': 'amp',
-                    'Phase': 'pha',
-                    'Deflection': 'deflection'},
-        'dfrt': {'time': 'times',
-                 'Amplitude': 'amp',
-                 'Phase': 'pha',
-                 'Deflection': 'deflection'}}
-}
-HEADER_LINES = 1
-INDEX_LINE_MEAS_NAME = 0
-DELIMITER = '\t\t'
-FIGSIZE = [18, 9]
-DETECT_BUG_SEGMENTS = False
-FIT_METHOD = 'nelder'
-COLOR_AMP_PHA_MAP = 'coolwarm'
-HISTO_PHASE_METHOD = 'fit'
-COLOR_SSPFM_MAP = 'copper'
-COLOR_SSPFM_MAP_PIXEL = 'white'
-COLOR_SSPFM_MAP_HIGHLIGHTED_PIXEL = 'red'
-COLOR_HYSTERESIS_CLUSTERING = 'turbo'
-ELECTROSTATIC_OFFSET = True
+def get_path_from_json(settings_dict):
+    """
+    Updates the settings dictionary with the path information.
 
-SETTINGS_DICT = {
-    'parameters file name': DEFAULT_PARAMETERS_FILE_NAME,
-    'figures folder name': DEFAULT_FIGURES_FOLDER_NAME,
-    'nanoloops folder name': DEFAULT_NANOLOOPS_FOLDER_NAME,
-    'best nanoloops folder name': DEFAULT_BEST_NANOLOOP_FOLDER_NAME,
-    'properties folder name': DEFAULT_PROPERTIES_FOLDER_NAME,
-    'key meas extract': KEY_MEASUREMENT_EXTRACTION,
-    'header lines': HEADER_LINES,
-    'index line meas name': INDEX_LINE_MEAS_NAME,
-    'delimiter': DELIMITER,
-    'detect bug segments': DETECT_BUG_SEGMENTS,
-    'fit method': FIT_METHOD,
-    'histo phase method': HISTO_PHASE_METHOD,
-    'elec offset': ELECTROSTATIC_OFFSET
-}
+    Parameters
+    ----------
+    settings_dict: dict
+        The settings dictionary.
+
+    Returns
+    -------
+    settings_dict: dict
+        The updated settings dictionary.
+    """
+    # Update the ROOT path.
+    root = settings_dict["ROOT"]
+    if isinstance(root, list):
+        for cont, elem in enumerate(root):
+            if elem == "PARENT":
+                root[cont] = pathlib.Path(__file__).parent.parent
+        root = os.path.join(*root)
+
+    # Update the EXAMPLES path.
+    examples = settings_dict["EXAMPLES"]
+    if isinstance(examples, list):
+        for cont, elem in enumerate(examples):
+            if elem == "ROOT":
+                examples[cont] = root
+        examples = os.path.join(*examples)
+
+    settings_dict["ROOT"] = root
+    settings_dict["EXAMPLES"] = examples
+
+    # Update other paths.
+    for key, value in settings_dict.items():
+        if isinstance(value) and "PATH" in key:
+            for cont, elem in enumerate(value):
+                if elem == "ROOT":
+                    settings_dict[key][cont] = root
+                elif elem == "EXAMPLES":
+                    settings_dict[key][cont] = examples
+                else:
+                    continue
+            settings_dict[key] = os.path.join(*settings_dict[key])
+
+    return settings_dict
+
+
+def get_settings_dict(json_file_name):
+    """
+    Returns the settings dictionary from a JSON file.
+
+    Parameters
+    ----------
+    json_file_name: str
+        Path to the JSON file.
+
+    Returns
+    -------
+    json_dict: dict
+        The settings dictionary.
+    """
+    json_file_path = os.path.join(os.path.dirname(__file__), json_file_name)
+    # Load the settings dictionary from the JSON file.
+    json_dict = load_parameters_from_file(json_file_path)
+    # Update the settings dictionary with the path information.
+    json_dict = get_path_from_json(json_dict)
+
+    return json_dict
