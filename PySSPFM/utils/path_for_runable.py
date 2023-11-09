@@ -39,6 +39,31 @@ def load_parameters_from_file(file_path):
     parameters: dict
         Dictionary containing the loaded parameters.
     """
+
+    def replace_null_with_none(data):
+        """
+        Recursively replace 'null' with None in a dictionary or list.
+
+        Parameters
+        ----------
+        data : any
+            The data (dict, list, or value) to process.
+
+        Returns
+        -------
+        any
+            The processed data with 'null' replaced by None.
+        """
+        if isinstance(data, dict):
+            for key, value in data.items():
+                data[key] = replace_null_with_none(value)
+        elif isinstance(data, list):
+            for i, item in enumerate(data):
+                data[i] = replace_null_with_none(item)
+        elif data == "null":
+            data = None
+        return data
+
     _, file_extension = os.path.splitext(file_path)
     if file_extension == '.toml':
         try:
@@ -47,8 +72,10 @@ def load_parameters_from_file(file_path):
             message = "To open toml file , toml module is required"
             raise TomlError(message) from error
         with open(file_path, 'r', encoding='utf-8') as toml_file:
-            return toml.load(toml_file)
-    if file_extension == '.json':
+            dict_pars = toml.load(toml_file)
+            dict_pars = replace_null_with_none(dict_pars)
+            return dict_pars
+    elif file_extension == '.json':
         with open(file_path, 'r', encoding='utf-8') as json_file:
             return json.load(json_file)
     else:
