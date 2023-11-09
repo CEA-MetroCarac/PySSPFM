@@ -3,13 +3,12 @@ Example of signal_bias functions
 """
 import matplotlib.pyplot as plt
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.signal_bias import \
     (sspfm_generator, sspfm_time, dynamic_generator, ckpfm_generator,
      extract_sspfm_bias_pars)
-
-from PySSPFM.settings import FIGSIZE
 
 
 def example_sspfm_bias(open_mode=False, verbose=False, make_plots=False):
@@ -65,7 +64,8 @@ def example_sspfm_bias(open_mode=False, verbose=False, make_plots=False):
     if make_plots:
         # Create plot
         plot_dict = {'x lab': 'time (s)', 'y lab': 'sspfm bias (V)'}
-        fig, ax = plt.subplots(figsize=FIGSIZE)
+        figsize = get_setting("figsize")
+        fig, ax = plt.subplots(figsize=figsize)
         add_str = "_open" if open_mode else ""
         fig.sfn = f"example_sspfm_bias{add_str}"
         plot_graph(ax, real_sspfm_time, real_sspfm_bias, plot_dict=plot_dict)
@@ -110,7 +110,8 @@ def example_dynamic_bias(make_plots=False):
     if make_plots:
         # Create plot
         plot_dict = {'x lab': 'time (s)', 'y lab': 'dynamic bias (V)'}
-        fig, ax = plt.subplots(figsize=FIGSIZE)
+        figsize = get_setting("figsize")
+        fig, ax = plt.subplots(figsize=figsize)
         fig.sfn = "example_dynamic_bias"
         plot_graph(ax, dynamic_time, dynamic_bias, plot_dict=plot_dict)
 
@@ -158,7 +159,8 @@ def example_ckpfm_bias(mode='Sweep', make_plots=False):
     if make_plots:
         # Create plot
         plot_dict = {'x lab': 'time (s)', 'y lab': 'ckpfm bias (V)'}
-        fig, ax = plt.subplots(figsize=FIGSIZE)
+        figsize = get_setting("figsize")
+        fig, ax = plt.subplots(figsize=figsize)
         fig.sfn = f"example_ckpfm_{mode}_bias"
         plot_graph(ax, ckfpm_time, ckfpm_bias, plot_dict=plot_dict)
 
