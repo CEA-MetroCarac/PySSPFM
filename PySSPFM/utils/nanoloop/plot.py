@@ -8,10 +8,9 @@ from matplotlib import cm
 import matplotlib as mpl
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.figure import plot_graph
 from PySSPFM.utils.nanoloop.analysis import MeanLoop
-
-from PySSPFM.settings import FIGSIZE
 
 
 def plot_ckpfm(loop_dict, dict_str=None):
@@ -34,7 +33,8 @@ def plot_ckpfm(loop_dict, dict_str=None):
     unit = "" if dict_str is None else dict_str["unit"]
 
     # Plotting initialization
-    fig, ax = plt.subplots(figsize=FIGSIZE)
+    figsize = get_setting("figsize")
+    fig, ax = plt.subplots(figsize=figsize)
     fig.sfn = 'plot_ckpfm'
     ax.tick_params(length=10, width=5, right=True, top=False,
                    grid_linewidth=2, grid_linestyle=':', labelsize=15)
@@ -100,7 +100,8 @@ def plot_multiloop(mean_loop, dict_str=None):
     else:
         unit, mode = dict_str["unit"], dict_str["label"]
 
-    fig, (ax_1, ax_2) = plt.subplots(1, 2, figsize=FIGSIZE)
+    figsize = get_setting("figsize")
+    fig, (ax_1, ax_2) = plt.subplots(1, 2, figsize=figsize)
     add = mode.lower().replace(' ', '_')
     fig.sfn = f'plot_multiloop_{add}'
 
@@ -226,8 +227,9 @@ def plot_all_loop(loops_tab, pha_calib, dict_str=None):
     for title, label_y in zip(titles, labels_y):
 
         # Init figure (label ...)
+        figsize = get_setting("figsize")
         fig, axs = plt.subplots(fig_dim[0], fig_dim[1], sharex='all',
-                                sharey='all', figsize=FIGSIZE)
+                                sharey='all', figsize=figsize)
         add = mode.lower().replace(' ', '_')
         fig.sfn = f'plot_meanloop_{add}_{title.replace(" ", "_").lower()}'
         str_dict = {'title': title, 'x label': label_x, 'y label': label_y}
@@ -335,7 +337,8 @@ def plot_meanloop(loops_tab, pha_calib, dict_str=None, del_1st_loop=False):
             mean_measure_right = mean_loop.piezorep_right
             mean_measure_marker = mean_loop.piezorep_marker
 
-        fig, (ax_1, ax_2) = plt.subplots(1, 2, sharey='all', figsize=FIGSIZE)
+        figsize = get_setting("figsize")
+        fig, (ax_1, ax_2) = plt.subplots(1, 2, sharey='all', figsize=figsize)
         add = mode.lower().replace(' ', '_')
         fig.sfn = f'plot_all_loop_{add}_{title.replace(" ", "_").lower()}'
         fig.suptitle(title, size=24, weight='heavy')
