@@ -171,26 +171,6 @@ def get_setting(key):
     origin_path = sys.argv[0]
     sep_origin_path = origin_path.split(os.path.sep)
 
-    def get_settings_dict(json_file_name):
-        """
-        Returns the settings dictionary from a JSON file.
-
-        Parameters
-        ----------
-        json_file_name: str
-            Path to the JSON file.
-
-        Returns
-        -------
-        json_dict: dict
-            The settings dictionary.
-        """
-        json_file_path = os.path.join(os.path.dirname(__file__), json_file_name)
-        # Load the settings dictionary from the JSON file.
-        json_dict = load_parameters_from_file(json_file_path)
-
-        return json_dict
-
     settings_dict = get_settings_dict("settings.json")
     # Update the settings dictionary with the path information.
     settings_dict = get_path_from_json(settings_dict)
@@ -209,6 +189,27 @@ def get_setting(key):
     return setting
 
 
+def get_settings_dict(json_file_name):
+    """
+    Returns the settings dictionary from a JSON file.
+
+    Parameters
+    ----------
+    json_file_name: str
+        Path to the JSON file.
+
+    Returns
+    -------
+    json_dict: dict
+        The settings dictionary.
+    """
+    json_file_path = os.path.join(os.path.dirname(__file__), json_file_name)
+    # Load the settings dictionary from the JSON file.
+    json_dict = load_parameters_from_file(json_file_path)
+
+    return json_dict
+
+
 def get_path_from_json(settings_dict):
     """
     Updates the settings dictionary with the path information.
@@ -224,7 +225,7 @@ def get_path_from_json(settings_dict):
         The updated settings dictionary.
     """
     # Update the ROOT path.
-    root = settings_dict["ROOT"]
+    root = settings_dict["root"]
     if isinstance(root, list):
         for cont, elem in enumerate(root):
             if elem == "PARENT":
@@ -232,19 +233,19 @@ def get_path_from_json(settings_dict):
         root = os.path.join(*root)
 
     # Update the EXAMPLES path.
-    examples = settings_dict["EXAMPLES"]
+    examples = settings_dict["examples"]
     if isinstance(examples, list):
         for cont, elem in enumerate(examples):
             if elem == "ROOT":
                 examples[cont] = root
         examples = os.path.join(*examples)
 
-    settings_dict["ROOT"] = root
-    settings_dict["EXAMPLES"] = examples
+    settings_dict["root"] = root
+    settings_dict["examples"] = examples
 
     # Update other paths.
     for key, value in settings_dict.items():
-        if isinstance(value) and "PATH" in key:
+        if isinstance(value, list) and "path" in key:
             for cont, elem in enumerate(value):
                 if elem == "ROOT":
                     settings_dict[key][cont] = root
