@@ -271,7 +271,7 @@ def single_script(tab_path_in, user_pars, meas_pars, sign_pars, cont=1,
         figs.extend(single_figs)
 
     if add_str == 'b':
-        elec_offset = get_setting('elec offset')
+        elec_offset = get_setting('electrostatic_offset')
         offset_off = properties['off']['charac tot fit: y shift'] \
             if elec_offset else 0
         par = coupled_analysis(
@@ -333,7 +333,7 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
     if save:
         if not os.path.isdir(root_out):
             os.makedirs(root_out)
-        figures_folder_name = get_setting('figures folder name')
+        figures_folder_name = get_setting('default_figures_folder_name')
         dir_path_out_fig = dir_path_out_fig or os.path.join(
             root_out, figures_folder_name)
         if not os.path.isdir(dir_path_out_fig):
@@ -391,10 +391,11 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
                'y': meas_pars['Grid y [um]']}
 
     if save:
-        properties_folder_name = get_setting('properties folder name')
+        properties_folder_name = get_setting('default_properties_folder_name')
         dir_path_out_props = dir_path_out_props or os.path.join(
             root_out, properties_folder_name)
-        best_nanoloops_folder_name = get_setting('best nanoloops folder name')
+        best_nanoloops_folder_name = \
+            get_setting('default_best_nanoloop_folder_name')
         dir_path_out_best_loops = dir_path_out_best_loops or os.path.join(
             root_out, best_nanoloops_folder_name)
         save_best_nanoloops(tab_best_loops, dir_path_out_best_loops)
@@ -403,7 +404,7 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
 
     if save and test_dicts is None:
         root_in = os.path.split(dir_path_in)[0]
-        parameters_file_name = get_setting('parameters file name')
+        parameters_file_name = get_setting('default_parameters_file_name')
         file_path_in_txt = os.path.join(root_in, parameters_file_name)
         file_path_out_txt_save = file_path_out_txt_save or os.path.join(
             root_out, parameters_file_name)
@@ -439,7 +440,7 @@ def main_script(user_pars, dir_path_in, verbose=False, show_plots=False,
     t0, date = time.time(), datetime.now().strftime('%Y-%m-%d %H;%M')
     if root_out is None:
         root_out, _ = os.path.split(dir_path_in)
-    parameters_file_name = get_setting('parameters file name')
+    parameters_file_name = get_setting('default_parameters_file_name')
     file_path_out_txt_save = os.path.join(root_out, parameters_file_name)
     meas_pars, sign_pars, _, _, _ = print_parameters(
         file_path_out_txt_save, verbose=verbose)
