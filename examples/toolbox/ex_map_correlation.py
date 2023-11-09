@@ -4,11 +4,10 @@ Example of map_correlation methods
 
 import os
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.toolbox.map_correlation import main_map_correlation
-
-from PySSPFM.settings import EXAMPLE_ROOT_PATH_IN
 
 
 def ex_map_correlation(verbose=False, make_plots=False):
@@ -27,8 +26,9 @@ def ex_map_correlation(verbose=False, make_plots=False):
     coef_arr: dict
         Dictionary containing correlation coefficients.
     """
+    example_root_path_in = get_setting("example_root_path_in")
     dir_path_in = os.path.join(
-        EXAMPLE_ROOT_PATH_IN, "KNN500n_2023-10-05-17h23m_out_dfrt",
+        example_root_path_in, "KNN500n_2023-10-05-17h23m_out_dfrt",
         "properties")
     ind_maps = None
 
