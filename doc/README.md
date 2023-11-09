@@ -28,6 +28,7 @@
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii1b---measurement-sheet">III.1.b) - Measurement sheet</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii1c---extraction">III.1.c) - Extraction</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii1d---examples--tests">III.1.d) - Examples & Tests</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1e---parameters">III.1.e) - Parameters</a></li>
                     </ul>
                 </li>
                 <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2---output-files">III.2) - Output files</a>
@@ -35,8 +36,7 @@
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2a---first-step-of-data-analysis">III.2.a) - First step of data analysis</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2b---second-step-of-data-analysis">III.2.b) - Second step of data analysis</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2c---toolbox">III.2.c) - Toolbox</a></li>
-                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2d---examples--tests">III.2.d) - Examples & Tests</a></li>       
-                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2e---parameters">III.2.e) - Parameters</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2d---examples--tests">III.2.d) - Examples & Tests</a></li>
                     </ul>
                 </li>
             </ul>
