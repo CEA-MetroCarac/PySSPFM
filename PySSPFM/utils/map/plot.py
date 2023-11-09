@@ -7,19 +7,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.map.interpolate import interp_2d_treated
 from PySSPFM.utils.map.matrix_processing import formatting_measure
-
-from PySSPFM.settings import \
-    (COLOR_SSPFM_MAP_PIXEL, COLOR_SSPFM_MAP, COLOR_SSPFM_MAP_HIGHLIGHTED_PIXEL,
-     FIGSIZE)
 
 
 def plot_and_save_maps(property_arr, dim_pix, dim_mic=None, dict_interp=None,
                        dict_map=None, save=False, dir_path_out=None, mask=None,
                        revert_mask=False, prop_str='', ref=None, dict_ref=None,
-                       color=COLOR_SSPFM_MAP, cbar_lab=None,
-                       highlight_pix=None):
+                       color=None, cbar_lab=None, highlight_pix=None):
     """
     Plot the figure of the hysteresis nanoloop characteristic properties
     (all maps)
@@ -61,14 +57,15 @@ def plot_and_save_maps(property_arr, dim_pix, dim_mic=None, dict_interp=None,
     -------
     fig: plt.figure
     """
-
+    color = color or get_setting("color_sspfm_map")
     applied_mask = [index for index in range(len(property_arr)) if
                     index not in mask] if revert_mask else mask
 
     property_arr = np.array(property_arr, dtype='f')
 
     # Initialize the figure
-    fig = plt.figure(figsize=FIGSIZE)
+    figsize = get_setting("figsize")
+    fig = plt.figure(figsize=figsize)
     fig.sfn = 'map_image'
     main_ax = fig.add_subplot(111)
     axs = []
@@ -251,7 +248,7 @@ def plot_and_save_maps(property_arr, dim_pix, dim_mic=None, dict_interp=None,
 def intermediate_map(fig, ax, matrix, dim_pix, ext=None, dim_fact=None,
                      tab_all_index=None, tab_plotted_index=None,
                      directions=None, plot_ind=True, ax_title='',
-                     color=COLOR_SSPFM_MAP, cbar_lab=None, highlight_pix=None):
+                     color=None, cbar_lab=None, highlight_pix=None):
     """
     Plot intermediate map on the figure
 
@@ -294,6 +291,7 @@ def intermediate_map(fig, ax, matrix, dim_pix, ext=None, dim_fact=None,
     -------
     None
     """
+    color = color or get_setting("color_sspfm_map")
     dim_fact = dim_fact or {
         'x': (matrix.shape[0] - 1) / (dim_pix['x'] - 1),
         'y': (matrix.shape[1] - 1) / (dim_pix['y'] - 1)
@@ -325,7 +323,7 @@ def intermediate_map(fig, ax, matrix, dim_pix, ext=None, dim_fact=None,
 
 def final_map(fig, ax, matrix, dim_pix, ext=None, dim_fact=None,
               tab_all_index=None, tab_plotted_index=None, directions=None,
-              index_blank=None, ax_title='', color=COLOR_SSPFM_MAP,
+              index_blank=None, ax_title='', color=None,
               cbar_lab=None, highlight_pix=None):
     """
     Plot the final sub image i.e last map on the figure
@@ -369,6 +367,7 @@ def final_map(fig, ax, matrix, dim_pix, ext=None, dim_fact=None,
     -------
     None
     """
+    color = color or get_setting("color_sspfm_map")
     dim_fact = dim_fact or {
         'x': (matrix.shape[0] - 1) / (dim_pix['x'] - 1),
         'y': (matrix.shape[1] - 1) / (dim_pix['y'] - 1)
@@ -449,9 +448,9 @@ def annotate(ax, dim_pix, dim_fact=None, tab_all_index=None,
 
     if tab_all_index is not None and tab_plotted_index is not None:
         for i, index in enumerate(tab_all_index):
-            color = COLOR_SSPFM_MAP_PIXEL
+            color = get_setting("color_sspfm_map_pixel")
             if highlight_pix is not None and index in highlight_pix:
-                color = COLOR_SSPFM_MAP_HIGHLIGHTED_PIXEL
+                color = get_setting("color_sspfm_map_highlighted_pixel")
             if index in tab_plotted_index and plot_ind:
                 # Plot pixel index
                 ax.annotate(str(int(index)),
