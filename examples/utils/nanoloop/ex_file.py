@@ -6,15 +6,13 @@ import shutil
 import numpy as np
 import matplotlib.pyplot as plt
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.signal_bias import sspfm_generator
 from PySSPFM.utils.nanoloop.gen_data import gen_nanoloops
 from PySSPFM.utils.nanoloop.file import \
     sort_nanoloop_data, save_nanoloop_file, extract_nanoloop_data
-
-from PySSPFM.settings import \
-    EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT, FIGSIZE
 
 
 def example_file(make_plots=False, verbose=False):
@@ -37,10 +35,10 @@ def example_file(make_plots=False, verbose=False):
     # File management
     if make_plots:
         dir_path_out_data = os.path.join(
-            EXAMPLE_ROOT_PATH_OUT, "ex_nanoloop_file")
+            get_setting("example_root_path_out"), "ex_nanoloop_file")
     else:
         dir_path_out_data = os.path.join(
-            DEFAULT_DATA_PATH_OUT, "test_nanoloop_file")
+            get_setting("default_data_path_out"), "test_nanoloop_file")
     if os.path.isdir(dir_path_out_data):
         shutil.rmtree(dir_path_out_data)
     os.makedirs(dir_path_out_data)
@@ -124,7 +122,8 @@ def example_file(make_plots=False, verbose=False):
 
         # Plot
         if make_plots:
-            fig, axs = plt.subplots(1, 2, figsize=FIGSIZE)
+            figsize = get_setting("figsize")
+            fig, axs = plt.subplots(1, 2, figsize=figsize)
             fig.sfn = f'ex_file_{mode}_field'
             amp_tab_dict, pha_tab_dict = {'form': 'r.-'}, {'form': 'b.-'}
             (y_tabs_amp, y_tabs_pha, amp_tabs_dict, pha_tabs_dict,
