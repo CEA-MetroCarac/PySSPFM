@@ -66,7 +66,7 @@ class CurveFit:
             return y_val - self.model.eval(params, x=x_val)
 
         # Perform the minimization
-        fit_method = get_setting('fit method')
+        fit_method = get_setting('fit_method')
         self.result = minimize(
             objective, self.params, args=(), method=fit_method)
 
