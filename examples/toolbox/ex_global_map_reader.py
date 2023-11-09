@@ -3,10 +3,9 @@ Example of global_map_reader methods
 """
 import os
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.toolbox.global_map_reader import main_global_map_reader
-
-from PySSPFM.settings import EXAMPLE_ROOT_PATH_IN
 
 
 def ex_global_map_reader(verbose=False, make_plots=False):
@@ -27,8 +26,9 @@ def ex_global_map_reader(verbose=False, make_plots=False):
     coef_arr: array-like
         Coefficient array.
     """
+    example_root_path_in = get_setting("EXAMPLE_ROOT_PATH_IN")
     dir_path_in = os.path.join(
-        EXAMPLE_ROOT_PATH_IN, "KNN500n_2023-10-05-17h23m_out_dfrt",
+        example_root_path_in, "KNN500n_2023-10-05-17h23m_out_dfrt",
         "properties")
 
     user_params = {'interp fact': 4,
