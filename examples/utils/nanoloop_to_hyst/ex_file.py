@@ -9,14 +9,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from examples.utils.nanoloop_to_hyst.ex_analysis import ex_sort_prop
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.nanoloop_to_hyst.file import \
     (generate_file_nanoloop_paths, print_parameters, complete_parameters,
      save_properties, extract_properties)
-
-from PySSPFM.settings import \
-    EXAMPLE_ROOT_PATH_IN, EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT, FIGSIZE
 
 
 def example_file(make_plots=False, verbose=False):
@@ -52,15 +50,15 @@ def example_file(make_plots=False, verbose=False):
         Dimension in micrometers.
     """
     # Define input and output file paths
-    root_data = os.path.join(
-        EXAMPLE_ROOT_PATH_IN, "KNN500n_2023-10-05-17h21m_out_dfrt")
+    root_data = os.path.join(get_setting("example_root_path_in"),
+                             "KNN500n_2023-10-05-17h21m_out_dfrt")
     dir_path_in = os.path.join(root_data, "nanoloops")
     if make_plots:
         root_out = os.path.join(
-            EXAMPLE_ROOT_PATH_OUT, "ex_nanoloop_to_hyst_file")
+            get_setting("example_root_path_out"), "ex_nanoloop_to_hyst_file")
     else:
         root_out = os.path.join(
-            DEFAULT_DATA_PATH_OUT, "test_nanoloop_to_hyst_file")
+            get_setting("default_data_path_out"), "test_nanoloop_to_hyst_file")
 
     # Remove existing output directory and copy the data
     if os.path.isdir(root_out):
@@ -111,7 +109,8 @@ def example_file(make_plots=False, verbose=False):
 
     fig = []
     if make_plots:
-        fig, ax = plt.subplots(figsize=FIGSIZE)
+        figsize = get_setting("figsize")
+        fig, ax = plt.subplots(figsize=figsize)
         fig.sfn = 'example_file'
         plot_dict = {'title': 'Write segment',
                      'x lab': 'Index', 'y lab': 'Voltage [V]'}
