@@ -12,6 +12,7 @@
 "default_best_nanoloop_folder_name": "best_nanoloops",
 "default_properties_folder_name": "properties",
 "save_test_example": true,
+"extract_parameters": "json",
 "key_measurement_extraction": {
     "spm": {
         "classic": {"time": "times",
