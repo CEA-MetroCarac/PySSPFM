@@ -406,7 +406,13 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
         </ul>
     </ul>
 </p>
-                    
+
+#### III.1.e) - Parameters
+
+<p align="justify" width="100%">
+For each of the executable scripts within <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/data_processing">data_processing</a></code> or the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">toolbox</a></code>, a json file, have been created in the same directory, to load the user parameters for the measurement processing. The <code>extract_parameters</code> setting allows the user to choose whether to extract parameters from a json, toml, or directly from the current python file (by assigning the value <code>"json"</code> (default), <code>"toml"</code>, or <code>"python"</code>, respectively). The name of the json or toml file must be the same as the corresponding executable python file, followed by <code>"_params"</code> and the file extension. To employ one of these files within the python script, make sure to adjust the desired parameter values within the file. The user can also create and use toml extension file to deal with the treatment parameters. It's important to note that the installation of the <a href="https://pypi.org/project/toml/">toml</a> library is requisite for reading a toml file.
+</p>
+
 ### III.2) - Output files
 
 <p align="justify" width="100%">
@@ -470,12 +476,6 @@ The management of paths for both the <code><a href="https://github.com/CEA-Metro
 The majority of outcomes from the examples consist of visual representations, which are, by default, stored in the <code>PySSPFM_example_out</code> directory, located within <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data">examples/data</a></code>.
 The results of the tests are not automatically stored, except for a few assessments where minimal or no comparisons are made with experimental results (<code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/data_processing/test_datacube_to_nanoloop_s1.py">tests/data_processing/test_datacube_to_nanoloop_s1.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/utils/nanoloop/test_theory.py">tests/utils/nanoloop/test_theory.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/utils/map/test_map.py">tests/utils/map/test_map.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/data_processing/test_nanoloop_to_hyst_s2.py">tests/data_processing/test_nanoloop_to_hyst_s2.py</a></code>), as well as for <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/toolbox/test_spm_converter.py">tests/toolbox/test_spm_converter.py</a></code>. These are, by default, stored in the <code>PySSPFM_data_out</code> directory, situated at the root of PySSPFM.
 The <code>save_test_example</code> settings provide the option to determine whether the outcomes of examples and tests are automatically saved.
-</p>
-
-#### III.2.e) - Parameters
-
-<p align="justify" width="100%">
-For each of the executable scripts within <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/data_processing">data_processing</a></code> or the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">toolbox</a></code>, a json file, have been created in the same directory, to load the user parameters for the measurement processing. The <code>extract_parameters</code> setting allows the user to choose whether to extract parameters from a json, toml, or directly from the current python file (by assigning the value <code>"json"</code> (default), <code>"toml"</code>, or <code>"python"</code>, respectively). The name of the json or toml file must be the same as the corresponding executable python file, followed by <code>"_params"</code> and the file extension. To employ one of these files within the Python script, make sure to adjust the desired parameter values within the file. The user can also create and use toml extension file to deal with the treatment parameters. It's important to note that the installation of the <a href="https://pypi.org/project/toml/">toml</a> library is requisite for reading a toml file.
 </p>
 
 ## IV) - First step of data analysis
