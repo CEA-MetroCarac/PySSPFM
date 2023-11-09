@@ -9,7 +9,7 @@ from matplotlib import axes, legend
 from matplotlib.colors import LogNorm
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-from PySSPFM.settings import DEFAULT_DATA_PATH_OUT
+from PySSPFM.settings import get_setting
 
 
 def print_plots(figs, save_plots=True, show_plots=True, dirname=None,
@@ -49,8 +49,8 @@ def print_plots(figs, save_plots=True, show_plots=True, dirname=None,
 
     if save_plots:
 
-        if dirname is None:
-            dirname = DEFAULT_DATA_PATH_OUT
+        default_data_path_out = get_setting("default_data_path_out")
+        dirname = dirname or default_data_path_out
 
         if not os.path.exists(dirname):
             os.makedirs(dirname)
