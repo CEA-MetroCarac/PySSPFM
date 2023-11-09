@@ -7,11 +7,10 @@ Module used for the scripts of sspfm 2d step data analysis
 import numpy as np
 import matplotlib.pyplot as plt
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.basic_func import linear
 from PySSPFM.utils.core.figure import plot_graph, ax_formating
 from PySSPFM.utils.nanoloop.plot import add_txt
-
-from PySSPFM.settings import FIGSIZE
 
 
 def plot_btfly_analysis(write, amp, mini, imprint, dict_str=None):
@@ -38,7 +37,8 @@ def plot_btfly_analysis(write, amp, mini, imprint, dict_str=None):
     """
     unit = dict_str["unit"] if dict_str is not None else ""
 
-    fig, ax = plt.subplots(figsize=FIGSIZE)
+    figsize = get_setting("figsize")
+    fig, ax = plt.subplots(figsize=figsize)
     add = dict_str["label"].lower().replace(' ', '_')
     fig.sfn = f'btfly_analysis_{add}'
 
@@ -120,7 +120,8 @@ def plot_sat_analysis(write, amp, piezorep, a_elec, y_0, x_0, r_square, sat,
     unit = dict_str["unit"] if dict_str is not None else ""
 
     # Init figure
-    fig, axs = plt.subplots(1, 2, figsize=FIGSIZE, sharex='all', sharey='all')
+    figsize = get_setting("figsize")
+    fig, axs = plt.subplots(1, 2, figsize=figsize, sharex='all', sharey='all')
     add = dict_str["label"].lower().replace(' ', '_')
     fig.sfn = f'sat_analysis_fig1_{add}'
 
@@ -175,7 +176,7 @@ def plot_sat_analysis(write, amp, piezorep, a_elec, y_0, x_0, r_square, sat,
     fig.legend(fontsize=13, loc='upper right')
 
     # Init figure
-    fig2, ax = plt.subplots(figsize=FIGSIZE)
+    fig2, ax = plt.subplots(figsize=figsize)
     add = dict_str["label"].lower().replace(' ', '_')
     fig2.sfn = f'sat_analysis_fig2_{add}'
 
@@ -242,7 +243,8 @@ def plot_offset_analysis(a_elec, y_0, x_0, r_square, read_volt, elec_fit,
     """
     unit = dict_str["unit"] if dict_str is not None else ""
 
-    fig, ax = plt.subplots(figsize=FIGSIZE)
+    figsize = get_setting("figsize")
+    fig, ax = plt.subplots(figsize=figsize)
     add = dict_str["label"].lower().replace(' ', '_')
     fig.sfn = f'offset_analysis_{add}'
 
@@ -322,7 +324,8 @@ def plot_differential_analysis(write_volt_left, write_volt_right, diff_fit,
     unit = dict_str["unit"] if dict_str is not None else ""
 
     # Create the figure and axes
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=FIGSIZE, sharex='all')
+    figsize = get_setting("figsize")
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=figsize, sharex='all')
     fig.sfn = 'differential_analysis'
 
     # Plot differential analysis
@@ -397,7 +400,8 @@ def plot_nanoloop_on_off(loop_on, loop_off, dict_str=None):
     index = dict_str["index"] if dict_str else 0
 
     # Create the figure and axes
-    fig, axs = plt.subplots(1, 2, figsize=FIGSIZE)
+    figsize = get_setting("figsize")
+    fig, axs = plt.subplots(1, 2, figsize=figsize)
     fig.sfn = 'on_off_field'
 
     # Plot butterfly loop
@@ -468,7 +472,8 @@ def plot_hysteresis(best_hyst, x_hyst, y_hyst, bckgnd=None, infl_threshold=10,
     unit = dict_str["unit"] if dict_str else ""
 
     # Create the figure and axes
-    fig, [ax0, ax1] = plt.subplots(1, 2, figsize=FIGSIZE)
+    figsize = get_setting("figsize")
+    fig, [ax0, ax1] = plt.subplots(1, 2, figsize=figsize)
     add = dict_str["label"].lower().replace(' ', '_')
     fig.sfn = f'hysteresis_fit_{add}'
 
