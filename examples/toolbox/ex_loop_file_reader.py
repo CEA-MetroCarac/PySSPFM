@@ -5,11 +5,10 @@ Example of loop_file_reader methods
 import os
 import numpy as np
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.toolbox.loop_file_reader import main_loop_file_reader
-
-from PySSPFM.settings import EXAMPLE_ROOT_PATH_IN
 
 
 def example_loop_file_reader(verbose=False, make_plots=False):
@@ -29,10 +28,11 @@ def example_loop_file_reader(verbose=False, make_plots=False):
         Result of the `main` function.
     """
     # Input and output file management
+    example_root_path_in = get_setting("example_root_path_in")
     file_path_in = os.path.join(
-        EXAMPLE_ROOT_PATH_IN, "KNN500n_2023-10-05-17h21m_out_dfrt", "nanoloops",
+        example_root_path_in, "KNN500n_2023-10-05-17h21m_out_dfrt", "nanoloops",
         "off_f_KNN500n_SSPFM.0_00056.txt")
-    csv_path = os.path.join(EXAMPLE_ROOT_PATH_IN, "KNN500n")
+    csv_path = os.path.join(example_root_path_in, "KNN500n")
 
     dict_pha = {
         'del 1st loop': True,
