@@ -137,7 +137,7 @@ def main(parent=None):
 
     # Function to generate the default input properties directory path
     def generate_default_input_props_dir(input_dir):
-        properties_folder_name = get_setting('properties folder name')
+        properties_folder_name = get_setting('default_properties_folder_name')
         if input_dir != "":
             root, _ = os.path.split(input_dir)
             input_props_dir = os.path.join(root, properties_folder_name)
