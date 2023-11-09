@@ -3,12 +3,11 @@ Example of raw_extraction methods
 """
 import os
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.datacube_to_nanoloop.plot import plt_signals
 from PySSPFM.utils.raw_extraction import data_extraction, csv_meas_sheet_extract
-
-from PySSPFM.settings import EXAMPLE_ROOT_PATH_IN
 
 
 def ex_data_extraction(ext, make_plots=False, verbose=False):
@@ -40,7 +39,8 @@ def ex_data_extraction(ext, make_plots=False, verbose=False):
     file_name = 'KNN500n_SSPFM.0_00056' + f'.{ext}'
     mode_dfrt = True
 
-    f_path = os.path.join(EXAMPLE_ROOT_PATH_IN, dir_name, file_name)
+    example_root_path_in = get_setting("example_root_path_in")
+    f_path = os.path.join(example_root_path_in, dir_name, file_name)
 
     # ex data_extraction
     dict_meas, script_dict = data_extraction(f_path, mode_dfrt=mode_dfrt,
@@ -76,7 +76,8 @@ def ex_csv_meas_sheet_extract(verbose=False):
     """
 
     dir_name = "KNN500n_reduced"
-    csv_dir_path = os.path.join(EXAMPLE_ROOT_PATH_IN, dir_name)
+    example_root_path_in = get_setting("example_root_path_in")
+    csv_dir_path = os.path.join(example_root_path_in, dir_name)
 
     # ex csv_meas_sheet_extract
     meas_pars, sign_pars = csv_meas_sheet_extract(csv_dir_path)
