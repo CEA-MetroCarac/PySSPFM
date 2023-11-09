@@ -4,11 +4,10 @@ Example of list_map_reader methods
 
 import os
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.toolbox.list_map_reader import main_list_map_reader
-
-from PySSPFM.settings import EXAMPLE_ROOT_PATH_IN
 
 
 def ex_list_map_reader(verbose=False):
@@ -25,8 +24,9 @@ def ex_list_map_reader(verbose=False):
     figures: list
         List of figures.
     """
+    example_root_path_in = get_setting("example_root_path_in")
     dir_path_in = os.path.join(
-        EXAMPLE_ROOT_PATH_IN, "KNN500n_2023-10-05-17h23m_out_dfrt",
+        example_root_path_in, "KNN500n_2023-10-05-17h23m_out_dfrt",
         "properties")
 
     ind_maps = [['off', 'fit pars: ampli_0'],
