@@ -203,30 +203,22 @@ def main_spm_converter(dir_path_in, mode='classic', extension='txt',
         print('############################################\n')
 
 
-def main(file_name_user_params=None):
-    """
-    Main function for data analysis
-
-    Parameters
-    ----------
-    file_name_user_params: str, optional
-        Name of user parameters file (json or toml extension), optional
-        (default is None, user parameters are used from original python script)
-    """
-    script_directory = os.path.dirname(os.path.realpath(__file__))
-    file_path_user_params = os.path.join(
-        script_directory, file_name_user_params) \
-        if file_name_user_params else "no file"
-    if os.path.exists(file_path_user_params):
+def main():
+    """ Main function for data analysis """
+    if get_setting("extract_parameters") in ['json', 'toml']:
+        script_directory = os.path.realpath(__file__)
+        file_path_user_params = script_directory.split('.')[0] + \
+            f'_params.{get_setting("extract_parameters")}'
         # Load parameters from the specified configuration file
-        print(f"user parameters from {file_name_user_params} file")
+        print(f"user parameters from {os.path.split(file_path_user_params)[1]} "
+              f"file")
         config_params = load_parameters_from_file(file_path_user_params)
         dir_path_in = config_params['dir_path_in']
         dir_path_out = config_params['dir_path_out']
         verbose = config_params['verbose']
         mode = config_params['mode']
         extension = config_params['extension']
-    else:
+    elif get_setting("extract_parameters") == 'python':
         # Get directory path
         dir_path_in = tkf.askdirectory()
         # dir_path_in = r'...\KNN500n
@@ -237,6 +229,9 @@ def main(file_name_user_params=None):
         mode = 'classic'
         # extension = 'txt' or 'csv' or 'xlsx'
         extension = 'txt'
+    else:
+        raise NotImplementedError("setting 'extract_parameters' "
+                                  "should be in ['json', 'toml', 'python']")
 
     # Main function
     main_spm_converter(dir_path_in, mode=mode, extension=extension,

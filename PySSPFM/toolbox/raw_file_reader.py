@@ -6,6 +6,7 @@ Inspired by SS_PFM script, Nanoscope, Bruker
 import os
 import tkinter.filedialog as tkf
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots
@@ -49,23 +50,15 @@ def main_raw_file_reader(file_path_in, mode='classic', verbose=False):
     return [fig]
 
 
-def main(file_name_user_params=None):
-    """
-    Main function for data analysis
-
-    Parameters
-    ----------
-    file_name_user_params: str, optional
-        Name of user parameters file (json or toml extension), optional
-        (default is None, user parameters are used from original python script)
-    """
-    script_directory = os.path.dirname(os.path.realpath(__file__))
-    file_path_user_params = os.path.join(
-        script_directory, file_name_user_params) \
-        if file_name_user_params else "no file"
-    if os.path.exists(file_path_user_params):
+def main():
+    """ Main function for data analysis """
+    if get_setting("extract_parameters") in ['json', 'toml']:
+        script_directory = os.path.realpath(__file__)
+        file_path_user_params = script_directory.split('.')[0] + \
+            f'_params.{get_setting("extract_parameters")}'
         # Load parameters from the specified configuration file
-        print(f"user parameters from {file_name_user_params} file")
+        print(f"user parameters from {os.path.split(file_path_user_params)[1]} "
+              f"file")
         config_params = load_parameters_from_file(file_path_user_params)
         file_path_in = config_params['file_path_in']
         dir_path_out = config_params['dir_path_out']
@@ -73,7 +66,7 @@ def main(file_name_user_params=None):
         show_plots = config_params['show_plots']
         save_plots = config_params['save_plots']
         mode = config_params['mode']
-    else:
+    elif get_setting("extract_parameters") == 'python':
         file_path_in = tkf.askopenfilename()
         # file_path_in = r'...\KNN500n\KNN500n.0_00001.spm
         dir_path_out = None
@@ -83,6 +76,9 @@ def main(file_name_user_params=None):
         save_plots = False
         # Mode = 'dfrt' or 'classic' (sweep)
         mode = 'classic'
+    else:
+        raise NotImplementedError("setting 'extract_parameters' "
+                                  "should be in ['json', 'toml', 'python']")
 
     figs = []
     # Generate default path out
