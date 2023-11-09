@@ -13,8 +13,9 @@ import pandas as pd
 import numpy as np
 
 from PySSPFM.settings import get_setting
+from PySSPFM.utils.core.extract_params_from_file import \
+    load_parameters_from_file
 from PySSPFM.utils.raw_extraction import data_extraction
-from PySSPFM.utils.path_for_runable import load_parameters_from_file
 
 
 def single_script(dir_path_out, file_path_in, extension='txt', mode='classic',

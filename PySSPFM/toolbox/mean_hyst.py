@@ -14,6 +14,8 @@ from datetime import datetime
 import numpy as np
 
 from PySSPFM.settings import get_setting
+from PySSPFM.utils.core.extract_params_from_file import \
+    load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.nanoloop.file import extract_nanoloop_data
 from PySSPFM.utils.nanoloop.analysis import nanoloop_treatment, MeanLoop
@@ -27,8 +29,7 @@ from PySSPFM.utils.nanoloop_to_hyst.electrostatic import \
     gen_differential_loop, linreg_differential
 from PySSPFM.utils.nanoloop_to_hyst.analysis import \
     find_best_nanoloop, hyst_analysis, electrostatic_analysis
-from PySSPFM.utils.path_for_runable import \
-    save_path_management, save_user_pars, load_parameters_from_file
+from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
 
 def single_script(file, user_pars, meas_pars, sign_pars,

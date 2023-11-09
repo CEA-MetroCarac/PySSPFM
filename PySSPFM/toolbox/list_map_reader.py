@@ -11,6 +11,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from PySSPFM.settings import get_setting
+from PySSPFM.utils.core.extract_params_from_file import \
+    load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.nanoloop.plot import subplots_dim
 from PySSPFM.utils.nanoloop_to_hyst.file import extract_properties
@@ -19,8 +21,7 @@ from PySSPFM.utils.map.main import gen_mask_ref
 from PySSPFM.utils.map.matrix_processing import formatting_measure
 from PySSPFM.toolbox.map_correlation import \
     gen_correlation_array, plot_correlation_table
-from PySSPFM.utils.path_for_runable import \
-    save_path_management, save_user_pars, load_parameters_from_file
+from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
 
 def main_list_map_reader(user_pars, dir_path_in, verbose=False):

@@ -14,7 +14,8 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 
 from PySSPFM.settings import get_setting
-from PySSPFM.utils.path_for_runable import load_parameters_from_file
+from PySSPFM.utils.core.extract_params_from_file import \
+    load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.raw_extraction import data_extraction
 from PySSPFM.utils.signal_bias import sspfm_time, sspfm_generator, write_vec

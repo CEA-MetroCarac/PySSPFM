@@ -8,12 +8,13 @@ import os
 import tkinter.filedialog as tkf
 from datetime import datetime
 
+from PySSPFM.utils.core.extract_params_from_file import \
+    load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.map.main import main_mapping
 from PySSPFM.utils.nanoloop_to_hyst.file import extract_properties
 from PySSPFM.toolbox.map_correlation import correlation_analysis_all_maps
-from PySSPFM.utils.path_for_runable import \
-    save_path_management, save_user_pars, load_parameters_from_file
+from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
 
 def main_global_map_reader(

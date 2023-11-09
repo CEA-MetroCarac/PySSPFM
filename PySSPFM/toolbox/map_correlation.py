@@ -10,11 +10,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from PySSPFM.settings import get_setting
+from PySSPFM.utils.core.extract_params_from_file import \
+    load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots, plot_map
 from PySSPFM.utils.nanoloop_to_hyst.file import extract_properties
 from PySSPFM.utils.map.interpolate import remove_val
-from PySSPFM.utils.path_for_runable import \
-    save_path_management, save_user_pars, load_parameters_from_file
+from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
 
 def plot_correlation_table(arr, map_label=None, add_txt=''):

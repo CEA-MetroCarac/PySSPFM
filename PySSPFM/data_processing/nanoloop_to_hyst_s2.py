@@ -11,7 +11,8 @@ from datetime import datetime
 import numpy as np
 
 from PySSPFM.settings import get_setting
-from PySSPFM.utils.path_for_runable import load_parameters_from_file
+from PySSPFM.utils.core.extract_params_from_file import \
+    load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.nanoloop.file import extract_nanoloop_data
 from PySSPFM.utils.nanoloop.plot import plot_ckpfm

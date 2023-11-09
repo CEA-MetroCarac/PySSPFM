@@ -6,11 +6,12 @@ Inspired by SS_PFM script, Nanoscope, Bruker
 import os
 import tkinter.filedialog as tkf
 
+from PySSPFM.utils.core.extract_params_from_file import \
+    load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.datacube_to_nanoloop.plot import plt_signals
 from PySSPFM.utils.raw_extraction import data_extraction
-from PySSPFM.utils.path_for_runable import \
-    save_path_management, load_parameters_from_file
+from PySSPFM.utils.path_for_runable import save_path_management
 
 
 def main_raw_file_reader(file_path_in, mode='classic', verbose=False):
