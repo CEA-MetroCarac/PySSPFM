@@ -363,8 +363,7 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
             </ul>
         </ul>
         <ul align="justify" width="100%">
-            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/default_settings.json">default_settings.json
-</a></code>: représente un fichier json contenant l'ensemble de settings utilisés par défaut (pour les tests et exemples) de l'application PySSPFM</li>
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/default_settings.json">default_settings.json</a></code>: représente un fichier json contenant l'ensemble de settings utilisés par défaut (pour les tests et exemples) de l'application PySSPFM</li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/ex_settings.py">examples/ex_settings.py</a></code>.</li>
             </ul>
