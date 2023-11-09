@@ -357,19 +357,19 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
             </ul>
         </ul>
         <ul align="justify" width="100%">
-            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/settings.json">settings.json</a></code>: A JSON file containing the complete set of configuration parameters for the PySSPFM application. It is opened for the following file :</li>
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/settings.json">settings.json</a></code>: a json file containing the complete set of configuration parameters for the PySSPFM application. It is opened for the following file :</li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/ex_settings.py">examples/ex_settings.py</a></code>.</li>
             </ul>
         </ul>
         <ul align="justify" width="100%">
-            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/default_settings.json">default_settings.json</a></code>: A JSON file containing the default set of configuration parameters used by the PySSPFM application (used for tests and examples). It is opened for the following file :</li>
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/default_settings.json">default_settings.json</a></code>: a json file containing the default set of configuration parameters used by the PySSPFM application (used for tests and examples). It is opened for the following file :</li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/ex_settings.py">examples/ex_settings.py</a></code>.</li>
             </ul>
         </ul>
         <ul align="justify" width="100%">
-            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/mean_hyst_params.json">mean_hyst_params.json</a></code>:  A JSON file containing the complete set of parameters associated with an executable code (in this case, mean_hyst.py). It is opened for the following file :</li>
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/mean_hyst_params.json">mean_hyst_params.json</a></code>: a json file containing the complete set of parameters associated with an executable code (in this case, mean_hyst.py). It is opened for the following file :</li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/core/ex_extract_params_from_file.py">examples/utils/core/ex_extract_params_from_file.py</a></code>.</li>
             </ul>
@@ -475,7 +475,7 @@ The <code>save_test_example</code> settings provide the option to determine whet
 #### III.2.e) - Parameters
 
 <p align="justify" width="100%">
-For each of the executable scripts within <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/data_processing">data_processing</a></code> or the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">toolbox</a></code>, a json file, have been created in the same directory, to load the user parameters for the measurement processing. To employ one of these files within the Python script, thus configuring the user's processing parameters, one must replace the default value of the input variable, <code>file_name_user_params</code>, within the <code>parameters</code> function with the corresponding json file name, making sure to adjust the desired parameter values within the file. If <code>file_name_user_params</code> is left as the default, <code>None</code>, the user-defined parameters will be those specified in the executed Python script. The user can also create and use toml extension file to deal with the treatment parameters. It's important to note that the installation of the <a href="https://pypi.org/project/toml/">toml</a> library is requisite for reading a toml file.
+For each of the executable scripts within <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/data_processing">data_processing</a></code> or the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">toolbox</a></code>, a json file, have been created in the same directory, to load the user parameters for the measurement processing. The <code>extract_parameters</code> setting allows the user to choose whether to extract parameters from a json, toml, or directly from the current python file (by assigning the value <code>"json"</code> (default), <code>"toml"</code>, or <code>"python"</code>, respectively). The name of the json or toml file must be the same as the corresponding executable python file, followed by <code>"_params"</code> and the file extension. To employ one of these files within the Python script, make sure to adjust the desired parameter values within the file. The user can also create and use toml extension file to deal with the treatment parameters. It's important to note that the installation of the <a href="https://pypi.org/project/toml/">toml</a> library is requisite for reading a toml file.
 </p>
 
 ## IV) - First step of data analysis
