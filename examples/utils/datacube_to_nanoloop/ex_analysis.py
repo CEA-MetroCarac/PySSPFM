@@ -6,14 +6,13 @@ import matplotlib.pyplot as plt
 
 from examples.utils.datacube_to_nanoloop.ex_gen_data import \
     ex_gen_segments, pars_segment
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.datacube_to_nanoloop.plot import \
     plt_seg_max, plt_seg_fit, plt_seg_dfrt
 from PySSPFM.utils.datacube_to_nanoloop.analysis import \
     Segment, zi_calib, init_parameters
-
-from PySSPFM.settings import FIGSIZE
 
 
 def list_segs(mode, nb_seg_str='all'):
@@ -118,7 +117,8 @@ def ex_calib(make_plots=False):
                               dict_meas_dfrt_amp_zi]
 
     if make_plots:
-        fig, ax = plt.subplots(3, 2, figsize=FIGSIZE, sharex='all')
+        figsize = get_setting("figsize")
+        fig, ax = plt.subplots(3, 2, figsize=figsize, sharex='all')
         fig.sfn = "ex_calib"
         plot_dict = {'title': 'zi signal', 'x lab': '',
                      'y lab': 'amplitude zi (V)', 'fs': 13, 'edgew': 3,
