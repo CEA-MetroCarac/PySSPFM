@@ -10,6 +10,7 @@ from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.nanoloop.plot import subplots_dim
 from PySSPFM.utils.nanoloop_to_hyst.file import extract_properties
@@ -20,8 +21,6 @@ from PySSPFM.toolbox.map_correlation import \
     gen_correlation_array, plot_correlation_table
 from PySSPFM.utils.path_for_runable import \
     save_path_management, save_user_pars, load_parameters_from_file
-
-from PySSPFM.settings import FIGSIZE
 
 
 def main_list_map_reader(user_pars, dir_path_in, verbose=False):
@@ -94,11 +93,12 @@ def main_list_map_reader(user_pars, dir_path_in, verbose=False):
         if user_pars['revert mask'] else mask
 
     maps = []
+    figsize = get_setting("figsize")
     # Plot ref
     if ref:
         if verbose:
             print('# reference property')
-        fig_ref = plt.figure(figsize=FIGSIZE)
+        fig_ref = plt.figure(figsize=figsize)
         fig_ref.sfn = "list_map_reader_ref"
         axs_ref = formatting_fig(fig_ref, [1, 1], applied_mask, nb_map=1,
                                  dict_map=None, dict_ref=None, dim_mic=None)
@@ -116,7 +116,7 @@ def main_list_map_reader(user_pars, dir_path_in, verbose=False):
         print('# multi mapping')
     nb_map = len(list(multi_prop.keys()))
     fig_maps_dim = subplots_dim(nb_map)
-    fig_maps = plt.figure(figsize=FIGSIZE)
+    fig_maps = plt.figure(figsize=figsize)
     fig_maps.sfn = "list_map_reader_maps"
     axs_maps = formatting_fig(
         fig_maps, fig_maps_dim, applied_mask,  nb_map=nb_map, dict_map=None,
