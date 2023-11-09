@@ -1,0 +1,34 @@
+{
+"default_parameters_file_name": "parameters.txt",
+"default_figures_folder_name": "figs",
+"default_nanoloops_folder_name": "nanoloops",
+"default_best_nanoloop_folder_name": "best_nanoloops",
+"default_properties_folder_name": "properties",
+"key_measurement_extraction": {
+    "spm": {
+        "classic": {"time": "times",
+                    "HS PR Amplitude (nm)": "amp",
+                    "HS PR Phase (°)": "pha",
+                    "DeflectionIn1B (nm)": "deflection"},
+        "dfrt": {"time": "times",
+                 "Tip Bias (V)": "amp",
+                 "Input3 (V)": "pha",
+                 "DeflectionIn1B (nm)": "deflection"}},
+    "table": {
+        "classic": {"time": "times",
+                    "Amplitude": "amp",
+                    "Phase": "pha",
+                    "Deflection": "deflection"},
+        "dfrt": {"time": "times",
+                 "Amplitude": "amp",
+                 "Phase": "pha",
+                 "Deflection": "deflection"}}
+},
+"header_lines": 1,
+"index_line_meas_name": 0,
+"delimiter": "\t\t",
+"detect_bug_segments": false,
+"fit_method": "nelder",
+"histo_phase_method": "fit",
+"electrostatic_offset": true
+}
