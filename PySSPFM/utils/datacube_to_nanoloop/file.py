@@ -52,7 +52,7 @@ def save_parameters(dir_path_out, t0, date, user_pars, meas_pars, sign_pars,
         'nb file analyzed': nb_file
     }
 
-    parameters_file_name = get_setting('parameters file name')
+    parameters_file_name = get_setting('default_parameters_file_name')
     file_path_out = os.path.join(dir_path_out, parameters_file_name)
 
     with open(file_path_out, 'w', encoding='utf-8') as file:
