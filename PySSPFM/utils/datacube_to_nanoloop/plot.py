@@ -9,14 +9,13 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.figure import plot_graph, plot_map
-
-from PySSPFM.settings import COLOR_AMP_PHA_MAP, FIGSIZE
 
 
 def amp_pha_map(seg_tab, dict_meas, index_hold, freq_range=None,
                 read_nb_voltages=None, cut_seg=None, mapping_label='',
-                unit='a.u', mode='dfrt', colo=COLOR_AMP_PHA_MAP):
+                unit='a.u', mode='dfrt', colo=None):
     """
     Plot a figure with tip bias, and 2 maps of amplitude and phase with
     frequency for each segment
@@ -64,7 +63,8 @@ def amp_pha_map(seg_tab, dict_meas, index_hold, freq_range=None,
                   'end': dict_meas['times'][index_hold['end'][0] - 1]}
 
     # Init figure
-    fig, axs = plt.subplots(3, 1, figsize=FIGSIZE, sharex='all')
+    figsize = get_setting("figsize")
+    fig, axs = plt.subplots(3, 1, figsize=figsize, sharex='all')
     fig.sfn = f'amp_pha_{mapping_label.replace(" ", "_").lower()}'
     fig.suptitle(mapping_label, fontsize=24, fontweight='heavy')
 
@@ -102,6 +102,7 @@ def amp_pha_map(seg_tab, dict_meas, index_hold, freq_range=None,
         else:
             y_lab = 'Freq [kHz]'
         plot_dict = {'x lab': '', 'y lab': y_lab}
+        colo = colo or get_setting("color_amp_pha_map")
         colorbar_dict = {'lab': y_label[key], 'col': colo}
         plot_map(fig, axs[cont + 1], np.transpose(np.array(meas_tab)),
                  extent=extent, plot_dict=plot_dict,
@@ -153,7 +154,8 @@ def plt_bias(time_bias_calc, ss_pfm_bias_calc, ss_pfm_bias, dict_meas):
     fig: plt.figure
         The generated figure
     """
-    fig, ax = plt.subplots(figsize=FIGSIZE)
+    figsize = get_setting("figsize")
+    fig, ax = plt.subplots(figsize=figsize)
     fig.sfn = 'sspfm_bias'
 
     if len(dict_meas['tip_bias']) == 0:
@@ -196,7 +198,8 @@ def plt_amp(dict_meas, unit='a.u'):
     fig: plt.figure
         The generated figure
     """
-    fig, ax = plt.subplots(figsize=FIGSIZE)
+    figsize = get_setting("figsize")
+    fig, ax = plt.subplots(figsize=figsize)
     fig.sfn = 'sspfm_bias_amplitude'
     ax2 = ax.twinx()
     plot_dict = {'title': 'SS PFM Signal and Amplitude', 'x lab': 'Time [s]',
@@ -234,7 +237,8 @@ def plt_signals(dict_meas, unit='a.u'):
         The generated figure
     """
     # Initialize figure
-    fig, axs = plt.subplots(4, 1, figsize=FIGSIZE, sharex='all')
+    figsize = get_setting("figsize")
+    fig, axs = plt.subplots(4, 1, figsize=figsize, sharex='all')
     fig.sfn = "raw_signals"
     fig.suptitle('\nPhysical Signals in Time', fontsize=24, fontweight='heavy')
     plot_dict = {'x lab': '', 'lw': 1, 'fs': 15, 'edgew': 2, 'tickl': 3,
@@ -292,7 +296,8 @@ def plt_seg_max(seg, unit='a.u'):
         The generated figure
     """
     # Initialize figure
-    fig, ax = plt.subplots(figsize=FIGSIZE)
+    figsize = get_setting("figsize")
+    fig, ax = plt.subplots(figsize=figsize)
     fig.sfn = f'segment_{seg.seg_infos["index"]}_max'
     ax2 = ax.twinx()
 
@@ -355,8 +360,9 @@ def plt_seg_fit(seg, unit='a.u', fit_pha=False):
         The generated figure
     """
     # Initialize figure
+    figsize = get_setting("figsize")
     fig, (ax1, ax2) = plt.subplots(nrows=2, sharex='all', sharey='all',
-                                   figsize=FIGSIZE)
+                                   figsize=figsize)
     fig.sfn = f'segment_{seg.seg_infos["index"]}_fit'
     ax1b, ax2b = ax1.twinx(), ax2.twinx()
 
@@ -428,7 +434,8 @@ def plt_seg_dfrt(seg, unit='a.u'):
         The generated figure
     """
     # Initialize figure
-    fig, (ax1, ax2) = plt.subplots(nrows=2, sharex='all', figsize=FIGSIZE)
+    figsize = get_setting("figsize")
+    fig, (ax1, ax2) = plt.subplots(nrows=2, sharex='all', figsize=figsize)
     fig.sfn = f'segment_{seg.seg_infos["index"]}_dfrt'
 
     # Plot amplitude and phase segment
@@ -504,7 +511,8 @@ def plt_seg(dict_meas, hold_dict, index, sign_pars):
         The generated figure
     """
     # Initialize figure
-    fig, (ax_1, ax_2) = plt.subplots(2, 1, figsize=FIGSIZE)
+    figsize = get_setting("figsize")
+    fig, (ax_1, ax_2) = plt.subplots(2, 1, figsize=figsize)
     fig.suptitle('Cut function analysis', fontsize=24, fontweight='heavy')
 
     # Plot index nb with time
