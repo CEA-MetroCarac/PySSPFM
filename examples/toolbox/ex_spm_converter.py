@@ -5,14 +5,12 @@ Example of spm_converter methods
 import os
 import shutil
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.raw_extraction import data_extraction
 from PySSPFM.toolbox.raw_file_reader import main_raw_file_reader
 from PySSPFM.toolbox.spm_converter import main_spm_converter
-
-from PySSPFM.settings import \
-    EXAMPLE_ROOT_PATH_IN, EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT
 
 
 def example_spm_converter(ext, make_plots=False, verbose=False):
@@ -37,13 +35,16 @@ def example_spm_converter(ext, make_plots=False, verbose=False):
     assert ext in ['txt', 'csv', 'xlsx']
 
     # Define paths
-    dir_path_in = os.path.join(EXAMPLE_ROOT_PATH_IN, 'KNN500n_reduced')
+    dir_path_in = os.path.join(get_setting("example_root_path_in"),
+                               'KNN500n_reduced')
     if make_plots:
         dir_path_out_data = os.path.join(
-            EXAMPLE_ROOT_PATH_OUT, f'KNN500n_reduced_datacube_{ext}')
+            get_setting("example_root_path_out"),
+            f'KNN500n_reduced_datacube_{ext}')
     else:
         dir_path_out_data = os.path.join(
-            DEFAULT_DATA_PATH_OUT, f'KNN500n_reduced_datacube_{ext}')
+            get_setting("default_data_path_out"),
+            f'KNN500n_reduced_datacube_{ext}')
 
     # Remove existing output directory and create a new one
 
