@@ -393,7 +393,7 @@ def main_mean_hyst(user_pars, verbose=False, make_plots=False):
         offsets_off = properties['off']['charac tot fit: y shift']
         selected_offsets_off = [val for cont, val in enumerate(offsets_off) if
                                 cont not in applied_mask]
-        elec_offset = get_setting('elec offset')
+        elec_offset = get_setting('electrostatic_offset')
         selected_offsets_off = selected_offsets_off if elec_offset else None
         res = mean_analysis_coupled(
             best_loops,
@@ -650,13 +650,13 @@ def parameters(file_name_user_params=None):
                      'sat domain': {'min': -9., 'max': 9.},
                      'interp fact': 4,
                      'interp func': 'linear'}
-    properties_folder_name = get_setting('properties folder name')
+    properties_folder_name = get_setting('default_properties_folder_name')
     dir_path_in_prop = os.path.join(dir_path_in, properties_folder_name)
     # dir_path_in_prop = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
-    nanoloops_folder_name = get_setting('nanoloops folder name')
+    nanoloops_folder_name = get_setting('default_nanoloops_folder_name')
     dir_path_in_loop = os.path.join(dir_path_in, nanoloops_folder_name)
     # dir_path_in_loop = r'...\KNN500n_15h18m02-10-2023_out_dfrt\nanoloops
-    parameters_file_name = get_setting('parameters file name')
+    parameters_file_name = get_setting('default_parameters_file_name')
     file_path_in_pars = os.path.join(dir_path_in, parameters_file_name)
     # file_path_in_pars = r'...\KNN500n_15h18m02-10-2023_out_dfrt\results\
     # saving_parameters.txt
