@@ -4,11 +4,10 @@ Example of raw_file_reader methods
 
 import os
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.toolbox.raw_file_reader import main_raw_file_reader
-
-from PySSPFM.settings import EXAMPLE_ROOT_PATH_IN
 
 
 def example_raw_file_reader(ext, verbose=False):
@@ -35,8 +34,8 @@ def example_raw_file_reader(ext, verbose=False):
         dir_name += f'_datacube_{ext}'
     file_name = 'KNN500n_SSPFM.0_00056' + f'.{ext}'
     mode = 'dfrt'
-
-    f_path = os.path.join(EXAMPLE_ROOT_PATH_IN, dir_name, file_name)
+    example_root_path_in = get_setting("example_root_path_in")
+    f_path = os.path.join(example_root_path_in, dir_name, file_name)
 
     # ex main_raw_file_reader
     fig = main_raw_file_reader(f_path, mode, verbose=verbose)
