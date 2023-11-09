@@ -48,7 +48,7 @@ def data_identification(raw_dict, type_file, mode_dfrt=False):
     """
     dict_meas = {}
     strg = 'dfrt' if mode_dfrt else 'classic'
-    key_measurement_extraction = get_setting("key meas extract")
+    key_measurement_extraction = get_setting("key_measurement_extraction")
     dict_identify_mea = key_measurement_extraction[type_file][strg]
 
     for key, value in dict_identify_mea.items():
@@ -177,12 +177,12 @@ def extr_data_table(file_path_in, mode_dfrt=False):
     script_dict = script_dict_from_meas_sheet(root_in)
 
     file_type = os.path.splitext(file_path_in)[1][1:]
-    header_lines = get_setting('header lines')
+    header_lines = get_setting('header_lines')
 
     # Extract and identify measurements from the file
     if file_type == 'txt':
         delimiter = get_setting('delimiter')
-        index_line_meas_name = get_setting('index line meas name')
+        index_line_meas_name = get_setting('index_line_meas_name')
         raw_data = np.genfromtxt(
             file_path_in, delimiter=delimiter, skip_header=header_lines).T
         # Extraire le header
