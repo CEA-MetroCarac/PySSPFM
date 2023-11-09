@@ -5,11 +5,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from examples.utils.nanoloop.ex_analysis import init_pars
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import plot_graph, print_plots
 from PySSPFM.utils.nanoloop.gen_data import gen_nanoloops
-
-from PySSPFM.settings import FIGSIZE
 
 
 def ex_gen_nanoloops(mode, make_plots=False):
@@ -41,9 +40,10 @@ def ex_gen_nanoloops(mode, make_plots=False):
 
     # Plot
     if make_plots:
+        figsize = get_setting("figsize")
         figs_genloop = []
         plot_dict = {'fs': 13, 'edgew': 3, 'tickl': 5, 'gridw': 1}
-        fig, axs = plt.subplots(2, pars['read']['nb'], figsize=FIGSIZE)
+        fig, axs = plt.subplots(2, pars['read']['nb'], figsize=figsize)
         fig.sfn = f'ex_gen_nanoloops_{mode}_field'
         fig.suptitle(f'{mode} field', size=plot_dict['fs'], weight='heavy')
         for i in range(pars['read']['nb']):
