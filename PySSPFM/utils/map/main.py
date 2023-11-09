@@ -7,12 +7,11 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.iterable import arg_cond
 from PySSPFM.utils.map.matrix_processing import \
     init_formatting_measure, cleared_measure
 from PySSPFM.utils.map.plot import plot_and_save_maps, intermediate_map
-
-from PySSPFM.settings import COLOR_SSPFM_MAP, FIGSIZE
 
 
 def main_mapping(properties, dim_pix, dim_mic=None, dict_interp=None,
@@ -85,7 +84,7 @@ def main_mapping(properties, dim_pix, dim_mic=None, dict_interp=None,
         try:
             color = colors[key]
         except TypeError:
-            color = COLOR_SSPFM_MAP
+            color = get_setting("color_sspfm_map")
         try:
             cbar_lab = cbar_lab[key]
         except TypeError:
@@ -221,7 +220,8 @@ def interactive_range_ref(ref, dim_pix, dim_mic=None, dict_map=None,
                                          mask=mask)
 
         # Initialize image
-        fig = plt.figure(figsize=FIGSIZE)
+        figsize = get_setting("figsize")
+        fig = plt.figure(figsize=figsize)
         ax = fig.add_subplot(111)
 
         # Colormap and colorbar
