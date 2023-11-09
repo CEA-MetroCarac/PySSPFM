@@ -355,21 +355,25 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_raw_file_reader.py">examples/toolbox/ex_raw_file_reader.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/ex_raw_extraction.py">examples/utils/ex_raw_extraction.py</a></code>.</li>
             </ul>
+        </ul>
+        <ul align="justify" width="100%">
             <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/settings.json">settings.json</a></code>: représente un fichier json contenant l'ensemble de settings de l'application PySSPFM. L'exemple suivant s'applique sur ce fichier : </li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/ex_settings.py">examples/ex_settings.py</a></code>.</li>
             </ul>
-            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/settings.json">settings.json</a></code>: représente un fichier json contenant l'ensemble de settings de l'application PySSPFM. L'exemple suivant s'applique sur ce fichier : </li>
-            <ul align="justify" width="100%">
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/ex_settings.py">examples/ex_settings.py</a></code>.</li>
-            </ul>
+        </ul>
+        <ul align="justify" width="100%">
             <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/default_settings.json">default_settings.json
 </a></code>: représente un fichier json contenant l'ensemble de settings utilisés par défaut (pour les tests et exemples) de l'application PySSPFM</li>
             <ul align="justify" width="100%">
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/core/ex_extract_params_from_file.py">examples/utils/core/ex_extract_params_from_file.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/ex_settings.py">examples/ex_settings.py</a></code>.</li>
             </ul>
+        </ul>
+        <ul align="justify" width="100%">
             <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/mean_hyst_params.json">mean_hyst_params.json
 </a></code>: représente un fichier json contenant l'ensemble des paramètres associés à un code excécutable (en locurrence <code>mean_hyst.py</code>)</li>
+            <ul align="justify" width="100%">
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/core/ex_extract_params_from_file.py">examples/utils/core/ex_extract_params_from_file.py</a></code>.</li>
             </ul>
         </ul>
     </ul>
