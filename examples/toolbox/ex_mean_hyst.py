@@ -4,11 +4,10 @@ Example of mean_hyst methods
 import os
 import numpy as np
 
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.toolbox.mean_hyst import main_mean_hyst
-
-from PySSPFM.settings import EXAMPLE_ROOT_PATH_IN
 
 
 def example_mean_hyst(phase='1', mode='off', verbose=False, make_plots=False):
@@ -95,8 +94,9 @@ def example_mean_hyst(phase='1', mode='off', verbose=False, make_plots=False):
     else:
         raise IOError("mode should be in 'off', 'on', 'coupled'")
     # file management
+    example_root_path_in = get_setting("example_root_path_in")
     dir_path_in = os.path.join(
-        EXAMPLE_ROOT_PATH_IN, "KNN500n_2023-10-05-17h23m_out_dfrt")
+        example_root_path_in, "KNN500n_2023-10-05-17h23m_out_dfrt")
     dir_path_in_props = os.path.join(dir_path_in, "properties")
     dir_path_in_loop = os.path.join(dir_path_in, "nanoloops")
     file_path_in_pars = os.path.join(dir_path_in, "parameters.txt")
