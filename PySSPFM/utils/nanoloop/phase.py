@@ -10,8 +10,6 @@ from PySSPFM.utils.core.figure import plot_graph
 from PySSPFM.utils.core.peak import find_main_peaks
 from PySSPFM.utils.core.fitting import GaussianPeakFit
 
-from PySSPFM.settings import FIGSIZE
-
 
 def phase_calibration(phase, write_voltage, dict_pha, dict_str=None,
                       make_plots=False):
@@ -119,7 +117,7 @@ def phase_calibration(phase, write_voltage, dict_pha, dict_str=None,
             peak_phase_max = (hist_vect[res['peaks'][res['main'][0]]],
                               hist_vect[res['peaks'][res['main'][1]]])
             diff_phase_max = abs(peak_phase_max[1] - peak_phase_max[0])
-            histo_phase_method = get_setting('histo phase method')
+            histo_phase_method = get_setting('histo_phase_method')
             if histo_phase_method == 'fit':
                 try:
                     # Fit two phase peaks
@@ -265,7 +263,8 @@ def phase_analysis(phase, write_voltage, bias_pola_target=None,
     positive_pha_grad = np.mean(grad_mean_pha) >= 0
 
     if make_plots:
-        fig, (ax_1, ax_2) = plt.subplots(1, 2, figsize=FIGSIZE)
+        figsize = get_setting("figsize")
+        fig, (ax_1, ax_2) = plt.subplots(1, 2, figsize=figsize)
         add = mode.lower().replace(' ', '_')
         fig.sfn = f'phase_analysis_{add}'
         fig.suptitle('Phase up & down analysis', size=24, weight='heavy')
@@ -361,7 +360,8 @@ def histo_init(filtered_phase, dict_str=None, make_plots=False):
 
     fig, ax = [], []
     if make_plots:
-        fig, ax = plt.subplots(figsize=FIGSIZE)
+        figsize = get_setting("figsize")
+        fig, ax = plt.subplots(figsize=figsize)
         add = mode.lower().replace(' ', '_')
         fig.sfn = f'histo_phase_{add}'
         plot_dict = {'title': 'Histogram phase', 'x lab': 'Phase (°)',
