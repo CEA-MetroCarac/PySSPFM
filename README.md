@@ -97,7 +97,8 @@ See the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc">docume
 <p align="justify" width="100%">
 All code executed and parameter adjustments made through the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/gui">GUI</a> can be replicated in executable scripts: <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/data_processing">Data Processing</a> <br>
-&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">Toolbox</a>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">Toolbox</a> <br>
+Then, user can adjust parameters directly either in a pre-filled json file, in a toml file or in the excecutable python code.
 </p>
 
 <p align="justify" width="100%">
