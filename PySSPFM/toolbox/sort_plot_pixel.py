@@ -31,7 +31,6 @@ from PySSPFM.toolbox.loop_file_reader import main_loop_file_reader
 from PySSPFM.utils.path_for_runable import \
     save_path_management, save_user_pars, load_parameters_from_file
 
-from PySSPFM.settings import FIGSIZE
 DEFAULT_LIMIT = {'min': -8., 'max': 8.}
 
 
@@ -95,8 +94,8 @@ def plot_comparative_hyst(mean_hyst, mean_loop, hyst, loop, bckgnd=None,
         Figure of hysteresis analysis (fit and properties hysteresis plotting)
     """
     unit = "" if dict_str is None else dict_str["unit"]
-
-    fig, axs = plt.subplots(2, 2, figsize=FIGSIZE, sharex='all', sharey='row')
+    figsize = get_setting("figsize")
+    fig, axs = plt.subplots(2, 2, figsize=figsize, sharex='all', sharey='row')
     fig.sfn = f'hysteresis_fit_pixel_{pixel_ind}'
 
     # For mean // selected file
@@ -494,7 +493,7 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
                 multi_figures = main_mean_hyst(treat_pars, verbose=False,
                                                make_plots=True)
                 offsets_off = properties['off']['charac tot fit: y shift']
-                elec_offset = get_setting('elec offset')
+                elec_offset = get_setting('electrostatic_offset')
                 offset_off = offsets_off[dict_file[file]] if elec_offset else 0
                 _, _, _, single_fig = differential_analysis(
                     best_loop['on'], best_loop['off'], offset_off=offset_off,
@@ -516,7 +515,8 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
                 highlight_pix=[dict_file[file]])
             fig_map.sfn += f'_pixel_{dict_file[file]}'
             add_txt(fig_map, dict_str)
-            histo, ax = plt.subplots(figsize=FIGSIZE)
+            figsize = get_setting("figsize")
+            histo, ax = plt.subplots(figsize=figsize)
             histo.sfn = f'histo_pixel_{dict_file[file]}'
             plot_dict = {'title': f'histo: pixel {dict_file[file]}',
                          'x lab': f'{user_pars["prop key"]["prop"]}',
@@ -649,13 +649,13 @@ def parameters(file_name_user_params=None):
                      'del 1st loop': True,
                      'interp fact': 4,
                      'interp func': 'linear'}
-    properties_folder_name = get_setting('properties folder name')
+    properties_folder_name = get_setting('default_properties_folder_name')
     dir_path_in_prop = os.path.join(dir_path_in, properties_folder_name)
     # dir_path_in_prop = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
-    nanoloops_folder_name = get_setting('nanoloops folder name')
+    nanoloops_folder_name = get_setting('default_nanoloops_folder_name')
     dir_path_in_loop = os.path.join(dir_path_in, nanoloops_folder_name)
     # dir_path_in_loop = r'...\KNN500n_15h18m02-10-2023_out_dfrt\nanoloops
-    parameters_file_name = get_setting('parameters file name')
+    parameters_file_name = get_setting('default_parameters_file_name')
     file_path_in_pars = os.path.join(dir_path_in, parameters_file_name)
     # file_path_in_pars = r'...\KNN500n_15h18m02-10-2023_out_dfrt\parameters.txt
     user_pars['dir path in prop'] = dir_path_in_prop
