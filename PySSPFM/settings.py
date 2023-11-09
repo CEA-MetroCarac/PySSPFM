@@ -58,6 +58,14 @@ SAVE_TEST_EXAMPLE: bool
     or examples or not.
     Default is True.
 
+EXTRACT_PARAMETERS: str
+    Method used to extract processing parameters. It can be extracted from json
+    file (extract_parameters = 'json') that have been created in the same
+    directory, toml file (extract_parameters = 'toml') that has to be created,
+    or directly from the current python file (extract_parameters = 'python').
+    The name of the json or toml file must be the same as the corresponding
+    executable python file, followed by "_params" and the file extension.
+
 KEY_MEASUREMENT_EXTRACTION: dict
     Correspondence between the names of measurements extracted from the
     initial file and the keys of the measurement dictionary created for
