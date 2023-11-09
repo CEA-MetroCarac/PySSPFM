@@ -6,7 +6,7 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 
-from PySSPFM.settings import DEFAULT_LOGO_PATH, DEFAULT_ICON_PATH
+from PySSPFM.settings import get_setting
 
 
 def apply_style(root):
@@ -236,9 +236,8 @@ def init_main_wdw(wdw_title, logo_path=None, icon_path=None):
     tk.Tk
         The initialized main window.
     """
-
-    logo_path = logo_path or DEFAULT_LOGO_PATH
-    icon_path = icon_path or DEFAULT_ICON_PATH
+    logo_path = logo_path or get_setting("default_logo_path")
+    icon_path = icon_path or get_setting("default_icon_path")
 
     root = tk.Tk()
     root.title(wdw_title)
@@ -275,8 +274,7 @@ def init_secondary_wdw(parent, wdw_title, icon_path=None):
     tk.Tk
         The initialized secondary window.
     """
-
-    icon_path = icon_path or DEFAULT_ICON_PATH
+    icon_path = icon_path or get_setting("default_icon_path")
 
     if parent is None:
         root = tk.Tk()
@@ -311,7 +309,7 @@ def wdw_main_title(root, label, logo_path=None):
     -------
     None
     """
-    logo_path = logo_path or DEFAULT_LOGO_PATH
+    logo_path = logo_path or get_setting("default_logo_path")
 
     logo_image = Image.open(logo_path)
     logo_image.thumbnail((128, 128))
