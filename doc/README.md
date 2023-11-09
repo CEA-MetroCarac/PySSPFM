@@ -357,19 +357,19 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
             </ul>
         </ul>
         <ul align="justify" width="100%">
-            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/settings.json">settings.json</a></code>: représente un fichier json contenant l'ensemble de settings de l'application PySSPFM. L'exemple suivant s'applique sur ce fichier : </li>
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/settings.json">settings.json</a></code>: A JSON file containing the complete set of configuration parameters for the PySSPFM application. It is opened for the following file :</li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/ex_settings.py">examples/ex_settings.py</a></code>.</li>
             </ul>
         </ul>
         <ul align="justify" width="100%">
-            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/default_settings.json">default_settings.json</a></code>: représente un fichier json contenant l'ensemble de settings utilisés par défaut (pour les tests et exemples) de l'application PySSPFM</li>
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/default_settings.json">default_settings.json</a></code>: A JSON file containing the default set of configuration parameters used by the PySSPFM application (used for tests and examples). It is opened for the following file :</li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/ex_settings.py">examples/ex_settings.py</a></code>.</li>
             </ul>
         </ul>
         <ul align="justify" width="100%">
-            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/mean_hyst_params.json">mean_hyst_params.json</a></code>: représente un fichier json contenant l'ensemble des paramètres associés à un code excécutable (en locurrence <code>mean_hyst.py</code>)</li>
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/mean_hyst_params.json">mean_hyst_params.json</a></code>:  A JSON file containing the complete set of parameters associated with an executable code (in this case, mean_hyst.py). It is opened for the following file :</li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/core/ex_extract_params_from_file.py">examples/utils/core/ex_extract_params_from_file.py</a></code>.</li>
             </ul>
