@@ -7,12 +7,10 @@ import time
 from datetime import datetime
 
 from examples.utils.datacube_to_nanoloop.ex_gen_data import pars_segment
+from PySSPFM.settings import get_setting
 from PySSPFM.utils.raw_extraction import csv_meas_sheet_extract
 from PySSPFM.utils.datacube_to_nanoloop.file import \
     print_params, save_parameters
-
-from PySSPFM.settings import \
-    EXAMPLE_ROOT_PATH_IN, EXAMPLE_ROOT_PATH_OUT, DEFAULT_DATA_PATH_OUT
 
 
 def example_file(verbose=False):
@@ -35,13 +33,13 @@ def example_file(verbose=False):
         Directory path of the output files
     """
     # In and out file management
-    dir_path_in = os.path.join(EXAMPLE_ROOT_PATH_IN, "KNN500n")
+    dir_path_in = os.path.join(get_setting("example_root_path_in"), "KNN500n")
     if verbose:
         dir_path_out = os.path.join(
-            EXAMPLE_ROOT_PATH_OUT, "ex_seg_to_loop_file")
+            get_setting("example_root_path_out"), "ex_seg_to_loop_file")
     else:
         dir_path_out = os.path.join(
-            DEFAULT_DATA_PATH_OUT, "test_seg_to_loop_file")
+            get_setting("default_data_path_out"), "test_seg_to_loop_file")
 
     # Remove output directory if it already exists
     if os.path.isdir(dir_path_out):
