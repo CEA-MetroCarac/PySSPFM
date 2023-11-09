@@ -170,7 +170,30 @@ def get_setting(key):
     """
     origin_path = sys.argv[0]
     sep_origin_path = origin_path.split(os.path.sep)
+
+    def get_settings_dict(json_file_name):
+        """
+        Returns the settings dictionary from a JSON file.
+
+        Parameters
+        ----------
+        json_file_name: str
+            Path to the JSON file.
+
+        Returns
+        -------
+        json_dict: dict
+            The settings dictionary.
+        """
+        json_file_path = os.path.join(os.path.dirname(__file__), json_file_name)
+        # Load the settings dictionary from the JSON file.
+        json_dict = load_parameters_from_file(json_file_path)
+
+        return json_dict
+
     settings_dict = get_settings_dict("settings.json")
+    # Update the settings dictionary with the path information.
+    settings_dict = get_path_from_json(settings_dict)
     # All default constants for PySSPFM examples and tests
     # Default settings must not be modified
     def_settings_dict = get_settings_dict("default_settings.json")
@@ -232,26 +255,3 @@ def get_path_from_json(settings_dict):
             settings_dict[key] = os.path.join(*settings_dict[key])
 
     return settings_dict
-
-
-def get_settings_dict(json_file_name):
-    """
-    Returns the settings dictionary from a JSON file.
-
-    Parameters
-    ----------
-    json_file_name: str
-        Path to the JSON file.
-
-    Returns
-    -------
-    json_dict: dict
-        The settings dictionary.
-    """
-    json_file_path = os.path.join(os.path.dirname(__file__), json_file_name)
-    # Load the settings dictionary from the JSON file.
-    json_dict = load_parameters_from_file(json_file_path)
-    # Update the settings dictionary with the path information.
-    json_dict = get_path_from_json(json_dict)
-
-    return json_dict
