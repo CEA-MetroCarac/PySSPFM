@@ -15,18 +15,6 @@ def test_get_settings_dict_classic():
     settings_dict = ex_get_settings_dict(mode='classic')
 
     target_settings_dict = {
-        'root': 'C:\\Users\\HV265662\\PycharmProjects\\PySSPFM',
-        'examples': 'C:\\Users\\HV265662\\PycharmProjects\\PySSPFM\\examples',
-        'example_root_path_in': 'C:\\Users\\HV265662\\PycharmProjects\\PySSPFM'
-                                '\\examples\\data\\PySSPFM_example_in',
-        'example_root_path_out': 'C:\\Users\\HV265662\\PycharmProjects\\PySSPFM'
-                                 '\\examples\\data\\PySSPFM_example_out',
-        'default_data_path_out': 'C:\\Users\\HV265662\\PycharmProjects\\PySSPFM'
-                                 '\\PySSPFM_data_out',
-        'default_logo_path': 'C:\\Users\\HV265662\\PycharmProjects\\PySSPFM'
-                             '\\PySSPFM\\logo_icon\\logoPySSPFM.png',
-        'default_icon_path': 'C:\\Users\\HV265662\\PycharmProjects\\PySSPFM'
-                             '\\PySSPFM\\logo_icon\\iconPySSPFM.png',
         'default_parameters_file_name': 'parameters.txt',
         'default_figures_folder_name': 'figs',
         'default_nanoloops_folder_name': 'nanoloops',
@@ -71,7 +59,8 @@ def test_get_settings_dict_classic():
         'color_hysteresis_clustering': 'turbo',
         'electrostatic_offset': True}
 
-    assert settings_dict == target_settings_dict
+    for key in target_settings_dict.keys():
+        assert settings_dict[key] == target_settings_dict[key]
 
 
 def test_get_settings_dict_default():
