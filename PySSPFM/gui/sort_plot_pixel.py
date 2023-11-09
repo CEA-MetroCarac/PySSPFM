@@ -156,7 +156,7 @@ def main(parent=None):
 
     # Function to generate the default input properties directory path
     def generate_default_input_props_dir(input_dir):
-        properties_folder_name = get_setting('properties folder name')
+        properties_folder_name = get_setting('default_properties_folder_name')
         if input_dir != "":
             input_props_dir = os.path.join(input_dir, properties_folder_name)
         else:
@@ -165,7 +165,7 @@ def main(parent=None):
 
     # Function to generate the default input loop directory path
     def generate_default_input_loop_dir(input_dir):
-        nanoloops_folder_name = get_setting('nanoloops folder name')
+        nanoloops_folder_name = get_setting('default_nanoloops_folder_name')
         if input_dir != "":
             input_loop_dir = os.path.join(input_dir, nanoloops_folder_name)
         else:
@@ -174,7 +174,7 @@ def main(parent=None):
 
     # Function to generate the default input pars file path
     def generate_default_input_pars_file(input_dir):
-        parameters_file_name = get_setting('parameters file name')
+        parameters_file_name = get_setting('default_parameters_file_name')
         if input_dir != "":
             input_pars_file = os.path.join(input_dir, parameters_file_name)
         else:
