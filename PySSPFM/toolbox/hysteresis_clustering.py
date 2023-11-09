@@ -24,8 +24,6 @@ from PySSPFM.utils.map.main import main_mapping
 from PySSPFM.utils.path_for_runable import \
     save_path_management, save_user_pars, load_parameters_from_file
 
-from PySSPFM.settings import FIGSIZE, COLOR_HYSTERESIS_CLUSTERING
-
 
 def gen_hyst_data(data):
     """
@@ -299,10 +297,11 @@ def main_hysteresis_clustering(
     if dir_path_in is not None:
         if dir_path_in_props is None:
             root = os.path.split(dir_path_in)[0]
-            properties_folder_name = get_setting('properties folder name')
+            properties_folder_name = \
+                get_setting('default_properties_folder_name')
             dir_path_in_props = os.path.join(root, properties_folder_name)
         properties, dim_pix, dim_mic = extract_properties(dir_path_in_props)
-        elec_offset = get_setting('elec offset')
+        elec_offset = get_setting('electrostatic_offset')
         offsets = properties['off']['fit pars: offset'] \
             if elec_offset else None
 
@@ -343,7 +342,9 @@ def main_hysteresis_clustering(
             # Generate plots if specified
             if make_plots:
                 # Color of figures
-                cbar = plt.get_cmap(COLOR_HYSTERESIS_CLUSTERING)
+                color_hysteresis_clustering = \
+                    get_setting("color_hysteresis_clustering")
+                cbar = plt.get_cmap(color_hysteresis_clustering)
                 colors = [cbar((numb_cluster - i) / numb_cluster)
                           for i in range(numb_cluster)]
                 cmap, cbar_lab = cbar_map(colors, numb_cluster)
@@ -358,7 +359,8 @@ def main_hysteresis_clustering(
                 figs = []
 
                 # Create graph
-                fig1, ax = plt.subplots(figsize=FIGSIZE)
+                figsize = get_setting("figsize")
+                fig1, ax = plt.subplots(figsize=figsize)
                 fig1.sfn = f"clustering_best_loops_{mode}"
                 plot_dict_1 = {
                     'title': f'Clustering (K-Means): Best Loops ({mode})',
@@ -375,7 +377,7 @@ def main_hysteresis_clustering(
 
                 # Plot 2 : Average Hysteresis by Cluster
                 # Create graph
-                fig2, ax = plt.subplots(figsize=FIGSIZE)
+                fig2, ax = plt.subplots(figsize=figsize)
                 fig2.sfn = f"clustering_average_loops_{mode}"
                 plot_dict_3 = {
                     'title': f'Average Hysteresis by Cluster ({mode})',
