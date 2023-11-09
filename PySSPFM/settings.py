@@ -182,9 +182,9 @@ def get_setting(key):
         def_settings_dict if 'examples' in sep_origin_path or \
                              'tests' in sep_origin_path else settings_dict
     try:
-        setting = settings_to_use.get(key)
+        setting = settings_to_use[key]
     except KeyError:
-        setting = settings_dict.get(key)
+        setting = settings_dict[key]
 
     return setting
 
@@ -196,14 +196,17 @@ def get_settings_dict(json_file_name):
     Parameters
     ----------
     json_file_name: str
-        Path to the JSON file.
+        Path or name to the JSON file.
 
     Returns
     -------
     json_dict: dict
         The settings dictionary.
     """
-    json_file_path = os.path.join(os.path.dirname(__file__), json_file_name)
+    if os.path.exists(json_file_name):
+        json_file_path = os.path.join(json_file_name)
+    else:
+        json_file_path = os.path.join(os.path.dirname(__file__), json_file_name)
     # Load the settings dictionary from the JSON file.
     json_dict = load_parameters_from_file(json_file_path)
 
