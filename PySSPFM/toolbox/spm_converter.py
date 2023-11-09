@@ -64,7 +64,7 @@ def single_script(dir_path_out, file_path_in, extension='txt', mode='classic',
     file_name_out = file_name_in[:-4]
     file_path_out = os.path.join(dir_path_out, file_name_out + '.' + extension)
 
-    key_measurement_extraction = get_setting("key meas extract")
+    key_measurement_extraction = get_setting("key_measurement_extraction")
     header = list(key_measurement_extraction['table'][mode].keys())
 
     if extension == 'txt':
