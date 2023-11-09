@@ -564,7 +564,7 @@ def nb_measure_segment(times, sign_pars, hold_dict):
     nb_sample_exp = len(times[hold_dict['index']['start'][1] +
                               1:hold_dict['index']['end'][0] - 1])
 
-    detect_bug_segments = get_setting('detect bug segments')
+    detect_bug_segments = get_setting('detect_bug_segments')
     if nb_sample_th != nb_sample_exp and detect_bug_segments:
         print(f"Theoretical number of samples: {nb_sample_th}")
         print(f"Experimental number of samples: {nb_sample_exp}")
