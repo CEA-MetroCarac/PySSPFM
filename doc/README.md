@@ -276,7 +276,7 @@ SSPFM files from other manufacturers are not supported in this application. It i
 #### III.1.b) - Measurement sheet
 
 <p align="justify" width="100%">
-Prior to conducting the SSPFM measurement, the user must complete a measurement form. Templates are available for both the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a> and <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a> modes. This measurement form serves to guide the user in carrying out the SSPFM measurements and to maintain a record of critical measurement parameters. It also automatically generates certain measurement information based on the provided parameters, such as: <br>
+Prior to conducting the SSPFM measurement, the user must complete a measurement form. Templates are available for both the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a> and <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a> modes. This measurement form serves as a comprehensive guide, directing the user in the execution of SSPFM measurements and concurrently documenting essential measurement parameters. Its purpose is to ensure adherence to good practices and establish a shared foundation in the implementation of the measurement across diverse SSPFM setups unique to each user. Moreover, it provides ample information for seamless progression through the data processing with PySSPFM. It also automatically generates certain measurement information based on the provided parameters, such as: <br>
 &#8226 total measurement time <br>
 &#8226 tip-induced pressure <br>
 &#8226 lock-in amplifier settings <br>
@@ -761,7 +761,7 @@ For each measurement file, the acquisition of multiple nanoloop curves is possib
 
 <p align="justify" width="100%">
 To facilitate a more comprehensive data visualization:<br>
-&#8226 Markers (at the beginning and end of the measurement, as well as at the extremities of the polarization voltages) are automatically determined based on the polarization voltage signal.<br>
+&#8226 Markers are automatically determined based on the polarization voltage signal (at the beginning and end of the measurement, as well as at the extremities of the polarization voltages).<br>
 &#8226 The branches of each nanoloop are divided into two categories: those on the right (in red) and those on the left (in blue). <br> <br>
 Phase values are then adjusted according to the phase calibration dictionary.
 </p>
