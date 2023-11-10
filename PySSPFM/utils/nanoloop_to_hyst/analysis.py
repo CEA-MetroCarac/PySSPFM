@@ -423,6 +423,8 @@ def electrostatic_analysis(best_loop, analysis_mode='mean_loop',
         List of figure objects of electrostatic analysis
     """
     func = func or np.cos
+    func = eval(func) if isinstance(func, str) else func
+
     assert analysis_mode in ['multi_loop', 'mean_loop', 'on_f_loop']
     figs = []
     electrostatic_dict = {}
