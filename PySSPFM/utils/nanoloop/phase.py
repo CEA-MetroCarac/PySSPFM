@@ -619,6 +619,7 @@ def gen_dict_pha(meas_pars, pha_corr, pha_fwd=0, pha_rev=180, func=None,
         Dict used for phase calibration
     """
     func = func or np.cos
+    func = eval(func) if isinstance(func, str) else func
 
     try:
         if meas_pars['Bias app'].lower() == 'sample':
