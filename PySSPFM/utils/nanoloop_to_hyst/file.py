@@ -176,7 +176,9 @@ def complete_parameters(file_path_in, user_pars, t0, date, file_path_out=None):
     treatment_time = time.time() - t0
     treatment_time_h_m_s = time.strftime('%Hh:%Mm:%Ss',
                                          time.gmtime(treatment_time))
-
+    pha_func_str = user_pars['pha func'] \
+        if isinstance(user_pars['pha func'], str) \
+        else getattr(user_pars["pha func"], "__name__")
     new_lines = [
         '### Treatment parameters: second step ###',
         '- Info',
@@ -195,7 +197,7 @@ def complete_parameters(file_path_in, user_pars, t0, date, file_path_out=None):
         f'phase correction: {user_pars["pha corr"]}',
         f'phase value (forward): {user_pars["pha fwd"]}',
         f'phase value (reverse): {user_pars["pha rev"]}',
-        f'phase function: {getattr(user_pars["pha func"], "__name__")}',
+        f'phase function: {pha_func_str}',
         f'main electrostatic component (on field): {user_pars["main elec"]}',
         f'locked electrostatic slope (on field): '
         f'{user_pars["locked elec slope"]}',
