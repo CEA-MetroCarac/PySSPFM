@@ -857,7 +857,7 @@ The nanoloops data is extracted from the files within the corresponding <code>na
 <p align="justify" width="100%">
 There are three distinct measurement processing modes, each involving the extraction of a <code>best_loop</code> using the <code>find_best_nanoloop</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/analysis.py">utils/nanoloop_to_hyst/analysis.py</a></code> script: <br>
 &#8226 <code>'multi_loop'</code>: Measurements are conducted in off field, and various reading voltage values are applied. This mode corresponds to the cKPFM (contact Kelvin Probe Force Microscopy) mode introduced by N. Balke and his colleagues <a href="#ref8">[8]</a>. All loops are fitted using the <code>Hysteresis</code> object (refer to Section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vi3---hysteresis-and-properties">IV.3) - Hysteresis and properties</a> in the documentation), and the best loop is the one that minimizes the vertical offset associated with the electrostatic component in off field. <br>
-&#8226 <code>'mean_loop'</code>: Measurements are conducted in off field with a single reading voltage value, often set at 0 volts. The best loop is the average of all the loops (sometimes the first loop is not considered do to its pre-polarized state), determined through the creation of the <code>MeanLoop</code> object (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#v3---meanloop">V.3) - MeanLoop</a> of the documentation). <br>
+&#8226 <code>'mean_loop'</code>: Measurements are conducted in off field with a single reading voltage value, often set at 0 volts. The best loop is the average of all the loops (sometimes the first loop is not considered due to its pre-polarized state), determined through the creation of the <code>MeanLoop</code> object (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#v3---meanloop">V.3) - MeanLoop</a> of the documentation). <br>
 &#8226 <code>'on_field'</code>: Measurements are conducted in on field. The best loop, in this case, is the average of all the loops, determined through the creation of the <code>MeanLoop</code> object.
 </p>
 
@@ -869,7 +869,7 @@ The process of fitting hysteresis curves is a crucial step in determining the fe
 
 <p align="justify" width="100%">
 The script <code><a href=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/curve_hysteresis.py>utils/core/curve_hysteresis</a></code> introduces and processes a novel entity known as the <code>Hysteresis</code> object. This object is initialized through the variable <code>model</code>, encapsulating the mathematical formulations for both of its branches, describing the evolution of the piezoresponse $PR$ with the writing voltage $V$: <br>
-&#8226 <code>'sigmoid'</code> (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) <a href="#ref9">[9]</a>: $PR(V) = G * ({1 \over 1. + exp(-c^i * (V - V_0^i))} - 0.5) + a*V + b$ <br>
+&#8226 <code>'sigmoid'</code> (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) <a href="#ref9">[9]</a>: $PR(V) = G * ({1 \over 1 + exp(-c^i * (V - V_0^i))} - 0.5) + a*V + b$ <br>
 &#8226 <code>'arctan'</code> (function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script): $PR(V) = G * arctan(c^i * (V - V_0^i)) + a*V + b$ <br>
 $i$ serves as the index designating the branch: $i=L$ for the left branch, and $i=R$ for the right branch. $G$ symbolizes the magnitude of a hysteresis branch, $c$ its expansion coefficient, and $V_0$ the abscissa deviation. $a$ and $b$ represents the affine component. <br>
 The boolean variable, <code>asymmetric</code>, holds the responsibility of deciding whether to apportion distinct dilation coefficients to these bifurcated branches. 
@@ -892,7 +892,7 @@ An initialization of the fitting parameters is conducted with the function <code
         <li>Definition Interval:</li>
             <ul align="justify" width="100%">
                 <li>$c^i \in \left[0, +\infty\right[$ </li>
-                <li>$G \in \left[0, +\infty\right[$ for a "counterclockwise" loop and $G \in \left]-\infty, 0\right]$ for a "clockwise" loop.</li>
+                <li>$G \in \left[0, +\infty\right[$ for a <code>"counterclockwise"</code> loop and $G \in \left]-\infty, 0\right]$ for a <code>"clockwise"</code> loop.</li>
                 <li>$V_0^i \in \left[min(V), max(V)\right]$ </li>
                 <li>$b \in \left[min(PR), max(PR)\right]$ </li>
                 <li>$a$:</li>
@@ -904,10 +904,10 @@ An initialization of the fitting parameters is conducted with the function <code
                                     <li><code>locked_elec_slope is None</code>, $a$ is determined based on the direction of voltage application:</li>
                                         <ul align="justify" width="100%">
                                             <li><code>grounded_tip is True</code> -> $a \in \left]-\infty, 0\right]$</li>
-                                            <li><code>grounded_tip is False</code> -> $a \in \left[0, +\infty\right[$</li>
+                                            <li><code>grounded_tip is False</code> (case of grounded bottom) -> $a \in \left[0, +\infty\right[$</li>
                                         </ul>
                                 </ul>
-                        <li>Otherwise, $a=0$ </li>
+                        <li>Otherwise, if measurement are in off field, $a=0$ </li>
                     </ul>
             </ul>
         <li>The differential of the two branches, <code>diff_hyst</code>, is calculated and subsequently filtered (via the <code>filter_mean</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/noise.py">utils/core/noise.py</a></code>), effectively forming a dome. This process facilitates the initialization of fit parameter values and is derived from the work of Jesse et al. <a href="#ref9">[9]</a>. <br>
