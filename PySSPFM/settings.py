@@ -1,5 +1,5 @@
 """
-All constants for PySSPFM
+Perform all the setting management for PySSPFM
 
 For json settings file, paths can be:
     - A list of path (string) that will be joined
