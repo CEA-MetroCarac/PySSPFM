@@ -65,6 +65,8 @@ def main_loop_file_reader(file_path, csv_path=None, dict_pha=None,
     # Extract nanoloop data
     data_dict, dict_str = extract_nanoloop_data(file_path)
     # Treat nanoloop data
+    dict_pha['func'] = eval(dict_pha['func']) \
+        if isinstance(dict_pha['func'], str) else dict_pha['func']
     res = nanoloop_treatment(
         data_dict, sign_pars, dict_pha=dict_pha, dict_str=dict_str)
     (loop_tab, pha_calib, _) = res
