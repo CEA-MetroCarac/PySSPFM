@@ -1707,7 +1707,7 @@ User parameters:
 <p align="justify" width="100%">
 As input, SSPFM datacube measurement folder is selected. A new directory is created (<code>'input_directory_name'_datacube_'extension'</code>), and the csv measurement sheet is copied from the input directory into it. Subsequently, each of the SPM datacube files (Bruker) is read, and its data is extracted (refer to Section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii1c---extraction">III.1.c) - Extraction</a> in the documentation). The choice of measurement mode is simplified through the <code>'mode'</code> parameter, which offers the following options: <br>
 &#8226 <code>'classic'</code> (sweep resonance) <br>
-&#8226 <code>'dfrt'</code> <br>
+&#8226 <code>'dfrt'</code> <br> <br>
 Following this, a corresponding new datacube file is generated, with an extension chosen by the user, and is complemented with the raw data from the input file. The available extensions are: <br>
 &#8226 <code>'txt'</code> (created using the <a href="https://numpy.org/doc/stable/reference/generated/numpy.savetxt.html">savetxt</a> function of NumPy library) <br>
 &#8226 <code>'csv'</code> (with the pandas library, a <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html">DataFrame</a> object containing the data is created, and the file is saved using the <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_csv.html">to_csv</a> method) <br>
