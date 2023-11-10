@@ -930,7 +930,7 @@ The hysteresis is subsequently fitted using the fit <code>method</code>, conside
 </p>
 
 <p align="justify" width="100%">
-It should be noted that the fitting process (based on minimization of mean square deviation between analytical model and experimental data) is performed on the entirety of the hysteresis curve and not on each individual branch separately. Some parameters are global to the hysteresis such as affine component and hysteresis amplitude while some can vary for each branch such as the position and the dilatation coefficient. 
+It should be noted that the fitting process is performed on the entirety of the hysteresis curve and not on each individual branch separately. Some parameters are global to the hysteresis such as affine component and hysteresis amplitude while some can vary for each branch such as the position and the dilatation coefficient. 
 </p>
 
 <p align="justify" width="100%">
@@ -939,7 +939,6 @@ Following the completion of the fitting process, the <code>properties</code> met
 &#8226 The intersection points on the abscissa axes (<code>x_inters_l</code>, <code>x_inters_r</code>) and the ordinate axes (<code>y_inters_l</code>, <code>y_inters_r</code>) respectively define the coercive voltages and the remanent piezoresponse voltages. <br>
 &#8226 The inflection points, by default located at 10% and 90% of the branch amplitudes, determine the nucleation voltages (<code>x_infl_l</code>, <code>x_infl_r</code>) and saturation voltages (<code>x_sat_l</code>, <code>x_sat_r</code>). <br>
 &#8226 The relative difference between the expansion coefficients of the right and left branches, denoted as <code>diff_coef</code>, quantifies the level of hysteresis asymmetry. <br>
-&#8226 The quadratic error between the experimental data and the model. <br>
 </p>
 
 <p align="justify" width="100%">
@@ -971,7 +970,7 @@ Artifacts, primarily of electrostatic nature,  but more generally stemming from 
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/artifacts_influence_on_hysteresis.PNG> <br>
-    <em>Artifact influence on hysteresis</em>
+    <em>Artifact influence on hysteresis, left: off field, right: on field</em>
 </p>
 
 <p align="justify" width="100%">
@@ -1000,7 +999,7 @@ However, this method has some drawbacks. It cannot determine the slope of the el
 ### VI.4.b) - Analysis of saturation domain of on field piezoresponse nanoloop
 
 <p align="justify" width="100%">
-This procedure has been inspired by the following publication <a href="#ref20">[20]</a>. The function <code>sat_analysis</code> enables the execution of the procedure. This method involves isolating the two saturation domains of the on field hysteresis, performing a linear regression of these domains, and measuring the line passing through them, which constitutes the affine component. The saturation domain can be determined in two modes. If the parameter <code>sat_mode = 'set'</code> is selected, it is defined by the user through the values <code>'min'</code> and <code>'max'</code> within the <code>sat_domain</code> dictionary. On the other hand, if <code>sat_mode = 'auto'</code> is chosen, it is automatically determined following the fitting process (voltages at which 90% (default value of <code>sat_thresh</code>) of the switch is achieved for both branches, respectively). This method is easy to implement and provides the entire affine component due to the artifacts. However, it requires reaching the saturation domain of the hysteresis, which is not always the case, especially for thick samples or those with high coercive voltages requiring high pulses voltages. Additionally, the influence of artifacts can be more significant in the saturation domains, especially for on field measurement, and other phenomena can play a significant role, such as charge injection <a href="#ref15">[15]</a>, leakage current <a href="#ref21">[21]</a>, joules heating <a href="#ref15">[15]</a>, surface or tip degradation <a href="#ref22">[22]</a>, etc [<a href="#ref15">15</a>, <a href="#ref22">22</a>, <a href="#ref23">23</a>]. The analysis domain is limited, resulting in less precise measurements.
+This procedure has been inspired by the work of Jesse et al. <a href="#ref20">[20]</a>. The function <code>sat_analysis</code> enables the execution of the procedure. This method involves isolating the two saturation domains of the on field hysteresis, performing a linear regression of these domains, and measuring the line passing through them, which constitutes the affine component. The saturation domain can be determined in two modes. If the parameter <code>sat_mode = 'set'</code> is selected, it is defined by the user through the values <code>'min'</code> and <code>'max'</code> within the <code>sat_domain</code> dictionary. On the other hand, if <code>sat_mode = 'auto'</code> is chosen, it is automatically determined following the fitting process (voltages at which 90% (default value of <code>sat_thresh</code>) of the switch is achieved for both branches, respectively). This method is easy to implement and provides the entire affine component due to the artifacts. However, it requires reaching the saturation domain of the hysteresis, which is not always the case, especially for thick samples or those with high coercive voltages requiring high pulses voltages. Additionally, the influence of artifacts can be more significant in the saturation domains, especially for on field measurement, and other phenomena can play a significant role, such as charge injection <a href="#ref15">[15]</a>, leakage current <a href="#ref21">[21]</a>, joules heating <a href="#ref15">[15]</a>, surface or tip degradation <a href="#ref22">[22]</a>, etc [<a href="#ref15">15</a>, <a href="#ref22">22</a>, <a href="#ref23">23</a>]. The analysis domain is limited, resulting in less precise measurements.
 </p>
 
 <p align="center" width="100%">
