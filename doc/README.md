@@ -1042,7 +1042,7 @@ The <code>'multi_loop'</code> analysis mode is equivalent to the cKPFM mode <a h
 </p>
 
 <p align="justify" width="100%">
-For more information about the <code>'multi_loop'</code> analysis mode, see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi2---best-loop">VI.2) - Best loop</a> of the documentation.
+&#8226 For more information about the <code>'multi_loop'</code> analysis mode, see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi2---best-loop">VI.2) - Best loop</a> of the documentation.
 </p>
 
 <p align="center" width="100%">
@@ -1164,7 +1164,7 @@ As input, SSPFM datacube measurement file is open, and its data is extracted (se
     <em>Raw measurement of an datacube file (figure generated with <code>plt_signals</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/plot.py">utils/datacube_to_nanoloop/plot.py</a></code> script)</em>
 </p>
 
-<p align="center" width="100%">
+<p align="justify" width="100%">
 &#8226 For a deeper understanding of the output file management, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2c---toolbox">III.2.c) - Toolbox</a>
 </p>
 
@@ -1204,7 +1204,7 @@ User parameters:
 &#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. <br>
 </p>
 
-<p align="center" width="100%">
+<p align="justify" width="100%">
 &#8226 For a deeper understanding of the output file management, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2c---toolbox">III.2.c) - Toolbox</a>
 </p>
 
@@ -1213,7 +1213,7 @@ In input, a measurement file in the form of a <code>nanoloop</code> file (genera
 </p>
 
 <p align="justify" width="100%">
-For more precisions on post-measurement phase calibration, <code>MultiLoop</code> and <code>MeanLoop</code> objects, please refer to section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#v---nanoloop">V) Nanoloop</a> of the documentation.
+&#8226 For more precisions on post-measurement phase calibration, <code>MultiLoop</code> and <code>MeanLoop</code> objects, please refer to section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#v---nanoloop">V) Nanoloop</a> of the documentation.
 </p>
 
 #### VIII.1.c) Global map reader
@@ -1266,7 +1266,7 @@ User parameters:
 &#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. <br>
 </p>
 
-<p align="center" width="100%">
+<p align="justify" width="100%">
 &#8226 For a deeper understanding of the output file management, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2c---toolbox">III.2.c) - Toolbox</a>
 </p>
 
@@ -1323,7 +1323,7 @@ User parameters:
 &#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. <br>
 </p>
 
-<p align="center" width="100%">
+<p align="justify" width="100%">
 &#8226 For a deeper understanding of the output file management, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2c---toolbox">III.2.c) - Toolbox</a>
 </p>
 
@@ -1369,7 +1369,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 &#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. <br>
 </p>
 
-<p align="center" width="100%">
+<p align="justify" width="100%">
 &#8226 For a deeper understanding of the output file management, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2c---toolbox">III.2.c) - Toolbox</a>
 </p>
 
@@ -1467,7 +1467,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 &#8226 Save and plot parameters: Pertaining to the management of display and the preservation of results. <br>
 </p>
 
-<p align="center" width="100%">
+<p align="justify" width="100%">
 &#8226 For a deeper understanding of the output file management, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2c---toolbox">III.2.c) - Toolbox</a>
 </p>
 
@@ -1710,7 +1710,7 @@ Following this, a corresponding new datacube file is generated, with an extensio
 &#8226 <code>'xlsx'</code> (with the pandas library, a <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html">DataFrame</a> object containing the data is created, and the file is saved using the <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_excel.html">to_excel</a> method) <br>
 </p>
 
-<p align="center" width="100%">
+<p align="justify" width="100%">
 &#8226 For a deeper understanding of the output file management, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2c---toolbox">III.2.c) - Toolbox</a>
 </p>
 
