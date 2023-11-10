@@ -762,7 +762,7 @@ For each measurement file, the acquisition of multiple nanoloop curves is possib
 <p align="justify" width="100%">
 To facilitate a more comprehensive data visualization:<br>
 &#8226 Markers are automatically determined based on the polarization voltage signal (at the beginning and end of the measurement, as well as at the extremities of the polarization voltages).<br>
-&#8226 The branches of each nanoloop are divided into two categories: those on the right (in red) and those on the left (in blue). <br> <br>
+&#8226 The branches of each nanoloop are divided into two categories: those on the right, corresponding to positive variation of polarization voltage, in blue and those on the left, corresponding to negative variation of polarization voltage, in red. <br> <br>
 Phase values are then adjusted according to the phase calibration dictionary.
 </p>
 
