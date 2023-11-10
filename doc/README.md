@@ -907,7 +907,7 @@ An initialization of the fitting parameters is conducted with the function <code
                                             <li><code>grounded_tip is False</code> (case of grounded bottom) -> $a \in \left[0, +\infty\right[$</li>
                                         </ul>
                                 </ul>
-                        <li>Otherwise, if measurement are in off field, $a=0$ </li>
+                        <li>Otherwise, if the measure is performed off field, $a=0$ </li>
                     </ul>
             </ul>
         <li>The differential of the two branches, <code>diff_hyst</code>, is calculated and subsequently filtered (via the <code>filter_mean</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/noise.py">utils/core/noise.py</a></code>), effectively forming a dome. This process facilitates the initialization of fit parameter values and is derived from the work of Jesse et al. <a href="#ref9">[9]</a>. <br>
@@ -926,7 +926,7 @@ An initialization of the fitting parameters is conducted with the function <code
 </p>
 
 <p align="justify" width="100%">
-The hysteresis is subsequently fitted using the fit <code>method</code>, considering the coordinates of the best loop's points and selecting the desired method. This approach leverages the <a href="https://pypi.org/project/lmfit/">lmfit</a> library, enabling the extraction of parameters from the hysteresis model that best converges with the experimental data.
+The hysteresis is subsequently fitted using the fit <code>method</code>, considering the coordinates of the best loop's points and selecting the desired method. Due to the number of parameters in the hysteresis fit model, coupled with the potential deviation of measurements from the typical hysteresis form, it is advisable to employ a fitting method that ensures superior convergence, albeit at the expense of fitting duration (the <code>"nelder"</code> method will be favored over the <code>"least_sq"</code> method). This approach leverages the <a href="https://pypi.org/project/lmfit/">lmfit</a> library, enabling the extraction of parameters from the hysteresis model that best converges with the experimental data.
 </p>
 
 <p align="justify" width="100%">
