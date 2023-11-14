@@ -44,7 +44,7 @@ If you encounter any bugs or issues, you can kindly bring them to the developer'
 
 ### 0) Measures
 <p align="justify" width="100%">
-PySSPFM facilitates the processing of a set of SSPFM measurement data points by simply populating a measurement form (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">standard SSPFM</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). The range of measurement files to be processed may have the extensions: <br>
+PySSPFM facilitates the processing of a set of SSPFM measurement data points by simply populating a measurement form (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">SSPFM single frequency</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20Bruker.csv">SSPFM sweep frequency</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20ZI%20DFRT.csv">SSPFM-DFRT</a>). The range of measurement files to be processed may have the extensions: <br>
 &#8226 <code>.spm</code> (Bruker) <br>
 &#8226 <code>.txt</code> <br>
 &#8226 <code>.csv</code> <br>
@@ -56,6 +56,7 @@ PySSPFM facilitates the processing of a set of SSPFM measurement data points by 
 For each of the SSPFM measurement files, amplitude and phase are extracted for each segment using a user-selected method: <br>
 &#8226 <code>max</code>: extract maximum or resonance peak (for frequency sweep mode) <br>
 &#8226 <code>fit</code>: perform a fit of the resonance peak based on SHO (Simple Harmonic Oscillator) model (for frequency sweep mode) <br>
+&#8226 <code>single_freq</code>: mean of the segment (for single frequency mode) <br>
 &#8226 <code>dfrt</code>: mean of the segment (for DFRT mode) <br>
 </p>
 
