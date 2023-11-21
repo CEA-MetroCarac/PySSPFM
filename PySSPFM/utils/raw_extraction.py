@@ -55,8 +55,7 @@ def data_identification(raw_dict, type_file, mode_dfrt=False):
         try:
             dict_meas[value] = raw_dict[key]
         except KeyError:
-            print(f'KeyError on {key}.\n'
-                  f'The available keys are: {raw_dict.keys()}')
+            continue
     if 'deflection' not in dict_meas:
         dict_meas['deflection'] = []
     if 'tip_bias' not in dict_meas:
