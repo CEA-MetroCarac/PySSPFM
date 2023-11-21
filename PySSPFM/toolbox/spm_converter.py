@@ -162,7 +162,7 @@ def main_spm_converter(dir_path_in, mode='classic', extension='txt',
         (extraction of PFM measurements).
         This parameter determines the treatment method used for segment data
         analysis, specifically for the extraction of PFM measurements.
-        Two possible values: 'classic' (sweep) or 'dfrt'.
+        Two possible values: 'classic' (sweep or single frequency) or 'dfrt'.
     extension: str, optional
         Extension of converted spm files.
         This parameter determines the extension type used for conversion of
@@ -225,7 +225,7 @@ def main():
         dir_path_out = None
         # dir_path_out = r'...\KNN500n_datacube_txt
         verbose = True
-        # mode = 'dfrt' or 'classic'
+        # mode = 'dfrt' or 'classic' (sweep or single frequency)
         mode = 'classic'
         # extension = 'txt' or 'csv' or 'xlsx'
         extension = 'txt'
