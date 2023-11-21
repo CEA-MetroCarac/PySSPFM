@@ -1,9 +1,12 @@
 """
 --> Executable Script
-Module used to perform a clustering (K-Means) for all best hysteresis
-(for each pixel, one hysteresis for each mode) of a sspfm measurement
+Module used to perform a clustering (K-Means) for all best curve
+(with a chosen measure, for example piezoresponse), for each pixel 
+(one curve for each mode) of a sspfm measurement.
+Curve can be a composition of several measure, which will be normalized
+between 0 and 1 and concatenated (for example amplitude and phase)
     - Generate a sspfm maps for each mode resulting of clustering analysis
-    - Generate a graph of all hysteresis with their cluster for each mode
+    - Generate a graph of all curve with their cluster for each mode
     resulting of clustering analysis
 """
 
@@ -26,40 +29,50 @@ from PySSPFM.utils.map.main import main_mapping
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
 
-def gen_hyst_data(data):
+def gen_curve_data(data):
     """
-    Extract 2D hysteresis data from a 3-row data array.
+    Extract 2D curves data from a 3-row data array.
 
     Parameters
     ----------
     data : numpy.ndarray
-        3-row data array where the first row contains indices,
-        the second row contains voltage values, and the third
-        row contains piezorepsonse values.
+        2+nb_y_meas-row data array where the first row contains indices,
+        the second row contains voltage values, and the other
+        row contains y_axis values.
 
     Returns
     -------
-    hysts_x : list of list
-        Object containing voltage data for each hysteresis nanoloop.
-    hysts_y : list of list
-        Object containing piezorep data for each hysteresis nanoloop.
+    curves_x : list of list
+        Polarization voltage data for each curve.
+    curves_y : list of list
+        y_axis data for each curve.
     """
 
-    cont = 1
-    hysts_x = [[]]
-    hysts_y = [[]]
-    for index, voltage, piezorep in zip(data[0], data[1], data[2]):
-        if cont != index:
-            cont += 1
-            hysts_x.append([])
-            hysts_y.append([])
-        hysts_x[cont - 1].append(voltage)
-        hysts_y[cont - 1].append(piezorep)
+    data_x, data_y = [], []
 
-    return hysts_x, hysts_y
+    # Segmentation
+    index_changes = np.where(data[0][:-1] != data[0][1:])[0] + 1
+    for cont, teab_meas in enumerate(data[2]):
+        data_x.append([])
+        data_y.append([])
+        data_x[cont] = np.split(data[1], index_changes)
+        data_y[cont] = np.split(teab_meas, index_changes)
+
+    # Normalize data_y if len > 2 (for multi data y)
+    if len(data_y) >= 2:
+        for cont, tab_data_y in enumerate(data_y):
+            min_val = np.min(tab_data_y)
+            max_val = np.max(tab_data_y)
+            data_y[cont] = (tab_data_y - min_val) / (max_val - min_val)
+
+    # Concatenation for multi data y
+    curves_x = np.concatenate(data_x, axis=1)
+    curves_y = np.concatenate(data_y, axis=1)
+
+    return curves_x, curves_y
 
 
-def extract_data(dir_path_in, name_files, modes):
+def extract_data(dir_path_in, name_files, modes, tab_label):
     """
     Extract data from files based on modes and cluster counts.
 
@@ -71,17 +84,18 @@ def extract_data(dir_path_in, name_files, modes):
         List of file names to process.
     modes : list of str
         List of modes to consider.
+    tab_label: list of str
+        List of measurement name for the curve
 
     Returns
     -------
-    hysts_x : dict
+    curves_x : dict
         Dictionary containing x-axis data for each mode.
-    hysts_y : dict
+    curves_y : dict
         Dictionary containing y-axis data for each mode.
     """
 
-    hysts_x = {}
-    hysts_y = {}
+    curves_x, curves_y = {}, {}
 
     for name_file in name_files:
         mode_cluster = ""
@@ -92,50 +106,62 @@ def extract_data(dir_path_in, name_files, modes):
         if mode_cluster:
             if mode_cluster != "coupled":
                 path = os.path.join(dir_path_in, name_file)
+                with open(path, 'r', encoding="latin-1") as file:
+                    header = file.readlines()[1]
+                    header = header.replace('\n', '').replace('# ', '')
+                    tab_header = header.split('\t\t')
                 data = np.loadtxt(path, skiprows=2).T
-                res = gen_hyst_data(data)
-                hysts_x[mode_cluster], hysts_y[mode_cluster] = res
+                data_dict = {}
+                for key, data_row in zip(tab_header, data):
+                    data_dict[key] = data_row
+                index = data_dict['index pix']
+                data_x = data_dict['voltage']
+                data_y = [data_dict[label] for label in tab_label]
+                curves_x[mode_cluster], curves_y[mode_cluster] = \
+                    gen_curve_data([index, data_x, data_y])
 
-    return hysts_x, hysts_y
+    return curves_x, curves_y
 
 
-def gen_coupled_data(hysts_x, hysts_y, offsets=None):
+def gen_coupled_data(curves_x, curves_y, offsets=None):
     """
-    Generate coupled data by subtracting 'off' from 'on' field measurements.
+    Generate coupled data by subtracting 'off' from 'on' field measurements:
+    only for piezoresponse curve
 
     Parameters
     ----------
-    hysts_x : dict
+    curves_x : dict
         Dictionary containing 'on' and 'off' field measurements for x-axis.
-    hysts_y : dict
+    curves_y : dict
         Dictionary containing 'on' and 'off' field measurements for y-axis.
-    offsets: list of float
+    offsets: list of float, optional
         List with fit determined vertical offset for off field measurements
+        (default: None)
 
     Returns
     -------
-    hysts_x : dict
+    curves_x : dict
         Updated dictionary containing 'coupled' measurements for x-axis.
-    hysts_y : dict
+    curves_y : dict
         Updated dictionary containing 'coupled' measurements for y-axis.
     """
 
-    if "on" in hysts_x.keys() and "off" in hysts_x.keys():
+    if "on" in curves_x.keys() and "off" in curves_x.keys():
 
-        hysts_x["coupled"] = hysts_x["on"]
-        hysts_y["coupled"] = [
-            [on - off for on, off in zip(hyst_y_on, hyst_y_off)]
-            for hyst_y_on, hyst_y_off in zip(hysts_y["on"], hysts_y["off"])]
+        curves_x["coupled"] = curves_x["on"]
+        curves_y["coupled"] = [
+            [on - off for on, off in zip(curve_y_on, curve_y_off)]
+            for curve_y_on, curve_y_off in zip(curves_y["on"], curves_y["off"])]
         if offsets is not None:
-            if len(offsets) == len(hysts_y["coupled"]):
-                for i, hyst_y_coupled in enumerate(hysts_y["coupled"]):
-                    hysts_y["coupled"][i] = [elem+offsets[i]
-                                             for elem in hyst_y_coupled]
+            if len(offsets) == len(curves_y["coupled"]):
+                for i, curve_y_coupled in enumerate(curves_y["coupled"]):
+                    curves_y["coupled"][i] = [elem+offsets[i]
+                                              for elem in curve_y_coupled]
     else:
         print("For coupled analysis, both 'on' and 'off' field "
               "measurements should be available.")
 
-    return hysts_x, hysts_y
+    return curves_x, curves_y
 
 
 def cbar_map(colors, numb_cluster):
@@ -175,14 +201,14 @@ def cbar_map(colors, numb_cluster):
     return cmap, cbar_lab
 
 
-def cluster_kmeans(hysteresis_data, num_clusters=3):
+def cluster_kmeans(curve_data, num_clusters=3):
     """
-    Perform K-Means clustering on hysteresis data.
+    Perform K-Means clustering on curve data.
 
     Parameters
     ----------
-    hysteresis_data : numpy.ndarray
-        Hysteresis data for clustering.
+    curve_data : numpy.ndarray
+        Curve data for clustering.
     num_clusters : int, optional
         Number of clusters to create. Default is 3.
 
@@ -197,8 +223,7 @@ def cluster_kmeans(hysteresis_data, num_clusters=3):
     """
 
     # Apply K-Means clustering
-    kmeans = KMeans(n_clusters=num_clusters, random_state=0).fit(
-        hysteresis_data)
+    kmeans = KMeans(n_clusters=num_clusters, random_state=0).fit(curve_data)
     cluster_labels = kmeans.labels_
 
     # Calculate intra-cluster inertia (within-cluster sum of squares)
@@ -242,12 +267,12 @@ def cluster_kmeans(hysteresis_data, num_clusters=3):
     return cluster_labels, cluster_info, inertia
 
 
-def main_hysteresis_clustering(
+def main_curve_clustering(
         user_pars, dir_path_in, verbose=False, show_plots=True,
         save_plots=False, dir_path_out=None, dim_pix=None, dim_mic=None,
         dir_path_in_props=None):
     """
-    Perform hysteresis clustering analysis.
+    Perform curve clustering analysis.
 
     Parameters
     ----------
@@ -278,21 +303,24 @@ def main_hysteresis_clustering(
         Information about each cluster for each mode.
     inertia : dict
         Inertia (within-cluster sum of squares) for each mode.
-    avg_hysteresis : dict
-        List of average hysteresis for each cluster in each mode.
+    avg_curve : dict
+        List of average curve for each cluster in each mode.
     """
 
     name_files = os.listdir(dir_path_in)
-    modes = [elem.split()[-1] for elem in user_pars.keys() if
-             'clusters' in elem]
+    modes = [key.split()[-1] for key, value in user_pars.items() if
+             'clusters' in key and value is not None]
+    if user_pars['label meas'] != ['piezoresponse']:
+        modes = [lab for lab in modes if lab != 'coupled']
     lab_tab = [['on', 'off', 'coupled'], ['y', 'w', 'r'],
                ['On Field', 'Off Field', 'Coupled']]
-    cluster_labels, cluster_info, inertia, avg_hysteresis = {}, {}, {}, {}
+    cluster_labels, cluster_info, inertia, avg_curve = {}, {}, {}, {}
     offsets = []
     make_plots = bool(show_plots or save_plots)
 
-    # Extract hysteresis data
-    hysts_x, hysts_y = extract_data(dir_path_in, name_files, modes)
+    # Extract curve data
+    curves_x, curves_y = extract_data(dir_path_in, name_files, modes,
+                                      user_pars['label meas'])
 
     # Extract extra analysis info (scan dim + vertical offset (off field))
     if dir_path_in is not None:
@@ -306,24 +334,26 @@ def main_hysteresis_clustering(
         offsets = properties['off']['fit pars: offset'] \
             if elec_offset else None
 
-    # If "coupled" mode is present, calculate coupled hysteresis
+    # If "coupled" mode is present, calculate coupled curve
+    # (only for piezoresponse)
     if "coupled" in modes:
-        hysts_x, hysts_y = gen_coupled_data(hysts_x, hysts_y, offsets=offsets)
+        curves_x, curves_y = gen_coupled_data(curves_x, curves_y,
+                                              offsets=offsets)
 
     # Perform clustering for each mode
     for mode in modes:
         try:
             # K-Means
             numb_cluster = user_pars[f'nb clusters {mode}']
-            res = cluster_kmeans(hysts_y[mode], numb_cluster)
+            res = cluster_kmeans(curves_y[mode], numb_cluster)
             cluster_labels[mode], cluster_info[mode], inertia[mode] = res
 
-            # Calculate Average Hysteresis by Cluster
-            avg_hysteresis[mode] = []
+            # Calculate Average curve by Cluster
+            avg_curve[mode] = []
             for cluster_idx in range(numb_cluster):
                 cluster_mask = np.array(cluster_labels[mode]) == cluster_idx
-                avg_hysteresis[mode].append(
-                    np.mean(np.array(hysts_y[mode])[cluster_mask], axis=0))
+                avg_curve[mode].append(
+                    np.mean(np.array(curves_y[mode])[cluster_mask], axis=0))
 
             # Clustering results in str
             labels = []
@@ -343,14 +373,13 @@ def main_hysteresis_clustering(
             # Generate plots if specified
             if make_plots:
                 # Color of figures
-                color_hysteresis_clustering = \
-                    get_setting("color_hysteresis_clustering")
-                cbar = plt.get_cmap(color_hysteresis_clustering)
+                color_curve_clustering = get_setting("color_curve_clustering")
+                cbar = plt.get_cmap(color_curve_clustering)
                 colors = [cbar((numb_cluster - i) / numb_cluster)
                           for i in range(numb_cluster)]
                 cmap, cbar_lab = cbar_map(colors, numb_cluster)
 
-                # Plot 1 : All Hysteresis by Cluster
+                # Plot 1 : All Curve by Cluster
                 # Legend
                 legend_handles = []
                 for i in range(numb_cluster):
@@ -365,31 +394,31 @@ def main_hysteresis_clustering(
                 fig1.sfn = f"clustering_best_loops_{mode}"
                 plot_dict_1 = {
                     'title': f'Clustering (K-Means): Best Loops ({mode})',
-                    'x lab': 'Voltage', 'y lab': 'Piezoresponse',
+                    'x lab': 'Voltage', 'y lab': 'Y Axis',
                     'fs': 15, 'edgew': 3, 'tickl': 5, 'gridw': 1}
                 plot_graph(ax, [], [], plot_dict=plot_dict_1)
-                # Plot each hysteresis
+                # Plot each curve
                 for i, (elem_x, elem_y) in enumerate(zip(
-                        hysts_x[mode], hysts_y[mode])):
+                        curves_x[mode], curves_y[mode])):
                     color = colors[cluster_labels[mode][i]]
                     plt.plot(elem_x, elem_y, color=color)
                 ax.legend(handles=legend_handles)
                 figs += [fig1]
 
-                # Plot 2 : Average Hysteresis by Cluster
+                # Plot 2 : Average Curve by Cluster
                 # Create graph
                 fig2, ax = plt.subplots(figsize=figsize)
                 fig2.sfn = f"clustering_average_loops_{mode}"
                 plot_dict_3 = {
-                    'title': f'Average Hysteresis by Cluster ({mode})',
-                    'x lab': 'Voltage', 'y lab': 'Piezoresponse',
+                    'title': f'Average Curve by Cluster ({mode})',
+                    'x lab': 'Voltage', 'y lab': 'Y Axis',
                     'fs': 15, 'edgew': 3, 'tickl': 5, 'gridw': 1}
                 plot_graph(ax, [], [], plot_dict=plot_dict_3)
-                # Plot Average Hysteresis by Cluster
+                # Plot Average Curve by Cluster
                 for index in range(numb_cluster):
                     color = colors[index]
                     label = f'Cluster {cluster_info[mode][index][4]}'
-                    plt.plot(hysts_x[mode][0], avg_hysteresis[mode][index],
+                    plt.plot(curves_x[mode][0], avg_curve[mode][index],
                              label=label, color=color)
                 ax.legend()
                 figs += [fig2]
@@ -411,31 +440,38 @@ def main_hysteresis_clustering(
                   f"for analysis")
             continue
 
-    return cluster_labels, cluster_info, inertia, avg_hysteresis
+    return cluster_labels, cluster_info, inertia, avg_curve
 
 
 def parameters():
     """
     To complete by user of the script: return parameters for analysis
-
+    - label_meas: list of str
+        List of Measurement Name for Curves
+        This parameter contains a list of measurement name in order to create
+        the curve to be analyzed using a machine learning algorithm
+        of clustering (K-Means). If several name are filled, the curve will be
+        normalized and concatenated.
+        Choose from : piezoresponse, amplitude, phase, res freq and q fact
     - nb_clusters_off: int
-        Number of Clusters for Off-Field Hysteresis Nanoloop.
+        Number of Clusters for Off-Field Curve.
         This parameter determines the number of clusters for the
-        off-field hysteresis nanoloop using a machine learning algorithm
+        off-field curve using a machine learning algorithm
         of clustering (K-Means).
-        Used in the analysis of off-field hysteresis loop.
+        Used in the analysis of off-field curve.
     - nb_clusters_on: int
-        Number of Clusters for On-Field Hysteresis Loop.
+        Number of Clusters for On-Field Curve.
         This parameter determines the number of clusters for the
-        on-field hysteresis loop using a machine learning algorithm
+        on-field curve using a machine learning algorithm
         of clustering (K-Means).
-        Used in the analysis of on-field hysteresis loop.
+        Used in the analysis of on-field curve.
     - nb_clusters_coupled: int
-        Number of Clusters for Differential Hysteresis Loop.
+        Number of Clusters for Differential Curve.
         This parameter determines the number of clusters for the
-        differential hysteresis loop using a machine learning algorithm
+        differential curve using a machine learning algorithm
         of clustering (K-Means).
-        Used in the analysis of differential hysteresis loop.
+        Only valid only for a piezoresponse curve.
+        Used in the analysis of differential curve.
 
     - dir_path_in: str
         Input Directory for Best Loop TXT Files (default: 'best_nanoloops').
@@ -493,7 +529,8 @@ def parameters():
         show_plots = True
         save = False
 
-        user_pars = {'nb clusters off': 4,
+        user_pars = {'label meas': ['piezoresponse'],
+                     'nb clusters off': 4,
                      'nb clusters on': 4,
                      'nb clusters coupled': 4}
 
@@ -513,11 +550,11 @@ def main():
      show_plots, save) = out
     # Generate default path out
     dir_path_out = save_path_management(
-        dir_path_in, dir_path_out, save=save,  dirname="hysteresis_clustering",
+        dir_path_in, dir_path_out, save=save,  dirname="curve_clustering",
         lvl=1, create_path=True, post_analysis=True)
     start_time = datetime.now()
     # Main function
-    main_hysteresis_clustering(
+    main_curve_clustering(
         user_pars, dir_path_in, verbose=verbose, show_plots=show_plots,
         save_plots=save, dir_path_out=dir_path_out,
         dir_path_in_props=dir_path_in_props)
