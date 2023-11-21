@@ -142,7 +142,7 @@ def main(parent=None):
     # Mode
     label_mode = ttk.Label(app, text="Mode:")
     row = grid_item(label_mode, row, column=0, sticky="e", increment=False)
-    mode_var = ttk.Combobox(app, values=["max", "fit", "dfrt"])
+    mode_var = ttk.Combobox(app, values=["max", "fit", "single_freq", "dfrt"])
     mode_var.set(user_parameters['seg pars']['mode'])
     row = grid_item(mode_var, row, column=1, sticky="ew")
     strg = "- Name: mode\n" \
@@ -152,10 +152,14 @@ def main(parent=None):
            "method used for data analysis, specifically for " \
            "extracting PFM amplitude and phase data from segments and " \
            "for signal treatment within the segment.\n" \
-           "- Value: A string with three possible values:\n" \
-           "\t--> 'max': peak maximum treatment (sweep)\n" \
-           "\t--> 'fit': peak fit treatment (sweep)\n," \
-           "\t--> 'dfrt': average of segment"
+           "- Value: A string with four possible values:\n" \
+           "\t--> 'max': Peak maximum treatment " \
+           "(frequency sweep in resonance)\n" \
+           "\t--> 'fit': Peak fit treatment " \
+           "(frequency sweep in resonance)\n," \
+           "\t--> 'single_freq': Average of segment (single frequency, " \
+           "in or out of resonance)\n," \
+           "\t--> 'dfrt': Average of segment (dfrt)"
     mode_var.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(mode_var, mess))
 
