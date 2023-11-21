@@ -75,7 +75,7 @@ def single_script(file, user_pars, meas_pars, sign_pars,
 
     loop_tab, _, _ = nanoloop_treatment(
         data_dict, sign_pars, dict_pha=dict_pha, dict_str=dict_str,
-        q_fact=meas_pars['Q factor'])
+        q_fact_scalar=meas_pars['Q factor'])
     _, _, best_loop, _, _ = find_best_nanoloop(
         loop_tab, dict_pha['counterclockwise'],
         grounded_tip=dict_pha['grounded tip'], analysis_mode=analysis_mode,
