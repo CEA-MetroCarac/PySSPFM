@@ -188,22 +188,34 @@ def extract_params(file_path_in=None):
         if line.startswith('- Other parameters'):
             indx_other_pars = cont
 
+    def get_keys(lines_pars, line_start=0, line_end=-1):
+        """
+        Extract keys from lines of parameters.
+
+        Parameters
+        ----------
+        lines_pars: list of str
+            List of lines containing parameters
+        line_start: int, optional
+            Starting line index (inclusive)
+        line_end: int, optional
+            Ending line index (exclusive)
+
+        Returns
+        -------
+        keys_pars: list of str
+            List of extracted keys
+        """
+        lines_pars = lines_pars[line_start:line_end]
+        keys_pars = [line_pars.split(':')[0] for line_pars in lines_pars if
+                     line_pars != '\n']
+        return keys_pars
+
     # Key of all dict parameters
-    keys_meas_pars = ['Grid x [pix]', 'Grid x [μm]', 'Grid y [pix]',
-                      'Grid y [μm]', 'Hold time [ms]', 'Hold force [nN]',
-                      'Pressure [MPa]', 'Calibration', 'Calib fact [nm/V]',
-                      'Q factor', 'P [kHz/V]', 'I [MHz/(V.s)]',
-                      'Center [kHz]', 'Range [kHz]', 'Sideband amp [V]',
-                      'Sideband freq [kHz]', 'Sens 1', 'Offset 1 [V]',
-                      'Sens 2 [mV/°]', 'Offset 2 [V]', 'Bias app', 'V_AC [V]',
-                      'Date [hh : dd/mm/yyyy]', 'Pix durat [sec]',
-                      'Grid durat [sec]', 'Tip', 'Sign of d33', 'Sample ref',
-                      'nb seg', 'exp time [s]', 'start hold time exp [s]',
-                      'end hold time exp [s]', 'theoretic time [s]']
-    keys_sign_pars = ['Min volt (W) [V]', 'Max volt (W) [V]', 'Nb volt (W)',
-                      'Mode (W)', 'Seg durat (W) [ms]', 'Seg sample (W)',
-                      'Min volt (R) [V]', 'Max volt (R) [V]', 'Nb volt (R)',
-                      'Mode (R)', 'Seg durat (R) [ms]', 'Seg sample (R)']
+    keys_meas_pars = get_keys(lines, line_start=indx_meas_pars+1,
+                              line_end=indx_sign_pars-1)
+    keys_sign_pars = get_keys(lines, line_start=indx_sign_pars+1,
+                              line_end=indx_hyst_pars-1)
     keys_hyst_pars = ['func', 'method', 'asymmetric', 'inf thresh',
                       'sat thresh', 'del 1st loop']
     keys_pha_pars = ['pha corr', 'pha fwd', 'pha rev', 'pha func', 'main elec',
@@ -313,7 +325,7 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars, dict_pha,
     # List of MultiLoop object
     res = nanoloop_treatment(
         data_dict, sign_pars, dict_pha=dict_pha, dict_str=dict_str,
-        q_fact=meas_pars['Q factor'])
+        q_fact_scalar=meas_pars['Q factor'])
     (loop_tab, _, _) = res
 
     # cKPFM analysis if multiloop
@@ -386,7 +398,8 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
         'dir path in prop': user_pars['dir path in prop'],
         'dir path in loop': user_pars['dir path in loop'],
         'file path in pars': user_pars['file path in pars'],
-        'mask': {'man mask': []}
+        'mask': {'man mask': [],
+                 'revert mask': False}
     })
     dict_pha = gen_dict_pha(meas_pars, treat_pars['pha corr'],
                             pha_fwd=treat_pars['pha fwd'],
