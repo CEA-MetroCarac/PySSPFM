@@ -7,24 +7,19 @@ Module used for the scripts of sspfm 1st step data analysis
 import numpy as np
 
 from PySSPFM.settings import get_setting
+from PySSPFM.utils.core.basic_func import sho, sho_phase
 from PySSPFM.utils.core.noise import filter_mean
 from PySSPFM.utils.core.peak import width_peak
 from PySSPFM.utils.datacube_to_nanoloop.plot import plt_seg
 from PySSPFM.utils.core.fitting import ShoPeakFit, ShoPhaseFit
 
 
-class Segment:
-    """
-    Segment voltage of sspfm bias signal and associated amplitude and
-    phase measure
-    """
-
-    def __init__(self, start_ind, end_ind, dict_meas, start_freq_init=200.,
-                 end_freq_init=300., write_volt=0., read_volt=0.,
-                 type_seg='read', mode='max', numb=0, cut_seg=None,
-                 filter_order=None, fit_pars=None, guess_init=None):
+class SegmentInfo:
+    """ Init all segment info (common for all Segment classes) """
+    def __init__(self, start_ind, end_ind, times, write_volt=0.,
+                 read_volt=0., type_seg='read',  mode='max', numb=0):
         """
-        Main function of the class
+        Class to initialize segment information.
 
         Parameters
         ----------
@@ -32,25 +27,65 @@ class Segment:
             Starting index of the segment
         end_ind: int
             Ending index of the segment
+        times: array-like
+            Array containing time values
+        write_volt: float, optional
+            Write voltage value associated to the segment (in V)
+            (default is 0.0)
+        read_volt: float, optional
+            Read voltage value associated to the segment (in V)
+            (default is 0.0)
+        type_seg: str, optional
+            Type of segment ('read' or 'write', default is 'read')
+        mode: str, optional
+            Operating mode for analysis: four possible modes:
+            - 'max': for analysis of the resonance with max peak value
+            (frequency sweep in resonance)
+            - 'fit': for analysis of the resonance with a SHO fit of the peak
+            (frequency sweep in resonance)
+            - 'single_freq': for analysis performed at single frequency,
+            average of segment (in or out of resonance)
+            - 'dfrt': for analysis performed with dfrt, average of segment
+        numb: int, optional
+            Index number of the segment (default is 0)
+        """
+        assert type_seg in ['read', 'write']
+        self.start_ind_init = start_ind
+        self.end_ind_init = end_ind
+        self.len_init = end_ind - start_ind
+        self.seg_info = {
+            'read volt': read_volt,
+            'write volt': write_volt,
+            'type': type_seg,
+            'mode': mode,
+            'index': numb,
+            'start time': times[start_ind],
+            'end time': times[end_ind]
+        }
+
+
+class SegmentSweep:
+    """
+    Segment voltage of sspfm bias signal and associated amplitude and
+    phase measure for frequency sweep in resonance
+    """
+
+    def __init__(self, segment_info, dict_meas, start_freq_init=200.,
+                 end_freq_init=300., cut_seg=None, filter_order=None,
+                 fit_pars=None, guess_init=None):
+        """
+        Main function of the class
+
+        Parameters
+        ----------
+        segment_info: SegmentInfo
+            Instance of SegmentInfo class containing segment information
         dict_meas: dict
-            Dict of all measurement in extracted file
+            All measurement in extracted file
         start_freq_init: float, optional
             Starting frequency of the sweep (if max or fit mode) (in kHz)
         end_freq_init: float, optional
             Ending frequency of the sweep (if max or fit mode) (in kHz)
-        write_volt: float, optional
-            Write voltage value associated to the segment (in V)
-        read_volt: float, optional
-            Read voltage value associated to the segment (in V)
-        type_seg: str, optional
-            'read' or 'write' depending of segment type
-        mode: str, optional
-            Operating mode for analysis: three possible mode:
-            - 'max' for analysis of the resonance with max peak value
-            - 'fit' for analysis of the resonance with a SHO fit of the peak
-            - 'dfrt' for analysis performed with the dfrt
-        numb: int, optional
-            Index associated to the segment
         cut_seg: dict, optional
             Dict of percent cut of the start and end of the segment
         filter_order: int
@@ -60,52 +95,40 @@ class Segment:
         guess_init: dict, optional
             Dict of initial parameters to perform the fit (if fit mode)
         """
-        assert type_seg in ['read', 'write']
-        self.start_ind_init = start_ind
-        self.end_ind_init = end_ind
-        self.cut_seg = cut_seg
-        (self.amp, self.pha, self.res_freq, self.q_fact, self.inc_amp,
-         self.inc_pha, self.bckgnd) = (None, None, None, None, None, None, None)
+        (self.amp, self.pha, self.res_freq, self.q_fact, self.bckgnd) = \
+            (None, None, None, None, None)
         self.best_fit, self.pha_best_fit = [], []
         self.error = ''
-        self.seg_infos = {
-            'read volt': read_volt,
-            'write volt': write_volt,
-            'type': type_seg,
-            'mode': mode,
-            'index': numb,
-            'start time': dict_meas['times'][start_ind],
-            'end time': dict_meas['times'][end_ind]
-        }
-        self.len_init = self.end_ind_init - self.start_ind_init
-        self.amp_tab_init = dict_meas['amp'][self.start_ind_init:
-                                             self.end_ind_init]
-        self.pha_tab_init = dict_meas['pha'][self.start_ind_init:
-                                             self.end_ind_init]
-        self.time_tab_init = dict_meas['times'][self.start_ind_init:
-                                                self.end_ind_init]
+        self.segment_info = segment_info
+        mode = segment_info.seg_info['mode']
+        self.time_tab_init = dict_meas['times'][segment_info.start_ind_init:
+                                                segment_info.end_ind_init]
         self.freq_tab_init = np.linspace(start_freq_init, end_freq_init,
-                                         self.len_init, endpoint=False)
+                                         segment_info.len_init, endpoint=False)
+        self.amp_tab_init = dict_meas['amp'][segment_info.start_ind_init:
+                                             segment_info.end_ind_init]
+        self.pha_tab_init = dict_meas['pha'][segment_info.start_ind_init:
+                                             segment_info.end_ind_init]
 
         # Cut beginning and end of the segment
         if cut_seg is None:
-            self.start_ind = self.start_ind_init
-            self.end_ind = self.end_ind_init
-            self.len = self.len_init
-            self.amp_tab = self.amp_tab_init
-            self.pha_tab = self.pha_tab_init
+            self.start_ind = segment_info.start_ind_init
+            self.end_ind = segment_info.end_ind_init
+            self.len = segment_info.len_init
             self.time_tab = self.time_tab_init
             self.freq_tab = self.freq_tab_init
+            self.amp_tab = self.amp_tab_init
+            self.pha_tab = self.pha_tab_init
         else:
-            incr_start = int(cut_seg['start'] / 100 * self.len_init)
-            incr_end = int(cut_seg['end'] / 100 * self.len_init)
-            self.start_ind = self.start_ind_init + incr_start
-            self.end_ind = self.end_ind_init - incr_end
+            incr_start = int(cut_seg['start'] / 100 * segment_info.len_init)
+            incr_end = int(cut_seg['end'] / 100 * segment_info.len_init)
+            self.start_ind = segment_info.start_ind_init + incr_start
+            self.end_ind = segment_info.end_ind_init - incr_end
             self.len = self.end_ind - self.start_ind
-            self.amp_tab = dict_meas['amp'][self.start_ind:self.end_ind]
-            self.pha_tab = dict_meas['pha'][self.start_ind:self.end_ind]
             self.time_tab = dict_meas['times'][self.start_ind:self.end_ind]
             self.freq_tab = self.freq_tab_init[incr_start:-incr_end]
+            self.amp_tab = dict_meas['amp'][self.start_ind:self.end_ind]
+            self.pha_tab = dict_meas['pha'][self.start_ind:self.end_ind]
 
         # Measure filtered
         if filter_order:
@@ -122,13 +145,8 @@ class Segment:
             self.q_fact = self.q_fact_max()
         elif mode == 'fit':
             self.treatment_fit(fit_pars=fit_pars, guess_init=guess_init)
-        elif mode == 'dfrt':
-            self.amp = np.mean(self.amp_tab)
-            self.pha = np.mean(self.pha_tab)
-            self.inc_amp = np.sqrt(np.var(self.amp_tab))
-            self.inc_pha = np.sqrt(np.var(self.pha_tab))
         else:
-            raise IOError('mode in [\'max\',\'fit\',\'dfrt\']')
+            raise IOError('mode in [\'max\',\'fit\']')
 
     def treatment_fit(self, fit_pars=None, guess_init=None):
         """
@@ -261,11 +279,11 @@ class Segment:
                        "vary": True, "min": min(y), "max": max(y)},
             "slope": {"value": 0, "vary": False, "min": None, "max": None}}
         # Creation of Curve and fit
-        sho_phase = ShoPhaseFit(switch=switch)
-        sho_phase.fit(x, y, init_params=init_params)
+        sho_pha = ShoPhaseFit(switch=switch)
+        sho_pha.fit(x, y, init_params=init_params)
         # Extraction of parameters
-        self.pha_best_fit = sho_phase.eval(self.freq_tab)
-        self.pha = sho_phase.eval(self.res_freq)
+        self.pha_best_fit = sho_pha.eval(self.freq_tab)
+        self.pha = sho_pha.eval(self.res_freq)
 
         # print and plot fit results
         # print(guess_init)
@@ -343,16 +361,264 @@ class Segment:
         return qual_factor
 
 
-def zi_calib(amplitude_zi, phase_zi, meas_pars=None):
+class SegmentStable:
     """
-    Convert output zhinst amplitude and phase (in V) to physical units.
+    Segment voltage of sspfm bias signal and associated amplitude and
+    phase measure for DFRT or single frequency measure
+    """
+
+    def __init__(self, segment_info, dict_meas, cut_seg=None,
+                 filter_order=None):
+        """
+        Main function of the class
+
+        Parameters
+        ----------
+        segment_info: SegmentInfo
+            Instance of SegmentInfo class containing segment information
+        dict_meas: dict
+            All measurement in extracted file
+        cut_seg: dict, optional
+            Dict of percent cut of the start and end of the segment
+        filter_order: int
+            Order of the filter for amplitude and phase in the segment
+        """
+        (self.amp, self.pha, self.res_freq, self.inc_amp, self.inc_pha,
+         self.inc_res_freq) = (None, None, None, None, None, None)
+        self.segment_info = segment_info
+        self.time_tab_init = dict_meas['times'][segment_info.start_ind_init:
+                                                segment_info.end_ind_init]
+        self.amp_tab_init = dict_meas['amp'][segment_info.start_ind_init:
+                                             segment_info.end_ind_init]
+        self.pha_tab_init = dict_meas['pha'][segment_info.start_ind_init:
+                                             segment_info.end_ind_init]
+        self.freq_tab_init = dict_meas.get('freq', None)
+        self.freq_tab_init = dict_meas['freq'][segment_info.start_ind_init:
+                                               segment_info.end_ind_init] \
+            if self.freq_tab_init else None
+
+        # Cut beginning and end of the segment
+        if cut_seg is None:
+            self.start_ind = segment_info.start_ind_init
+            self.end_ind = segment_info.end_ind_init
+            self.len = segment_info.len_init
+            self.time_tab = self.time_tab_init
+            self.amp_tab = self.amp_tab_init
+            self.pha_tab = self.pha_tab_init
+            self.freq_tab = self.freq_tab_init
+
+        else:
+            incr_start = int(cut_seg['start'] / 100 * segment_info.len_init)
+            incr_end = int(cut_seg['end'] / 100 * segment_info.len_init)
+            self.start_ind = segment_info.start_ind_init + incr_start
+            self.end_ind = segment_info.end_ind_init - incr_end
+            self.len = self.end_ind - self.start_ind
+            self.time_tab = dict_meas['times'][self.start_ind:self.end_ind]
+            self.amp_tab = dict_meas['amp'][self.start_ind:self.end_ind]
+            self.pha_tab = dict_meas['pha'][self.start_ind:self.end_ind]
+            self.freq_tab = dict_meas['freq'][self.start_ind:self.end_ind] \
+                if self.freq_tab_init else None
+
+        # Measure filtered
+        if filter_order:
+            self.amp_tab = filter_mean(self.amp_tab, filter_order)
+            self.amp_tab_init = filter_mean(self.amp_tab_init, filter_order)
+            self.pha_tab = filter_mean(self.pha_tab, filter_order)
+            self.pha_tab_init = filter_mean(self.pha_tab_init, filter_order)
+            self.freq_tab = filter_mean(self.freq_tab, filter_order) \
+                if self.freq_tab else None
+            self.freq_tab_init = filter_mean(self.freq_tab_init, filter_order) \
+                if self.freq_tab_init else None
+
+        # Segment treatment
+        self.amp = np.mean(self.amp_tab)
+        self.pha = np.mean(self.pha_tab)
+        self.res_freq = np.mean(self.freq_tab) if self.freq_tab else None
+        self.inc_amp = np.sqrt(np.var(self.amp_tab))
+        self.inc_pha = np.sqrt(np.var(self.pha_tab))
+        self.inc_res_freq = np.sqrt(np.var(self.freq_tab)) \
+            if self.freq_tab else None
+
+
+class SegmentStableDFRT:
+    """
+    Segment voltage of sspfm bias signal and associated amplitude and
+    phase measure for DFRT if sidebands are measured
+    """
+
+    def __init__(self, segment_info, dict_meas, cut_seg=None,
+                 filter_order=None):
+        """
+        Main function of the class
+
+        Parameters
+        ----------
+        segment_info: SegmentInfo
+            Instance of SegmentInfo class containing segment information
+        dict_meas: dict
+            All measurement in extracted file
+        cut_seg: dict, optional
+            Dict of percent cut of the start and end of the segment
+        filter_order: int
+            Order of the filter for amplitude and phase in the segment
+        """
+        (self.amp, self.pha, self.res_freq, self.q_fact) = \
+            (None, None, None, None)
+        self.segment_info = segment_info
+        self.time_tab_init = dict_meas['times'][segment_info.start_ind_init:
+                                                segment_info.end_ind_init]
+        self.amp_main_tab_init = dict_meas['amp'][segment_info.start_ind_init:
+                                                  segment_info.end_ind_init]
+        self.pha_main_tab_init = dict_meas['pha'][segment_info.start_ind_init:
+                                                  segment_info.end_ind_init]
+        self.freq_main_tab_init = dict_meas['freq'][segment_info.start_ind_init:
+                                                    segment_info.end_ind_init]
+        self.amp_sbl_tab_init = \
+            dict_meas['amp sb_l'][segment_info.start_ind_init:
+                                  segment_info.end_ind_init]
+        self.pha_sbl_tab_init = \
+            dict_meas['pha sb_l'][segment_info.start_ind_init:
+                                  segment_info.end_ind_init]
+        self.freq_sbl_tab_init = \
+            dict_meas['freq sb_l'][segment_info.start_ind_init:
+                                   segment_info.end_ind_init]
+        self.amp_sbr_tab_init = \
+            dict_meas['amp sb_r'][segment_info.start_ind_init:
+                                  segment_info.end_ind_init]
+        self.pha_sbr_tab_init = \
+            dict_meas['pha sb_r'][segment_info.start_ind_init:
+                                  segment_info.end_ind_init]
+        self.freq_sbr_tab_init = \
+            dict_meas['freq sb_r'][segment_info.start_ind_init:
+                                   segment_info.end_ind_init]
+
+        # Cut beginning and end of the segment
+        if cut_seg is None:
+            self.start_ind = segment_info.start_ind_init
+            self.end_ind = segment_info.end_ind_init
+            self.len = segment_info.len_init
+            self.time_tab = self.time_tab_init
+            self.amp_main_tab = self.amp_main_tab_init
+            self.pha_main_tab = self.pha_main_tab_init
+            self.freq_main_tab = self.freq_main_tab_init
+            self.amp_sbl_tab = self.amp_sbl_tab_init
+            self.pha_sbl_tab = self.pha_sbl_tab_init
+            self.freq_sbl_tab = self.freq_sbl_tab_init
+            self.amp_sbr_tab = self.amp_sbr_tab_init
+            self.pha_sbr_tab = self.pha_sbr_tab_init
+            self.freq_sbr_tab = self.freq_sbr_tab_init
+        else:
+            incr_start = int(cut_seg['start'] / 100 * segment_info.len_init)
+            incr_end = int(cut_seg['end'] / 100 * segment_info.len_init)
+            self.start_ind = segment_info.start_ind_init + incr_start
+            self.end_ind = segment_info.end_ind_init - incr_end
+            self.len = self.end_ind - self.start_ind
+            self.time_tab = dict_meas['times'][self.start_ind:self.end_ind]
+            self.amp_main_tab = dict_meas['amp'][self.start_ind:self.end_ind]
+            self.pha_main_tab = dict_meas['pha'][self.start_ind:self.end_ind]
+            self.freq_main_tab = dict_meas['freq'][self.start_ind:self.end_ind]
+            self.amp_sbl_tab = dict_meas['amp sb_l'][self.start_ind:
+                                                     self.end_ind]
+            self.pha_sbl_tab = dict_meas['pha sb_l'][self.start_ind:
+                                                     self.end_ind]
+            self.freq_sbl_tab = dict_meas['freq sb_l'][self.start_ind:
+                                                       self.end_ind]
+            self.amp_sbr_tab = dict_meas['amp sb_r'][self.start_ind:
+                                                     self.end_ind]
+            self.pha_sbr_tab = dict_meas['pha sb_r'][self.start_ind:
+                                                     self.end_ind]
+            self.freq_sbr_tab = dict_meas['freq sb_r'][self.start_ind:
+                                                       self.end_ind]
+        # Measure filtered
+        if filter_order:
+            self.amp_main_tab = filter_mean(self.amp_main_tab, filter_order)
+            self.amp_main_tab_init = filter_mean(self.amp_main_tab_init,
+                                                 filter_order)
+            self.pha_main_tab = filter_mean(self.pha_main_tab, filter_order)
+            self.pha_main_tab_init = filter_mean(self.pha_main_tab_init,
+                                                 filter_order)
+            self.freq_main_tab = filter_mean(self.freq_main_tab, filter_order)
+            self.freq_main_tab_init = filter_mean(self.freq_main_tab_init,
+                                                  filter_order)
+            self.amp_sbl_tab = filter_mean(self.amp_sbl_tab, filter_order)
+            self.amp_sbl_tab_init = filter_mean(self.amp_sbl_tab_init,
+                                                filter_order)
+            self.pha_sbl_tab = filter_mean(self.pha_sbl_tab, filter_order)
+            self.pha_sbl_tab_init = filter_mean(self.pha_sbl_tab_init,
+                                                filter_order)
+            self.freq_sbl_tab = filter_mean(self.freq_sbl_tab, filter_order)
+            self.freq_sbl_tab_init = filter_mean(self.freq_sbl_tab_init,
+                                                 filter_order)
+            self.amp_sbr_tab = filter_mean(self.amp_sbr_tab, filter_order)
+            self.amp_sbr_tab_init = filter_mean(self.amp_sbr_tab_init,
+                                                filter_order)
+            self.pha_sbr_tab = filter_mean(self.pha_sbr_tab, filter_order)
+            self.pha_sbr_tab_init = filter_mean(self.pha_sbr_tab_init,
+                                                filter_order)
+            self.freq_sbr_tab = filter_mean(self.freq_sbr_tab, filter_order)
+            self.freq_sbr_tab_init = filter_mean(self.freq_sbr_tab_init,
+                                                 filter_order)
+
+        # Segment treatment
+        self.amp_main = np.mean(self.amp_main_tab)
+        self.pha_main = np.mean(self.pha_main_tab)
+        self.freq_main = np.mean(self.freq_main_tab)
+        self.amp_sbl = np.mean(self.amp_sbl_tab)
+        self.pha_sbl = np.mean(self.pha_sbl_tab)
+        self.freq_sbl = np.mean(self.freq_sbl_tab)
+        self.amp_sbr = np.mean(self.amp_sbr_tab)
+        self.pha_sbr = np.mean(self.pha_sbr_tab)
+        self.freq_sbr = np.mean(self.freq_sbr_tab)
+
+        self.process_sidebands()
+
+    def process_sidebands(self):
+        """
+        Compute peak parameters from sidebands amplitude, phase and frequency
+        values. Conditions: pha_sbr > pha_sbl for freq_sbr > freq_sbl.
+        Source : doi:10.1088/0957-4484/24/15/159501
+        """
+        assert self.pha_sbr > self.pha_sbl, \
+            "pha_sbr must be greater than pha_sbl"
+        assert self.freq_sbr > self.freq_sbl, \
+            "freq_sbr must be greater than freq_sbl"
+
+        phi = np.tan(self.pha_sbr - self.pha_sbl)
+        omega = self.freq_sbl * self.amp_sbl / (self.freq_sbr * self.amp_sbr)
+
+        x_1 = - (1 - np.sign(phi) * np.sqrt(1 + phi ** 2) / omega**2) / phi
+        x_2 = (1 - np.sign(phi) * np.sqrt(1 + phi ** 2) * omega) / phi
+
+        frac = (self.freq_sbr * x_1 - self.freq_sbl * x_2) / \
+               (self.freq_sbl * x_1 - self.freq_sbr * x_2)
+        self.res_freq = np.sqrt(self.freq_sbl * self.freq_sbr * frac)
+
+        num = self.freq_sbl * self.freq_sbr * \
+            (self.freq_sbr * x_1 - self.freq_sbl * x_2) * \
+            (self.freq_sbl * x_1 - self.freq_sbr * x_2)
+        denom = self.freq_sbr**2 - self.freq_sbl**2
+        self.q_fact = np.sqrt(num) / denom
+
+        self.amp = self.amp_sbl * self.q_fact / \
+            sho(self.freq_sbl, 1, self.q_fact, self.res_freq)
+        self.pha = self.pha_sbl + \
+            sho_phase(self.freq_sbl, 1, self.q_fact, self.res_freq)
+
+
+def external_calib(amplitude_out, phase_out, meas_pars=None):
+    """
+    Convert the output amplitude and phase from an external acquisition device
+    (in V) to physical units. Additional measurements like frequency can
+    be added here.
 
     Parameters
     ----------
-    amplitude_zi: list or numpy.array of float
-        List of zhinst PFM amplitude measurements (in V).
-    phase_zi: list or numpy.array of float
-        List of zhinst PFM phase measurements (in V).
+    amplitude_out: list or numpy.array of float
+        List of output PFM amplitude measurements of external acquisition
+        device (in V).
+    phase_out: list or numpy.array of float
+        List of output PFM phase measurements of external acquisition
+        device (in V).
     meas_pars: dict, optional
         Dictionary of conversion sensibility and offset factors.
         Default is None.
@@ -365,13 +631,13 @@ def zi_calib(amplitude_zi, phase_zi, meas_pars=None):
         List of PFM phase measurements after conversion (in °).
     """
     meas_pars = meas_pars or {
-        'Sens 1': 1, 'Offset 1 [V]': 0,
-        'Sens 2 [mV/°]': 1000, 'Offset 2 [V]': 0
+        'Sens ampli': 1, 'Offset ampli [V]': 0,
+        'Sens phase [mV/°]': 1000, 'Offset phase [V]': 0
     }
-    amplitude = [(elem_amp - meas_pars['Offset 1 [V]']) / meas_pars['Sens 1']
-                 for elem_amp in amplitude_zi]
-    phase = [(elem_pha - meas_pars['Offset 2 [V]']) /
-             (meas_pars['Sens 2 [mV/°]'] / 1000) for elem_pha in phase_zi]
+    amplitude = [(elem_amp - meas_pars['Offset ampli [V]']) /
+                 meas_pars['Sens ampli'] for elem_amp in amplitude_out]
+    phase = [(elem_pha - meas_pars['Offset phase [V]']) /
+             (meas_pars['Sens phase [mV/°]'] / 1000) for elem_pha in phase_out]
 
     return amplitude, phase
 
