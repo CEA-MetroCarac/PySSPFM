@@ -8,11 +8,12 @@
         "interp fact": 3,
         "interp func": "linear",
         "revert mask": false,
+        "man mask": [],
         "ref": {
             "mode": "off",
             "prop": "charac tot fit: R_2 hyst",
             "fmt": ".5f",
-            "min val": 0.95,
+            "min val": 0.99,
             "max val": null,
             "interactive": false
         },
