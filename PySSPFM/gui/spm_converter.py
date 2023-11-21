@@ -131,7 +131,7 @@ def main(parent=None):
            "used for segment data analysis, specifically for the extraction " \
            "of PFM measurements.\n" \
            "- Value: A string with two possible values: " \
-           "'classic' (sweep) or 'dfrt'"
+           "'classic' (sweep or single_freq) or 'dfrt'"
     mode_var.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(mode_var, mess))
     row = add_grid_separator(app, row=row)
