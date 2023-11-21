@@ -54,7 +54,9 @@ def main_loop_file_reader(file_path, csv_path=None, dict_pha=None,
         csv_path = '_'.join(tab_path)
     if verbose:
         if 'dfrt' in file_path:
-            print('Maximum DFRT treatment')
+            print('Mean DFRT treatment')
+        elif 'single_freq' in file_path:
+            print('Mean single frequency treatment')
         elif 'maximum' in file_path:
             print('Maximum classic treatment')
         elif 'fit' in file_path:
