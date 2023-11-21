@@ -1350,7 +1350,7 @@ The operating principle of this reader differs slightly from that of the global 
 ### VIII.2) Hysteresis clustering (K-Means)
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox/hysteresis_clustering.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hysteresis_clustering.py">gui/hysteresis_clustering.py</a></code>. It facilitates the classification of hysteresis loops associated with each measurement point into clusters. This tool can enable phase separation or the separation of the influences of physically distinct phenomena, such as measurement artifacts.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox/hysteresis_clustering.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hysteresis_clustering.py">gui/hysteresis_clustering.py</a></code>. It facilitates the classification of loops associated with each measurement point into clusters. This tool can enable phase separation or the separation of the influences of physically distinct phenomena, such as measurement artifacts.
 </p>
 
 #### VIII.2.a) Parameters
@@ -1360,6 +1360,7 @@ The script can be executed directly using the executable file: <code><a href="ht
         'dir path in': '',
         'dir path in meas': '',
         'dir path out': '',
+        'label meas': ['piezoresponse'],
         'nb clusters off': 4,
         'nb clusters on': 4,
         'nb clusters coupled': 4,
@@ -1382,9 +1383,9 @@ The script can be executed directly using the executable file: <code><a href="ht
 #### VIII.2.b) Extraction 
 
 <p align="justify" width="100%">
-The entirety of data stemming from the best hysteresis loops, both in the on field and off field modes, is extracted from the files residing within the <code>best_nanoloops</code> directory (with the function <code>extract_data</code> of the script). <br>
-Vertical offset measurements in the off field mode and the dimensions of the mappings are drawn from the files within the <code>properties</code> directory (with <code>extract_properties</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file.py</a></code>). <br>
-The coupled measurements are subsequently generated through the process of differential analysis of on field and off field measurements, with the flexibility to incorporate the vertical offset in the off field mode, a component influenced by the sample's surface contact potential (section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4d---differential-analysis-of-on-and-off-field-hysteresis">VI.4.d) - Differential analysis of on and off field hysteresis</a> in the documentation).
+The entirety of data stemming from the best nanoloops, both in the on field and off field modes, is extracted from the files residing within the <code>best_nanoloops</code> directory (with the function <code>extract_data</code> of the script). <br>
+For piezoresponse curve analysis, vertical offset measurements in the off field mode and the dimensions of the mappings are drawn from the files within the <code>properties</code> directory (with <code>extract_properties</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file.py</a></code>). <br>
+For piezoresponse curve analysis, the coupled measurements are subsequently generated through the process of differential analysis of on field and off field measurements, with the flexibility to incorporate the vertical offset in the off field mode, a component influenced by the sample's surface contact potential (section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4d---differential-analysis-of-on-and-off-field-hysteresis">VI.4.d) - Differential analysis of on and off field hysteresis</a> in the documentation).
 </p>
 
 <p align="justify" width="100%">
@@ -1395,7 +1396,7 @@ For a deeper understanding of the input file management, please refer to the rel
 #### VIII.2.c) Treatment
 
 <p align="justify" width="100%">
-For each of the modes (on field, off field, and coupled), and for each of the hysteresis associated with each data point, a cluster is assigned using the machine learning K-Means methodology. To accomplish this, we import the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">KMeans</a> function from <a href="https://scikit-learn.org/stable/modules/clustering.html#clustering">sklearn.cluster</a>. A reference cluster is established, identified as the one encompassing the maximum number of data points. The index assigned to the other clusters is then computed as the distance between their centroid and that of the reference cluster, respectively. In other words, the clustering indexing provides the user with information about the separation (determined with quantitative data) of each cluster relative to the reference cluster. Subsequently, an average hysteresis for each cluster is computed.
+Initially, following data extraction, a curve is constructed. If multiple measurements are specified in the <code>label_meas</code> parameter, they are normalized between 0 and 1 and concatenated together in the <code>gen_curve_data</code> function of the script. To analyze ferroelectric as well as electrostatic effects, the quality of clusterization can be enhanced by composing amplitude with phase rather than simply relying on piezoresponse [INSERT SOURCE]. To study mechanical properties under in situ material polarization, resonance frequency and quality factor curves can be selected (for elastic and dissipative properties, respectively). This can be particularly relevant, for example, in the study of relaxor ferroelectric materials [INSERT SOURCE]. For each of the modes (on field, off field, and eventually coupled), and for each of the nanoloops associated with each data point, a cluster is assigned using the machine learning K-Means methodology. To accomplish this, we import the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">KMeans</a> function from <a href="https://scikit-learn.org/stable/modules/clustering.html#clustering">sklearn.cluster</a>. A reference cluster is established, identified as the one encompassing the maximum number of data points. The index assigned to the other clusters is then computed as the distance between their centroid and that of the reference cluster, respectively. In other words, the clustering indexing provides the user with information about the separation (determined with quantitative data) of each cluster relative to the reference cluster. Subsequently, an average curve for each cluster is computed.
 </p>
 
 #### VIII.2.d) Figures
@@ -1404,13 +1405,13 @@ For each of the modes (on field, off field, and coupled), and for each of the hy
     <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_all_hyst.PNG>
     <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_mean_hyst.PNG>
     <img align="center" width="19%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_carto.PNG> <br>
-    <em>Result of hysteresis_clustering (figure generated with <code>main_hysteresis_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox/hysteresis_clustering.py</a></code> script)</em>
+    <em>Result of curve_clustering (figure generated with <code>main_curve_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox/hysteresis_clustering.py</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
-For each mode (on field, off field, and coupled), three figures are generated, each containing: <br>
-&#8226 The complete array of hysteresis loops from all datasets, distinguished by colors assigned based on their cluster index. <br>
-&#8226 The average hysteresis loops for each cluster, distinguished by colors assigned according to their cluster index. <br>
+For each mode (on field, off field, and eventually coupled), three figures are generated, each containing: <br>
+&#8226 The complete array of curve from all datasets, distinguished by colors assigned based on their cluster index. <br>
+&#8226 The average curve for each cluster, distinguished by colors assigned according to their cluster index. <br>
 &#8226 A spatial cartography displaying the assigned clusters. <br>
 </p>
 
