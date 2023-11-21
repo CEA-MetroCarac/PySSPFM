@@ -1,7 +1,7 @@
 """
 --> Executable Script
 Graphical interface for hysteresis clustering
- (run hysteresis_clustering.main_hysteresis_clustering)
+ (run hysteresis_clustering.main_curve_clustering)
 """
 
 import os
@@ -12,7 +12,7 @@ from datetime import datetime
 
 from PySSPFM.settings import get_setting
 from PySSPFM.toolbox.hysteresis_clustering import \
-    main_hysteresis_clustering as main_script
+    main_curve_clustering as main_script
 from PySSPFM.gui.utils import \
     (add_grid_separator, grid_item, show_tooltip, extract_var,
      init_secondary_wdw, wdw_main_title)
