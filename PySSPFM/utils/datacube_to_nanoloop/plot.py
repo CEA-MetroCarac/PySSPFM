@@ -302,11 +302,11 @@ def plt_seg_max(seg, unit='a.u'):
     # Initialize figure
     figsize = get_setting("figsize")
     fig, ax = plt.subplots(figsize=figsize)
-    fig.sfn = f'segment_{seg.segmentinfo.seg_infos["index"]}_max'
+    fig.sfn = f'segment_{seg.segment_info.seg_info["index"]}_max'
     ax2 = ax.twinx()
 
     # Plot amplitude and phase segment
-    plot_dict = {'title': f'Segment n°{seg.segmentinfo.seg_infos["index"]}',
+    plot_dict = {'title': f'Segment n°{seg.segment_info.seg_info["index"]}',
                  'y lab': f'Amplitude [{unit}]', 'y2 lab': 'Phase [°]',
                  'c y2 lab': 'r', 'c y lab': 'b', 'x lab': 'Frequency [kHz]'}
     tabs_dict = [{'form': 'b-', 'legend': 'amplitude'},
@@ -330,13 +330,13 @@ def plt_seg_max(seg, unit='a.u'):
     ax2.plot(seg.res_freq, seg.pha, 'rh', ms=10, mec='k')
 
     # Annotate
-    if seg.segmentinfo.seg_infos['type'] == 'read':
+    if seg.segment_info.seg_info['type'] == 'read':
         label, col = 'Off field', 'w'
     else:
         label, col = 'On field', 'y'
     label = \
-        f'{label}:\nwrite: {seg.segmentinfo.seg_infos["write volt"]:.2f}V,\n' \
-        f'read: {seg.segmentinfo.seg_infos["read volt"]:.2f}V'
+        f'{label}:\nwrite: {seg.segment_info.seg_info["write volt"]:.2f}V,\n' \
+        f'read: {seg.segment_info.seg_info["read volt"]:.2f}V'
     fig.legend(fontsize=13, loc='upper right')
     fig.text(0.01, 0.90, label, color=col, fontsize=15, fontweight='heavy',
              backgroundcolor='black')
@@ -368,7 +368,7 @@ def plt_seg_fit(seg, unit='a.u', fit_pha=False):
     figsize = get_setting("figsize")
     fig, (ax1, ax2) = plt.subplots(nrows=2, sharex='all', sharey='all',
                                    figsize=figsize)
-    fig.sfn = f'segment_{seg.segmentinfo.seg_infos["index"]}_fit'
+    fig.sfn = f'segment_{seg.segment_info.seg_info["index"]}_fit'
     ax1b, ax2b = ax1.twinx(), ax2.twinx()
 
     # Plot amplitude and phase segment
@@ -407,14 +407,15 @@ def plt_seg_fit(seg, unit='a.u', fit_pha=False):
 
     # Annotate
     fig.legend(fontsize=13, loc='upper right')
-    fig.suptitle(f'Segment n°{seg.segmentinfo.seg_infos["index"]}', fontsize=13)
-    if seg.segmentinfo.seg_infos['type'] == 'read':
+    fig.suptitle(f'Segment n°{seg.segment_info.seg_info["index"]}',
+                 fontsize=13)
+    if seg.segment_info.seg_info['type'] == 'read':
         label, col = 'Off field', 'w'
     else:
         label, col = 'On field', 'y'
     label = \
-        f'{label}:\nwrite: {seg.segmentinfo.seg_infos["write volt"]:.2f}V,\n' \
-        f'read: {seg.segmentinfo.seg_infos["read volt"]:.2f}V'
+        f'{label}:\nwrite: {seg.segment_info.seg_info["write volt"]:.2f}V,\n' \
+        f'read: {seg.segment_info.seg_info["read volt"]:.2f}V'
     fig.text(0.01, 0.90, label, color=col, fontsize=15, fontweight='heavy',
              backgroundcolor='black')
 
@@ -442,7 +443,7 @@ def plt_seg_stable(seg, unit='a.u'):
     # Initialize figure
     figsize = get_setting("figsize")
     fig, (ax1, ax2) = plt.subplots(nrows=2, sharex='all', figsize=figsize)
-    fig.sfn = f'segment_{seg.segmentinfo.seg_infos["index"]}_cst'
+    fig.sfn = f'segment_{seg.segment_info.seg_info["index"]}_cst'
 
     # Plot amplitude and phase segment
     plot_dict = {'y lab': f'Amplitude [{unit}]', 'x lab': '', 'fs': 13,
@@ -480,18 +481,19 @@ def plt_seg_stable(seg, unit='a.u'):
 
     # Annotate
     fig.legend(fontsize=13, loc='upper right')
-    fig.suptitle(f'Segment n°{seg.segmentinfo.seg_infos["index"]}', fontsize=13)
-    start = seg.segmentinfo.seg_infos['start time']
-    end = seg.segmentinfo.seg_infos['end time']
+    fig.suptitle(f'Segment n°{seg.segment_info.seg_info["index"]}',
+                 fontsize=13)
+    start = seg.segment_info.seg_info['start time']
+    end = seg.segment_info.seg_info['end time']
     ax.set_xticks(np.linspace(seg.time_tab_init[0], seg.time_tab_init[-1], 5))
     ax.set_xticklabels([f'{elem:.2f}' for elem in np.linspace(start, end, 5)])
-    if seg.segmentinfo.seg_infos['type'] == 'read':
+    if seg.segment_info.seg_info['type'] == 'read':
         label, col = 'Off field', 'w'
     else:
         label, col = 'On field', 'y'
     label = \
-        f'{label}:\nwrite: {seg.segmentinfo.seg_infos["write volt"]:.2f}V,\n' \
-        f'read: {seg.segmentinfo.seg_infos["read volt"]:.2f}V'
+        f'{label}:\nwrite: {seg.segment_info.seg_info["write volt"]:.2f}V,\n' \
+        f'read: {seg.segment_info.seg_info["read volt"]:.2f}V'
     fig.text(0.01, 0.90, label, color=col, fontsize=15, fontweight='heavy',
              backgroundcolor='black')
 
