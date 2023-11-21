@@ -44,10 +44,14 @@ def amp_pha_map(seg_tab, dict_meas, index_hold, freq_range=None,
         - 'a.u' if no calibration is performed
         - 'nm' in the other case
     mode: str, optional
-        Operating mode for analysis: three possible modes:
-        - 'max' for analysis of the resonance with max peak value
-        - 'fit' for analysis of the resonance with a SHO fit of the peak
-        - 'dfrt' for analysis performed with the dfrt
+        Operating mode for analysis: four possible modes:
+        - 'max': for analysis of the resonance with max peak value
+        (frequency sweep in resonance)
+        - 'fit': for analysis of the resonance with a SHO fit of the peak
+        (frequency sweep in resonance)
+        - 'single_freq': for analysis performed at single frequency,
+        average of segment (in or out of resonance)
+        - 'dfrt': for analysis performed with dfrt, average of segment
     colo: str, optional
         Map coloration ('coolwarm', 'jet' ...)
 
@@ -56,7 +60,7 @@ def amp_pha_map(seg_tab, dict_meas, index_hold, freq_range=None,
     fig: plt.figure
         The generated figure
     """
-    assert mode in ['max', 'fit', 'dfrt']
+    assert mode in ['max', 'fit', 'dfrt', 'single_freq']
     freq_range = freq_range or {'start': 0, 'end': 1}
 
     time_range = {'start': dict_meas['times'][index_hold['start'][1] + 1],
@@ -95,7 +99,7 @@ def amp_pha_map(seg_tab, dict_meas, index_hold, freq_range=None,
         # Sub plotting
         extent = [time_range['start'], time_range['end'], freq_range['start'],
                   freq_range['end']]
-        if mode == 'dfrt':
+        if mode in ['dfrt', 'single_freq']:
             y_lab = ''
             axs[1].set_yticklabels('')
             axs[2].set_yticklabels('')
@@ -298,11 +302,11 @@ def plt_seg_max(seg, unit='a.u'):
     # Initialize figure
     figsize = get_setting("figsize")
     fig, ax = plt.subplots(figsize=figsize)
-    fig.sfn = f'segment_{seg.seg_infos["index"]}_max'
+    fig.sfn = f'segment_{seg.segmentinfo.seg_infos["index"]}_max'
     ax2 = ax.twinx()
 
     # Plot amplitude and phase segment
-    plot_dict = {'title': f'Segment n°{seg.seg_infos["index"]}',
+    plot_dict = {'title': f'Segment n°{seg.segmentinfo.seg_infos["index"]}',
                  'y lab': f'Amplitude [{unit}]', 'y2 lab': 'Phase [°]',
                  'c y2 lab': 'r', 'c y lab': 'b', 'x lab': 'Frequency [kHz]'}
     tabs_dict = [{'form': 'b-', 'legend': 'amplitude'},
@@ -326,12 +330,13 @@ def plt_seg_max(seg, unit='a.u'):
     ax2.plot(seg.res_freq, seg.pha, 'rh', ms=10, mec='k')
 
     # Annotate
-    if seg.seg_infos['type'] == 'read':
+    if seg.segmentinfo.seg_infos['type'] == 'read':
         label, col = 'Off field', 'w'
     else:
         label, col = 'On field', 'y'
-    label = f'{label}:\nwrite: {seg.seg_infos["write volt"]:.2f}V,\n' \
-            f'read: {seg.seg_infos["read volt"]:.2f}V'
+    label = \
+        f'{label}:\nwrite: {seg.segmentinfo.seg_infos["write volt"]:.2f}V,\n' \
+        f'read: {seg.segmentinfo.seg_infos["read volt"]:.2f}V'
     fig.legend(fontsize=13, loc='upper right')
     fig.text(0.01, 0.90, label, color=col, fontsize=15, fontweight='heavy',
              backgroundcolor='black')
@@ -363,7 +368,7 @@ def plt_seg_fit(seg, unit='a.u', fit_pha=False):
     figsize = get_setting("figsize")
     fig, (ax1, ax2) = plt.subplots(nrows=2, sharex='all', sharey='all',
                                    figsize=figsize)
-    fig.sfn = f'segment_{seg.seg_infos["index"]}_fit'
+    fig.sfn = f'segment_{seg.segmentinfo.seg_infos["index"]}_fit'
     ax1b, ax2b = ax1.twinx(), ax2.twinx()
 
     # Plot amplitude and phase segment
@@ -402,22 +407,23 @@ def plt_seg_fit(seg, unit='a.u', fit_pha=False):
 
     # Annotate
     fig.legend(fontsize=13, loc='upper right')
-    fig.suptitle(f'Segment n°{seg.seg_infos["index"]}', fontsize=13)
-    if seg.seg_infos['type'] == 'read':
+    fig.suptitle(f'Segment n°{seg.segmentinfo.seg_infos["index"]}', fontsize=13)
+    if seg.segmentinfo.seg_infos['type'] == 'read':
         label, col = 'Off field', 'w'
     else:
         label, col = 'On field', 'y'
-    label = f'{label}:\nwrite: {seg.seg_infos["write volt"]:.2f}V,\n' \
-            f'read: {seg.seg_infos["read volt"]:.2f}V'
+    label = \
+        f'{label}:\nwrite: {seg.segmentinfo.seg_infos["write volt"]:.2f}V,\n' \
+        f'read: {seg.segmentinfo.seg_infos["read volt"]:.2f}V'
     fig.text(0.01, 0.90, label, color=col, fontsize=15, fontweight='heavy',
              backgroundcolor='black')
 
     return fig
 
 
-def plt_seg_dfrt(seg, unit='a.u'):
+def plt_seg_stable(seg, unit='a.u'):
     """
-    Plot a segment for DFRT analysis
+    Plot a segment for single frequency or DFRT analysis
 
     Parameters
     ----------
@@ -436,22 +442,22 @@ def plt_seg_dfrt(seg, unit='a.u'):
     # Initialize figure
     figsize = get_setting("figsize")
     fig, (ax1, ax2) = plt.subplots(nrows=2, sharex='all', figsize=figsize)
-    fig.sfn = f'segment_{seg.seg_infos["index"]}_dfrt'
+    fig.sfn = f'segment_{seg.segmentinfo.seg_infos["index"]}_cst'
 
     # Plot amplitude and phase segment
     plot_dict = {'y lab': f'Amplitude [{unit}]', 'x lab': '', 'fs': 13,
                  'edgew': 3, 'tickl': 5, 'gridw': 1}
     tab_dict = {'form': 'b-', 'legend': 'amplitude'}
-    plot_graph(ax1, seg.freq_tab_init, seg.amp_tab_init, plot_dict=plot_dict,
+    plot_graph(ax1, seg.time_tab_init, seg.amp_tab_init, plot_dict=plot_dict,
                tabs_dict=tab_dict)
     plot_dict['x lab'], plot_dict['y lab'] = 'Time [s]', 'Phase [°]'
     tab_dict = {'form': 'r-', 'legend': 'phase'}
-    plot_graph(ax2, seg.freq_tab_init, seg.pha_tab_init, plot_dict=plot_dict,
+    plot_graph(ax2, seg.time_tab_init, seg.pha_tab_init, plot_dict=plot_dict,
                tabs_dict=tab_dict)
 
     # Plot cut domain
     color = cm.Wistia(0.5)
-    cut_range = [seg.freq_tab[0], seg.freq_tab[-1]]
+    cut_range = [seg.time_tab[0], seg.time_tab[-1]]
     for ax in [ax1, ax2]:
         for i in range(2):
             ax.axvline(x=cut_range[i], lw=3, c=color, ls='-.')
@@ -474,16 +480,18 @@ def plt_seg_dfrt(seg, unit='a.u'):
 
     # Annotate
     fig.legend(fontsize=13, loc='upper right')
-    fig.suptitle(f'Segment n°{seg.seg_infos["index"]}', fontsize=13)
-    start, end = seg.seg_infos['start time'], seg.seg_infos['end time']
-    ax.set_xticks(np.linspace(seg.freq_tab_init[0], seg.freq_tab_init[-1], 5))
+    fig.suptitle(f'Segment n°{seg.segmentinfo.seg_infos["index"]}', fontsize=13)
+    start = seg.segmentinfo.seg_infos['start time']
+    end = seg.segmentinfo.seg_infos['end time']
+    ax.set_xticks(np.linspace(seg.time_tab_init[0], seg.time_tab_init[-1], 5))
     ax.set_xticklabels([f'{elem:.2f}' for elem in np.linspace(start, end, 5)])
-    if seg.seg_infos['type'] == 'read':
+    if seg.segmentinfo.seg_infos['type'] == 'read':
         label, col = 'Off field', 'w'
     else:
         label, col = 'On field', 'y'
-    label = f'{label}:\nwrite: {seg.seg_infos["write volt"]:.2f}V,\n' \
-            f'read: {seg.seg_infos["read volt"]:.2f}V'
+    label = \
+        f'{label}:\nwrite: {seg.segmentinfo.seg_infos["write volt"]:.2f}V,\n' \
+        f'read: {seg.segmentinfo.seg_infos["read volt"]:.2f}V'
     fig.text(0.01, 0.90, label, color=col, fontsize=15, fontweight='heavy',
              backgroundcolor='black')
 
