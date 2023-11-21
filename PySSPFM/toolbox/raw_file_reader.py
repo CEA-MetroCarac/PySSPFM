@@ -31,7 +31,7 @@ def main_raw_file_reader(file_path_in, mode='classic', verbose=False):
         (extraction of PFM measurements).
         This parameter determines the treatment method used for segment data
         analysis, specifically for the extraction of PFM measurements.
-        Two possible values: 'classic' (sweep) or 'dfrt'.
+        Two possible values: 'classic' (sweep or single frequency) or 'dfrt'.
     verbose: bool, optional
         Activation key for printing verbosity during analysis.
         This parameter serves as an activation key for printing verbose
@@ -74,7 +74,7 @@ def main():
         verbose = True
         show_plots = True
         save_plots = False
-        # Mode = 'dfrt' or 'classic' (sweep)
+        # Mode = 'dfrt' or 'classic' (sweep or single frequency)
         mode = 'classic'
     else:
         raise NotImplementedError("setting 'extract_parameters' "
