@@ -580,11 +580,11 @@ One can then compare the theoretical and actual duration of the measurement: the
 </p>
 
 <p align="justify" width="100%">
-The segmentation process is performed with <code>cut_function</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code>, and each segment is generated. When the <code>Segment</code> object is initialized in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code>, it generates some of its attributes, including arrays of PFM amplitude and phase measurements, as well as frequency (used in sweep mode in resonance) and time bounded by the start and end indices of the segment. These arrays are optionally trimmed at the beginning and end based on the <code>cut_seg</code> parameter. Noise in the amplitude and phase measurements is potentially reduced by a mean filter, which can be enabled (<code>filter</code>) and is defined by its order (<code>filter_ord</code>). The segment is then processed according to the <code>mode</code> chosen by the user:
+The segmentation process is performed with <code>cut_function</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code>, and each segment is generated. A segment is initialized with the class <code>SegmentInfo</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code>, in which some of these associated attributes are defined. Subsequently, a second object is created to perform the processing associated with the segment. It generates some of its attributes, including arrays of time values, PFM amplitude and phase measurements, as well as optional additionnal quantities measured. These arrays are optionally trimmed at the beginning and end based on the <code>cut_seg</code> parameter. Noise in the amplitude and phase measurements is potentially reduced by a mean filter, which can be enabled (<code>filter</code>) and is defined by its order (<code>filter_ord</code>). The segment is then processed according to the <code>mode</code> chosen by the user:
 </p>
 
 <p align="justify" width="100%">
-&#8226 <code>max</code> (usable for resonance sweep): the maximum value from the amplitude array is extracted. The corresponding index is used to extract the resonance frequency value along with the phase value. The bandwidth of the peak is determined with method <code>q_fact_max</code> using the function <code>width_peak</code> in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/peak.py">utils/core/peak.py</a></code>, allowing for the calculation of the quality factor. This method is advantageous due to its speed and robustness.
+&#8226 <code>max</code> (usable for resonance sweep): The frequency (used in sweep mode in resonance) array is determined. The maximum value from the amplitude array is extracted. The corresponding index is used to extract the resonance frequency value along with the phase value. The bandwidth of the peak is determined with method <code>q_fact_max</code> using the function <code>width_peak</code> in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/peak.py">utils/core/peak.py</a></code>, allowing for the calculation of the quality factor. This method is advantageous due to its speed and robustness, and is performed with <code>SegmentSweep</code> object in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code> script.
 </p>
 
 <p align="center" width="100%">
@@ -593,7 +593,7 @@ The segmentation process is performed with <code>cut_function</code> in the scri
 </p>
 
 <p align="justify" width="100%">
-&#8226 <code>fit</code> (usable for a resonance sweep): The amplitude resonance peak with frequency $R(f)$ is fitted using the SHO (Simple Harmonic Oscillator) model (<code>sho</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) <a href="#ref2">[2]</a>:
+&#8226 <code>fit</code> (usable for a resonance sweep): The frequency (used in sweep mode in resonance) array is determined. The amplitude resonance peak with frequency $R(f)$ is fitted using the SHO (Simple Harmonic Oscillator) model (<code>sho</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) <a href="#ref2">[2]</a>:
 </p>
 
 $$ R(f) = A * {f_0^2 \over \sqrt{f_0^2 - f^2)^2 + (f * f_0 / Q)^2}} + R_0 $$
@@ -608,13 +608,17 @@ The phase $\phi$ can be extracted simply at the index of the resonance frequency
 
 $$ \phi(f) = arctan({f * f_0 \over Q * (f_0^2 - f^2)}) + \phi_0 $$
 
+<p align="justify" width="100%">
+The phase $\phi$ can be extracted simply at the index of the resonance frequency $f_0$ or by performing a fit (the process is performed in <code>phase_fit</code> method) in the narrow vicinity of the resonance peak using the <code>fit_pha</code> parameter with an arctangent function model (in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/basic_func.py">utils/core/basic_func.py</a></code> script) with (<code>sho_phase_switch</code> function) or without (<code>sho_phase</code> function) a switch (detected with <code>phase_fit_analysis</code> method). $\phi_0$ represents the phase offset <a href="#ref2">[2]</a>:
+</p>
+
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/segment_fit_peak.PNG> <br>
     <em>Segment treatment in fit mode (figure generated with <code>plt_seg_fit</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/plot.py">utils/datacube_to_nanoloop/plot.py</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
-This entire process enhances the precision of the measured values. The robustness of the treatment can be increased with <code>treatment_fit</code> method in which a peak detection algorithm is used (activated with <code>detect_peak</code> and with order of <code>filter_ord</code>), allowing a choice regarding whether to perform the fit.
+This entire process enhances the precision of the measured values. The robustness of the treatment can be increased with <code>treatment_fit</code> method in which a peak detection algorithm is used (activated with <code>detect_peak</code> and with order of <code>filter_ord</code>), allowing a choice regarding whether to perform the fit. This process is performed with <code>SegmentSweep</code> object in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code> script.
 </p>
 
 <p align="justify" width="100%">
