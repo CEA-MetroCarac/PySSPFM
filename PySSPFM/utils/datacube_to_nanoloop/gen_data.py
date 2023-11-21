@@ -72,9 +72,9 @@ def loop_targets(loop_pars, noise_pars=None, pha_val=None):
     return targets
 
 
-def measure_dfrt(nb_samp=100, target=None, noise_pars=None):
+def measure_stable(nb_samp=100, target=None, noise_pars=None):
     """
-    Generate amplitude and phase segment values for DFRT mode
+    Generate amplitude and phase segment more or less stable values with noise
 
     Parameters
     ----------
@@ -108,7 +108,7 @@ def measure_dfrt(nb_samp=100, target=None, noise_pars=None):
 
 def measure_peak(nb_samp=100, target=None, noise_pars=None):
     """
-    Generate amplitude and phase segment values for sweep mode
+    Generate amplitude and phase segment values with noise for sweep mode
 
     Parameters
     ----------
@@ -163,10 +163,14 @@ def gen_segments(sign_pars, mode='dfrt', seg_noise_pars=None, hold_dict=None,
     sign_pars: dict
         Dict of sspfm bias signal parameters
     mode: str, optional
-        Operating mode for analysis: three possible mode:
-        - 'max' for analysis of the resonance with max peak value
-        - 'fit' for analysis of the resonance with a SHO fit of the peak
-        - 'dfrt' for analysis performed with the dfrt
+        Operating mode for analysis: four possible modes:
+        - 'max': for analysis of the resonance with max peak value
+        (frequency sweep in resonance)
+        - 'fit': for analysis of the resonance with a SHO fit of the peak
+        (frequency sweep in resonance)
+        - 'single_freq': for analysis performed at single frequency,
+        average of segment (in or out of resonance)
+        - 'dfrt': for analysis performed with dfrt, average of segment
     seg_noise_pars: dict, optional
         Dict of noise parameters for segment
     hold_dict: dict, optional
@@ -183,7 +187,7 @@ def gen_segments(sign_pars, mode='dfrt', seg_noise_pars=None, hold_dict=None,
     dict_meas: dict
         Dict of all measurements
     """
-    assert mode in ['max', 'fit', 'dfrt']
+    assert mode in ['max', 'fit', 'single_freq', 'dfrt']
     seg_noise_pars = seg_noise_pars or {'type': 'normal', 'ampli': 0.}
 
     dict_meas = {'sspfm bias': sspfm_generator(sign_pars)}
@@ -203,8 +207,8 @@ def gen_segments(sign_pars, mode='dfrt', seg_noise_pars=None, hold_dict=None,
     for i in range(ite):
         for field, nb_samp in zip(['on', 'off'], [sign_pars['Seg sample (W)'],
                                                   sign_pars['Seg sample (R)']]):
-            if mode == 'dfrt':
-                seg_amp, seg_pha = measure_dfrt(nb_samp=nb_samp, target={
+            if mode in ['dfrt', 'single_freq']:
+                seg_amp, seg_pha = measure_stable(nb_samp=nb_samp, target={
                     'amp': targets[field]['amp'][i],
                     'pha': targets[field]['pha'][i]}, noise_pars=seg_noise_pars)
             else:
