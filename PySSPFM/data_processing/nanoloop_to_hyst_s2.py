@@ -91,9 +91,15 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars,
         main_elec=user_pars['main elec'],
         locked_elec_slope=user_pars['locked elec slope'])
 
+    # Check if measurement are performed in or out of resonance
+    if 'Resonance' in meas_pars.keys():
+        resonance = bool(meas_pars['Resonance'] == 'Resonance')
+    else:
+        resonance = False
+
     par = nanoloop_treatment(
         data_dict, sign_pars, dict_pha=dict_pha, dict_str=dict_str,
-        q_fact=meas_pars['Q factor'])
+        q_fact_scalar=meas_pars['Q factor'], resonance=resonance)
     loop_tab, _, init_meas = par
 
     if analysis_mode == 'mean_loop':
@@ -112,6 +118,12 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars,
         model=user_pars['func'], method=user_pars['method'],
         locked_elec_slope=dict_pha['locked elec slope'])
     x_hyst, y_hyst, best_loop, read_volt, bckgnd_tab = par
+
+    # properties : mean res freq et q factor
+    if best_loop.res_freq:
+        properties['res freq'] = np.mean(best_loop.res_freq)
+    if best_loop.q_fact:
+        properties['q fact'] = np.mean(best_loop.q_fact)
 
     # filter nan values
     nan_indices = np.isnan(x_hyst) | np.isnan(y_hyst)
@@ -410,7 +422,7 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
         file_path_out_txt_save = file_path_out_txt_save or os.path.join(
             root_out, parameters_file_name)
         complete_parameters(file_path_in_txt, user_pars, t0, date,
-                          file_path_out=file_path_out_txt_save)
+                            file_path_out=file_path_out_txt_save)
 
 
 def main_script(user_pars, dir_path_in, verbose=False, show_plots=False,
