@@ -15,7 +15,7 @@ from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.raw_extraction import csv_meas_sheet_extract
-from PySSPFM.utils.nanoloop.plot import plot_sspfm_loops
+from PySSPFM.utils.nanoloop.plot import main_plot
 from PySSPFM.utils.nanoloop.file import extract_nanoloop_data
 from PySSPFM.utils.nanoloop.analysis import nanoloop_treatment
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
@@ -75,7 +75,7 @@ def main_loop_file_reader(file_path, csv_path=None, dict_pha=None,
 
     # Plot nanoloops
     if make_plots:
-        figures = plot_sspfm_loops(
+        figures = main_plot(
             loop_tab, pha_calib, dict_str=dict_str, del_1st_loop=del_1st_loop)
         return figures
     else:
