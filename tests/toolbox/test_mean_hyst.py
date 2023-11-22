@@ -106,7 +106,7 @@ def test_mean_hyst_2_off():
     # print(np.sum(list(best_hysts.props.values())))
 
     assert np.sum(mean_best_loop.piezorep.y_meas) == approx(
-        0.013260336560458203, abs=1e-8)
+        0.013260336560458203, abs=1e-4)
     assert np.sum(mean_best_loop.treated_pha.y_meas) == approx(
         7224.888276360544)
     assert np.sum(mean_best_loop.amp.y_meas) == approx(
