@@ -8,7 +8,7 @@ from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.core.basic_func import linear
 from PySSPFM.utils.core.noise import noise
 from PySSPFM.utils.nanoloop.gen_data import gen_nanoloops
-from PySSPFM.utils.nanoloop.analysis import MultiLoop
+from PySSPFM.utils.nanoloop.analysis import AllMultiLoop
 from PySSPFM.utils.nanoloop_to_hyst.plot import plot_nanoloop_on_off
 from PySSPFM.utils.nanoloop_to_hyst.electrostatic import \
     btfly_analysis, sat_analysis, offset_analysis, differential_analysis
@@ -86,12 +86,12 @@ def multiloop_gen():
     mode = ['On field', 'Off field']
     loop = {}
 
-    # Create Multiloop objects for On and Off fields
+    # Create AllMultiLoop objects for On and Off fields
     for cont, key in enumerate(['on', 'off']):
-        loop[key] = MultiLoop(list(write_voltage[0]), list(amplitude[key][0]),
-                              list(phase[key][0]), read_voltage,
-                              pha_calib={"func": np.cos, "corr": 'raw'},
-                              mode=mode[cont])
+        loop[key] = AllMultiLoop(
+            list(write_voltage[0]), list(amplitude[key][0]),
+            list(phase[key][0]), {"func": np.cos, "corr": 'raw'}, read_voltage,
+            mode=mode[cont])
 
     return loop, dict_str
 
@@ -117,14 +117,14 @@ def measure_pfm(loop):
         Dictionary of piezorep values.
     """
     # Extract loop data
-    write = {'left': loop.write_volt_left,
-             'right': loop.write_volt_right}
-    amp = {'left': loop.amp_left,
-           'right': loop.amp_right}
-    pha = {'left': loop.pha_left,
-           'right': loop.pha_right}
-    piezorep = {'left': loop.piezorep_left,
-                'right': loop.piezorep_right}
+    write = {'left': loop.amp.write_volt_left,
+             'right': loop.amp.write_volt_right}
+    amp = {'left': loop.amp.y_meas_left,
+           'right': loop.amp.y_meas_right}
+    pha = {'left': loop.pha.y_meas_left,
+           'right': loop.pha.y_meas_right}
+    piezorep = {'left': loop.piezorep.y_meas_left,
+                'right': loop.piezorep.y_meas_right}
 
     return write, amp, pha, piezorep
 
