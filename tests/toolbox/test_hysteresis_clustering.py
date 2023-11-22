@@ -30,7 +30,10 @@ def test_hysteresis_clustering_piezoresponse():
     # print(np.sum(avg_hysteresis["coupled"][1]))
     # print(np.sum(avg_hysteresis["coupled"][2]))
     # print(np.sum(avg_hysteresis["coupled"][3]))
-
+    indexs_off = [3, 1, 3, 3, 3, 4, 1, 3, 2, 2, 2, 1, 3, 3, 3, 3, 2, 2, 2,
+                  2, 0, 4, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                  2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                  1, 1, 2, 3, 3, 3]
     indexs_on = [0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -199,6 +202,7 @@ def test_hysteresis_clustering_amp_pha():
         inertia_off = 96.59258253235751
         avg_hysteresis_off_1 = 69.47246188061166
         avg_hysteresis_off_2 = 83.07405484256466
+        avg_hysteresis_off_3 = 91.95712529778717
     else:
         indexs_off = [3, 1, 3, 3, 3, 4, 1, 3, 2, 2, 2, 1, 3, 3, 3, 3, 2, 2, 2,
                       2, 4, 4, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -207,6 +211,7 @@ def test_hysteresis_clustering_amp_pha():
         inertia_off = 94.9635356607568
         avg_hysteresis_off_1 = 72.50786208611287
         avg_hysteresis_off_2 = 82.10108346249717
+        avg_hysteresis_off_3 = 94.46671008317617
     assert cluster_indexs["off"] == indexs_off
     assert cluster_indexs["on"] == indexs_on
 
@@ -216,7 +221,7 @@ def test_hysteresis_clustering_amp_pha():
     assert np.sum(avg_hysteresis["off"][0]) == approx(66.12804145794577)
     assert np.sum(avg_hysteresis["off"][1]) == approx(avg_hysteresis_off_1)
     assert np.sum(avg_hysteresis["off"][2]) == approx(avg_hysteresis_off_2)
-    assert np.sum(avg_hysteresis["off"][3]) == approx(91.95712529778717)
+    assert np.sum(avg_hysteresis["off"][3]) == approx(avg_hysteresis_off_3)
     assert np.sum(avg_hysteresis["off"][4]) == approx(72.96209700766119)
 
     assert np.sum(avg_hysteresis["on"][0]) == approx(108.58805972420119)
