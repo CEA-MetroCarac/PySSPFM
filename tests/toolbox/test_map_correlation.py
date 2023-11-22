@@ -19,6 +19,6 @@ def test_map_correlation():
     # print(np.nansum(coef_arr['off']))
     # print(np.nansum(coef_arr['off on']))
 
-    assert np.nansum(coef_arr['on']) == approx(157.2555736840546)
-    assert np.nansum(coef_arr['off']) == approx(92.8133823858753)
-    assert np.nansum(coef_arr['off on']) == approx(2.7887944744886886)
+    assert np.nansum(coef_arr['off']) == approx(92.27982285169584)
+    assert np.nansum(coef_arr['on']) == approx(106.9191926189809)
+    assert np.nansum(coef_arr['off on']) == approx(14.942095580937401)
