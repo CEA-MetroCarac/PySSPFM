@@ -18,7 +18,7 @@ from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.nanoloop.file import extract_nanoloop_data
-from PySSPFM.utils.nanoloop.analysis import nanoloop_treatment, MeanLoop
+from PySSPFM.utils.nanoloop.analysis import nanoloop_treatment, AllMeanLoop
 from PySSPFM.utils.nanoloop.phase import gen_dict_pha
 from PySSPFM.utils.map.main import gen_mask_ref, plot_and_save_maps
 from PySSPFM.utils.nanoloop_to_hyst.file import \
@@ -175,12 +175,12 @@ def mean_analysis_on_off(user_pars, best_loops, analysis_mode='mean_loop',
     figures = []
 
     # Compute the mean of all best_loops
-    mean_best_loop = MeanLoop(best_loops, del_1st_loop=False)
+    mean_best_loop = AllMeanLoop(best_loops, del_1st_loop=False)
 
-    x_hyst = [np.array(mean_best_loop.write_volt_right),
-              np.array(mean_best_loop.write_volt_left)]
-    y_hyst = [np.array(mean_best_loop.piezorep_right),
-              np.array(mean_best_loop.piezorep_left)]
+    x_hyst = [np.array(mean_best_loop.piezorep.write_volt_right),
+              np.array(mean_best_loop.piezorep.write_volt_left)]
+    y_hyst = [np.array(mean_best_loop.piezorep.y_meas_right),
+              np.array(mean_best_loop.piezorep.y_meas_left)]
 
     res = print_parameters(user_pars['file path in pars'])
     meas_pars, _, _, _, _ = res
