@@ -51,7 +51,7 @@ def example_file(make_plots=False, verbose=False):
     """
     # Define input and output file paths
     root_data = os.path.join(get_setting("example_root_path_in"),
-                             "KNN500n_2023-10-05-17h21m_out_dfrt")
+                             "KNN500n_2023-11-20-16h18m_out_dfrt")
     dir_path_in = os.path.join(root_data, "nanoloops")
     if make_plots:
         root_out = os.path.join(
