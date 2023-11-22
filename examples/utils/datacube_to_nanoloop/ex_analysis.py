@@ -10,9 +10,9 @@ from PySSPFM.settings import get_setting
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.datacube_to_nanoloop.plot import \
-    plt_seg_max, plt_seg_fit, plt_seg_dfrt
+    plt_seg_max, plt_seg_fit, plt_seg_stable
 from PySSPFM.utils.datacube_to_nanoloop.analysis import \
-    Segment, zi_calib, init_parameters
+    (SegmentInfo, SegmentSweep, SegmentStable, external_calib, init_parameters)
 
 
 def list_segs(mode, nb_seg_str='all'):
@@ -61,21 +61,30 @@ def list_segs(mode, nb_seg_str='all'):
                 start_ind = i * ite + sign_pars['Seg sample (W)']
                 start_ind += hold_dict['start samp']
                 end_ind = start_ind + nb_samp
-            # ex Segment
-            segs[key].append(Segment(start_ind, end_ind, dict_meas,
-                                     sweep_freq['start'], sweep_freq['end'],
-                                     write_volt=read_volt, read_volt=write_volt,
-                                     type_seg=type_seg,
-                                     mode=seg_pars['mode'], numb=i,
-                                     cut_seg=seg_pars['cut seg [%]'],
-                                     fit_pars=fit_pars))
+
+            # ex SegmentInfo
+            segment_info = SegmentInfo(
+                start_ind, end_ind, dict_meas['times'],
+                write_volt=write_volt, read_volt=read_volt, type_seg=type_seg,
+                mode=seg_pars['mode'], numb=i)
+            # ex SegmentSweep
+            if mode in ['max', 'fit']:
+                segs[key].append(SegmentSweep(
+                    segment_info, dict_meas,
+                    start_freq_init=sweep_freq['start'],
+                    end_freq_init=sweep_freq['end'],
+                    cut_seg=seg_pars['cut seg [%]'], fit_pars=fit_pars))
+            # ex SegmentStable
+            else:
+                segs[key].append(SegmentStable(
+                    segment_info, dict_meas, cut_seg=seg_pars['cut seg [%]']))
 
     return segs, dict_meas
 
 
 def ex_calib(make_plots=False):
     """
-    Example of zi_calib and amplitude_calib functions.
+    Example of external_calib and amplitude_calib functions.
 
     Parameters
     ----------
@@ -84,22 +93,22 @@ def ex_calib(make_plots=False):
 
     Returns
     -------
-    (dict_meas_dfrt_amp_zi, dict_meas_dfrt_pha_zi, dict_meas_dfrt_amp_cal):
+    (dict_meas_amp, dict_meas_pha, dict_meas_amp_cal):
     tuple
         Processed measurement values if `make_plots` is False.
     """
     _, _, _, _, meas_range, _, _ = pars_segment()
     calib_amp = 0.5
-    meas_pars = {'Sens 1': 0.1,
-                 'Offset 1 [V]': 0.5,
-                 'Sens 2 [mV/°]': 1000,
-                 'Offset 2 [V]': 0}
+    meas_pars = {'Sens ampli': 0.1,
+                 'Offset ampli [V]': 0.5,
+                 'Sens phase [mV/°]': 1000,
+                 'Offset phase [V]': 0}
 
-    # ZI values
-    meas_range['amp'] = np.array(meas_range['amp']) * meas_pars['Sens 1']
-    meas_range['amp'] += meas_pars['Offset 1 [V]']
-    meas_range['pha'] = [elem * meas_pars['Sens 2 [mV/°]'] / 1000 +
-                         meas_pars['Offset 2 [V]']
+    # external values
+    meas_range['amp'] = np.array(meas_range['amp']) * meas_pars['Sens ampli']
+    meas_range['amp'] += meas_pars['Offset ampli [V]']
+    meas_range['pha'] = [elem * meas_pars['Sens phase [mV/°]'] / 1000 +
+                         meas_pars['Offset phase [V]']
                          for elem in np.array(meas_range['pha'])]
 
     # Calib
@@ -108,20 +117,20 @@ def ex_calib(make_plots=False):
     # ex gen_segments
     dict_meas = ex_gen_segments('dfrt', make_plots=False)
 
-    # ex zi_calib
-    out = zi_calib(dict_meas['amp'], dict_meas['pha'], meas_pars=meas_pars)
-    (dict_meas_dfrt_amp_zi, dict_meas_dfrt_pha_zi) = out
+    # ex external_calib
+    out = external_calib(dict_meas['amp'], dict_meas['pha'],
+                         meas_pars=meas_pars)
+    (dict_meas_amp, dict_meas_pha) = out
 
     # ex amplitude_calib
-    dict_meas_dfrt_amp_cal = [elem * calib_amp for elem in
-                              dict_meas_dfrt_amp_zi]
+    dict_meas_amp_cal = [elem * calib_amp for elem in dict_meas_amp]
 
     if make_plots:
         figsize = get_setting("figsize")
         fig, ax = plt.subplots(3, 2, figsize=figsize, sharex='all')
         fig.sfn = "ex_calib"
-        plot_dict = {'title': 'zi signal', 'x lab': '',
-                     'y lab': 'amplitude zi (V)', 'fs': 13, 'edgew': 3,
+        plot_dict = {'title': 'external signal', 'x lab': '',
+                     'y lab': 'amplitude (V)', 'fs': 13, 'edgew': 3,
                      'tickl': 5, 'gridw': 1, 'lw': 1}
         tab_dict = {'form': 'b-'}
         plot_graph(ax[0, 0], dict_meas['times'], dict_meas['amp'],
@@ -131,23 +140,22 @@ def ex_calib(make_plots=False):
                    plot_dict=plot_dict, tabs_dict=tab_dict)
         (tab_dict, plot_dict['title'], plot_dict['y lab']) = \
             ({'form': 'b-'}, 'signal (no calib)', 'amplitude (a.u)')
-        plot_graph(ax[1, 0], dict_meas['times'], dict_meas_dfrt_amp_zi,
+        plot_graph(ax[1, 0], dict_meas['times'], dict_meas_amp,
                    plot_dict=plot_dict, tabs_dict=tab_dict)
         tab_dict, plot_dict['y lab'] = {'form': 'r-'}, 'phase (°)'
-        plot_graph(ax[1, 1], dict_meas['times'], dict_meas_dfrt_pha_zi,
+        plot_graph(ax[1, 1], dict_meas['times'], dict_meas_pha,
                    plot_dict=plot_dict, tabs_dict=tab_dict)
         (tab_dict, plot_dict['title'], plot_dict['y lab'], plot_dict['x lab']) \
             = ({'form': 'b-'}, 'signal (calib)', 'amplitude (a.u)', 'time (s)')
-        plot_graph(ax[2, 0], dict_meas['times'], dict_meas_dfrt_amp_cal,
+        plot_graph(ax[2, 0], dict_meas['times'], dict_meas_amp_cal,
                    plot_dict=plot_dict, tabs_dict=tab_dict)
         tab_dict, plot_dict['y lab'] = {'form': 'r-'}, 'phase (°)'
-        plot_graph(ax[2, 1], dict_meas['times'], dict_meas_dfrt_pha_zi,
+        plot_graph(ax[2, 1], dict_meas['times'], dict_meas_pha,
                    plot_dict=plot_dict, tabs_dict=tab_dict)
 
         return [fig]
     else:
-        return (dict_meas_dfrt_amp_zi, dict_meas_dfrt_pha_zi,
-                dict_meas_dfrt_amp_cal)
+        return dict_meas_amp, dict_meas_pha, dict_meas_amp_cal
 
 
 def ex_init_parameters(make_plots=False, verbose=False):
@@ -195,12 +203,13 @@ def ex_init_parameters(make_plots=False, verbose=False):
 def ex_segments(analysis, mode, make_plots=False):
     """
     Example of Segment object and the functions plt_seg, plt_seg_max,
-    plt_seg_fit, plt_seg_dfrt.
+    plt_seg_fit, plt_seg_stable.
 
     Parameters
     ----------
     analysis: str
-        The type of analysis to perform. Possible values: 'max', 'fit', 'dfrt'.
+        The type of analysis to perform. Possible values: 'max', 'fit',
+        'dfrt', 'single_freq'.
     mode: str
         The mode of operation. Possible values: 'on f', 'off f'.
     make_plots: bool, optional
@@ -224,10 +233,11 @@ def ex_segments(analysis, mode, make_plots=False):
         elif analysis == 'fit':
             fig = plt_seg_fit(segs[mode][4], unit=unit,
                               fit_pha=fit_pars['fit pha'])
-        elif analysis == 'dfrt':
-            fig = plt_seg_dfrt(segs[mode][4], unit=unit)
+        elif analysis in ['dfrt', 'single_freq']:
+            fig = plt_seg_stable(segs[mode][4], unit=unit)
         else:
-            raise IOError('analysis must be: "max", "fit" or "dfrt"')
+            raise IOError('analysis must be: "max", "fit", "single_freq" or '
+                          '"dfrt"')
         fig.sfn += f"_{mode}"
         return [fig]
     else:
