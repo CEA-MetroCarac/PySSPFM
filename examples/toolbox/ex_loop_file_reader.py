@@ -30,7 +30,7 @@ def example_loop_file_reader(verbose=False, make_plots=False):
     # Input and output file management
     example_root_path_in = get_setting("example_root_path_in")
     file_path_in = os.path.join(
-        example_root_path_in, "KNN500n_2023-10-05-17h21m_out_dfrt", "nanoloops",
+        example_root_path_in, "KNN500n_2023-11-20-16h18m_out_dfrt", "nanoloops",
         "off_f_KNN500n_SSPFM.0_00056.txt")
     csv_path = os.path.join(example_root_path_in, "KNN500n")
 
