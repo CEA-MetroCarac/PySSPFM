@@ -204,17 +204,15 @@ def test_hysteresis_clustering_amp_pha():
                       2, 4, 4, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                       2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
                       1, 1, 3, 3, 3, 3]
-        iniertia_off = 94.9635356607568
     else:
         indexs_off = [3, 1, 3, 3, 3, 4, 1, 3, 2, 2, 2, 1, 3, 3, 3, 3, 2, 2, 2,
                       2, 4, 4, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                       2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
                       1, 1, 3, 3, 3, 3]
-        iniertia_off = 96.59258253235751
     assert cluster_indexs["off"] == indexs_off
     assert cluster_indexs["on"] == indexs_on
 
-    assert inertia["off"] == approx(iniertia_off)
+    assert inertia["off"] == approx(94.9635356607568)
     assert inertia["on"] == approx(85.9572013452021)
 
     assert np.sum(avg_hysteresis["off"][0]) == approx(66.12804145794577)

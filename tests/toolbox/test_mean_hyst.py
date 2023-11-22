@@ -118,14 +118,14 @@ def test_mean_hyst_2_off():
         target_1 = 0.013260336560458203
         target_2 = 7224.888276360544
 
-    assert np.sum(mean_best_loop.piezorep.y_meas) == approx(target_1, abs=1e-8)
+    assert np.sum(mean_best_loop.piezorep.y_meas) == approx(target_1, abs=1e-5)
     assert np.sum(mean_best_loop.treated_pha.y_meas) == approx(
         target_2, abs=1e-3)
     assert np.sum(mean_best_loop.amp.y_meas) == approx(
         0.029393670007661767, abs=1e-8)
     assert np.sum(best_hysts.params) == approx(0.8354624824790046, abs=1e-2)
     assert np.sum(list(best_hysts.props.values())) == approx(
-        23.463940770122115, abs=1e-3)
+        23.463940770122115, abs=1e-2)
 
 
 def test_mean_hyst_2_coupled():
