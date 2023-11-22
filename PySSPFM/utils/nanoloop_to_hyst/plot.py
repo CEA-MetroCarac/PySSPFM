@@ -409,8 +409,8 @@ def plot_nanoloop_on_off(loop_on, loop_off, dict_str=None):
                  'gridw': 1}
     tab_dict_1 = {'form': 'k-o', 'ms': 2, 'mec': 'k', 'lw': 1}
     tab_dict_2 = {'form': 'r-o', 'ms': 2, 'mec': 'r', 'lw': 1}
-    x_tabs = [loop_off.write_volt, loop_on.write_volt]
-    y_tabs = [loop_off.amp, loop_on.amp]
+    x_tabs = [loop_off.amp.write_volt, loop_on.amp.write_volt]
+    y_tabs = [loop_off.amp.y_meas, loop_on.amp.y_meas]
     tabs_dict = [tab_dict_1, tab_dict_2]
     plot_graph(axs[0], x_tabs, y_tabs, plot_dict=plot_dict, tabs_dict=tabs_dict,
                plot_leg=False)
@@ -419,7 +419,7 @@ def plot_nanoloop_on_off(loop_on, loop_off, dict_str=None):
     plot_dict['y lab'] = f'Piezo Response [{unit}]'
     tab_dict_1 = {'form': 'k-s', 'ms': 2, 'mec': 'k', 'lw': 1}
     tab_dict_2 = {'form': 'r-s', 'ms': 2, 'mec': 'r', 'lw': 1}
-    y_tabs = [loop_off.piezorep, loop_on.piezorep]
+    y_tabs = [loop_off.piezorep.y_meas, loop_on.piezorep.y_meas]
     plot_graph(axs[1], x_tabs, y_tabs, plot_dict=plot_dict,
                tabs_dict=[tab_dict_1, tab_dict_2], plot_leg=False)
 
