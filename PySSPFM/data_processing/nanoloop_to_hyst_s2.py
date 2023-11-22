@@ -121,9 +121,9 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars,
 
     # properties : mean res freq et q factor
     if best_loop.res_freq:
-        properties['res freq'] = np.mean(best_loop.res_freq)
+        properties['res freq'] = np.mean(best_loop.res_freq.y_meas)
     if best_loop.q_fact:
-        properties['q fact'] = np.mean(best_loop.q_fact)
+        properties['q fact'] = np.mean(best_loop.q_fact.y_meas)
 
     # filter nan values
     nan_indices = np.isnan(x_hyst) | np.isnan(y_hyst)
