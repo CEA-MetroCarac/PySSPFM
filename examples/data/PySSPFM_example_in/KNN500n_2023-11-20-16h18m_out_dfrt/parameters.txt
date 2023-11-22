@@ -17,10 +17,11 @@ Center [kHz]: 290
 Range [kHz]: 20
 Sideband amp [V]: 1
 Sideband freq [kHz]: 3
-Sens 1: 100
-Offset 1 [V]: 0
-Sens 2 [mV/°]: 5
-Offset 2 [V]: 0
+External meas: Yes
+Sens ampli: 100
+Offset ampli [V]: 0
+Sens phase [mV/°]: 5
+Offset phase [V]: 0
 Bias app: Sample
 V_AC [V]: 1
 Date [hh : dd/mm/yyyy]: 13H : 27/06/2022
@@ -53,13 +54,13 @@ Seg sample (R): 100
 ### Treatment parameters: first step ###
 
 - Info
-start of analysis: 2023-10-17 09;56
-analysis duration: 00h:00m:28s
+start of analysis: 2023-11-20 16;19
+analysis duration: 00h:00m:32s
 nb file analyzed: 63
 
 - Segment parameters
-cut seg [%]: {'start': 5, 'end': 5}
 mode: dfrt
+cut seg [%]: {'start': 5, 'end': 5}
 filter: False
 filter ord: 10
 
@@ -67,16 +68,16 @@ filter ord: 10
 ### Treatment parameters: second step ###
 
 - Info
-start of analysis: 2023-10-17 09;57
-analysis duration: 00h:00m:22s
+start of analysis: 2023-11-22 15;00
+analysis duration: 00h:00m:00s
 
 - Hysteresis / loop treatment parameters
 fit hyst func: sigmoid
-fit hyst method: least_square
+fit hyst method: leastsq
 fit hyst asym: False
 threshold value (in percent) for the calculation of nucleation bias: 10
 threshold value (in percent) for the calculation of saturation domain: 90
-first loop deleted for the analysis ?: True
+first nanoloop deleted for analysis ?: True
 
 - Phase treatment parameters
 phase correction: offset
@@ -87,7 +88,7 @@ main electrostatic component (on field): True
 locked electrostatic slope (on field): None
 
 - Other parameters
-differential domain between on/off field loops: {'min': -5.0, 'max': 5.0}
-differential domain between on/off field loops, mode ?: set
+differential domain between on/off field nanoloops: {'min': -5.0, 'max': 5.0}
+differential domain between on/off field nanoloops, mode ?: set
 saturation domain for electrostatic decoupling procedure: {'min': -9.0, 'max': 9.0}
 saturation domain for electrostatic decoupling procedure, mode ?: set
