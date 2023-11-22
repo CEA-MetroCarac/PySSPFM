@@ -15,13 +15,13 @@ def test_analysis_on():
 
     loop_tab, mean_loop, init_meas, ckpfm_loop_dict = example_analysis('on')
 
-    prs_l = np.sum([loop.piezorep_left for loop in loop_tab])
-    prs_r = np.sum([loop.piezorep_right for loop in loop_tab])
-    phase = np.sum([loop.treat_pha for loop in loop_tab])
-    amps_mark = np.sum([loop.amp_marker for loop in loop_tab])
-    pr_l = np.sum(mean_loop.piezorep_left)
-    pr_r = np.sum(mean_loop.piezorep_right)
-    amp_mark = np.sum(mean_loop.amp_marker)
+    prs_l = np.sum([loop.piezorep.y_meas_left for loop in loop_tab])
+    prs_r = np.sum([loop.piezorep.y_meas_right for loop in loop_tab])
+    phase = np.sum([loop.treated_pha.y_meas for loop in loop_tab])
+    amps_mark = np.sum([loop.amp.y_marker for loop in loop_tab])
+    pr_l = np.sum(mean_loop.piezorep.y_meas_left)
+    pr_r = np.sum(mean_loop.piezorep.y_meas_right)
+    amp_mark = np.sum(mean_loop.amp.y_marker)
 
     assert ckpfm_loop_dict == {}
     assert init_meas['amp'] == approx(1.1114887643999471)
@@ -40,14 +40,16 @@ def test_analysis_off():
 
     out = example_analysis('off')
     (loop_tab, mean_loop, init_meas, ckpfm_loop_dict) = out
+
     piezorep = np.array(ckpfm_loop_dict['piezorep'])
-    prs_l = np.sum([loop.piezorep_left for loop in loop_tab])
-    prs_r = np.sum([loop.piezorep_right for loop in loop_tab])
-    phase = np.sum([loop.treat_pha for loop in loop_tab])
-    amps_mark = np.sum([loop.amp_marker for loop in loop_tab])
-    pr_l = np.sum(mean_loop.piezorep_left)
-    pr_r = np.sum(mean_loop.piezorep_right)
-    amp_mark = np.sum(mean_loop.amp_marker)
+
+    prs_l = np.sum([loop.piezorep.y_meas_left for loop in loop_tab])
+    prs_r = np.sum([loop.piezorep.y_meas_right for loop in loop_tab])
+    phase = np.sum([loop.treated_pha.y_meas for loop in loop_tab])
+    amps_mark = np.sum([loop.amp.y_marker for loop in loop_tab])
+    pr_l = np.sum(mean_loop.piezorep.y_meas_left)
+    pr_r = np.sum(mean_loop.piezorep.y_meas_right)
+    amp_mark = np.sum(mean_loop.amp.y_marker)
 
     assert init_meas['amp'] == approx(1.4189108225846916)
     assert init_meas['pha'] == approx(0.0)
