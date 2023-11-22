@@ -11,8 +11,8 @@ from PySSPFM.utils.core.signal import interpolate
 from PySSPFM.utils.core.basic_func import linear, sigmoid, arctan
 from PySSPFM.utils.core.curve_hysteresis import Hysteresis
 from PySSPFM.utils.core.noise import filter_mean
-from PySSPFM.utils.nanoloop.plot import plot_multiloop
-from PySSPFM.utils.nanoloop.analysis import MeanLoop
+from PySSPFM.utils.nanoloop.plot import plot_meanloop
+from PySSPFM.utils.nanoloop.analysis import AllMeanLoop
 from PySSPFM.utils.nanoloop_to_hyst.plot import plot_hysteresis
 from PySSPFM.utils.nanoloop_to_hyst.electrostatic import \
     (btfly_analysis, sat_analysis, offset_analysis)
@@ -248,10 +248,10 @@ def find_best_nanoloop(loop_tab, counterclockwise, grounded_tip,
     if analysis_mode == 'multi_loop':
         xy_hyst_tab, bckgnd_tab, read_volt = [], [], []
         for loop in loop_tab:
-            x_hyst_i = [np.array(loop.write_volt_right),
-                        np.array(loop.write_volt_left)]
-            y_hyst_i = [np.array(loop.piezorep_right),
-                        np.array(loop.piezorep_left)]
+            x_hyst_i = [np.array(loop.piezorep.write_volt_right),
+                        np.array(loop.piezorep.write_volt_left)]
+            y_hyst_i = [np.array(loop.piezorep.y_meas_right),
+                        np.array(loop.piezorep.y_meas_left)]
             xy_hyst_tab.append([x_hyst_i, y_hyst_i])
             hyst = Hysteresis(model=model, asymmetric=asymmetric)
             _ = init_hysteresis_params(
@@ -268,11 +268,11 @@ def find_best_nanoloop(loop_tab, counterclockwise, grounded_tip,
         y_hyst = xy_hyst_tab[best_idx][1]
 
     elif analysis_mode in ['mean_loop', 'on_f_loop']:
-        best_loop = MeanLoop(loop_tab, del_1st_loop=del_1st_loop)
-        x_hyst = [np.array(best_loop.write_volt_right),
-                  np.array(best_loop.write_volt_left)]
-        y_hyst = [np.array(best_loop.piezorep_right),
-                  np.array(best_loop.piezorep_left)]
+        best_loop = AllMeanLoop(loop_tab, del_1st_loop=del_1st_loop)
+        x_hyst = [np.array(best_loop.piezorep.write_volt_right),
+                  np.array(best_loop.piezorep.write_volt_left)]
+        y_hyst = [np.array(best_loop.piezorep.y_meas_right),
+                  np.array(best_loop.piezorep.y_meas_left)]
 
     else:
         raise IOError(
@@ -356,7 +356,7 @@ def hyst_analysis(x_hyst, y_hyst, best_loop, counterclockwise, grounded_tip,
 
     # Plot multiloop
     if make_plots:
-        fig = plot_multiloop(best_loop, dict_str=dict_str)
+        fig = plot_meanloop(best_loop, dict_str=dict_str)
         figs.append(fig)
 
     # Extract hysteresis properties
@@ -431,12 +431,14 @@ def electrostatic_analysis(best_loop, analysis_mode='mean_loop',
 
     if analysis_mode == 'on_f_loop':
         # On-field electrostatic analysis
-        write_loop = {'left': best_loop.write_volt_left,
-                      'right': best_loop.write_volt_right}
-        amp_loop = {'left': best_loop.amp_left, 'right': best_loop.amp_right}
-        pha_loop = {'left': best_loop.pha_left, 'right': best_loop.pha_right}
-        piezorep_loop = {'left': best_loop.piezorep_left,
-                         'right': best_loop.piezorep_right}
+        write_loop = {'left': best_loop.amp.write_volt_left,
+                      'right': best_loop.amp.write_volt_right}
+        amp_loop = {'left': best_loop.amp.y_meas_left,
+                    'right': best_loop.amp.y_meas_right}
+        pha_loop = {'left': best_loop.pha.y_meas_left,
+                    'right': best_loop.pha.y_meas_right}
+        piezorep_loop = {'left': best_loop.piezorep.y_meas_left,
+                         'right': best_loop.piezorep.y_meas_right}
 
         # Butterfly analysis
         imprint_btfly, fig = btfly_analysis(write_loop, amp_loop,
