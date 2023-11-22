@@ -15,10 +15,16 @@ def test_file():
 
     loop_tabs, fmts, headers, datas_dicts, dict_strs = example_file()
 
-    sum_1 = sum(np.sum(value) for value in datas_dicts['on'].values())
-    sum_2 = sum(np.sum(value) for value in datas_dicts['off'].values())
-    sum_3 = sum(np.sum(loop) for loop in loop_tabs['on'])
-    sum_4 = sum(np.sum(loop) for loop in loop_tabs['off'])
+    sum_1 = np.sum([np.sum(np.nan_to_num(value))
+                    for value in datas_dicts['on'].values()])
+    sum_2 = np.sum([np.sum(np.nan_to_num(value))
+                    for value in datas_dicts['off'].values()])
+    sum_3 = np.sum(
+        [np.sum(np.nan_to_num(value))
+         for value in loop_tabs['on'].values() if value is not None])
+    sum_4 = np.sum(
+        [np.sum(np.nan_to_num(value))
+         for value in loop_tabs['off'].values() if value is not None])
 
     assert sum_1 == approx(86455.65548)
     assert sum_2 == approx(74628.64881099999)
