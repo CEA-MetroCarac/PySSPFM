@@ -26,10 +26,11 @@ def ex_single_script(make_plots=False, verbose=False):
 
     # Measurement parameters
     meas_pars = {
-        'Sens 1': 0.1,
-        'Offset 1 [V]': 0.5,
-        'Sens 2 [mV/°]': 1000,
-        'Offset 2 [V]': 0,
+        'External meas': 'Yes',
+        'Sens ampli': 0.1,
+        'Offset ampli [V]': 0.5,
+        'Sens phase [mV/°]': 1000,
+        'Offset phase [V]': 0,
         'Calibration': 'no',
         'Calib fact [nm/V]': 1,
         'Bias app': 'Sample',
