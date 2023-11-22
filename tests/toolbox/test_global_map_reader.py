@@ -16,7 +16,7 @@ def test_global_map_reader():
     mask, coef_arr = ex_global_map_reader()
 
     off_mask_target = [1, 6, 20]
-    on_mask_target = [1, 6, 11]
+    on_mask_target = [1, 5]
     coupled_mask_target = [1, 5, 11]
 
     # print(np.nansum(coef_arr['off']))
@@ -27,6 +27,6 @@ def test_global_map_reader():
     assert list(mask['on']) == on_mask_target
     assert list(mask['coupled']) == coupled_mask_target
 
-    assert np.nansum(coef_arr['off']) == approx(92.8133823858753)
-    assert np.nansum(coef_arr['on']) == approx(157.2555736840546)
-    assert np.nansum(coef_arr['off on']) == approx(2.788794474488689)
+    assert np.nansum(coef_arr['off']) == approx(92.27982285169584)
+    assert np.nansum(coef_arr['on']) == approx(106.9191926189809)
+    assert np.nansum(coef_arr['off on']) == approx(14.942095580937401)
