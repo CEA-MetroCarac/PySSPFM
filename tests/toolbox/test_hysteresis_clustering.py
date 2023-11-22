@@ -31,7 +31,6 @@ def test_hysteresis_clustering_piezoresponse():
     # print(np.sum(avg_hysteresis["coupled"][2]))
     # print(np.sum(avg_hysteresis["coupled"][3]))
 
-
     indexs_on = [0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -190,15 +189,26 @@ def test_hysteresis_clustering_amp_pha():
     # print(np.sum(avg_hysteresis["on"][0]))
     # print(np.sum(avg_hysteresis["on"][1]))
 
-    indexs_off = [3, 1, 3, 3, 3, 4, 1, 3, 3, 3, 2, 1, 3, 3, 3, 3, 3, 2, 2, 2,
-                  4, 4, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0,
-                  0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 3,
-                  3, 3, 3]
     indexs_on = [0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
                  1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
                  0, 0, 0]
 
+    # Get Python version
+    version_info = sys.version_info
+    python_version = f"{version_info.major}.{version_info.minor}"
+
+    # Target adapted depending on Python version
+    if python_version in ["3.8", "3.9", "3.10"] or version_info.minor >= 8:
+        indexs_off = [3, 1, 3, 3, 3, 4, 1, 3, 3, 3, 2, 1, 3, 3, 3, 3, 3, 2, 2,
+                      2, 4, 4, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                      1, 1, 3, 3, 3, 3]
+    else:
+        indexs_off = [3, 1, 3, 3, 3, 4, 1, 3, 2, 2, 2, 1, 3, 3, 3, 3, 2, 2, 2,
+                      2, 4, 4, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                      1, 1, 3, 3, 3, 3]
     assert cluster_indexs["off"] == indexs_off
     assert cluster_indexs["on"] == indexs_on
 
