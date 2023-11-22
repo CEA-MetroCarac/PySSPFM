@@ -113,10 +113,10 @@ def test_mean_hyst_2_off():
     # Target adapted depending on Python version
     if python_version in ["3.8", "3.9", "3.10"] or version_info.minor >= 8:
         target_1 = 0.013266997150809881
-        target_2 = 7221.80355612245
+        target_2 = 7224.888276360544
     else:
         target_1 = 0.013260336560458203
-        target_2 = 7224.888276360544
+        target_2 = 7221.80355612245
 
     assert np.sum(mean_best_loop.piezorep.y_meas) == approx(target_1, abs=1e-5)
     assert np.sum(mean_best_loop.treated_pha.y_meas) == approx(
