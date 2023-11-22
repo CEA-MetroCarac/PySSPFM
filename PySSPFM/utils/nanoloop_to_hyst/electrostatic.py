@@ -343,12 +343,12 @@ def gen_differential_loop(loop_on, loop_off, offset_off=0):
     """
     # Subtract on and off field hysteresis loop
     write_volt_left, diff_piezorep_left = substract_on_off_loop(
-        loop_off.write_volt_left, loop_off.piezorep_left,
-        loop_on.write_volt_left, loop_on.piezorep_left,
+        loop_off.piezorep.write_volt_left, loop_off.piezorep.y_meas_left,
+        loop_on.piezorep.write_volt_left, loop_on.piezorep.y_meas_left,
         offset_off=offset_off)
     write_volt_right, diff_piezorep_right = substract_on_off_loop(
-        loop_off.write_volt_right, loop_off.piezorep_right,
-        loop_on.write_volt_right, loop_on.piezorep_right,
+        loop_off.piezorep.write_volt_right, loop_off.piezorep.y_meas_right,
+        loop_on.piezorep.write_volt_right, loop_on.piezorep.y_meas_right,
         offset_off=offset_off)
 
     # Compute mean piezoresponse for left and right segments
