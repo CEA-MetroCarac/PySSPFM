@@ -74,29 +74,27 @@ def example_mean_hyst(phase='1', mode='off', verbose=False, make_plots=False):
         user_pars['mask']['ref']['prop'] = 'a'
         # Select ferro phase 1 or 2 measurement or not depending on mode
         if phase == '1':
-            user_pars['mask']['ref']['max val'] = -0.0001
-            user_pars['mask']['ref']['min val'] = -0.00025
+            user_pars['mask']['ref']['min val'] = -0.012
         else:
-            user_pars['mask']['ref']['max val'] = -0.00025
+            user_pars['mask']['ref']['max val'] = -0.012
     elif mode == 'off':
         # Select ferro phase 1 or 2 measurement or not depending on mode
         if phase == '1':
-            user_pars['mask']['ref']['min val'] = 0.001
+            user_pars['mask']['ref']['min val'] = 0.05
         else:
-            user_pars['mask']['ref']['min val'] = 0.0002
-            user_pars['mask']['ref']['max val'] = 0.001
+            user_pars['mask']['ref']['max val'] = 0.05
     elif mode == 'on':
         # Select ferro phase 1 or 2 measurement or not depending on mode
         if phase == '1':
-            user_pars['mask']['ref']['min val'] = -0.0025
+            user_pars['mask']['ref']['min val'] = 0.10
         else:
-            user_pars['mask']['ref']['max val'] = -0.0025
+            user_pars['mask']['ref']['max val'] = 0.10
     else:
         raise IOError("mode should be in 'off', 'on', 'coupled'")
     # file management
     example_root_path_in = get_setting("example_root_path_in")
     dir_path_in = os.path.join(
-        example_root_path_in, "KNN500n_2023-10-05-17h23m_out_dfrt")
+        example_root_path_in, "KNN500n_2023-11-20-16h15m_out_dfrt")
     dir_path_in_props = os.path.join(dir_path_in, "properties")
     dir_path_in_loop = os.path.join(dir_path_in, "nanoloops")
     file_path_in_pars = os.path.join(dir_path_in, "parameters.txt")
