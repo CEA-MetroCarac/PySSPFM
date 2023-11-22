@@ -28,7 +28,7 @@ def ex_global_map_reader(verbose=False, make_plots=False):
     """
     example_root_path_in = get_setting("example_root_path_in")
     dir_path_in = os.path.join(
-        example_root_path_in, "KNN500n_2023-10-05-17h23m_out_dfrt",
+        example_root_path_in, "KNN500n_2023-11-20-16h15m_out_dfrt",
         "properties")
 
     user_params = {'interp fact': 4,
@@ -41,7 +41,7 @@ def ex_global_map_reader(verbose=False, make_plots=False):
                                 'coupled': None},
                    'ref': {'on': {'prop': 'charac tot fit: R_2 hyst',
                                   'fmt': '.5f',
-                                  'min val': 0.99,
+                                  'min val': 0.92,
                                   'max val': None,
                                   'interactive': False},
                            'off': {'prop': 'charac tot fit: R_2 hyst',
