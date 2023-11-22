@@ -772,10 +772,10 @@ Phase values are then adjusted according to the phase calibration dictionary.
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/multiloop_amplitude.PNG> <br>
-    <em><code>MultiLoop</code> of amplitude (figure generated with <code>plot_all_loop</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot.py</a></code> script)</em> <br>
+    <em><code>MultiLoop</code> of amplitude (figure generated with <code>plot_multiloop</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot.py</a></code> script)</em> <br>
      <br>
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/multiloop_phase.PNG> <br>
-    <em><code>MultiLoop</code> of phase (figure generated with <code>plot_all_loop</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot.py</a></code> script)</em>
+    <em><code>MultiLoop</code> of phase (figure generated with <code>plot_multiloop</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot.py</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
@@ -784,7 +784,7 @@ Subsequently, based on the amplitude ($R$) and phase ($\phi$) loops, piezorespon
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/multiloop_piezoresponse.PNG> <br>
-    <em><code>MultiLoop</code> of piezoresponse (figure generated with <code>plot_all_loop</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot.py</a></code> script)</em>
+    <em><code>MultiLoop</code> of piezoresponse (figure generated with <code>plot_multiloop</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot.py</a></code> script)</em>
 </p>
 
 ### V.3) - MeanLoop
