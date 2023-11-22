@@ -5,10 +5,10 @@ import numpy as np
 
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
-from PySSPFM.utils.nanoloop.plot import \
-    plot_sspfm_loops, plot_multiloop, plot_ckpfm
+from PySSPFM.utils.nanoloop.plot import main_plot, plot_meanloop, plot_ckpfm
 from PySSPFM.utils.nanoloop.gen_data import gen_nanoloops
-from PySSPFM.utils.nanoloop.analysis import MultiLoop, MeanLoop, gen_ckpfm_meas
+from PySSPFM.utils.nanoloop.analysis import \
+    AllMultiLoop, AllMeanLoop, gen_ckpfm_meas
 
 
 def init_pars():
@@ -103,33 +103,34 @@ def example_analysis(mode, make_plots=False, verbose=False):
     ckpfm_loop_dict = {}
     for elem_volt, elem_amp, elem_pha in zip(
             write_voltage, amp[mode], pha[mode]):
-        # ex MultiLoop
-        loop_tab.append(MultiLoop(
-            list(elem_volt), list(elem_amp), list(elem_pha),
-            read_voltage[len(loop_tab)], pha_calib, mode=plot_dict['label']))
+        # ex AllMultiLoop
+        loop_tab.append(AllMultiLoop(
+            list(elem_volt), list(elem_amp), list(elem_pha), pha_calib,
+            read_voltage[len(loop_tab)], mode=plot_dict['label']))
 
     # Generate and plot SSPFM nanoloops
-    figs_loop = plot_sspfm_loops(loop_tab, pha_calib, dict_str=plot_dict)
+    figs_loop = main_plot(loop_tab, pha_calib, dict_str=plot_dict)
     figs_analysis.extend(figs_loop)
 
     # Store initial PFM measurement
-    amp_0, pha_0 = loop_tab[0].amp[0], loop_tab[0].pha[0]
+    amp_0, pha_0 = loop_tab[0].amp.y_meas[0], loop_tab[0].pha.y_meas[0]
     init_meas = {'amp': amp_0, 'pha': pha_0}
     if verbose:
         print(f'{mode} field: initial amp: {amp_0}, initial amp: {pha_0}')
 
     # Generate and plot CKPFM measurement
     if mode == 'off':
+        loop_piezorep = [loop.piezorep for loop in loop_tab]
         # ex gen_ckpfm_meas
-        ckpfm_loop_dict = gen_ckpfm_meas(loop_tab)
+        ckpfm_loop_dict = gen_ckpfm_meas(loop_piezorep)
         fig = plot_ckpfm(ckpfm_loop_dict, dict_str=plot_dict)
         figs_analysis.append(fig)
 
-    # ex MeanLoop
-    mean_loop = MeanLoop(loop_tab)
+    # ex AllMeanLoops
+    mean_loop = AllMeanLoop(loop_tab)
 
     # Plot MeanLoop
-    fig = plot_multiloop(mean_loop, dict_str=plot_dict)
+    fig = plot_meanloop(mean_loop, dict_str=plot_dict)
     figs_analysis.append(fig)
 
     if make_plots:
