@@ -20,7 +20,7 @@ def test_file():
     assert len(list(write_segment)) == 100
     assert len(dict_analysis_1) == 3
     assert len(list(file_paths)) == 63
-    assert len(meas_pars) == 33
+    assert len(meas_pars) == 34
     assert len(sign_pars) == 12
     assert np.sum(list(dim_pix.values())) == 16
     assert np.sum(list(dim_mic.values())) == 7
