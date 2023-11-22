@@ -10,7 +10,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.figure import plot_graph
-from PySSPFM.utils.nanoloop.analysis import MeanLoop
+from PySSPFM.utils.nanoloop.analysis import AllMeanLoop
 
 
 def plot_ckpfm(loop_dict, dict_str=None):
@@ -78,7 +78,7 @@ def plot_ckpfm(loop_dict, dict_str=None):
     return fig
 
 
-def plot_multiloop(mean_loop, dict_str=None):
+def plot_meanloop(mean_loop, dict_str=None):
     """
     Create a figure of single multi loop with amplitude, phase, and
     piezoresponse.
@@ -103,7 +103,7 @@ def plot_multiloop(mean_loop, dict_str=None):
     figsize = get_setting("figsize")
     fig, (ax_1, ax_2) = plt.subplots(1, 2, figsize=figsize)
     add = mode.lower().replace(' ', '_')
-    fig.sfn = f'plot_multiloop_{add}'
+    fig.sfn = f'plot_meanloop_{add}'
 
     # Amplitude and phase loops
     add_ax_1 = ax_1.twinx()
@@ -115,11 +115,24 @@ def plot_multiloop(mean_loop, dict_str=None):
     tab_dict_2 = {'legend': 'amplitude (right)', 'form': 'b+-'}
     tab_dict_3 = {'legend': 'phase (left)', 'form': 'm:x', 'mec': 'm'}
     tab_dict_4 = {'legend': 'phase (right)', 'form': 'c:x', 'mec': 'c'}
-    x_tabs = [mean_loop.write_volt_left, mean_loop.write_volt_right,
-              mean_loop.write_volt_left, mean_loop.write_volt_right]
-    y_tabs = [mean_loop.amp_left, mean_loop.amp_right]
-    y2_tabs = [mean_loop.pha_left, mean_loop.pha_right]
+    x_tabs = \
+        [mean_loop.amp.write_volt_left, mean_loop.amp.write_volt_right,
+         mean_loop.pha.write_volt_left, mean_loop.pha.write_volt_right]
+    y_tabs = \
+        [mean_loop.amp.y_meas_left, mean_loop.amp.y_meas_right]
+    y2_tabs = \
+        [mean_loop.pha.y_meas_left, mean_loop.pha.y_meas_right]
     tabs_dict = [tab_dict_1, tab_dict_2, tab_dict_3, tab_dict_4]
+    for ax, key, col_left, col_right in zip(
+            [ax_1, add_ax_1], ["amp", "pha"], ['r', 'm'], ['b', 'c']):
+        ax.errorbar(mean_loop.meas[key].write_volt_left,
+                    mean_loop.meas[key].y_meas_left,
+                    yerr=mean_loop.meas[key].y_sigma_left, ecolor=col_left,
+                    ls='', marker='.', mec='w', mfc='w', ms=1, color='w')
+        ax.errorbar(mean_loop.meas[key].write_volt_right,
+                    mean_loop.meas[key].y_meas_right,
+                    yerr=mean_loop.meas[key].y_sigma_right, ecolor=col_right,
+                    ls='', marker='.', mec='w', mfc='w', ms=1, color='w')
     plot_graph(ax_1, x_tabs, y_tabs, ax2=add_ax_1, y2_tabs=y2_tabs,
                plot_dict=plot_dict, tabs_dict=tabs_dict)
 
@@ -128,9 +141,18 @@ def plot_multiloop(mean_loop, dict_str=None):
     plot_dict['y lab'] = f'Piezo Response [{unit}]'
     tab_dict_1 = {'legend': 'piezoresponse (left)', 'form': 'r.-'}
     tab_dict_2 = {'legend': 'piezoresponse (right)', 'form': 'b.-'}
-    x_tabs = [mean_loop.write_volt_left, mean_loop.write_volt_right]
-    y_tabs = [mean_loop.piezorep_left, mean_loop.piezorep_right]
+    x_tabs = [mean_loop.piezorep.write_volt_left,
+              mean_loop.piezorep.write_volt_right]
+    y_tabs = [mean_loop.piezorep.y_meas_left, mean_loop.piezorep.y_meas_right]
     tabs_dict = [tab_dict_1, tab_dict_2]
+    ax_2.errorbar(mean_loop.piezorep.write_volt_left,
+                  mean_loop.piezorep.y_meas_left,
+                  yerr=mean_loop.piezorep.y_sigma_left, ecolor='r',
+                  ls='', marker='.', mec='w', mfc='w', ms=1, color='w')
+    ax_2.errorbar(mean_loop.piezorep.write_volt_right,
+                  mean_loop.piezorep.y_meas_right,
+                  yerr=mean_loop.piezorep.y_sigma_right, ecolor='b',
+                  ls='', marker='.', mec='w', mfc='w', ms=1, color='w')
     plot_graph(ax_2, x_tabs, y_tabs, plot_dict=plot_dict, tabs_dict=tabs_dict)
 
     ax_2.yaxis.tick_right()
@@ -142,8 +164,9 @@ def plot_multiloop(mean_loop, dict_str=None):
 
     # Segment markers
     for cont, (elem_x, elem_y1, elem_y2, elem_y3) in enumerate(zip(
-            mean_loop.write_marker, mean_loop.amp_marker, mean_loop.pha_marker,
-            mean_loop.piezorep_marker), start=1):
+            mean_loop.amp.write_marker, mean_loop.amp.y_marker,
+            mean_loop.pha.y_marker, mean_loop.piezorep.y_marker),
+            start=1):
         ax_1.plot(elem_x, elem_y1, '*', c='g', ms=8, mec='k', mew=0.5)
         ax_1.text(elem_x, elem_y1, str(cont), c='g', size=13, weight='heavy')
         add_ax_1.plot(elem_x, elem_y2, '*', c='g', ms=8, mec='k', mew=0.5)
@@ -153,17 +176,17 @@ def plot_multiloop(mean_loop, dict_str=None):
         ax_2.text(elem_x, elem_y3, str(cont), c='g', size=13, weight='heavy')
 
     y_offset = 0.02
-    for j in range(len(mean_loop.write_marker) - 1):
+    for j in range(len(mean_loop.amp.write_marker) - 1):
         fig.text(0.01, 0.98 - y_offset * j,
                  f'segment {j + 1}: point {j + 1} to {j + 2} '
-                 f'({mean_loop.write_marker[j]:.2f} to '
-                 f'{mean_loop.write_marker[j + 1]:.2f})',
+                 f'({mean_loop.amp.write_marker[j]:.2f} to '
+                 f'{mean_loop.amp.write_marker[j + 1]:.2f})',
                  c='g', size=15, weight='heavy')
 
     return fig
 
 
-def plot_sspfm_loops(loops_tab, pha_calib, dict_str=None, del_1st_loop=False):
+def main_plot(loops_tab, pha_calib, dict_str=None, del_1st_loop=False):
     """
     Figure of multiple multi and mean loops with amplitude, phase and
     piezoresponse
@@ -184,13 +207,13 @@ def plot_sspfm_loops(loops_tab, pha_calib, dict_str=None, del_1st_loop=False):
     figs: list(6) of figure
         List of figure object
     """
-    figs = plot_all_loop(loops_tab, pha_calib, dict_str=dict_str)
-    figs += plot_meanloop(loops_tab, pha_calib, dict_str=dict_str,
+    figs = plot_multiloop(loops_tab, pha_calib, dict_str=dict_str)
+    figs += plot_all_loop(loops_tab, pha_calib, dict_str=dict_str,
                           del_1st_loop=del_1st_loop)
     return figs
 
 
-def plot_all_loop(loops_tab, pha_calib, dict_str=None):
+def plot_multiloop(loops_tab, pha_calib, dict_str=None):
     """
     Figure of separated multiple multi loops with amplitude, phase and
     piezoresponse.
@@ -219,67 +242,104 @@ def plot_all_loop(loops_tab, pha_calib, dict_str=None):
 
     read_voltage = [loop.read_volt for loop in loops_tab]
 
-    titles = ['Amplitude Loops', 'Phase Loops', 'Piezorep Loops']
+    titles = ['Amplitude Loops', 'Phase Loops', 'Piezorep Loops',
+              'Resonance Freq Loops', 'Q Factor Loops']
     label_x = 'Write voltage [V]'
-    labels_y = [f'Amplitude [{unit}]', 'Phase [°]', f'Piezo Response [{unit}]']
+    labels_y = [f'Amplitude [{unit}]', 'Phase [°]', f'Piezo Response [{unit}]',
+                'Resonance Frequency [kHz]', 'Quality Factor']
+    keys = ["amp", "treat pha", "piezorep", "res freq", "q fact"]
     figs = []
 
-    for title, label_y in zip(titles, labels_y):
+    for key, title, label_y in zip(keys, titles, labels_y):
 
-        # Init figure (label ...)
-        figsize = get_setting("figsize")
-        fig, axs = plt.subplots(fig_dim[0], fig_dim[1], sharex='all',
-                                sharey='all', figsize=figsize)
-        add = mode.lower().replace(' ', '_')
-        fig.sfn = f'plot_meanloop_{add}_{title.replace(" ", "_").lower()}'
-        str_dict = {'title': title, 'x label': label_x, 'y label': label_y}
-        set_figure(fig, str_dict, pha_calib, loops_tab[0].write_marker,
-                   dict_str=dict_str)
+        if loops_tab[0].meas[key] is not None:
 
-        for i, loop in enumerate(loops_tab):
-            if mode == 'Off Field':
-                if min(read_voltage) == max(read_voltage):
-                    color = cm.jet(0.55)
+            # Init figure (label ...)
+            figsize = get_setting("figsize")
+            fig, axs = plt.subplots(fig_dim[0], fig_dim[1], sharex='all',
+                                    sharey='all', figsize=figsize)
+            add = mode.lower().replace(' ', '_')
+            fig.sfn = f'plot_meanloop_{add}_{title.replace(" ", "_").lower()}'
+            str_dict = {'title': title, 'x label': label_x, 'y label': label_y}
+            set_figure(fig, str_dict, pha_calib, loops_tab[0].amp.write_marker,
+                       dict_str=dict_str)
+
+            for i, loop in enumerate(loops_tab):
+
+                # Init subplot
+                if mode == 'Off Field':
+                    if min(read_voltage) == max(read_voltage):
+                        color = cm.jet(0.55)
+                    else:
+                        fraction = (loop.read_volt - min(read_voltage)) / (
+                                max(read_voltage) - min(read_voltage))
+                        fraction = fraction * 0.7 + 0.2
+                        color = cm.jet(fraction)
+                    label_tit = f'loop n°{i}, read = {loop.read_volt:.2f} V'
                 else:
-                    fraction = (loop.read_volt - min(read_voltage)) / (
-                            max(read_voltage) - min(read_voltage))
-                    fraction = fraction * 0.7 + 0.2
-                    color = cm.jet(fraction)
-                label_tit = f'loop n°{i}, read = {loop.read_volt:.2f} V'
-            else:
-                color = cm.jet(0.55)
-                label_tit = f'loop n°{i}, baseline = {loop.read_volt:.2f} V'
-            index_line, index_column = divmod(i, fig_dim[1])
-            ax = axs if fig_dim[0] == fig_dim[1] == 1 else axs[
-                index_line, index_column]
-            ax.set_title(label_tit, c=color, weight='heavy',
-                         backgroundcolor='k')
-            ax.grid(True, ls=':')
-            if 'Phase' in label_y and pha_calib['corr'] != 'raw':
-                ax.plot(loop.write_volt_left, loop.pha_left, 'mx:', ms=5)
-                ax.plot(loop.write_volt_right, loop.pha_right, 'cx:', ms=5)
-            if 'Amplitude' in title:
-                measure_left = loop.amp_left
-                measure_right = loop.amp_right
-                measure_marker = loop.amp_marker
-            elif 'Phase' in title:
-                measure_left = loop.treat_pha_left
-                measure_right = loop.treat_pha_right
-                measure_marker = loop.treat_pha_marker
-            else:
-                measure_left = loop.piezorep_left
-                measure_right = loop.piezorep_right
-                measure_marker = loop.piezorep_marker
-            ax.plot(loop.write_volt_left, measure_left, 'r.-', ms=5, mec='k')
-            ax.plot(loop.write_volt_right, measure_right, 'b.-', ms=5, mec='k')
-            for elem_wr, elem_meas in zip(loop.write_marker, measure_marker):
-                ax.plot(elem_wr, elem_meas, 'wo', ms=5, mec='g')
-        figs.append(fig)
+                    color = cm.jet(0.55)
+                    label_tit = f'loop n°{i}, baseline = {loop.read_volt:.2f} V'
+                index_line, index_column = divmod(i, fig_dim[1])
+                ax = axs if fig_dim[0] == fig_dim[1] == 1 else axs[
+                    index_line, index_column]
+                ax.set_title(label_tit, c=color, weight='heavy',
+                             backgroundcolor='k')
+                ax.grid(True, ls=':')
+
+                # Extract meas
+                write_volt_right = loop.meas[key].write_volt_right
+                measure_left = loop.meas[key].y_meas_left
+                try:
+                    sigma_measure_left = loop.meas[key].y_sigma_left
+                except AttributeError:
+                    sigma_measure_left = None
+                write_volt_left = loop.meas[key].write_volt_left
+                measure_right = loop.meas[key].y_meas_right
+                try:
+                    sigma_measure_right = loop.meas[key].y_sigma_right
+                except AttributeError:
+                    sigma_measure_right = None
+                write_marker = loop.meas[key].write_marker
+                measure_marker = loop.meas[key].y_marker
+
+                # Plot the subplot
+                ax.errorbar(write_volt_left, measure_left,
+                            yerr=sigma_measure_left, ecolor='r',
+                            ls='', marker='.', mec='w', mfc='w', ms=1,
+                            color='w')
+                ax.plot(loop.amp.write_volt_left, measure_left, 'r.-', ms=5,
+                        mec='k')
+                ax.errorbar(write_volt_right, measure_right,
+                            yerr=sigma_measure_right, ecolor='b',
+                            ls='', marker='.', mec='w', mfc='w', ms=1,
+                            color='w')
+                ax.plot(write_volt_right, measure_right, 'b.-', ms=5,
+                        mec='k')
+                for elem_wr, elem_meas in zip(write_marker, measure_marker):
+                    if elem_wr and elem_meas:
+                        ax.plot(elem_wr, elem_meas, 'wo', ms=5, mec='g')
+
+                # For phase : plot phase and calibrated phase
+                if 'Phase' in label_y and pha_calib['corr'] != 'raw':
+                    # ax.plot(loop.write_volt_left, loop.pha_left, 'mx:', ms=5)
+                    ax.errorbar(loop.pha.write_volt_left, loop.pha.y_meas_left,
+                                yerr=loop.pha.y_sigma_left, ecolor='m',
+                                ls=':', marker='x', mec='m', mfc='m', ms=5,
+                                color='m')
+                    # ax.plot(loop.write_volt_right, loop.pha_right, 'cx:',
+                    #         ms=5)
+                    ax.errorbar(loop.pha.write_volt_right,
+                                loop.pha.y_meas_right,
+                                yerr=loop.pha.y_sigma_right, ecolor='c',
+                                ls=':', marker='x', mec='c', mfc='c', ms=5,
+                                color='c')
+
+            figs.append(fig)
 
     return figs
 
 
-def plot_meanloop(loops_tab, pha_calib, dict_str=None, del_1st_loop=False):
+def plot_all_loop(loops_tab, pha_calib, dict_str=None, del_1st_loop=False):
     """
     Figure of superposed multiple multi loops and mean loop with
     amplitude, phase, and piezoresponse.
@@ -305,84 +365,100 @@ def plot_meanloop(loops_tab, pha_calib, dict_str=None, del_1st_loop=False):
     else:
         unit, mode = dict_str["unit"], dict_str["label"]
 
-    mean_loop = MeanLoop(
+    mean_loop = AllMeanLoop(
         loops_tab, pha_calib=pha_calib, del_1st_loop=del_1st_loop)
     if del_1st_loop:
         loops_tab = loops_tab[1:]
 
-    titles = ['Amplitude Loops', 'Phase Loops', 'Piezorep Loops']
+    titles = ['Amplitude Loops', 'Phase Loops', 'Piezorep Loops',
+              'Resonance Freq Loops', 'Q Factor Loops']
     label_x = 'Write voltage [V]'
-    labels_y = [f'Amplitude [{unit}]', 'Phase [°]', f'Piezo Response [{unit}]']
-
+    labels_y = [f'Amplitude [{unit}]', 'Phase [°]', f'Piezo Response [{unit}]',
+                'Resonance Frequency [kHz]', 'Quality Factor']
+    keys = ["amp", "treat pha", "piezorep", "res freq", "q fact"]
     figs = []
 
-    for title, label_y in zip(titles, labels_y):
+    for key, title, label_y in zip(keys, titles, labels_y):
 
-        if 'Amplitude' in title:
-            measure_left = [loop.amp_left for loop in loops_tab]
-            measure_right = [loop.amp_right for loop in loops_tab]
-            mean_measure_left = mean_loop.amp_left
-            mean_measure_right = mean_loop.amp_right
-            mean_measure_marker = mean_loop.amp_marker
-        elif 'Phase' in title:
-            measure_left = [loop.treat_pha_left for loop in loops_tab]
-            measure_right = [loop.treat_pha_right for loop in loops_tab]
-            mean_measure_left = mean_loop.pha_left
-            mean_measure_right = mean_loop.pha_right
-            mean_measure_marker = mean_loop.pha_marker
-        else:
-            measure_left = [loop.piezorep_left for loop in loops_tab]
-            measure_right = [loop.piezorep_right for loop in loops_tab]
-            mean_measure_left = mean_loop.piezorep_left
-            mean_measure_right = mean_loop.piezorep_right
-            mean_measure_marker = mean_loop.piezorep_marker
+        if loops_tab[0].meas[key] is not None:
 
-        figsize = get_setting("figsize")
-        fig, (ax_1, ax_2) = plt.subplots(1, 2, sharey='all', figsize=figsize)
-        add = mode.lower().replace(' ', '_')
-        fig.sfn = f'plot_all_loop_{add}_{title.replace(" ", "_").lower()}'
-        fig.suptitle(title, size=24, weight='heavy')
+            # Extract meas
+            write_volt_left = \
+                [loop.meas[key].write_volt_left for loop in loops_tab]
+            write_volt_right = \
+                [loop.meas[key].write_volt_right for loop in loops_tab]
+            measure_left = [loop.meas[key].y_meas_left for loop in loops_tab]
+            measure_right = [loop.meas[key].y_meas_right for loop in loops_tab]
+            mean_write_volt_left = mean_loop.meas[key].write_volt_left
+            mean_measure_left = mean_loop.meas[key].y_meas_left
+            mean_measure_sigma_left = mean_loop.meas[key].y_sigma_left
+            mean_write_volt_right = mean_loop.meas[key].write_volt_right
+            mean_measure_right = mean_loop.meas[key].y_meas_right
+            mean_measure_sigma_right = mean_loop.meas[key].y_sigma_right
+            mean_write_marker = mean_loop.meas[key].write_marker
+            mean_measure_marker = mean_loop.meas[key].y_marker
 
-        plot_dict = {'fs': 13, 'edgew': 3, 'tickl': 5, 'gridw': 1,
-                     'x lab': label_x, 'y lab': label_y,
-                     'title': 'superposed loops'}
+            # Init fig
+            figsize = get_setting("figsize")
+            fig, (ax_1, ax_2) = plt.subplots(
+                1, 2, sharey='all', figsize=figsize)
+            add = mode.lower().replace(' ', '_')
+            fig.sfn = f'plot_all_loop_{add}_{title.replace(" ", "_").lower()}'
+            fig.suptitle(title, size=24, weight='heavy')
 
-        plot_graph(ax_1, [], [], plot_dict=plot_dict)
-        cmap = cm.get_cmap('jet')
+            # Init subplot 1 : multi loop
+            plot_dict = {'fs': 13, 'edgew': 3, 'tickl': 5, 'gridw': 1,
+                         'x lab': label_x, 'y lab': label_y,
+                         'title': 'superposed loops'}
+            plot_graph(ax_1, [], [], plot_dict=plot_dict)
+            cmap = cm.get_cmap('jet')
 
-        for cont, (elem_left, elem_right) in enumerate(zip(measure_left,
-                                                           measure_right)):
-            ax_1.plot(loops_tab[0].write_volt_left, elem_left, ls='-', lw=1,
-                      c=cmap(cont / len(measure_left)))
-            ax_1.plot(loops_tab[0].write_volt_right, elem_right, ls='-',
-                      lw=1, c=cmap(cont / len(measure_left)))
+            # Plot subplot 1 : multi loop
+            for cont, (elem_x_left, elem_x_right, elem_y_left, elem_y_right) \
+                    in enumerate(zip(
+                    write_volt_left, write_volt_right, measure_left,
+                    measure_right)):
+                ax_1.plot(elem_x_left, elem_y_left, ls='-', lw=1,
+                          c=cmap(cont / len(measure_left)))
+                ax_1.plot(elem_x_right, elem_y_right, ls='-',
+                          lw=1, c=cmap(cont / len(measure_left)))
 
-        plot_dict['title'] = 'mean loop'
-        tab_dict_1 = {'form': 'r.-', 'ms': 10}
-        tab_dict_2 = {'form': 'b.-', 'ms': 10}
-        x_tabs = [mean_loop.write_volt_left, mean_loop.write_volt_right]
-        y_tabs = [mean_measure_left, mean_measure_right]
-        tabs_dict = [tab_dict_1, tab_dict_2]
-        plot_graph(ax_2, x_tabs, y_tabs, plot_dict=plot_dict,
-                   tabs_dict=tabs_dict)
+            # Init subplot 2 : mean loop
+            plot_dict['title'] = 'mean loop'
+            tab_dict_1 = {'form': 'r.-', 'ms': 10}
+            tab_dict_2 = {'form': 'b.-', 'ms': 10}
 
-        if dict_str:
-            add_txt(fig, dict_str)
+            # Plot subplot 2 : mean loop
+            x_tabs = [mean_write_volt_left, mean_write_volt_right]
+            y_tabs = [mean_measure_left, mean_measure_right]
+            tabs_dict = [tab_dict_1, tab_dict_2]
+            ax_2.errorbar(mean_write_volt_left, mean_measure_left,
+                          yerr=mean_measure_sigma_left, ecolor='r',
+                          ls='', marker='.', mec='w', mfc='w', ms=1, color='w')
+            ax_2.errorbar(mean_write_volt_right, mean_measure_right,
+                          yerr=mean_measure_sigma_right, ecolor='b',
+                          ls='', marker='.', mec='w', mfc='w', ms=1, color='w')
+            plot_graph(ax_2, x_tabs, y_tabs, plot_dict=plot_dict,
+                       tabs_dict=tabs_dict)
 
-        for i, (elem_x, elem_y) in enumerate(zip(
-                mean_loop.write_marker, mean_measure_marker), start=1):
-            ax_2.plot(elem_x, elem_y, '*', c='g', ms=10, mec='k', mew=0.5)
-            ax_2.text(elem_x, elem_y, str(i), c='g', size=13, weight='heavy')
+            if dict_str:
+                add_txt(fig, dict_str)
 
-        y_offset = 0.02
-        for j in range(len(mean_loop.write_marker) - 1):
-            fig.text(0.01, 0.98 - y_offset * j,
-                     f'segment {j + 1}: point {j + 1} to {j + 2} '
-                     f'({mean_loop.write_marker[j]:.2f} to '
-                     f'{mean_loop.write_marker[j + 1]:.2f})',
-                     c='g', size=15, weight='heavy')
+            for i, (elem_x, elem_y) in enumerate(zip(
+                    mean_write_marker, mean_measure_marker), start=1):
+                ax_2.plot(elem_x, elem_y, '*', c='g', ms=10, mec='k', mew=0.5)
+                ax_2.text(elem_x, elem_y, str(i), c='g', size=13,
+                          weight='heavy')
 
-        figs.append(fig)
+            y_offset = 0.02
+            for j in range(len(mean_write_marker) - 1):
+                fig.text(0.01, 0.98 - y_offset * j,
+                         f'segment {j + 1}: point {j + 1} to {j + 2} '
+                         f'({mean_write_marker[j]:.2f} to '
+                         f'{mean_write_marker[j + 1]:.2f})',
+                         c='g', size=15, weight='heavy')
+
+            figs.append(fig)
 
     return figs
 
