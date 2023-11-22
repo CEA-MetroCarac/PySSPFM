@@ -293,23 +293,82 @@ def save_best_nanoloops(tab_best_loops, dir_path_out,
     """
     if not os.path.isdir(dir_path_out):
         os.makedirs(dir_path_out)
+    tab_data = ['piezoresponse', 'amplitude', 'phase']
+    fmt = ('%i', '%.5e', '%.5e', '%.5e', '%.5e')
+    tab_data, fmt = add_header_labels(tab_best_loops, tab_data, fmt)
 
-    header_lab_add = 'index pix\t\tvoltage\t\tpiezoresponse'
-    fmt = ('%i', '%.5e', '%.5e')
-
+    header_lab_add = 'index pix\t\tvoltage\t\t' + '\t\t'.join(tab_data)
     for key, value in tab_best_loops.items():
         header = f"{key}\n{header_lab_add}"
         file_path_out = os.path.join(dir_path_out,
                                      f"{file_prefix_out}{key}.txt")
-        tab_index_pix, tab_voltage, tab_piezorep = [], [], []
+        tab_index = []
+        data_saved = []
+        for _ in range(len(tab_data)+1):
+            data_saved.append([])
         for cont, loop in enumerate(value):
-            for write_volt, piezorep in zip(loop.write_volt, loop.piezorep):
-                tab_index_pix.append(cont+1)
-                tab_voltage.append(write_volt)
-                tab_piezorep.append(piezorep)
-        np.savetxt(file_path_out, np.array([tab_index_pix, tab_voltage,
-                                            tab_piezorep]).T,
+            tab_index.append([])
+            dict_best_loop = {'voltage': loop.amp.write_volt,
+                              'piezoresponse': loop.piezorep.y_meas,
+                              'amp': loop.amp.y_meas,
+                              'pha': loop.pha.y_meas}
+            if 'res freq' in tab_data:
+                dict_best_loop['res freq'] = loop.res_freq.y_meas
+            if 'q factor' in tab_data:
+                dict_best_loop['q factor'] = loop.q_fact.y_meas
+
+            for sub_cont, key_name in enumerate(dict_best_loop.keys()):
+                data_saved[sub_cont].append(dict_best_loop[key_name])
+                if sub_cont == 0:
+                    tab_index[cont] = [cont+1 for _ in dict_best_loop[key_name]]
+        for cont, elem in enumerate(data_saved):
+            data_saved[cont] = np.ravel(elem)
+        data_saved.insert(0, np.ravel(tab_index))
+        data_saved = np.array(data_saved).T
+        np.savetxt(file_path_out, data_saved,
                    delimiter='\t\t', newline='\n', header=header, fmt=fmt)
+
+
+def add_header_labels(tab_best_loops, tab_data=None, fmt=None):
+    """
+    Add header labels for resonance frequency and Q factor based on available
+    attributes
+
+    Parameters
+    ----------
+    tab_best_loops: dict
+        List of best loops for all file
+    tab_data: list, optional
+        List of data labels of best loop to save in txt file header. Default: []
+    fmt: tuple, optional
+        Format specification for the additional header labels. Default: ()
+
+    Returns
+    -------
+    tab_data: list
+        Updated tab_data
+    fmt: tuple
+        Updated fmt
+    """
+    fmt = fmt or ()
+    tab_data = tab_data or []
+    # Check for resonance frequency attribute and add header label if present
+    try:
+        if list(tab_best_loops.values())[0].res_freq:
+            tab_data += 'res freq'
+            fmt += '.5e'
+    except AttributeError:
+        pass
+
+    # Check for Q factor attribute and add header label if present
+    try:
+        if list(tab_best_loops.values())[0].q_fact:
+            tab_data += 'q factor'
+            fmt += '.5e'
+    except AttributeError:
+        pass
+
+    return tab_data, fmt
 
 
 def extract_properties(dir_path_in):
@@ -346,7 +405,7 @@ def extract_properties(dir_path_in):
         prop_keys = lines[2][2:].split('\t\t')[:-1]
         props = np.genfromtxt(
             file_path_in, dtype=float, delimiter='\t\t', skip_header=3,
-            encoding='utf-8')
+            encoding='latin-1')
         properties[mode] = {}
         for key, prop in zip(prop_keys, np.array(props).T):
             properties[mode][key] = list(prop)
