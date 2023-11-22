@@ -28,7 +28,7 @@ def ex_map_correlation(verbose=False, make_plots=False):
     """
     example_root_path_in = get_setting("example_root_path_in")
     dir_path_in = os.path.join(
-        example_root_path_in, "KNN500n_2023-10-05-17h23m_out_dfrt",
+        example_root_path_in, "KNN500n_2023-11-20-16h15m_out_dfrt",
         "properties")
     ind_maps = None
 
