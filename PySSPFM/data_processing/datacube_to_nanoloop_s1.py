@@ -19,10 +19,10 @@ from PySSPFM.utils.core.extract_params_from_file import \
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.raw_extraction import data_extraction
 from PySSPFM.utils.signal_bias import sspfm_time, sspfm_generator, write_vec
-from PySSPFM.utils.nanoloop.plot import plot_sspfm_loops
+from PySSPFM.utils.nanoloop.plot import main_plot
 from PySSPFM.utils.nanoloop.file import save_nanoloop_file, sort_nanoloop_data
 from PySSPFM.utils.nanoloop.phase import phase_calibration, gen_dict_pha
-from PySSPFM.utils.nanoloop.analysis import MultiLoop
+from PySSPFM.utils.nanoloop.analysis import AllMultiLoop
 from PySSPFM.utils.datacube_to_nanoloop.gen_data import gen_segments
 from PySSPFM.utils.datacube_to_nanoloop.plot import \
     (plt_seg_max, plt_seg_fit, plt_seg_stable,  plt_signals, plt_amp, plt_bias,
@@ -308,16 +308,16 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
                 figs.append(fig)
             # Create list of nanoloops
             read_volt = 0
-            (amplitude, phase, res_freq, q_fact, sigma_amp, sigma_pha,
-             sigma_res_freq, loop_tab) = [], [], [], [], [], [], [], []
+            (amplitude, phase, res_freq, q_fact, amp_sigma, pha_sigma,
+             res_freq_sigma, loop_tab) = [], [], [], [], [], [], [], []
             for i in range(1, sign_pars['Nb volt (R)'] + 1):
                 amplitude.append([])
                 phase.append([])
                 res_freq.append([])
                 q_fact.append([])
-                sigma_amp.append([])
-                sigma_pha.append([])
-                sigma_res_freq.append([])
+                amp_sigma.append([])
+                pha_sigma.append([])
+                res_freq_sigma.append([])
                 for cont, elem in enumerate(nanoloops['Index Pix']):
                     if elem == i:
                         amplitude[i - 1].append(nanoloops['Amplitude'][cont])
@@ -327,13 +327,13 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
                         if nanoloops['Q Fact']:
                             q_fact[i - 1].append(nanoloops['Q Fact'][cont])
                         if nanoloops['Sigma Amp']:
-                            sigma_amp[i - 1].append(
+                            amp_sigma[i - 1].append(
                                 nanoloops['Sigma Amp'][cont])
                         if nanoloops['Sigma Pha']:
-                            sigma_pha[i - 1].append(
+                            pha_sigma[i - 1].append(
                                 nanoloops['Sigma Pha'][cont])
                         if nanoloops['Sigma Res Freq']:
-                            sigma_res_freq[i - 1].append(
+                            res_freq_sigma[i - 1].append(
                                 nanoloops['Sigma Res Freq'][cont])
                         read_volt = nanoloops['Read Volt'][cont]
                 write_v = write_vec(sign_pars)
@@ -342,19 +342,21 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
                     if nanoloops['Res Freq'] else None
                 multi_loop_q_fact = q_fact[i - 1] \
                     if nanoloops['Q Fact'] else None
-                multi_loop_sigma_amp = sigma_amp[i - 1] \
+                multi_loop_amp_sigma = amp_sigma[i - 1] \
                     if nanoloops['Sigma Amp'] else None
-                multi_loop_sigma_pha = sigma_pha[i - 1] \
+                multi_loop_pha_sigma = pha_sigma[i - 1] \
                     if nanoloops['Sigma Pha'] else None
-                multi_loop_sigma_res_freq = sigma_res_freq[i - 1] \
+                multi_loop_res_freq_sigma = res_freq_sigma[i - 1] \
                     if nanoloops['Sigma Res Freq'] else None
-                loop_tab.append(MultiLoop(
-                    write_v, multi_loop_amp, multi_loop_pha, read_volt,
-                    pha_calib, label[cont_list], res_freq=multi_loop_res_freq,
-                    q_fact=multi_loop_q_fact, sigma_amp=multi_loop_sigma_amp,
-                    sigma_pha=multi_loop_sigma_pha,
-                    sigma_res_freq=multi_loop_sigma_res_freq,
-                    sigma_q_fact=None))
+
+                loop_tab.append(AllMultiLoop(
+                    write_v, multi_loop_amp, multi_loop_pha, pha_calib,
+                    read_volt, mode=label[cont_list],
+                    res_freq=multi_loop_res_freq, q_fact=multi_loop_q_fact,
+                    amp_sigma=multi_loop_amp_sigma,
+                    pha_sigma=multi_loop_pha_sigma,
+                    res_freq_sigma=multi_loop_res_freq_sigma,
+                    q_fact_sigma=None))
 
         # Save nanoloop data in txt file
         if txt_save:
@@ -374,8 +376,8 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
         if make_plots:
             plot_dict = {'label': label[cont_list], 'col': col[cont_list],
                          'unit': unit}
-            figs_2 = plot_sspfm_loops(loop_tab, pha_calib, dict_str=plot_dict,
-                                      del_1st_loop=DEL_1ST_LOOP)
+            figs_2 = main_plot(loop_tab, pha_calib, dict_str=plot_dict,
+                               del_1st_loop=DEL_1ST_LOOP)
 
             for fig in figs_2:
                 figs.append(fig)
