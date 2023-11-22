@@ -49,7 +49,7 @@ def test_analysis_multi_off():
     assert dict_str == {'unit': 'nm', 'label': 'Off field', 'col': 'w'}
     assert sum_x_hyst == approx(5.1514348342607263e-14)
     assert sum_y_hyst == approx(-3.0582405907115238)
-    assert np.sum(best_loop.piezorep) == approx(-2.920267424751798)
+    assert np.sum(best_loop.piezorep.y_meas) == approx(-2.8958272377863805)
     assert read_volt == [-2.0, -1.0, 0.0, 1.0, 2.0]
     assert np.sum(bckgnd_tab) == approx(1.8011164390742098)
     assert np.sum(list(props_tot.values())) == approx(55.751250260969876)
@@ -83,7 +83,7 @@ def test_analysis_mean_off():
     assert dict_str == {'unit': 'nm', 'label': 'Off field', 'col': 'w'}
     assert sum_x_hyst == approx(5.1514348342607263e-14)
     assert sum_y_hyst == approx(36.71570696942)
-    assert np.sum(best_loop.piezorep) == approx(36.060682403651434)
+    assert np.sum(best_loop.piezorep.y_meas) == approx(36.04369866758542)
 
     assert read_volt is None
     assert bckgnd_tab is None
@@ -120,11 +120,11 @@ def test_analysis_mean_on():
     assert dict_str == {'unit': 'nm', 'label': 'On field', 'col': 'y'}
     assert sum_x_hyst == approx(5.1514348342607263e-14)
     assert sum_y_hyst == approx(35.749385588975855)
-    assert np.sum(best_loop.piezorep) == approx(35.087827842303675)
+    assert np.sum(best_loop.piezorep.y_meas) == approx(35.02393812741746)
     assert read_volt is None
     assert bckgnd_tab is None
     assert np.sum(list(props_tot.values())) == approx(59.87070357013261)
 
     assert np.sum(list(props_no_bckgnd.values())) == approx(55.2989653801296)
 
-    assert np.sum(elec_list) == approx(1.7718065803000576)
+    assert np.sum(elec_list) == approx(1.781444848093118)
