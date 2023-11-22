@@ -40,42 +40,42 @@ def sort_nanoloop_data(ss_pfm_bias, write_nb_voltages, read_nb_voltages,
     # Create fmt and header for saving results in txt file
     meas_label = {'Amplitude': {'unit': f'{unit}', 'fmt': '%.3e'},
                   'Phase': {'unit': 'deg', 'fmt': '%.3f'},
-                  'Freq res': {'unit': 'kHz', 'fmt': '%.1f'},
-                  'Q fact': {'unit': '', 'fmt': '%.1f'},
-                  'inc Amp': {'unit': f'{unit}', 'fmt': '%.1e'},
-                  'inc Pha': {'unit': '°', 'fmt': '%.1f'}}
+                  'Res Freq': {'unit': 'kHz', 'fmt': '%.1f'},
+                  'Q Fact': {'unit': '', 'fmt': '%.1f'},
+                  'Sigma Amp': {'unit': f'{unit}', 'fmt': '%.3e'},
+                  'Sigma Pha': {'unit': 'deg', 'fmt': '%.3f'},
+                  'Sigma Res Freq': {'unit': 'kHz', 'fmt': '%.1f'},
+                  'Sigma Q Fact': {'unit': '', 'fmt': '%.1f'}}
     fmt = ['%i', '%.2f', '%.2f']
     header = 'Loop index\tRead Volt (V)\tWrite Volt (V)\t'
+    loop = {}
 
     # Add measurement labels to fmt and header
     for key in dict_res.keys():
-        fmt.append(meas_label[key]['fmt'])
-        header += f'{key} ({meas_label[key]["unit"]})\t'
+        if not all(elem is None for elem in dict_res[key]):
+            fmt.append(meas_label[key]['fmt'])
+            header += f'{key} ({meas_label[key]["unit"]})\t'
+            loop[key] = dict_res[key]
+        else:
+            loop[key] = None
+
+    for key in meas_label:
+        if key not in dict_res:
+            loop[key] = None
 
     # Separate write and read voltage signal
     ss_pfm_bias_write = ss_pfm_bias[::2]
     ss_pfm_bias_read = ss_pfm_bias[1::2]
 
-    loop = [[] for _ in range(len(dict_res) + 3)]
-
-    # Fill column 0 with loop number
-    loop[0] = [i + 1 for i in range(read_nb_voltages) for _ in
-               range((write_nb_voltages - 1) * 2)]
-
-    # Fill column 1 with read voltage
-    loop[1] = ss_pfm_bias_read
-
-    # Fill column 2 with write voltage
-    loop[2] = ss_pfm_bias_write
-
-    # Fill other columns with the different measurements
-    for i, key in enumerate(dict_res.keys()):
-        loop[3 + i] = dict_res[key]
+    loop['Index Pix'] = [i + 1 for i in range(read_nb_voltages) for _ in
+                         range((write_nb_voltages - 1) * 2)]
+    loop['Read Volt'] = ss_pfm_bias_read
+    loop['Write Volt'] = ss_pfm_bias_write
 
     return loop, tuple(fmt), header
 
 
-def save_nanoloop_file(dir_path_out, file_name_root, loop_tab, fmt, header,
+def save_nanoloop_file(dir_path_out, file_name_root, loop_dict, fmt, header,
                        mode='Off field'):
     """
     Save nanoloop data in a text file
@@ -86,7 +86,7 @@ def save_nanoloop_file(dir_path_out, file_name_root, loop_tab, fmt, header,
         Path of the txt saving loop directory (out)
     file_name_root: str
         Name of root for the file (out)
-    loop_tab: list(n*m) or numpy.array(n*m) of float
+    loop_dict: list(n*m) or numpy.array(n*m) of float
         2D array of loop data
     fmt: tuple(n) of string
         Tuple of data saving format
@@ -110,21 +110,17 @@ def save_nanoloop_file(dir_path_out, file_name_root, loop_tab, fmt, header,
     else:
         raise IOError('mode in [\'Off field\',\'On field\']')
 
+    usual_keys = ['Index Pix', 'Read Volt', 'Write Volt', 'Amplitude', 'Phase',
+                  'Res Freq', 'Q Fact', 'Sigma Amp', 'Sigma Pha',
+                  'Sigma Res Freq', 'Sigma Q Fact']
     file_path_out = os.path.join(dir_path_out, lab + file_name_root + '.txt')
     date = datetime.now().strftime('%Y-%m-%d %H;%M')
     date_str = f'Date of analysis: {date}\n\n'
 
-    indxs = [cont for cont, tab in enumerate(loop_tab) if
-             all(elem is None for elem in tab)]
-    indxs.reverse()
-    header_tab = header.split('\t')
+    loop_tab = [loop_dict[key]
+                for key in usual_keys if loop_dict[key] is not None]
 
-    for indx in indxs:
-        header_tab = header_tab[:indx] + header_tab[indx + 1:]
-        fmt = fmt[:indx] + fmt[indx + 1:]
-        loop_tab = loop_tab[:indx] + loop_tab[indx + 1:]
-
-    header = date_str + '\t'.join(header_tab)
+    header = date_str + header
 
     try:
         np.savetxt(file_path_out, np.array(loop_tab).T, fmt=fmt, newline='\n',
