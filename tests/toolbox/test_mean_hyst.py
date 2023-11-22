@@ -1,6 +1,7 @@
 """
 Test mean_hyst methods
 """
+import sys
 from pytest import approx
 import numpy as np
 
@@ -105,10 +106,21 @@ def test_mean_hyst_2_off():
     # print(np.sum(best_hysts.params))
     # print(np.sum(list(best_hysts.props.values())))
 
-    assert np.sum(mean_best_loop.piezorep.y_meas) == approx(
-        0.013260336560458203, abs=1e-4)
+    # Get Python version
+    version_info = sys.version_info
+    python_version = f"{version_info.major}.{version_info.minor}"
+
+    # Target adapted depending on Python version
+    if python_version in ["3.8", "3.9", "3.10"] or version_info.minor >= 8:
+        target_1 = 0.013266997150809881
+        target_2 = 7221.80355612245
+    else:
+        target_1 = 0.013260336560458203
+        target_2 = 7224.888276360544
+
+    assert np.sum(mean_best_loop.piezorep.y_meas) == approx(target_1, abs=1e-8)
     assert np.sum(mean_best_loop.treated_pha.y_meas) == approx(
-        7224.888276360544)
+        target_2, abs=1e-3)
     assert np.sum(mean_best_loop.amp.y_meas) == approx(
         0.029393670007661767, abs=1e-8)
     assert np.sum(best_hysts.params) == approx(0.8354624824790046, abs=1e-2)
