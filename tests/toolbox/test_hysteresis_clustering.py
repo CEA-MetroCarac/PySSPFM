@@ -39,37 +39,10 @@ def test_hysteresis_clustering_piezoresponse():
                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
                  0, 0, 0]
-
-    # Get Python version
-    version_info = sys.version_info
-    python_version = f"{version_info.major}.{version_info.minor}"
-
-    # Target adapted depending on Python version
-    if python_version in ["3.8", "3.9", "3.10"] or version_info.minor >= 8:
-        indexs_coupled = [2, 3, 2, 2, 2, 1, 3, 2, 1, 1, 1, 3, 2, 2, 1, 1, 0, 1,
-                          1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                          0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                          0, 0, 0, 0, 0, 0, 2, 1, 1]
-        sum_avg_hysteresis_coupled_0 = 0.009878486114671473
-        sum_avg_hysteresis_coupled_1 = 0.022249788685527537
-        cluster_info_coupled_1_0 = 0.0018836636880818609
-        cluster_info_coupled_2_0 = 0.0024577990105899027
-        cluster_info_coupled_3_0 = 0.005585684068363985
-        cluster_info_coupled_0_3 = 36
-        cluster_info_coupled_1_3 = 16
-
-    else:
-        indexs_coupled = [2, 3, 2, 2, 2, 1, 3, 2, 1, 1, 1, 3, 2, 2, 1, 1, 0,
-                          1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0,
-                          0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                          0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1]
-        sum_avg_hysteresis_coupled_0 = 0.009546531839895579
-        sum_avg_hysteresis_coupled_1 = 0.021502224252231337
-        cluster_info_coupled_1_0 = 0.0018234490228291962
-        cluster_info_coupled_2_0 = 0.0024690239940242165
-        cluster_info_coupled_3_0 = 0.005547935923473194
-        cluster_info_coupled_0_3 = 34
-        cluster_info_coupled_1_3 = 18
+    indexs_coupled = [2, 3, 2, 2, 2, 1, 3, 2, 1, 1, 1, 3, 2, 2, 1, 1, 0, 1,
+                      1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0, 2, 1, 1]
 
     assert cluster_indexs["off"] == indexs_off
     assert cluster_indexs["on"] == indexs_on
