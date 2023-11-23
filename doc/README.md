@@ -90,7 +90,7 @@
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1d-list-map-reader">VIII.1.d) List map reader</a></li>
                     </ul>
                 </li>
-                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2-hysteresis-clustering-k-means">VIII.2) Hysteresis clustering (K-Means)</a>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2-curve-clustering-k-means">VIII.2) Curve clustering (K-Means)</a>
                     <ul align="justify" width="100%">
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2a-parameters">VIII.2.a) Parameters</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2b-extraction">VIII.2.b) Extraction</a></li>
@@ -145,7 +145,7 @@ The PySSPFM application then proceeds with two stages of measurement processing.
 </p>
 
 <p align="justify" width="100%">
-&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">Machine learning (K-Means)</a> <br>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">Machine learning (K-Means)</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_hyst.py">Phase separation</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">Mapping cross-correlation</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">SPM file converter</a> <br>
@@ -320,7 +320,7 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
             <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/KNN500n_2023-10-05-17h23m_out_dfrt">KNN500n_2023-10-05-17h23m_out_dfrt</a></code>: embodying the measurement outcomes post the second phase of processing. This underpins the following endeavors:</li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_global_map_reader.py">examples/toolbox/ex_global_map_reader.py</a></code>.</li>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_hysteresis_clustering.py">examples/toolbox/ex_hysteresis_clustering.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_curve_clustering.py">examples/toolbox/ex_curve_clustering.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_list_map_reader.py">examples/toolbox/ex_list_map_reader.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_map_correlation.py">examples/toolbox/ex_map_correlation.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_mean_hyst.py">examples/toolbox/ex_mean_hyst.py</a></code>.</li>
@@ -1347,10 +1347,10 @@ The operating principle of this reader differs slightly from that of the global 
     <em>Result of list_map_reader (figure generated with <code>main_list_map_reader</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader.py</a></code> script)</em>
 </p>
 
-### VIII.2) Hysteresis clustering (K-Means)
+### VIII.2) Curve clustering (K-Means)
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox/hysteresis_clustering.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/hysteresis_clustering.py">gui/hysteresis_clustering.py</a></code>. It facilitates the classification of loops associated with each measurement point into clusters. This tool can enable phase separation or the separation of the influences of physically distinct phenomena, such as measurement artifacts.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">toolbox/curve_clustering.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/curve_clustering.py">gui/curve_clustering.py</a></code>. It facilitates the classification of loops associated with each measurement point into clusters. This tool can enable phase separation or the separation of the influences of physically distinct phenomena, such as measurement artifacts.
 </p>
 
 #### VIII.2.a) Parameters
@@ -1372,6 +1372,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 
 <p align="justify" width="100%">
 &#8226 File management: In the initial phase, the algorithm ingests the <code>best_nanoloops</code> directory along with the <code>properties</code> directory. <br>
+&#8226 Label measure: One or more measure considered to determine the curve (from amplitude, phase, piezoresponse, resonance frequency or quality). <br>
 &#8226 Clusters: For each measurement (on field, off field, and coupled), the user specifies the number of clusters. <br>
 &#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. <br>
 </p>
@@ -1405,7 +1406,7 @@ Initially, following data extraction, a curve is constructed. If multiple measur
     <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_all_hyst.PNG>
     <img align="center" width="40%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_mean_hyst.PNG>
     <img align="center" width="19%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_carto.PNG> <br>
-    <em>Result of curve_clustering (figure generated with <code>main_curve_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/hysteresis_clustering.py">toolbox/hysteresis_clustering.py</a></code> script)</em>
+    <em>Result of curve_clustering (figure generated with <code>main_curve_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.pyy">toolbox/curve_clustering.py</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
