@@ -663,7 +663,7 @@ Note that SSPFM can also allow to investigate nanomechanical properties as a fun
 </p>
 
 <p align="justify" width="100%">
-All segments (in the off field mode) can be visualized on this map:
+All segments (in the off field mode) can be visualized on this map <a href="#ref5">[5]</a>:
 </p>
 
 <p align="center" width="100%">
@@ -1799,7 +1799,7 @@ The entire assemblage of scripts under the <code><a href="https://github.com/CEA
     <span id="ref6">&#8226 [6] : Neumayer, Sabine M., Sahar Saremi, Lane W. Martin, Liam Collins, Alexander Tselev, Stephen Jesse, Sergei V. Kalinin, and Nina Balke. “Piezoresponse Amplitude and Phase Quantified for Electromechanical Characterization.” Journal of Applied Physics 128, no. 17 (November 7, 2020): 171105. https://doi.org/10.1063/5.0011631.</span><br>
     <span id="ref7">&#8226 [7] : Neumayer, Sabine M, Sahar Saremi, Lane W Martin, Liam Collins, Alexander Tselev, Stephen Jesse, Sergei V Kalinin, and Nina Balke. “Piezoresponse Phase as Variable in Electromechanical Characterization,” n.d., 16. https://doi.org/10.48550/arXiv.1912.03257.</span><br>
     <span id="ref8">&#8226 [8] : Bradler, Stephan, André Schirmeisen, and Bernhard Roling. “Amplitude Quantification in Contact-Resonance-Based Voltage-Modulated Force Spectroscopy.” Journal of Applied Physics 122, no. 6 (August 14, 2017): 065106. https://doi.org/10.1063/1.4998435.</span><br>
-    <span id="ref9">&#8226 [9] : Balke, Nina, Stephen Jesse, Pu Yu, Ben Carmichael, Sergei V Kalinin, and Alexander Tselev. “Quantification of Surface Displacements and Electromechanical Phenomena via Dynamic Atomic Force Microscopy.” Nanotechnology 27, no. 42 (October 21, 2016): 425707. https://doi.org/10.1088/0957-4484/27/42/425707.</span><br>
+    <span id="ref9">&#8226 [9] : Balke, Nina, Petro Maksymovych, Stephen Jesse, Ivan I. Kravchenko, Qian Li, and Sergei V. Kalinin. “Exploring Local Electrostatic Effects with Scanning Probe Microscopy: Implications for Piezoresponse Force Microscopy and Triboelectricity.” ACS Nano 8, no. 10 (October 28, 2014): 10229–36. https://doi.org/10.1021/nn505176a.</span><br>
     <span id="ref10">&#8226 [10] : Jesse, Stephen, Ho Nyung Lee, and Sergei V. Kalinin. “Quantitative Mapping of Switching Behavior in Piezoresponse Force Microscopy.” Review of Scientific Instruments 77, no. 7 (July 2006): 073702. https://doi.org/10.1063/1.2214699.</span><br>
     <span id="ref11">&#8226 [11] : Kim, Sungho, Daehee Seol, Xiaoli Lu, Marin Alexe, and Yunseok Kim. “Electrostatic-Free Piezoresponse Force Microscopy.” Scientific Reports 7, no. 1 (March 2017): 41657. https://doi.org/10.1038/srep41657.</span><br>
     <span id="ref12">&#8226 [12] : Kalinin, Sergei V., and Dawn A. Bonnell. “Local Potential and Polarization Screening on Ferroelectric Surfaces.” Physical Review B 63, no. 12 (March 13, 2001): 125411. https://doi.org/10.1103/PhysRevB.63.125411.</span><br>
