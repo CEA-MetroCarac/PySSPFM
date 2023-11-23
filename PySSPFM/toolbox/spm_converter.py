@@ -52,21 +52,18 @@ def single_script(dir_path_out, file_path_in, extension='txt', mode='classic',
         file_path_in, mode_dfrt=(mode.lower() == 'dfrt'))
 
     # Data identification
-    raw_data = [dict_meas['times']]
-    list_meas = [dict_meas['amp'], dict_meas['pha'], dict_meas['deflection']]
-    if mode.lower() != 'dfrt':
-        list_meas.append(dict_meas['tip_bias'])
-    for _, meas in enumerate(list_meas):
-        raw_data.append(np.ravel(meas) if len(meas) != 0 else
-                        np.zeros(len(dict_meas['times'])))
+    key_measurement_extraction = get_setting("key_measurement_extraction")
+    inverted_dict = {
+        value: key for key, value
+        in key_measurement_extraction['table'][mode].items()}
+    header = [inverted_dict[key]
+              for key, tab in dict_meas.items() if len(tab) > 0]
+    raw_data = [tab for tab in dict_meas.values() if len(tab) > 0]
 
     # Save the measure
     _, file_name_in = os.path.split(file_path_in)
     file_name_out = file_name_in[:-4]
     file_path_out = os.path.join(dir_path_out, file_name_out + '.' + extension)
-
-    key_measurement_extraction = get_setting("key_measurement_extraction")
-    header = list(key_measurement_extraction['table'][mode].keys())
 
     if extension == 'txt':
         # Text file format
