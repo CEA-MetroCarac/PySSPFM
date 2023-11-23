@@ -203,6 +203,7 @@ def test_hysteresis_clustering_amp_pha():
         avg_hysteresis_off_2 = 83.07405484256466
         avg_hysteresis_off_3 = 91.95712529778717
         cluster_info_off_1_0 = 2.1301929582074703
+        cluster_info_off_2_0 = 2.1743304237987306
     else:
         indexs_off = [3, 1, 3, 3, 3, 4, 1, 3, 2, 2, 2, 1, 3, 3, 3, 3, 2, 2, 2,
                       2, 4, 4, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -213,6 +214,7 @@ def test_hysteresis_clustering_amp_pha():
         avg_hysteresis_off_2 = 82.10108346249717
         avg_hysteresis_off_3 = 94.46671008317617
         cluster_info_off_1_0 = 2.1113160018913417
+        cluster_info_off_2_0 = 2.254872025351866
     assert cluster_indexs["off"] == indexs_off
     assert cluster_indexs["on"] == indexs_on
 
@@ -230,7 +232,7 @@ def test_hysteresis_clustering_amp_pha():
 
     assert cluster_info["off"][0][0] == approx(0.0)
     assert cluster_info["off"][1][0] == approx(cluster_info_off_1_0)
-    assert cluster_info["off"][2][0] == approx(2.1743304237987306)
+    assert cluster_info["off"][2][0] == approx(cluster_info_off_2_0)
     assert cluster_info["off"][3][0] == approx(3.342860315025872)
     assert cluster_info["off"][4][0] == approx(5.1303263806638535)
 
@@ -239,7 +241,7 @@ def test_hysteresis_clustering_amp_pha():
 
     assert cluster_info["off"][0][1] == approx(cluster_info_off_1_0)
     assert cluster_info["off"][1][1] == approx(cluster_info_off_1_0)
-    assert cluster_info["off"][2][1] == approx(2.1743304237987306)
+    assert cluster_info["off"][2][1] == approx(cluster_info_off_2_0)
     assert cluster_info["off"][3][1] == approx(2.29989794039676)
     assert cluster_info["off"][4][1] == approx(4.18485558614015)
 
