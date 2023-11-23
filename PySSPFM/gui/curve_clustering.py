@@ -1,7 +1,7 @@
 """
 --> Executable Script
-Graphical interface for hysteresis clustering
- (run hysteresis_clustering.main_curve_clustering)
+Graphical interface for curve clustering
+ (run curve_clustering.main_curve_clustering)
 """
 
 import os
@@ -11,7 +11,7 @@ from tkinter import filedialog
 from datetime import datetime
 
 from PySSPFM.settings import get_setting
-from PySSPFM.toolbox.hysteresis_clustering import \
+from PySSPFM.toolbox.curve_clustering import \
     main_curve_clustering as main_script
 from PySSPFM.gui.utils import \
     (add_grid_separator, grid_item, show_tooltip, extract_var,
@@ -33,7 +33,7 @@ def main(parent=None):
     None
     """
     # Create the main or secondary window
-    title = "Hysteresis clustering"
+    title = "Curve clustering (k-means)"
     app = init_secondary_wdw(parent=parent, wdw_title=title)
 
     # Set default parameter values
@@ -41,6 +41,7 @@ def main(parent=None):
         'dir path in': '',
         'dir path in prop': '',
         'dir path out': '',
+        'label meas': ["piezoresponse"],
         'nb clusters off': 4,
         'nb clusters on': 4,
         'nb clusters coupled': 4,
@@ -55,6 +56,7 @@ def main(parent=None):
         user_parameters['dir path in'] = dir_path_in_var.get()
         user_parameters['dir path in prop'] = extract_var(dir_path_prop_var)
         user_parameters['dir path out'] = extract_var(dir_path_out_var)
+        user_parameters['label meas'] = extract_var(label_meas_var)
         user_parameters['nb clusters off'] = clust_off_var.get()
         user_parameters['nb clusters on'] = clust_on_var.get()
         user_parameters['nb clusters coupled'] = clust_coupled_var.get()
@@ -96,7 +98,7 @@ def main(parent=None):
         dir_path_out = filedialog.askdirectory()
         dir_path_out_var.set(dir_path_out)
 
-    # Window title: Hysteresis clustering
+    # Window title: Curve clustering
     wdw_main_title(app, title)
 
     row = 3
@@ -129,7 +131,7 @@ def main(parent=None):
         if input_dir != "":
             output_dir = save_path_management(
                 input_dir, dir_path_out=None, save=True,
-                dirname="hysteresis_clustering", lvl=1, create_path=False,
+                dirname="curve_clustering", lvl=1, create_path=False,
                 post_analysis=True)
         else:
             output_dir = ""
@@ -208,10 +210,36 @@ def main(parent=None):
     row = grid_item(browse_button_out, row, column=2)
     row = add_grid_separator(app, row=row)
 
-    # Section title: Hysteresis treatment
-    label_treat = ttk.Label(app, text="Cluster (k-means)",
-                            font=("Helvetica", 14))
-    row = grid_item(label_treat, row, column=0, sticky="ew", columnspan=3)
+    # Section title: Measure
+    label_meas = ttk.Label(app, text="Measure", font=("Helvetica", 14))
+    row = grid_item(label_meas, row, column=0, sticky="ew", columnspan=3)
+
+    # Measure
+    label_name = ttk.Label(app, text="Name(s):")
+    row = grid_item(label_name, row, column=0, sticky="e", increment=False)
+    label_meas_var = tk.StringVar()
+    label_meas_var.set(str(user_parameters['label meas']))
+    entry_label_meas = ttk.Entry(app, textvariable=label_meas_var)
+    row = grid_item(entry_label_meas, row, column=1, sticky="ew")
+    strg = "- Name: label_meas\n" \
+           "- Summary: List of Measurement Name for Curves\n" \
+           "- Description: This parameter contains a list of measurement " \
+           "name in order to create the curve to be analyzed using a machine " \
+           "learning algorithm of clustering (K-Means).\n" \
+           "If several name are filled, the curve will be normalized and " \
+           "concatenated.\n" \
+           "Choose from : piezoresponse, amplitude, phase, res freq " \
+           "and q fact\n" \
+           "- Value: A list containing strings.\n" \
+           "\t- For example: ['piezoresponse'] or ['amplitude', 'phase']"
+    entry_label_meas.bind(
+        "<Enter>",
+        lambda event, mess=strg: show_tooltip(entry_label_meas, mess))
+    row = add_grid_separator(app, row=row)
+
+    # Section title: Cluster
+    label_clust = ttk.Label(app, text="Cluster", font=("Helvetica", 14))
+    row = grid_item(label_clust, row, column=0, sticky="ew", columnspan=3)
 
     # Function to update the label text when the slider is moved
     def update_nb_clusters_off(event):
@@ -234,13 +262,13 @@ def main(parent=None):
                           command=update_nb_clusters_off)
     row = grid_item(scale_off, row, column=1, sticky="ew", increment=False)
     strg = "- Name: nb_clusters_off\n" \
-           "- Summary: Number of Clusters for Off Field Hysteresis Loop\n" \
+           "- Summary: Number of Clusters for Off Field Curve\n" \
            "- Description: This parameter determines the number of " \
-           "clusters for the off-field hysteresis loop. " \
+           "clusters for the off-field curve. " \
            "Machine learning algorythm of clustering (K-Means)\n" \
            "- Value: Integer representing the number of initial " \
-           "clusters for the off-field hysteresis loop.\n" \
-           "- Active if: Used in the analysis of off-field hysteresis loop."
+           "clusters for the off-field curve.\n" \
+           "- Active if: Used in the analysis of off-field curve."
     scale_off.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(scale_off, mess))
     clust_off_label = ttk.Label(app, text=str(clust_off_var.get()))
@@ -255,13 +283,13 @@ def main(parent=None):
                          command=update_nb_clusters_on)
     row = grid_item(scale_on, row, column=1, sticky="ew", increment=False)
     strg = "- Name: nb_clusters_on\n" \
-           "- Summary: Number of Clusters for On Field Hysteresis Loop\n" \
+           "- Summary: Number of Clusters for On Field Curve\n" \
            "- Description: This parameter determines the number of " \
-           "clusters for the on-field hysteresis loop. " \
+           "clusters for the on-field curve. " \
            "Machine learning algorythm of clustering (K-Means)\n" \
            "- Value: Integer representing the number of initial " \
-           "clusters for the on-field hysteresis loop.\n" \
-           "- Active if: Used in the analysis of on-field hysteresis loop."
+           "clusters for the on-field curve.\n" \
+           "- Active if: Used in the analysis of on-field curve."
     scale_on.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(scale_on, mess))
     clust_on_label = ttk.Label(app, text=str(clust_on_var.get()))
@@ -276,13 +304,14 @@ def main(parent=None):
                               command=update_nb_clusters_coupled)
     row = grid_item(scale_coupled, row, column=1, sticky="ew", increment=False)
     strg = "- Name: nb_clusters_coupled\n" \
-           "- Summary: Number of Clusters for Differential Hysteresis Loop\n" \
+           "- Summary: Number of Clusters for Differential Component\n" \
            "- Description: This parameter determines the number of " \
-           "clusters for the differential hysteresis loop. " \
+           "clusters for the differential component. " \
            "Machine learning algorythm of clustering (K-Means)\n" \
            "- Value: Integer representing the number of initial " \
-           "clusters for the differential hysteresis loop.\n" \
-           "- Active if: Used in the analysis of differential hysteresis loop."
+           "clusters for the differential component.\n" \
+           "- Active if: Used in the analysis of differential component only " \
+           "for piezoresponse curve."
     scale_coupled.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(scale_coupled, mess))
     clust_coupled_label = ttk.Label(app, text=str(clust_coupled_var.get()))
