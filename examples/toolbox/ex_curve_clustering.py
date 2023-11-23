@@ -1,5 +1,5 @@
 """
-Example of hysteresis_clustering methods
+Example of curve_clustering methods
 """
 import os
 
@@ -10,7 +10,7 @@ from PySSPFM.toolbox.curve_clustering import main_curve_clustering
 
 def ex_curve_clustering(label_meas, verbose=False, make_plots=False):
     """
-    Example of hysteresis_clustering functions.
+    Example of curve_clustering functions.
 
     Parameters
     ----------
@@ -30,8 +30,8 @@ def ex_curve_clustering(label_meas, verbose=False, make_plots=False):
         Information about each cluster for each mode.
     inertia : dict
         Inertia (within-cluster sum of squares) for each mode.
-    avg_hysteresis : dict
-        Contain all list of average hysteresis for each cluster in each mode.
+    avg_curve : dict
+        Contain all list of average curve for each cluster in each mode.
     """
     example_root_path_in = get_setting("example_root_path_in")
     dir_path_in = os.path.join(
@@ -50,9 +50,9 @@ def ex_curve_clustering(label_meas, verbose=False, make_plots=False):
     out = main_curve_clustering(
         user_pars, dir_path_in, verbose=verbose, show_plots=make_plots,
         save_plots=save_plots, dir_path_out=dir_path_out)
-    (cluster_labels, cluster_info, inertia, avg_hysteresis) = out
+    (cluster_labels, cluster_info, inertia, avg_curve) = out
 
-    return cluster_labels, cluster_info, inertia, avg_hysteresis
+    return cluster_labels, cluster_info, inertia, avg_curve
 
 
 if __name__ == '__main__':
