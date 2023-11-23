@@ -12,7 +12,7 @@ from PySSPFM.gui.list_map_reader import main as main_tool_1_b
 from PySSPFM.gui.loop_file_reader import main as main_tool_1_c
 from PySSPFM.gui.raw_file_reader import main as main_tool_1_d
 from PySSPFM.gui.map_correlation import main as main_tool_2_a
-from PySSPFM.gui.hysteresis_clustering import main as main_tool_2_b
+from PySSPFM.gui.curve_clustering import main as main_tool_2_b
 from PySSPFM.gui.mean_hyst import main as main_tool_2_c
 from PySSPFM.gui.sort_plot_pixel import main as main_tool_2_d
 from PySSPFM.gui.spm_converter import main as main_tool_3_a
@@ -72,8 +72,8 @@ def main():
                    strg_title=strg_title, strg_functions=strg_functions)
 
     # Toolbox - 2 - Map / multi-loop tools
-    labels = ["Map correlation", "Hysteresis clustering", "Mean hysteresis",
-              "Plot sort pixel"]
+    labels = ["Map correlation", "Curve clustering", "Mean hysteresis",
+              "Sort and plot pixel"]
     functions = [main_tool_2_a, main_tool_2_b, main_tool_2_c,
                  main_tool_2_d]
     strg_title = "Map and multi-loop tools allow to go deeper into sspfm " \
@@ -84,11 +84,14 @@ def main():
         "- Generate cross correlation coefficient array between a selected "
         "set of sample properties in order to determine origins of contrast "
         "mapping",
-        "Clustering with machine learning approach (K-Means) of hysteresis:\n"
+        "Clustering with machine learning approach (K-Means) of curve:\n"
         "- Perform a clustering analysis (K-Means) for all best hysteresis "
         "(for each pixel, one hysteresis for each mode) of a sspfm measurement "
         "in order to separate phases and different physical signal "
-        "contributions",
+        "contributions.\n"
+        "Curves can be generated using one or more measurements, including "
+        "piezoresponse, amplitude, phase, resonance frequency, or "
+        "quality factor.",
         "Perform mean of hysteresis loops (on / off / coupled) by reading a "
         "set of txt file nanoloops defined by the user",
         "Find extremum value of sspfm map of a property and "
