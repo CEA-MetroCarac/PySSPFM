@@ -471,7 +471,8 @@ def parameters():
         differential curve using a machine learning algorithm
         of clustering (K-Means).
         Only valid only for a piezoresponse curve.
-        Used in the analysis of differential curve.
+        Used in the analysis of differential component only for piezoresponse
+        curve.
 
     - dir_path_in: str
         Input Directory for Best Loop TXT Files (default: 'best_nanoloops').
@@ -522,7 +523,7 @@ def parameters():
         # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\best_nanoloops
         dir_path_out = None
         # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
-        # hysteresis_clustering_2023-10-02-16h38m
+        # curve_clustering_2023-10-02-16h38m
         dir_path_in_props = None
         # dir_path_in_props = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
         verbose = True
