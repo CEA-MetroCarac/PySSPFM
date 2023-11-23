@@ -6,7 +6,7 @@
 
 <p align="justify" width="100%"> 
 <strong>PySSFPM</strong> is a specific tool developed in 
-<strong>Py</strong>thon dedicated to perform data analysis on <strong>SSPFM</strong> (Switching Spectroscopy Piezoresponse Force Microscopy) measurements with a GUI that aims to be as simple to use as possible and complete to accommodate the user's measurement requirements and conditions. The source code was developed to be easily customizable in order to meet the user's specific needs. Measurements can be processed in both standard SSPFM and SSPFM-DFRT (Dual Frequency Resonance Tracking) mode.
+<strong>Py</strong>thon dedicated to perform data analysis on <strong>SSPFM</strong> (Switching Spectroscopy Piezoresponse Force Microscopy) measurements with a GUI that aims to be as simple to use as possible and complete to accommodate the user's measurement requirements and conditions. The source code was developed to be easily customizable in order to meet the user's specific needs. Measurements can be processed in both standard SSPFM including fixed-frequency measurements on or off resonance, or with frequency sweeping to reconstruct the resonance peak, as well as SSPFM-DFRT (Dual Frequency Resonance Tracking) mode.
 </p>
 
 ## Important
