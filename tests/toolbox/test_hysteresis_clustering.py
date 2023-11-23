@@ -5,7 +5,7 @@ import sys
 from pytest import approx
 import numpy as np
 
-from examples.toolbox.ex_hysteresis_clustering import ex_curve_clustering
+from examples.toolbox.ex_curve_clustering import ex_curve_clustering
 
 
 # class TestReaderAllMaps(unittest.TestCase):
