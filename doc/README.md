@@ -621,11 +621,11 @@ This entire process enhances the precision of the measured values. The robustnes
 &#8226 <code>dfrt</code> : The average of the arrays of measurements in amplitude and phase maintained at resonance through the use of DFRT (Dual Frequency Resonance Tracking) <a href="#ref3">[3]</a>, defines the unique values of the segment in amplitude and phase, respectively. The uncertainty in these two quantities can be determined based on their variance (with <a href="https://numpy.org/doc/stable/reference/generated/numpy.var.html">var</a> function of NumPy library) within the segment. This process is swift, robust, and highly precise, and is performed with <code>SegmentStable</code> object of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code> script. In cases where the quantities (amplitude, phase, and frequency) associated with the sidebands are measured, the values of amplitude, phase, resonance frequency, and quality factor are extracted using a procedure developed by Gannepalli et al. <a href="#ref4">[4]</a> with the SHO model. The procedure is carried out with the <code>process_sidebands</code> method, associated with the <code>SegmentStableDFRT</code> object in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code>. Voici la procédure à suivre, définie dans la méthode process_sidebands de <code>SegmentStableDFRT</code>:
 </p>
 
-$$ phi = tan({\phi_2 - \phi_1}) $$
+$$ \Phi = tan({\phi_2 - \phi_1}) $$
 
-$$ omega = {f_1 * A_1 \over f_2 * A_2} $$
+$$ \Omega = {f_1 * A_1 \over f_2 * A_2} $$
 
-$$ X_1 = {1 - sgn(\phi) * \omega * \sqrt{1 + \phi^2} \over \phi} $$
+$$ X_1 = {1 - sgn(\Phi) * \Omega * \sqrt{1 + \Phi^2} \over \Phi} $$
 
 <p align="justify" width="100%">
 &#8226 <code>single_freq</code> : The measurements are performed at a fixed frequency, either at resonance or not. The amplitude and phase values are then maintained at relatively stable values, in most cases. The extraction of quantities is the same as in DFRT: respectively for amplitude and phase, the mean as well as the uncertainty determined from the variance are extracted for each segment. This process is performed with <code>SegmentStable</code> objetc of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code> script.
