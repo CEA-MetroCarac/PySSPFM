@@ -5,7 +5,7 @@ import os
 
 from PySSPFM.settings import get_setting
 from PySSPFM.utils.path_for_runable import save_path_example
-from PySSPFM.toolbox.hysteresis_clustering import main_curve_clustering
+from PySSPFM.toolbox.curve_clustering import main_curve_clustering
 
 
 def ex_curve_clustering(label_meas, verbose=False, make_plots=False):
