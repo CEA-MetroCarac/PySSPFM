@@ -104,10 +104,10 @@ def plot_comparative_hyst(mean_hyst, mean_loop, hyst, loop, bckgnd=None,
             [[axs[0][0], axs[1][0]], [axs[0][1], axs[1][1]]],
             [mean_hyst, hyst], [mean_loop, loop],
             ['mean', f'pixel {pixel_ind}']):
-        x_hyst = [np.array(loop_data.write_volt_right),
-                  np.array(loop_data.write_volt_left)]
-        y_hyst = [np.array(loop_data.piezorep_right),
-                  np.array(loop_data.piezorep_left)]
+        x_hyst = [np.array(loop_data.piezorep.write_volt_right),
+                  np.array(loop_data.piezorep.write_volt_left)]
+        y_hyst = [np.array(loop_data.piezorep.y_meas_right),
+                  np.array(loop_data.piezorep.y_meas_left)]
 
         # Plot loop data and fit characteristics -> total fit
         hyster.plot(x_hyst, y=y_hyst, ax=ax,
