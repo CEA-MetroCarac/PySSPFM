@@ -627,6 +627,8 @@ $$ \Omega = {f_1 * A_1 \over f_2 * A_2} $$
 
 $$ X_1 = {1 - sgn(\Phi) * \Omega * \sqrt{1 + \Phi^2} \over \Phi} $$
 
+$$ X_2 = {1 - sgn(\Phi) * \sqrt{1 + \Phi^2} / \Omega \over \Phi} $$
+
 <p align="justify" width="100%">
 &#8226 <code>single_freq</code> : The measurements are performed at a fixed frequency, either at resonance or not. The amplitude and phase values are then maintained at relatively stable values, in most cases. The extraction of quantities is the same as in DFRT: respectively for amplitude and phase, the mean as well as the uncertainty determined from the variance are extracted for each segment. This process is performed with <code>SegmentStable</code> objetc of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code> script.
 </p>
