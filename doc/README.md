@@ -622,7 +622,11 @@ This entire process enhances the precision of the measured values. The robustnes
 </p>
 
 <p align="justify" width="100%">
-Voici la procédure à suivre, définie dans la méthode process_sidebands de <code>SegmentStableDFRT</code>. On défini, les grandeurs phi et omega à partir des mesures respectives en amplitude, phase et fréquences des sidebandes de part et d'autre, à gauche et droite de la résonance :
+Voici la procédure à suivre, définie dans la méthode process_sidebands de <code>SegmentStableDFRT</code>. On défini, les grandeurs $\Phi$ et $\Omega$ à partir des mesures extraites du segment, respectivement en amplitude $A$, phase $\phi$ et fréquences $f$ des sidebandes de part et d'autre, à gauche et droite (d'indice $1$ et $2$ respectivement) de la résonance :
+</p>
+
+<p align="justify" width="100%">
+In the process outlined in the method <code>process_sidebands</code> of <code>SegmentStableDFRT</code>, the variables $\Phi$ and $\Omega$ are defined based on the measurements extracted from the segment. These measurements include the amplitude $A$, phase $\phi$, and frequencies $f$ of the sidebands on both sides (indexed as 1 and 2, for the left and right side of the resonance, respectively):
 </p>
 
 $$ \Phi = tan({\phi_2 - \phi_1}) $$
@@ -630,7 +634,7 @@ $$ \Phi = tan({\phi_2 - \phi_1}) $$
 $$ \Omega = {f_1 * A_1 \over f_2 * A_2} $$
 
 <p align="justify" width="100%">
-A partir de phi et oméga on introduit les grandeuts X1 et X2 :
+For $f_2$ > $f_1$, the condition $\phi_2$ > $\phi_1$ must be satisfied. Using $\Phi$ and $\Omega$, we introduce the variables $X_1$ and $X_2$:
 </p>
 
 $$ X_1 = {1 - sgn(\Phi) * \sqrt{1 + \Phi^2} / \Omega \over \Phi} $$
@@ -638,7 +642,7 @@ $$ X_1 = {1 - sgn(\Phi) * \sqrt{1 + \Phi^2} / \Omega \over \Phi} $$
 $$ X_2 = {1 - sgn(\Phi) * \Omega * \sqrt{1 + \Phi^2} \over \Phi} $$
 
 <p align="justify" width="100%">
-On peut alors déterminer la fréquence de résonance f0 et le facteur de qualité Q avec les grandeurs X1 et X2 :
+The resonance frequency $f_0$ and the quality factor $Q$ can then be determined using the variables $X_1$ and $X_2$:
 </p>
 
 $$ f_0 = \sqrt{f_1 * f_2 * {f_2 * X_1 - f_1 * X_2 \over f_1 * X_1 - f_2 * X_2}} $$
