@@ -586,7 +586,7 @@ class SegmentStableDFRT:
         phi = np.tan(self.pha_sbr - self.pha_sbl)
         omega = self.freq_sbl * self.amp_sbl / (self.freq_sbr * self.amp_sbr)
 
-        x_1 = - (1 - np.sign(phi) * np.sqrt(1 + phi ** 2) / omega**2) / phi
+        x_1 = - (1 - np.sign(phi) * np.sqrt(1 + phi ** 2) / omega) / phi
         x_2 = (1 - np.sign(phi) * np.sqrt(1 + phi ** 2) * omega) / phi
 
         frac = (self.freq_sbr * x_1 - self.freq_sbl * x_2) / \
