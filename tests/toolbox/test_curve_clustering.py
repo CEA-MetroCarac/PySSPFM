@@ -1,5 +1,5 @@
 """
-Test hysteresis_clustering methods
+Test curve_clustering methods
 """
 import sys
 from pytest import approx
@@ -11,25 +11,25 @@ from examples.toolbox.ex_curve_clustering import ex_curve_clustering
 # class TestReaderAllMaps(unittest.TestCase):
 
 
-def test_hysteresis_clustering_piezoresponse():
+def test_curve_clustering_piezoresponse():
     """ Test ex_curve_clustering for piezoresponse signal """
 
     out = ex_curve_clustering(['piezoresponse'])
-    (cluster_indexs, cluster_info, inertia, avg_hysteresis) = out
+    (cluster_indexs, cluster_info, inertia, avg_curve) = out
 
-    # print(np.sum(avg_hysteresis["off"][0]))
-    # print(np.sum(avg_hysteresis["off"][1]))
-    # print(np.sum(avg_hysteresis["off"][2]))
-    # print(np.sum(avg_hysteresis["off"][3]))
-    # print(np.sum(avg_hysteresis["off"][4]))
+    # print(np.sum(avg_curve["off"][0]))
+    # print(np.sum(avg_curve["off"][1]))
+    # print(np.sum(avg_curve["off"][2]))
+    # print(np.sum(avg_curve["off"][3]))
+    # print(np.sum(avg_curve["off"][4]))
     #
-    # print(np.sum(avg_hysteresis["on"][0]))
-    # print(np.sum(avg_hysteresis["on"][1]))
+    # print(np.sum(avg_curve["on"][0]))
+    # print(np.sum(avg_curve["on"][1]))
     #
-    # print(np.sum(avg_hysteresis["coupled"][0]))
-    # print(np.sum(avg_hysteresis["coupled"][1]))
-    # print(np.sum(avg_hysteresis["coupled"][2]))
-    # print(np.sum(avg_hysteresis["coupled"][3]))
+    # print(np.sum(avg_curve["coupled"][0]))
+    # print(np.sum(avg_curve["coupled"][1]))
+    # print(np.sum(avg_curve["coupled"][2]))
+    # print(np.sum(avg_curve["coupled"][3]))
 
     indexs_off = [3, 1, 3, 3, 3, 4, 1, 3, 2, 2, 2, 1, 3, 3, 3, 3, 2, 2, 2,
                   2, 0, 4, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -52,22 +52,22 @@ def test_hysteresis_clustering_piezoresponse():
     assert inertia["on"] == approx(0.28498500984901537)
     assert inertia["coupled"] == approx(0.1642794418242845)
 
-    assert np.sum(avg_hysteresis["off"][0]) == approx(0.5936781031803703)
-    assert np.sum(avg_hysteresis["off"][1]) == approx(0.2831871919714286)
-    assert np.sum(avg_hysteresis["off"][2]) == approx(0.8627956580466666)
-    assert np.sum(avg_hysteresis["off"][3]) == approx(0.15602010488333334)
-    assert np.sum(avg_hysteresis["off"][4]) == approx(2.3118014035)
+    assert np.sum(avg_curve["off"][0]) == approx(0.5936781031803703)
+    assert np.sum(avg_curve["off"][1]) == approx(0.2831871919714286)
+    assert np.sum(avg_curve["off"][2]) == approx(0.8627956580466666)
+    assert np.sum(avg_curve["off"][3]) == approx(0.15602010488333334)
+    assert np.sum(avg_curve["off"][4]) == approx(2.3118014035)
 
-    assert np.sum(avg_hysteresis["on"][0]) == approx(0.45226276894237294)
-    assert np.sum(avg_hysteresis["on"][1]) == approx(0.5239598472500001)
+    assert np.sum(avg_curve["on"][0]) == approx(0.45226276894237294)
+    assert np.sum(avg_curve["on"][1]) == approx(0.5239598472500001)
 
-    assert np.sum(avg_hysteresis["coupled"][0]) == approx(
+    assert np.sum(avg_curve["coupled"][0]) == approx(
         0.448606402302103)
-    assert np.sum(avg_hysteresis["coupled"][1]) == approx(
+    assert np.sum(avg_curve["coupled"][1]) == approx(
         0.6988583802447283)
-    assert np.sum(avg_hysteresis["coupled"][2]) == approx(
+    assert np.sum(avg_curve["coupled"][2]) == approx(
         -0.36790395567739304)
-    assert np.sum(avg_hysteresis["coupled"][3]) == approx(0.5236255422617767)
+    assert np.sum(avg_curve["coupled"][3]) == approx(0.5236255422617767)
 
     assert cluster_info["off"][0][0] == approx(0.0)
     assert cluster_info["off"][1][0] == approx(0.07786968990413191)
@@ -140,21 +140,20 @@ def test_hysteresis_clustering_piezoresponse():
     assert cluster_info["coupled"][3][4] == "D"
 
 
-def test_hysteresis_clustering_amp_pha():
-    """ Test ex_curve_clustering for composed amplitude and phase
-    signal """
+def test_curve_clustering_amp_pha():
+    """ Test ex_curve_clustering for composed amplitude and phase signal """
 
     out = ex_curve_clustering(['amplitude', 'phase'])
-    (cluster_indexs, cluster_info, inertia, avg_hysteresis) = out
+    (cluster_indexs, cluster_info, inertia, avg_curve) = out
 
-    # print(np.sum(avg_hysteresis["off"][0]))
-    # print(np.sum(avg_hysteresis["off"][1]))
-    # print(np.sum(avg_hysteresis["off"][2]))
-    # print(np.sum(avg_hysteresis["off"][3]))
-    # print(np.sum(avg_hysteresis["off"][4]))
+    # print(np.sum(avg_curve["off"][0]))
+    # print(np.sum(avg_curve["off"][1]))
+    # print(np.sum(avg_curve["off"][2]))
+    # print(np.sum(avg_curve["off"][3]))
+    # print(np.sum(avg_curve["off"][4]))
     #
-    # print(np.sum(avg_hysteresis["on"][0]))
-    # print(np.sum(avg_hysteresis["on"][1]))
+    # print(np.sum(avg_curve["on"][0]))
+    # print(np.sum(avg_curve["on"][1]))
 
     indexs_on = [0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
                  1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -172,9 +171,9 @@ def test_hysteresis_clustering_amp_pha():
                       2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
                       1, 1, 3, 3, 3, 3]
         inertia_off = 96.59258253235751
-        avg_hysteresis_off_1 = 69.47246188061166
-        avg_hysteresis_off_2 = 83.07405484256466
-        avg_hysteresis_off_3 = 91.95712529778717
+        avg_curve_off_1 = 69.47246188061166
+        avg_curve_off_2 = 83.07405484256466
+        avg_curve_off_3 = 91.95712529778717
         cluster_info_off_1_0 = 2.1301929582074703
         cluster_info_off_2_0 = 2.1743304237987306
         cluster_info_off_3_0 = 3.342860315025872
@@ -189,9 +188,9 @@ def test_hysteresis_clustering_amp_pha():
                       2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
                       1, 1, 3, 3, 3, 3]
         inertia_off = 94.9635356607568
-        avg_hysteresis_off_1 = 72.50786208611287
-        avg_hysteresis_off_2 = 82.10108346249717
-        avg_hysteresis_off_3 = 94.46671008317617
+        avg_curve_off_1 = 72.50786208611287
+        avg_curve_off_2 = 82.10108346249717
+        avg_curve_off_3 = 94.46671008317617
         cluster_info_off_1_0 = 2.1113160018913417
         cluster_info_off_2_0 = 2.254872025351866
         cluster_info_off_3_0 = 3.5300633820041
@@ -206,14 +205,14 @@ def test_hysteresis_clustering_amp_pha():
     assert inertia["off"] == approx(inertia_off)
     assert inertia["on"] == approx(85.9572013452021)
 
-    assert np.sum(avg_hysteresis["off"][0]) == approx(66.12804145794577)
-    assert np.sum(avg_hysteresis["off"][1]) == approx(avg_hysteresis_off_1)
-    assert np.sum(avg_hysteresis["off"][2]) == approx(avg_hysteresis_off_2)
-    assert np.sum(avg_hysteresis["off"][3]) == approx(avg_hysteresis_off_3)
-    assert np.sum(avg_hysteresis["off"][4]) == approx(72.96209700766119)
+    assert np.sum(avg_curve["off"][0]) == approx(66.12804145794577)
+    assert np.sum(avg_curve["off"][1]) == approx(avg_curve_off_1)
+    assert np.sum(avg_curve["off"][2]) == approx(avg_curve_off_2)
+    assert np.sum(avg_curve["off"][3]) == approx(avg_curve_off_3)
+    assert np.sum(avg_curve["off"][4]) == approx(72.96209700766119)
 
-    assert np.sum(avg_hysteresis["on"][0]) == approx(108.58805972420119)
-    assert np.sum(avg_hysteresis["on"][1]) == approx(86.93195273947686)
+    assert np.sum(avg_curve["on"][0]) == approx(108.58805972420119)
+    assert np.sum(avg_curve["on"][1]) == approx(86.93195273947686)
 
     assert cluster_info["off"][0][0] == approx(0.0)
     assert cluster_info["off"][1][0] == approx(cluster_info_off_1_0)
