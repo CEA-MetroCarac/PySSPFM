@@ -622,7 +622,9 @@ This entire process enhances the precision of the measured values. The robustnes
 </p>
 
 $$ \phi = tan({\phi_2 - \phi_1}) $$
+
 $$ \omega = {f_1 * A_1 \over f_2 * A_2} $$
+
 $$ X_1 = {1 - sgn(\phi) * \omega * \sqrt{1 + \phi^2} \over \phi} $$
 
 <p align="justify" width="100%">
