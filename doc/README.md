@@ -1447,7 +1447,7 @@ For each mode (on field, off field, and eventually coupled), three figures are g
 ### VIII.3) Mean hysteresis
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_hyst.py">toolbox/mean_hyst.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/mean_hyst.py">gui/mean_hyst.py</a></code>. A portion of each of the hysteresis loops associated with each measurement point can be selected using a criterion chosen by the user, and then they are averaged. This algorithm was inspired by the work of Kelley et al <a href="#ref29">[29]</a> enables phase separation and extraction of the average properties associated with it.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_hyst.py">toolbox/mean_hyst.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/mean_hyst.py">gui/mean_hyst.py</a></code>. A portion of each of the hysteresis loops associated with each measurement point can be selected using a criterion chosen by the user, and then they are averaged. This algorithm was inspired by the work of Kelley et al. <a href="#ref29">[29]</a> and enables phase separation and extraction of the average properties associated with it.
 </p>
 
 #### VIII.3.a) Parameters
