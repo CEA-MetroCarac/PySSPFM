@@ -5,7 +5,7 @@ from pytest import approx
 import numpy as np
 
 from examples.utils.datacube_to_nanoloop.ex_analysis import \
-    ex_calib, ex_init_parameters, ex_segments
+    ex_calib, ex_cut_function, ex_segments
 
 
 # class TestAnalysis(unittest.TestCase):
@@ -21,27 +21,17 @@ def test_calib():
     assert np.sum(amp_cal_external) == approx(24042895.72343873)
 
 
-def test_init_parameters():
-    """ Test ex_init_parameters """
+def test_cut_function():
+    """ Test ex_cut_function """
 
-    cut_dict, read_mode = ex_init_parameters()
-    assert cut_dict['index hold']['start'][0] == 0
-    assert cut_dict['index hold']['start'][1] == 19
-    assert cut_dict['index hold']['end'][0] == 196021
-    assert cut_dict['index hold']['end'][1] == 196040
-    assert np.sum(cut_dict['start hold seg']) == approx(9.499999999999998)
-
-    assert np.sum(cut_dict['end hold seg']) == approx(1890.4999999999338)
-
-    assert np.sum(cut_dict['index on field']) == approx(95961600)
-    assert np.sum(cut_dict['index off field']) == approx(96059600)
-    assert cut_dict['nb seg'] == 1960
-    assert cut_dict['experimental time'] == approx(99.94999999999652)
-    assert cut_dict['start hold time exp'] == 1.0
-    assert cut_dict['end hold time exp'] == approx(0.9500000000000028)
-
-    assert cut_dict['theoretical time'] == 99.95
-    assert read_mode == 'Single Read Step'
+    cut_dict, nb_seg_tot = ex_cut_function()
+    assert cut_dict['off f'][0] == 120
+    assert cut_dict['off f'][-1] == 195920
+    assert cut_dict['on f'][0] == 20
+    assert cut_dict['on f'][-1] == 195820
+    assert np.sum(cut_dict['off f']) == 96059600
+    assert np.sum(cut_dict['on f']) == 95961600
+    assert nb_seg_tot == 1960
 
 
 def test_segments_max_on():
@@ -79,8 +69,8 @@ def test_segments_max_on():
     assert seg.q_fact == approx(163.0)
     assert seg.res_freq == 326.0
     assert seg.start_ind == 830
-    assert np.sum(seg.time_tab) == approx(114.00000000000003)
-    assert np.sum(seg.time_tab_init) == approx(142.50000000000003)
+    assert np.sum(seg.time_tab) == approx(34.0)
+    assert np.sum(seg.time_tab_init) == approx(42.5)
 
 
 def test_segments_max_off():
@@ -118,8 +108,8 @@ def test_segments_max_off():
     assert seg.q_fact == approx(74.0)
     assert seg.res_freq == 296.0
     assert seg.start_ind == 930
-    assert np.sum(seg.time_tab) == approx(118.00000000000003)
-    assert np.sum(seg.time_tab_init) == approx(147.50000000000003)
+    assert np.sum(seg.time_tab) == approx(38.0)
+    assert np.sum(seg.time_tab_init) == approx(47.5)
 
 
 def test_segments_fit_on():
@@ -160,8 +150,8 @@ def test_segments_fit_on():
     assert seg.q_fact == approx(343.3272390563352, abs=1e-4)
     assert seg.res_freq == approx(326.76409251747384)
     assert seg.start_ind == 830
-    assert np.sum(seg.time_tab) == approx(114.00000000000003)
-    assert np.sum(seg.time_tab_init) == approx(142.50000000000003)
+    assert np.sum(seg.time_tab) == approx(34.0)
+    assert np.sum(seg.time_tab_init) == approx(42.5)
 
 
 def test_segments_fit_off():
@@ -202,8 +192,8 @@ def test_segments_fit_off():
     assert seg.q_fact == approx(341.7160661770409, abs=1e-4)
     assert seg.res_freq == approx(295.0595059372857)
     assert seg.start_ind == 930
-    assert np.sum(seg.time_tab) == approx(118.00000000000003)
-    assert np.sum(seg.time_tab_init) == approx(147.50000000000003)
+    assert np.sum(seg.time_tab) == approx(38.0)
+    assert np.sum(seg.time_tab_init) == approx(47.5)
 
 
 def test_segments_dfrt_on():
@@ -237,8 +227,8 @@ def test_segments_dfrt_on():
     assert np.sum(seg.pha_tab) == approx(7277.405689581113)
     assert np.sum(seg.pha_tab_init) == approx(8996.054642657837)
     assert seg.start_ind == 830
-    assert np.sum(seg.time_tab) == approx(114.00000000000003)
-    assert np.sum(seg.time_tab_init) == approx(142.50000000000003)
+    assert np.sum(seg.time_tab) == approx(34.0)
+    assert np.sum(seg.time_tab_init) == approx(42.5)
 
 
 def test_segments_dfrt_off():
@@ -272,5 +262,5 @@ def test_segments_dfrt_off():
     assert np.sum(seg.pha_tab) == approx(5766.402610566696)
     assert np.sum(seg.pha_tab_init) == approx(7132.943058414065)
     assert seg.start_ind == 930
-    assert np.sum(seg.time_tab) == approx(118.00000000000003)
-    assert np.sum(seg.time_tab_init) == approx(147.50000000000003)
+    assert np.sum(seg.time_tab) == approx(38.0)
+    assert np.sum(seg.time_tab_init) == approx(47.5)
