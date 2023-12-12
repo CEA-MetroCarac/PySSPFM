@@ -5,7 +5,6 @@ Grid x [pix]: 8
 Grid x [um]: 3.55
 Grid y [pix]: 8
 Grid y [um]: 3.55
-Hold time [ms]: 250
 Hold force [nN]: 100
 Pressure [MPa]: 50.929581789406505
 Calibration: No

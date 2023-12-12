@@ -45,7 +45,6 @@
 "header_lines": 1,
 "index_line_meas_name": 0,
 "delimiter": "\t\t",
-"detect_bug_segments": false,
 "fit_method": "nelder",
 "histo_phase_method": "fit",
 "electrostatic_offset": true

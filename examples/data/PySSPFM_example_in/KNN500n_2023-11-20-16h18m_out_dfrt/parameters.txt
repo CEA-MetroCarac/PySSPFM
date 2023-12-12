@@ -5,7 +5,6 @@ Grid x [pix]: 8
 Grid x [um]: 3.55
 Grid y [pix]: 8
 Grid y [um]: 3.55
-Hold time [ms]: 250
 Hold force [nN]: 100
 Pressure [MPa]: 50.929581789406505
 Calibration: No
@@ -68,7 +67,7 @@ filter ord: 10
 ### Treatment parameters: second step ###
 
 - Info
-start of analysis: 2023-11-22 15;00
+start of analysis: 2023-12-12 14;05
 analysis duration: 00h:00m:00s
 
 - Hysteresis / loop treatment parameters
