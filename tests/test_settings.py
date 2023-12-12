@@ -64,7 +64,6 @@ def test_get_settings_dict_classic():
         "index_line_meas_name": 0,
         "delimiter": "\t\t",
         "figsize": [18, 9],
-        "detect_bug_segments": False,
         "fit_method": "nelder",
         "color_amp_pha_map": "coolwarm",
         "histo_phase_method": "fit",
@@ -129,7 +128,6 @@ def test_get_settings_dict_default():
         "header_lines": 1,
         "index_line_meas_name": 0,
         "delimiter": "\t\t",
-        "detect_bug_segments": False,
         "fit_method": "nelder",
         "histo_phase_method": "fit",
         "electrostatic_offset": True}
