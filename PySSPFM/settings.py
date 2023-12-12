@@ -100,12 +100,6 @@ FIGSIZE : list
     The size of the figure for visualization, specified as [width, height].
     Default is [18, 9].
 
-DETECT_BUG_SEGMENTS: bool
-    If set to True, this parameter compares the theoretically expected number of
-    segments based on the SSPFM bias parameters with the actual number of
-    experimental segments. It raises an error if these two values do not match.
-    Default is False.
-
 FIT_METHOD: str
     Fitting method for the models sho, sho_phase (for amplitude and phase of
     the segments with frequency sweep segments, respectively), and Gaussian
