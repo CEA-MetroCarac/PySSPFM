@@ -533,7 +533,10 @@ def nanoloop_treatment(data_dict, sign_pars, dict_pha=None, dict_str=None,
     init_meas: dict
         Initial amplitude and phase value
     """
-    dict_pha = dict_pha or {'corr': 'raw', 'func': np.cos}
+    dict_pha = dict_pha or {
+        'corr': 'raw', 'func': np.cos, 'pha fwd': 0, 'pha rev': 180,
+        'main elec': False, 'locked elec slope': False, 'grounded tip': False,
+        'positive d33': True}
 
     # Perform phase treatment and get pha_calib
     (_, pha_calib, _) = phase_calibration(
