@@ -191,8 +191,7 @@ def gen_segments(sign_pars, mode='dfrt', seg_noise_pars=None, hold_dict=None,
     seg_noise_pars = seg_noise_pars or {'type': 'normal', 'ampli': 0.}
 
     dict_meas = {'sspfm bias': sspfm_generator(sign_pars)}
-    out = sspfm_time(dict_meas['sspfm bias'], sign_pars,
-                     start_hold_time=hold_dict['start time'])
+    out = sspfm_time(dict_meas['sspfm bias'], sign_pars, gen_hold_segment=False)
     dict_meas['times'], dict_meas['tip_bias'] = out
 
     dict_meas['amp'], dict_meas['pha'] = [], []
@@ -244,6 +243,5 @@ def gen_segments(sign_pars, mode='dfrt', seg_noise_pars=None, hold_dict=None,
                                              hold_seg[key]['end']])
 
     dict_meas['deflection'] = []
-    dict_meas['times_bias'] = dict_meas['times']
 
     return dict_meas
