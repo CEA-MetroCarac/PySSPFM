@@ -59,7 +59,7 @@ def data_identification(raw_dict, type_file, mode_dfrt=False):
     if 'deflection' not in dict_meas:
         dict_meas['deflection'] = []
     if 'tip_bias' not in dict_meas:
-        dict_meas['times_bias'], dict_meas['tip_bias'] = [], []
+        dict_meas['tip_bias'] = []
 
     return dict_meas
 
@@ -131,6 +131,9 @@ def extr_data_spm(file_path_in, mode_dfrt=False, verbose=False):
 
     # Extraction of SS PFM bias info organized in terms of ramp script
     # parameters
+    # /!\ For Bruker measurement, check the nb of sample / time etc. for each
+    # segment to adjust it in the measurement sheet. Some values can be rounded
+    # Debug the code here /!\
     script_dict = script_info(info_dict)
 
     # .spm file info: raw data
