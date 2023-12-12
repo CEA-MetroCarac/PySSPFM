@@ -128,7 +128,6 @@ def test_csv_meas_sheet_extract():
                    'Grid x [um]': 3.55,
                    'Grid y [pix]': 8,
                    'Grid y [um]': 3.55,
-                   'Hold time [ms]': 250,
                    'Hold force [nN]': 100,
                    'Pressure [MPa]': 50.929581789406505,
                    'Calibration': 'No',
@@ -148,8 +147,8 @@ def test_csv_meas_sheet_extract():
                    'Bias app': 'Sample',
                    'V_AC [V]': 1,
                    'Date [hh : dd/mm/yyyy]': '13H : 27/06/2022',
-                   'Pix durat [sec]': 80.15,
-                   'Grid durat [sec]': 5129.6,
+                   'Pix durat [sec]': 80.15667999935194,
+                   'Grid durat [sec]': 5130.027519958524,
                    'Tip': 'SCM-PIT-V2',
                    'Sign of d33': 'positive',
                    'Sample ref': 'KNN03'}
@@ -162,9 +161,13 @@ def test_csv_meas_sheet_extract():
                    'Seg sample (W)': 100,
                    'Min volt (R) [V]': 0,
                    'Max volt (R) [V]': 0,
-                   'Nb volt (R)': 8, 'Mode (R)':
-                       'Low to High', 'Seg durat (R) [ms]': 50,
-                   'Seg sample (R)': 100}
+                   'Nb volt (R)': 8, 'Mode (R)': 'Low to High',
+                   'Seg durat (R) [ms]': 50,
+                   'Seg sample (R)': 100,
+                   'Hold seg durat (start) [ms]': 7.4399999812158,
+                   'Hold sample (start)': 6,
+                   'Hold seg durat (end) [ms]': 249.239999370729,
+                   'Hold sample (end)': 201}
 
     for key, value in target_meas.items():
         assert meas_pars[key] == value
