@@ -17,8 +17,7 @@ def ex_plt_bias():
     # Generate segments
     dict_meas = ex_gen_segments('dfrt', make_plots=False)
     # ex plt_bias
-    fig = plt_bias(dict_meas['times'], dict_meas['tip_bias'],
-                   dict_meas['sspfm bias'], dict_meas)
+    fig = plt_bias(dict_meas['tip_bias'], dict_meas['sspfm bias'], dict_meas)
 
     return [fig]
 
@@ -64,7 +63,7 @@ def ex_amp_pha_map(analysis, mode):
     # Get parameters
     seg_pars, sign_pars, _, _, _, _, _ = pars_segment()
     mapping_label = {'on f': 'On Field', 'off f': 'Off Field'}
-    index_hold = {'start': [0, 19], 'end': [196021, 196040]}
+    index_hold = {'start': 20, 'end': 20}
     sweep_freq = {'start': 200, 'end': 400}
     unit = 'nm'
 
@@ -72,11 +71,12 @@ def ex_amp_pha_map(analysis, mode):
     segs, dict_meas = list_segs(analysis, nb_seg_str='all')
 
     # ex amp_pha_map
-    fig = amp_pha_map(segs[mode], dict_meas, index_hold, freq_range=sweep_freq,
-                      read_nb_voltages=sign_pars['Nb volt (R)'],
-                      cut_seg=seg_pars['cut seg [%]'],
-                      mapping_label=mapping_label[mode], unit=unit,
-                      mode=seg_pars['mode'])
+    fig = amp_pha_map(
+        segs[mode], dict_meas, index_hold_start=index_hold['start'],
+        index_hold_end=index_hold['end'], freq_range=sweep_freq,
+        read_nb_voltages=sign_pars['Nb volt (R)'],
+        cut_seg=seg_pars['cut seg [%]'], mapping_label=mapping_label[mode],
+        unit=unit, mode=seg_pars['mode'])
     fig.sfn += f"_{analysis}"
     return [fig]
 
