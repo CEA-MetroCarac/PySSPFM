@@ -17,7 +17,7 @@ from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots
-from PySSPFM.utils.raw_extraction import data_extraction
+from PySSPFM.utils.raw_extraction import data_extraction, csv_meas_sheet_extract
 from PySSPFM.utils.signal_bias import sspfm_time, sspfm_generator, write_vec
 from PySSPFM.utils.nanoloop.plot import main_plot
 from PySSPFM.utils.nanoloop.file import save_nanoloop_file, sort_nanoloop_data
@@ -29,9 +29,8 @@ from PySSPFM.utils.datacube_to_nanoloop.plot import \
      amp_pha_map)
 from PySSPFM.utils.datacube_to_nanoloop.file import \
     save_parameters, print_params
-from PySSPFM.utils.raw_extraction import csv_meas_sheet_extract
 from PySSPFM.utils.datacube_to_nanoloop.analysis import \
-    (init_parameters, external_calib, SegmentInfo, SegmentSweep,
+    (cut_function, external_calib, SegmentInfo, SegmentSweep,
      SegmentStable, SegmentStableDFRT)
 
 mpl.rcParams.update({'figure.max_open_warning': 0})
@@ -117,8 +116,11 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
             hold_dict=test_dict['hold pars'], loop_pars=test_dict['loop pars'],
             alea_target_range=test_dict['alea target range'])
 
-    par = init_parameters(dict_meas, sign_pars, verbose=verbose)
-    cut_dict, sign_pars['Mode (R)'] = par
+    # Init and cut measurements
+    if sign_pars['Min volt (R) [V]'] == sign_pars['Max volt (R) [V]']:
+        sign_pars['Mode (R)'] = 'Single Read Step'
+    cut_dict, _ = cut_function(sign_pars)
+
     # Print SS PFM bias info
     print_params(meas_pars, sign_pars, user_pars, verbose=verbose)
 
@@ -149,21 +151,14 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
     ss_pfm_bias = sspfm_generator(sign_pars)
 
     # SS PFM signal determination
-    par = sspfm_time(ss_pfm_bias, sign_pars,
-                     start_hold_time=cut_dict['start hold time exp'])
-    (time_bias_calc, ss_pfm_bias_calc) = par
-    time_bias_calc = np.concatenate([cut_dict['start hold seg'], time_bias_calc,
-                                     cut_dict['end hold seg']])
-    ss_pfm_bias_calc = \
-        np.concatenate([np.zeros(len(cut_dict['start hold seg'])),
-                        ss_pfm_bias_calc,
-                        np.zeros(len(cut_dict['end hold seg']))])
+    par = sspfm_time(ss_pfm_bias, sign_pars)
+    (_, ss_pfm_bias_calc) = par
+
     if make_plots:
-        fig = plt_bias(time_bias_calc, ss_pfm_bias_calc, ss_pfm_bias, dict_meas)
+        fig = plt_bias(ss_pfm_bias_calc, ss_pfm_bias, dict_meas)
         figs.append(fig)
 
     if len(dict_meas['tip_bias']) < 1:
-        dict_meas['times_bias'] = time_bias_calc
         dict_meas['tip_bias'] = ss_pfm_bias_calc
 
     # Plot SS PFM and amplitude signal
@@ -183,14 +178,14 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
     filter_order = user_pars['seg pars']['filter ord'] if \
         user_pars['seg pars']['filter'] else None
     if on_field_mode:
-        seg_pars_on['index cut'] = cut_dict['index on field']
+        seg_pars_on['index cut'] = cut_dict['on f']
         seg_pars_on['ite'] = sign_pars['Seg sample (W)']
         seg_pars_on['type'] = 'write'
         seg_pars_on['add'] = [0, 0]
         seg_pars_on['title map'] = 'On Field Map'
         seg_pars['On field'] = seg_pars_on
     if off_field_mode:
-        seg_pars_off['index cut'] = cut_dict['index off field']
+        seg_pars_off['index cut'] = cut_dict['off f']
         seg_pars_off['ite'] = sign_pars['Seg sample (R)']
         seg_pars_off['type'] = 'read'
         seg_pars_off['add'] = [0, 1]
@@ -253,13 +248,14 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
                 figs.append(fig)
         # Plot segment maps
         if make_plots:
-            fig = amp_pha_map(seg_tab, dict_meas,
-                              cut_dict['index hold'],
-                              freq_range=freq_range,
-                              read_nb_voltages=sign_pars['Nb volt (R)'],
-                              cut_seg=cut_seg,
-                              mapping_label=tuple_dict[1]['title map'],
-                              unit=unit, mode=mode)
+            fig = amp_pha_map(
+                seg_tab, dict_meas,
+                sign_pars['Hold sample (start)'],
+                sign_pars['Hold sample (end)'],
+                freq_range=freq_range,
+                read_nb_voltages=sign_pars['Nb volt (R)'],
+                cut_seg=cut_seg, mapping_label=tuple_dict[1]['title map'],
+                unit=unit, mode=mode)
             figs.append(fig)
         seg_dict[tuple_dict[0]] = seg_tab
 
@@ -436,7 +432,6 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='max',
 
     # Start single script for each measurement file
     i = 0
-    file_path_in = ''
     for elem in os.listdir(dir_path_in):
         if elem.endswith(file_format) and not elem.endswith('SS_PFM_bias.txt'):
             file_path_in = os.path.join(dir_path_in, elem)
@@ -449,17 +444,9 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='max',
         if verbose:
             print('\nSS PFM parameter analysis ...\n')
 
-        # Data extraction from measurement file and identification
-        dict_meas, _ = data_extraction(
-            file_path_in, mode_dfrt=bool(mode == 'dfrt'), verbose=verbose)
-
-        # Find measurement parameters (cut and read mode parameters)
-        cut_dict, sign_pars['Mode (R)'] = init_parameters(dict_meas, sign_pars)
-        meas_pars['nb seg'] = cut_dict['nb seg']
-        meas_pars['exp time [s]'] = cut_dict['experimental time']
-        meas_pars['start hold time exp [s]'] = cut_dict['start hold time exp']
-        meas_pars['end hold time exp [s]'] = cut_dict['end hold time exp']
-        meas_pars['theoretic time [s]'] = cut_dict['theoretical time']
+        # Find number of segment
+        _, nb_seg_tot = cut_function(sign_pars)
+        meas_pars['nb seg'] = nb_seg_tot
 
         # Save all the parameters in a text file
         save_parameters(root_out, t0, date, user_pars, meas_pars, sign_pars, i)
