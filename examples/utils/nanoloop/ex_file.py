@@ -67,7 +67,11 @@ def example_file(make_plots=False, verbose=False):
                  'Nb volt (W)': 51,
                  'Mode (W)': 'Zero, up',
                  'Seg durat (W) [ms]': 500,
-                 'Seg sample (W)': 100}
+                 'Seg sample (W)': 100,
+                 'Hold seg durat (start) [ms]': 7.4399999812158,
+                 'Hold sample (start)': 6,
+                 'Hold seg durat (end) [ms]': 249.239999370729,
+                 'Hold sample (end)': 201}
 
     write_pars = {'range': [sign_pars['Min volt (W) [V]'],
                             sign_pars['Max volt (W) [V]']],
