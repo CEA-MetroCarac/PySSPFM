@@ -107,7 +107,7 @@ def read_vec(ckpfm_pars):
     return read_voltage
 
 
-def sspfm_time(ss_pfm_bias, sspfm_pars, start_hold_time=0.):
+def sspfm_time(ss_pfm_bias, sspfm_pars, gen_hold_segment=True):
     """
     Generate time associated with sspfm bias signal
 
@@ -117,8 +117,8 @@ def sspfm_time(ss_pfm_bias, sspfm_pars, start_hold_time=0.):
         Array of sspfm bias signal single value (in V)
     sspfm_pars: dict
         sspfm bias signal parameters
-    start_hold_time: float, optional
-        Initial hold time (in s)
+    gen_hold_segment: bool, optional
+        Generate hold segment (default is True).
 
     Returns
     -------
@@ -128,7 +128,11 @@ def sspfm_time(ss_pfm_bias, sspfm_pars, start_hold_time=0.):
         List of sspfm bias signal associated with time (in V)
     """
     times_bias = []
-    sum_time = start_hold_time
+    if gen_hold_segment:
+        sum_time = sspfm_pars['Hold seg durat (start) [ms]']/1000
+    else:
+        sum_time = 0
+
     for cont, _ in enumerate(ss_pfm_bias):
         ite = sspfm_pars['Seg durat (W) [ms]'] / 1000 if cont % 2 == 0 else \
             sspfm_pars['Seg durat (R) [ms]'] / 1000
@@ -146,6 +150,32 @@ def sspfm_time(ss_pfm_bias, sspfm_pars, start_hold_time=0.):
                                    sspfm_pars['Seg durat (R) [ms]'] / 1000, ite)
         ss_pfm_bias_calc.extend([elem_bias] * ite)
         ss_pfm_times_calc.extend(sub_time)
+
+    if gen_hold_segment:
+        bias_hold_segment = {
+            'start': np.zeros(sspfm_pars['Hold sample (start)']),
+            'end': np.zeros(sspfm_pars['Hold sample (end)'])
+        }
+        ss_pfm_bias_calc = np.concatenate(
+            [bias_hold_segment['start'], ss_pfm_bias_calc,
+             bias_hold_segment['end']])
+
+        step_time_hold_end = \
+            sspfm_pars['Hold seg durat (end) [ms]'] / \
+            (1000*sspfm_pars['Hold sample (end)'])
+        time_hold_segment = {
+            'start': np.linspace(0,
+                                 sspfm_pars['Hold seg durat (start) [ms]']/1000,
+                                 sspfm_pars['Hold sample (start)'],
+                                 endpoint=False),
+            'end': np.linspace(ss_pfm_times_calc[-1] + step_time_hold_end,
+                               ss_pfm_times_calc[-1] +
+                               sspfm_pars['Hold seg durat (end) [ms]']/1000,
+                               sspfm_pars['Hold sample (end)'], endpoint=True)
+        }
+        ss_pfm_times_calc = np.concatenate(
+            [time_hold_segment['start'], ss_pfm_times_calc,
+             time_hold_segment['end']])
 
     return ss_pfm_times_calc, ss_pfm_bias_calc
 
