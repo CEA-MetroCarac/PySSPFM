@@ -59,7 +59,11 @@ def gen_pars(read_volt_range=None):
                  'Nb volt (W)': 51,
                  'Mode (W)': 'Zero, up',
                  'Seg durat (W) [ms]': 500,
-                 'Seg sample (W)': 100}
+                 'Seg sample (W)': 100,
+                 'Hold seg durat (start) [ms]': 7.4399999812158,
+                 'Hold sample (start)': 6,
+                 'Hold seg durat (end) [ms]': 249.239999370729,
+                 'Hold sample (end)': 201}
 
     write_pars = {'range': [sign_pars['Min volt (W) [V]'],
                             sign_pars['Max volt (W) [V]']],
@@ -129,7 +133,13 @@ def example_gen_data(analysis='mean_off', make_plots=False, verbose=False):
 
     if make_plots:
         # Perform treatment and generate plots
-        out = nanoloop_treatment(datas_dict, sign_pars, dict_str=dict_str)
+        dict_pha = {
+            'corr': 'raw', 'func': np.cos, 'pha fwd': 0, 'pha rev': 180,
+            'main elec': bool(analysis == 'mean_on'),
+            'locked elec slope': False, 'grounded tip': True,
+            'positive d33': True}
+        out = nanoloop_treatment(datas_dict, sign_pars, dict_pha=dict_pha,
+                                 dict_str=dict_str)
         loop_tab, pha_calib, _ = out
         figs_loop = plot_all_loop(loop_tab, pha_calib=pha_calib,
                                   dict_str=dict_str)
