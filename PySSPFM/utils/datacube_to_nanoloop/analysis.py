@@ -6,11 +6,9 @@ Module used for the scripts of sspfm 1st step data analysis
 
 import numpy as np
 
-from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.basic_func import sho, sho_phase
 from PySSPFM.utils.core.noise import filter_mean
 from PySSPFM.utils.core.peak import width_peak
-from PySSPFM.utils.datacube_to_nanoloop.plot import plt_seg
 from PySSPFM.utils.core.fitting import ShoPeakFit, ShoPhaseFit
 
 
@@ -642,233 +640,37 @@ def external_calib(amplitude_out, phase_out, meas_pars=None):
     return amplitude, phase
 
 
-def init_parameters(dict_meas, sign_pars, verbose=False, make_plots=False):
+def cut_function(sign_pars):
     """
-    Correct the measurement file with corrected values of some parameters.
+    This function is used to cut the measure into segments and compute the
+    index values for each start of on field and off field segments.
 
     Parameters
     ----------
-    dict_meas: dict
-        Dictionary of all measurements in the extracted file.
     sign_pars: dict
         Dictionary of sspfm bias signal parameters.
-    verbose: bool, optional
-        If True, print information on the number of segments. Default is False.
-    make_plots: bool, optional
-        If True, print graphs of the cut analysis. Default is False.
-
-    Returns
-    -------
-    cut_dict: dict
-        Dictionary of cut parameters.
-    read_mode: str
-        Application order of read voltage:
-        - 'Low to High'
-        - 'High to Low'
-        - 'Single Read Step'
-    """
-    read_mode = sign_pars['Mode (R)']
-    if sign_pars['Min volt (R) [V]'] == sign_pars['Max volt (R) [V]']:
-        read_mode = 'Single Read Step'
-
-    cut_dict = cut_function(dict_meas, sign_pars, verbose=verbose,
-                            make_plots=make_plots)
-
-    return cut_dict, read_mode
-
-
-def cut_function(dict_meas, sign_pars, verbose=False, make_plots=False):
-    """
-    Function used for init_parameters function:
-    Cut the measures in segment
-
-    Parameters
-    ----------
-    dict_meas: dict
-        Dictionary of all measurements in the extracted file.
-    sign_pars: dict
-        Dictionary of sspfm bias signal parameters.
-    verbose: bool, optional
-        If True, print information on the number of segments. Default is False.
-    make_plots: bool, optional
-        If True, print graphs of the cut analysis. Default is False.
-
-    Returns
-    -------
-    cut_dict: dict
-        Dictionary of cut parameters.
-    """
-    # Compute the last index of starting hold segment and first index of
-    # ending hold segment
-    hold_dict = index_hold_segment(dict_meas['times'])
-
-    # Calculation of the number of segment and check if there is a problem
-    # with the application of sspfm measure
-    nb_segment = nb_measure_segment(dict_meas['times'], sign_pars, hold_dict)
-
-    # Compute the list of time value for each beginning of on field and off
-    # field segment
-    index = generate_cut_time_values(hold_dict['index']['start'][1],
-                                     sign_pars, nb_segment)
-
-    # Time analysis
-    experimental_time = dict_meas['times'][-1]
-    start_hold_time_exp = dict_meas['times'][hold_dict['index']['start'][1] + 1]
-    end_hold_time_exp = dict_meas['times'][-1] - dict_meas['times'][
-        hold_dict['index']['end'][0] - 1]
-    segment_time = (sign_pars['Seg durat (W) [ms]'] +
-                    sign_pars['Seg durat (R) [ms]']) / 1000
-    hold_time = start_hold_time_exp + end_hold_time_exp
-    theoretical_time = int(nb_segment / 2) * segment_time + hold_time
-
-    if verbose:
-        print('------------')
-        print('- Cut results')
-        print(f'Theoretical total time = {theoretical_time} s')
-        print(f'Experimental total time = {experimental_time} s')
-        print(f'Experimental init hold time = {start_hold_time_exp} s')
-        print(f'Experimental end hold time = {end_hold_time_exp} s')
-        print(f'Total number of segment = {nb_segment}')
-        print('------------')
-
-    # Plot time function and holding segment to verify the analysis
-    fig = plt_seg(dict_meas, hold_dict, index,
-                  sign_pars) if make_plots else None
-
-    return {
-        'index hold': hold_dict['index'],
-        'start hold seg': hold_dict['seg']['start'],
-        'end hold seg': hold_dict['seg']['end'],
-        'index on field': index['on f'],
-        'index off field': index['off f'],
-        'nb seg': nb_segment,
-        'experimental time': experimental_time,
-        'start hold time exp': start_hold_time_exp,
-        'end hold time exp': end_hold_time_exp,
-        'theoretical time': theoretical_time,
-        'fig': fig
-    }
-
-
-def index_hold_segment(times):
-    """
-    This function is used by `cut_function` to compute the indices of the
-    starting and ending hold segments.
-
-    Parameters
-    ----------
-    times: list or numpy.array
-        Array of time measurements (in seconds).
-
-    Returns
-    -------
-    hold_dict: dict
-        Dictionary containing the indices and segments for the starting and
-        ending hold segments.
-    """
-    start_index_hold, end_index_hold = -1, 0
-    dt_hold_start = round(times[1] - times[0], 9)
-    dt_hold_end = round(times[-1] - times[-2], 9)
-    start_hold_seg = []
-    end_hold_seg = []
-
-    for i in range(len(times) - 1):
-        if round(times[i + 1] - times[i], 9) == dt_hold_start:
-            start_index_hold += 1
-            start_hold_seg.append(times[start_index_hold])
-        else:
-            break
-
-    for i in range(len(times) - 1):
-        if round(
-                times[(len(times) - 1) - i] - times[(len(times) - 1) - (i + 1)],
-                9) == dt_hold_end:
-            end_index_hold += 1
-            end_hold_seg.append(times[len(times) - end_index_hold])
-        else:
-            break
-
-    end_index_hold = len(times) - end_index_hold
-
-    return {
-        'index': {
-            'start': [0, start_index_hold],
-            'end': [end_index_hold, len(times)]
-        },
-        'seg': {
-            'start': start_hold_seg,
-            'end': end_hold_seg
-        }
-    }
-
-
-def nb_measure_segment(times, sign_pars, hold_dict):
-    """
-    This function is used by `cut_function` to compute the number of segments
-    in the measure and check if there is a discrepancy between the theoretical
-    and experimental number of samples.
-
-    Parameters
-    ----------
-    times: list or numpy.array
-        Array of time measurements (in seconds).
-    sign_pars: dict
-        Dictionary of sspfm bias signal parameters.
-    hold_dict: dict
-        Dictionary containing the indices and segments for the starting and
-        ending hold segments.
-
-    Returns
-    -------
-    nb_seg: int
-        Number of segments in the measure (excluding the 2 hold segments).
-    """
-    nb_seg = (sign_pars['Nb volt (W)'] - 1) * 4 * sign_pars['Nb volt (R)']
-    nb_seg_th = (sign_pars['Nb volt (W)'] - 1) * 2 * sign_pars['Nb volt (R)']
-    nb_samp_th = (sign_pars['Seg sample (R)'] + sign_pars['Seg sample (W)'])
-    nb_sample_th = nb_seg_th * nb_samp_th
-    nb_sample_exp = len(times[hold_dict['index']['start'][1] +
-                              1:hold_dict['index']['end'][0] - 1])
-
-    detect_bug_segments = get_setting('detect_bug_segments')
-    if nb_sample_th != nb_sample_exp and detect_bug_segments:
-        print(f"Theoretical number of samples: {nb_sample_th}")
-        print(f"Experimental number of samples: {nb_sample_exp}")
-        print("Error with the application of ss_pfm_signal or parameters "
-              "saving in the spm file")
-        raise NotImplementedError
-
-    return nb_seg
-
-
-def generate_cut_time_values(start_ind_hold, sign_pars, nb_segment):
-    """
-    This function is used by `cut_function` to cut the measure into segments
-    and compute the index values for each start of on field and off field
-    segments.
-
-    Parameters
-    ----------
-    start_ind_hold: int
-        Last index of the starting hold segment.
-    sign_pars: dict
-        Dictionary of sspfm bias signal parameters.
-    nb_segment: int
-        Number of segments in the measure (excluding the 2 hold segments).
 
     Returns
     -------
     index: dict
         Dictionary of index values for each on and off field segment.
+    nb_seg_tot: int
+        Total number of segments.
     """
-    index_on_f, index_off_f = [], []
-    seg_ite = sign_pars['Seg sample (W)'] + sign_pars['Seg sample (R)']
 
-    for index_seg in range(int(nb_segment / 2)):
-        seg_increment = start_ind_hold + 1 + index_seg * seg_ite
+    nb_seg_read_write = \
+        (sign_pars['Nb volt (W)'] - 1) * 2 * sign_pars['Nb volt (R)']
+    seg_ite = sign_pars['Seg sample (W)'] + sign_pars['Seg sample (R)']
+    nb_seg_tot = nb_seg_read_write*2
+    # nb_sample = nb_seg * seg_ite
+
+    index_on_f, index_off_f = [], []
+    for index_seg in range(int(nb_seg_read_write)):
+        seg_increment = \
+            sign_pars['Hold sample (start)'] + index_seg * seg_ite
         index_on_f.append(seg_increment)
 
         seg_increment += sign_pars['Seg sample (W)']
         index_off_f.append(seg_increment)
 
-    return {'off f': index_off_f, 'on f': index_on_f}
+    return {'off f': index_off_f, 'on f': index_on_f}, nb_seg_tot
