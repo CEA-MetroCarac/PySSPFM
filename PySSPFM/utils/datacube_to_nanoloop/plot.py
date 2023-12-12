@@ -13,9 +13,9 @@ from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.figure import plot_graph, plot_map
 
 
-def amp_pha_map(seg_tab, dict_meas, index_hold, freq_range=None,
-                read_nb_voltages=None, cut_seg=None, mapping_label='',
-                unit='a.u', mode='dfrt', colo=None):
+def amp_pha_map(seg_tab, dict_meas, index_hold_start, index_hold_end,
+                freq_range=None, read_nb_voltages=None, cut_seg=None,
+                mapping_label='', unit='a.u', mode='dfrt', colo=None):
     """
     Plot a figure with tip bias, and 2 maps of amplitude and phase with
     frequency for each segment
@@ -29,8 +29,10 @@ def amp_pha_map(seg_tab, dict_meas, index_hold, freq_range=None,
         List of segment types
     dict_meas: dict
         All measurements in extracted file
-    index_hold: dict
-        Index for start and end hold segment
+    index_hold_start: int
+        Index for start hold segment
+    index_hold_end: int
+        Index for end hold segment
     freq_range: dict, optional
         Dict of min and max frequency of the sweep (in kHz)
     read_nb_voltages: int, optional
@@ -63,8 +65,8 @@ def amp_pha_map(seg_tab, dict_meas, index_hold, freq_range=None,
     assert mode in ['max', 'fit', 'dfrt', 'single_freq']
     freq_range = freq_range or {'start': 0, 'end': 1}
 
-    time_range = {'start': dict_meas['times'][index_hold['start'][1] + 1],
-                  'end': dict_meas['times'][index_hold['end'][0] - 1]}
+    time_range = {'start': dict_meas['times'][index_hold_start],
+                  'end': dict_meas['times'][-index_hold_end]}
 
     # Init figure
     figsize = get_setting("figsize")
@@ -84,7 +86,7 @@ def amp_pha_map(seg_tab, dict_meas, index_hold, freq_range=None,
     plot_dict = {'x lab': '', 'y lab': 'SS PFM bias [V]', 'fs': 15, 'edgew': 1,
                  'tickl': 2, 'gridw': 1}
     tab_dict = {'form': 'g-'}
-    plot_graph(axs[0], dict_meas['times_bias'], dict_meas['tip_bias'],
+    plot_graph(axs[0], dict_meas['times'], dict_meas['tip_bias'],
                plot_dict=plot_dict, tabs_dict=tab_dict, plot_leg=False)
 
     amp_tab, pha_tab = [], []
@@ -118,35 +120,26 @@ def amp_pha_map(seg_tab, dict_meas, index_hold, freq_range=None,
 
     # Each new sspfm tip bias cycle is highlighted
     if (read_nb_voltages, cut_seg) is not None:
-        offset = dict_meas['times'][index_hold['start'][1] + 1]
-        increment = dict_meas['times'][index_hold['end'][0] - 1] - offset
+        offset = dict_meas['times'][index_hold_start]
+        increment = dict_meas['times'][- index_hold_end] - offset
         for i in range(read_nb_voltages + 1):
             position = i / read_nb_voltages * increment + offset
-            delta_freq = freq_range['end'] - freq_range['start']
-            freq_start = cut_seg['start'] / 100 * delta_freq
-            freq_start += freq_range['start']
-            freq_end = freq_range['end'] - cut_seg['end'] / 100 * delta_freq
-            axs[0].axvline(position, c='k', ls='--')
-            for ax in [axs[1], axs[2]]:
-                for elem in [position, freq_start, freq_end]:
-                    ax.axvline(elem, c='k', ls='--')
+            for ax in [axs[0], axs[1], axs[2]]:
+                ax.axvline(position, c='k', ls='--')
 
     fig.text(0.5, 0.05, 'Times [s]', fontsize=15, color='black', ha='center')
 
     return fig
 
 
-def plt_bias(time_bias_calc, ss_pfm_bias_calc, ss_pfm_bias, dict_meas):
+def plt_bias(ss_pfm_bias_calc, ss_pfm_bias, dict_meas):
     """
     Plot SS PFM signal calculated
 
     Parameters
     ----------
-    time_bias_calc: list or numpy.array
-        Array of time values corresponding to ss_pfm_bias_calc, calculated
-        from ss_pfm_bias (in s)
     ss_pfm_bias_calc: list or numpy.array
-        Array of voltage values corresponding to time_bias_calc, calculated
+        Array of voltage values (calculated)
         from ss_pfm_bias (in V)
     ss_pfm_bias: list or numpy.array
         Array of SS PFM bias values (in V)
@@ -167,8 +160,6 @@ def plt_bias(time_bias_calc, ss_pfm_bias_calc, ss_pfm_bias, dict_meas):
     else:
         y_tabs = [ss_pfm_bias_calc, dict_meas['tip_bias']]
 
-    x_tabs = [time_bias_calc, dict_meas['times']]
-
     plot_dict = {'title': 'SS PFM Bias', 'x lab': 'Time [s]',
                  'y lab': 'SS PFM BIAS [V]'}
 
@@ -178,7 +169,8 @@ def plt_bias(time_bias_calc, ss_pfm_bias_calc, ss_pfm_bias, dict_meas):
 
     tabs_dict = [tab_dict_1, tab_dict_2]
 
-    plot_graph(ax, x_tabs, y_tabs, plot_dict=plot_dict, tabs_dict=tabs_dict)
+    plot_graph(ax, dict_meas['times'], y_tabs, plot_dict=plot_dict,
+               tabs_dict=tabs_dict)
 
     return fig
 
@@ -211,7 +203,7 @@ def plt_amp(dict_meas, unit='a.u'):
                  'y2 lab': 'SS PFM bias [V]', 'c y2 lab': 'g', 'y lw': 1,
                  'z lw': 1}
     tabs_dict = [{'form': 'b-'}, {'form': 'g-'}]
-    plot_graph(ax, [dict_meas['times'], dict_meas['times_bias']],
+    plot_graph(ax, [dict_meas['times'], dict_meas['times']],
                dict_meas['amp'], ax2=ax2, y2_tabs=dict_meas['tip_bias'],
                plot_dict=plot_dict, tabs_dict=tabs_dict)
 
@@ -260,9 +252,9 @@ def plt_signals(dict_meas, unit='a.u'):
     try:
         plot_dict.update({'y lab': 'SS PFM bias [V]', 'c y lab': 'g'})
         tab_dict.update({'form': 'g-'})
-        plot_graph(axs[1], dict_meas['times_bias'], dict_meas['tip_bias'],
+        plot_graph(axs[1], dict_meas['times'], dict_meas['tip_bias'],
                    plot_dict=plot_dict, tabs_dict=tab_dict, plot_leg=False)
-    except KeyError:
+    except (KeyError, ValueError):
         pass
 
     # Amplitude sub image
