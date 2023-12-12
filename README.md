@@ -1,7 +1,7 @@
 # PySSPFM
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/circular_diagram.png> <br>
+    <img align="center" width="70%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/circular_diagram.png> <br>
 </p>
 
 <p align="justify" width="100%"> 
