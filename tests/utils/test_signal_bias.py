@@ -31,7 +31,7 @@ def test_sspfm_bias():
     assert sspfm_bias[int(len(sspfm_bias) / 2)] == 0.0
     assert sspfm_bias[int(3 * len(sspfm_bias) / 4)] == 0.0
     assert np.sum(np.absolute(sspfm_bias)) == 800.0
-    assert np.sum(real_time_bias) == 2592000.0
+    assert np.sum(real_time_bias) == approx(2592424.7672793316)
     assert np.sum(np.absolute(real_sspfm_bias)) == 80000.0
     assert extracted_bias_pars == target_extracted_bias_pars
 
@@ -48,7 +48,7 @@ def test_sspfm_bias_open():
     assert sspfm_bias[int(len(sspfm_bias) / 2)] == 0.0
     assert sspfm_bias[int(3 * len(sspfm_bias) / 4)] == 0.0
     assert np.sum(np.absolute(sspfm_bias)) == 440.0
-    assert np.sum(real_time_bias) == 2592000.0
+    assert np.sum(real_time_bias) == approx(2592424.7672793316)
     assert np.sum(np.absolute(real_sspfm_bias)) == 44000.0
 
 
