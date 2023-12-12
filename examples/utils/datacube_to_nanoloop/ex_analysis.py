@@ -12,7 +12,7 @@ from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.datacube_to_nanoloop.plot import \
     plt_seg_max, plt_seg_fit, plt_seg_stable
 from PySSPFM.utils.datacube_to_nanoloop.analysis import \
-    (SegmentInfo, SegmentSweep, SegmentStable, external_calib, init_parameters)
+    (SegmentInfo, SegmentSweep, SegmentStable, external_calib, cut_function)
 
 
 def list_segs(mode, nb_seg_str='all'):
@@ -158,14 +158,12 @@ def ex_calib(make_plots=False):
         return dict_meas_amp, dict_meas_pha, dict_meas_amp_cal
 
 
-def ex_init_parameters(make_plots=False, verbose=False):
+def ex_cut_function(verbose=False):
     """
-    Example of init_parameters function.
+    Example of cut_function function.
 
     Parameters
     ----------
-    make_plots: bool, optional
-        Flag indicating whether to generate plots. Defaults to False.
     verbose: bool, optional
         Flag indicating whether to print verbose information. Defaults to False.
 
@@ -173,31 +171,21 @@ def ex_init_parameters(make_plots=False, verbose=False):
     -------
     cut_dict: dict
         Dictionary containing the processed measurement values.
-    sign_pars['Mode (R)']: str
-        The value of 'Mode (R)' in the `sign_pars` dictionary after
-        initialization.
+    nb_seg_tot: int
+        Total number of segments.
     """
     _, sign_pars, _, _, _, _, _ = pars_segment()
-    dict_meas = ex_gen_segments('dfrt', make_plots=False)
+
+    # ex cut_function
+    cut_dict, nb_seg_tot = cut_function(sign_pars)
 
     if verbose:
-        print('- ex init_parameters:')
-        print(f'read mode before init_parameters: {sign_pars["Mode (R)"]}')
-
-    # ex init_parameters
-    cut_dict, sign_pars['Mode (R)'] = init_parameters(dict_meas, sign_pars,
-                                                      verbose=verbose,
-                                                      make_plots=make_plots)
-
-    if verbose:
-        print(f'read mode after init_parameters: {sign_pars["Mode (R)"]}')
-
-    if make_plots:
-        fig = cut_dict['fig']
-        fig.sfn = "ex_init_parameters"
-        return [fig]
+        print("Total number of segments:", nb_seg_tot)
+        print("Cut dictionary:")
+        for key, value in cut_dict.items():
+            print(f"{key}: {value}")
     else:
-        return cut_dict, sign_pars['Mode (R)']
+        return cut_dict, nb_seg_tot
 
 
 def ex_segments(analysis, mode, make_plots=False):
@@ -251,7 +239,7 @@ if __name__ == '__main__':
         save_test_exe=False)
     figs = []
     figs += ex_calib(make_plots=True)
-    figs += ex_init_parameters(make_plots=True, verbose=True)
+    ex_cut_function(verbose=True)
     figs += ex_segments('max', 'off f', make_plots=True)
     figs += ex_segments('max', 'on f', make_plots=True)
     figs += ex_segments('fit', 'off f', make_plots=True)
