@@ -17,15 +17,12 @@ def test_gen_segments_fit():
 
     key_dict_meas = list(dict_meas.keys())
     true_keys = ['sspfm bias', 'times', 'tip_bias', 'amp', 'pha',
-                 'deflection', 'times_bias']
+                 'deflection']
 
-    assert np.sum(dict_meas['times']) == approx(9801998.999999795)
+    assert np.sum(dict_meas['times']) == approx(9605978.999999806)
     assert np.sum(dict_meas['tip_bias']) == approx(1.4551915228366852e-11)
-
     assert np.sum(dict_meas['amp']) == approx(14298019.68521869)
     assert np.sum(dict_meas['pha']) == approx(34957828.199933924)
-    assert np.sum(dict_meas['times_bias']) == approx(9801998.999999795)
-
     assert key_dict_meas == true_keys
 
 
@@ -36,13 +33,10 @@ def test_gen_segments_dfrt():
 
     key_dict_meas = list(dict_meas.keys())
     true_keys = ['sspfm bias', 'times', 'tip_bias', 'amp', 'pha',
-                 'deflection', 'times_bias']
+                 'deflection']
 
-    assert np.sum(dict_meas['times']) == approx(9801998.999999795)
+    assert np.sum(dict_meas['times']) == approx(9605978.999999806)
     assert np.sum(dict_meas['tip_bias']) == approx(1.4551915228366852e-11)
-
     assert np.sum(dict_meas['amp']) == approx(4906599.144687748)
     assert np.sum(dict_meas['pha']) == approx(17219838.632536672)
-    assert np.sum(dict_meas['times_bias']) == approx(9801998.999999795)
-
     assert key_dict_meas == true_keys
