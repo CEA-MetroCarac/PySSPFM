@@ -46,7 +46,11 @@ def pars_segment():
                  'Nb volt (W)': 50,
                  'Seg sample (W)': 100,
                  'Seg durat (W) [ms]': 50,
-                 'Mode (W)': 'Zero, up'}
+                 'Mode (W)': 'Zero, up',
+                 'Hold seg durat (start) [ms]': 1000,
+                 'Hold sample (start)': 20,
+                 'Hold seg durat (end) [ms]': 1000,
+                 'Hold sample (end)': 20}
     hold_dict = {'start time': 1,
                  'end time': 1,
                  'start samp': 20,
