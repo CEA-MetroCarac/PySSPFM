@@ -43,9 +43,11 @@ def example_sspfm_bias(open_mode=False, verbose=False, make_plots=False):
         'Nb volt (W)': 9,
         'Mode (W)': 'Zero, up',
         'Seg durat (W) [ms]': 500,
-        'Seg sample (W)': 100
-    }
-    start_hold_time = 1
+        'Seg sample (W)': 100,
+        'Hold seg durat (start) [ms]': 7.4399999812158,
+        'Hold sample (start)': 6,
+        'Hold seg durat (end) [ms]': 249.239999370729,
+        'Hold sample (end)': 201}
 
     # ex sspfm_generator
     sspfm_bias = sspfm_generator(sspfm_pars, open_mode=open_mode)
@@ -59,7 +61,7 @@ def example_sspfm_bias(open_mode=False, verbose=False, make_plots=False):
             print(f"extracted sspfm pars: {extracted_bias_pars}")
 
     # ex sspfm_time
-    out = sspfm_time(sspfm_bias, sspfm_pars, start_hold_time=start_hold_time)
+    out = sspfm_time(sspfm_bias, sspfm_pars)
     (real_sspfm_time, real_sspfm_bias) = out
     if make_plots:
         # Create plot
