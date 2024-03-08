@@ -10,12 +10,18 @@
             "start": 5,
             "end": 5
         },
-        "filter": false,
-        "filter ord": 10
+        "filter type": null,
+        "filter freq 1": 1e3,
+        "filter freq 2": 3e3,
+        "filter ord": 4
     },
     "fit_params": {
         "fit pha": false,
         "detect peak": false,
         "sens peak detect": 1.5
+    },
+    "pha_params": {
+        "method": "static",
+        "offset": 0
     }
 }
