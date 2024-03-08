@@ -133,7 +133,7 @@ def extr_data_spm(file_path_in, mode_dfrt=False, verbose=False):
     # parameters
     # /!\ For Bruker measurement, check the nb of sample / time etc. for each
     # segment to adjust it in the measurement sheet. Some values can be rounded
-    # Debug the code here /!\
+    # Debug the code here --> check info_dict variable /!\
     script_dict = script_info(info_dict)
 
     # .spm file info: raw data
@@ -318,6 +318,7 @@ def csv_meas_sheet_extract(dir_path_in_csv, verbose=False):
     for elem in os.listdir(dir_path_in_csv):
         if elem.endswith('.csv') and 'measurement sheet' in elem:
             file_path_in_csv = os.path.join(dir_path_in_csv, elem)
+            file_path_in_csv = file_path_in_csv.replace("~$", "")
             if verbose:
                 name = os.path.split(file_path_in_csv)[1]
                 print(f'- meas sheet name: "{name}"\n')
@@ -330,5 +331,18 @@ def csv_meas_sheet_extract(dir_path_in_csv, verbose=False):
                                      sheet_name=bias_pars_sheet)
     csv_sspfm_bias = dict(zip(excel_sspfm_bias['Parameter'].tolist(),
                               excel_sspfm_bias['Value'].tolist()))
+
+    # Removes keys specific to unused modes
+    key_mode = {
+        "DFRT": ['P [kHz/V]', 'I [MHz/(V.s)]', 'Center [kHz]', 'Range [kHz]',
+                 'Sideband amp [V]', 'Sideband freq [kHz]'],
+        "Sweep": ['Low freq [kHz]', 'High freq [kHz]', 'Nb meas (W)',
+                  'Nb meas (R)'],
+        "Single frequency": ['Signal freq [kHz]']
+    }
+    del_keys = [elem for key, value in key_mode.items() if
+                key != csv_meas["Mode"] for elem in value]
+    for dictio in [csv_meas, csv_sspfm_bias]:
+        _ = [dictio.pop(key, None) for key in del_keys]
 
     return csv_meas, csv_sspfm_bias
