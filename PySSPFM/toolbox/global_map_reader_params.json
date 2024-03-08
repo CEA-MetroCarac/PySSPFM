@@ -10,12 +10,14 @@
         "revert mask": {
             "on": false,
             "off": false,
-            "coupled": false
+            "coupled": false,
+            "other": false
         },
         "man mask": {
             "on": [],
             "off": [],
-            "coupled": []
+            "coupled": [],
+            "other": []
         },
         "ref": {
             "on": {
@@ -37,7 +39,13 @@
                 "fmt": ".5f",
                 "min val": 0.95,
                 "max val": null,
-                "interactive": false
+                "interactive": false,
+            "other": {
+                "prop": "deflection error",
+                "fmt": ".2f",
+                "min val": null,
+                "max val": 5,
+                "interactive": false}
             }
         }
     }
