@@ -12,7 +12,7 @@
         "pha rev": 180,
         "func": "np.cos",
         "main elec": true,
-        "grounded tip": true,
+        "grounded tip": false,
         "positive d33": true,
         "locked elec slope": null
     }
