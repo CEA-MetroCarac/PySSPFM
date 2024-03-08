@@ -35,25 +35,33 @@ def generate_file_nanoloop_paths(dir_path_in, mode=''):
     assert mode in ['', 'off_f', 'on_f']
 
     file_paths_in = []
-    indexs = {}
+    list_file = [file for file in os.listdir(dir_path_in)
+                 if not file.endswith('.csv')]
+    root = list_file[0].split('.')[0].replace("off_f_", "").replace('on_f_', '')
+    index_pattern = list_file[0].split('.')[1]
 
-    # Find index of txt loop files
-    for elem in os.listdir(dir_path_in):
-        sub_strs = elem.replace('_', '.').split('.')
-        for i in range(len(sub_strs)):
-            if sub_strs[-i].isnumeric():
-                indexs[sub_strs[-i]] = int(sub_strs[-i])
-                break
+    indexs = []
+    for file in list_file:
+        indexs.append(int(file.split('.')[1].replace("_", "")))
 
-    # Sort index in ascending order
-    indexs = dict(sorted(indexs.items(), key=lambda item: item[1]))
+    list_indexs_pattern = []
+    for index in range(min(indexs), max(indexs)+1):
+        list_indexs_pattern.append(
+            index_pattern[:-len(str(index))] + str(index))
 
-    # Find path of txt loop files
-    for index in indexs:
-        file_paths_in.append([])
-        for elem in os.listdir(dir_path_in):
-            if str(index) in elem and mode in elem:
-                file_paths_in[-1].append(os.path.join(dir_path_in, elem))
+    for elem_index_pattern in list_indexs_pattern:
+        if mode == '':
+            tab_file_name_off_f = ['off_f_' + root, elem_index_pattern, 'txt']
+            tab_file_name_on_f = ['on_f_' + root, elem_index_pattern, 'txt']
+            off_f_path = os.path.join(dir_path_in,
+                                      '.'.join(tab_file_name_off_f))
+            on_f_path = os.path.join(dir_path_in,
+                                     '.'.join(tab_file_name_on_f))
+            file_paths_in.append([off_f_path, on_f_path])
+        else:
+            tab_file_name = [mode + '_' + root, elem_index_pattern, 'txt']
+            path = os.path.join(dir_path_in, '.'.join(tab_file_name))
+            file_paths_in.append([path])
 
     return file_paths_in
 
