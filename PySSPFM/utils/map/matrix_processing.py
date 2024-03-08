@@ -142,14 +142,20 @@ def init_formatting_measure(measure, dim_pix, dim_mic=None):
     # Organize the measure in a 2D matrix, sorted and shaped in agreement
     # with the scan size
     sorted_matrix = np.resize(measure, new_shape=(dim_pix['x'], dim_pix['y']))
-    sorted_matrix[-1, -(1 + np.arange(nb_bug))] = np.NaN
+    try:
+        sorted_matrix[-1, -(1 + np.arange(nb_bug))] = np.NaN
+    except IndexError:
+        pass
     sorted_matrix = rearrange_matrix(sorted_matrix)
 
     # Organize the indices in a 2D matrix, sorted and shaped in agreement with
     # the scan size
     index_matrix = np.resize(np.arange(len(measure)),
                              new_shape=(dim_pix['y'], dim_pix['x']))
-    index_matrix[-1, -(1 + np.arange(nb_bug))] = -1
+    try:
+        index_matrix[-1, -(1 + np.arange(nb_bug))] = -1
+    except IndexError:
+        pass
     rearranged_index_matrix = rearrange_matrix(index_matrix)
     tab_all_index = [elem for sublist in rearranged_index_matrix
                      for elem in sublist]
