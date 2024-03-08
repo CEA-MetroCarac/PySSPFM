@@ -81,8 +81,9 @@ KEY_MEASUREMENT_EXTRACTION: dict
     the header.
     For output values corresponding to the measurement dictionary created
     for SSPFM processing, the names 'times', 'amp', 'pha', 'tip_bias',
-    'deflection' correspond to the measurements of time, amplitude, and phase
-    PFM, SSPFM polarization signal, and tip deflection respectively.
+    'deflection', 'height' correspond to the measurements of time, amplitude,
+    and phase PFM, SSPFM polarisation signal, tip deflection and piezo sensor
+    height respectively.
 
 HEADER_LINES : int
     The number of header lines in the raw measurement data file.
@@ -106,7 +107,7 @@ FIT_METHOD: str
     (for phase histograms).
     Could be "leastsq", "least_square" (fast fitting but harder to converge)
     or "nelder" (vice versa).
-    Default is "nelder".
+    Default is "least_square".
 
 COLOR_AMP_PHA_MAP : str
     The colormap for amplitude and phase mapping.
@@ -118,7 +119,19 @@ HISTO_PHASE_METHOD : str
     histogram (gaussian model) or 'max' to take the maximum for the peak.
     The method is used in order to determine the phase difference between
     the two peaks. 'fit' method is more accurate but slower.
-    Default is 'fit'.
+    Default is 'max'.
+
+UNIPOLAR_PHASE_REVERT : bool
+    Flag to indicate if phase inversion occur for unipolar nanoloop.
+    Large vertical offsets can influence the PFM amplitude measurement,
+    especially in the case of Off Field measurements (electrostatic effects,
+    frozen polarization etc.). Also, some of the nanoloops can have a single
+    associated phase value: the phase is unipolar. In this case, the analysis
+    performed for the phase calibration asks the user to fill in if a phase
+    inversion takes place. This parameter is considered only for unipolar
+    nanoloops, and must be adjusted by the user based on phase analysis
+    performed on a bipolar nanoloop or on theoretical analysis of nanoloop
+    depending on measurement condition.
 
 COLOR_SSPFM_MAP : str
     The colormap for SSPFM mapping.
@@ -141,7 +154,7 @@ ELECTROSTATIC_OFFSET: bool
     coupled analysis. Coupled analysis is used in order to study artifacts
     (mainly electrostatics) in the measurements. If the main origin of the
     offset of off field measurements is electrostatics and not ferroelectric
-    effects (like frozen polarization), this parameter should be True.
+    effects (like frozen polarisation), this parameter should be True.
     Default is True.
 """
 import sys
@@ -180,9 +193,12 @@ def get_setting(key):
     # Default settings must not be modified
     def_settings_dict = get_settings_dict("default_settings.json")
     # Use the default settings if 'examples' or 'test' is in the script path
-    settings_to_use = \
-        def_settings_dict if 'examples' in sep_origin_path or \
-                             'tests' in sep_origin_path else settings_dict
+    if "PySSPFM" not in sep_origin_path:
+        settings_to_use = def_settings_dict
+    elif 'examples' in sep_origin_path or 'test' in sep_origin_path:
+        settings_to_use = def_settings_dict
+    else:
+        settings_to_use = settings_dict
     try:
         setting = settings_to_use[key]
     except KeyError:
