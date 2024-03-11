@@ -9,7 +9,8 @@ from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.core.noise import noise
 from PySSPFM.utils.core.basic_func import gaussian, linear
 from PySSPFM.utils.core.peak import \
-    detect_peak, find_main_peaks, width_peak, guess_bckgnd, guess_affine
+    (detect_peak, find_main_peaks, plot_main_peaks, width_peak, guess_bckgnd,
+     guess_affine)
 
 
 def ex_find_main_peaks(make_plots=False):
@@ -52,6 +53,10 @@ def ex_find_main_peaks(make_plots=False):
         plot_graph(ax, x, y, plot_dict=plot_dict, tabs_dict=tab_dict)
         for peak in res['peaks']:
             ax.plot(x[peak], y[peak], 'rx', ms=10)
+
+        # ex plot_main_peaks
+        plot_main_peaks(ax, x, y, res)
+
         return [fig]
     else:
         return res['peaks'], res['main'], res['lim']
@@ -122,7 +127,7 @@ def ex_width_peak(make_plots=False):
     threshold = (max(y) - min(y)) / 2 + min(y)
 
     # ex width_peak
-    width = width_peak(x, y, np.argmax(y), threshold)
+    width = width_peak(x, y, int(np.argmax(y)), threshold)
 
     if make_plots:
         fig, ax = plt.subplots(figsize=[18, 9])
