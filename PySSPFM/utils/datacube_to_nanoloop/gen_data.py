@@ -243,5 +243,6 @@ def gen_segments(sign_pars, mode='dfrt', seg_noise_pars=None, hold_dict=None,
                                              hold_seg[key]['end']])
 
     dict_meas['deflection'] = []
+    dict_meas['height'] = []
 
     return dict_meas
