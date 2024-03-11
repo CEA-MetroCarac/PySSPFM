@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import plot_graph, plot_hist, print_plots
-from PySSPFM.utils.core.noise import noise, filter_mean, normal
+from PySSPFM.utils.core.noise import noise, filter_mean, butter_filter, normal
 
 
 def ex_gen_noise(make_plots=False):
@@ -112,6 +112,53 @@ def ex_filter_mean(make_plots=False):
         return y_filt
 
 
+def ex_butter_filter(filter_type='low', make_plots=False):
+    """
+    Example of the filter_mean function.
+
+    Parameters
+    ----------
+    filter_type : str, optional
+        Type of the filter ('low', 'high', 'bandpass', or 'bandstop').
+    make_plots: bool, optional
+        Flag indicating whether to generate plots. Default is False.
+
+    Returns
+    -------
+    y_filt: list
+        List of y values after applying the filter.
+    """
+    # Generate a signal composed of sinusoids with different frequencies
+    freq1 = 5
+    freq2 = 20
+    sampling_rate = 1000  # Hz
+    t = np.linspace(0, 2, 2 * sampling_rate, endpoint=False)
+    signal = np.sin(2 * np.pi * freq1 * t) + 0.5 * np.sin(2 * np.pi * freq2 * t)
+
+    if filter_type in ("low", "high"):
+        cutoff_frequency = np.mean([freq1, freq2])
+    else:
+        cutoff_frequency = (freq1-0.5*freq1, freq1+0.5*freq1)
+
+    # ex filter_mean
+    filtered_signal = butter_filter(
+        signal, sampling_frequency=sampling_rate,
+        cutoff_frequency=cutoff_frequency, filter_type=filter_type,
+        filter_order=4)
+
+    if make_plots:
+        fig, ax = plt.subplots(figsize=[18, 9])
+        fig.sfn = "ex_filter_mean"
+        plot_dict = {'title': f'Filter {filter_type}'}
+        tab_dict_1 = {'legend': 'signal', 'form': 'r-'}
+        tab_dict_2 = {'legend': 'filtered signal', 'form': 'b-'}
+        plot_graph(ax, t, [signal, filtered_signal], plot_dict=plot_dict,
+                   tabs_dict=[tab_dict_1, tab_dict_2])
+        return [fig]
+    else:
+        return filtered_signal
+
+
 if __name__ == '__main__':
     # saving path management
     dir_path_out, save_plots = save_path_example(
@@ -119,5 +166,9 @@ if __name__ == '__main__':
     figs = []
     figs += ex_gen_noise(make_plots=True)
     figs += ex_filter_mean(make_plots=True)
+    figs += ex_butter_filter(filter_type='low', make_plots=True)
+    figs += ex_butter_filter(filter_type='high', make_plots=True)
+    figs += ex_butter_filter(filter_type='bandpass', make_plots=True)
+    figs += ex_butter_filter(filter_type='bandstop', make_plots=True)
     print_plots(figs, save_plots=save_plots, show_plots=True,
                 dirname=dir_path_out, transparent=False)
