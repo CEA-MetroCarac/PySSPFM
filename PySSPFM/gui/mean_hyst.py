@@ -284,7 +284,8 @@ def main(parent=None):
 
     # Directory properties (in)
     default_input_dir = dir_path_in_var.get()
-    default_input_props_dir = generate_default_input_props_dir(default_input_dir)
+    default_input_props_dir = \
+        generate_default_input_props_dir(default_input_dir)
     label_prop = ttk.Label(left_frame, text="Directory properties (in) (*):")
     row = grid_item(label_prop, row, column=0, sticky="e", increment=False)
     dir_path_in_prop_var = tk.StringVar()
@@ -667,7 +668,7 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(chck_asym, mess))
 
     # Function to update the label text when the slider is moved
-    def update_inf_thresh_label(event):
+    def update_inf_thresh_label(_):
         inf_thresh_label.config(text=str(inf_thresh_var.get()))
 
     # Inflection Threshold
@@ -694,7 +695,7 @@ def main(parent=None):
     row = grid_item(inf_thresh_label, row, column=2, sticky="w")
 
     # Function to update the label text when the slider is moved
-    def update_sat_thresh_label(event):
+    def update_sat_thresh_label(_):
         sat_thresh_label.config(text=str(sat_thresh_var.get()))
 
     # Saturation Threshold
