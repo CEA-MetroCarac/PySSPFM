@@ -21,18 +21,19 @@ from PySSPFM.utils.raw_extraction import data_extraction, csv_meas_sheet_extract
 from PySSPFM.utils.signal_bias import sspfm_time, sspfm_generator, write_vec
 from PySSPFM.utils.nanoloop.plot import main_plot
 from PySSPFM.utils.nanoloop.file import save_nanoloop_file, sort_nanoloop_data
-from PySSPFM.utils.nanoloop.phase import phase_calibration, gen_dict_pha
+from PySSPFM.utils.nanoloop.phase import \
+    (phase_calibration, gen_dict_pha, phase_offset_determination,
+     apply_phase_offset, mean_phase_offset)
 from PySSPFM.utils.nanoloop.analysis import AllMultiLoop
 from PySSPFM.utils.datacube_to_nanoloop.gen_data import gen_segments
 from PySSPFM.utils.datacube_to_nanoloop.plot import \
     (plt_seg_max, plt_seg_fit, plt_seg_stable,  plt_signals, plt_amp, plt_bias,
      amp_pha_map)
 from PySSPFM.utils.datacube_to_nanoloop.file import \
-    save_parameters, print_params
+    save_parameters, print_params, get_acquisition_time, get_file_names
 from PySSPFM.utils.datacube_to_nanoloop.analysis import \
     (cut_function, external_calib, SegmentInfo, SegmentSweep,
-     SegmentStable, SegmentStableDFRT)
-
+     SegmentStable, SegmentStableDFRT, extract_other_properties)
 mpl.rcParams.update({'figure.max_open_warning': 0})
 PHA_CORR = 'offset'
 PHA_FWD = 0
@@ -43,11 +44,11 @@ LOCKED_ELEC_SLOPE = None
 DEL_1ST_LOOP = True
 
 
-def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
-                  root_out=None, dir_path_out_fig=None,
-                  dir_path_out_nanoloops=None, test_dict=None,
-                  verbose=False, show_plots=False, save_plots=False,
-                  txt_save=False):
+def single_script(user_pars, file_path_in, meas_pars, sign_pars, phase_offset=0,
+                  get_phase_offset=False, mode='max', root_out=None,
+                  dir_path_out_fig=None, dir_path_out_nanoloops=None,
+                  test_dict=None, verbose=False, show_plots=False,
+                  save_plots=False, txt_save=False, index=None):
     """
     Data analysis of a measurement file (i.e., a pixel), print the graphs +
     info and save the nanoloop data in a txt file.
@@ -62,6 +63,11 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
         Dictionary of measurement parameters.
     sign_pars: dict
         Dictionary of SSPFM bias signal parameters.
+    phase_offset: float, optional
+        Phase offset to apply to all phase values.
+    get_phase_offset: bool, optional
+        Key activation to perform analysis and get phase offset from histogram
+        of phase segment values.
     mode: str, optional
         Operating mode for analysis: four possible modes:
         - 'max': for analysis of the resonance with max peak value
@@ -87,10 +93,15 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
         Activation key for figure save.
     txt_save: bool, optional
         Activation key for txt nanoloop save.
+    index: int, optional
+        Index of the measurement file.
 
     Returns
     -------
-    None
+    phase_offset_val: dict
+        Dictionary containing phase offset data of a single file resulting from
+        analysis of histogram of phase segment values. If 'get_phase_offset' is
+        False, this value is None.
     """
     assert mode in ['max', 'fit', 'single_freq', 'dfrt']
     assert root_out or (dir_path_out_nanoloops and dir_path_out_fig)
@@ -101,7 +112,8 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
 
     # Print the file name
     _, file_name_in = os.path.split(file_path_in)
-    print(f'- measurement file: {file_name_in}\n')
+    add_str = f'n°{index}' if index else ''
+    print(f'- measurement file {add_str}: {file_name_in}\n')
     if verbose:
         print('Beginning single-script analysis -------------------------------'
               '-------------------------------------------\n')
@@ -154,6 +166,11 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
     par = sspfm_time(ss_pfm_bias, sign_pars)
     (_, ss_pfm_bias_calc) = par
 
+    # Apply offset to all phase values
+    if user_pars['pha pars']['method'] is not None:
+        dict_meas['pha'] = apply_phase_offset(
+            dict_meas['pha'], phase_offset, phase_min=-180, phase_max=180)
+
     if make_plots:
         fig = plt_bias(ss_pfm_bias_calc, ss_pfm_bias, dict_meas)
         figs.append(fig)
@@ -171,12 +188,30 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
         fig = plt_signals(dict_meas, unit=unit)
         figs.append(fig)
 
+    # Extract other properties in terms of height and deflection
+    other_properties = extract_other_properties(
+        dict_meas, sign_pars['Hold sample (start)'],
+        sign_pars['Hold sample (end)'])
+    other_properties["phase offset"] = phase_offset
+
     # Init parameters
     cut_seg = user_pars['seg pars']['cut seg [%]']
     seg_tab, seg_tab_on_f, seg_tab_off_f = [], [], []
-    seg_dict, seg_pars, seg_pars_on, seg_pars_off = {}, {}, {}, {}
+    seg_dict, seg_pars, seg_pars_on, seg_pars_off, phase_offset_val = \
+        {}, {}, {}, {}, {}
+    filter_type = user_pars['seg pars']['filter type']
+    filter_freq_1 = user_pars['seg pars']['filter freq 1'] if \
+        filter_type in ['low', 'high', 'bandpass', 'bandstop'] else None
+    filter_freq_2 = user_pars['seg pars']['filter freq 2'] if \
+        filter_type in ['low', 'high', 'bandpass', 'bandstop'] else None
+    if filter_type in ['bandpass', 'bandstop']:
+        filter_freq = (filter_freq_1, filter_freq_2)
+    elif filter_type in ['low', 'high']:
+        filter_freq = np.min([filter_freq_1, filter_freq_2])
+    else:
+        filter_freq = None
     filter_order = user_pars['seg pars']['filter ord'] if \
-        user_pars['seg pars']['filter'] else None
+        filter_type else None
     if on_field_mode:
         seg_pars_on['index cut'] = cut_dict['on f']
         seg_pars_on['ite'] = sign_pars['Seg sample (W)']
@@ -211,7 +246,9 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
                 seg_tab.append(SegmentSweep(
                     segment_info, dict_meas,
                     start_freq_init=freq_ini, end_freq_init=freq_end,
-                    cut_seg=cut_seg, filter_order=filter_order,
+                    cut_seg=cut_seg, filter_type=filter_type,
+                    filter_cutoff_frequency=filter_freq,
+                    filter_order=filter_order,
                     fit_pars=user_pars['fit pars']))
                 freq_range = {'start': freq_ini, 'end': freq_end}
             else:
@@ -225,12 +262,16 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
                     method_segment = 'stable_dfrt'
                     seg_tab.append(SegmentStableDFRT(
                         segment_info, dict_meas, cut_seg=cut_seg,
+                        filter_type=filter_type,
+                        filter_cutoff_frequency=filter_freq,
                         filter_order=filter_order))
                 else:
                     # SegmentStable
                     method_segment = 'stable'
                     seg_tab.append(SegmentStable(
                         segment_info, dict_meas, cut_seg=cut_seg,
+                        filter_type=filter_type,
+                        filter_cutoff_frequency=filter_freq,
                         filter_order=filter_order))
             # Plot segments
             if cont in (0, len(tuple_dict[1]['index cut']) - 1) and make_plots:
@@ -246,6 +287,16 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
                     if seg_tab[cont].error == '':
                         fig = plt_seg_max(seg_tab[cont], unit=unit)
                 figs.append(fig)
+
+        # Perform analysis and get phase offset from histogram of phase segment
+        # values
+        if get_phase_offset:
+            phase_offset_val[tuple_dict[0]], _ = \
+                phase_offset_determination([seg.pha for seg in seg_tab],
+                                           dict_str=None, make_plots=False)
+        else:
+            phase_offset_val = None
+
         # Plot segment maps
         if make_plots:
             fig = amp_pha_map(
@@ -366,8 +417,7 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
                     root_out, nanoloops_folder_name)
             save_nanoloop_file(
                 dir_path_out_nanoloops, file_name_in[:-4], nanoloops, fmt,
-                header, mode=save_dict['label'])
-
+                header, other_properties, mode=save_dict['label'])
         # Plot loops
         if make_plots:
             plot_dict = {'label': label[cont_list], 'col': col[cont_list],
@@ -384,6 +434,8 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, mode='max',
     print_plots(figs, save_plots=save_plots, show_plots=show_plots,
                 dirname=dir_path_out_fig, transparent=False)
     plt.close('all')
+
+    return phase_offset_val
 
 
 def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='max',
@@ -426,19 +478,38 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='max',
     """
     assert root_out
 
-    # Create the saving folder, init date and starting time
-    t0, date = time.time(), datetime.now()
-    date = date.strftime('%Y-%m-%d %H;%M')
+    # Create the saving folder, init date, starting time and measurement time
+    t0, raw_date = time.time(), datetime.now()
+    date = raw_date.strftime('%Y-%m-%d %H;%M')
+    exp_meas_time = get_acquisition_time(dir_path_in, file_format=file_format)
+    get_phase_offset = bool(user_pars["pha pars"]["method"] == "dynamic")
 
     # Start single script for each measurement file
+    file_names = get_file_names(dir_path_in, file_format=file_format)
+    if 'SS_PFM_bias.txt' in file_names:
+        file_names.remove('SS_PFM_bias.txt')
     i = 0
-    for elem in os.listdir(dir_path_in):
+    for i, elem in enumerate(file_names):
         if elem.endswith(file_format) and not elem.endswith('SS_PFM_bias.txt'):
+            if i == 0:
+                phase_offset = user_pars["pha pars"]["offset"]
             file_path_in = os.path.join(dir_path_in, elem)
-            single_script(user_pars, file_path_in, meas_pars, sign_pars,
-                          mode=mode, root_out=root_out, verbose=verbose,
-                          txt_save=save)
-            i += 1
+            phase_offset_val = \
+                single_script(user_pars, file_path_in, meas_pars, sign_pars,
+                              phase_offset=phase_offset,
+                              get_phase_offset=get_phase_offset, mode=mode,
+                              root_out=root_out, verbose=verbose,
+                              txt_save=save, index=i+1)
+            if user_pars["pha pars"]["method"] is None:
+                phase_offset = 0
+            elif user_pars["pha pars"]["method"] == "static":
+                phase_offset = user_pars["pha pars"]["offset"]
+            elif user_pars["pha pars"]["method"] == "dynamic":
+                phase_offset = mean_phase_offset(phase_offset_val)
+            else:
+                raise NotImplementedError(
+                    "setting 'pha_params' / 'method' should be in "
+                    "['static', 'dynamic', None]")
 
     if save:
         if verbose:
@@ -449,7 +520,8 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='max',
         meas_pars['nb seg'] = nb_seg_tot
 
         # Save all the parameters in a text file
-        save_parameters(root_out, t0, date, user_pars, meas_pars, sign_pars, i)
+        save_parameters(root_out, t0, date, exp_meas_time, user_pars,
+                        meas_pars, sign_pars, i)
 
 
 def main_script(user_pars, file_path_in, verbose=False, show_plots=False,
@@ -479,8 +551,7 @@ def main_script(user_pars, file_path_in, verbose=False, show_plots=False,
     # Single Script
     seg_pars = user_pars['seg pars']
     mode = seg_pars['mode']
-    file_format = file_path_in[-4:]
-
+    file_format = '.' + file_path_in.split('.')[-1]
     if verbose:
         print('\n############################################')
         print('\nsingle script analysis in progress ...\n')
@@ -495,10 +566,11 @@ def main_script(user_pars, file_path_in, verbose=False, show_plots=False,
             f'_{date_str}_out_{user_pars["seg pars"]["mode"]}'
     if not os.path.isdir(root_out) and save is True:
         os.makedirs(root_out)
-
-    single_script(user_pars, file_path_in, meas_pars, sign_pars, mode=mode,
-                  root_out=root_out, verbose=verbose, show_plots=show_plots,
-                  save_plots=save)
+    phase_offset = user_pars["pha pars"]["offset"]
+    _ = single_script(user_pars, file_path_in, meas_pars, sign_pars,
+                      phase_offset=phase_offset, get_phase_offset=False,
+                      mode=mode, root_out=root_out, verbose=verbose,
+                      show_plots=show_plots, save_plots=save)
 
     if verbose:
         print('\nsingle script analysis end with success !')
@@ -548,16 +620,39 @@ def parameters():
         length to be trimmed from both the start and end of the segment.
         It allows you to exclude a certain portion of the segment from analysis
          at the beginning and end (in term of %)
-    - filter: bool
-        Noise Reduction Filter for Measurements
-        This parameter controls whether a noise reduction filter should be
-        applied to the measurements.
+    - filter type: str
+        Type of Filter for Measurements
+        This parameter specifies the type of filter to be applied to
+        the measurements.
+        There are six possible values:
+            --> 'mean': Apply a Mean filter.
+            --> 'low': Apply a Low Butterworth filter.
+            --> 'high': Apply a High Butterworth filter.
+            --> 'bandpass': Apply a Bandpass Butterworth filter.
+            --> 'bandstop': Apply a Bandstop Butterworth filter.
+            --> None: Do not apply any filter.
+    - filter freq 1: float
+        Filter Cutoff Frequency, First Value
+        This parameter controls the cutoff frequency in Hz of the filter used.
+        Value: Float representing single cutoff frequency value if the filter
+        type is "low" or "high", or the first cutoff frequency value if the
+        filter type is "bandpass" or "bandstop".
+        Active if: This parameter is active when the 'filter type' option is
+        neither "mean" nor None.
+    - filter freq 2: float
+        Filter Cutoff Frequency, Second Value
+        This parameter controls the cutoff frequency in Hz of the filter used.
+        Value: Float representing second cutoff frequency value if the filter
+        type is "bandpass" or "bandstop".
+        Active if: This parameter is active when the 'filter type' option is
+        either "bandpass" or "bandstop".
     - filter ord: int
-        Filter Order for Noise Reduction
-        This parameter controls the order of the filter used for noise
-        reduction. A higher value results in stronger filtering of the signal.
+        Filter Order
+        This parameter controls the order of the filter used. A higher value
+        results in stronger filtering of the signal.
         Value: An integer value, with a minimum value of 1.
-        Active if: This parameter is active when the 'filter' option is enabled.
+        Active if: This parameter is active when the 'filter type' option is
+        not None.
     - fit pha: bool
         Indicator for Fitting Phase Measurements
         This parameter determines whether phase measurements should undergo
@@ -577,6 +672,28 @@ def parameters():
         meaning it will be harder to detect peaks.
         Active if: This parameter is active when the 'fit' mode is selected
         and peak detection is enabled.
+    - method: str
+        Treatment Method for Phase Offset Application on Measurements.
+        This parameter determines the treatment method used for phase offset
+        application to measurements.
+        It specifies how phase offset is performed in analysis.
+        Three possible values:
+            - 'static': Phase offset value remains constant and is specified
+            by the user.
+            - 'dynamic': Phase offset value is determined for each file
+            through specific phase analysis and is applied to the subsequent
+            file (useful for long measurements with phase drift).
+            - None: No phase offset processing is performed: raw phase values
+            are used for analysis.
+    - offset: float
+        Phase offset value applied to measurements.
+        This parameter allows the user to specify a constant phase offset value
+        for the analysis, which is applied to all phase values.
+        It is used in conjunction with the 'static' treatment method for phase
+        offset application on measurements.
+        Active if: This parameter is active for the analysis of the first
+        raw measurement file in all cases, and for all raw measurement files
+        when the selected 'method' for phase offset analysis is 'static'.
 
     file_path_in: str
         Path of datacube SSPFM raw file measurements.
@@ -614,7 +731,8 @@ def parameters():
         show_plots = config_params['show_plots']
         save = config_params['save']
         user_pars = {'seg pars': config_params['seg_params'],
-                     'fit pars': config_params['fit_params']}
+                     'fit pars': config_params['fit_params'],
+                     'pha pars': config_params['pha_params']}
     elif get_setting("extract_parameters") == 'python':
         print("user parameters from python file")
         # Get file path for single script
@@ -627,15 +745,18 @@ def parameters():
         save = True
         seg_params = {'mode': 'max',
                       'cut seg [%]': {'start': 5, 'end': 5},
-                      'filter': False,
-                      'filter ord': 10}
-
+                      'filter type': None,
+                      'filter freq 1': 1e3,
+                      'filter freq 2': 3e3,
+                      'filter ord': 4}
         fit_params = {'fit pha': False,
                       'detect peak': False,
                       'sens peak detect': 1.5}
-
+        pha_params = {'method': 'static',
+                      'offset': 0}
         user_pars = {'seg pars': seg_params,
-                     'fit pars': fit_params}
+                     'fit pars': fit_params,
+                     'pha pars': pha_params}
     else:
         raise NotImplementedError("setting 'extract_parameters' "
                                   "should be in ['json', 'toml', 'python']")
