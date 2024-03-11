@@ -34,15 +34,20 @@ def main(parent=None):
     # Set default parameter values
     default_seg_params = {'cut seg [%]': {'start': 5, 'end': 5},
                           'mode': 'max',
-                          'filter': False,
-                          'filter ord': 10}
+                          'filter type': 'None',
+                          'filter freq 1': 1e3,
+                          'filter freq 2': 3e3,
+                          'filter ord': 4}
     default_fit_params = {'fit pha': False,
                           'detect peak': False,
                           'sens peak detect': 1.5}
+    default_pha_params = {'method': 'static',
+                          'offset': 0}
     default_user_parameters = {'file path in': '',
                                'root out': '',
                                'seg pars': default_seg_params,
                                'fit pars': default_fit_params,
+                               'pha pars': default_pha_params,
                                'verbose': True,
                                'show plots': True,
                                'save': True}
@@ -53,17 +58,25 @@ def main(parent=None):
         seg_params = {
             'cut seg [%]': {'start': start_var.get(), 'end': end_var.get()},
             'mode': mode_var.get(),
-            'filter': filter_var.get(), 'filter ord': filter_ord_var.get(),
+            'filter type': extract_var(filter_type_var),
+            'filter freq 1': extract_var(filter_freq_1_var),
+            'filter freq 2': extract_var(filter_freq_2_var),
+            'filter ord': filter_ord_var.get(),
         }
         fit_params = {
             'fit pha': fit_pha_var.get(),
             'detect peak': detect_peak_var.get(),
             'sens peak detect': extract_var(sens_peak_detect_var)
         }
+        pha_params = {
+            'method': pha_method_var.get(),
+            'offset': pha_offset_var.get()
+        }
         user_parameters["file path in"] = file_path_in_var.get()
         user_parameters['root out'] = extract_var(root_out_var)
         user_parameters["seg pars"] = seg_params
         user_parameters["fit pars"] = fit_params
+        user_parameters["pha pars"] = pha_params
         user_parameters['verbose'] = verbose_var.get()
         user_parameters['show plots'] = show_plots_var.get()
         user_parameters['save'] = save_var.get()
@@ -100,9 +113,9 @@ def main(parent=None):
     entry_in = ttk.Entry(app, textvariable=file_path_in_var)
     row = grid_item(entry_in, row, column=1, sticky="ew", increment=False)
     strg = "- Name: file_path_in\n" \
-           "- Summary: Path of datacube SSPFM raw file propurements.\n" \
+           "- Summary: Path of datacube SSPFM raw file measurements.\n" \
            "- Description: This parameter specifies the path where " \
-           "datacube SSPFM raw file propurements are located. " \
+           "datacube SSPFM raw file measurements are located. " \
            "It is used to indicate the path to the file containing " \
            "these measurement.\n" \
            "- Value: A string representing the file path."
@@ -164,7 +177,7 @@ def main(parent=None):
                   lambda event, mess=strg: show_tooltip(mode_var, mess))
 
     # Function to update the label text when the slider is moved
-    def update_start_label(event):
+    def update_start_label(_):
         label_value_start.config(text=str(start_var.get()))
 
     # Cut segment (start)
@@ -190,7 +203,7 @@ def main(parent=None):
     row = grid_item(label_value_start, row, column=2, sticky="w")
 
     # Function to update the label text when the slider is moved
-    def update_end_label(event):
+    def update_end_label(_):
         label_value_end.config(text=str(end_var.get()))
 
     # Cut segment (end)
@@ -214,23 +227,68 @@ def main(parent=None):
     label_value_end = ttk.Label(app, text=str(end_var.get()))
     row = grid_item(label_value_end, row, column=2, sticky="w")
 
-    # Filter
-    label_filter = ttk.Label(app, text="Filter:")
+    # Filter type
+    label_filter = ttk.Label(app, text="Filter type:")
     row = grid_item(label_filter, row, column=0, sticky="e", increment=False)
-    filter_var = tk.BooleanVar()
-    filter_var.set(user_parameters['seg pars']['filter'])
-    chck_filter = ttk.Checkbutton(app, variable=filter_var)
-    row = grid_item(chck_filter, row, column=1, sticky="w")
-    strg = "- Name: filter\n" \
-           "- Summary: Noise reduction filter for measurements.\n" \
-           "- Description: This parameter controls the application of " \
-           "a noise reduction filter to the measurements\n" \
-           "- Value: Boolean (True or False)."
-    chck_filter.bind("<Enter>",
-                     lambda event, mess=strg: show_tooltip(chck_filter, mess))
+    filter_type_var = ttk.Combobox(app, values=[
+        "mean", "low", "high", "bandpass", "bandstop", "None"])
+    filter_type_var.set(user_parameters['seg pars']['filter type'])
+    row = grid_item(filter_type_var, row, column=1, sticky="ew")
+    strg = "- Name: filter_type\n" \
+           "- Summary: Type of Filter for Measurements.\n" \
+           "- Description: This parameter specifies the type of filter to be " \
+           "applied to the measurements.\n" \
+           "- Value: A string with six possible values:\n" \
+           "\t--> 'mean': Apply a Mean filter.\n" \
+           "\t--> 'low': Apply a Low Butterworth filter.\n" \
+           "\t--> 'high': Apply a High Butterworth filter.\n" \
+           "\t--> 'bandpass': Apply a Bandpass Butterworth filter.\n" \
+           "\t--> 'bandstop': Apply a Bandstop Butterworth filter.\n" \
+           "\t--> None: Do not apply any filter."
+    filter_type_var.bind(
+        "<Enter>", lambda event, mess=strg: show_tooltip(filter_type_var, mess))
+
+    # Filter first cutoff frequency
+    label_freq = ttk.Label(app, text="Filter first cutoff frequency:")
+    row = grid_item(label_freq, row, column=0, sticky="e", increment=False)
+    filter_freq_1_var = tk.StringVar()
+    filter_freq_1_var.set(user_parameters['seg pars']['filter freq 1'])
+    entry_freq = ttk.Entry(app, textvariable=filter_freq_1_var)
+    entry_freq.grid(row=9, column=1, sticky="ew")
+    row = grid_item(entry_freq, row, column=1, sticky="ew")
+    strg = "- Name: filter_freq_1\n" \
+           "- Summary: Filter Cutoff Frequency, First Value.\n" \
+           "- Description: This parameter controls the cutoff frequency in " \
+           "Hz of the filter used.\n" \
+           "- Value: Float representing single cutoff frequency value if the " \
+           "filter type is 'low' or 'high', or the first cutoff frequency " \
+           "value if the  filter type is 'bandpass' or 'bandstop'.\n" \
+           "- Active if: This parameter is active when the 'filter type' " \
+           "option is neither 'mean' nor None."
+    entry_freq.bind(
+        "<Enter>", lambda event, mess=strg: show_tooltip(entry_freq, mess))
+
+    # Filter second cutoff frequency
+    label_freq = ttk.Label(app, text="Filter second cutoff frequency:")
+    row = grid_item(label_freq, row, column=0, sticky="e", increment=False)
+    filter_freq_2_var = tk.StringVar()
+    filter_freq_2_var.set(user_parameters['seg pars']['filter freq 2'])
+    entry_freq = ttk.Entry(app, textvariable=filter_freq_2_var)
+    entry_freq.grid(row=9, column=1, sticky="ew")
+    row = grid_item(entry_freq, row, column=1, sticky="ew")
+    strg = "- Name: filter_freq_2\n" \
+           "- Summary: Filter Cutoff Frequency, Second Value.\n" \
+           "- Description: This parameter controls the cutoff frequency in " \
+           "Hz of the filter used.\n" \
+           "- Value: Float representing second cutoff frequency value if the " \
+           "filter type is 'bandpass' or 'bandstop'.\n" \
+           "- Active if: This parameter is active when the 'filter type' " \
+           "option is either 'bandpass' or 'bandstop'."
+    entry_freq.bind(
+        "<Enter>", lambda event, mess=strg: show_tooltip(entry_freq, mess))
 
     # Function to update the label text when the slider is moved
-    def update_filter_ord_label(event):
+    def update_filter_ord_label(_):
         filter_ord_label.config(text=str(filter_ord_var.get()))
 
     # Filter older
@@ -242,13 +300,13 @@ def main(parent=None):
                             command=update_filter_ord_label)
     row = grid_item(scale_order, row, column=1, sticky="ew", increment=False)
     strg = "- Name: filter_ord\n" \
-           "- Summary: Filter order for noise reduction.\n" \
+           "- Summary: Filter Order.\n" \
            "- Description: This parameter controls the order of the filter " \
-           "used for noise reduction. The higher the value of this " \
-           "parameter, the more the signal is filtered.\n" \
+           "used. A higher value results in stronger filtering of the " \
+           "signal.\n" \
            "- Value: An integer value, with a minimum value of 1.\n" \
-           "- Active if: This parameter is active when the 'filter' option " \
-           "is enabled."
+           "- Active if: This parameter is active when the 'filter type' " \
+           "option is not None."
     scale_order.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(scale_order, mess))
     filter_ord_label = ttk.Label(app, text=str(filter_ord_var.get()))
@@ -317,6 +375,62 @@ def main(parent=None):
            "sensitivity level.\n" \
            "- Active if: This parameter is active when the 'fit' mode is " \
            "selected and peak detection is enabled."
+    entry_fwd.bind("<Enter>",
+                   lambda event, mess=strg: show_tooltip(entry_fwd, mess))
+    row = add_grid_separator(app, row=row)
+
+    # Section title: Phase offset
+    label_phase = ttk.Label(app, text="Phase offset", font=("Helvetica", 14))
+    row = grid_item(label_phase, row, column=0, sticky="ew", columnspan=3)
+    strg = "Phase offset analysis"
+    label_phase.bind(
+        "<Enter>", lambda event, mess=strg: show_tooltip(label_phase, mess))
+
+    # Method
+    label_pha_method = ttk.Label(app, text="Method:")
+    row = grid_item(label_pha_method, row, column=0, sticky="e",
+                    increment=False)
+    pha_method_var = ttk.Combobox(app, values=["static", "dynamic"])
+    pha_method_var.set(user_parameters["pha pars"]["method"])
+    row = grid_item(pha_method_var, row, column=1, sticky="ew")
+    strg = "- Name: method\n" \
+           "- Summary: Treatment Method for Phase Offset Application on " \
+           "Measurements\n" \
+           "- Description: This parameter determines the treatment method " \
+           "used for phase offset application to measurements. It specifies " \
+           "how phase offset is performed in analysis.\n" \
+           "- Value: String indicating the method for phase offset " \
+           "analysis.\n" \
+           "\t--> 'static': Phase offset value remains constant and is " \
+           "specified by the user.\n" \
+           "\t--> 'dynamic': Phase offset value is determined for each file " \
+           "through specific phase analysis and is applied to the subsequent " \
+           "file (useful for long measurements with phase drift)." \
+           "\t--> None: No phase offset processing is performed: raw phase " \
+           "values are used for analysis."
+    pha_method_var.bind(
+        "<Enter>", lambda event, mess=strg: show_tooltip(pha_method_var, mess))
+
+    # Value
+    label_value_offset = ttk.Label(app, text="Offset:")
+    row = grid_item(label_value_offset, row, column=0, sticky="e",
+                    increment=False)
+    pha_offset_var = tk.StringVar()
+    pha_offset_var.set(user_parameters['pha pars']['offset'])
+    entry_fwd = ttk.Entry(app, textvariable=pha_offset_var)
+    entry_fwd.grid(row=9, column=1, sticky="ew")
+    row = grid_item(entry_fwd, row, column=1, sticky="ew")
+    strg = "- Name: offset\n" \
+           "- Summary: Phase offset value applied to measurements.\n" \
+           "- Description: This parameter allows the user to specify a " \
+           "constant phase offset value for the analysis, which is applied " \
+           "to all phase values.\n" \
+           "- Value: A floating-point number representing the " \
+           "phase offset.\n" \
+           "- Active if: This parameter is active for the analysis of the " \
+           "first raw measurement file in all cases, and for all raw " \
+           "measurement files when the selected 'method' for phase offset " \
+           "analysis is 'static'."
     entry_fwd.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(entry_fwd, mess))
     row = add_grid_separator(app, row=row)
