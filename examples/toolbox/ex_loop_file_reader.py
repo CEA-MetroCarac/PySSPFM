@@ -41,7 +41,7 @@ def example_loop_file_reader(verbose=False, make_plots=False):
         'pha rev': 180,
         'func': np.cos,
         'main elec': True,
-        'grounded tip': True,
+        'grounded tip': False,
         'positive d33': True,
         'locked elec slope': None
     }
