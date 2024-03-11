@@ -33,8 +33,10 @@ def pars_segment():
     """
     seg_pars = {'mode': 'dfrt',
                 'cut seg [%]': {'start': 10, 'end': 10},
-                'filter': False,
-                'filter ord': 10}
+                'filter type': None,
+                'filter freq 1': 1e3,
+                'filter freq 2': 3e3,
+                'filter ord': 4}
     sign_pars = {'Min volt (R) [V]': 0,
                  'Max volt (R) [V]': 0,
                  'Nb volt (R)': 10,
@@ -61,10 +63,13 @@ def pars_segment():
     fit_pars = {'fit pha': True,
                 'detect peak': False,
                 'sens peak detect': 1.5}
+    pha_params = {'method': 'dynamic',
+                  'offset': 45}
     user_pars = {'file path in': 'gen data module',
                  'root out': 'gen data module out',
                  'seg pars': seg_pars,
-                 'fit pars': fit_pars}
+                 'fit pars': fit_pars,
+                 'pha pars': pha_params}
 
     return (seg_pars, sign_pars, hold_dict, noise_pars, meas_range, fit_pars,
             user_pars)
