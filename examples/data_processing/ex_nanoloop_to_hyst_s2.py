@@ -60,7 +60,7 @@ def main_pars():
 
     # Define measurement parameters
     meas_pars = {'Q factor': 1.,
-                 'Bias app': 'Sample',
+                 'SSPFM Bias app': 'Sample',
                  'Sign of d33': 'positive'}
 
     # Define ferro parameters for phase 1
