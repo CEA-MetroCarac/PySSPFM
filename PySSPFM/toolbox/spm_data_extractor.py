@@ -12,7 +12,7 @@ from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.figure import plot_graph, print_plots
 from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
-from PySSPFM.utils.datacube_reader import DataExtraction, script_info
+from PySSPFM.utils.raw_extraction import NanoscopeError
 from PySSPFM.utils.signal_bias import extract_sspfm_bias_pars, sspfm_time
 
 
@@ -74,6 +74,14 @@ def main_spm_data_extractor(file_path_in, nb_hold_seg_start=1,
     other_pars: dict
         Dictionary containing other parameters
     """
+    try:
+        from PySSPFM.utils.datacube_reader import \
+            DataExtraction, script_info # noqa
+    except (NotImplementedError, NameError) as error:
+        message = "To open DATACUBE spm file (Bruker), nanoscope module is " \
+                  "required and NanoScope Analysis software (Bruker) should " \
+                  "be installed on the computer"
+        raise NanoscopeError(message) from error
 
     # Extract data from measurement file: tip bias list of values
     data_extract = DataExtraction(file_path_in)
