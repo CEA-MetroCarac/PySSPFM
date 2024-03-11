@@ -68,8 +68,8 @@ def example_file(make_plots=False, verbose=False):
                  'Mode (W)': 'Zero, up',
                  'Seg durat (W) [ms]': 500,
                  'Seg sample (W)': 100,
-                 'Hold seg durat (start) [ms]': 7.4399999812158,
-                 'Hold sample (start)': 6,
+                 'Hold seg durat (start) [ms]': 249.239999370729,
+                 'Hold sample (start)': 201,
                  'Hold seg durat (end) [ms]': 249.239999370729,
                  'Hold sample (end)': 201}
 
@@ -120,7 +120,7 @@ def example_file(make_plots=False, verbose=False):
             dir_path_out_data, f_name_out, loop_tab, fmt, header,
             mode=plt_dict[cont]['label'])
         # ex extract_nanoloop_data
-        datas_dict, dict_str = extract_nanoloop_data(file_path_out)
+        datas_dict, dict_str, _ = extract_nanoloop_data(file_path_out)
         if verbose:
             print(f'dict_str: {dict_str}')
 
@@ -141,7 +141,7 @@ def example_file(make_plots=False, verbose=False):
                     if i == index:
                         y_tabs_amp[i - 1].append(datas_dict['amplitude'][j])
                         y_tabs_pha[i - 1].append(datas_dict['phase'][j])
-                        if index == 1:
+                        if index == 2:
                             write_volt.append(datas_dict['write'][j])
             plot_dict = {'title': 'Amp Loops', 'x lab': 'Write voltage [V]',
                          'y lab': 'Amplitude [nm]',
