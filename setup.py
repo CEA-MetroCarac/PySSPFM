@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="PySSPFM",
-    version='2023.10',
+    version='2024.03',
     license='GPL v3',
     include_package_data=False,
     zip_safe=False,
