@@ -76,7 +76,7 @@ def sort_nanoloop_data(ss_pfm_bias, write_nb_voltages, read_nb_voltages,
 
 
 def save_nanoloop_file(dir_path_out, file_name_root, loop_dict, fmt, header,
-                       mode='Off field'):
+                       segment_info=None, mode='Off field'):
     """
     Save nanoloop data in a text file
 
@@ -92,6 +92,9 @@ def save_nanoloop_file(dir_path_out, file_name_root, loop_dict, fmt, header,
         Tuple of data saving format
     header: str
         Title of data to save
+    segment_info: dict, optional
+        Other info about the segment (topography, mechanical measurement ...) to
+        add in the header
     mode: str, optional
         'Off field' or 'On field'
 
@@ -114,13 +117,22 @@ def save_nanoloop_file(dir_path_out, file_name_root, loop_dict, fmt, header,
                   'Res Freq', 'Q Fact', 'Sigma Amp', 'Sigma Pha',
                   'Sigma Res Freq', 'Sigma Q Fact']
     file_path_out = os.path.join(dir_path_out, lab + file_name_root + '.txt')
-    date = datetime.now().strftime('%Y-%m-%d %H;%M')
-    date_str = f'Date of analysis: {date}\n\n'
 
+    # Add data and segment info in the file header
+    date = datetime.now().strftime('%Y-%m-%d %H;%M')
+    date_str = f'Date of analysis: {date}\n'
+    if segment_info:
+        segment_info_str = 'Segment other properties: '
+        for key, value in segment_info.items():
+            segment_info_str += f'{key}: {value}, '
+        segment_info_str = segment_info_str[:-2] + '\n\n'
+    else:
+        segment_info_str = ''
+    # Title of the rows
     loop_tab = [loop_dict[key]
                 for key in usual_keys if loop_dict[key] is not None]
 
-    header = date_str + header
+    header = date_str + segment_info_str + header
 
     try:
         np.savetxt(file_path_out, np.array(loop_tab).T, fmt=fmt, newline='\n',
@@ -149,22 +161,66 @@ def extract_nanoloop_data(file_path_in):
         Object containing all the data loop
     dict_str: dict
         Used for figure annotation
+    other_properties: dict
+        Other properties about the segment (topography, mechanical measurement)
     """
     assert os.path.isfile(file_path_in)
 
+    def count_header_lines(f_path):
+        """
+        Count the header of lines starting with '#' at the beginning of the
+        file.
+
+        Parameters
+        ----------
+        f_path : str
+            Path to the text file.
+
+        Returns
+        -------
+        count : int
+            Number of lines starting with '#' at the beginning of the file.
+        """
+        count = 0
+        with open(f_path, 'r', encoding='utf-8') as file:
+            for line in file:
+                if line.strip().startswith('#'):
+                    count += 1
+                else:
+                    break
+        return count
+
+    num_header_lines = count_header_lines(file_path_in)
     data_tab = np.transpose(np.genfromtxt(file_path_in, delimiter='\t\t',
-                                          skip_header=3))
+                                          skip_header=num_header_lines))
     with open(file_path_in, encoding='latin-1') as data_file:
         lines = data_file.readlines()
-    header = lines[2]
-    split_header = header.split('\t')
+
+    header = [line.replace('# ', '') for line in lines if line.startswith('#')]
+
+    # Extract other segment properties
+    other_properties = None
+    for line in header:
+        if 'Segment other properties: ' in line:
+            line_other_properties = \
+                line.replace('Segment other properties: ', '')
+            tab_other_properties = line_other_properties.split(', ')
+            other_properties = {}
+            for prop in tab_other_properties:
+                splited_prop = prop.split(': ')
+                other_properties[splited_prop[0]] = splited_prop[1]
+
+    # Extract title of the rows
+    meas_keys = header[-1].split('\t')
+    if "\n" in meas_keys:
+        meas_keys.remove("\n")
 
     data_dict = {}
     key_labs = ['index', 'read', 'write', 'amplitude', 'phase', 'freq',
-                'q fact', 'inc amp', 'inc pha']
+                'q fact', 'sigma amp', 'sigma pha']
     index = -1
 
-    for _, key in enumerate(split_header):
+    for _, key in enumerate(meas_keys):
         name = key
         for lab in key_labs:
             if lab in key.lower():
@@ -176,7 +232,7 @@ def extract_nanoloop_data(file_path_in):
         data_dict[name] = data_values
 
     unit = ''
-    for elem in split_header:
+    for elem in meas_keys:
         if 'Amplitude' in elem:
             unit = elem.split()[1][1:-1]
 
@@ -189,4 +245,4 @@ def extract_nanoloop_data(file_path_in):
 
     data_file.close()
 
-    return data_dict, dict_str
+    return data_dict, dict_str, other_properties
