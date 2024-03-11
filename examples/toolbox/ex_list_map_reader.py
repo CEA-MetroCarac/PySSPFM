@@ -30,8 +30,6 @@ def ex_list_map_reader(verbose=False):
         "properties")
 
     ind_maps = [['off', 'fit pars: ampli_0'],
-                ['off', 'fit pars: slope'],
-                ['off', 'fit pars: offset'],
                 ['off', 'charac tot fit: x shift'],
                 ['off', 'charac tot fit: y shift'],
                 ['off', 'charac tot fit: area'],
@@ -39,6 +37,7 @@ def ex_list_map_reader(verbose=False):
 
     user_pars = {'interp fact': 4,
                  'interp func': 'linear',
+                 'meas time': 1.5,
                  'revert mask': False,
                  'man mask': None,
                  'ref': {'mode': 'off',
