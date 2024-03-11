@@ -19,7 +19,10 @@ def ex_single_script(make_plots=False, verbose=False):
 
     Returns
     -------
-    None
+    phase_offset_val: dict
+        Dictionary containing phase offset data of a single file resulting from
+        analysis of histogram of phase segment values. If 'get_phase_offset' is
+        False, this value is None.
     """
     # Configuration parameters
     seg_pars, sign_pars, hold_dict, _, _, _, user_pars = pars_segment()
@@ -33,7 +36,7 @@ def ex_single_script(make_plots=False, verbose=False):
         'Offset phase [V]': 0,
         'Calibration': 'no',
         'Calib fact [nm/V]': 1,
-        'Bias app': 'Sample',
+        'SSPFM Bias app': 'Sample',
         'Sign of d33': 'positive',
     }
 
@@ -108,17 +111,23 @@ def ex_single_script(make_plots=False, verbose=False):
             'alea target range': None,
             'loop pars': nanoloop_pars
         }
+    get_phase_offset = bool(user_pars["pha pars"]["method"] == "dynamic")
     # saving path management
     dir_path_out, save_plots = save_path_example(
         "datacube_to_nanoloop_s1", save_example_exe=make_plots,
         save_test_exe=not make_plots)
     txt_save = save_plots
     # ex single_script
-    single_script(
-        user_pars, '', meas_pars, sign_pars, mode=seg_pars['mode'],
-        root_out=dir_path_out, test_dict=seg_dict, verbose=verbose,
-        show_plots=make_plots, save_plots=save_plots, txt_save=txt_save)
+    phase_offset_val = single_script(
+        user_pars, '', meas_pars, sign_pars,
+        phase_offset=user_pars['pha pars']['offset'],
+        get_phase_offset=get_phase_offset, mode=seg_pars['mode'],
+        root_out=dir_path_out, test_dict=seg_dict,
+        verbose=verbose, show_plots=make_plots, save_plots=save_plots,
+        txt_save=txt_save)
+
+    return phase_offset_val
 
 
 if __name__ == '__main__':
-    ex_single_script(make_plots=True, verbose=True)
+    _ = ex_single_script(make_plots=True, verbose=True)
