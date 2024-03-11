@@ -64,7 +64,7 @@ def single_script(file, user_pars, meas_pars, sign_pars,
     """
     assert analysis_mode in ['multi_loop', 'mean_loop', 'on_f_loop']
 
-    data_dict, dict_str = extract_nanoloop_data(file)
+    data_dict, dict_str, _ = extract_nanoloop_data(file)
 
     dict_pha = gen_dict_pha(meas_pars, user_pars['pha corr'],
                             pha_fwd=user_pars['pha fwd'],
