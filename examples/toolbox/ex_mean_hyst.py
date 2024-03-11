@@ -74,21 +74,21 @@ def example_mean_hyst(phase='1', mode='off', verbose=False, make_plots=False):
         user_pars['mask']['ref']['prop'] = 'a'
         # Select ferro phase 1 or 2 measurement or not depending on mode
         if phase == '1':
-            user_pars['mask']['ref']['min val'] = -0.012
+            user_pars['mask']['ref']['min val'] = 0.012
         else:
-            user_pars['mask']['ref']['max val'] = -0.012
+            user_pars['mask']['ref']['max val'] = 0.012
     elif mode == 'off':
         # Select ferro phase 1 or 2 measurement or not depending on mode
         if phase == '1':
-            user_pars['mask']['ref']['min val'] = 0.05
+            user_pars['mask']['ref']['min val'] = -0.05
         else:
-            user_pars['mask']['ref']['max val'] = 0.05
+            user_pars['mask']['ref']['max val'] = -0.05
     elif mode == 'on':
         # Select ferro phase 1 or 2 measurement or not depending on mode
         if phase == '1':
-            user_pars['mask']['ref']['min val'] = 0.10
+            user_pars['mask']['ref']['min val'] = -0.10
         else:
-            user_pars['mask']['ref']['max val'] = 0.10
+            user_pars['mask']['ref']['max val'] = -0.10
     else:
         raise IOError("mode should be in 'off', 'on', 'coupled'")
     # file management
