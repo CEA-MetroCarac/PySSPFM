@@ -1,7 +1,7 @@
 """
 Test curve_clustering methods
 """
-import sys
+import os
 from pytest import approx, skip
 import numpy as np
 
