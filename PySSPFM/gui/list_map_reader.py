@@ -46,6 +46,7 @@ def main(parent=None):
         'ind maps': ind_maps,
         'interp fact': 4,
         'interp func': 'linear',
+        'meas time': None,
         'revert mask': False,
         'man mask': [],
         'ref': {'mode': 'off',
@@ -67,6 +68,7 @@ def main(parent=None):
         user_parameters['ind maps'] = extract_var(ind_maps_var)
         user_parameters['interp fact'] = interp_fact_var.get()
         user_parameters['interp func'] = interp_func_var.get()
+        user_parameters['meas time'] = extract_var(meas_time_var)
         user_parameters['revert mask'] = revert_mask_var.get()
         user_parameters['man mask'] = extract_var(man_mask_var)
         user_parameters['ref']['prop'] = ref_prop_var.get()
@@ -239,6 +241,30 @@ def main(parent=None):
            " 'linear', or 'cubic'."
     interp_func_var.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(interp_func_var, mess))
+    row = add_grid_separator(app, row=row)
+
+    # Section title: Measurement time
+    label_title = ttk.Label(app, text="Measurement time:",
+                            font=("Helvetica", 14))
+    row = grid_item(label_title, row, column=0, sticky="ew", columnspan=3)
+
+    # Real measurement time
+    label_meas_time = ttk.Label(app, text="Real measurement time (*):")
+    row = grid_item(label_meas_time, row, column=0, sticky="e", increment=False)
+    meas_time_var = tk.StringVar()
+    meas_time_var.set(user_parameters['meas time'])
+    entry_meas_time = ttk.Entry(app, textvariable=meas_time_var)
+    row = grid_item(entry_meas_time, row, column=1, sticky="ew")
+    strg = "- Name: meas_time\n" \
+           "- Summary: Real duration of the measurement in hours.\n" \
+           "- Description: This parameter represents the actual duration of " \
+           "the measurement in hours. It is used to generate a time axis for " \
+           "the property graphs corresponding to the measurements.\n" \
+           "- Value: float\n" \
+           "\tIf left empty or set to None, no time axis is generated, and " \
+           "only the line index is used as the x-axis values."
+    entry_meas_time.bind(
+        "<Enter>", lambda event, mess=strg: show_tooltip(entry_meas_time, mess))
     row = add_grid_separator(app, row=row)
 
     # Section title: Mask
