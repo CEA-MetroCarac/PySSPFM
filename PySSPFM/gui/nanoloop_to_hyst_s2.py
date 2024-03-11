@@ -221,7 +221,7 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(chck_asym, mess))
 
     # Function to update the label text when the slider is moved
-    def update_inf_thresh_label(event):
+    def update_inf_thresh_label(_):
         label_value_inf.config(text=str(inf_thresh_var.get()))
 
     # Inflection Threshold
@@ -248,7 +248,7 @@ def main(parent=None):
     row = grid_item(label_value_inf, row, column=2, sticky="w")
 
     # Function to update the label text when the slider is moved
-    def update_sat_thresh_label(event):
+    def update_sat_thresh_label(_):
         label_value_sat.config(text=str(sat_thresh_var.get()))
 
     # Saturation Threshold
