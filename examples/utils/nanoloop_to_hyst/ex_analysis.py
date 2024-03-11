@@ -90,7 +90,7 @@ def example_analysis(analysis='mean_off', make_plots=False, verbose=False):
     else:
         raise IOError('analysis must be: "multi_off", "mean_off" or "mean_on"')
 
-    meas_pars = {'Bias app': 'Sample',
+    meas_pars = {'SSPFM Bias app': 'Sample',
                  'Sign of d33': 'positive'}
     dict_pha = gen_dict_pha(meas_pars, 'offset', main_elec=False)
 
