@@ -37,7 +37,7 @@ def example_sort_plot_pixel(verbose=False, make_plots=False):
                  'prop key': {'mode': 'off',
                               'prop': 'fit pars: ampli_0'},
                  'list pixels': None,
-                 'reverse': False,
+                 'reverse': True,
                  'del 1st loop': True,
                  'interp fact': 4,
                  'interp func': 'linear'}
