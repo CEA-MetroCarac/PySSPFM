@@ -242,15 +242,15 @@ def main(parent=None):
     row = grid_item(label_clust, row, column=0, sticky="ew", columnspan=3)
 
     # Function to update the label text when the slider is moved
-    def update_nb_clusters_off(event):
+    def update_nb_clusters_off(_):
         clust_off_label.config(text=str(clust_off_var.get()))
 
     # Function to update the label text when the slider is moved
-    def update_nb_clusters_on(event):
+    def update_nb_clusters_on(_):
         clust_on_label.config(text=str(clust_on_var.get()))
 
     # Function to update the label text when the slider is moved
-    def update_nb_clusters_coupled(event):
+    def update_nb_clusters_coupled(_):
         clust_coupled_label.config(text=str(clust_coupled_var.get()))
 
     # Nb clusters (off)
