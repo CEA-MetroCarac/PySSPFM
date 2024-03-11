@@ -17,7 +17,7 @@ def test_gen_segments_fit():
 
     key_dict_meas = list(dict_meas.keys())
     true_keys = ['sspfm bias', 'times', 'tip_bias', 'amp', 'pha',
-                 'deflection']
+                 'deflection', 'height']
 
     assert np.sum(dict_meas['times']) == approx(9605978.999999806)
     assert np.sum(dict_meas['tip_bias']) == approx(1.4551915228366852e-11)
@@ -33,7 +33,7 @@ def test_gen_segments_dfrt():
 
     key_dict_meas = list(dict_meas.keys())
     true_keys = ['sspfm bias', 'times', 'tip_bias', 'amp', 'pha',
-                 'deflection']
+                 'deflection', 'height']
 
     assert np.sum(dict_meas['times']) == approx(9605978.999999806)
     assert np.sum(dict_meas['tip_bias']) == approx(1.4551915228366852e-11)
