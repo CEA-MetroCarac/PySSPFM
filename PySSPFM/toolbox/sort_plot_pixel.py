@@ -247,7 +247,7 @@ def extract_params(file_path_in=None):
                 lab = txt_split[0].strip()
                 value_str = txt_split[1].strip()
                 if lab == 'phase function':
-                    value = np.cos if value_str == 'cos' else np.sin
+                    value = np.cos if 'cos' in value_str else np.sin
                 elif lab == 'differential domain between on/off ' \
                             'field loops, mode ?':
                     value = value_str
@@ -314,7 +314,7 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars, dict_pha,
 
     # Data extraction
     if test_dict is None:
-        data_dict, dict_str = extract_nanoloop_data(file_path_in)
+        data_dict, dict_str, _ = extract_nanoloop_data(file_path_in)
     else:
         pha_val = {"fwd": user_pars["pha fwd"], "rev": user_pars["pha rev"]}
         data_dict, dict_str = gen_data_dict(
@@ -460,11 +460,10 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
                 res = main_mean_hyst(treat_pars, verbose=False,
                                      make_plots=False)
                 (mean_loop, mean_hyst) = res
-                loop_file_name = str(user_pars['prop key']['mode']) + '_f_'
-                loop_file_name += os.path.split(file)[1][:-4] + '.txt'
+                loop_file_name = os.path.split(file)[1][:-4] + '.txt'
                 loop_file_path = os.path.join(user_pars['dir path in loop'],
                                               loop_file_name)
-                _, dict_str = extract_nanoloop_data(loop_file_path)
+                _, dict_str, _ = extract_nanoloop_data(loop_file_path)
                 analysis_mode = gen_analysis_mode(
                     mode=user_pars['prop key']['mode'],
                     read_mode=sign_pars['Mode (R)'])
