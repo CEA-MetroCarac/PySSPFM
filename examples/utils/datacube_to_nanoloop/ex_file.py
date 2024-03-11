@@ -10,7 +10,7 @@ from examples.utils.datacube_to_nanoloop.ex_gen_data import pars_segment
 from PySSPFM.settings import get_setting
 from PySSPFM.utils.raw_extraction import csv_meas_sheet_extract
 from PySSPFM.utils.datacube_to_nanoloop.file import \
-    print_params, save_parameters
+    print_params, save_parameters, get_acquisition_time, get_file_names
 
 
 def example_file(verbose=False):
@@ -53,13 +53,25 @@ def example_file(verbose=False):
     user_pars['f path'] = dir_path_in
     meas_pars, sign_pars = csv_meas_sheet_extract(user_pars['f path'])
 
+    # ex get_file_names
+    file_names_ordered = get_file_names(dir_path_in, file_format=".txt")
+
     # ex print_params
     if verbose:
         print('- ex print_params:')
     print_params(meas_pars, sign_pars, user_pars, verbose=verbose)
 
+    # ex get_acquisition_time
+    exp_meas_time = get_acquisition_time(dir_path_in, file_format='.txt')
+    if verbose:
+        print('\n- ex get_acquisition_time:')
+        print(f'experimental acquisition time [s]: {exp_meas_time}')
+
     # ex save_parameters
-    save_parameters(dir_path_out, t0, date, user_pars, meas_pars, sign_pars, 0)
+    save_parameters(dir_path_out, t0, date, exp_meas_time, user_pars, meas_pars,
+                    sign_pars, 0)
+
+    return exp_meas_time, file_names_ordered
 
 
 if __name__ == '__main__':
