@@ -8,12 +8,13 @@ Module used for the scripts of sspfm 1st step data analysis
 
 import time
 import os
+from datetime import datetime
 
 from PySSPFM.settings import get_setting
 
 
-def save_parameters(dir_path_out, t0, date, user_pars, meas_pars, sign_pars,
-                    nb_file):
+def save_parameters(dir_path_out, t0, date, exp_meas_time, user_pars,
+                    meas_pars, sign_pars, nb_file):
     """
     Save all measurement and treatment parameters in a txt file
 
@@ -26,6 +27,8 @@ def save_parameters(dir_path_out, t0, date, user_pars, meas_pars, sign_pars,
         initialization
     date: str
         Date (Year-Month-Day Hour:Minute), at the moment of save initialization
+    exp_meas_time: float
+        Experimental measurement time in seconds
     user_pars: dict
         All user parameters for the treatment
     meas_pars: dict
@@ -43,13 +46,16 @@ def save_parameters(dir_path_out, t0, date, user_pars, meas_pars, sign_pars,
         os.makedirs(dir_path_out)
 
     treatment_time = time.time() - t0
-    treatment_time_h_m_s = time.strftime('%Hh:%Mm:%Ss',
-                                         time.gmtime(treatment_time))
+    treatment_time_hms_th = time.strftime('%Hh:%Mm:%Ss',
+                                          time.gmtime(treatment_time))
+    treatment_time_hms_exp = time.strftime('%Hh:%Mm:%Ss',
+                                           time.gmtime(exp_meas_time))
 
     info = {
         'start of analysis': date,
-        'analysis duration': treatment_time_h_m_s,
-        'nb file analyzed': nb_file
+        'analysis duration (theoretical)': treatment_time_hms_th,
+        'nb file analyzed': nb_file,
+        'analysis duration (real)': treatment_time_hms_exp
     }
 
     parameters_file_name = get_setting('default_parameters_file_name')
@@ -113,3 +119,63 @@ def print_params(meas_pars, sign_pars, user_pars, verbose=False):
             print(f'------------\n{lab}')
             for key, value in dictio.items():
                 print(key, ':', value)
+
+
+def get_file_names(dir_path_in, file_format=".spm"):
+    """
+    Get file names of a certain format, ordered with acquisition time.
+
+    Parameters
+    ----------
+    dir_path_in : str
+        Input directory path
+    file_format: str, optional
+        Format of the measurement file analyzed: '.spm' or '.txt'
+
+    Returns
+    -------
+    file_names_ordered : list of str
+        Ordered list of file names
+    """
+    file_names = [f for f in os.listdir(dir_path_in) if f.endswith(file_format)]
+    file_names_ordered = sorted(
+        file_names,
+        key=lambda x: os.path.getmtime(os.path.join(dir_path_in, x)))
+
+    return file_names_ordered
+
+
+def get_acquisition_time(folder_path, file_format='.spm'):
+    """
+    Get acquisition time of the latest file in the folder
+
+    Parameters
+    ----------
+    folder_path: str
+        Path of the folder containing measurement files
+    file_format: str, optional
+        File extension to filter relevant files, default is '.spm'
+
+    Returns
+    -------
+    time_diff_seconds: float
+        Time difference in seconds relative to the first file
+    """
+    # List files in the folder
+    files = os.listdir(folder_path)
+
+    # Filter relevant files
+    valid_files = [file for file in files if file.endswith(file_format)]
+
+    # Sort files by modification date
+    valid_files.sort(key=lambda x: os.path.getmtime(
+        os.path.join(folder_path, x)))
+
+    # Extract modification dates and create file indices
+    dates = [datetime.fromtimestamp(os.path.getmtime(
+        os.path.join(folder_path, file))) for file in valid_files]
+
+    # Calculate time difference in seconds relative to the first file
+    time_diff_seconds = [(date - dates[0]).total_seconds() for date in dates]
+
+    return time_diff_seconds[-1]
