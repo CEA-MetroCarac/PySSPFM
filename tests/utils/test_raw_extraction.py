@@ -19,10 +19,10 @@ def test_data_extraction_spm():
         skip("Test skipped (NanoscopeError): spm file can't be opened without "
              "Nanoscope Analysis DLL")
 
-    sum_dict = np.sum(list(dict_meas.values())[0:4])
+    sum_dict = np.sum(list(dict_meas.values())[0:5])
     tab_script = list(script_dict.values())
 
-    assert sum_dict == approx(13119195.087875232)
+    assert sum_dict == approx(9691899.026586432)
     assert tab_script[0] == 1602
     assert tab_script[1] == 80
     assert tab_script[2] == 500
@@ -49,7 +49,7 @@ def test_data_extraction_txt():
     """ Test ex_data_extraction '.txt' file """
     dict_meas, script_dict = ex_data_extraction('txt')
 
-    sum_dict = np.sum(list(dict_meas.values())[0:1])
+    sum_dict = np.sum(list(dict_meas.values())[0:5])
 
     target_script = {'Write Voltage Range (V)': (-10, 10),
                      'Write Number of Voltages': 51,
@@ -67,14 +67,14 @@ def test_data_extraction_txt():
 
     for key, value in target_script.items():
         assert script_dict[key] == value
-    assert sum_dict == approx(6417256.821837984)
+    assert sum_dict == approx(9691899.026586432)
 
 
 def test_data_extraction_csv():
     """ Test ex_data_extraction '.csv' file """
     dict_meas, script_dict = ex_data_extraction('csv')
 
-    sum_dict = np.sum(list(dict_meas.values())[0:1])
+    sum_dict = np.sum(list(dict_meas.values())[0:5])
 
     target_script = {'Write Voltage Range (V)': (-10, 10),
                      'Write Number of Voltages': 51,
@@ -92,14 +92,14 @@ def test_data_extraction_csv():
 
     for key, value in target_script.items():
         assert script_dict[key] == value
-    assert sum_dict == approx(6417256.821837984)
+    assert sum_dict == approx(9692740.523223111)
 
 
 def test_data_extraction_xlsx():
     """ Test ex_data_extraction '.xlsx' file """
     dict_meas, script_dict = ex_data_extraction('xlsx')
 
-    sum_dict = np.sum(list(dict_meas.values())[0:1])
+    sum_dict = np.sum(list(dict_meas.values())[0:5])
 
     target_script = {'Write Voltage Range (V)': (-10, 10),
                      'Write Number of Voltages': 51,
@@ -117,7 +117,7 @@ def test_data_extraction_xlsx():
 
     for key, value in target_script.items():
         assert script_dict[key] == value
-    assert sum_dict == approx(6417256.821837984)
+    assert sum_dict == approx(9692740.523223111)
 
 
 def test_csv_meas_sheet_extract():
@@ -144,14 +144,15 @@ def test_csv_meas_sheet_extract():
                    'Offset ampli [V]': 0,
                    'Sens phase [mV/°]': 5,
                    'Offset phase [V]': 0,
-                   'Bias app': 'Sample',
+                   'SSPFM Bias app': 'Tip',
                    'V_AC [V]': 1,
                    'Date [hh : dd/mm/yyyy]': '13H : 27/06/2022',
-                   'Pix durat [sec]': 80.15667999935194,
-                   'Grid durat [sec]': 5130.027519958524,
+                   'Pix durat [sec]': 80.40,
+                   'Grid durat [sec]': 5145.60,
                    'Tip': 'SCM-PIT-V2',
                    'Sign of d33': 'positive',
-                   'Sample ref': 'KNN03'}
+                   'Sample ref': 'KNN03',
+                   'Mode': 'DFRT'}
 
     target_sign = {'Min volt (W) [V]': -10,
                    'Max volt (W) [V]': 10,
@@ -164,9 +165,9 @@ def test_csv_meas_sheet_extract():
                    'Nb volt (R)': 8, 'Mode (R)': 'Low to High',
                    'Seg durat (R) [ms]': 50,
                    'Seg sample (R)': 100,
-                   'Hold seg durat (start) [ms]': 7.4399999812158,
-                   'Hold sample (start)': 6,
-                   'Hold seg durat (end) [ms]': 249.239999370729,
+                   'Hold seg durat (start) [ms]': 250,
+                   'Hold sample (start)': 201,
+                   'Hold seg durat (end) [ms]': 250,
                    'Hold sample (end)': 201}
 
     for key, value in target_meas.items():
