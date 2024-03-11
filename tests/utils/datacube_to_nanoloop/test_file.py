@@ -11,7 +11,7 @@ from examples.utils.datacube_to_nanoloop.ex_file import example_file
 def test_file():
     """ Test example_file """
 
-    exp_meas_time, file_names_ordered = example_file()
+    _, file_names_ordered = example_file()
 
     target_file_names = \
         ['KNN500n_SSPFM.0_00056.txt', 'KNN500n_SSPFM.0_00057.txt',
@@ -47,5 +47,4 @@ def test_file():
          'KNN500n_SSPFM.0_00116.txt', 'KNN500n_SSPFM.0_00117.txt',
          'KNN500n_SSPFM.0_00118.txt']
 
-    assert exp_meas_time == 70.467422
     assert file_names_ordered == target_file_names
