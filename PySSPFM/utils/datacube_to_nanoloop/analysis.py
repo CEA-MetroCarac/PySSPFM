@@ -7,7 +7,7 @@ Module used for the scripts of sspfm 1st step data analysis
 import numpy as np
 
 from PySSPFM.utils.core.basic_func import sho, sho_phase
-from PySSPFM.utils.core.noise import filter_mean
+from PySSPFM.utils.core.noise import filter_mean, butter_filter
 from PySSPFM.utils.core.peak import width_peak
 from PySSPFM.utils.core.fitting import ShoPeakFit, ShoPhaseFit
 
@@ -69,8 +69,9 @@ class SegmentSweep:
     """
 
     def __init__(self, segment_info, dict_meas, start_freq_init=200.,
-                 end_freq_init=300., cut_seg=None, filter_order=None,
-                 fit_pars=None, guess_init=None):
+                 end_freq_init=300., cut_seg=None, filter_type=None,
+                 filter_cutoff_frequency=None, filter_order=None, fit_pars=None,
+                 guess_init=None):
         """
         Main function of the class
 
@@ -86,6 +87,11 @@ class SegmentSweep:
             Ending frequency of the sweep (if max or fit mode) (in kHz)
         cut_seg: dict, optional
             Dict of percent cut of the start and end of the segment
+        filter_type: str
+            Type of the filter for amplitude and phase in the segment
+        filter_cutoff_frequency: float or tuple
+            Cutoff frequency of the filter for amplitude and phase in the
+            segment
         filter_order: int
             Order of the filter for amplitude and phase in the segment
         fit_pars: dict, optional
@@ -124,16 +130,32 @@ class SegmentSweep:
             self.end_ind = segment_info.end_ind_init - incr_end
             self.len = self.end_ind - self.start_ind
             self.time_tab = dict_meas['times'][self.start_ind:self.end_ind]
+            incr_end = incr_end if incr_end != 0 else 1
             self.freq_tab = self.freq_tab_init[incr_start:-incr_end]
             self.amp_tab = dict_meas['amp'][self.start_ind:self.end_ind]
             self.pha_tab = dict_meas['pha'][self.start_ind:self.end_ind]
 
         # Measure filtered
-        if filter_order:
+        if filter_type == 'mean':
             self.amp_tab = filter_mean(self.amp_tab, filter_order)
             self.amp_tab_init = filter_mean(self.amp_tab_init, filter_order)
             self.pha_tab = filter_mean(self.pha_tab, filter_order)
             self.pha_tab_init = filter_mean(self.pha_tab_init, filter_order)
+        elif filter_type in ['low', 'high', 'bandpass', 'bandstop']:
+            sampling_frequency = \
+                len(self.time_tab) / (self.time_tab[-1] - self.time_tab[0])
+            self.amp_tab = butter_filter(
+                self.amp_tab, sampling_frequency, filter_cutoff_frequency,
+                filter_type, filter_order)
+            self.amp_tab_init = butter_filter(
+                self.amp_tab_init, sampling_frequency, filter_cutoff_frequency,
+                filter_type, filter_order)
+            self.pha_tab = butter_filter(
+                self.pha_tab, sampling_frequency, filter_cutoff_frequency,
+                filter_type, filter_order)
+            self.pha_tab_init = butter_filter(
+                self.pha_tab_init, sampling_frequency, filter_cutoff_frequency,
+                filter_type, filter_order)
 
         # Segment treatment
         if mode == 'max':
@@ -252,7 +274,7 @@ class SegmentSweep:
         """ Function used to fit the resonance phase with SHO model """
         # Reduce domain of phase signal to fit
         width = width_peak(
-            self.freq_tab, self.best_fit, np.argmax(self.best_fit),
+            self.freq_tab, self.best_fit, int(np.argmax(self.best_fit)),
             (self.best_fit.max() - self.best_fit.min()) / 2 +
             self.best_fit.min()
         )
@@ -362,10 +384,11 @@ class SegmentSweep:
 class SegmentStable:
     """
     Segment voltage of sspfm bias signal and associated amplitude and
-    phase measure for DFRT or single frequency measure
+    phase measure for dfrt or single frequency measure
     """
 
     def __init__(self, segment_info, dict_meas, cut_seg=None,
+                 filter_type=None, filter_cutoff_frequency=None,
                  filter_order=None):
         """
         Main function of the class
@@ -378,6 +401,11 @@ class SegmentStable:
             All measurement in extracted file
         cut_seg: dict, optional
             Dict of percent cut of the start and end of the segment
+        filter_type: str
+            Type of the filter for amplitude and phase in the segment
+        filter_cutoff_frequency: float or tuple
+            Cutoff frequency of the filter for amplitude and phase in the
+            segment
         filter_order: int
             Order of the filter for amplitude and phase in the segment
         """
@@ -395,6 +423,26 @@ class SegmentStable:
                                                segment_info.end_ind_init] \
             if self.freq_tab_init else None
 
+        # Measure filtered
+        if filter_type == 'mean':
+            self.amp_tab_init = filter_mean(self.amp_tab_init, filter_order)
+            self.pha_tab_init = filter_mean(self.pha_tab_init, filter_order)
+            self.freq_tab_init = filter_mean(self.freq_tab_init, filter_order) \
+                if self.freq_tab_init else None
+        elif filter_type in ['low', 'high', 'bandpass', 'bandstop']:
+            sampling_frequency = \
+                len(self.time_tab_init) / (self.time_tab_init[-1] -
+                                           self.time_tab_init[0])
+            self.amp_tab_init = butter_filter(
+                self.amp_tab_init, sampling_frequency, filter_cutoff_frequency,
+                filter_type, filter_order)
+            self.pha_tab_init = butter_filter(
+                self.pha_tab_init, sampling_frequency, filter_cutoff_frequency,
+                filter_type, filter_order)
+            self.freq_tab_init = butter_filter(
+                self.freq_tab_init, sampling_frequency, filter_cutoff_frequency,
+                filter_type, filter_order) if self.freq_tab_init else None
+
         # Cut beginning and end of the segment
         if cut_seg is None:
             self.start_ind = segment_info.start_ind_init
@@ -404,7 +452,6 @@ class SegmentStable:
             self.amp_tab = self.amp_tab_init
             self.pha_tab = self.pha_tab_init
             self.freq_tab = self.freq_tab_init
-
         else:
             incr_start = int(cut_seg['start'] / 100 * segment_info.len_init)
             incr_end = int(cut_seg['end'] / 100 * segment_info.len_init)
@@ -412,20 +459,13 @@ class SegmentStable:
             self.end_ind = segment_info.end_ind_init - incr_end
             self.len = self.end_ind - self.start_ind
             self.time_tab = dict_meas['times'][self.start_ind:self.end_ind]
-            self.amp_tab = dict_meas['amp'][self.start_ind:self.end_ind]
-            self.pha_tab = dict_meas['pha'][self.start_ind:self.end_ind]
-            self.freq_tab = dict_meas['freq'][self.start_ind:self.end_ind] \
-                if self.freq_tab_init else None
-
-        # Measure filtered
-        if filter_order:
-            self.amp_tab = filter_mean(self.amp_tab, filter_order)
-            self.amp_tab_init = filter_mean(self.amp_tab_init, filter_order)
-            self.pha_tab = filter_mean(self.pha_tab, filter_order)
-            self.pha_tab_init = filter_mean(self.pha_tab_init, filter_order)
-            self.freq_tab = filter_mean(self.freq_tab, filter_order) \
-                if self.freq_tab else None
-            self.freq_tab_init = filter_mean(self.freq_tab_init, filter_order) \
+            incr_end = incr_end if incr_end != 0 else 1
+            self.amp_tab = \
+                self.amp_tab_init[incr_start:segment_info.len_init-incr_end]
+            self.pha_tab = \
+                self.pha_tab_init[incr_start:segment_info.len_init-incr_end]
+            self.freq_tab = \
+                self.freq_tab_init[incr_start:segment_info.len_init-incr_end] \
                 if self.freq_tab_init else None
 
         # Segment treatment
@@ -441,10 +481,11 @@ class SegmentStable:
 class SegmentStableDFRT:
     """
     Segment voltage of sspfm bias signal and associated amplitude and
-    phase measure for DFRT if sidebands are measured
+    phase measure for dfrt if sidebands are measured
     """
 
     def __init__(self, segment_info, dict_meas, cut_seg=None,
+                 filter_type=None, filter_cutoff_frequency=None,
                  filter_order=None):
         """
         Main function of the class
@@ -457,6 +498,11 @@ class SegmentStableDFRT:
             All measurement in extracted file
         cut_seg: dict, optional
             Dict of percent cut of the start and end of the segment
+        filter_type: str
+            Type of the filter for amplitude and phase in the segment
+        filter_cutoff_frequency: float or tuple
+            Cutoff frequency of the filter for amplitude and phase in the
+            segment
         filter_order: int
             Order of the filter for amplitude and phase in the segment
         """
@@ -528,7 +574,7 @@ class SegmentStableDFRT:
             self.freq_sbr_tab = dict_meas['freq sb_r'][self.start_ind:
                                                        self.end_ind]
         # Measure filtered
-        if filter_order:
+        if filter_type == 'mean':
             self.amp_main_tab = filter_mean(self.amp_main_tab, filter_order)
             self.amp_main_tab_init = filter_mean(self.amp_main_tab_init,
                                                  filter_order)
@@ -556,6 +602,63 @@ class SegmentStableDFRT:
             self.freq_sbr_tab = filter_mean(self.freq_sbr_tab, filter_order)
             self.freq_sbr_tab_init = filter_mean(self.freq_sbr_tab_init,
                                                  filter_order)
+        elif filter_type in ['low', 'high', 'bandpass', 'bandstop']:
+            sampling_frequency = \
+                len(self.time_tab) / (self.time_tab[-1] - self.time_tab[0])
+            self.amp_main_tab = butter_filter(
+                self.amp_main_tab, sampling_frequency, filter_cutoff_frequency,
+                filter_type, filter_order)
+            self.amp_main_tab_init = butter_filter(
+                self.amp_main_tab_init, sampling_frequency,
+                filter_cutoff_frequency, filter_type, filter_order)
+            self.pha_main_tab = butter_filter(
+                self.pha_main_tab, sampling_frequency, filter_cutoff_frequency,
+                filter_type, filter_order)
+            self.pha_main_tab_init = butter_filter(
+                self.pha_main_tab_init, sampling_frequency,
+                filter_cutoff_frequency, filter_type, filter_order)
+            self.freq_main_tab = butter_filter(
+                self.freq_main_tab, sampling_frequency, filter_cutoff_frequency,
+                filter_type, filter_order)
+            self.freq_main_tab_init = butter_filter(
+                self.freq_main_tab_init, sampling_frequency,
+                filter_cutoff_frequency, filter_type, filter_order)
+            self.amp_sbl_tab = butter_filter(
+                self.amp_sbl_tab, sampling_frequency, filter_cutoff_frequency,
+                filter_type, filter_order)
+            self.amp_sbl_tab_init = butter_filter(
+                self.amp_sbl_tab_init, sampling_frequency,
+                filter_cutoff_frequency, filter_type, filter_order)
+            self.pha_sbl_tab = butter_filter(
+                self.pha_sbl_tab, sampling_frequency, filter_cutoff_frequency,
+                filter_type, filter_order)
+            self.pha_sbl_tab_init = butter_filter(
+                self.pha_sbl_tab_init, sampling_frequency,
+                filter_cutoff_frequency, filter_type, filter_order)
+            self.freq_sbl_tab = butter_filter(
+                self.freq_sbl_tab, sampling_frequency, filter_cutoff_frequency,
+                filter_type, filter_order)
+            self.freq_sbl_tab_init = butter_filter(
+                self.freq_sbl_tab_init, sampling_frequency,
+                filter_cutoff_frequency, filter_type, filter_order)
+            self.amp_sbr_tab = butter_filter(
+                self.amp_sbr_tab, sampling_frequency, filter_cutoff_frequency,
+                filter_type, filter_order)
+            self.amp_sbr_tab_init = butter_filter(
+                self.amp_sbr_tab_init, sampling_frequency,
+                filter_cutoff_frequency, filter_type, filter_order)
+            self.pha_sbr_tab = butter_filter(
+                self.pha_sbr_tab, sampling_frequency, filter_cutoff_frequency,
+                filter_type, filter_order)
+            self.pha_sbr_tab_init = butter_filter(
+                self.pha_sbr_tab_init, sampling_frequency,
+                filter_cutoff_frequency, filter_type, filter_order)
+            self.freq_sbr_tab = butter_filter(
+                self.freq_sbr_tab, sampling_frequency, filter_cutoff_frequency,
+                filter_type, filter_order)
+            self.freq_sbr_tab_init = butter_filter(
+                self.freq_sbr_tab_init, sampling_frequency,
+                filter_cutoff_frequency, filter_type, filter_order)
 
         # Segment treatment
         self.amp_main = np.mean(self.amp_main_tab)
@@ -674,3 +777,53 @@ def cut_function(sign_pars):
         index_off_f.append(seg_increment)
 
     return {'off f': index_off_f, 'on f': index_on_f}, nb_seg_tot
+
+
+def extract_other_properties(dict_meas, start_ind, end_ind):
+    """
+    Extract other properties from measurement dictionary
+
+    Parameters
+    ----------
+    dict_meas: dict
+        Dictionary containing measurement data
+    start_ind: int
+        Starting index for data extraction
+    end_ind: int
+        Ending index for data extraction
+
+    Returns
+    -------
+    other_properties: dict
+        Dictionary containing extracted properties
+    """
+    mean_height, diff_height, mean_deflection, deflection_error, adhesion = \
+        None, None, None, None, None
+
+    if "height" in list(dict_meas.keys()):
+        if len(dict_meas["height"]) > 0:
+            mean_height = np.mean(dict_meas["height"][start_ind:-end_ind])
+            diff_height = abs(np.mean(
+                [dict_meas["height"][0],
+                 dict_meas["height"][-1]]) - mean_height)
+    if "deflection" in list(dict_meas.keys()):
+        if len(dict_meas["deflection"]) > 0:
+            mean_deflection = abs(np.mean(
+                [dict_meas["deflection"][0],
+                 dict_meas["deflection"][-1]]) -
+                                  np.mean(dict_meas["deflection"][
+                                          start_ind:-end_ind]))
+            deflection_error = np.sqrt(np.var(dict_meas["deflection"][
+                                              start_ind:-end_ind]))
+            adhesion = np.mean(dict_meas["deflection"][-(int(end_ind/2)):]) - \
+                min(dict_meas["deflection"][-end_ind:])
+
+    other_properties = {
+        "height": mean_height,
+        "diff height": diff_height,
+        "deflection": mean_deflection,
+        "deflection error": deflection_error,
+        "adhesion": adhesion,
+    }
+
+    return other_properties
