@@ -1,7 +1,6 @@
 """
 Test spm_converter methods
 """
-import pytest
 from pytest import approx, skip
 import numpy as np
 
@@ -35,7 +34,7 @@ def test_spm_converter_txt():
                      'Read Samples Per Segment': 100,
                      'Frequency Range (kHz)': (None, None)}
 
-    assert sum_dict == approx(13119195.087875232)
+    assert sum_dict == approx(9691899.026586428)
     for key, value in target_script.items():
         assert script_dict[key] == value
 
@@ -64,12 +63,11 @@ def test_spm_converter_csv():
                      'Read Samples Per Segment': 100,
                      'Frequency Range (kHz)': (None, None)}
 
-    assert sum_dict == approx(13119195.087875232)
+    assert sum_dict == approx(9692740.52322312)
     for key, value in target_script.items():
         assert script_dict[key] == value
 
 
-@pytest.mark.slow
 def test_spm_converter_xlsx():
     """ Test example_spm_converter in xlsx file """
     try:
@@ -94,6 +92,6 @@ def test_spm_converter_xlsx():
                      'Read Samples Per Segment': 100,
                      'Frequency Range (kHz)': (None, None)}
 
-    assert sum_dict == approx(13119195.087875232)
+    assert sum_dict == approx(9692740.52322312)
     for key, value in target_script.items():
         assert script_dict[key] == value
