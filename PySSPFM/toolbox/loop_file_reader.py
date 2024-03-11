@@ -65,12 +65,20 @@ def main_loop_file_reader(file_path, csv_path=None, dict_pha=None,
     _, sign_pars = csv_meas_sheet_extract(csv_path, verbose=verbose)
 
     # Extract nanoloop data
-    data_dict, dict_str = extract_nanoloop_data(file_path)
+    data_dict, dict_str, other_properties = extract_nanoloop_data(file_path)
+
+    # Print other properties
+    if verbose and other_properties is not None:
+        print('File properties:')
+        for key, value in other_properties.items():
+            print(f"{key}: {value}")
+
     # Treat nanoloop data
     dict_pha['func'] = eval(dict_pha['func']) \
         if isinstance(dict_pha['func'], str) else dict_pha['func']
     res = nanoloop_treatment(
-        data_dict, sign_pars, dict_pha=dict_pha, dict_str=dict_str)
+        data_dict, sign_pars, dict_pha=dict_pha, dict_str=dict_str,
+        make_plots=make_plots)
     (loop_tab, pha_calib, _) = res
 
     # Plot nanoloops
@@ -130,7 +138,7 @@ def parameters():
     - grounded_tip: bool
         Flag indicating whether the tip is grounded.
         This parameter must be activated if the tip is grounded.
-        It influences the polarization value, the sense of rotation of
+        It influences the polarisation value, the sense of rotation of
         hysteresis, and the sign of the electrostatic slope.
     - positive_d33: bool
         Flag indicating positive d33.
