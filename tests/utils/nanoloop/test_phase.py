@@ -1,9 +1,10 @@
 """
 Test phase methods
 """
-from pytest import approx
+from pytest import approx, skip
 import numpy as np
 
+from PySSPFM.utils.raw_extraction import NanoscopeError
 from examples.utils.nanoloop.ex_phase import \
     (ex_exp_phase_calibration, ex_simulated_phase_calibration,
      ex_phase_offset_determination, ex_apply_phase_offset)
@@ -219,7 +220,11 @@ def test_unipolar_phase_offset_determination():
 def test_apply_phase_offset():
     """ Test ex_apply_phase_offset """
 
-    offset_phase = ex_apply_phase_offset()
+    try:
+        offset_phase = ex_apply_phase_offset()
+    except NanoscopeError:
+        skip("Test skipped (NanoscopeError): spm file can't be opened without "
+             "Nanoscope Analysis DLL")
 
     # print(np.sum(offset_phase))
 
