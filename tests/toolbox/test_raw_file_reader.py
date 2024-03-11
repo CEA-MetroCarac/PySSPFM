@@ -2,19 +2,23 @@
 Test raw_file_reader methods
 """
 
+from pytest import skip
+
 from examples.toolbox.ex_raw_file_reader import example_raw_file_reader
+from PySSPFM.utils.raw_extraction import NanoscopeError
 
 
 # class TestSignalViewer(unittest.TestCase):
 
 
 # Error when Nanoscope Analysis wheel is not installed
-'''
 def test_raw_file_reader_spm():
     """ Test example_raw_file_reader for 'spm' file """
-
-    example_raw_file_reader('spm')
-'''
+    try:
+        example_raw_file_reader('spm')
+    except NanoscopeError:
+        skip("Test skipped (NanoscopeError): spm file can't be opened without "
+             "Nanoscope Analysis DLL")
 
 
 def test_raw_file_reader_txt():
