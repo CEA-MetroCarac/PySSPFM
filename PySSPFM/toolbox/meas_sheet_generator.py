@@ -14,7 +14,7 @@ import openpyxl
 from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
-from PySSPFM.utils.datacube_reader import DataExtraction
+from PySSPFM.utils.raw_extraction import NanoscopeError
 from PySSPFM.utils.signal_bias import extract_sspfm_bias_pars
 from PySSPFM.utils.datacube_to_nanoloop.file import get_file_names
 
@@ -117,6 +117,14 @@ def main_meas_sheet_generator(file_path_in, dir_path_out, extension=".spm",
     values: list
         Values of the modified cells
     """
+    try:
+        from PySSPFM.utils.datacube_reader import DataExtraction # noqa
+    except (NotImplementedError, NameError) as error:
+        message = "To open DATACUBE spm file (Bruker), nanoscope module is " \
+                  "required and NanoScope Analysis software (Bruker) should " \
+                  "be installed on the computer"
+        raise NanoscopeError(message) from error
+
     file_path_out = os.path.join(dir_path_out, os.path.split(file_path_in)[1])
     file_path_out = file_path_out.replace(".csv", ".xlsx")
     shutil.copyfile(file_path_in, file_path_out)
