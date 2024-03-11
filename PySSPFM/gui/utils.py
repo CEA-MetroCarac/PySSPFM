@@ -383,11 +383,11 @@ def buttons_section(names, functions, root, title=None, strg_functions=None):
     def open_interface(lab, app):
         lab(parent=app)
 
-    def show_tooltip_button(event, btn):
+    def show_tooltip_button(_, btn):
         if btn in tooltips:
             show_tooltip(buttons[btn], tooltips[btn])
 
-    def hide_tooltip_button(event, btn):
+    def hide_tooltip_button(_, btn):
         if btn in tooltips:
             hide_tooltip(tooltips[btn])
 
