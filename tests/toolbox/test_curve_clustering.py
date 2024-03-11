@@ -13,8 +13,7 @@ from examples.toolbox.ex_curve_clustering import ex_curve_clustering
 
 def test_curve_clustering_piezoresponse():
     """ Test ex_curve_clustering for piezoresponse signal """
-
-    if "/home/runner/work" in sys.argv[0]:
+    if os.getenv('GITHUB_ACTIONS') == 'true':
         skip("Test skipped for Github source")
 
     out = ex_curve_clustering(['piezoresponse'])
@@ -98,8 +97,7 @@ def test_curve_clustering_piezoresponse():
 
 def test_curve_clustering_amp_pha():
     """ Test ex_curve_clustering for composed amplitude and phase signal """
-
-    if "/home/runner/work" in sys.argv[0]:
+    if os.getenv('GITHUB_ACTIONS') == 'true':
         skip("Test skipped for Github source")
 
     out = ex_curve_clustering(['amplitude', 'phase'])
