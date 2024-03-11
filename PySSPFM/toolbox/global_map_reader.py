@@ -66,8 +66,8 @@ def main_global_map_reader(
 
     dict_interp = {'fact': user_pars['interp fact'],
                    'func': user_pars['interp func']}
-    lab_tab = [['on', 'off', 'coupled'], ['y', 'w', 'r'],
-               ['On Field', 'Off Field', 'Coupled']]
+    lab_tab = [['on', 'off', 'coupled', 'other'], ['y', 'w', 'r', 'g'],
+               ['On Field', 'Off Field', 'Coupled', 'Other']]
     properties, mask = {}, {}
 
     # Extract all properties
@@ -205,10 +205,12 @@ def parameters():
                      'interp func': 'linear',
                      'revert mask': {'on': False,
                                      'off': False,
-                                     'coupled': False},
+                                     'coupled': False,
+                                     'other': False},
                      'man mask': {'on': [],
                                   'off': [],
-                                  'coupled': []},
+                                  'coupled': [],
+                                  'other': []},
                      'ref': {'on': {'prop': 'charac tot fit: area',
                                     'fmt': '.5f',
                                     'min val': None,
@@ -223,7 +225,13 @@ def parameters():
                                          'fmt': '.5f',
                                          'min val': 0.95,
                                          'max val': None,
-                                         'interactive': False}}}
+                                         'interactive': False},
+                             'other': {
+                                 'prop': 'deflection error',
+                                 'fmt': '.2f',
+                                 'min val': None,
+                                 'max val': 5,
+                                 'interactive': False}}}
     else:
         raise NotImplementedError("setting 'extract_parameters' "
                                   "should be in ['json', 'toml', 'python']")
