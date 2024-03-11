@@ -30,8 +30,10 @@ def example_file(make_plots=False, verbose=False):
 
     Returns
     -------
-    file_paths: list
-        List of file paths.
+    file_paths_from_nanoloops: list
+        File paths generated from nanoloops file.
+    file_paths_from_raw: list
+        File paths generated from raw measurement file.
     meas_pars: dict
         Measurement parameters.
     sign_pars: dict
@@ -53,6 +55,8 @@ def example_file(make_plots=False, verbose=False):
     root_data = os.path.join(get_setting("example_root_path_in"),
                              "KNN500n_2023-11-20-16h18m_out_dfrt")
     dir_path_in = os.path.join(root_data, "nanoloops")
+    dir_path_raw = os.path.join(get_setting("example_root_path_in"),
+                                "KNN500n")
     if make_plots:
         root_out = os.path.join(
             get_setting("example_root_path_out"), "ex_nanoloop_to_hyst_file")
@@ -86,11 +90,12 @@ def example_file(make_plots=False, verbose=False):
     t0, date = time.time(), datetime.now()
     date = date.strftime('%Y-%m-%d %H;%M')
 
-    # Generate file paths
-    file_paths = generate_file_nanoloop_paths(dir_path_in)
+    # Generate file paths from nanoloops and raw measurement files
+    file_paths_from_nanoloops = generate_file_nanoloop_paths(dir_path_in)
+    file_paths_from_raw = generate_file_nanoloop_paths(dir_path_raw)
     if verbose:
         print('\t- ex generate_file_nanoloop_paths')
-        for cont, elem in enumerate(file_paths):
+        for cont, elem in enumerate(file_paths_from_nanoloops):
             print(f'\t\tpath n°{cont + 1}: {elem}')
         print('\n')
 
@@ -141,9 +146,9 @@ def example_file(make_plots=False, verbose=False):
     if make_plots:
         return [fig]
     else:
-        return (file_paths, meas_pars, sign_pars, dict_analysis_1,
-                nb_write_per_read, write_segment, properties, dim_pix,
-                dim_mic)
+        return (file_paths_from_nanoloops, file_paths_from_raw, meas_pars,
+                sign_pars, dict_analysis_1, nb_write_per_read, write_segment,
+                properties, dim_pix, dim_mic)
 
 
 if __name__ == '__main__':
