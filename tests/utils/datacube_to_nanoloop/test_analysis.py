@@ -5,7 +5,7 @@ from pytest import approx
 import numpy as np
 
 from examples.utils.datacube_to_nanoloop.ex_analysis import \
-    ex_calib, ex_cut_function, ex_segments
+    ex_calib, ex_cut_function, ex_segments, ex_extract_other_properties
 
 
 # class TestAnalysis(unittest.TestCase):
@@ -264,3 +264,26 @@ def test_segments_dfrt_off():
     assert seg.start_ind == 930
     assert np.sum(seg.time_tab) == approx(38.0)
     assert np.sum(seg.time_tab_init) == approx(47.5)
+
+
+def test_extract_other_properties():
+    """ Test ex_extract_other_properties """
+
+    tab_other_properties = ex_extract_other_properties()
+
+    # print(np.sum(tab_other_properties['height']))
+    # print(np.sum(tab_other_properties['diff height']))
+    # print(np.sum(tab_other_properties['deflection']))
+    # print(np.sum(tab_other_properties['deflection error']))
+    # print(np.sum(tab_other_properties['adhesion']))
+
+    assert np.sum(tab_other_properties['height']) == \
+           approx(-3433.0601149671857)
+    assert np.sum(tab_other_properties['diff height']) == \
+           approx(25817.959373755926)
+    assert np.sum(tab_other_properties['deflection']) == \
+           approx(2169.527382639743)
+    assert np.sum(tab_other_properties['deflection error']) == \
+           approx(210.01148994019235)
+    assert np.sum(tab_other_properties['adhesion']) == \
+           approx(2324.4693974670386)
