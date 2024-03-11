@@ -17,6 +17,10 @@ def test_file():
     (file_paths_from_nanoloops, file_paths_from_raw, meas_pars, sign_pars,
      dict_analysis_1, nb_write_per_read, write_segment, properties, dim_pix,
      dim_mic) = out
+    file_names_from_nanoloops = [[os.path.split(path)[1] for path in paths]
+                                 for paths in file_paths_from_nanoloops]
+    file_names_from_raw = [[os.path.split(path)[1] for path in paths]
+                           for paths in file_paths_from_raw]
 
     assert nb_write_per_read == 100
     assert len(list(write_segment)) == 100
