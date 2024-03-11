@@ -366,7 +366,7 @@ def main(parent=None):
     strg = "- Name: grounded_tip\n" \
            "- Summary: Flag indicating whether the tip is grounded.\n" \
            "- Description: This parameter must be activated if the tip " \
-           "is grounded. It influences the polarization value, the sense " \
+           "is grounded. It influences the polarisation value, the sense " \
            "of rotation of hysteresis, and the sign of the electrostatic " \
            "slope.\n" \
            "- Value: Boolean (True or False)."
