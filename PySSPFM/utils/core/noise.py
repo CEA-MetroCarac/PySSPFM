@@ -4,6 +4,7 @@ Utilities methods for noise generation and filtering
 import numpy as np
 from scipy.special import erf
 from scipy.optimize import root
+from scipy.signal import butter, lfilter
 
 
 def noise(y, noise_pars, relative=False):
@@ -113,7 +114,7 @@ def normal(y, ampli, sigma=1, cdf=0.99):
 
 
 def laplace_pdf(x, lbda=1., mu=0.):
-    """ Laplace probability distribution function """
+    """ Laplace's probability distribution function """
     return lbda / 2 * np.exp(-lbda * abs(x - mu))
 
 
@@ -182,5 +183,51 @@ def filter_mean(signal, window_size):
     """
     window = np.ones(window_size) / window_size
     filtered_signal = np.convolve(signal, window, mode='same')
+
+    return filtered_signal
+
+
+def butter_filter(signal, sampling_frequency, cutoff_frequency,
+                  filter_type="low", filter_order=1):
+    """
+    Apply a Butterworth filter to the input signal.
+
+    Parameters
+    ----------
+    signal : np.ndarray
+        Input signal.
+    sampling_frequency : float
+        Sampling frequency of the input signal.
+    cutoff_frequency : float or tuple
+        Cutoff frequency or frequencies of the filter.
+    filter_type : str
+        Type of the filter ('low', 'high', 'bandpass', or 'bandstop').
+        Default is "low".
+    filter_order : int, optional
+        Order of the filter. Default is 1.
+
+    Returns
+    -------
+    filtered_signal : array-like
+        Filtered signal.
+    """
+    # Frequency normalization
+    nyquist = 0.5 * sampling_frequency
+
+    # Calcul of filter coefficients
+    if filter_type in ('low', 'high'):
+        normal_cutoff = cutoff_frequency / nyquist
+        coef_b, coef_a = butter(filter_order, normal_cutoff,
+                                btype=filter_type, analog=False)[:2]
+    elif filter_type in ('bandpass', 'bandstop'):
+        normal_cutoff = np.array(cutoff_frequency) / nyquist
+        coef_b, coef_a = butter(filter_order, normal_cutoff,
+                                btype=filter_type, analog=False)[:2]
+    else:
+        raise ValueError("Invalid filter type. Use 'low', 'high', "
+                         "'bandpass', or 'bandstop'.")
+
+    # Applying the filter to the signal
+    filtered_signal = lfilter(coef_b, coef_a, signal)
 
     return filtered_signal
