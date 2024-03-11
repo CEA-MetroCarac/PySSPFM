@@ -52,7 +52,7 @@ def test_ex_butter_filter_bandpass():
 
     y_filt_bandpass = ex_butter_filter(filter_type='bandpass')
 
-    assert np.sum(y_filt_bandpass) == approx(-24.70597466183571)
+    assert np.sum(y_filt_bandpass) == approx(-24.70597466183571, abs=1e-5)
 
 
 def test_ex_butter_filter_bandstop():
@@ -60,4 +60,4 @@ def test_ex_butter_filter_bandstop():
 
     y_filt_bandstop = ex_butter_filter(filter_type='bandstop')
 
-    assert np.sum(y_filt_bandstop) == approx(33.83620308961862)
+    assert np.sum(y_filt_bandstop) == approx(33.83620308961862, abs=1e-5)
