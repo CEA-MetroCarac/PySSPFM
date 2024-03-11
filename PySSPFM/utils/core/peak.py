@@ -50,15 +50,6 @@ def detect_peak(x, y, sens_coef=1.5):
 
         test = bool(test_var is True and test_mean is True)
 
-        # import matplotlib.pyplot as plt
-        # plt.figure()
-        # plt.plot(x, y)
-        # plt.plot(x[res['peaks']][0], y[res['peaks']][0], 'rx')
-        # plt.axhline(y[res['peaks']][0] - bckgnd, c='g')
-        # plt.axhline(2 * total_inc, c='orange')
-        # plt.axhline((np.mean(y) - bckgnd) * sens_coef, c='red')
-        # plt.show()
-
         return test
 
 
@@ -99,7 +90,7 @@ def find_main_peaks(x, y, nb_peak=2, dist_min=None, width_min=None,
     # Compute the considered part of the peak (threshold = phase mean)
     wid_left, wid_right, left_limit, right_limit = [], [], [], []
     for peak in peaks:
-        width_res = width_peak(x, y, peak, np.mean(y))
+        width_res = width_peak(x, y, peak, float(np.mean(y)))
         left_limit.append(width_res['ind left'])
         wid_left.append(x[peak - width_res['ind left']])
         right_limit.append(width_res['ind right'])
@@ -143,27 +134,48 @@ def find_main_peaks(x, y, nb_peak=2, dist_min=None, width_min=None,
     # The two peaks with the largest integral are considered
     arr_2d = np.array([integs, range(len(integs))])
     sorted_arr_2d = sort_2d_arr(arr_2d, 'line', 0, reverse=True)
-    main_peaks = [int(elem) for elem in sorted_arr_2d[1][:nb_peak]]
+    main_index = [int(elem) for elem in sorted_arr_2d[1][:nb_peak]]
+    main_peaks = [peaks[index] for index in main_index]
     x_offset, y_offset = (max(x) - min(x)) / 10, max(y) / 10
 
-    if make_plots:
-        for main in main_peaks:
-            ax.plot(x[peaks[main]], y[peaks[main]], 'go', ms=10)
-            ax.axvline(x=x[left_limit[main]], c='g', ls='--')
-            ax.axvline(x=x[right_limit[main]], c='g', ls='--')
-            ax.annotate(f'{x[peaks[main]]:.1f}',
-                        xy=(x[peaks[main]], y[peaks[main]]),
-                        xytext=(x[peaks[main]] + x_offset,
-                                y[peaks[main]] - y_offset),
-                        c='g', size=15,
-                        arrowprops={'facecolor': 'green'}, weight='heavy')
-        ax.axhline(y=np.mean(y), c='k', ls=':',
-                   label='amplitude mean : threshold of peak detection')
-
     return {'peaks': peaks,
-            'main': main_peaks,
+            'main': main_index,
+            'main peaks': main_peaks,
             'lim': [left_limit, right_limit],
             'offset': [x_offset, y_offset]}
+
+
+def plot_main_peaks(ax, x, y, res):
+    """
+    Plot main peaks on a given axis.
+
+    Parameters
+    ----------
+    ax : matplotlib.axes.Axes
+        Axis to plot on.
+    x : array-like
+        X-axis data.
+    y : array-like
+        Y-axis data.
+    res : dict
+        Result dictionary containing peak information.
+
+    Returns
+    -------
+    None
+    """
+    for index, peak in zip(res['main'], res['main peaks']):
+        ax.plot(x[peak], y[peak], 'go', ms=10)
+        ax.axvline(x=x[res["lim"][0][index]], c='g', ls='--')
+        ax.axvline(x=x[res["lim"][1][index]], c='g', ls='--')
+        ax.annotate(f'{x[peak]:.1f}',
+                    xy=(x[peak], y[peak]),
+                    xytext=(x[peak] + res["offset"][0],
+                            y[peak] - res["offset"][1]),
+                    c='g', size=15,
+                    arrowprops={'facecolor': 'green'}, weight='heavy')
+    ax.axhline(y=float(np.mean(y)), c='k', ls=':',
+               label='amplitude mean : threshold of peak detection')
 
 
 def width_peak(x_val, y_val, index_cent, threshold):
@@ -231,8 +243,9 @@ def guess_bckgnd(y_val, x_bckgnd=10):
     """
     assert 0 <= x_bckgnd <= 100
     coef = int(x_bckgnd / 100 * len(y_val))
-    y_val_bckng = np.concatenate([y_val[:coef], y_val[-coef:]])
-    bckgnd = np.mean(np.concatenate([y_val_bckng[:coef], y_val_bckng[-coef:]]))
+    y_val_bckgnd = np.concatenate([y_val[:coef], y_val[-coef:]])
+    bckgnd = \
+        np.mean(np.concatenate([y_val_bckgnd[:coef], y_val_bckgnd[-coef:]]))
 
     return bckgnd
 
@@ -259,8 +272,8 @@ def guess_affine(x_val, y_val, x_bckgnd=10):
     """
     assert 0 <= x_bckgnd <= 100
     coef = int(x_bckgnd / 100 * len(x_val))
-    x_val_bckng = np.concatenate([x_val[:coef], x_val[-coef:]])
-    y_val_bckng = np.concatenate([y_val[:coef], y_val[-coef:]])
-    bckgnd_res = linregress(x_val_bckng, y_val_bckng)
+    x_val_bckgnd = np.concatenate([x_val[:coef], x_val[-coef:]])
+    y_val_bckgnd = np.concatenate([y_val[:coef], y_val[-coef:]])
+    bckgnd_res = linregress(x_val_bckgnd, y_val_bckgnd)
 
     return bckgnd_res[0], bckgnd_res[1]
