@@ -134,9 +134,11 @@ def correlation_analysis_all_maps(properties, mask=None):
     for mode in ['on', 'off']:
         if mode in properties:
             dict_map = properties[mode]
-            # Add coupled maps
+            # Add maps of coupled and other properties
             if 'coupled' in properties:
                 dict_map.update(properties['coupled'])
+            if 'other' in properties:
+                dict_map.update(properties['other'])
             maps = list(dict_map.values())
             key_map = list(dict_map.keys())
             coef_arr[mode] = gen_correlation_array(maps, mask=mask)
