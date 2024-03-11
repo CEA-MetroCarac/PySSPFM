@@ -11,11 +11,14 @@ from PySSPFM.gui.global_map_reader import main as main_tool_1_a
 from PySSPFM.gui.list_map_reader import main as main_tool_1_b
 from PySSPFM.gui.loop_file_reader import main as main_tool_1_c
 from PySSPFM.gui.raw_file_reader import main as main_tool_1_d
-from PySSPFM.gui.map_correlation import main as main_tool_2_a
-from PySSPFM.gui.curve_clustering import main as main_tool_2_b
-from PySSPFM.gui.mean_hyst import main as main_tool_2_c
-from PySSPFM.gui.sort_plot_pixel import main as main_tool_2_d
-from PySSPFM.gui.spm_converter import main as main_tool_3_a
+from PySSPFM.gui.spm_data_extractor import main as main_tool_1_e
+from PySSPFM.gui.phase_offset_analyzer import main as main_tool_2_a
+from PySSPFM.gui.map_correlation import main as main_tool_3_a
+from PySSPFM.gui.curve_clustering import main as main_tool_3_b
+from PySSPFM.gui.mean_hyst import main as main_tool_3_c
+from PySSPFM.gui.sort_plot_pixel import main as main_tool_3_d
+from PySSPFM.gui.spm_converter import main as main_tool_4_a
+from PySSPFM.gui.meas_sheet_generator import main as main_tool_4_b
 from PySSPFM.gui.utils import \
     add_section_separator, init_main_wdw, create_section
 
@@ -53,10 +56,11 @@ def main():
                    strg_title=strg_title, strg_functions=strg_functions)
 
     # Toolbox - 1 - Readers
-    labels = ["Global map", "List map", "Loop file", "Raw file"]
+    labels = ["Global map", "List map", "Loop file", "Raw file",
+              "SPM data extractor"]
     functions = [main_tool_1_a, main_tool_1_b, main_tool_1_c,
-                 main_tool_1_d]
-    strg_title = "Readers are usefull to create figures of sspfm results"
+                 main_tool_1_d, main_tool_1_e]
+    strg_title = "Readers are usefull to create figures or extract sspfm data"
     strg_functions = [
         "Generate all sspfm maps of sample properties\n"
         "- Generate all sspfm maps from extraction of sample properties "
@@ -67,15 +71,29 @@ def main():
         "Extraction and visualisation of .txt file data of local nanoloops "
         "of the sample surface",
         "Viewing of raw signal of a sspfm file in a graphic",
+        "Extract all the data contained in an SPM file",
     ]
     create_section(root, "Toolbox - 1 - Readers", labels, functions,
                    strg_title=strg_title, strg_functions=strg_functions)
 
-    # Toolbox - 2 - Map / multi-loop tools
+    # Toolbox - 2 - Phase tools
+    labels = ["Phase offset analyzer"]
+    functions = [main_tool_2_a]
+    strg_title = "Phase tools allow to perform phase analysis on sspfm " \
+                 "measurement"
+    strg_functions = [
+        "Automatic determination of phase offset for a list of raw sspfm "
+        "measurement file"
+    ]
+    create_section(root, "Toolbox - 2 - Phase tools", labels,
+                   functions, strg_title=strg_title,
+                   strg_functions=strg_functions)
+
+    # Toolbox - 3 - Map / multi-loop tools
     labels = ["Map correlation", "Curve clustering", "Mean hysteresis",
               "Sort and plot pixel"]
-    functions = [main_tool_2_a, main_tool_2_b, main_tool_2_c,
-                 main_tool_2_d]
+    functions = [main_tool_3_a, main_tool_3_b, main_tool_3_c,
+                 main_tool_3_d]
     strg_title = "Map and multi-loop tools allow to go deeper into sspfm " \
                  "measurement analysis by trying to identify and separate " \
                  "phases, determining origins of contrast mapping ..."
@@ -97,17 +115,21 @@ def main():
         "Find extremum value of sspfm map of a property and "
         "plot hysteresis of associated files"
     ]
-    create_section(root, "Toolbox - 2 - Map / multi-loop tools", labels,
+    create_section(root, "Toolbox - 3 - Map / multi-loop tools", labels,
                    functions, strg_title=strg_title,
                    strg_functions=strg_functions)
 
-    # Toolbox - 3 - File management
-    strg_title = "File management tools allow to manipulate sspfm data files."
+    # Toolbox - 4 - File management
+    strg_title = "File management tools allow to manipulate sspfm data files " \
+                 "or measurement sheet based on data extraction of SPM files."
     strg_functions = [
-        "Conversion of raw_data.spm (sspfm datacube file) to raw_data.txt"
+        "Conversion of raw_data.spm (sspfm datacube file) to raw_data.txt",
+        "Generate a CSV measurement sheet from a model and SPM raw file "
+        "data extraction",
     ]
-    create_section(root, "Toolbox - 3 - File management", ["SPM converter"],
-                   [main_tool_3_a], strg_title=strg_title,
+    create_section(root, "Toolbox - 4 - File management",
+                   ["SPM converter", "Measurement sheet generator"],
+                   [main_tool_4_a, main_tool_4_b], strg_title=strg_title,
                    strg_functions=strg_functions)
 
     def quit_application():
