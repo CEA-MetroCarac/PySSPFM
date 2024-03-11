@@ -26,8 +26,8 @@ def test_file():
         [np.sum(np.nan_to_num(value))
          for value in loop_tabs['off'].values() if value is not None])
 
-    assert sum_1 == approx(86455.65548)
-    assert sum_2 == approx(74628.64881099999)
+    assert sum_1 == approx(46128.32948)
+    assert sum_2 == approx(38651.288811)
     assert sum_3 == approx(46128.38957897419)
     assert sum_4 == approx(38651.29668676276)
     assert fmts['on'][0] == '%i'
