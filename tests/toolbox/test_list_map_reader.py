@@ -13,4 +13,4 @@ def test_list_map_reader():
 
     figures = ex_list_map_reader()
 
-    assert len(list(figures)) == 3
+    assert len(list(figures)) == 4
