@@ -34,11 +34,15 @@ def generate_file_nanoloop_paths(dir_path_in, mode=''):
     assert os.path.isdir(dir_path_in)
     assert mode in ['', 'off_f', 'on_f']
 
+    def replace_numbers_with_zero(input_string):
+        return ''.join('0' if c.isdigit() else c for c in input_string)
+
     file_paths_in = []
     list_file = [file for file in os.listdir(dir_path_in)
-                 if not file.endswith('.csv')]
+                 if not file.endswith('measurement sheet model SSPFM.csv')]
     root = list_file[0].split('.')[0].replace("off_f_", "").replace('on_f_', '')
     index_pattern = list_file[0].split('.')[1]
+    index_pattern = replace_numbers_with_zero(index_pattern)
 
     indexs = []
     for file in list_file:
