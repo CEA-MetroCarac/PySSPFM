@@ -35,10 +35,12 @@ def ex_global_map_reader(verbose=False, make_plots=False):
                    'interp func': 'linear',
                    'revert mask': {'on': False,
                                    'off': False,
-                                   'coupled': False},
+                                   'coupled': False,
+                                   'other': False},
                    'man mask': {'on': None,
                                 'off': None,
-                                'coupled': None},
+                                'coupled': None,
+                                'other': None},
                    'ref': {'on': {'prop': 'charac tot fit: R_2 hyst',
                                   'fmt': '.5f',
                                   'min val': 0.92,
@@ -53,7 +55,13 @@ def ex_global_map_reader(verbose=False, make_plots=False):
                                        'fmt': '.5f',
                                        'min val': 0.995,
                                        'max val': None,
-                                       'interactive': False}}}
+                                       'interactive': False},
+                           'other': {'prop': 'deflection error',
+                                     'fmt': '.2f',
+                                     'min val': None,
+                                     'max val': 5,
+                                     'interactive': False}}}
+
     # saving path management
     dir_path_out, save_plots = save_path_example(
         "global_map_reader", save_example_exe=make_plots, save_test_exe=False)
