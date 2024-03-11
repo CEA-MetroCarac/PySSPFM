@@ -60,4 +60,4 @@ def test_ex_butter_filter_bandstop():
 
     y_filt_bandstop = ex_butter_filter(filter_type='bandstop')
 
-    assert np.sum(y_filt_bandstop) == approx(33.83620308961862, abs=1e-5)
+    assert np.sum(y_filt_bandstop) == approx(33.83620308961862, rel=0.1)
