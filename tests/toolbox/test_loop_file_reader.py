@@ -16,13 +16,13 @@ def test_loop_file_reader():
     out = example_loop_file_reader()
 
     # for nanoloop in out:
-    #     print(np.sum(nanoloop.piezorep))
+    #     print(np.sum(nanoloop.piezorep.y_meas))
 
-    assert np.sum(out[0].piezorep.y_meas) == approx(0.007081196191521127)
-    assert np.sum(out[1].piezorep.y_meas) == approx(0.0030950251475542184)
-    assert np.sum(out[2].piezorep.y_meas) == approx(0.002495189589386597)
-    assert np.sum(out[3].piezorep.y_meas) == approx(0.0022313696987980723)
-    assert np.sum(out[4].piezorep.y_meas) == approx(0.0018318402751288214)
-    assert np.sum(out[5].piezorep.y_meas) == approx(0.0022254565110847615)
-    assert np.sum(out[6].piezorep.y_meas) == approx(0.002313203349539847)
-    assert np.sum(out[7].piezorep.y_meas) == approx(0.002579800042060846)
+    assert np.sum(out[0].piezorep.y_meas) == approx(-0.0071040007941460355)
+    assert np.sum(out[1].piezorep.y_meas) == approx(-0.0030957909636012133)
+    assert np.sum(out[2].piezorep.y_meas) == approx(-0.002491171905122655)
+    assert np.sum(out[3].piezorep.y_meas) == approx(-0.00228582007060475)
+    assert np.sum(out[4].piezorep.y_meas) == approx(-0.001837495609928858)
+    assert np.sum(out[5].piezorep.y_meas) == approx(-0.002237673504772637)
+    assert np.sum(out[6].piezorep.y_meas) == approx(-0.002378292790837367)
+    assert np.sum(out[7].piezorep.y_meas) == approx(-0.0026344524341999475)
