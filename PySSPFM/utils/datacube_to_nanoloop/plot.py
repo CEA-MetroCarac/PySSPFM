@@ -170,7 +170,7 @@ def plt_bias(ss_pfm_bias_calc, ss_pfm_bias, dict_meas):
     tabs_dict = [tab_dict_1, tab_dict_2]
 
     plot_graph(ax, dict_meas['times'], y_tabs, plot_dict=plot_dict,
-               tabs_dict=tabs_dict)
+               tabs_dict=tabs_dict, plot_leg=True)
 
     return fig
 
@@ -234,25 +234,38 @@ def plt_signals(dict_meas, unit='a.u'):
     """
     # Initialize figure
     figsize = get_setting("figsize")
-    fig, axs = plt.subplots(4, 1, figsize=figsize, sharex='all')
+    fig, axs = plt.subplots(5, 1, figsize=figsize, sharex='all')
     fig.sfn = "raw_signals"
     fig.suptitle('\nPhysical Signals in Time', fontsize=24, fontweight='heavy')
     plot_dict = {'x lab': '', 'lw': 1, 'fs': 15, 'edgew': 2, 'tickl': 3,
                  'gridw': 1}
     tab_dict = {}
 
+    # Height sub image
+    try:
+        if len(dict_meas['height']) > 0:
+            plot_dict.update({'y lab': 'Height [nm]', 'c y lab': 'c'})
+            tab_dict.update({'form': 'c-'})
+            plot_graph(axs[0], dict_meas['times'], dict_meas['height'],
+                       plot_dict=plot_dict, tabs_dict=tab_dict, plot_leg=False)
+    except (KeyError, ValueError):
+        pass
+
     # Deflection sub image
-    if len(dict_meas['deflection']) > 0:
-        plot_dict.update({'y lab': 'Deflection [nm]', 'c y lab': 'm'})
-        tab_dict.update({'form': 'm-'})
-        plot_graph(axs[0], dict_meas['times'], dict_meas['deflection'],
-                   plot_dict=plot_dict, tabs_dict=tab_dict, plot_leg=False)
+    try:
+        if len(dict_meas['deflection']) > 0:
+            plot_dict.update({'y lab': 'Deflection [nm]', 'c y lab': 'm'})
+            tab_dict.update({'form': 'm-'})
+            plot_graph(axs[1], dict_meas['times'], dict_meas['deflection'],
+                       plot_dict=plot_dict, tabs_dict=tab_dict, plot_leg=False)
+    except (KeyError, ValueError):
+        pass
 
     # Tip bias sub image
     try:
         plot_dict.update({'y lab': 'SS PFM bias [V]', 'c y lab': 'g'})
         tab_dict.update({'form': 'g-'})
-        plot_graph(axs[1], dict_meas['times'], dict_meas['tip_bias'],
+        plot_graph(axs[2], dict_meas['times'], dict_meas['tip_bias'],
                    plot_dict=plot_dict, tabs_dict=tab_dict, plot_leg=False)
     except (KeyError, ValueError):
         pass
@@ -260,14 +273,14 @@ def plt_signals(dict_meas, unit='a.u'):
     # Amplitude sub image
     plot_dict.update({'y lab': f'Amplitude [{unit}]', 'c y lab': 'b'})
     tab_dict.update({'form': 'b-'})
-    plot_graph(axs[2], dict_meas['times'], dict_meas['amp'],
+    plot_graph(axs[3], dict_meas['times'], dict_meas['amp'],
                plot_dict=plot_dict, tabs_dict=tab_dict, plot_leg=False)
 
     # Phase sub image
     plot_dict.update({'y lab': 'Phase [°]', 'x lab': 'Time [s]',
                       'c y lab': 'r'})
     tab_dict.update({'form': 'r-'})
-    plot_graph(axs[3], dict_meas['times'], dict_meas['pha'],
+    plot_graph(axs[4], dict_meas['times'], dict_meas['pha'],
                plot_dict=plot_dict, tabs_dict=tab_dict, plot_leg=False)
 
     return fig
@@ -275,7 +288,7 @@ def plt_signals(dict_meas, unit='a.u'):
 
 def plt_seg_max(seg, unit='a.u'):
     """
-    Plot a segment segment for max sweep analysis
+    Plot a segment for max sweep analysis
 
     Parameters
     ----------
@@ -416,7 +429,7 @@ def plt_seg_fit(seg, unit='a.u', fit_pha=False):
 
 def plt_seg_stable(seg, unit='a.u'):
     """
-    Plot a segment for single frequency or DFRT analysis
+    Plot a segment for single frequency or dfrt analysis
 
     Parameters
     ----------
