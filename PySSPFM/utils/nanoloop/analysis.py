@@ -374,25 +374,19 @@ class AllMultiLoop:
 
         # Resonance frequency
         if res_freq:
-            if not all(elem == res_freq[0] for elem in res_freq):
-                res_freq_loops = MultiLoop(
-                    write_volt, res_freq, read_volt, mode=mode,
-                    y_sigma=res_freq_sigma)
-                self.res_freq = res_freq_loops
-            else:
-                self.res_freq, res_freq_loops = None, None
+            res_freq_loops = MultiLoop(
+                write_volt, res_freq, read_volt, mode=mode,
+                y_sigma=res_freq_sigma)
+            self.res_freq = res_freq_loops
         else:
             self.res_freq, res_freq_loops = None, None
 
         # Quality factor
         if q_fact:
-            if not all(elem == q_fact[0] for elem in q_fact):
-                q_fact_loops = MultiLoop(
-                    write_volt, q_fact, read_volt, mode=mode,
-                    y_sigma=q_fact_sigma)
-                self.q_fact = q_fact_loops
-            else:
-                self.q_fact, q_fact_loops = None, None
+            q_fact_loops = MultiLoop(
+                write_volt, q_fact, read_volt, mode=mode,
+                y_sigma=q_fact_sigma)
+            self.q_fact = q_fact_loops
         else:
             self.q_fact, q_fact_loops = None, None
 
@@ -505,7 +499,7 @@ def phase_up_down(phase_tab, pha_calib):
 
 
 def nanoloop_treatment(data_dict, sign_pars, dict_pha=None, dict_str=None,
-                       q_fact_scalar=100., resonance=True):
+                       q_fact_scalar=100., resonance=True, make_plots=False):
     """
     Perform treatment value on nanoloops
 
@@ -523,6 +517,8 @@ def nanoloop_treatment(data_dict, sign_pars, dict_pha=None, dict_str=None,
         Quality factor value (scalar)
     resonance: bool, optional
         True if measurement are performed at resonance frequency and vice versa
+    make_plots: bool, optional
+        Activation key for matplotlib figures generation
 
     Returns
     -------
@@ -540,7 +536,8 @@ def nanoloop_treatment(data_dict, sign_pars, dict_pha=None, dict_str=None,
 
     # Perform phase treatment and get pha_calib
     (_, pha_calib, _) = phase_calibration(
-        data_dict['phase'], data_dict['write'], dict_pha, dict_str=dict_str)
+        data_dict['phase'], data_dict['write'], dict_pha, dict_str=dict_str,
+        make_plots=make_plots)
     loop_tab = []
     for num in range(1, int(max(data_dict['index']) + 1)):
         # Extract values for the current loop
