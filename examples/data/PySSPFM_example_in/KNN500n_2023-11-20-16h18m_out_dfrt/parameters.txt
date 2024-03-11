@@ -21,19 +21,17 @@ Sens ampli: 100
 Offset ampli [V]: 0
 Sens phase [mV/°]: 5
 Offset phase [V]: 0
-Bias app: Sample
+AC Bias app: Sample
+SSPFM Bias app: Tip
 V_AC [V]: 1
 Date [hh : dd/mm/yyyy]: 13H : 27/06/2022
-Pix durat [sec]: 80.15
-Grid durat [sec]: 5129.6
+Pix durat [sec]: 80.4
+Grid durat [sec]: 5145.6
 Tip: SCM-PIT-V2
 Sign of d33: positive
 Sample ref: KNN03
+Mode: DFRT
 nb seg: 1600
-exp time [s]: 80.34471979714908
-start hold time exp [s]: 0.09671999975580547
-end hold time exp [s]: 0.2479999993738602
-theoretic time [s]: 80.34471999912967
 
 - SS PFM parameters
 Min volt (W) [V]: -10
@@ -48,26 +46,33 @@ Nb volt (R): 8
 Mode (R): Single Read Step
 Seg durat (R) [ms]: 50
 Seg sample (R): 100
+Hold seg durat (start) [ms]: 250
+Hold sample (start): 201
+Hold seg durat (end) [ms]: 250
+Hold sample (end): 201
 
 
 ### Treatment parameters: first step ###
 
 - Info
-start of analysis: 2023-11-20 16;19
-analysis duration: 00h:00m:32s
-nb file analyzed: 63
+start of analysis: 2024-03-08 10;58
+analysis duration (theoretical): 00h:01m:15s
+nb file analyzed: 62
+analysis duration (real): 00h:01m:10s
 
 - Segment parameters
 mode: dfrt
-cut seg [%]: {'start': 5, 'end': 5}
-filter: False
-filter ord: 10
+cut seg [%]: {'start': 10, 'end': 0}
+filter type: None
+filter freq 1: 1000.0
+filter freq 2: 3000.0
+filter ord: 4
 
 
 ### Treatment parameters: second step ###
 
 - Info
-start of analysis: 2023-12-12 14;05
+start of analysis: 2024-03-08 18;04
 analysis duration: 00h:00m:00s
 
 - Hysteresis / loop treatment parameters
