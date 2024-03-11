@@ -9,6 +9,7 @@ import tkinter.filedialog as tkf
 import time
 from datetime import datetime
 import numpy as np
+import matplotlib.pyplot as plt
 
 from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.extract_params_from_file import \
@@ -67,6 +68,8 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars,
         Best nanoloop depending on the analysis mode for the pixel.
     properties: dict
         Properties of the pixel (result of single analysis).
+    other_properties: dict
+        Other properties about the segment (topography, mechanical measurement).
     dict_str: dict
         Dictionary used for figure annotation.
     figs: list of matplotlib.pyplot.Figure
@@ -77,12 +80,14 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars,
     figs, bckgnd_tab, read_volt, properties = [], [], [], {}
 
     if test_dict is None:
-        data_dict, dict_str = extract_nanoloop_data(file_path_in)
+        data_dict, dict_str, other_properties = \
+            extract_nanoloop_data(file_path_in)
     else:
         pha_val = {"fwd": user_pars["pha fwd"], "rev": user_pars["pha rev"]}
         data_dict, dict_str = gen_data_dict(
             test_dict, meas_pars['Q factor'], mode=test_dict['mode'],
             pha_val=pha_val)
+        other_properties = {}
     dict_str['index'] = cont
 
     dict_pha = gen_dict_pha(
@@ -107,7 +112,7 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars,
         properties['pha 0'] = init_meas['pha']
 
     if analysis_mode == 'multi_loop':
-        ckpfm_dict = gen_ckpfm_meas(loop_tab)
+        ckpfm_dict = gen_ckpfm_meas([loop.piezorep for loop in loop_tab])
         if make_plots:
             fig = plot_ckpfm(ckpfm_dict, dict_str=dict_str)
             figs.append(fig)
@@ -175,7 +180,7 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars,
         properties[key] = value
     figs += figs_elec
 
-    return best_loop, properties, dict_str, figs
+    return best_loop, properties, other_properties, dict_str, figs
 
 
 def coupled_analysis(best_loops, offset_off=0.0, limit=None, dict_str=None,
@@ -254,11 +259,13 @@ def single_script(tab_path_in, user_pars, meas_pars, sign_pars, cont=1,
         Best loops depending on analysis mode.
     properties: dict
         Measurements of the pixel (result of single script analysis).
+    other_properties: dict
+        Other properties about the segment (topography, mechanical measurement).
     figs: list of matplotlib.pyplot.Figure
         Figures of single and coupled analysis.
     """
     best_loops = {'on': [], 'off': []}
-    figs, add_str, dict_str, properties = [], '', '', {}
+    figs, add_str, dict_str, properties, other_properies = [], '', '', {}, {}
 
     for sub_cont, file_path_in in enumerate(tab_path_in):
         file_name_in = os.path.split(file_path_in)[1]
@@ -280,7 +287,8 @@ def single_script(tab_path_in, user_pars, meas_pars, sign_pars, cont=1,
             analysis_mode=analysis_mode, cont=cont, test_dict=test_dict,
             make_plots=make_plots)
 
-        best_loops[mode], properties[mode], dict_str, single_figs = par
+        best_loops[mode], properties[mode], other_properies[mode], dict_str, \
+            single_figs = par
         figs.extend(single_figs)
 
     if add_str == 'b':
@@ -293,7 +301,7 @@ def single_script(tab_path_in, user_pars, meas_pars, sign_pars, cont=1,
         properties['coupled'], coupled_figs = par
         figs.extend(coupled_figs)
 
-    return best_loops, properties, figs
+    return best_loops, properties, other_properies, figs
 
 
 def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
@@ -380,23 +388,28 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
     else:
         limit = user_pars['diff domain']
     make_plots = bool(show_plots or save)
-    _, properties, figs = single_script(
-        file_paths_in[0], user_pars, meas_pars, sign_pars, cont=1, limit=limit,
+    _, properties, other_properties, figs = single_script(
+        file_paths_in[0], user_pars, meas_pars, sign_pars, cont=0, limit=limit,
         test_dicts=test_dicts, make_plots=make_plots, verbose=verbose)
     print_plots(figs, save_plots=save, show_plots=show_plots,
                 dirname=dir_path_out_fig, transparent=False)
+
     for key, value in properties.items():
         all_properties[key] = {sub_key: [] for sub_key in value}
-
+        all_properties['other'] = {key: [] for key in
+                                   list(other_properties.values())[0].keys()}
     for cont, tab_path_in in enumerate(file_paths_in):
-        best_loops, properties, _ = single_script(
+        best_loops, properties, other_properties, _ = single_script(
             tab_path_in, user_pars, meas_pars, sign_pars, cont=cont,
             test_dicts=test_dicts, verbose=verbose)
         for key, value in properties.items():
             for sub_key, sub_value in value.items():
                 all_properties[key][sub_key].append(sub_value)
+        for key, value in list(other_properties.values())[0].items():
+            all_properties['other'][key].append(value)
         for key, value in best_loops.items():
             tab_best_loops[key].append(value)
+        plt.close('all')
 
     dim_pix = {'x': meas_pars['Grid x [pix]'],
                'y': meas_pars['Grid y [pix]']}
