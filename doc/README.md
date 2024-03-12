@@ -140,7 +140,7 @@
 </p>
 
 <p align="justify" width="100%">
-Following the SSPFM (Switching Spectroscopy Piezoresponse Force Microscopy) <a href="#ref1">[1]</a> measurement, one or more SSPFM datacube files are generated. A measurement form should be completed by the user (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20single%20frequency.csv">SSPFM single frequency</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20sweep%20frequency.csv">SSPFM sweep frequency</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20DFRT.csv">SSPFM-DFRT</a>). 
+Following the SSPFM (Switching Spectroscopy Piezoresponse Force Microscopy) <a href="#ref1">[1]</a> measurement, one or more SSPFM datacube files are generated. A measurement form should be completed by the user (template for: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM.csv">measurement sheet model SSPFM</a>). 
 The PySSPFM application then proceeds with two stages of measurement processing. In the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/datacube_to_nanoloop_s1.py">first step</a> of data analysis, amplitude and phase measurements are extracted and calibrated for each segment and nanoloops are determined. The <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/nanoloop_to_hyst_s2.py">second step</a> creates the piezoresponse hysteresis loop, and extracts piezoelectric and ferroelectric properties using an algorithm based on the <a href="https://pypi.org/project/lmfit/">lmfit</a> library. Various artifact decorrelation protocols improve measurement accuracy. Then, <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">SSPFM mapping</a> can be performed. A <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">toolbox</a> is provided including:
 </p>
 
@@ -276,7 +276,7 @@ SSPFM files from other manufacturers are not supported in this application. It i
 #### III.1.b) - Measurement sheet
 
 <p align="justify" width="100%">
-Prior to conducting the SSPFM measurement, the user must complete a measurement form. Templates are available for the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20single%20frequency.csv">SSPFM single frequency</a>, <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20sweep%20frequency.csv">SSPFM sweep frequency</a> and <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM%20DFRT.csv">SSPFM-DFRT</a> modes. This measurement form serves as a comprehensive guide, directing the user in the execution of SSPFM measurements and concurrently documenting essential measurement parameters. Its purpose is to ensure adherence to good practices and establish a shared foundation in the implementation of the measurement across diverse SSPFM setups unique to each user. Moreover, it provides ample information for seamless progression through the data processing with PySSPFM. It also automatically generates certain measurement information based on the provided parameters, such as: <br>
+Prior to conducting the SSPFM measurement, the user must complete a measurement form (the template is available here: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM.csv">measurement sheet model SSPFM</a>). This measurement form serves as a comprehensive guide, directing the user in the execution of SSPFM measurements and concurrently documenting essential measurement parameters. Its purpose is to ensure adherence to good practices and establish a shared foundation in the implementation of the measurement across diverse SSPFM setups unique to each user. Moreover, it provides ample information for seamless progression through the data processing with PySSPFM. It also automatically generates certain measurement information based on the provided parameters, such as: <br>
 &#8226 total measurement time <br>
 &#8226 tip-induced pressure <br>
 &#8226 lock-in amplifier settings <br>
@@ -286,9 +286,9 @@ Furthermore, completing the form is a mandatory prerequisite for the subsequent 
 &#8226 grid dimensions <br>
 &#8226 calibration coefficients <br>
 &#8226 sign of piezoelectric coeffcient <br>
-&#8226 sinusoidal voltage magnitude <br>
-&#8226 voltage application direction <br>
-&#8226 SSPFM polarization signal parameters <br>
+&#8226 AC voltage magnitude <br>
+&#8226 AC and DC voltage application direction <br>
+&#8226 SSPFM polarization (DC) voltage parameters <br>
 </p>
 
 #### III.1.c) - Extraction
@@ -304,9 +304,12 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
     <ul align="justify" width="100%">
         <li>1. Authentic data stemming from SSPFM measurements conducted on a KNN (potassium sodium niobate) sample, which are located within the directory: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in">examples/data/PySSPFM_example_in</a></code>. This repository encompasses several subdirectories, specifically:</li>
         <ul align="justify" width="100%">
-            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/KNN500n">KNN500n</a></code>: housing an assemblage of SSPFM datacube measurement files, bearing the spm extension (Bruker), alongside their corresponding measurement records. This serves the following purpose:</li>
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/KNN500n">KNN500n</a></code>: housing an assemblage of SSPFM datacube measurement files, initially with an spm extension (Bruker), converted to txt format to be read by all users, alongside their corresponding measurement records. This serves the following purpose:</li>
             <ul align="justify" width="100%">
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_loop_file_reader.py">examples/toolbox/ex_loop_file_reader.py</a></code></li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop_to_hyst/ex_file.py">examples/utils/nanoloop_to_hyst/ex_file.py</a></code></li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/datacube_to_nanoloop/ex_file.py">examples/utils/datacube_to_nanoloop/ex_file.py</a></code></li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/datacube_to_nanoloop/ex_analysis.py">examples/utils/datacube_to_nanoloop/ex_analysis.py</a></code></li>
             </ul>
         </ul>
         <ul align="justify" width="100%">
@@ -319,8 +322,9 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
         <ul align="justify" width="100%">
             <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/KNN500n_2023-11-20-16h15m_out_dfrt">KNN500n_2023-11-20-16h15m_out_dfrt</a></code>: embodying the measurement outcomes post the second phase of processing. This underpins the following endeavors:</li>
             <ul align="justify" width="100%">
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_global_map_reader.py">examples/toolbox/ex_global_map_reader.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_phase.py">examples/utils/nanoloop/ex_phase.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_curve_clustering.py">examples/toolbox/ex_curve_clustering.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_global_map_reader.py">examples/toolbox/ex_global_map_reader.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_list_map_reader.py">examples/toolbox/ex_list_map_reader.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_map_correlation.py">examples/toolbox/ex_map_correlation.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_mean_hyst.py">examples/toolbox/ex_mean_hyst.py</a></code>.</li>
