@@ -387,6 +387,12 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
     <ul align="justify" width="100%">
         <li>3. Other files, that are not SSPFM datacube measurement files:</li>
         <ul align="justify" width="100%">
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/CSV%20measurement%20sheet">examples/data/PySSPFM_example_in/CSV measurement sheet</a></code>: a CSV measurement sheet model. It is opened for the following file :</li>:
+            <ul align="justify" width="100%">
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_meas_sheet_generator.py">examples/toolbox/ex_meas_sheet_generator.py</a></code>.</li>
+            </ul>
+        </ul>
+        <ul align="justify" width="100%">
             <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/settings.json">settings.json</a></code>: a json file containing the complete set of configuration parameters for the PySSPFM application. It is opened for the following file :</li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/ex_settings.py">examples/ex_settings.py</a></code>.</li>
