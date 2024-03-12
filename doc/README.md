@@ -844,12 +844,12 @@ In the PySSPFM application, users can concretely assign the desired phase values
 </p>
 
 <p align="justify" width="100%">
-A potential phase inversion can be detected by examining the variation in the mean phase concerning the polarization voltage, using the <code>phase_analysis</code> function. If the theoretical and measured variations are opposite, a phase inversion has occurred, and it is subsequently corrected.  It should be noted that the direction of the AC voltage application influences the phase value corresponding to the polarisation state or DC bias voltage. However, a potential phase inversion is taken into account and corrected at this stage to align with the physically determined value beforehand.
+A potential phase inversion can be detected by examining the variation in the mean phase concerning the polarization voltage, using the <code>phase_bias_grad</code> function. If the theoretical and measured variations are opposite, a phase inversion has occurred, and it is subsequently corrected.  It should be noted that the direction of the AC voltage application influences the phase value corresponding to the polarisation state or DC bias voltage. However, a potential phase inversion is taken into account and corrected at this stage to align with the physically determined value beforehand.
 </p>
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_variation_with_voltage.PNG> <br>
-    <em>Detection of phase inversion with phase variation with voltage (figure generated with <code>phase_analysis</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script)</em>
+    <em>Detection of phase inversion with phase variation with voltage (figure generated with <code>phase_bias_grad</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
@@ -1239,6 +1239,34 @@ Each cartography is rendered using the functions <code>intermediate_map</code> o
 ## VIII) Toolbox
 
 ### VIII.1) Viewers
+
+#### VIII.1.a) SPM data extractor
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_data_extractor.py">toolbox/spm_data_extractor.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/spm_data_extractor.py">gui/spm_data_extractor.py</a></code>. This enables the extraction of all the data contained within the raw SSPFM file measurement with the spm extension.
+</p>
+
+<p align="justify" width="100%">
+User parameters:
+</p>
+
+```
+    default_user_parameters = {
+        'file path in': '',
+        'nb hold seg start': 1,
+        'nb hold seg end': 1,
+        'verbose': True,
+        'show plots': True}
+```
+
+<p align="justify" width="100%">
+&#8226 File management: In input, the algorithm take a SSPFM datacube measurement file. <br>
+&#8226 Plot parameters: Pertaining to the management of display of outcomes. <br>
+</p>
+
+<p align="justify" width="100%">
+As input, the SSPFM datacube measurement file is opened, and all its data is extracted and plotted. The user must specify the number of initial and final hold segments respectively, via the parameters <code>nb_hold_seg</code>, to facilitate data extraction from the file. The raw SSPFM measurement data are extracted, along with the SSPFM voltage parameters and information regarding the measurement conditions.
+</p>
 
 #### VIII.1.a) Raw file
 
