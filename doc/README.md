@@ -860,6 +860,10 @@ Following the calibration process and the identification of the positions of the
 &#8226 <code>up_down</code>: A threshold is established between the two peaks, and each phase value is assigned the target value, <code>pha_fwd</code> or <code>pha_rev</code>, based on its position relative to the threshold and the calibration process.
 </p>
 
+<p align="justify" width="100%">
+The whole phase analysis is separated from the plotting, respectively in the scripts <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot_phase.py">utils/nanoloop/plot_phase.py</a></code>.
+</p>
+
 ### V.2) - MultiLoop
 
 <p align="justify" width="100%">
