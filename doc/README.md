@@ -619,7 +619,7 @@ Calibration is indispensable for obtaining quantitative measurements. In the mea
 <p align="justify" width="100%">
 The user can also define a phase offset value to implement before processing the measurements. This offset is applied in the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script using the <code>apply_phase_offset</code> function, aiming to mitigate phase switching, which can pose challenges during analysis and nanoloop fitting. The user defines the phase offset value through the <code>offset</code> parameter. <br>
 &#8226 If the <code>method</code> parameter is set to <code>'static'</code>, this value is applied to the phase signal for all SSPFM raw measurement files. <br>
-&#8226 When <code>method</code> is set to <code>'dynamic'</code>, the phase offset value is applied to the first SSPFM raw measurement file, and for each subsequent file, a new offset value is determined using the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script with the <code>phase_offset_determination</code> function. It is then applied to the next measurement file. <br>
+&#8226 When <code>method</code> is set to <code>'dynamic'</code>, the phase offset value is applied to the first SSPFM raw measurement file, and for each subsequent file, a new offset value is determined using the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script with the <code>phase_offset_determination</code> and <code>mean_phase_offset</code> functions. It is then applied to the next measurement file. For a deeper understanding of the phase offset determination, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2-phase-offset-analyzer">VIII.2) Phase offset analyzer</a>.<br>
 &#8226 If <code>method</code> is set to <code>None</code>, no phase offset is applied for analysis.
 </p>
 
@@ -755,7 +755,7 @@ Once all the measurements are extracted per segment, phase and amplitude nanoloo
 ### V.1) - Post-measurement phase calibration
 
 <p align="justify" width="100%">
-Post-measurement phase calibration is performed with <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script.
+Post-measurement phase calibration is performed with the <code>phase_calibration</code> function of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script.
 To accomplish the calibration, taking inspiration from the publications of Neumayer et al. [<a href="#ref8">8</a>, <a href="#ref9">9</a>], a post-measurement calibration protocol has been devised. We have tailored this protocol for integration into the PySSPFM application, considering the specific user-specific experimental conditions.
 </p>
 
@@ -818,7 +818,7 @@ Here are the various hysteresis configurations in the on field mode, depending o
 </p>
 
 <p align="justify" width="100%">
-The entirety of these steps, including the determination of the direction of hysteresis rotation, as well as the correlation between the various levels of bias, polarization, and phase, is ascertained within the first part of the <code>phase_calibration</code> function.
+The entirety of these steps, including the determination of the direction of hysteresis rotation, as well as the correlation between the various levels of bias, polarization, and phase, is ascertained within the <code>theoretical_phase_analysis</code> function.
 </p>
 
 <p align="justify" width="100%">
@@ -836,7 +836,7 @@ For the second part of the <code>phase_calibration</code> function, an in-depth 
 
 <p align="center" width="100%">
     <img align="center" width="65%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_histogram.PNG> <br>
-    <em>Phase histogram of SSPFM measurement (figure generated with <code>histo_init</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script)</em>
+    <em>Phase histogram of SSPFM measurement (figure generated with <code>histo_init</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot_phase.py">utils/nanoloop/plot_phase.py</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
@@ -849,7 +849,7 @@ A potential phase inversion can be detected by examining the variation in the me
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_variation_with_voltage.PNG> <br>
-    <em>Detection of phase inversion with phase variation with voltage (figure generated with <code>phase_bias_grad</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script)</em>
+    <em>Detection of phase inversion with phase variation with voltage (figure generated with <code>plot_phase_bias_grad</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot_phase.py">utils/nanoloop/plot_phase.py</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
@@ -1491,6 +1491,78 @@ The operating principle of this reader differs slightly from that of the global 
     <em>Result of list_map_reader (figure generated with <code>main_list_map_reader</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader.py</a></code> script)</em>
 </p>
 
+### VIII.2) Phase offset analyzer
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">toolbox/phase_offset_analyzer.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/phase_offset_analyzer.py">gui/phase_offset_analyzer.py</a></code>. This script automatically calculates the optimal phase offset to apply to a series of raw SSPFM measurement files in order to minimize the phase switching phenomenon, which can complicate the analysis and fitting of SSPFM nanoloops.
+</p>
+
+#### VIII.2.a) Parameters
+
+<p align="justify" width="100%">
+User parameters:
+</p>
+
+```
+    default_seg_params = {'cut seg [%]': {'start': 5, 'end': 5},
+                          'mode': 'max',
+                          'filter type': 'None',
+                          'filter freq 1': 1e3,
+                          'filter freq 2': 3e3,
+                          'filter ord': 4}
+    default_fit_params = {'fit pha': False,
+                          'detect peak': False,
+                          'sens peak detect': 1.5}
+    default_user_parameters = {'dir path in': '',
+                               'dir path out': '',
+                               'range file': 'None',
+                               'extension': 'spm',
+                               'seg pars': default_seg_params,
+                               'fit pars': default_fit_params,
+                               'verbose': True,
+                               'show plots': True,
+                               'save': False}
+```
+
+<p align="justify" width="100%">
+&#8226 File Management: The user specifies the input folder containing all the raw SSPFM measurement files, as well as the csv measurement sheet Additionally, the range of file indices to analyze, extension, and an output folder to save the analysis results can be provided. <br>
+&#8226 Segment parameters: Parameters used for segment processing. <br>
+&#8226 Fit parameteres: Parameters used for SHO fitting. <br>
+&#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. <br>
+</p>
+
+<p align="justify" width="100%">
+&#8226 For a deeper understanding of the user parameters, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv---first-step-of-data-analysis">IV) - First step of data analysis</a>
+</p>
+
+#### VIII.2.b) Workflow
+
+<p align="center" width="100%">
+    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_phase_offset_analyzer.PNG>
+    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_phase_offset_analyzer_single_script.PNG> <br>
+    <em>Workflow: Phase offset analyzer (left: global, right: single script)</em>
+</p>
+
+<p align="justify" width="100%">
+The measurement parameters are extracted from the SSPFM measurement sheet, and each of the raw SSPFM measurement files is subsequently analyzed within the <code>multi_script</code> function. The <code>single_script</code> function analyzes a single raw SSPFM data file by following these steps: measurements are extracted from the file and calibrated if necessary. They are then segmented and processed into PFM data for each segment. The PFM phase signal is analyzed using the <code>phase_offset_determination</code> function of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script, both in On Field and Off Field conditions. During this analysis, a phase offset is determined, and the two main peaks are identified and recentered within the phase measurement range. For instance, if the phase value range extends from -180 to 180°, and the two peaks are spaced by 180°, a phase offset will be calculated to position them at -90 and 90°, respectively. This minimizes phase switching across all measurements. Ideally, the phase offsets determined in On and Off Field conditions should be close. The average offset corresponding to the entire measurement file is determined using the <code>mean_phase_offset</code> function of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script. The phase evolution with respect to the measurement file is generated using the <code>generate_graph_offset</code> function. It should be noted that the case of unipolar phase data (a single peak on the phase histogram) can be handled by the script functions.
+</p>
+
+<p align="justify" width="100%">
+&#8226 For a deeper understanding of script workflow, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv---first-step-of-data-analysis">IV) - First step of data analysis</a>
+</p>
+
+#### VIII.2.c) Figures
+
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_offset_analyzer_histo.PNG> <br>
+    <em>Histogram of phase values for On Field measurements, after applying the phase offset determined by the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">toolbox/phase_offset_analyzer.py</a></code> (figure generated with <code>refocused_phase_histo</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot_phase.py">utils/nanoloop/plot_phase.py</a></code> script). Both On and Off Field phase histogram figure are plotted.</em>
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_offset_analyzer_graph.PNG> <br>
+    <em>Graph showing the evolution of the phase offset determined by the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">toolbox/phase_offset_analyzer.py</a></code> as a function of the index of the raw SSPFM measurement files (figure generated with <code>generate_graph_offset</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">toolbox/phase_offset_analyzer.py</a></code> script).</em>
+</p>
+
 ### VIII.2) Curve clustering (K-Means)
 
 <p align="justify" width="100%">
@@ -1901,7 +1973,7 @@ The entire assemblage of scripts under the <code><a href="https://github.com/CEA
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/fitting.py">fitting.py</a></code>, which is responsible for executing all fits (excluding hysteresis fitting) based on the <a href="https://lmfit.github.io/lmfit-py/fitting.html">minimize</a> function of <a href="https://pypi.org/project/lmfit/">lmfit</a> library. Fit methods like <code>least_sq</code>, <code>least_square</code> (prioritizing speed), or <code>nelder</code> (prioritizing convergence) can be selected with the <code>fit_method</code> setting. <a href="https://lmfit.github.io/lmfit-py/model.html#lmfit.model.Model">Model</a> and <a href="https://lmfit.github.io/lmfit-py/parameters.html#the-parameters-class">Parameters</a> objects of <a href="https://pypi.org/project/lmfit/">lmfit</a> are likewise employed, respectively, for the amalgamation of model functions (e.g., adding an affine or constant component that may correspond to noise) and for the management of parameter initialization prior to the fitting process (initial value, range of variation, etc.). It includes a parent class <code>CurveFit</code> and three subclasses, namely <code>GaussianPeakFit</code>, <code>ShoPeakFit</code>, and <code>ShoPhaseFit</code>, each built upon the parent class to execute Gaussian, Sho, and Sho phase (arctangent) fitting, respectively. The parent class incorporates a set of methods shared by the subclasses, including <code>eval</code> for evaluating the fitted peak at specified x-values, <code>fit</code>, <code>plot</code>, and more. The subclasses invoke the parent class during initialization and enable parameter initialization for fitting, with model-specific initial guesses. <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/iterable.py">iterable.py</a></code> for handling iterables. <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/noise.py">noise.py</a></code> for noise management. The <code>filter_mean</code> function serves as a filtering mechanism for averaging, offering a choice of filter order to reduce measurement noise. The <code>noise</code> function is used to generate noise of a specific amplitude (widely employed for examples and tests to recreate the most realistic data) using three possible distribution models: <code>uniform</code>, <code>normal</code>, and <code>laplace</code>. Finally, the <code>butter_filter</code> function filters an input signal with a Butterworth filter type ('low', 'high', 'bandpass', or 'bandstop'), along with its associated cutoff frequency or frequencies, and its order.<br>
-&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/peak.py">peak.py</a></code> contains a set of functions for peak handling. <code>detect_peak</code> and <code>find_peaks</code> automatically identify peaks in an array of values, relying on the <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.find_peaks.html#scipy.signal.find_peaks">find_peaks</a> function from the scipy.signal library. The function <code>plot_main_peaks</code> allow to plot an array of peaks. It also includes functions for guessing noise components (linear component with <code>guess_affine</code> and constant with <code>guess_bckgnd</code>) and determining peak width with <code>width_peak</code>. <br>
+&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/peak.py">peak.py</a></code> contains a set of functions for peak handling. <code>detect_peak</code> and <code>find_main_peaks</code> automatically identify peaks in an array of values, relying on the <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.find_peaks.html#scipy.signal.find_peaks">find_peaks</a> function from the scipy.signal library. The function <code>plot_main_peaks</code> allow to plot an array of peaks. It also includes functions for guessing noise components (linear component with <code>guess_affine</code> and constant with <code>guess_bckgnd</code>) and determining peak width with <code>width_peak</code>. <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/signal.py">signal.py</a></code> comprises two functions: <code>line_reg</code> for linear regression and <code>interpolate</code> for 1D interpolation. <br>
 </p>
 
