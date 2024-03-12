@@ -513,7 +513,7 @@ Four tools deviate from this path management: <br>
 <p align="justify" width="100%">
 The management of paths for both the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples">examples</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests">tests</a></code> is overseen through the utilization of the <code>save_path_example</code> function within the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/path_for_runable.py">utils/path_for_runable.py</a></code>.
 The majority of outcomes from the examples consist of visual representations, which are, by default, stored in the <code>PySSPFM_example_out</code> directory, located within <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data">examples/data</a></code>.
-The results of the tests are not automatically stored, except for a few assessments where minimal or no comparisons are made with experimental results (<code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/data_processing/test_datacube_to_nanoloop_s1.py">tests/data_processing/test_datacube_to_nanoloop_s1.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/utils/nanoloop/test_theory.py">tests/utils/nanoloop/test_theory.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/utils/map/test_map.py">tests/utils/map/test_map.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/data_processing/test_nanoloop_to_hyst_s2.py">tests/data_processing/test_nanoloop_to_hyst_s2.py</a></code>), as well as for <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/toolbox/test_spm_converter.py">tests/toolbox/test_spm_converter.py</a></code>. These are, by default, stored in the <code>PySSPFM_data_out</code> directory, situated at the root of PySSPFM.
+The results of the tests are not automatically stored, except for a few assessments where minimal or no comparisons are made with experimental results (<code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/data_processing/test_datacube_to_nanoloop_s1.py">tests/data_processing/test_datacube_to_nanoloop_s1.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/utils/nanoloop/test_theory.py">tests/utils/nanoloop/test_theory.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/utils/map/test_map.py">tests/utils/map/test_map.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/data_processing/test_nanoloop_to_hyst_s2.py">tests/data_processing/test_nanoloop_to_hyst_s2.py</a></code>), as well as for <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/toolbox/test_spm_converter.py">tests/toolbox/test_spm_converter.py</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/toolbox/test_meas_sheet_generator.py">tests/toolbox/test_meas_sheet_generator.py</a></code>. These are, by default, stored in the <code>PySSPFM_data_out</code> directory, situated at the root of PySSPFM.
 The <code>save_test_example</code> settings provide the option to determine whether the outcomes of examples and tests are automatically saved.
 </p>
 
@@ -543,7 +543,19 @@ For a deeper understanding of the file management in this phase, please refer to
 ### IV.1) - Parameters
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/parameters_first_step.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/parameters_first_step_1.PNG> <br>
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/parameters_first_step_2.PNG> <br>
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/parameters_first_step_3.PNG> <br>
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/parameters_first_step_4.PNG> <br>
 </p>
 
 ### IV.2) - Polarization voltage
