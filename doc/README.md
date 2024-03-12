@@ -1540,7 +1540,7 @@ User parameters:
 <p align="center" width="100%">
     <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_phase_offset_analyzer.PNG>
     <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_phase_offset_analyzer_single_script.PNG> <br>
-    <em>Workflow: Second step of data analysis (left: global, right: single script)</em>
+    <em>Workflow: Phase offset analyzer (left: global, right: single script)</em>
 </p>
 
 <p align="justify" width="100%">
@@ -1555,12 +1555,12 @@ The measurement parameters are extracted from the SSPFM measurement sheet, and e
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_offset_analyzer_histo.PNG> <br>
-    <em>Histogram of phase values for On Field measurements, after applying the phase offset determined by the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">toolbox/phase_offset_analyzer.py</a></code> (figure generated with <code>plot_comparative_hyst</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/sort_plot_pixel.py">toolbox/sort_plot_pixel.py</a></code> script). Both On and Off Field phase histogram figure are plotted.</em>
+    <em>Histogram of phase values for On Field measurements, after applying the phase offset determined by the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">toolbox/phase_offset_analyzer.py</a></code> (figure generated with <code>refocused_phase_histo</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot_phase.py">utils/nanoloop/plot_phase.py</a></code> script). Both On and Off Field phase histogram figure are plotted.</em>
 </p>
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_offset_analyzer_graph.PNG> <br>
-    <em>Graph showing the evolution of the phase offset determined by the script code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">toolbox/phase_offset_analyzer.py</a></code> as a function of the index of the raw SSPFM measurement files (figure generated with <code>plot_and_save_image</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> script)</em>
+    <em>Graph showing the evolution of the phase offset determined by the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">toolbox/phase_offset_analyzer.py</a></code> as a function of the index of the raw SSPFM measurement files (figure generated with <code>generate_graph_offset</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">toolbox/phase_offset_analyzer.py</a></code> script)</em>
 </p>
 
 ### VIII.2) Curve clustering (K-Means)
