@@ -637,7 +637,7 @@ To obtain the total duration (or total sample count) of the measurement, it suff
 </p>
 
 <p align="justify" width="100%">
-The segmentation process is performed with <code>cut_function</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code>, and each segment is generated. A segment is initialized with the class <code>SegmentInfo</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code>, in which some of these associated attributes are defined. Subsequently, a second object is created to perform the processing associated with the segment. It generates some of its attributes, including arrays of time values, PFM amplitude and phase measurements, as well as optional additionnal quantities measured. These arrays are optionally trimmed at the beginning and end based on the <code>cut_seg</code> parameter. Noise in the amplitude and phase measurements is potentially reduced by a mean filter or butterworth filter, which can be enabled (<code>filter_type</code>) and is defined by its order (<code>filter_ord</code>) and cuttoff frequency (<code>filter_freq</code>). Butterworth filters can be used when noise is periodic, what may be the case when using the dfrt. The segment is then processed according to the <code>mode</code> chosen by the user:
+The segmentation process is performed with <code>cut_function</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code>, and each segment is generated. A segment is initialized with the class <code>SegmentInfo</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code>, in which some of these associated attributes are defined. Subsequently, a second object is created to perform the processing associated with the segment. It generates some of its attributes, including arrays of time values, PFM amplitude and phase measurements, as well as optional additionnal quantities measured. These arrays are optionally trimmed at the beginning and end based on the <code>cut_seg</code> parameter. Noise in the amplitude and phase measurements is potentially reduced by a mean filter or butterworth filter, which can be enabled (<code>filter_type</code>) and is defined by its order (<code>filter_ord</code>) and cuttoff frequency (<code>filter_freq</code>). Butterworth filters can be used when noise is periodic, what may be the case when using the DFRT. The segment is then processed according to the <code>mode</code> chosen by the user:
 </p>
 
 <p align="justify" width="100%">
@@ -742,7 +742,7 @@ To accomplish the calibration, taking inspiration from the publications of Neuma
 </p>
 
 <p align="justify" width="100%">
-The direction of vertical polarization (let's approximate that it's a purely ferroelectric effect) induced in the material is contingent on the applied voltage between the tip and the material's bottom electrode. Voltages greater in magnitude than the low and high coercive voltages of the hysteresis are referred to as low and high voltages, respectively. Two scenarios are then distinguished: one for the grounded tip case and the other for the grounded bottom case. The diagram below summarizes the direction of polarization concerning the applied voltage for both cases:
+The direction of vertical polarization (let's approximate that it's a purely ferroelectric effect) induced in the material is contingent on the applied polarization voltage between the tip and the material's bottom electrode. Voltages greater in magnitude than the low and high coercive voltages of the hysteresis are referred to as low and high voltages, respectively. Two scenarios are then distinguished: one for the grounded tip case and the other for the grounded bottom case. The diagram below summarizes the direction of polarization concerning the applied voltage for both cases:
 </p>
 
 <p align="center" width="100%">
@@ -826,7 +826,7 @@ In the PySSPFM application, users can concretely assign the desired phase values
 </p>
 
 <p align="justify" width="100%">
-A potential phase inversion can be detected by examining the variation in the mean phase concerning the polarization voltage, using the <code>phase_analysis</code> function. If the theoretical and measured variations are opposite, a phase inversion has occurred, and it is subsequently corrected.
+A potential phase inversion can be detected by examining the variation in the mean phase concerning the polarization voltage, using the <code>phase_analysis</code> function. If the theoretical and measured variations are opposite, a phase inversion has occurred, and it is subsequently corrected.  It should be noted that the direction of the AC voltage application influences the phase value corresponding to the polarisation state or DC bias voltage. However, a potential phase inversion is taken into account and corrected at this stage to align with the physically determined value beforehand.
 </p>
 
 <p align="center" width="100%">
@@ -864,7 +864,7 @@ Phase values are then adjusted according to the phase calibration dictionary.
 </p>
 
 <p align="justify" width="100%">
-Subsequently, based on the amplitude ($R$) and phase ($\phi$) loops, piezoresponse ($PR$) loops are generated. The user selects the function ($func_{pha}$) for calculating the piezoresponse with the parameter <code>pha_func</code>: $PR=R*func_{pha}(\phi)$. For phase values such as <code>pha_rev</code>=-90° and <code>pha_fwd</code>=90°, the chosen function should be <code>np.sin()</code>, whereas for phase values like <code>pha_rev</code>=180° and <code>pha_fwd</code>=0°, the selected function should be <code>np.cos()</code>.
+Subsequently, based on the amplitude ($R$) and phase ($\phi$) loops, piezoresponse ($PR$) loops are generated. The user selects the function ($func_{pha}$) for calculating the piezoresponse with the parameter <code>pha_func</code>: $PR=R*func_{pha}(\phi)$. For phase values such as <code>pha_rev</code>=-90° and <code>pha_fwd</code>=90°, the chosen function should be <code>np.sin()</code>, whereas for phase values like <code>pha_rev</code>=180° or <code>pha_rev</code>=-180° and <code>pha_fwd</code>=0°, the selected function should be <code>np.cos()</code>.
 </p>
 
 <p align="center" width="100%">
@@ -911,7 +911,7 @@ As an initial step, the <code>nanoloops</code> folder obtained is selected. The 
 </p>
 
 <p align="justify" width="100%">
-Figures resulting from the processing of the first file are generated with <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot.py</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/plot.py">utils/nanoloop_to_hyst/plot.py</a></code> scripts. Subsequently, each of the files is automatically analyzed without displaying the figures. For each mode (on field, off field, and coupled), a hysteresis loop is selected and associated with each pixel, and a set of ferroelectric properties is extracted. Additional properties are obtained through the analysis of measurement artifacts. The entirety of these properties contributes to the creation of SSPFM mappings.
+Figures resulting from the processing of the first file are generated with <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot.py</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/plot.py">utils/nanoloop_to_hyst/plot.py</a></code> scripts. Subsequently, each of the files is automatically analyzed without displaying the figures. For each mode (on field, off field, and coupled), a hysteresis loop is selected and associated with each pixel, and a set of ferroelectric properties is extracted. Additional properties are obtained through the analysis of measurement artifacts or other signals like height or deflection. The entirety of these properties contributes to the creation of SSPFM mappings.
 </p>
 
 <p align="justify" width="100%">
@@ -1015,7 +1015,7 @@ An initialization of the fitting parameters is conducted with the function <code
 </p>
 
 <p align="justify" width="100%">
-The hysteresis is subsequently fitted using the fit <code>method</code>, considering the coordinates of the best loop's points and selecting the desired method. Due to the number of parameters in the hysteresis fit model, coupled with the potential deviation of measurements from the typical hysteresis form, it is advisable to employ a fitting method that ensures superior convergence, albeit at the expense of fitting duration (the <code>"nelder"</code> method will be favored over the <code>"least_sq"</code> method). This approach leverages the <a href="https://pypi.org/project/lmfit/">lmfit</a> library, enabling the extraction of parameters from the hysteresis model that best converges with the experimental data.
+The hysteresis is subsequently fitted using the fit <code>method</code>, considering the coordinates of the best loop's points and selecting the desired method. Due to the number of parameters in the hysteresis fit model, coupled with the potential deviation of measurements from the typical hysteresis form, it is advisable to employ a fitting method that ensures superior convergence, albeit at the expense of fitting duration (the <code>"nelder"</code> method will be favored over the <code>"least_sq"</code> or <code>"least_square"</code> method). This approach leverages the <a href="https://pypi.org/project/lmfit/">lmfit</a> library, enabling the extraction of parameters from the hysteresis model that best converges with the experimental data.
 </p>
 
 <p align="justify" width="100%">
@@ -1166,7 +1166,7 @@ For cartographies, it is possible to establish a mask in order to: <br>
 <p align="justify" width="100%">
 The mask can be ascertained: <br>
 &#8226 Manually, through the <code>man_mask</code> parameter, which contains a list of pixels provided by the user. <br>
-&#8226 Using a reference property, in case <code>man_mask is None</code>, with parameters specified in the <code>ref</code> dictionary. The latter is chosen through the <code>'mode'</code> (<code>'off'</code>, <code>'on'</code>, or <code>'coupled'</code>) and <code>'meas'</code>, which contains the name of the reference property. The user then selects a measurement range using the <code>'min value'</code> and <code>'max value'</code> parameters. If either of the two values is <code>None</code>, the corresponding boundary is not considered. The <code>'interactive'</code> parameter allows interactive selection of the reference measurement boundaries, with an iterative display of the masked map and user keyboard input. This interactive procedure is provided by the <code>select_pixel</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. The entire procedure is executed by the <code>mask_ref</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. <br>
+&#8226 Using a reference property, in case <code>man_mask is None</code>, with parameters specified in the <code>ref</code> dictionary. The latter is chosen through the <code>'mode'</code> (<code>'off'</code>, <code>'on'</code>, <code>'other'</code> or <code>'coupled'</code>) and <code>'meas'</code>, which contains the name of the reference property. The user then selects a measurement range using the <code>'min value'</code> and <code>'max value'</code> parameters. If either of the two values is <code>None</code>, the corresponding boundary is not considered. The <code>'interactive'</code> parameter allows interactive selection of the reference measurement boundaries, with an iterative display of the masked map and user keyboard input. This interactive procedure is provided by the <code>select_pixel</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. The entire procedure is executed by the <code>mask_ref</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. <br>
 &#8226 The mask can be reverted by assigning the value <code>True</code> to the user parameter <code>revert_mask</code>.
 </p>
 
@@ -1272,7 +1272,7 @@ User parameters:
 ```
     default_user_parameters = {
         'file path in': '',
-        'csv path in': '',
+        'csv file path': '',
         'dir path out': '',
         'del 1st loop': True,
         'corr': 'offset',
@@ -1325,25 +1325,32 @@ User parameters:
         'interp func': 'linear',
         'revert mask': {'on': False,
                         'off': False,
-                        'coupled': False},
+                        'coupled': False,
+                        'other': False},
         'man mask': {'on': [],
                      'off': [],
-                     'coupled': []},
-        'ref': {'on': {'meas': 'charac tot fit: area',
+                     'coupled': [],
+                     'other': []},
+        'ref': {'on': {'prop': 'charac tot fit: area',
                        'min val': None,
                        'max val': 0.005,
                        'fmt': '.5f',
                        'interactive': False},
-                'off': {'meas': 'charac tot fit: area',
+                'off': {'prop': 'charac tot fit: area',
                         'min val': None,
                         'max val': 0.005,
                         'fmt': '.5f',
                         'interactive': False},
-                'coupled': {'meas': 'r_2',
+                'coupled': {'prop': 'r_2',
                             'min val': 0.95,
                             'max val': None,
                             'fmt': '.5f',
-                            'interactive': False}},
+                            'interactive': False},
+                'other': {'prop': 'deflection error',
+                          'fmt': '.2f',
+                          'min val': None,
+                          'max val': 5,
+                          'interactive': False}},
         'verbose': True,
         'show plots': True,
         'save': False,
@@ -1362,7 +1369,7 @@ User parameters:
 </p>
 
 <p align="justify" width="100%">
-In input, the directory <code>properties</code> (generated after the second processing step (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi---second-step-of-data-analysis">VI) - Second step of data analysis</a> of the documentation)), containing the property measurements in the form of text files for all modes (on and off field, coupled), is specified. Subsequently, the data is extracted, with <code>extract_properties</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file.py</a></code> and a cross-correlation analysis is conducted between the different cartographies. The cartographies are then generated for each of the modes (on and off field, and coupled) and displayed using the <code>main_mapping</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. It's worth noting that a different mask is constructed for each mode.
+In input, the directory <code>properties</code> (generated after the second processing step (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi---second-step-of-data-analysis">VI) - Second step of data analysis</a> of the documentation)), containing the property measurements in the form of text files for all modes (on and off field, coupled and other), is specified. Subsequently, the data is extracted, with <code>extract_properties</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file.py</a></code> and a cross-correlation analysis is conducted between the different cartographies. The cartographies are then generated for each of the modes (on and off field, coupled and other) and displayed using the <code>main_mapping</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>. It's worth noting that a different mask is constructed for each mode.
 </p>
 
 <p align="justify" width="100%">
@@ -1392,10 +1399,11 @@ User parameters:
         'ind maps': ind_maps,
         'interp fact': 4,
         'interp func': 'linear',
+        'meas time': None,
         'revert mask': False,
         'man mask': [],
         'ref': {'mode': 'off',
-                'meas': 'charac tot fit: R_2 hyst',
+                'prop': 'charac tot fit: R_2 hyst',
                 'min val': 0.95,
                 'max val': None,
                 'fmt': '.5f',
@@ -1410,6 +1418,7 @@ User parameters:
 &#8226 File management: As an input, the algorithm takes a <code>properties</code> SSPFM datacube measurement file.<br>
 &#8226 Measurement selection parameters<br>
 &#8226 Map interpolation parameters<br>
+&#8226 Experimental measurement time<br>
 &#8226 Mask parameters<br>
 &#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. <br>
 </p>
@@ -1443,9 +1452,9 @@ The script can be executed directly using the executable file: <code><a href="ht
 ```
     default_user_parameters = {
         'dir path in': '',
-        'dir path in meas': '',
+        'dir path in prop': '',
         'dir path out': '',
-        'label meas': ['piezoresponse'],
+        'label meas': ["piezoresponse"],
         'nb clusters off': 4,
         'nb clusters on': 4,
         'nb clusters coupled': 4,
@@ -1513,7 +1522,7 @@ The script can be executed directly using the executable file: <code><a href="ht
     default_user_parameters = {
         'dir path in': '',
         'dir path out': '',
-        'dir path in meas': '',
+        'dir path in prop': '',
         'dir path in loop': '',
         'file path in pars': '',
         'mode': 'off',
@@ -1624,7 +1633,7 @@ $$ R_{ij} = {c_{ij} \over \sqrt{c_{ii} * c_{jj}}} $$
     default_user_parameters = {
         'dir path in': '',
         'dir path out': '',
-        'dir path in meas': '',
+        'dir path in prop': '',
         'dir path in loop': '',
         'dir path in pars': '',
         'ind maps': ind_maps,
@@ -1692,11 +1701,11 @@ The script can be executed directly using the executable file: <code><a href="ht
     default_user_parameters = {
         'dir path in': '',
         'dir path out': '',
-        'dir path in meas': '',
+        'dir path in prop': '',
         'dir path in loop': '',
         'dir path in pars': '',
-        'meas key': {'mode': 'off',
-                     'meas': 'charac tot fit: area'},
+        'prop key': {'mode': 'off',
+                     'prop': 'charac tot fit: area'},
         'list pixels': None,
         'reverse': False,
         'del 1st loop': True,
@@ -1841,8 +1850,8 @@ The entire assemblage of scripts under the <code><a href="https://github.com/CEA
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/figure.py">figure.py</a></code>, which facilitates the generation of visual representations in a consistent style. This encompasses the creation of graphs, histograms, and mappings through the functions <code>plot_graph</code>, <code>plot_hist</code>, and <code>plot_map</code>. The <code>print_plots</code> function offers advanced control over the display and storage of visual representations. <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/fitting.py">fitting.py</a></code>, which is responsible for executing all fits (excluding hysteresis fitting) based on the <a href="https://lmfit.github.io/lmfit-py/fitting.html">minimize</a> function of <a href="https://pypi.org/project/lmfit/">lmfit</a> library. Fit methods like <code>least_sq</code>, <code>least_square</code> (prioritizing speed), or <code>nelder</code> (prioritizing convergence) can be selected with the <code>fit_method</code> setting. <a href="https://lmfit.github.io/lmfit-py/model.html#lmfit.model.Model">Model</a> and <a href="https://lmfit.github.io/lmfit-py/parameters.html#the-parameters-class">Parameters</a> objects of <a href="https://pypi.org/project/lmfit/">lmfit</a> are likewise employed, respectively, for the amalgamation of model functions (e.g., adding an affine or constant component that may correspond to noise) and for the management of parameter initialization prior to the fitting process (initial value, range of variation, etc.). It includes a parent class <code>CurveFit</code> and three subclasses, namely <code>GaussianPeakFit</code>, <code>ShoPeakFit</code>, and <code>ShoPhaseFit</code>, each built upon the parent class to execute Gaussian, Sho, and Sho phase (arctangent) fitting, respectively. The parent class incorporates a set of methods shared by the subclasses, including <code>eval</code> for evaluating the fitted peak at specified x-values, <code>fit</code>, <code>plot</code>, and more. The subclasses invoke the parent class during initialization and enable parameter initialization for fitting, with model-specific initial guesses. <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/iterable.py">iterable.py</a></code> for handling iterables. <br>
-&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/noise.py">noise.py</a></code> for noise management. The <code>filter_mean</code> function serves as a filtering mechanism for averaging, offering a choice of filter order to reduce measurement noise. The <code>noise</code> function is used to generate noise of a specific amplitude (widely employed for examples and tests to recreate the most realistic data) using three possible distribution models: <code>uniform</code>, <code>normal</code>, and <code>laplace</code>. <br>
-&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/peak.py">peak.py</a></code> contains a set of functions for peak handling. <code>detect_peak</code> and <code>find_peaks</code> automatically identify peaks in an array of values, relying on the <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.find_peaks.html#scipy.signal.find_peaks">find_peaks</a> function from the scipy.signal library. It also includes functions for guessing noise components (linear component with <code>guess_affine</code> and constant with <code>guess_bckgnd</code>) and determining peak width with <code>width_peak</code>. <br>
+&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/noise.py">noise.py</a></code> for noise management. The <code>filter_mean</code> function serves as a filtering mechanism for averaging, offering a choice of filter order to reduce measurement noise. The <code>noise</code> function is used to generate noise of a specific amplitude (widely employed for examples and tests to recreate the most realistic data) using three possible distribution models: <code>uniform</code>, <code>normal</code>, and <code>laplace</code>. Finally, the <code>butter_filter</code> function filters an input signal with a Butterworth filter type ('low', 'high', 'bandpass', or 'bandstop'), along with its associated cutoff frequency or frequencies, and its order.<br>
+&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/peak.py">peak.py</a></code> contains a set of functions for peak handling. <code>detect_peak</code> and <code>find_peaks</code> automatically identify peaks in an array of values, relying on the <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.find_peaks.html#scipy.signal.find_peaks">find_peaks</a> function from the scipy.signal library. The function <code>plot_main_peaks</code> allow to plot an array of peaks. It also includes functions for guessing noise components (linear component with <code>guess_affine</code> and constant with <code>guess_bckgnd</code>) and determining peak width with <code>width_peak</code>. <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/signal.py">signal.py</a></code> comprises two functions: <code>line_reg</code> for linear regression and <code>interpolate</code> for 1D interpolation. <br>
 </p>
 
