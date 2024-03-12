@@ -513,7 +513,7 @@ Four tools deviate from this path management: <br>
 <p align="justify" width="100%">
 The management of paths for both the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples">examples</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/tests">tests</a></code> is overseen through the utilization of the <code>save_path_example</code> function within the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/path_for_runable.py">utils/path_for_runable.py</a></code>.
 The majority of outcomes from the examples consist of visual representations, which are, by default, stored in the <code>PySSPFM_example_out</code> directory, located within <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data">examples/data</a></code>.
-The results of the tests are not automatically stored, except for a few assessments where minimal or no comparisons are made with experimental results (<code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/data_processing/test_datacube_to_nanoloop_s1.py">tests/data_processing/test_datacube_to_nanoloop_s1.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/utils/nanoloop/test_theory.py">tests/utils/nanoloop/test_theory.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/utils/map/test_map.py">tests/utils/map/test_map.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/data_processing/test_nanoloop_to_hyst_s2.py">tests/data_processing/test_nanoloop_to_hyst_s2.py</a></code>), as well as for <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/toolbox/test_spm_converter.py">tests/toolbox/test_spm_converter.py</a></code>. These are, by default, stored in the <code>PySSPFM_data_out</code> directory, situated at the root of PySSPFM.
+The results of the tests are not automatically stored, except for a few assessments where minimal or no comparisons are made with experimental results (<code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/data_processing/test_datacube_to_nanoloop_s1.py">tests/data_processing/test_datacube_to_nanoloop_s1.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/utils/nanoloop/test_theory.py">tests/utils/nanoloop/test_theory.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/utils/map/test_map.py">tests/utils/map/test_map.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/data_processing/test_nanoloop_to_hyst_s2.py">tests/data_processing/test_nanoloop_to_hyst_s2.py</a></code>), as well as for <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/toolbox/test_spm_converter.py">tests/toolbox/test_spm_converter.py</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/tests/toolbox/test_meas_sheet_generator.py">tests/toolbox/test_meas_sheet_generator.py</a></code>. These are, by default, stored in the <code>PySSPFM_data_out</code> directory, situated at the root of PySSPFM.
 The <code>save_test_example</code> settings provide the option to determine whether the outcomes of examples and tests are automatically saved.
 </p>
 
@@ -543,7 +543,19 @@ For a deeper understanding of the file management in this phase, please refer to
 ### IV.1) - Parameters
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/parameters_first_step.PNG> <br>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/parameters_first_step_1.PNG> <br>
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/parameters_first_step_2.PNG> <br>
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/parameters_first_step_3.PNG> <br>
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/parameters_first_step_4.PNG> <br>
 </p>
 
 ### IV.2) - Polarization voltage
@@ -603,6 +615,13 @@ The code also includes other polarization voltage form that can be utilized for 
 Calibration is indispensable for obtaining quantitative measurements. In the measurement data sheet, values can be provided to quantify the measured amplitude, including tip sensitivity (nm/V) and spring constant (N/m), which can be obtained from the manufacturer or through pre-measurement calibration. Additionally, a pre-measurement calibration can be used to determine the phase offset. The acquisition of amplitude, phase and eventually resonance frequency can be done via an external device with conversion coefficients for the quantities into voltage. If this is the case, the user must specify it in the corresponding section of the measurement sheet. The values are then converted in the scripts <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/datacube_to_nanoloop_s1.py">data_processing/datacube_to_nanoloop_s1.py</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code> with the function <code>external_calib</code>.
 </p>
 
+<p align="justify" width="100%">
+The user can also define a phase offset value to implement before processing the measurements. This offset is applied in the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script using the <code>apply_phase_offset</code> function, aiming to mitigate phase switching, which can pose challenges during analysis and nanoloop fitting. The user defines the phase offset value through the <code>offset</code> parameter. <br>
+&#8226 If the <code>method</code> parameter is set to <code>'static'</code>, this value is applied to the phase signal for all SSPFM raw measurement files. <br>
+&#8226 When <code>method</code> is set to <code>'dynamic'</code>, the phase offset value is applied to the first SSPFM raw measurement file, and for each subsequent file, a new offset value is determined using the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script with the <code>phase_offset_determination</code> function. It is then applied to the next measurement file. <br>
+&#8226 If <code>method</code> is set to <code>None</code>, no phase offset is applied for analysis.
+</p>
+
 ### IV.4) - Segment
 
 <p align="justify" width="100%">
@@ -618,7 +637,7 @@ To obtain the total duration (or total sample count) of the measurement, it suff
 </p>
 
 <p align="justify" width="100%">
-The segmentation process is performed with <code>cut_function</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code>, and each segment is generated. A segment is initialized with the class <code>SegmentInfo</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code>, in which some of these associated attributes are defined. Subsequently, a second object is created to perform the processing associated with the segment. It generates some of its attributes, including arrays of time values, PFM amplitude and phase measurements, as well as optional additionnal quantities measured. These arrays are optionally trimmed at the beginning and end based on the <code>cut_seg</code> parameter. Noise in the amplitude and phase measurements is potentially reduced by a mean filter, which can be enabled (<code>filter</code>) and is defined by its order (<code>filter_ord</code>). The segment is then processed according to the <code>mode</code> chosen by the user:
+The segmentation process is performed with <code>cut_function</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code>, and each segment is generated. A segment is initialized with the class <code>SegmentInfo</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code>, in which some of these associated attributes are defined. Subsequently, a second object is created to perform the processing associated with the segment. It generates some of its attributes, including arrays of time values, PFM amplitude and phase measurements, as well as optional additionnal quantities measured. These arrays are optionally trimmed at the beginning and end based on the <code>cut_seg</code> parameter. Noise in the amplitude and phase measurements is potentially reduced by a mean filter or butterworth filter, which can be enabled (<code>filter_type</code>) and is defined by its order (<code>filter_ord</code>) and cuttoff frequency (<code>filter_freq</code>). Butterworth filters can be used when noise is periodic, what may be the case when using the dfrt. The segment is then processed according to the <code>mode</code> chosen by the user:
 </p>
 
 <p align="justify" width="100%">
