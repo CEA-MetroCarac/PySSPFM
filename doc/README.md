@@ -401,6 +401,7 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_spm_data_extractor.py">examples/toolbox/ex_spm_data_extractor.py</a></code>.</li>
             </ul>
         </ul>
+    </ul>
     <ul align="justify" width="100%">
         <li>3. Other files, that are not SSPFM datacube measurement files:</li>
         <ul align="justify" width="100%">
@@ -423,6 +424,7 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_spm_data_extractor.py">examples/toolbox/ex_spm_data_extractor.py</a></code>.</li>
             </ul>
         </ul>
+    </ul>
     <ul align="justify" width="100%">
         <li>4. Data crafted by dedicated scripts for this purpose:</li>
         <ul align="justify" width="100%">
