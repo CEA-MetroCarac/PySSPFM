@@ -503,8 +503,8 @@ For each script in the toolbox, it is possible to save the analysis conducted. U
 <p align="justify" width="100%">
 Four tools deviate from this path management: <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">raw_file_reader.py</a></code>: It creates a folder with the nomenclature: <code>'initial_file_name'_toolbox</code> at the same root as the input folder. This folder contains a sub-folder <code>raw_file_reader'_yyyy-mm-dd-HHh-MMm'</code>. <br>
-&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">spm_converter.py</a></code>: It creates a folder with the nomenclature: <code>'initial_file_name'_datacube'_extension'</code> at the same root as the input folder, containing all the converted datacube files.
-&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/meas_sheet_generator.py">meas_sheet_generator.py</a></code>: A CSV measurement sheet is created in an output folder containing SSPFM datacube SPM extension measurement files.
+&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">spm_converter.py</a></code>: It creates a folder with the nomenclature: <code>'initial_file_name'_datacube'_extension'</code> at the same root as the input folder, containing all the converted datacube files. <br>
+&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/meas_sheet_generator.py">meas_sheet_generator.py</a></code>: A CSV measurement sheet is created in an output folder containing SSPFM datacube SPM extension measurement files. <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_data_extractor.py">spm_data_extractor.py</a></code>: whose only function is to extract and display the data contained in an SPM extension file.
 </p>
 
