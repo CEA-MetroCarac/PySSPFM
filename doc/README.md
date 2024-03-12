@@ -1491,6 +1491,79 @@ The operating principle of this reader differs slightly from that of the global 
     <em>Result of list_map_reader (figure generated with <code>main_list_map_reader</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader.py</a></code> script)</em>
 </p>
 
+### VIII.2) Phase offset analyzer
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">toolbox/phase_offset_analyzer.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/phase_offset_analyzer.py">gui/phase_offset_analyzer.py</a></code>. This script automatically calculates the optimal phase offset to apply to a series of raw SSPFM measurement files in order to minimize the phase switching phenomenon, which can complicate the analysis and fitting of SSPFM nanoloops.
+</p>
+
+#### VIII.2.a) Parameters
+
+<p align="justify" width="100%">
+User parameters:
+</p>
+
+```
+    default_seg_params = {'cut seg [%]': {'start': 5, 'end': 5},
+                          'mode': 'max',
+                          'filter type': 'None',
+                          'filter freq 1': 1e3,
+                          'filter freq 2': 3e3,
+                          'filter ord': 4}
+    default_fit_params = {'fit pha': False,
+                          'detect peak': False,
+                          'sens peak detect': 1.5}
+    default_user_parameters = {'dir path in': '',
+                               'dir path out': '',
+                               'range file': 'None',
+                               'extension': 'spm',
+                               'seg pars': default_seg_params,
+                               'fit pars': default_fit_params,
+                               'verbose': True,
+                               'show plots': True,
+                               'save': False}
+```
+
+<p align="justify" width="100%">
+&#8226 File management: L'utilisateur renseigne le dossier d'entrée qui contient l'ensemble des fichiers de mesures brutes SSPFM, ainsi que la fiche de mesure. Il peut également renseigner la plage d'indices de fichier à analyser, leur extension et un dossier de sorties de sauvegarde de l'analyse. <br>
+&#8226 Segment parameters: Paramètres utilisés pour le traitement de chacun des segments. <br>
+&#8226 Fit parameteres: For each measurement (on field, off field, and coupled), the user specifies the number of clusters. <br>
+&#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. <br>
+</p>
+
+Les paramètres sont semblables à ceux de l'étape d'analyse 1.
+
+#### VIII.2.b) Workflow
+
+<p align="center" width="100%">
+    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_phase_offset_analyzer.PNG>
+    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_phase_offset_analyzer_single_script.PNG> <br>
+    <em>Workflow: Second step of data analysis (left: global, right: single script)</em>
+</p>
+
+Le workflow du phase offset analyzer est assez similaire à celui de l'étape d'analyse 1. Les paramètres de mesures sont extraites de la fiche de mesure SSPFM, et chacun des fichiers de mesures brutes SSPFM sont ensuites analysés au sein de la fonction multi_script. La fonction single_script permet d'analyser un fichier de données brutes SSPFM en suivant les étapes suivantes : les mesures sont extraites du fichier puis calibrées si besoin. Elles sont ensuites segmentées et déterminées sous formes de données PFM pour chaques segments. Le signal de phase PFM est alors analysé via la fonction phase_offset_determination, aussi bien en On Field qu'en Off Field. Lors de cette analyse, un offset de phase est déterminé, les deux pics principaux sont repérées puis recentrés sur la plage de mesure de la phase. Par exemple, si la plage de valeur de phase s'étend de -180 à 180°, et que les deux pics sont espacés de 180°, un offset de phase sera calculé pour qu'ils se situent respectivement à -90 et 90°. De cette manière, la commutation de phase est minimisée pour l'ensemble des mesures. Normalement les offsets de phase déterminés en On et Off Field doivent être voisins. L'offset moyen correspondant à l'ensemble du fichier de mesure est déterminé via la fonction mean_phase_offset. L'évolution de la phase en fonction du fichier de mesure est généré avec la fonction generate_graph_offset.
+
+#### VIII.2.c) Figures
+
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_offset_analyzer_histo.PNG> <br>
+    <em>Comparative analysis between mean and single file hysteresis (figure generated with <code>plot_comparative_hyst</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/sort_plot_pixel.py">toolbox/sort_plot_pixel.py</a></code> script)</em>
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_offset_analyzer_graph.PNG> <br>
+    <em>Mapping of reference property (hysteresis amplitude) (figure generated with <code>plot_and_save_image</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> script)</em>
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="75%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/plot_pixel_extrem_histo.PNG> <br>
+    <em>Histogram of reference property (hysteresis amplitude) (figure generated with <code>main_sort_plot_pixel</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/sort_plot_pixel.py">toolbox/sort_plot_pixel.py</a></code> script)</em>
+</p>
+
+<p align="justify" width="100%">
+In addition, all the nanoloop figures associated with the corresponding file are plotted.
+</p>
+
 ### VIII.2) Curve clustering (K-Means)
 
 <p align="justify" width="100%">
