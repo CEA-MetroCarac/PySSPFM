@@ -380,7 +380,50 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
         </ul>
     </ul>
     <ul align="justify" width="100%">
-        <li>2. Data crafted by dedicated scripts for this purpose:</li>
+        <li>3. Other files, that are not SSPFM datacube measurement files:</li>
+        <ul align="justify" width="100%">
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/PZT100n">PZT100n</a></code>: housing an assemblage of SSPFM datacube measurement files with an spm extension (Bruker), alongside their corresponding measurement records. This serves the following purpose:</li>
+            <ul align="justify" width="100%">
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_phase.py">examples/utils/nanoloop/ex_phase.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_phase_offset_analyzer.py">examples/toolbox/ex_phase_offset_analyzer.py</a></code>.</li>
+            </ul>
+        </ul>
+        <ul align="justify" width="100%">
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/PZT100n_reduced_2024-02-22-17h23m_out_dfrt">PZT100n_reduced_2024-02-22-17h23m_out_dfrt</a></code>: signifying the measurement output subsequent to the initial processing phase. This facilitates the following:</li>
+            <ul align="justify" width="100%">
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_phase.py">examples/utils/nanoloop/ex_phase.py</a></code>.</li>
+            </ul>
+        </ul>
+        <ul align="justify" width="100%">
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/PZT100n_reduced">PZT100n_reduced</a></code>: constituting a diminished compilation of the SSPFM measurement, involving three Bruker spm datacube measurement files, along with their respective measurement records. This supports the following endeavors:</li>
+            <ul align="justify" width="100%">
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_meas_sheet_generator.py">examples/toolbox/ex_meas_sheet_generator.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_spm_data_extractor.py">examples/toolbox/ex_spm_data_extractor.py</a></code>.</li>
+            </ul>
+        </ul>
+                <li>2. Authentic data stemming from SSPFM measurements conducted on a PZT (lead zirconate titanate) sample, which are located within the directory: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in">examples/data/PySSPFM_example_in</a></code>. This repository encompasses several subdirectories, specifically:</li>
+        <ul align="justify" width="100%">
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/PZT100n">PZT100n</a></code>: housing an assemblage of SSPFM datacube measurement files with an spm extension (Bruker), alongside their corresponding measurement records. This serves the following purpose:</li>
+            <ul align="justify" width="100%">
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_phase.py">examples/utils/nanoloop/ex_phase.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_phase_offset_analyzer.py">examples/toolbox/ex_phase_offset_analyzer.py</a></code>.</li>
+            </ul>
+        </ul>
+        <ul align="justify" width="100%">
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/PZT100n_reduced_2024-02-22-17h23m_out_dfrt">PZT100n_reduced_2024-02-22-17h23m_out_dfrt</a></code>: signifying the measurement output subsequent to the initial processing phase. This facilitates the following:</li>
+            <ul align="justify" width="100%">
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_phase.py">examples/utils/nanoloop/ex_phase.py</a></code>.</li>
+            </ul>
+        </ul>
+        <ul align="justify" width="100%">
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/PZT100n_reduced">PZT100n_reduced</a></code>: constituting a diminished compilation of the SSPFM measurement, involving three Bruker spm datacube measurement files, along with their respective measurement records. This supports the following endeavors:</li>
+            <ul align="justify" width="100%">
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_meas_sheet_generator.py">examples/toolbox/ex_meas_sheet_generator.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_spm_data_extractor.py">examples/toolbox/ex_spm_data_extractor.py</a></code>.</li>
+            </ul>
+        </ul>
+    <ul align="justify" width="100%">
+        <li>3. Data crafted by dedicated scripts for this purpose:</li>
         <ul align="justify" width="100%">
             <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/gen_data.py">utils/datacube_to_nanoloop/gen_data.py</a></code> serves the function of generating an SSPFM datacube measurement, either in sweep resonance mode or DFRT mode. The ensuing examples derive their foundations from this source:</li>
             <ul align="justify" width="100%">
