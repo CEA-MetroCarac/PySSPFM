@@ -46,7 +46,8 @@
                 <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv1---parameters">IV.1) - Parameters</a></li>
                 <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv2---polarization-voltage">IV.2) - Polarization voltage</a></li>
                 <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv3---pre-measurement-calibration">IV.3) - Pre-measurement calibration</a></li>
-                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv4---segment">IV.4) - Segment</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv4---extraction-of-other-properties">IV.4) - Extraction of other properties</a></li>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv5---segment">IV.5) - Segment</a></li>
             </ul>
         </li>
         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#v---nanoloop">V) - Nanoloop</a>
@@ -622,7 +623,24 @@ The user can also define a phase offset value to implement before processing the
 &#8226 If <code>method</code> is set to <code>None</code>, no phase offset is applied for analysis.
 </p>
 
-### IV.4) - Segment
+### IV.4) - Extraction of other properties
+
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/other_properties.PNG>
+    <em>Highlighting of other properties on the height and deflection signal</em>
+</p>
+
+<p align="justify" width="100%">
+Other scalar properties associated with the entire SSPFM measurement file are extracted from the deflection and height signals using the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code> with the <code>extract_other_properties</code> function: <br>
+&#8226 The average height, determined once the approach is performed, during the measurement (thus excluding hold segments). <br>
+&#8226 The height difference between the average of the first and last measured points (at the beginning of approach and at the end of retraction), with the average height during the measurement. <br>
+&#8226 The average deflection, determined once the approach is performed, during the measurement (thus excluding hold segments). <br>
+&#8226 The deflection error, determined once the approach is performed, during the measurement (thus excluding hold segments), defined as the square root of the variance of the deflection signal. <br>
+&#8226 The adhesion, determined as the difference between the average deflection of the tip out of contact during retraction with the minimum deflection during retraction. <br>
+The phase offset applied to the raw phase signal before analysis is also added to these properties.
+</p>
+
+### IV.5) - Segment
 
 <p align="justify" width="100%">
 The SSPFM measurement is divided into segments, one for each polarization voltage signal switch. A hold segment is present at the beginning and end of the measurement. For the Bruker constructor mode, their duration is equal to the ratio between the ramp size (in nanometers) and the tip velocity (in nanometers per second). Depending on the polarization signal parameters, the total number of segments in the measurement can be determined: <br>
@@ -826,12 +844,12 @@ In the PySSPFM application, users can concretely assign the desired phase values
 </p>
 
 <p align="justify" width="100%">
-A potential phase inversion can be detected by examining the variation in the mean phase concerning the polarization voltage, using the <code>phase_analysis</code> function. If the theoretical and measured variations are opposite, a phase inversion has occurred, and it is subsequently corrected.  It should be noted that the direction of the AC voltage application influences the phase value corresponding to the polarisation state or DC bias voltage. However, a potential phase inversion is taken into account and corrected at this stage to align with the physically determined value beforehand.
+A potential phase inversion can be detected by examining the variation in the mean phase concerning the polarization voltage, using the <code>phase_bias_grad</code> function. If the theoretical and measured variations are opposite, a phase inversion has occurred, and it is subsequently corrected.  It should be noted that the direction of the AC voltage application influences the phase value corresponding to the polarisation state or DC bias voltage. However, a potential phase inversion is taken into account and corrected at this stage to align with the physically determined value beforehand.
 </p>
 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_variation_with_voltage.PNG> <br>
-    <em>Detection of phase inversion with phase variation with voltage (figure generated with <code>phase_analysis</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script)</em>
+    <em>Detection of phase inversion with phase variation with voltage (figure generated with <code>phase_bias_grad</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
@@ -840,6 +858,10 @@ Following the calibration process and the identification of the positions of the
 &#8226 <code>offset</code>: A phase offset is determined through calibration, and the phase difference between the two peaks remains unchanged (a treatment method that aims to preserve the initial measurement as faithfully as possible).<br>
 &#8226 <code>affine</code>: An affine relationship is applied to all phase values, adjusting the phase difference to 180°.<br>
 &#8226 <code>up_down</code>: A threshold is established between the two peaks, and each phase value is assigned the target value, <code>pha_fwd</code> or <code>pha_rev</code>, based on its position relative to the threshold and the calibration process.
+</p>
+
+<p align="justify" width="100%">
+The whole phase analysis is separated from the plotting, respectively in the scripts <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot_phase.py">utils/nanoloop/plot_phase.py</a></code>.
 </p>
 
 ### V.2) - MultiLoop
@@ -1217,6 +1239,34 @@ Each cartography is rendered using the functions <code>intermediate_map</code> o
 ## VIII) Toolbox
 
 ### VIII.1) Viewers
+
+#### VIII.1.a) SPM data extractor
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_data_extractor.py">toolbox/spm_data_extractor.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/spm_data_extractor.py">gui/spm_data_extractor.py</a></code>. This enables the extraction of all the data contained within the raw SSPFM file measurement with the spm extension.
+</p>
+
+<p align="justify" width="100%">
+User parameters:
+</p>
+
+```
+    default_user_parameters = {
+        'file path in': '',
+        'nb hold seg start': 1,
+        'nb hold seg end': 1,
+        'verbose': True,
+        'show plots': True}
+```
+
+<p align="justify" width="100%">
+&#8226 File management: In input, the algorithm take a SSPFM datacube measurement file. <br>
+&#8226 Plot parameters: Pertaining to the management of display of outcomes. <br>
+</p>
+
+<p align="justify" width="100%">
+As input, the SSPFM datacube measurement file is opened, and all its data is extracted and plotted. The user must specify the number of initial and final hold segments respectively, via the parameters <code>nb_hold_seg</code>, to facilitate data extraction from the file. The raw SSPFM measurement data are extracted, along with the SSPFM voltage parameters and information regarding the measurement conditions.
+</p>
 
 #### VIII.1.a) Raw file
 
