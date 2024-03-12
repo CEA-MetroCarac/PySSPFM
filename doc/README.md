@@ -360,24 +360,6 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/ex_raw_extraction.py">examples/utils/ex_raw_extraction.py</a></code>.</li>
             </ul>
         </ul>
-        <ul align="justify" width="100%">
-            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/settings.json">settings.json</a></code>: a json file containing the complete set of configuration parameters for the PySSPFM application. It is opened for the following file :</li>
-            <ul align="justify" width="100%">
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/ex_settings.py">examples/ex_settings.py</a></code>.</li>
-            </ul>
-        </ul>
-        <ul align="justify" width="100%">
-            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/default_settings.json">default_settings.json</a></code>: a json file containing the default set of configuration parameters used by the PySSPFM application (used for tests and examples). It is opened for the following file :</li>
-            <ul align="justify" width="100%">
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/ex_settings.py">examples/ex_settings.py</a></code>.</li>
-            </ul>
-        </ul>
-        <ul align="justify" width="100%">
-            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/mean_hyst_params.json">mean_hyst_params.json</a></code>: a json file containing the complete set of parameters associated with an executable code (in this case, mean_hyst.py). It is opened for the following file :</li>
-            <ul align="justify" width="100%">
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/core/ex_extract_params_from_file.py">examples/utils/core/ex_extract_params_from_file.py</a></code>.</li>
-            </ul>
-        </ul>
     </ul>
     <ul align="justify" width="100%">
         <li>2. Authentic data stemming from SSPFM measurements conducted on a PZT (lead zirconate titanate) sample, which are located within the directory: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in">examples/data/PySSPFM_example_in</a></code>. This repository encompasses several subdirectories, specifically:</li>
@@ -405,23 +387,22 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
     <ul align="justify" width="100%">
         <li>3. Other files, that are not SSPFM datacube measurement files:</li>
         <ul align="justify" width="100%">
-            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/PZT100n">PZT100n</a></code>: housing an assemblage of SSPFM datacube measurement files with an spm extension (Bruker), alongside their corresponding measurement records. This serves the following purpose:</li>
+        <ul align="justify" width="100%">
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/settings.json">settings.json</a></code>: a json file containing the complete set of configuration parameters for the PySSPFM application. It is opened for the following file :</li>
             <ul align="justify" width="100%">
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_phase.py">examples/utils/nanoloop/ex_phase.py</a></code>.</li>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_phase_offset_analyzer.py">examples/toolbox/ex_phase_offset_analyzer.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/ex_settings.py">examples/ex_settings.py</a></code>.</li>
             </ul>
         </ul>
         <ul align="justify" width="100%">
-            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/PZT100n_reduced_2024-02-22-17h23m_out_dfrt">PZT100n_reduced_2024-02-22-17h23m_out_dfrt</a></code>: signifying the measurement output subsequent to the initial processing phase. This facilitates the following:</li>
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/default_settings.json">default_settings.json</a></code>: a json file containing the default set of configuration parameters used by the PySSPFM application (used for tests and examples). It is opened for the following file :</li>
             <ul align="justify" width="100%">
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_phase.py">examples/utils/nanoloop/ex_phase.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/ex_settings.py">examples/ex_settings.py</a></code>.</li>
             </ul>
         </ul>
         <ul align="justify" width="100%">
-            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/PZT100n_reduced">PZT100n_reduced</a></code>: constituting a diminished compilation of the SSPFM measurement, involving three Bruker spm datacube measurement files, along with their respective measurement records. This supports the following endeavors:</li>
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/data/PySSPFM_example_in/mean_hyst_params.json">mean_hyst_params.json</a></code>: a json file containing the complete set of parameters associated with an executable code (in this case, mean_hyst.py). It is opened for the following file :</li>
             <ul align="justify" width="100%">
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_meas_sheet_generator.py">examples/toolbox/ex_meas_sheet_generator.py</a></code>.</li>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_spm_data_extractor.py">examples/toolbox/ex_spm_data_extractor.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/core/ex_extract_params_from_file.py">examples/utils/core/ex_extract_params_from_file.py</a></code>.</li>
             </ul>
         </ul>
     </ul>
