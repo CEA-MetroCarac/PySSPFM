@@ -379,8 +379,8 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
             </ul>
         </ul>
     </ul>
-        <ul align="justify" width="100%">
-            <li>2. Authentic data stemming from SSPFM measurements conducted on a PZT (lead zirconate titanate) sample, which are located within the directory: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in">examples/data/PySSPFM_example_in</a></code>. This repository encompasses several subdirectories, specifically:</li>
+    <ul align="justify" width="100%">
+        <li>2. Authentic data stemming from SSPFM measurements conducted on a PZT (lead zirconate titanate) sample, which are located within the directory: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in">examples/data/PySSPFM_example_in</a></code>. This repository encompasses several subdirectories, specifically:</li>
             <ul align="justify" width="100%">
             <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/PZT100n">PZT100n</a></code>: housing an assemblage of SSPFM datacube measurement files with an spm extension (Bruker), alongside their corresponding measurement records. This serves the following purpose:</li>
             <ul align="justify" width="100%">
@@ -423,6 +423,7 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_spm_data_extractor.py">examples/toolbox/ex_spm_data_extractor.py</a></code>.</li>
             </ul>
         </ul>
+    <ul align="justify" width="100%">
         <li>4. Data crafted by dedicated scripts for this purpose:</li>
         <ul align="justify" width="100%">
             <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/gen_data.py">utils/datacube_to_nanoloop/gen_data.py</a></code> serves the function of generating an SSPFM datacube measurement, either in sweep resonance mode or DFRT mode. The ensuing examples derive their foundations from this source:</li>
