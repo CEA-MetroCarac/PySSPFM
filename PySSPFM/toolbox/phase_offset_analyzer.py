@@ -54,8 +54,8 @@ def generate_graph_offset(phase_offset_tab):
     return graph_offset
 
 
-def single_script(file_path_in, user_pars, file_index=None, verbose=False,
-                  make_plots=False):
+def single_script(file_path_in, user_pars, meas_pars, sign_pars,
+                  file_index=None, verbose=False, make_plots=False):
     """
     Single script function
 
@@ -65,6 +65,10 @@ def single_script(file_path_in, user_pars, file_index=None, verbose=False,
         Path of input file
     user_pars: dict
         User parameters
+    meas_pars: dict
+        Dictionary of measurement parameters.
+    sign_pars: dict
+        Dictionary of SSPFM bias signal parameters.
     file_index: int, optional
         Index of the file
     verbose: bool, optional
@@ -84,10 +88,6 @@ def single_script(file_path_in, user_pars, file_index=None, verbose=False,
 
     if verbose and file_index is not None:
         print(f"\nFile n°{file_index}: {os.path.split(file_path_in)[1]}")
-
-    # Extract parameters from measurement sheet
-    meas_pars, sign_pars = csv_meas_sheet_extract(
-        os.path.split(file_path_in)[0])
 
     # Extract sspfm measurement from file
     dict_meas, _ = data_extraction(
@@ -226,8 +226,8 @@ def single_script(file_path_in, user_pars, file_index=None, verbose=False,
     return phase_offset_val, figures
 
 
-def multi_script(dir_path_in, file_names, user_pars, verbose=False,
-                 make_plots=False):
+def multi_script(dir_path_in, file_names, user_pars, meas_pars, sign_pars,
+                 verbose=False, make_plots=False):
     """
     Multi-script function
 
@@ -239,6 +239,10 @@ def multi_script(dir_path_in, file_names, user_pars, verbose=False,
         List of file names
     user_pars: dict
         User parameters
+    meas_pars: dict
+        Dictionary of measurement parameters.
+    sign_pars: dict
+        Dictionary of SSPFM bias signal parameters.
     verbose: bool, optional
         Activation key for verbosity
     make_plots: bool, optional
@@ -258,8 +262,9 @@ def multi_script(dir_path_in, file_names, user_pars, verbose=False,
     for index, file_name in enumerate(file_names):
         generate_figures = bool(index == 0 and make_plots)
         phase_offset, fig_main = single_script(
-            os.path.join(dir_path_in, file_name), user_pars,
-            file_index=index+1, verbose=verbose, make_plots=generate_figures)
+            os.path.join(dir_path_in, file_name), user_pars, meas_pars,
+            sign_pars, file_index=index+1, verbose=verbose,
+            make_plots=generate_figures)
         figures += fig_main
         mean_phase_offset_val = mean_phase_offset(phase_offset)
 
@@ -307,10 +312,13 @@ def main_phase_offset_analyzer(user_pars, dir_path_in, range_file=None,
     file_names = file_names[range_file[0]:range_file[1]] \
         if range_file is not None else file_names
 
+    # Extract parameters from measurement sheet
+    meas_pars, sign_pars = csv_meas_sheet_extract(dir_path_in)
+
     # Multi script
     phase_offset_tab, figures = multi_script(
-        dir_path_in, file_names, user_pars, verbose=verbose,
-        make_plots=make_plots)
+        dir_path_in, file_names, user_pars, meas_pars, sign_pars,
+        verbose=verbose, make_plots=make_plots)
 
     # Make graph offset
     if make_plots:
