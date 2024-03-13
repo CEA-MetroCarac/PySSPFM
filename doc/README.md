@@ -28,7 +28,7 @@
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii1b---measurement-sheet">III.1.b) - Measurement sheet</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii1c---extraction">III.1.c) - Extraction</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii1d---examples--tests">III.1.d) - Examples & Tests</a></li>
-                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1e---parameters">III.1.e) - Parameters</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/#iii1e---parameters">III.1.e) - Parameters</a></li>
                     </ul>
                 </li>
                 <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2---output-files">III.2) - Output files</a>
@@ -85,10 +85,11 @@
             <ul align="justify" width="100%">
                 <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1-viewers">VIII.1) Viewers</a>
                     <ul align="justify" width="100%">
-                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1a-raw-file">VIII.1.a) Raw file</a></li>
-                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1b-loop-file">VIII.1.b) Loop file</a></li>
-                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1c-global-map-reader">VIII.1.c) Global map reader</a></li>
-                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1d-list-map-reader">VIII.1.d) List map reader</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1a-spm-data-extractor">VIII.1.a) SPM data extractor</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1b-raw-file">VIII.1.b) Raw file</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1c-loop-file">VIII.1.c) Loop file</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1d-global-map-reader">VIII.1.d) Global map reader</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1e-list-map-reader">VIII.1.e) List map reader</a></li>
                     </ul>
                 </li>
                 <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2-curve-clustering-k-means">VIII.2) Curve clustering (K-Means)</a>
@@ -1174,7 +1175,7 @@ The script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/Py
 </p>
 
 <p align="justify" width="100%">
-The maps are generated using the executable codes <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader.py</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader.py</a></code> (see sections <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1c-global-map-reader">VIII.1.c) Global map reader</a> and <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1d-list-map-reader">VIII.1.d) List map reader</a> of the documentation).
+The maps are generated using the executable codes <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader.py</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader.py</a></code> (see sections <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1d-global-map-reader">VIII.1.d) Global map reader</a> and <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1e-list-map-reader">VIII.1.e) List map reader</a> of the documentation).
 </p>
 
 ### VII.1) - Mask
@@ -1268,7 +1269,7 @@ User parameters:
 As input, the SSPFM datacube measurement file is opened, and all its data is extracted and plotted. The user must specify the number of initial and final hold segments respectively, via the parameters <code>nb_hold_seg</code>, to facilitate data extraction from the file. The raw SSPFM measurement data are extracted, along with the SSPFM voltage parameters and information regarding the measurement conditions.
 </p>
 
-#### VIII.1.a) Raw file
+#### VIII.1.b) Raw file
 
 <p align="justify" width="100%">
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">toolbox/raw_file_reader.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/raw_file_reader.py">gui/raw_file_reader.py</a></code>. It allows the graphical visualization of raw measurements from an SSPFM datacube file.
@@ -1309,7 +1310,7 @@ As input, SSPFM datacube measurement file is open, and its data is extracted (se
 &#8226 For a deeper understanding of the output file management, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2c---toolbox">III.2.c) - Toolbox</a>
 </p>
 
-#### VIII.1.b) Loop file
+#### VIII.1.c) Loop file
 
 <p align="justify" width="100%">
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox/loop_file_reader.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/loop_file_reader.py">gui/loop_file_reader.py</a></code>. It enables the visualization of data from a measurement file in the form of a nanoloop (txt extension).
@@ -1357,7 +1358,7 @@ In input, a measurement file in the form of a <code>nanoloop</code> file (genera
 &#8226 For more precisions on post-measurement phase calibration, <code>AllMultiLoop</code> and <code>AllMeanLoop</code> objects, please refer to section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#v---nanoloop">V) Nanoloop</a> of the documentation.
 </p>
 
-#### VIII.1.c) Global map reader
+#### VIII.1.d) Global map reader
 
 <p align="justify" width="100%">
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/global_map_reader.py">toolbox/global_map_reader.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/global_map_reader.py">gui/global_map_reader.py</a></code>. It enables the visualization of all material properties measured in the form of cartographies.
@@ -1428,7 +1429,7 @@ In input, the directory <code>properties</code> (generated after the second proc
 &#8226 For cross-correlative analysis, please refer to section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii4-2d-cross-correlation">VII.4) - 2D cross correlation</a> of the documentation.
 </p>
 
-#### VIII.1.d) List map reader
+#### VIII.1.e) List map reader
 
 <p align="justify" width="100%">
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/list_map_reader.py">gui/list_map_reader.py</a></code>. It allows for the visualization of a selection of measured properties in the form of cartography on a single figure.
@@ -1478,7 +1479,7 @@ User parameters:
 </p>
 
 <p align="justify" width="100%">
-The operating principle of this reader differs slightly from that of the global map reader (see Section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii1c-global-map-reader">VIII.1.c) - Global map reader</a> in the documentation). In this case, a single mask can be defined by the user, and a list of measures to be mapped is provided by the user. The concept behind this reader is to observe multiple maps of different properties simultaneously (rather than one by one). Therefore, the <code>main_mapping</code> function is not used. In the main function of the script, <code>main_list_map_reader</code>, the mask is constructed, and cross-correlative analysis is performed only between the mapped measures (for cross-correlative analysis, please refer to section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii4-2d-cross-correlation">VII.4) - 2D cross correlation</a> of the documentation.). Then, the figure containing all the different maps is formatted using the <code>formatting_fig</code> function. For each map, the <code>tratment_plot_map</code> function is used to carry out treatments (masking, interpolation, etc.) and generate the map of the corresponding property, making use of functions from the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">SSPFM mapping</a> scripts. Finally, all the graphs of the evolution of the different properties as a function of time and the index of the map row are detrmined in the same way with the <code>treatment_plot_graph</code> and <code>formatting_fig_graphs</code> functions.
+The operating principle of this reader differs slightly from that of the global map reader (see Section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii1d-global-map-reader">VIII.1.d) - Global map reader</a> in the documentation). In this case, a single mask can be defined by the user, and a list of measures to be mapped is provided by the user. The concept behind this reader is to observe multiple maps of different properties simultaneously (rather than one by one). Therefore, the <code>main_mapping</code> function is not used. In the main function of the script, <code>main_list_map_reader</code>, the mask is constructed, and cross-correlative analysis is performed only between the mapped measures (for cross-correlative analysis, please refer to section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii4-2d-cross-correlation">VII.4) - 2D cross correlation</a> of the documentation.). Then, the figure containing all the different maps is formatted using the <code>formatting_fig</code> function. For each map, the <code>tratment_plot_map</code> function is used to carry out treatments (masking, interpolation, etc.) and generate the map of the corresponding property, making use of functions from the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">SSPFM mapping</a> scripts. Finally, all the graphs of the evolution of the different properties as a function of time and the index of the map row are detrmined in the same way with the <code>treatment_plot_graph</code> and <code>formatting_fig_graphs</code> functions.
 </p>
 
 <p align="center" width="100%">
@@ -1883,7 +1884,7 @@ Then, for each of the files:
             </ul> <br>
         <li>If <code>mode = 'coupled'</code>:</li>
             <ul align="justify" width="100%">
-                <li>For each mode (<code>'on'</code> and <code>'off'</code>): The nanoloop of the corresponding file (located in the <code>nanoloops</code> folder) is extracted with the <code>extract_nanoloop_data</code> function from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file.py">utils/nanoloop/file.py</a></code>, and the <code>best_loop</code> is extracted with the <code>single_script</code> function from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/nanoloop_to_hyst_s2.py">data_processing/nanoloop_to_hyst_s2.py</a></code> (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi2---best-loop">VI.2) - Best loop</a> of the documentation). The main function <code>main_loop_file_reader</code> from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox/loop_file_reader.py</a></code> is employed to create figures in the form of nanoloops (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1b-loop-file">VIII.1.b) Loop file</a> of the documentation).</li>
+                <li>For each mode (<code>'on'</code> and <code>'off'</code>): The nanoloop of the corresponding file (located in the <code>nanoloops</code> folder) is extracted with the <code>extract_nanoloop_data</code> function from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/file.py">utils/nanoloop/file.py</a></code>, and the <code>best_loop</code> is extracted with the <code>single_script</code> function from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/nanoloop_to_hyst_s2.py">data_processing/nanoloop_to_hyst_s2.py</a></code> (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi2---best-loop">VI.2) - Best loop</a> of the documentation). The main function <code>main_loop_file_reader</code> from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_file_reader.py">toolbox/loop_file_reader.py</a></code> is employed to create figures in the form of nanoloops (see section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii1c-loop-file">VIII.1.c) Loop file</a> of the documentation).</li>
                 <li>An analysis of the entire file selection is performed using the <code>mean_hyst</code> tool (the main function <code>main_mean_hyst</code> from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_hyst.py">toolbox/mean_hyst.py</a></code> is called). The differential component and average properties are then determined.</li>
                 <li>The <code>differential_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic.py</a></code> is employed to conduct the differential analysis for the respective file (section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4d---differential-analysis-of-on-and-off-field-hysteresis">VI.4.d) - Differential analysis of on and off field hysteresis</a> in the documentation).</li>
                 <li>The differential components (average and of the respective file) are determined during the corresponding analysis steps.</li>
