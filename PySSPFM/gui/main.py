@@ -124,7 +124,7 @@ def main():
                  "or measurement sheet based on data extraction of SPM files."
     strg_functions = [
         "Conversion of raw_data.spm (sspfm datacube file) to raw_data.txt",
-        "Generate a CSV measurement sheet from a model and SPM raw file "
+        "Generate a CSV measurement sheet from a model and SSPFM raw file "
         "data extraction",
     ]
     create_section(root, "Toolbox - 4 - File management",
