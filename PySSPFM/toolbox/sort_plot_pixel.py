@@ -442,7 +442,13 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
 
     # Mean sel_property value
     if verbose:
-        mean = np.mean(remove_val(sel_property, mask=user_pars["list pixels"],
+        if user_pars["list pixels"] is None:
+            mask_for_mean = user_pars["list pixels"]
+        elif len(user_pars["list pixels"]) > 0:
+            mask_for_mean = user_pars["list pixels"]
+        else:
+            mask_for_mean = None
+        mean = np.mean(remove_val(sel_property, mask=mask_for_mean,
                                   reverse=True))
         print(f'mean value: {mean}')
 
@@ -484,6 +490,13 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
                     sat_threshold=treat_pars['sat thresh'], dict_str=dict_str,
                     pixel_ind=dict_file[file])
                 figs = figs_nanoloop + [fig_hyst]
+            # Other mode
+            elif user_pars['prop key']['mode'] == 'other':
+                loop_file_name = os.path.split(file)[1][:-4] + '.txt'
+                loop_file_path = os.path.join(user_pars['dir path in loop'],
+                                              loop_file_name)
+                _, dict_str, _ = extract_nanoloop_data(loop_file_path)
+                figs = []
             # Coupled mode
             elif user_pars['prop key']['mode'] == 'coupled':
                 best_loop, figs_nanoloop = {}, {}
@@ -518,7 +531,7 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
                 figs += multi_figures + [single_fig]
             else:
                 raise IOError("'user_pars['prop key']['mode']' should be "
-                              "'on' or 'off' or 'coupled'")
+                              "'on' or 'off' or 'coupled' or 'other'")
 
             dict_interp = {'fact': user_pars['interp fact'],
                            'func': user_pars['interp func']}
@@ -651,7 +664,7 @@ def parameters():
         save = False
         user_pars = {'prop key': {'mode': 'off',
                                   'prop': 'charac tot fit: area'},
-                     'list pixels': [],
+                     'list pixels': None,
                      'reverse': False,
                      'del 1st loop': True,
                      'interp fact': 4,
