@@ -1951,6 +1951,34 @@ Following this, a corresponding new datacube file is generated, with an extensio
 &#8226 For a deeper understanding of the output file management, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2c---toolbox">III.2.c) - Toolbox</a>
 </p>
 
+### VIII.6) Measurement sheet generator
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/meas_sheet_generator.py">toolbox/meas_sheet_generator.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/meas_sheet_generator.py">gui/meas_sheet_generator.py</a></code>.
+</p>
+
+<p align="justify" width="100%">
+User parameters:
+</p>
+
+```
+    default_user_parameters = {
+        'file path in': '',
+        'dir path out': '',
+        'nb hold seg start': 1,
+        'nb hold seg end': 1,
+        'extension': "spm",
+        'verbose': True}
+```
+
+<p align="justify" width="100%">
+The analysis begins with the selection of a pre-existing CSV measurement sheet, which serves as the foundational template for generating a new CSV measurement sheet. This template is duplicated and placed within the designated output directory, which houses the raw SSPFM file measurements whose extension is specified by the user. Upon extraction of data from these files, taking into consideration the user-provided number of hold segments at the start and end of the measurement, the parameters of the DC polarization voltage are derived. Additionally, the date of measurement and the names of the first and last raw SSPFM files are extracted. Subsequently, all extracted data are meticulously inscribed into the CSV measurement sheet, ensuring comprehensive documentation and analysis.
+</p>
+
+<p align="justify" width="100%">
+&#8226 For a deeper understanding of the output file management, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2c---toolbox">III.2.c) - Toolbox</a>
+</p>
+
 ## IX) Overall settings
 
 <p align="justify" width="100%">
