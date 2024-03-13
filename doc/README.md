@@ -1888,6 +1888,10 @@ Then, for each of the files:
                 <li>The <code>differential_analysis</code> function in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/electrostatic.py">utils/nanoloop_to_hyst/electrostatic.py</a></code> is employed to conduct the differential analysis for the respective file (section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4d---differential-analysis-of-on-and-off-field-hysteresis">VI.4.d) - Differential analysis of on and off field hysteresis</a> in the documentation).</li>
                 <li>The differential components (average and of the respective file) are determined during the corresponding analysis steps.</li>
             </ul> <br>
+        <li>If <code>mode = 'other'</code>:</li>
+            <ul align="justify" width="100%">
+                <li>No hysteresis is displayed or any other specific treatment is performed.</li>
+            </ul> <br>
         <li>The mapping of the reference property is constructed using the <code>plot_and_save_image</code> function in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code>, with the pixel corresponding to the highlighted file (section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vii3---figures">VII.3) - Figures</a> in the documentation). A histogram of the reference property is generated, and the value of the property for the respective file is highlighted.</li>
     </ul>
 </p>
