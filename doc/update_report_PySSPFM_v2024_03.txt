@@ -1,0 +1,90 @@
+PySSPFM v2024.03 Update Report:
+
+# Other Properties:
+Addition of Height Sensor: The raw datas now include Height Sensor information in the settings JSON, facilitating the extraction of additional data for mapping purposes.
+Incorporation of Height Signal: The function plt_signals now includes the height signal, enhancing visualization capabilities.
+Creation of Other Properties: Introducing a dictionary of scalar quantities associated with each segment, including topography information, adhesion, phase, etc. This is implemented through the utilization of the extract_other_properties function in datacube_to_nanoloop_s1.py.
+Enhancements in File Saving: The functions save_nanoloop_file and extract_nanoloop_data have been modified to incorporate other properties into the header of Nanoloop save files.
+Extraction and Display: Other properties are now extracted and displayed in various scripts such as loop_file_reader.py and map_correlation.py.
+
+# Phase Offset:
+Phase Offset Analyzer: The executable script phase_offset_analyzer.py facilitates the determination of the optimal phase offset for realigning phase histogram peaks.
+Optional Phase Offset Application: An optional phase offset applicable to all initial phase values has been added to correct undesirable phase switches that disrupt nanoloops. This feature is integrated into datacube_to_nanoloop_s1.py using the apply_phase_offset function.
+Dynamic Offset Correction: Three modes for phase offset correction are available: dynamic (iterative offset determination for each new file), static (single offset value for all files), and None (no offset correction applied). Implemented in datacube_to_nanoloop_s1.py.
+Automatic Offset Calculation: The automatic calculation of the phase offset from the phase value histogram associated with each segment is now performed by the single_script function in datacube_to_nanoloop_s1.py.
+Mean Phase Offset Calculation: The mean_phase_offset function calculates the average phase offset of an SSPFM file from its phase offset dictionary containing values in Off Field and On Field.
+Phase Offset Determination: The phase_offset_determination function computes the phase offset from a list of phases by identifying the two main histogram peaks.
+Refocused Phase Histogram: The refocused_phase_histo function calculates the values of the recentred histogram and plots it.
+Phase Offset Application: The apply_phase_offset function applies a post-measurement phase offset while respecting the available phase value range.
+
+# Phase Analysis for Unipolar Nanoloops:
+Integration in Phase Offset Analyzer: Phase analysis for unipolar nanoloops is now integrated into the phase offset analyzer.
+Inclusion in Phase Calibration Function: Unipolar nanoloop analysis is incorporated into the phase_calibration function.
+Setting for Phase Reversion: A new setting "unipolar_phase_revert" determines whether phase reversal occurs in unipolar nanoloops.
+
+# Other Phase-related Enhancements:
+Peak Value Correction: Bug fixes have been implemented to address issues related to peak value attribution by using minimum and maximum values instead of index points.
+Decomposition of Functions: The phase_calibration function has been decomposed into smaller functions for improved modularity.
+Plotting Modifications: Adjustments in plot formatting have been made for better visualization, including legend and style changes.
+Separation of Plotting Functions: The plot_main_peaks function, responsible for plotting phase analysis, has been separated from the find_main_peaks function.
+
+# Filters:
+Addition of Butterworth Filters: Butterworth filters have been added for segment processing, integrated into datacube_to_nanoloop_s1.py using the butter_filter function.
+Segment-wise Processing: Filters are now applied to different segments in datacube_to_nanoloop/analysis.py.
+
+# Measurement Sheets:
+New Version of Measurement Sheet: A new version of the measurement sheet consolidates multiple files into a single file, enhancing usability.
+Adaptation for Measurement Sheet Modification: The csv_meas_sheet_extract function has been adapted to accommodate changes in the measurement sheet format.
+
+# Default Settings:
+Addition of New Setting: A new setting "unipolar_phase_revert" has been added.
+Default Fit Method: The default fit method is now "least_square" instead of "nelder".
+Default Phase Fit Method: The default phase fit method is now "max" instead of "fit".
+Other Enhancements and Fixes:
+
+Minor modifications and bug fixes have been made in various scripts, including raw_extraction.py, nanoloop/analysis.py, and map/matrix_processing.py.
+Real Measurement Time: Real measurement time is now recorded using the get_acquisition_time function, stored in the save_parameters function.
+R² Calculation Method: The method for calculating the R² of hysteresis has been updated.
+Plotting of Phase Analysis Figures: The make_plots function in nanoloop_treatment now displays phase analysis figures.
+Dictionary Adjustment: Minor adjustments have been made to the res dictionary to simplify usage in the find_main_peaks function.
+
+# Executables:
+List Map Reader Enhancements: Graphs depicting the evolution of measured parameters over time are now displayed in the list map reader. Additionally, the meas time parameter specifies the total duration of measurement.
+GUI Modifications: Minor modifications have been made in GUIs to improve pylint scores.
+Update of GUIs, JSON, Python, Parameters: All GUIs, JSON files, Python scripts, and parameters have been updated to incorporate new user settings.
+Display of Phase Analysis Figures: Phase analysis figures are now displayed in loop_file_reader.py.
+
+# New Toolbox/GUI Files:
+meas_sheet_generator.py: Generates a pre-filled CSV measurement sheet from a pre-existing sheet and data in an SPM file.
+phase_offset_analyzer.py: Calculates the phase offset of a series of measurement files.
+spm_data_extractor.py: Extracts all data from an SPM file.
+
+# New File plot_phase.py:
+A new file has been introduced to separate phase analysis plotting functions, previously contained in phase.py. It includes functions such as histo_init, refocused_phase_histo, annotate_histo, plot_phase_bias_grad, and add_txt.
+
+# Minor File Modifications:
+Minor modifications have been made in various scripts, such as datacube_to_nanoloop_s1.py, nanoloop_to_hyst_s2.py, and datacube_to_nanoloop/analysis.py, including file sorting by modification date and corrections of errors and bugs.
+
+# Listing of New Functions:
+mean_phase_offset: Calculates the average phase offset of an SSPFM file.
+phase_offset_determination: Computes the phase offset from a list of phases.
+refocused_phase_histo: Calculates and plots the recentred histogram of phase values.
+apply_phase_offset: Applies a post-measurement phase offset.
+get_file_names: Extracts files with a given extension in a directory and sorts them by modification date.
+get_acquisition_time: Returns the real acquisition time of a measurement series.
+extract_other_properties: Extracts a dictionary of scalar quantities associated with a segment.
+butter_filter: Applies a Butterworth filter to a signal.
+formatting_fig_graphs and treatment_plot_graph: Plotting functions for parameter evolution over time in the list map reader.
+plot_main_peaks: Plots the two main peaks on the phase histogram.
+theoretical_phase_analysis: Performs theoretical phase analysis, matching phase, bias, and polarization.
+unipolar_revert_analysis: Performs unipolar phase revert analysis.
+bipolar_revert_analysis: Performs bipolar phase analysis and detects phase inversion.
+plot_phase_bias_grad: Plotting function for phase bias gradient analysis.
+
+# Function Renaming:
+The phase_analysis function has been renamed to phase_bias_grad for clarity.
+
+# Documentation and/or Paper:
+All changes from the update have been incorporated into the documentation.
+Specific file naming conventions for measurements have been added to the measurement conditions.
+Phase inversion due to the application direction of the alternating voltage is now addressed, ensuring detection and correction if necessary for phase signal analysis.
