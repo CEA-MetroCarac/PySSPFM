@@ -1720,7 +1720,7 @@ The data of the measured properties (generated after the second processing step 
 &#8226 For mask creation, please refer to section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#vii1---mask">VII.1) - Mask</a> in the documentation.
 </p>
 
-#### VIII.3.c) Find best loop
+#### VIII.4.c) Find best loop
 
 <p align="justify" width="100%">
 Subsequently, for each of the selected measurement points, the finest among the loops is to be extracted with the aid of the <code>find_best_loops</code> function. This function acquires the measurement parameters from the <code>parameters.txt</code> file and invokes the <code>single_script</code> function found in <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/nanoloop_to_hyst_s2.py">data_processing/nanoloop_to_hyst_s2.py</a></code> to retrieve data from the <code>nanoloops</code> files and determine the optimum loop, referred to as the <code>best_loop</code>. In the case of a coupled measurement (<code>mode = 'coupled'</code>), this protocol is repeated for the on and off field modes. If the setting <code>electrostatic_offset is True</code>, the offsets in the <code>'off field'</code> mode are utilized to reconstruct the entirety of the electrostatic component (accounting for the CPD) (section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4d---differential-analysis-of-on-and-off-field-hysteresis">VI.4.d) - Differential analysis of on and off field hysteresis</a> in the documentation).
