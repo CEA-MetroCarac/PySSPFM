@@ -9,7 +9,7 @@
             "mode": "off",
             "prop": "charac tot fit: area"
         },
-        "list pixels": [],
+        "list pixels": null,
         "reverse": false,
         "del 1st loop": true,
         "interp fact": 4,
