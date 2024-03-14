@@ -747,7 +747,7 @@ Note that SSPFM can also allow to investigate nanomechanical properties as a fun
 </p>
 
 <p align="justify" width="100%">
-All segments (in the off field mode) can be visualized on this map <a href="#ref7">[7]</a>:
+All segments (here in the off field mode) can be visualized on this map <a href="#ref7">[7]</a>:
 </p>
 
 <p align="center" width="100%">
