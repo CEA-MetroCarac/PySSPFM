@@ -802,7 +802,7 @@ Here are the various hysteresis configurations in the off field mode, depending 
 </p>
 
 <p align="justify" width="100%">
-In the specific scenario of on field measurements with a predominant electrostatic component (where the electrostatic component determines the phase value with voltage), the sign of the electrostatic component's slope is contingent on the direction of the applied voltage, as established in the following table:
+In the specific scenario of on field measurements with a predominant electrostatic component (when the electrostatic component determines the phase value with voltage), the sign of the electrostatic component's slope is contingent on the direction of the applied voltage, as established in the following table:
 </p>
 
 <p align="center" width="100%">
@@ -862,7 +862,11 @@ A potential phase inversion can be detected by examining the variation in the me
 </p>
 
 <p align="justify" width="100%">
-Following the calibration process and the identification of the positions of the two peaks on the histogram, as well as the phase difference, the experimentally obtained results are processed using the theoretical phase calibration model with the function <code>bipolar_revert_analysis</code>. The script also handles the case of unipolar measurements (where only one phase peak is determined on the histogram) using the function <code>unipolar_revert_analysis</code> and the setting <code>unipolar_phase_revert</code> adapted on the direction of the phase determined for bipolar measurements. Then, phase correction is performed by <code>correct_phase_val</code> function can be achieved through four distinct protocols, chosen with <code>pha_corr</code> parameter:<br>
+Following the calibration process and the identification of the positions of the two peaks on the histogram, as well as the phase difference, the experimentally obtained results are processed using the theoretical phase calibration model with the function <code>bipolar_revert_analysis</code>. The script also handles the case of unipolar measurements (where only one phase peak is determined on the histogram) using the function <code>unipolar_revert_analysis</code> and the setting <code>unipolar_phase_revert</code> adapted on the direction of the phase determined for bipolar measurements. 
+</p>
+
+<p align="justify" width="100%">
+Then, phase correction is performed by <code>correct_phase_val</code> function can be achieved through four distinct protocols, chosen with <code>pha_corr</code> parameter:<br>
 &#8226 <code>raw</code>: The raw phase is retained, and no processing is applied (suitable for use in pre-measurement phase calibration).<br>
 &#8226 <code>offset</code>: A phase offset is determined through calibration, and the phase difference between the two peaks remains unchanged (a treatment method that aims to preserve the initial measurement as faithfully as possible).<br>
 &#8226 <code>affine</code>: An affine relationship is applied to all phase values, adjusting the phase difference to 180°.<br>
