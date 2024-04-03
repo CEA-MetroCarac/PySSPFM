@@ -159,6 +159,11 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, phase_offset=0,
                              meas_pars=meas_pars)
         (dict_meas['amp'], dict_meas['pha']) = par
 
+    # If input phase in radians, convert it in degrees
+    rad_phase = get_setting('radians_input_phase')
+    if rad_phase:
+        dict_meas['pha'] = 360/(2*np.pi)*np.array(dict_meas['pha'])
+
     # Generate SS PFM signal segment values
     ss_pfm_bias = sspfm_generator(sign_pars)
 
