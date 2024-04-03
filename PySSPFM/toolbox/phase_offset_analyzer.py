@@ -291,7 +291,8 @@ def multi_script(dir_path_in, file_names, user_pars, meas_pars, sign_pars,
     # Multi processing mode
     multiproc = get_setting("multi_processing")
     if multiproc:
-        from PySSPFM.utils.multi_proc import run_multi_phase_offset_analyzer
+        from PySSPFM.utils.core.multi_proc import \
+            run_multi_phase_offset_analyzer
         common_args = {
             "user_pars": user_pars,
             "meas_pars": meas_pars,

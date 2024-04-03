@@ -498,7 +498,7 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='max',
     # Multi processing mode
     multiproc = get_setting("multi_processing")
     if multiproc:
-        from PySSPFM.utils.multi_proc import run_multi_proc_s1
+        from PySSPFM.utils.core.multi_proc import run_multi_proc_s1
         file_paths = []
         for file in file_names:
             file_paths.append(os.path.join(dir_path_in, file))

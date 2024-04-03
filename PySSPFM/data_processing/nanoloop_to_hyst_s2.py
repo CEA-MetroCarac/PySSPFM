@@ -402,7 +402,7 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
     # Multi processing mode
     multiproc = get_setting("multi_processing")
     if multiproc:
-        from PySSPFM.utils.multi_proc import run_multi_proc_s2
+        from PySSPFM.utils.core.multi_proc import run_multi_proc_s2
 
         common_args = {
             "user_pars": user_pars,
