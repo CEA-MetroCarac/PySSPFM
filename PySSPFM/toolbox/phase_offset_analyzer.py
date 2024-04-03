@@ -25,9 +25,10 @@ from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
 
-def save_dict_to_txt(data_dict, file_path):
+def save_dict_to_txt(data_dict, file_path, map_dim=None):
     """
-    Save dictionary data to a text file.
+    Save dictionary data to a text file --> this file can be read with map
+    readers
 
     Parameters
     ----------
@@ -35,15 +36,23 @@ def save_dict_to_txt(data_dict, file_path):
         Dictionary containing data to be saved.
     file_path : str
         Path to the output text file.
+    map_dim: dict, optional
+        Map dimension in terms of pixels and microns
 
     Returns
     -------
     None
     """
-    headers = list(data_dict.keys())
-    data_array = np.array(list(data_dict.values())).T
-    np.savetxt(file_path, data_array, header='\t\t'.join(headers), fmt='%.5e',
-               delimiter='\t\t')
+    delimiter = get_setting("delimiter")
+    header = "phase\n"
+    if map_dim is not None:
+        header += f"x pix={map_dim['x pix']}, y pix={map_dim['y pix']}, " \
+                  f"x mic={map_dim['x mic']}, y mic={map_dim['y mic']}, \n"
+    for key in data_dict.keys():
+        header += f"{key}{delimiter}"
+    data_array = np.array(list(data_dict.values()), dtype=float).T
+    np.savetxt(file_path, data_array, header=header, delimiter=delimiter,
+               newline='\n', fmt='%s')
 
 
 def generate_graph_offset(phase_offset_tab):
@@ -279,24 +288,53 @@ def multi_script(dir_path_in, file_names, user_pars, meas_pars, sign_pars,
     figures = []
     phase_offset_tab = {}
 
-    # For each file: single_script
-    for index, file_name in enumerate(file_names):
-        generate_figures = bool(index == 0 and make_plots)
-        phase_offset, fig_main = single_script(
-            os.path.join(dir_path_in, file_name), user_pars, meas_pars,
-            sign_pars, file_index=index+1, verbose=verbose,
-            make_plots=generate_figures)
-        figures += fig_main
-        mean_phase_offset_val = mean_phase_offset(phase_offset)
+    # Multi processing mode
+    multiproc = get_setting("multi_processing")
+    if multiproc:
+        from PySSPFM.utils.multi_proc import run_multi_phase_offset_analyzer
+        common_args = {
+            "user_pars": user_pars,
+            "meas_pars": meas_pars,
+            "sign_pars": sign_pars,
+            "file_index": None,
+            "verbose": verbose,
+            "make_plots": False}
+        file_paths_in = [os.path.join(dir_path_in, file_name)
+                         for file_name in file_names]
+        tab_phase_offset_val = \
+            run_multi_phase_offset_analyzer(file_paths_in, common_args,
+                                            processes=16)
+        for elem in tab_phase_offset_val:
+            mean_phase_offset_val = mean_phase_offset(elem)
+            # Append phase offset values
+            if len(list(phase_offset_tab.keys())) == 0:
+                for key, value in elem.items():
+                    phase_offset_tab[key] = []
+                phase_offset_tab["Mean"] = []
+            for key, value in elem.items():
+                phase_offset_tab[key].append(value)
+            phase_offset_tab["Mean"].append(mean_phase_offset_val)
 
-        # Append phase offset values
-        if len(list(phase_offset_tab.keys())) == 0:
+    # Mono processing mode
+    else:
+        # For each file: single_script
+        for index, file_name in enumerate(file_names):
+            generate_figures = bool(index == 0 and make_plots)
+            phase_offset, fig_main = single_script(
+                os.path.join(dir_path_in, file_name), user_pars, meas_pars,
+                sign_pars, file_index=index+1, verbose=verbose,
+                make_plots=generate_figures)
+            figures += fig_main
+            mean_phase_offset_val = mean_phase_offset(phase_offset)
+
+            # Append phase offset values
+            if len(list(phase_offset_tab.keys())) == 0:
+                for key, value in phase_offset.items():
+                    phase_offset_tab[key] = []
+                phase_offset_tab["Mean"] = []
             for key, value in phase_offset.items():
-                phase_offset_tab[key] = []
-            phase_offset_tab["Mean"] = []
-        for key, value in phase_offset.items():
-            phase_offset_tab[key].append(value)
-        phase_offset_tab["Mean"].append(mean_phase_offset_val)
+                phase_offset_tab[key].append(value)
+            phase_offset_tab["Mean"].append(mean_phase_offset_val)
 
     return phase_offset_tab, figures
 
@@ -326,6 +364,8 @@ def main_phase_offset_analyzer(user_pars, dir_path_in, range_file=None,
     -------
     phase_offset_tab: dict
         Dictionary containing phase offset data of all the file
+    map_dim: dict
+        Map dimension in terms of pixels and microns
     figures: list
         Generated figures
     """
@@ -335,7 +375,10 @@ def main_phase_offset_analyzer(user_pars, dir_path_in, range_file=None,
 
     # Extract parameters from measurement sheet
     meas_pars, sign_pars = csv_meas_sheet_extract(dir_path_in)
-
+    map_dim = {'x pix': meas_pars['Grid x [pix]'],
+               'y pix': meas_pars['Grid y [um]'],
+               'x mic': meas_pars['Grid x [pix]'],
+               'y mic': meas_pars['Grid y [um]']}
     # Multi script
     phase_offset_tab, figures = multi_script(
         dir_path_in, file_names, user_pars, meas_pars, sign_pars,
@@ -346,7 +389,7 @@ def main_phase_offset_analyzer(user_pars, dir_path_in, range_file=None,
         figures += [generate_graph_offset(phase_offset_tab)]
     figures = [item for item in figures if item != []]
 
-    return phase_offset_tab, figures
+    return phase_offset_tab, map_dim, figures
 
 
 def parameters():
@@ -487,7 +530,7 @@ def parameters():
         # extension = 'spm' or 'txt' or 'csv' or 'xlsx'
         verbose = True
         show_plots = True
-        save = True
+        save = False
         seg_params = {'mode': 'max',
                       'cut seg [%]': {'start': 5, 'end': 5},
                       'filter type': None,
@@ -520,7 +563,7 @@ def main():
         lvl=0, create_path=True, post_analysis=False)
     start_time = datetime.now()
     # Main function
-    phase_offset_tab, figs = main_phase_offset_analyzer(
+    phase_offset_tab, map_dim, figs = main_phase_offset_analyzer(
         user_pars, dir_path_in, range_file=range_file, extension=extension,
         verbose=verbose, make_plots=bool(show_plots or save))
     # Plot figures
@@ -531,7 +574,8 @@ def main():
         save_user_pars(user_pars, dir_path_out, start_time=start_time,
                        verbose=verbose)
         file_path_out = os.path.join(dir_path_out, "phase.txt")
-        save_dict_to_txt(phase_offset_tab, file_path=file_path_out)
+        save_dict_to_txt(phase_offset_tab, file_path=file_path_out,
+                         map_dim=map_dim)
 
 
 if __name__ == '__main__':
