@@ -1,5 +1,7 @@
 """
-module description
+This module provides functionality to load parameters from a configuration file
+in either TOML or JSON format. It includes a custom error class TomlError for
+handling errors related to TOML files.
 """
 
 import os
