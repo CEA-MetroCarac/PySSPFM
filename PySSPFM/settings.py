@@ -58,6 +58,12 @@ SAVE_TEST_EXAMPLE: bool
     or examples or not.
     Default is True.
 
+MULTI_PROCESSING: bool
+    Flag to control whether data analysis is performed in multiprocessing or
+    not. This option applies for steps 1 and 2 of the data analysis,
+    and the offset analyzer of the toolbox.
+    Default is False.
+
 EXTRACT_PARAMETERS: str
     Method used to extract processing parameters. It can be extracted from json
     file (extract_parameters = 'json') that have been created in the same
@@ -120,6 +126,11 @@ HISTO_PHASE_METHOD : str
     The method is used in order to determine the phase difference between
     the two peaks. 'fit' method is more accurate but slower.
     Default is 'max'.
+
+RADIANS_INPUT_PHASE: bool
+    Flag to indicate whether the input phase data is in radians or not.
+    If so, it is converted into degrees for data analysis.
+    Default is False.
 
 UNIPOLAR_PHASE_REVERT : bool
     Flag to indicate if phase inversion occur for unipolar nanoloop.
