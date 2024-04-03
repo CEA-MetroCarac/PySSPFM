@@ -71,6 +71,7 @@ def test_get_settings_dict_classic():
         "fit_method": "least_square",
         "color_amp_pha_map": "coolwarm",
         "histo_phase_method": "max",
+        "radians_input_phase": False,
         "unipolar_phase_revert": False,
         "color_sspfm_map": "copper",
         "color_sspfm_map_pixel": "white",
@@ -140,6 +141,7 @@ def test_get_settings_dict_default():
         "delimiter": "\t\t",
         "fit_method": "nelder",
         "histo_phase_method": "fit",
+        "radians_input_phase": False,
         "unipolar_phase_revert": True,
         "electrostatic_offset": True}
 
