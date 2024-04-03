@@ -62,6 +62,7 @@
 "fit_method": "least_square",
 "color_amp_pha_map": "coolwarm",
 "histo_phase_method": "max",
+"radians_input_phase": false,
 "unipolar_phase_revert": false,
 "color_sspfm_map": "copper",
 "color_sspfm_map_pixel": "white",

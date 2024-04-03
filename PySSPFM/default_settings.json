@@ -51,6 +51,7 @@
 "delimiter": "\t\t",
 "fit_method": "nelder",
 "histo_phase_method": "fit",
+"radians_input_phase": false,
 "unipolar_phase_revert": true,
 "electrostatic_offset": true
 }
