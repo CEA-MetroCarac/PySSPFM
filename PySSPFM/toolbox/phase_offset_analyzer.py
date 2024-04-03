@@ -25,6 +25,27 @@ from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
 
 
+def save_dict_to_txt(data_dict, file_path):
+    """
+    Save dictionary data to a text file.
+
+    Parameters
+    ----------
+    data_dict : dict
+        Dictionary containing data to be saved.
+    file_path : str
+        Path to the output text file.
+
+    Returns
+    -------
+    None
+    """
+    headers = list(data_dict.keys())
+    data_array = np.array(list(data_dict.values())).T
+    np.savetxt(file_path, data_array, header='\t\t'.join(headers), fmt='%.5e',
+               delimiter='\t\t')
+
+
 def generate_graph_offset(phase_offset_tab):
     """
     Generate graph offset function
@@ -496,10 +517,10 @@ def main():
     # Generate default path out
     dir_path_out = save_path_management(
         dir_path_in, dir_path_out, save=save, dirname="phase_offset_analyzer",
-        lvl=1, create_path=True, post_analysis=False)
+        lvl=0, create_path=True, post_analysis=False)
     start_time = datetime.now()
     # Main function
-    _, figs = main_phase_offset_analyzer(
+    phase_offset_tab, figs = main_phase_offset_analyzer(
         user_pars, dir_path_in, range_file=range_file, extension=extension,
         verbose=verbose, make_plots=bool(show_plots or save))
     # Plot figures
@@ -509,6 +530,8 @@ def main():
     if save:
         save_user_pars(user_pars, dir_path_out, start_time=start_time,
                        verbose=verbose)
+        file_path_out = os.path.join(dir_path_out, "phase.txt")
+        save_dict_to_txt(phase_offset_tab, file_path=file_path_out)
 
 
 if __name__ == '__main__':
