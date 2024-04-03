@@ -1,0 +1,19 @@
+MAJ PySSPFM v2024.04 :
+
+# Phase in radians / degrees:
+If input phase in radians, phase is converted in degrees for data analysis (datacube_to_nanoloop_s1.py).
+Updated settings file --> add "radians_input_phase" option to convert phase in degrees if input phase is in degrees, add description of the setting.
+
+# Phase offset analyzer:
+Add save of phase values in a txt file --> this file can be opened with map readers.
+Correct minor error in saving path management.
+
+# Multiprocessing:
+New python file multi_proc.py with all multi_proc util functions
+Updated settings file --> add "multi_processing" option to perform data analysis step 1 (datacube_to_nanoloop_s1.py) + 2 (nanoloop_to_hyst_s2.py) + phase analyzer (phase_offset_analyzer.py) in multiprocessing, add description of the setting.
+
+# Minor plot and docstring changes:
+Remove sharex for graph plot (list_map_reader.py)
+Add module description (extract_params_from_file.py)
+
+# Update documentation
