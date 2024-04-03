@@ -626,7 +626,7 @@ Calibration is indispensable for obtaining quantitative measurements. In the mea
 </p>
 
 <p align="justify" width="100%">
-The user can also define a phase offset value to implement before processing the measurements. This offset is applied in the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script using the <code>apply_phase_offset</code> function, aiming to mitigate phase switching, which can pose challenges during analysis and nanoloop fitting. The user defines the phase offset value through the <code>offset</code> parameter. <br>
+The user must specify if input phase values are in radians or not with <code>radians_input_phase</code> setting. If it's the case, phase values are converted in degrees for the analysis. The user can also define a phase offset value to implement before processing the measurements. This offset is applied in the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script using the <code>apply_phase_offset</code> function, aiming to mitigate phase switching, which can pose challenges during analysis and nanoloop fitting. The user defines the phase offset value through the <code>offset</code> parameter. <br>
 &#8226 If the <code>method</code> parameter is set to <code>'static'</code>, this value is applied to the phase signal for all SSPFM raw measurement files. <br>
 &#8226 When <code>method</code> is set to <code>'dynamic'</code>, the phase offset value is applied to the first SSPFM raw measurement file, and for each subsequent file, a new offset value is determined using the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script with the <code>phase_offset_determination</code> and <code>mean_phase_offset</code> functions. It is then applied to the next measurement file. For a deeper understanding of the phase offset determination, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2-phase-offset-analyzer">VIII.2) Phase offset analyzer</a>.<br>
 &#8226 If <code>method</code> is set to <code>None</code>, no phase offset is applied for analysis.
@@ -1546,7 +1546,7 @@ User parameters:
 &#8226 File Management: The user specifies the input folder containing all the raw SSPFM measurement files, as well as the csv measurement sheet Additionally, the range of file indices to analyze, extension, and an output folder to save the analysis results can be provided. <br>
 &#8226 Segment parameters: Parameters used for segment processing. <br>
 &#8226 Fit parameteres: Parameters used for SHO fitting. <br>
-&#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. <br>
+&#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. Phase offset values can be saved in a txt file. This file can be opened with map readers.<br>
 </p>
 
 <p align="justify" width="100%">
