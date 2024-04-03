@@ -39,14 +39,15 @@ def ex_get_settings_dict(mode='classic', verbose=False):
         settings_dict = get_path_from_json(settings_dict)
 
     if verbose:
-        print("| Key | Value |")
+        print("\n| Key | Value |")
         print("|---|---|")
         for key, value in settings_dict.items():
             print(f"| {key} | {value} |")
+        print("|---|---|")
 
     return settings_dict
 
 
 if __name__ == "__main__":
-    # ex_get_settings_dict(mode='classic', verbose=True)
+    ex_get_settings_dict(mode='classic', verbose=True)
     ex_get_settings_dict(mode='default', verbose=True)
