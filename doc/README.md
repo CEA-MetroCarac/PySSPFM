@@ -286,7 +286,7 @@ SSPFM files from other manufacturers are not supported in this application. It i
 #### III.1.b) - Measurement sheet
 
 <p align="justify" width="100%">
-Prior to conducting the SSPFM measurement, the user must complete a measurement form (the template is available here: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM.csv">measurement sheet model SSPFM</a>). This measurement form serves as a comprehensive guide, directing the user in the execution of SSPFM measurements and concurrently documenting essential measurement parameters. Its purpose is to ensure adherence to good practices and establish a shared foundation in the implementation of the measurement across diverse SSPFM setups unique to each user. Moreover, it provides ample information for seamless progression through the data processing with PySSPFM.  <br> <br>
+Prior to conducting the SSPFM measurement, the user must complete a measurement form (the template is available here: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM.csv">measurement sheet model SSPFM</a>). This measurement form serves as a comprehensive guide, directing the user in the execution of SSPFM measurements and concurrently documenting essential measurement parameters. Its purpose is to ensure adherence to good practices and establish a shared foundation in the implementation of the measurement across diverse SSPFM setups unique to each user. Moreover, it provides ample information for seamless progression through the data processing with PySSPFM. A <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/meas_sheet_generator.py">SSPFM measurement sheet generator</a> is also available. <br> <br>
 It also automatically generates certain measurement information based on the provided parameters, such as: <br>
 &#8226 total measurement time <br>
 &#8226 tip-induced pressure <br>
@@ -388,7 +388,7 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
             </ul>
         </ul>
         <ul align="justify" width="100%">
-            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/PZT100n_reduced">PZT100n_reduced</a></code>: constituting a diminished compilation of the SSPFM measurement, involving three Bruker spm datacube measurement files, along with their respective measurement records. This supports the following endeavors:</li>
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/PZT100n_reduced">PZT100n_reduced</a></code>: constituting a diminished compilation of the SSPFM measurement, involving one Bruker spm datacube measurement file, along with their respective measurement records. This supports the following endeavors:</li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_meas_sheet_generator.py">examples/toolbox/ex_meas_sheet_generator.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_spm_data_extractor.py">examples/toolbox/ex_spm_data_extractor.py</a></code>.</li>
@@ -514,7 +514,7 @@ For each script in the toolbox, it is possible to save the analysis conducted. U
 Four tools deviate from this path management: <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/raw_file_reader.py">raw_file_reader.py</a></code>: It creates a folder with the nomenclature: <code>'initial_file_name'_toolbox</code> at the same root as the input folder. This folder contains a sub-folder <code>raw_file_reader'_yyyy-mm-dd-HHh-MMm'</code>. <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">spm_converter.py</a></code>: It creates a folder with the nomenclature: <code>'initial_file_name'_datacube'_extension'</code> at the same root as the input folder, containing all the converted datacube files. <br>
-&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/meas_sheet_generator.py">meas_sheet_generator.py</a></code>: A CSV measurement sheet is created in an output folder containing SSPFM datacube SPM extension measurement files. <br>
+&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/meas_sheet_generator.py">meas_sheet_generator.py</a></code>: A CSV measurement sheet is created in an output folder containing SSPFM datacube measurement files. <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_data_extractor.py">spm_data_extractor.py</a></code>: whose only function is to extract and display the data contained in an SPM extension file.
 </p>
 
@@ -747,7 +747,7 @@ Note that SSPFM can also allow to investigate nanomechanical properties as a fun
 </p>
 
 <p align="justify" width="100%">
-All segments (in the off field mode) can be visualized on this map <a href="#ref7">[7]</a>:
+All segments (here in the off field mode) can be visualized on this map <a href="#ref7">[7]</a>:
 </p>
 
 <p align="center" width="100%">
@@ -802,7 +802,7 @@ Here are the various hysteresis configurations in the off field mode, depending 
 </p>
 
 <p align="justify" width="100%">
-In the specific scenario of on field measurements with a predominant electrostatic component (where the electrostatic component determines the phase value with voltage), the sign of the electrostatic component's slope is contingent on the direction of the applied voltage, as established in the following table:
+In the specific scenario of on field measurements with a predominant electrostatic component (when the electrostatic component determines the phase value with voltage), the sign of the electrostatic component's slope is contingent on the direction of the applied voltage, as established in the following table:
 </p>
 
 <p align="center" width="100%">
@@ -862,7 +862,11 @@ A potential phase inversion can be detected by examining the variation in the me
 </p>
 
 <p align="justify" width="100%">
-Following the calibration process and the identification of the positions of the two peaks on the histogram, as well as the phase difference, the experimentally obtained results are processed using the theoretical phase calibration model with the function <code>bipolar_revert_analysis</code>. The script also handles the case of unipolar measurements (where only one phase peak is determined on the histogram) using the function <code>unipolar_revert_analysis</code> and the setting <code>unipolar_phase_revert</code> adapted on the direction of the phase determined for bipolar measurements. Then, phase correction is performed by <code>correct_phase_val</code> function can be achieved through four distinct protocols, chosen with <code>pha_corr</code> parameter:<br>
+Following the calibration process and the identification of the positions of the two peaks on the histogram, as well as the phase difference, the experimentally obtained results are processed using the theoretical phase calibration model with the function <code>bipolar_revert_analysis</code>. The script also handles the case of unipolar measurements (where only one phase peak is determined on the histogram) using the function <code>unipolar_revert_analysis</code> and the setting <code>unipolar_phase_revert</code> adapted on the direction of the phase determined for bipolar measurements. 
+</p>
+
+<p align="justify" width="100%">
+Then, phase correction is performed by <code>correct_phase_val</code> function can be achieved through four distinct protocols, chosen with <code>pha_corr</code> parameter:<br>
 &#8226 <code>raw</code>: The raw phase is retained, and no processing is applied (suitable for use in pre-measurement phase calibration).<br>
 &#8226 <code>offset</code>: A phase offset is determined through calibration, and the phase difference between the two peaks remains unchanged (a treatment method that aims to preserve the initial measurement as faithfully as possible).<br>
 &#8226 <code>affine</code>: An affine relationship is applied to all phase values, adjusting the phase difference to 180°.<br>
@@ -942,7 +946,7 @@ As an initial step, the <code>nanoloops</code> folder obtained is selected. The 
 </p>
 
 <p align="justify" width="100%">
-Figures resulting from the processing of the first file are generated with <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot.py</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/plot.py">utils/nanoloop_to_hyst/plot.py</a></code> scripts. Subsequently, each of the files is automatically analyzed without displaying the figures. For each mode (on field, off field, and coupled), a hysteresis loop is selected and associated with each pixel, and a set of ferroelectric properties is extracted. Additional properties are obtained through the analysis of measurement artifacts or other signals like height or deflection. The entirety of these properties contributes to the creation of SSPFM mappings.
+Figures resulting from the processing of the first file are generated with <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot.py">utils/nanoloop/plot.py</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/plot.py">utils/nanoloop_to_hyst/plot.py</a></code> scripts. Subsequently, each of the files is automatically analyzed without displaying the figures. For each mode (on and off field), a hysteresis loop is selected and associated with each pixel, and a set of ferroelectric properties is extracted. Additional properties on artifacts are obtained through the differential curve (coupled mode) and other properties through signals like height sensor or tip deflection. The entirety of these properties contributes to the creation of SSPFM mappings.
 </p>
 
 <p align="justify" width="100%">
@@ -1558,7 +1562,7 @@ User parameters:
 </p>
 
 <p align="justify" width="100%">
-The measurement parameters are extracted from the SSPFM measurement sheet, and each of the raw SSPFM measurement files is subsequently analyzed within the <code>multi_script</code> function. The <code>single_script</code> function analyzes a single raw SSPFM data file by following these steps: measurements are extracted from the file and calibrated if necessary. They are then segmented and processed into PFM data for each segment. The PFM phase signal is analyzed using the <code>phase_offset_determination</code> function of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script, both in On Field and Off Field conditions. During this analysis, a phase offset is determined, and the two main peaks are identified and recentered within the phase measurement range. For instance, if the phase value range extends from -180 to 180°, and the two peaks are spaced by 180°, a phase offset will be calculated to position them at -90 and 90°, respectively. This minimizes phase switching across all measurements. Ideally, the phase offsets determined in On and Off Field conditions should be close. The average offset corresponding to the entire measurement file is determined using the <code>mean_phase_offset</code> function of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script. The phase evolution with respect to the measurement file is generated using the <code>generate_graph_offset</code> function. It should be noted that the case of unipolar phase data (a single peak on the phase histogram) can be handled by the script functions.
+The measurement parameters are extracted from the SSPFM measurement sheet, and each of the raw SSPFM measurement files is subsequently analyzed within the <code>multi_script</code> function. The <code>single_script</code> function analyzes a single raw SSPFM data file by following these steps: measurements are extracted from the file and calibrated if necessary. They are then segmented and processed into PFM data for each segment. The PFM phase signal is analyzed using the <code>phase_offset_determination</code> function of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script, both in On Field and Off Field conditions. During this analysis, a phase offset is determined, and the two main peaks are identified and recentered within the phase measurement range. For instance, if the phase value range extends from -180 to 180°, and the two peaks are spaced by 180°, a phase offset will be calculated to position them at -90 and 90°, respectively. This minimizes phase switching across all measurements. Ideally, the phase offsets determined in On and Off Field conditions should be close. The average offset corresponding to the entire measurement file is determined using the <code>mean_phase_offset</code> function of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script. The phase evolution with respect to the measurement file is generated using the <code>generate_graph_offset</code> function. It should be noted that the case of unipolar phase data (a single peak on the phase histogram) can be handled by the script functions. Typically, this script is used before the first step of processing SSPFM measurements in order to enter a phase offset value to apply to measurement before the treatment processing.
 </p>
 
 <p align="justify" width="100%">
