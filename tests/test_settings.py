@@ -21,6 +21,7 @@ def test_get_settings_dict_classic():
         "default_best_nanoloop_folder_name": "best_nanoloops",
         "default_properties_folder_name": "properties",
         "save_test_example": True,
+        "multi_processing": False,
         "extract_parameters": "json",
         "key_measurement_extraction": {
             "spm": {
@@ -94,6 +95,7 @@ def test_get_settings_dict_default():
         "default_nanoloops_folder_name": "nanoloops",
         "default_best_nanoloop_folder_name": "best_nanoloops",
         "default_properties_folder_name": "properties",
+        "multi_processing": False,
         "key_measurement_extraction": {
             "spm": {
                 "classic": {"time": "times",
