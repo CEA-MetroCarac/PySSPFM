@@ -398,18 +398,48 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
         all_properties[key] = {sub_key: [] for sub_key in value}
         all_properties['other'] = {key: [] for key in
                                    list(other_properties.values())[0].keys()}
-    for cont, tab_path_in in enumerate(file_paths_in):
-        best_loops, properties, other_properties, _ = single_script(
-            tab_path_in, user_pars, meas_pars, sign_pars, cont=cont,
-            test_dicts=test_dicts, verbose=verbose)
-        for key, value in properties.items():
-            for sub_key, sub_value in value.items():
-                all_properties[key][sub_key].append(sub_value)
-        for key, value in list(other_properties.values())[0].items():
-            all_properties['other'][key].append(value)
-        for key, value in best_loops.items():
-            tab_best_loops[key].append(value)
-        plt.close('all')
+
+    # Multi processing mode
+    multiproc = get_setting("multi_processing")
+    if multiproc:
+        from PySSPFM.utils.multi_proc import run_multi_proc_s2
+
+        common_args = {
+            "user_pars": user_pars,
+            "meas_pars": meas_pars,
+            "sign_pars": sign_pars,
+            "cont": 1,
+            "limit": None,
+            "test_dicts": None,
+            "make_plots": False,
+            "verbose": verbose
+        }
+        list_best_loops, list_properties, list_other_properties = \
+            run_multi_proc_s2(file_paths_in, common_args, processes=16)
+        for elem_best_loops, elem_properties, elem_other_properties in \
+                zip(list_best_loops, list_properties, list_other_properties):
+            for key, value in elem_properties.items():
+                for sub_key, sub_value in value.items():
+                    all_properties[key][sub_key].append(sub_value)
+            for key, value in list(elem_other_properties.values())[0].items():
+                all_properties['other'][key].append(value)
+            for key, value in elem_best_loops.items():
+                tab_best_loops[key].append(value)
+
+    # Mono processing mode
+    else:
+        for cont, tab_path_in in enumerate(file_paths_in):
+            best_loops, properties, other_properties, _ = single_script(
+                tab_path_in, user_pars, meas_pars, sign_pars, cont=cont,
+                test_dicts=test_dicts, verbose=verbose)
+            for key, value in properties.items():
+                for sub_key, sub_value in value.items():
+                    all_properties[key][sub_key].append(sub_value)
+            for key, value in list(other_properties.values())[0].items():
+                all_properties['other'][key].append(value)
+            for key, value in best_loops.items():
+                tab_best_loops[key].append(value)
+            plt.close('all')
 
     dim_pix = {'x': meas_pars['Grid x [pix]'],
                'y': meas_pars['Grid y [pix]']}
