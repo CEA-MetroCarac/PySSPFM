@@ -350,7 +350,7 @@ def formatting_fig_graphs(fig, fig_dim, nb_graph=None):
     axs = [main_ax] if int(fig_dim[0] * fig_dim[1]) == 1 else []
     if int(fig_dim[0] * fig_dim[1]) > 1:
         disable_ax(main_ax)
-        axs = [fig.add_subplot(fig_dim[0], fig_dim[1], i + 1, sharex=main_ax)
+        axs = [fig.add_subplot(fig_dim[0], fig_dim[1], i + 1)
                for i in range(int(fig_dim[0] * fig_dim[1])) if i < nb_graph]
 
     return axs
