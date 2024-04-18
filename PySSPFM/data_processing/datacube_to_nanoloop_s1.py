@@ -17,6 +17,8 @@ from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots
+from PySSPFM.utils.core.path_management import \
+    get_files_with_conditions, sort_filenames
 from PySSPFM.utils.raw_extraction import data_extraction, csv_meas_sheet_extract
 from PySSPFM.utils.signal_bias import sspfm_time, sspfm_generator, write_vec
 from PySSPFM.utils.nanoloop.plot import main_plot
@@ -30,7 +32,7 @@ from PySSPFM.utils.datacube_to_nanoloop.plot import \
     (plt_seg_max, plt_seg_fit, plt_seg_stable,  plt_signals, plt_amp, plt_bias,
      amp_pha_map)
 from PySSPFM.utils.datacube_to_nanoloop.file import \
-    save_parameters, print_params, get_acquisition_time, get_file_names
+    save_parameters, print_params, get_acquisition_time
 from PySSPFM.utils.datacube_to_nanoloop.analysis import \
     (cut_function, external_calib, SegmentInfo, SegmentSweep,
      SegmentStable, SegmentStableDFRT, extract_other_properties)
@@ -490,7 +492,8 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='max',
     get_phase_offset = bool(user_pars["pha pars"]["method"] == "dynamic")
 
     # Start single script for each measurement file
-    file_names = get_file_names(dir_path_in, file_format=file_format)
+    file_names = get_files_with_conditions(dir_path_in, extension=file_format)
+    file_names, _, _ = sort_filenames(file_names)
     if 'SS_PFM_bias.txt' in file_names:
         file_names.remove('SS_PFM_bias.txt')
     i = 0
