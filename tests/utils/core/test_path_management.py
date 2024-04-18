@@ -1,19 +1,17 @@
 """
 Test path management methods
 """
-import os
 from pytest import approx
 
 from examples.utils.core.ex_path_management import \
-    ex_get_files_with_conditions, ex_filename_management
+    ex_get_filenames_with_conditions, ex_filename_management
 
 
-def test_get_files_with_conditions():
-    """ Test ex_get_files_with_conditions """
+def test_get_filenames_with_conditions():
+    """ Test get_filenames_with_conditions """
 
-    filepaths_sspfm = ex_get_files_with_conditions()
-    filenames = [os.path.split(filepath_sspfm)[1]
-                 for filepath_sspfm in filepaths_sspfm]
+    filenames_sspfm = ex_get_filenames_with_conditions()
+
     target_filenames = \
         ['KNN500n_SSPFM.0_00056.txt', 'KNN500n_SSPFM.0_00057.txt',
          'KNN500n_SSPFM.0_00058.txt', 'KNN500n_SSPFM.0_00059.txt',
@@ -48,7 +46,7 @@ def test_get_files_with_conditions():
          'KNN500n_SSPFM.0_00116.txt', 'KNN500n_SSPFM.0_00117.txt',
          'KNN500n_SSPFM.0_00118.txt']
 
-    assert filenames == target_filenames
+    assert filenames_sspfm == target_filenames
 
 
 def test_filename_management():
