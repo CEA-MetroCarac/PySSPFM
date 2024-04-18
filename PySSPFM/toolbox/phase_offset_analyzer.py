@@ -12,12 +12,13 @@ import matplotlib.pyplot as plt
 from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
+from PySSPFM.utils.core.path_management import \
+    get_files_with_conditions, sort_filenames
 from PySSPFM.utils.raw_extraction import data_extraction, csv_meas_sheet_extract
 from PySSPFM.utils.signal_bias import sspfm_time, sspfm_generator
 from PySSPFM.utils.datacube_to_nanoloop.analysis import \
     (cut_function, external_calib, SegmentInfo, SegmentSweep,
      SegmentStable, SegmentStableDFRT)
-from PySSPFM.utils.datacube_to_nanoloop.file import get_file_names
 from PySSPFM.utils.datacube_to_nanoloop.plot import plt_signals
 from PySSPFM.utils.nanoloop.phase import \
     phase_offset_determination, mean_phase_offset
@@ -370,7 +371,8 @@ def main_phase_offset_analyzer(user_pars, dir_path_in, range_file=None,
     figures: list
         Generated figures
     """
-    file_names = get_file_names(dir_path_in, file_format=extension)
+    file_names = get_files_with_conditions(dir_path_in, extension=extension)
+    file_names, _, _ = sort_filenames(file_names)
     file_names = file_names[range_file[0]:range_file[1]] \
         if range_file is not None else file_names
 
