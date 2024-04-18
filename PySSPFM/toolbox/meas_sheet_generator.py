@@ -15,7 +15,7 @@ from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
 from PySSPFM.utils.core.path_management import \
-    get_files_with_conditions, sort_filenames
+    get_filenames_with_conditions, sort_filenames
 from PySSPFM.utils.raw_extraction import NanoscopeError
 from PySSPFM.utils.signal_bias import extract_sspfm_bias_pars
 
@@ -130,8 +130,12 @@ def main_meas_sheet_generator(file_path_in, dir_path_out, extension=".spm",
     file_path_out = file_path_out.replace(".csv", ".xlsx")
     shutil.copyfile(file_path_in, file_path_out)
     # Get date and file path
-    file_names = get_files_with_conditions(dir_path_out, extension=extension)
-    file_names_ordered, _, _ = sort_filenames(file_names)
+    file_names = get_filenames_with_conditions(dir_path_out,
+                                               extension=extension)
+    if len(file_names) == 1:
+        file_names_ordered = file_names
+    else:
+        file_names_ordered, _, _ = sort_filenames(file_names)
     meas_file_path = os.path.join(dir_path_out, file_names_ordered[0])
     raw_date = os.path.getmtime(meas_file_path)
     raw_datetime = datetime.datetime.fromtimestamp(raw_date)
