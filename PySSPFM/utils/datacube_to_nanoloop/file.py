@@ -121,30 +121,6 @@ def print_params(meas_pars, sign_pars, user_pars, verbose=False):
                 print(key, ':', value)
 
 
-def get_file_names(dir_path_in, file_format=".spm"):
-    """
-    Get file names of a certain format, ordered with acquisition time.
-
-    Parameters
-    ----------
-    dir_path_in : str
-        Input directory path
-    file_format: str, optional
-        Format of the measurement file analyzed: '.spm' or '.txt'
-
-    Returns
-    -------
-    file_names_ordered : list of str
-        Ordered list of file names
-    """
-    file_names = [f for f in os.listdir(dir_path_in) if f.endswith(file_format)]
-    file_names_ordered = sorted(
-        file_names,
-        key=lambda x: os.path.getmtime(os.path.join(dir_path_in, x)))
-
-    return file_names_ordered
-
-
 def get_acquisition_time(folder_path, file_format='.spm'):
     """
     Get acquisition time of the latest file in the folder
