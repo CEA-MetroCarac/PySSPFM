@@ -10,6 +10,7 @@ import os
 import time
 import numpy as np
 
+from PySSPFM.utils.core.path_management import get_files_with_conditions
 from PySSPFM.utils.signal_bias import write_vec
 
 
@@ -34,38 +35,24 @@ def generate_file_nanoloop_paths(dir_path_in, mode=''):
     assert os.path.isdir(dir_path_in)
     assert mode in ['', 'off_f', 'on_f']
 
-    def replace_numbers_with_zero(input_string):
-        return ''.join('0' if c.isdigit() else c for c in input_string)
+    tab_file_name = {'off_f': [], 'on_f': []}
+    if mode == '':
+        for key in ['off_f', 'on_f']:
+            tab_file_name[key] = get_files_with_conditions(
+                dir_path_in, prefix=key, extension=".txt")
+    else:
+        tab_file_name[mode] = get_files_with_conditions(
+            dir_path_in, prefix=mode, extension=".txt")
 
     file_paths_in = []
-    list_file = [file for file in os.listdir(dir_path_in)
-                 if not file.endswith('measurement sheet model SSPFM.csv')]
-    root = list_file[0].split('.')[0].replace("off_f_", "").replace('on_f_', '')
-    index_pattern = list_file[0].split('.')[1]
-    index_pattern = replace_numbers_with_zero(index_pattern)
-
-    indexs = []
-    for file in list_file:
-        indexs.append(int(file.split('.')[1].replace("_", "")))
-
-    list_indexs_pattern = []
-    for index in range(min(indexs), max(indexs)+1):
-        list_indexs_pattern.append(
-            index_pattern[:-len(str(index))] + str(index))
-
-    for elem_index_pattern in list_indexs_pattern:
-        if mode == '':
-            tab_file_name_off_f = ['off_f_' + root, elem_index_pattern, 'txt']
-            tab_file_name_on_f = ['on_f_' + root, elem_index_pattern, 'txt']
-            off_f_path = os.path.join(dir_path_in,
-                                      '.'.join(tab_file_name_off_f))
-            on_f_path = os.path.join(dir_path_in,
-                                     '.'.join(tab_file_name_on_f))
-            file_paths_in.append([off_f_path, on_f_path])
-        else:
-            tab_file_name = [mode + '_' + root, elem_index_pattern, 'txt']
-            path = os.path.join(dir_path_in, '.'.join(tab_file_name))
-            file_paths_in.append([path])
+    if mode == '':
+        for elem_off, elem_on in zip(
+                tab_file_name['off_f'], tab_file_name['on_f']):
+            file_paths_in.append([os.path.join(dir_path_in, elem_off),
+                                  os.path.join(dir_path_in, elem_on)])
+    else:
+        for elem in tab_file_name[mode]:
+            file_paths_in.append([os.path.join(dir_path_in, elem)])
 
     return file_paths_in
 
