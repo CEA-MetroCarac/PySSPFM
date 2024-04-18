@@ -37,7 +37,7 @@ def example_phase_offset_analyzer(make_plots=False, verbose=False):
     _, _, _, _, _, _, user_pars = pars_segment()
 
     # ex main_phase_offset_analyzer
-    phase_offset_tab, figures = \
+    phase_offset_tab, map_dim, figures = \
         main_phase_offset_analyzer(user_pars, dir_path_in, range_file=None,
                                    extension="spm", verbose=verbose,
                                    make_plots=make_plots)
@@ -45,7 +45,7 @@ def example_phase_offset_analyzer(make_plots=False, verbose=False):
     if make_plots:
         return figures
     else:
-        return phase_offset_tab
+        return phase_offset_tab, map_dim
 
 
 if __name__ == '__main__':
