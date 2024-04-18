@@ -8,7 +8,7 @@ import os
 import numpy as np
 
 
-def get_files_with_conditions(directory, prefix=None, extension=None):
+def get_filenames_with_conditions(directory, prefix=None, extension=None):
     """
     Get files in a directory with specified conditions.
 
@@ -30,7 +30,7 @@ def get_files_with_conditions(directory, prefix=None, extension=None):
     for filename in os.listdir(directory):
         if (prefix is None or filename.startswith(prefix)) and \
                 (extension is None or filename.endswith(extension)):
-            files_in_directory.append(os.path.join(directory, filename))
+            files_in_directory.append(filename)
 
     return files_in_directory
 
