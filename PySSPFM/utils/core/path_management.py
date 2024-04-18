@@ -5,7 +5,7 @@ or file names
 
 import re
 import os
-import random
+import numpy as np
 
 
 def get_files_with_conditions(directory, prefix=None, extension=None):
@@ -58,7 +58,7 @@ def gen_bruker_filenames(filenames):
     return bruker_filenames
 
 
-def unique_numbers(lists):
+def extract_unique_numbers(lists):
     """
     Find unique numbers in lists.
 
@@ -73,14 +73,20 @@ def unique_numbers(lists):
         List of lists containing unique numbers.
     common_numbers: list
         Common numbers shared by all sublists.
+    indice_column: int or None
+        Index of the column where the uniqueness is broken,
+        or None if all columns are unique.
     """
-    common_numbers = set(lists[0])
-    for lst in lists[1:]:
-        common_numbers.intersection_update(lst)
-    result = [[num for num in lst if num not in common_numbers]
-              for lst in lists]
+    common_numbers, unique_numbers = [], []
+    indice_column = None
+    for cont, columns in enumerate(zip(*lists)):
+        if len(set(columns)) == 1:
+            common_numbers.append(columns[0])
+        else:
+            unique_numbers = list(columns)
+            indice_column = cont
 
-    return result, list(common_numbers)
+    return unique_numbers, common_numbers, indice_column
 
 
 def separate_numbers_from_filenames(filenames):
@@ -108,6 +114,77 @@ def separate_numbers_from_filenames(filenames):
     return list_numbers, list_non_numbers
 
 
+def find_order(numbers, non_numbers, filename):
+    """
+    Find order of elements based on filename
+
+    Parameters
+    ----------
+    numbers: list
+        List of numbers
+    non_numbers: list
+        Non-numeric elements
+    filename: str
+        Name of the file
+
+    Returns
+    -------
+    mutual_list: list
+        Interleaved list of elements from numbers and non_numbers based on
+        filename
+    """
+
+    def starts_with_number(string):
+        """Check if string starts with a number"""
+        pattern = r'^\d'
+        return bool(re.match(pattern, string))
+
+    def interleave_lists(list1, list2):
+        """Interleave elements from two lists"""
+        result = []
+        min_len = min(len(list1), len(list2))
+        for i in range(min_len):
+            result.extend([list2[i], list1[i]])
+        result.extend(list1[min_len:] or list2[min_len:])
+        return result
+
+    mutual_list = interleave_lists(non_numbers, numbers) \
+        if starts_with_number(filename) \
+        else interleave_lists(numbers, non_numbers)
+
+    return mutual_list
+
+
+def extract_filename_root(ordered_elems, indice_column):
+    """
+    Extract filename root from ordered elements
+
+    Parameters
+    ----------
+    ordered_elems: list of str
+        List of ordered elements
+    indice_column: int
+        Index of the column (for number) to remove
+
+    Returns
+    -------
+    filename_root: str
+        Filename root extracted from ordered elements
+    """
+
+    cont_num = -1
+    for cont_elem, elem in enumerate(ordered_elems):
+        if elem.isnumeric():
+            cont_num += 1
+        if cont_num == indice_column:
+            del ordered_elems[cont_elem]
+            break
+
+    filename_root = "".join(ordered_elems)
+
+    return filename_root
+
+
 def sort_filenames(filenames):
     """
     Sort filenames based on extracted numbers in their names.
@@ -130,53 +207,23 @@ def sort_filenames(filenames):
     # Separate numbers and char
     numbers, common_non_numbers = separate_numbers_from_filenames(filenames)
     # Separate indices from number of filename root
-    reduced_numbers, common_numbers = unique_numbers(numbers)
-
-    def find_order_in_string(elements, string):
-        indices = []
-        for element in elements:
-            index = string.index(element)
-            indices.append(index)
-        sorted_indices = sorted(range(len(indices)), key=lambda k: indices[k])
-        order = [sorted_indices.index(cont) for cont in range(len(indices))]
-        return order
-
-    # Find filename root
-    common_patterns = common_non_numbers + common_numbers
-    order_patterns = find_order_in_string(common_patterns, filenames[0])
-    filename_root = ""
-    for elem in order_patterns:
-        filename_root += common_patterns[elem]
-
-    # Check if the list is empty and add zero to the empty list
-    for i, lst in enumerate(reduced_numbers):
-        if not lst:
-            reduced_numbers[i].append('0')
-
-    def dimensions_list_nd(list_object):
-        if isinstance(list_object, list):
-            return (len(list_object),) + dimensions_list_nd(list_object[0])
-        else:
-            return ()
-
-    dimensions = dimensions_list_nd(reduced_numbers)
-    if dimensions[1] == 1:
-        indexs = [int(index[0]) for index in reduced_numbers]
-    else:
-        raise NotImplementedError("File index is not unique")
+    indexs, _, indice_column = extract_unique_numbers(numbers)
+    # Find filename_root
+    ordered_elems = find_order(numbers[0], common_non_numbers, filenames[0])
+    filename_root = extract_filename_root(ordered_elems, indice_column)
 
     # Sort filenames and indices
     indexed_filenames = list(zip(indexs, filenames))
     sorted_indexed_filenames = sorted(indexed_filenames, key=lambda x: x[0])
     sorted_filenames = [filename for _, filename in sorted_indexed_filenames]
-    sorted_indexs = [index for index, _ in sorted_indexed_filenames]
+    sorted_indexs = [int(index) for index, _ in sorted_indexed_filenames]
 
     return sorted_filenames, sorted_indexs, filename_root
 
 
 def generate_filenames(file_indices, file_root):
     """
-    Generate filenames based on indices and root.
+    Generate filenames based on indices and root, randomly arranged.
 
     Parameters
     ----------
@@ -188,10 +235,10 @@ def generate_filenames(file_indices, file_root):
     Returns
     -------
     list of str
-        List of generated filenames.
+        List of generated filenames randomly arranged.
     """
     filenames = [f"{file_root[0]}{i}{file_root[1]}"
                  for i in range(file_indices[0], file_indices[1])]
-    random.shuffle(filenames)
+    np.random.shuffle(filenames)
 
     return filenames
