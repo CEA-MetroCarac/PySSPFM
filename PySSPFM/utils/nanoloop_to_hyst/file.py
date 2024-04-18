@@ -10,8 +10,47 @@ import os
 import time
 import numpy as np
 
-from PySSPFM.utils.core.path_management import get_files_with_conditions
+from PySSPFM.utils.core.path_management import get_filenames_with_conditions
 from PySSPFM.utils.signal_bias import write_vec
+
+
+def create_file_nanoloop_paths(dir_path_in_raw, mode=''):
+    """
+    Create file paths for NanoLoop files.
+
+    Parameters
+    ----------
+    dir_path_in_raw: str
+        Directory path where the files are located.
+    mode: str, optional
+        Mode to filter filenames, must be in ['', 'off_f', 'on_f']
+        (default is '').
+
+    Returns
+    -------
+    file_paths_in: list of lists
+        List of lists containing file paths for NanoLoop files.
+    """
+    filenames = get_filenames_with_conditions(dir_path_in_raw)
+    filenames = [filename for filename in filenames
+                 if "measurement sheet model SSPFM.csv" not in filename]
+
+    file_paths_in = []
+
+    if mode == '':
+        keys = ['off_f_', 'on_f_']
+    else:
+        keys = [mode + '_']
+
+    for cont, filename in enumerate(filenames):
+        file_paths_in.append([])
+        filename_root, _ = os.path.splitext(filename)
+        for key in keys:
+            nanoloop_filename = key + filename_root + '.txt'
+            file_paths_in[cont].append(
+                os.path.join(dir_path_in_raw, nanoloop_filename))
+
+    return file_paths_in
 
 
 def generate_file_nanoloop_paths(dir_path_in, mode=''):
@@ -38,10 +77,10 @@ def generate_file_nanoloop_paths(dir_path_in, mode=''):
     tab_file_name = {'off_f': [], 'on_f': []}
     if mode == '':
         for key in ['off_f', 'on_f']:
-            tab_file_name[key] = get_files_with_conditions(
+            tab_file_name[key] = get_filenames_with_conditions(
                 dir_path_in, prefix=key, extension=".txt")
     else:
-        tab_file_name[mode] = get_files_with_conditions(
+        tab_file_name[mode] = get_filenames_with_conditions(
             dir_path_in, prefix=mode, extension=".txt")
 
     file_paths_in = []
