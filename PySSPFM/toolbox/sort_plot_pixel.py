@@ -22,7 +22,7 @@ from PySSPFM.utils.nanoloop.analysis import nanoloop_treatment, gen_ckpfm_meas
 from PySSPFM.utils.map.main import plot_and_save_maps
 from PySSPFM.utils.map.interpolate import remove_val
 from PySSPFM.utils.nanoloop_to_hyst.file import \
-    generate_file_nanoloop_paths, extract_properties, print_parameters
+    create_file_nanoloop_paths, extract_properties, print_parameters
 from PySSPFM.utils.nanoloop_to_hyst.gen_data import gen_data_dict
 from PySSPFM.utils.nanoloop_to_hyst.electrostatic import differential_analysis
 from PySSPFM.utils.nanoloop_to_hyst.analysis import \
@@ -412,7 +412,7 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
     tab_path_raw = dir_path_in.split('_')[:-3]
     dir_path_raw = '_'.join(tab_path_raw)
     file_paths_raw = [elem[0]
-                      for elem in generate_file_nanoloop_paths(dir_path_raw)]
+                      for elem in create_file_nanoloop_paths(dir_path_raw)]
     dict_file = {file: cont for cont, file in enumerate(file_paths_raw)}
 
     # Extract property value
