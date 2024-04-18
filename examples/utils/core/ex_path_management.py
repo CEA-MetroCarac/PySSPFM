@@ -6,30 +6,30 @@ import numpy as np
 
 from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.path_management import \
-    (generate_filenames, get_files_with_conditions, sort_filenames,
+    (generate_filenames, get_filenames_with_conditions, sort_filenames,
      gen_bruker_filenames)
 
 
-def ex_get_files_with_conditions():
+def ex_get_filenames_with_conditions():
     """
-    Example get_files_with_conditions function.
+    Example get_filenames_with_conditions function.
 
     Parameters
     ----------
 
     Returns
     -------
-    filepaths_sspfm : list
-        File paths satisfying the conditions.
+    filenames_sspfm : list
+        File names satisfying the conditions.
     """
     example_root_path_in = get_setting("example_root_path_in")
     dir_path_in = os.path.join(example_root_path_in, "KNN500n")
 
     # ex generate_filenames
-    filepaths_sspfm = get_files_with_conditions(dir_path_in, prefix="KNN",
-                                                extension=".txt")
+    filenames_sspfm = get_filenames_with_conditions(
+        dir_path_in, prefix="KNN", extension=".txt")
 
-    return filepaths_sspfm
+    return filenames_sspfm
 
 
 def ex_filename_management(verbose=False):
@@ -78,5 +78,5 @@ def ex_filename_management(verbose=False):
 
 
 if __name__ == '__main__':
-    ex_get_files_with_conditions()
+    ex_get_filenames_with_conditions()
     ex_filename_management(verbose=True)
