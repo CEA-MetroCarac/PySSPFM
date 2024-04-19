@@ -14,8 +14,11 @@ def test_file():
     """ Test example_file """
 
     out = example_file()
-    (file_paths_from_nanoloops, meas_pars, sign_pars, dict_analysis_1,
-     nb_write_per_read, write_segment, properties, dim_pix, dim_mic) = out
+    (file_paths_from_nanoloops, file_paths_from_raw, meas_pars, sign_pars,
+     dict_analysis_1, nb_write_per_read, write_segment, properties,
+     dim_pix, dim_mic) = out
+    file_names_from_raw = [[os.path.split(path)[1] for path in paths]
+                           for paths in file_paths_from_raw]
     file_names_from_nanoloops = [[os.path.split(path)[1] for path in paths]
                                  for paths in file_paths_from_nanoloops]
 
@@ -87,6 +90,7 @@ def test_file():
     assert nb_write_per_read == 100
     assert len(list(write_segment)) == 100
     assert len(dict_analysis_1) == 3
+    assert target_file_names == file_names_from_raw
     assert target_file_names == file_names_from_nanoloops
     assert len(meas_pars) == 31
     assert len(sign_pars) == 16
