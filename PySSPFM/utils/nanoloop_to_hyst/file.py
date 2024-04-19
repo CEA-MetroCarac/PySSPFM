@@ -10,7 +10,8 @@ import os
 import time
 import numpy as np
 
-from PySSPFM.utils.core.path_management import get_filenames_with_conditions
+from PySSPFM.utils.core.path_management import \
+    get_filenames_with_conditions, sort_filenames
 from PySSPFM.utils.signal_bias import write_vec
 
 
@@ -77,11 +78,13 @@ def generate_file_nanoloop_paths(dir_path_in, mode=''):
     tab_file_name = {'off_f': [], 'on_f': []}
     if mode == '':
         for key in ['off_f', 'on_f']:
-            tab_file_name[key] = get_filenames_with_conditions(
-                dir_path_in, prefix=key, extension=".txt")
+            filenames = get_filenames_with_conditions(dir_path_in, prefix=key,
+                                                      extension=".txt")
+            tab_file_name[key], _, _ = sort_filenames(filenames)
     else:
-        tab_file_name[mode] = get_filenames_with_conditions(
-            dir_path_in, prefix=mode, extension=".txt")
+        filenames = get_filenames_with_conditions(dir_path_in, prefix=mode,
+                                                  extension=".txt")
+        tab_file_name[mode], _, _ = sort_filenames(filenames)
 
     file_paths_in = []
     if mode == '':
@@ -305,7 +308,9 @@ def save_properties(properties, dir_path_out, dim_pix=None, dim_mic=None,
 
         for sub_key, sub_values in values.items():
             header += f'{sub_key}\t\t'
-            tab_props.append(np.array(list(sub_values), dtype=float).ravel())
+            list_sub_values = \
+                [elem if elem != 'None' else np.nan for elem in sub_values]
+            tab_props.append(np.array(list_sub_values, dtype=float).ravel())
         tab_props = np.where(np.isnan(tab_props), 'nan', tab_props)
         np.savetxt(file_path_out, np.array(tab_props).T, delimiter='\t\t',
                    newline='\n', header=header, fmt='%s')
