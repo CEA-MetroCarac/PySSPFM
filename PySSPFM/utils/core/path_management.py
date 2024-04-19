@@ -49,13 +49,17 @@ def gen_bruker_filenames(filenames):
     list of str
         List of Bruker filenames.
     """
-    bruker_filenames = []
-    _, sorted_indexs, filename_root = sort_filenames(filenames)
-    filename_root, extension = os.path.splitext(filename_root)
-    filename_root = filename_root.replace('__', '_')
-    for index in sorted_indexs:
-        bruker_filenames.append(f"{filename_root}.0_{index:05d}{extension}")
-    return bruker_filenames
+    if len(filenames) == 1:
+        filename_root, extension = os.path.splitext(filenames[0])
+        return [f"{filename_root}.0_00000{extension}"]
+    else:
+        bruker_filenames = []
+        _, sorted_indexs, filename_root = sort_filenames(filenames)
+        filename_root, extension = os.path.splitext(filename_root)
+        filename_root = filename_root.replace('__', '_')
+        for index in sorted_indexs:
+            bruker_filenames.append(f"{filename_root}.0_{index:05d}{extension}")
+        return bruker_filenames
 
 
 def extract_unique_numbers(lists):
@@ -204,21 +208,27 @@ def sort_filenames(filenames):
         Common part shared by all filenames, extracted based on the order of
         appearance of elements in the filenames.
     """
-    # Separate numbers and char
-    numbers, common_non_numbers = separate_numbers_from_filenames(filenames)
-    # Separate indices from number of filename root
-    indexs, _, indice_column = extract_unique_numbers(numbers)
-    # Find filename_root
-    ordered_elems = find_order(numbers[0], common_non_numbers, filenames[0])
-    filename_root = extract_filename_root(ordered_elems, indice_column)
 
-    # Sort filenames and indices
-    indexed_filenames = list(zip(indexs, filenames))
-    sorted_indexed_filenames = sorted(indexed_filenames, key=lambda x: x[0])
-    sorted_filenames = [filename for _, filename in sorted_indexed_filenames]
-    sorted_indexs = [int(index) for index, _ in sorted_indexed_filenames]
+    if len(filenames) == 1:
+        return filenames, None, None
 
-    return sorted_filenames, sorted_indexs, filename_root
+    else:
+        # Separate numbers and char
+        numbers, common_non_numbers = separate_numbers_from_filenames(filenames)
+        # Separate indices from number of filename root
+        indexs, _, indice_column = extract_unique_numbers(numbers)
+        # Find filename_root
+        ordered_elems = find_order(numbers[0], common_non_numbers, filenames[0])
+        filename_root = extract_filename_root(ordered_elems, indice_column)
+
+        # Sort filenames and indices
+        indexed_filenames = list(zip(indexs, filenames))
+        sorted_indexed_filenames = sorted(indexed_filenames, key=lambda x: x[0])
+        sorted_filenames = [filename
+                            for _, filename in sorted_indexed_filenames]
+        sorted_indexs = [int(index) for index, _ in sorted_indexed_filenames]
+
+        return sorted_filenames, sorted_indexs, filename_root
 
 
 def generate_filenames(file_indices, file_root):
