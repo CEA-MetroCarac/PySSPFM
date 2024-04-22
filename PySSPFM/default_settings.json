@@ -1,10 +1,19 @@
 {
+"root": ["PARENT"],
+"examples": ["ROOT", "examples"],
+"example_root_path_in": ["EXAMPLES", "data", "PySSPFM_example_in"],
+"example_root_path_out": ["EXAMPLES", "data", "PySSPFM_example_out"],
+"default_data_path_out": ["ROOT", "PySSPFM_data_out"],
+"default_logo_path": ["ROOT", "PySSPFM", "logo_icon", "logoPySSPFM.png"],
+"default_icon_path": ["ROOT", "PySSPFM", "logo_icon", "iconPySSPFM.png"],
 "default_parameters_file_name": "parameters.txt",
 "default_figures_folder_name": "figs",
 "default_nanoloops_folder_name": "nanoloops",
 "default_best_nanoloop_folder_name": "best_nanoloops",
 "default_properties_folder_name": "properties",
+"save_test_example": true,
 "multi_processing": false,
+"extract_parameters": "json",
 "key_measurement_extraction": {
     "spm": {
         "classic": {"time": "times",
@@ -50,9 +59,16 @@
 "header_lines": 1,
 "index_line_meas_name": 0,
 "delimiter": "\t\t",
-"fit_method": "nelder",
-"histo_phase_method": "fit",
+"figsize": [18, 9],
+"fit_method": "least_square",
+"color_amp_pha_map": "coolwarm",
+"histo_phase_method": "max",
 "radians_input_phase": false,
-"unipolar_phase_revert": true,
-"electrostatic_offset": true
+"unipolar_phase_revert": false,
+"color_sspfm_map": "copper",
+"color_sspfm_map_pixel": "white",
+"color_sspfm_map_highlighted_pixel": "red",
+"color_curve_clustering": "turbo",
+"electrostatic_offset": true,
+"global_map_reader_params": "~/.pysspfm/global_map_reader_params.json"
 }
