@@ -6,7 +6,7 @@ Inspired by SS_PFM script, Nanoscope, Bruker
 import os
 import tkinter.filedialog as tkf
 
-from PySSPFM.settings import get_setting
+from PySSPFM.settings import get_setting, copy_default_settings_if_not_exist
 from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots
@@ -53,9 +53,9 @@ def main_raw_file_reader(file_path_in, mode='classic', verbose=False):
 def main():
     """ Main function for data analysis """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        script_directory = os.path.realpath(__file__)
-        file_path_user_params = script_directory.split('.')[0] + \
-            f'_params.{get_setting("extract_parameters")}'
+        file_path = os.path.realpath(__file__)
+        file_path_user_params = copy_default_settings_if_not_exist(file_path)
+
         # Load parameters from the specified configuration file
         print(f"user parameters from {os.path.split(file_path_user_params)[1]} "
               f"file")

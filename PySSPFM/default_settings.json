@@ -70,5 +70,17 @@
 "color_sspfm_map_highlighted_pixel": "red",
 "color_curve_clustering": "turbo",
 "electrostatic_offset": true,
-"global_map_reader_params": "~/.pysspfm/global_map_reader_params.json"
+
+"curve_clustering_params": "~/.pysspfm/curve_clustering_params.json",
+"global_map_reader_params": "~/.pysspfm/global_map_reader_params.json",
+"list_map_reader_params": "~/.pysspfm/list_map_reader_params.json",
+"loop_file_reader_params": "~/.pysspfm/loop_file_reader_params.json",
+"map_correlation_params": "~/.pysspfm/map_correlation_params.json",
+"mean_hyst_params": "~/.pysspfm/mean_hyst_params.json",
+"meas_sheet_generator_params": "~/.pysspfm/meas_sheet_generator_params.json",
+"phase_offset_analyzer_params": "~/.pysspfm/phase_offset_analyzer_params.json",
+"raw_file_reader_params": "~/.pysspfm/raw_file_reader_params.json",
+"sort_plot_pixel_params": "~/.pysspfm/sort_plot_pixel_params.json",
+"spm_converter_params": "~/.pysspfm/spm_converter_params.json",
+"spm_data_extractor_params": "~/.pysspfm/spm_data_extractor_params.json"
 }
