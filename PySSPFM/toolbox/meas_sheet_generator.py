@@ -176,7 +176,7 @@ def main_meas_sheet_generator(file_path_in, dir_path_out, extension=".spm",
     return indexs, values
 
 
-def parameters():
+def parameters(fname_json=None):
     """
     To complete by user of the script: return parameters for analysis
 
@@ -214,8 +214,12 @@ def parameters():
         matplotlib figures during the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        file_path = os.path.realpath(__file__)
-        file_path_user_params = copy_default_settings_if_not_exist(file_path)
+        # if fname_json is provided, use it, else use the default one
+        if fname_json is not None:
+            file_path_user_params = fname_json
+        else:
+            file_path = os.path.realpath(__file__)
+            file_path_user_params = copy_default_settings_if_not_exist(file_path)
 
         # Load parameters from the specified configuration file
         print(f"user parameters from {os.path.split(file_path_user_params)[1]} "
@@ -246,13 +250,12 @@ def parameters():
         extension, verbose
 
 
-def main():
+def main(fname_json=None):
     """ Main function for data analysis. """
 
     # Extract parameters
-    out = parameters()
     (file_path_in, dir_path_out, nb_hold_seg_start, nb_hold_seg_end, extension,
-     verbose) = out
+     verbose) = parameters(fname_json=fname_json)# Generate default path out
     # Main function
     main_meas_sheet_generator(
         file_path_in, dir_path_out, extension=extension,

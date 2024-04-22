@@ -50,11 +50,15 @@ def main_raw_file_reader(file_path_in, mode='classic', verbose=False):
     return [fig]
 
 
-def main():
+def main(fname_json=None):
     """ Main function for data analysis """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        file_path = os.path.realpath(__file__)
-        file_path_user_params = copy_default_settings_if_not_exist(file_path)
+        # if fname_json is provided, use it, else use the default one
+        if fname_json is not None:
+            file_path_user_params = fname_json
+        else:
+            file_path = os.path.realpath(__file__)
+            file_path_user_params = copy_default_settings_if_not_exist(file_path)
 
         # Load parameters from the specified configuration file
         print(f"user parameters from {os.path.split(file_path_user_params)[1]} "
