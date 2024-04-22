@@ -1,4 +1,5 @@
 graft examples
 graft doc
 graft tests
+include PySSPFM/default_settings.json
 global-exclude *.pyc __pycache__

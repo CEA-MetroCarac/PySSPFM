@@ -171,6 +171,7 @@ ELECTROSTATIC_OFFSET: bool
 import sys
 import os
 import pathlib
+import shutil
 
 from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
@@ -197,12 +198,22 @@ def get_setting(key):
     origin_path = sys.argv[0]
     sep_origin_path = origin_path.split(os.path.sep)
 
-    settings_dict = get_settings_dict("settings.json")
+    # Define the default configuration file path and the user configuration file path
+    default_config_path = pathlib.Path(__file__).parent / 'default_settings.json'
+    user_config_path = pathlib.Path.home() / '.pysspfm.json'
+
+    # If the user configuration file doesn't exist, copy the default configuration file
+    if not user_config_path.exists():
+        shutil.copy(pathlib.Path(__file__).parent / 'settings.json', user_config_path)
+
+    settings_dict = get_settings_dict(user_config_path)
     # Update the settings dictionary with the path information.
     settings_dict = get_path_from_json(settings_dict)
+    
     # All default constants for PySSPFM examples and tests
     # Default settings must not be modified
-    def_settings_dict = get_settings_dict("default_settings.json")
+    def_settings_dict = get_settings_dict(default_config_path)
+
     # Use the default settings if 'examples' or 'test' is in the script path
     if "PySSPFM" not in sep_origin_path:
         settings_to_use = def_settings_dict
