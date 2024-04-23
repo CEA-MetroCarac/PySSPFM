@@ -170,7 +170,7 @@ ELECTROSTATIC_OFFSET: bool
 """
 import sys
 import os
-import pathlib
+from pathlib import Path
 import shutil
 
 from PySSPFM.utils.core.extract_params_from_file import \
@@ -199,15 +199,15 @@ def get_setting(key):
     sep_origin_path = origin_path.split(os.path.sep)
 
     # Define the examples configuration file path and the user configuration file path
-    examples_config_path = pathlib.Path(__file__).parent / 'examples_settings.json'
-    user_config_path = pathlib.Path.home() / '.pysspfm' / 'pysspfm.json'
+    examples_config_path = Path(__file__).parent / 'examples_settings.json'
+    user_config_path = Path.home() / '.pysspfm' / 'pysspfm.json'
 
     # If the ~/.pysspfm directory doesn't exist, create it
     user_config_path.parent.mkdir(parents=True, exist_ok=True)
 
     # If the user configuration file doesn't exist, copy the default configuration file
     if not user_config_path.exists():
-        shutil.copy(pathlib.Path(__file__).parent / 'default_settings.json', user_config_path)
+        shutil.copy(Path(__file__).parent / 'default_settings.json', user_config_path)
 
     settings_dict = get_settings_dict(user_config_path)
     # Update the settings dictionary with the path information.
@@ -275,7 +275,7 @@ def get_path_from_json(settings_dict):
     if isinstance(root, list):
         for cont, elem in enumerate(root):
             if elem == "PARENT":
-                root[cont] = pathlib.Path(__file__).parent.parent
+                root[cont] = Path(__file__).parent.parent
         root = os.path.join(*root)
 
     # Update the EXAMPLES path.
@@ -307,16 +307,19 @@ def copy_default_settings_if_not_exist(file_path):
     """
     Copy the default settings file to the user directory if it does not exist.
     """
-    filename = os.path.split(file_path)[1]
+    # Convert string to Path object if necessary
+    file_path = Path(file_path) if isinstance(file_path, str) else file_path
+    filename = file_path.name
 
     # Get the path from the settings
-    file_path_user_params = get_setting(filename.replace('.py', '_params'))
+    user_params_file_path = get_setting(filename.replace('.py', '_params'))
 
     # Expand the ~ to the home directory
-    file_path_user_params = os.path.expanduser(file_path_user_params)
+    user_params_file_path = Path(user_params_file_path).expanduser()
     
     # if json file in get_setting(filename_user_params) doesn't exists, copy default to ~/.pysspfm/
-    if not pathlib.Path(file_path_user_params).exists():
-        shutil.copy(file_path.split('.')[-2] + f'_params.{get_setting("extract_parameters")}', file_path_user_params)
+    if not user_params_file_path.exists():
+        default_file_path = file_path.with_suffix(f'_params.{get_setting("extract_parameters")}')
+        shutil.copy(default_file_path, user_params_file_path)
         
-    return file_path_user_params
+    return user_params_file_path
