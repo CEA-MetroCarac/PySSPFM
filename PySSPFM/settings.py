@@ -319,7 +319,7 @@ def copy_default_settings_if_not_exist(file_path):
     
     # if json file in get_setting(filename_user_params) doesn't exists, copy default to ~/.pysspfm/
     if not user_params_file_path.exists():
-        default_file_path = file_path.with_suffix(f'_params.{get_setting("extract_parameters")}')
+        default_file_path = file_path.with_name(f"{file_path.stem}_params.{get_setting('extract_parameters')}")
         shutil.copy(default_file_path, user_params_file_path)
         
     return user_params_file_path
