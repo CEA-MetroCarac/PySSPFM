@@ -1,7 +1,7 @@
 """
 --> Executable Script
-Module used to perform a clustering (K-Means) for all best curve
-(with a chosen measure, for example piezoresponse), for each pixel 
+Module used to perform a clustering (K-Means or Gaussian Mixture Model) for all
+best curve (with a chosen measure, for example piezoresponse), for each pixel
 (one curve for each mode) of a sspfm measurement.
 Curve can be a composition of several measure, which will be normalized
 between 0 and 1 and concatenated (for example amplitude and phase)
@@ -11,6 +11,7 @@ between 0 and 1 and concatenated (for example amplitude and phase)
 """
 
 import os
+import time
 import tkinter.filedialog as tkf
 from datetime import datetime
 import numpy as np
@@ -18,6 +19,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 import matplotlib.colors as mcolors
 from sklearn.cluster import KMeans
+from sklearn.mixture import GaussianMixture
 from sklearn.metrics import pairwise_distances
 
 from PySSPFM.settings import get_setting
@@ -164,7 +166,7 @@ def gen_coupled_data(curves_x, curves_y, offsets=None):
     return curves_x, curves_y
 
 
-def cbar_map(colors, numb_cluster):
+def cbar_map(colors, numb_cluster, method_str):
     """
     Generate a colormap and colorbar labels for clustering visualization.
 
@@ -174,6 +176,8 @@ def cbar_map(colors, numb_cluster):
         List of RGB color tuples.
     numb_cluster : int
         Number of clusters.
+    method_str : str
+        String representation of the clustering method.
 
     Returns
     -------
@@ -195,13 +199,13 @@ def cbar_map(colors, numb_cluster):
     slope = (y2 - y1) / (x2 - x1)
     offset = y1 - x1 * slope
     coordinate = [slope * elem + offset for elem in lab_clust]
-    cbar_lab = {"Clustering (K-Means)": [[chr(65+i) for i in lab_clust],
-                                         coordinate]}
+    cbar_lab = {f"Clustering ({method_str})": [[chr(65+i) for i in lab_clust],
+                                               coordinate]}
 
     return cmap, cbar_lab
 
 
-def cluster_kmeans(curve_data, num_clusters=3):
+def cluster_kmeans(curve_data, num_clusters=3, verbose=False):
     """
     Perform K-Means clustering on curve data.
 
@@ -211,6 +215,8 @@ def cluster_kmeans(curve_data, num_clusters=3):
         Curve data for clustering.
     num_clusters : int, optional
         Number of clusters to create. Default is 3.
+    verbose : bool, optional
+        Activation key for verbosity.
 
     Returns
     -------
@@ -220,10 +226,19 @@ def cluster_kmeans(curve_data, num_clusters=3):
         Information about each cluster.
     inertia : float
         Inertia (within-cluster sum of squares).
+    cluster_centers: numpy.ndarray
+        Coordinates of cluster centers.
     """
 
     # Apply K-Means clustering
-    kmeans = KMeans(n_clusters=num_clusters, random_state=0).fit(curve_data)
+    start_time = time.time()
+    kmeans = KMeans(
+        n_clusters=num_clusters, random_state=0, n_init=20).fit(curve_data)
+    execution_time = time.time() - start_time
+
+    if verbose:
+        print("\nExecution time:", execution_time, "seconds")
+
     cluster_labels = kmeans.labels_
 
     # Calculate intra-cluster inertia (within-cluster sum of squares)
@@ -264,7 +279,84 @@ def cluster_kmeans(curve_data, num_clusters=3):
     sort_tab = np.argsort([line[0] for line in cluster_info])
     cluster_info = [cluster_info[arg] for arg in sort_tab]
 
-    return cluster_labels, cluster_info, inertia
+    return cluster_labels, cluster_info, inertia, cluster_centers
+
+
+def cluster_gmm(curve_data, num_clusters=3, verbose=False):
+    """
+    Perform Gaussian Mixture Model clustering on curve data.
+
+    Parameters
+    ----------
+    curve_data : numpy.ndarray
+        Curve data for clustering.
+    num_clusters : int, optional
+        Number of clusters to create. Default is 3.
+    verbose : bool, optional
+        Activation key for verbosity.
+
+    Returns
+    -------
+    cluster_labels : list
+        Cluster indices for each data point
+    cluster_info : list
+        Information about each cluster.
+    bic : float
+        Bayesian Information Criterion.
+    cluster_means: numpy.ndarray
+        Coordinates of cluster mean.
+    """
+
+    # Apply Gaussian Mixture Model clustering
+    start_time = time.time()
+    gmm = GaussianMixture(
+        n_components=num_clusters, random_state=0).fit(curve_data)
+    execution_time = time.time() - start_time
+
+    if verbose:
+        print("\nExecution time:", execution_time, "seconds")
+
+    cluster_labels = gmm.predict(curve_data)
+
+    # Calculate Bayesian Information Criterion
+    bic = gmm.bic(curve_data)
+
+    # Count the number of points in each cluster
+    cluster_counts = np.bincount(cluster_labels)
+
+    # Calculate cluster means
+    cluster_means = gmm.means_
+
+    # Calculate pairwise distances between cluster means
+    distances = pairwise_distances(cluster_means, metric='euclidean')
+
+    # Reference cluster (position 0) = cluster with maximum of points
+    arg_ref = np.argmax(cluster_counts)
+    # Other cluster sorted with distance of the reference cluster
+    sorted_indices = [arg_ref] + list(np.argsort(distances[arg_ref]))[1:]
+
+    # Change of cluster_labels with sorted indices
+    cluster_labels = [sorted_indices.index(i) for i in cluster_labels]
+
+    # All cluster info
+    cluster_info = []
+    for i in range(num_clusters):
+        target = np.sort(distances[i])[1]
+        near_clust_index = list(distances[i]).index(target)
+        near_clust_name = chr(65 + sorted_indices.index(near_clust_index))
+        # [0]: distance ref, [1]: distance near, [2]: name near,
+        # [3]: nb of points, [4]: clust name
+        tab = [distances[arg_ref][i],
+               distances[i][near_clust_index],
+               near_clust_name,
+               cluster_counts[i],
+               chr(65 + sorted_indices.index(i))]
+        cluster_info.append(tab)
+    # sort cluster_info with distance of the reference cluster
+    sort_tab = np.argsort([line[0] for line in cluster_info])
+    cluster_info = [cluster_info[arg] for arg in sort_tab]
+
+    return cluster_labels, cluster_info, bic, cluster_means
 
 
 def main_curve_clustering(
@@ -306,15 +398,19 @@ def main_curve_clustering(
     avg_curve : dict
         List of average curve for each cluster in each mode.
     """
-
     name_files = os.listdir(dir_path_in)
+    method = user_pars["method"]
+    assert method in ["kmeans", "gmm"], \
+        "Invalid clustering method. Method must be either 'kmeans' or 'gmm'."
+
     modes = [key.split()[-1] for key, value in user_pars.items() if
              'clusters' in key and value is not None]
     if user_pars['label meas'] != ['piezoresponse']:
         modes = [lab for lab in modes if lab != 'coupled']
     lab_tab = [['on', 'off', 'coupled'], ['y', 'w', 'r'],
                ['On Field', 'Off Field', 'Coupled']]
-    cluster_labels, cluster_info, inertia, avg_curve = {}, {}, {}, {}
+    cluster_labels, cluster_info, inertia, centers, avg_curve = \
+        {}, {}, {}, {}, {}
     offsets = []
     make_plots = bool(show_plots or save_plots)
 
@@ -343,10 +439,18 @@ def main_curve_clustering(
     # Perform clustering for each mode
     for mode in modes:
         try:
-            # K-Means
             numb_cluster = user_pars[f'nb clusters {mode}']
-            res = cluster_kmeans(curves_y[mode], numb_cluster)
-            cluster_labels[mode], cluster_info[mode], inertia[mode] = res
+            if isinstance(curves_y[mode], list):
+                curves_y[mode] = np.array(curves_y[mode])
+            # K-Means
+            if method == 'kmeans':
+                res = cluster_kmeans(
+                    curves_y[mode], numb_cluster, verbose=verbose)
+            # Gaussian Mixture Model (GMM)
+            else:
+                res = cluster_gmm(curves_y[mode], numb_cluster, verbose=verbose)
+            cluster_labels[mode], cluster_info[mode], inertia[mode], \
+                centers[mode] = res
 
             # Calculate Average curve by Cluster
             avg_curve[mode] = []
@@ -367,33 +471,61 @@ def main_curve_clustering(
                               f'{cluster_info[mode][i][0]:.2e}')
 
             if verbose:
-                print(f'\n{mode} :')
+                print(f'{mode} :')
                 _ = [print(label) for label in labels]
 
             # Generate plots if specified
             if make_plots:
+
                 # Color of figures
                 color_curve_clustering = get_setting("color_curve_clustering")
                 cbar = plt.get_cmap(color_curve_clustering)
                 colors = [cbar((numb_cluster - i) / numb_cluster)
                           for i in range(numb_cluster)]
-                cmap, cbar_lab = cbar_map(colors, numb_cluster)
+                method_str = "K-Means" if method == "kmeans" else "GMM"
+                cmap, cbar_lab = cbar_map(colors, numb_cluster, method_str)
 
                 # Plot 1 : All Curve by Cluster
                 # Legend
                 legend_handles = []
                 for i in range(numb_cluster):
-                    legend_handles.append(Patch(color=colors[i],
-                                                label=labels[i]))
+                    legend_handles.append(
+                        Patch(color=colors[i], label=labels[i]))
 
                 figs = []
 
                 # Create graph
                 figsize = get_setting("figsize")
                 fig1, ax = plt.subplots(figsize=figsize)
-                fig1.sfn = f"clustering_best_loops_{mode}"
+                fig1.sfn = f"clusters_centroids_{mode}"
                 plot_dict_1 = {
-                    'title': f'Clustering (K-Means): Best Loops ({mode})',
+                    'title': f'Clusters with Centroids ({mode})',
+                    'x lab': 'Feature 1', 'y lab': 'Feature 2',
+                    'fs': 15, 'edgew': 3, 'tickl': 5, 'gridw': 1}
+                plot_graph(ax, [], [], plot_dict=plot_dict_1)
+
+                # Plot data points
+                for index in range(numb_cluster):
+                    tab_lab = np.array(cluster_labels[mode])
+                    cluster_data = curves_y[mode][tab_lab == index]
+                    cluster_data = np.array(cluster_data)
+
+                    # Plot data points for the current cluster
+                    plt.scatter(cluster_data[:, 0], cluster_data[:, 1],
+                                c=[colors[index]],
+                                label=f'Cluster {cluster_info[mode][index][4]}')
+                # Plot centroids
+                plt.scatter(centers[mode][:, 0], centers[mode][:, 1],
+                            marker='x', color='black', label='Centroids')
+                ax.legend()
+                figs += [fig1]
+
+                # Create graph
+                figsize = get_setting("figsize")
+                fig2, ax = plt.subplots(figsize=figsize)
+                fig2.sfn = f"clustering_best_loops_{mode}"
+                plot_dict_1 = {
+                    'title': f'Clustering ({method_str}): Best Loops ({mode})',
                     'x lab': 'Voltage', 'y lab': 'Y Axis',
                     'fs': 15, 'edgew': 3, 'tickl': 5, 'gridw': 1}
                 plot_graph(ax, [], [], plot_dict=plot_dict_1)
@@ -403,12 +535,12 @@ def main_curve_clustering(
                     color = colors[cluster_labels[mode][i]]
                     plt.plot(elem_x, elem_y, color=color)
                 ax.legend(handles=legend_handles)
-                figs += [fig1]
+                figs += [fig2]
 
                 # Plot 2 : Average Curve by Cluster
                 # Create graph
-                fig2, ax = plt.subplots(figsize=figsize)
-                fig2.sfn = f"clustering_average_loops_{mode}"
+                fig3, ax = plt.subplots(figsize=figsize)
+                fig3.sfn = f"clustering_average_loops_{mode}"
                 plot_dict_3 = {
                     'title': f'Average Curve by Cluster ({mode})',
                     'x lab': 'Voltage', 'y lab': 'Y Axis',
@@ -421,14 +553,16 @@ def main_curve_clustering(
                     plt.plot(curves_x[mode][0], avg_curve[mode][index],
                              label=label, color=color)
                 ax.legend()
-                figs += [fig2]
+                figs += [fig3]
+
                 if save_plots is True:
                     print_plots(figs, show_plots=False, save_plots=save_plots,
                                 dirname=dir_path_out)
 
                 # Plot 3 : cluster mapping
-                properties = {"Clustering (K-Means)": cluster_labels[mode]}
-                colors_lab = {"Clustering (K-Means)": cmap}
+                properties = \
+                    {f"Clustering ({method_str})": cluster_labels[mode]}
+                colors_lab = {f"Clustering ({method_str})": cmap}
                 indx = lab_tab[0].index(mode)
                 dict_map = {'label': lab_tab[2][indx], 'col': lab_tab[1][indx]}
                 main_mapping(properties, dim_pix, dim_mic=dim_mic,
@@ -446,6 +580,12 @@ def main_curve_clustering(
 def parameters():
     """
     To complete by user of the script: return parameters for analysis
+    - method: str
+        Name of the method used to perform the clustering
+        This parameter determines the method used to perform the clustering.
+        Implemented mthods are K-Means or Gaussian Mixture Model.
+        (GMM).
+        Choose from : "kmeans", "gmm"
     - label_meas: list of str
         List of Measurement Name for Curves
         This parameter contains a list of measurement name in order to create
@@ -530,7 +670,8 @@ def parameters():
         show_plots = True
         save = False
 
-        user_pars = {'label meas': ['piezoresponse'],
+        user_pars = {'method': 'gmm',
+                     'label meas': ['piezoresponse'],
                      'nb clusters off': 4,
                      'nb clusters on': 4,
                      'nb clusters coupled': 4}
