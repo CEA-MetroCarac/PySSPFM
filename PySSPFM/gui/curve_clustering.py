@@ -41,6 +41,7 @@ def main(parent=None):
         'dir path in': '',
         'dir path in prop': '',
         'dir path out': '',
+        'method': "kmeans",
         'label meas': ["piezoresponse"],
         'nb clusters off': 4,
         'nb clusters on': 4,
@@ -56,6 +57,7 @@ def main(parent=None):
         user_parameters['dir path in'] = dir_path_in_var.get()
         user_parameters['dir path in prop'] = extract_var(dir_path_prop_var)
         user_parameters['dir path out'] = extract_var(dir_path_out_var)
+        user_parameters['method'] = method_var.get()
         user_parameters['label meas'] = extract_var(label_meas_var)
         user_parameters['nb clusters off'] = clust_off_var.get()
         user_parameters['nb clusters on'] = clust_on_var.get()
@@ -209,6 +211,27 @@ def main(parent=None):
     browse_button_out = ttk.Button(app, text="Select", command=browse_dir_out)
     row = grid_item(browse_button_out, row, column=2)
     row = add_grid_separator(app, row=row)
+
+    # Section title: Method
+    label_meth = ttk.Label(app, text="Method", font=("Helvetica", 14))
+    row = grid_item(label_meth, row, column=0, sticky="ew", columnspan=3)
+
+    # Mode
+    label_method = ttk.Label(app, text="Method:")
+    row = grid_item(label_method, row, column=0, sticky="e", increment=False)
+    method_var = ttk.Combobox(app, values=["kmeans", "gmm"])
+    method_var.set(user_parameters['method'])
+    row = grid_item(method_var, row, column=1, sticky="ew")
+    strg = "- Name: method\n" \
+           "- Summary: Name of the method used to perform the clustering.\n" \
+           "- Description: This parameter determines the method used to " \
+           "perform the clustering. Implemented methods are K-Means or " \
+           "Gaussian Mixture Model. (GMM).\n" \
+           "- Value: A string with two possible values:\n" \
+           "\t--> 'kmeans': K-Means clustering\n" \
+           "\t--> 'gmm': Gaussian Mixture Model clustering"
+    method_var.bind("<Enter>",
+                    lambda event, mess=strg: show_tooltip(method_var, mess))
 
     # Section title: Measure
     label_meas = ttk.Label(app, text="Measure", font=("Helvetica", 14))
