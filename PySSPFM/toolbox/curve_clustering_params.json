@@ -6,6 +6,7 @@
     "show_plots": true,
     "save": false,
     "user_pars": {
+        "method": "gmm",
         "label meas": ["piezoresponse"],
         "nb clusters off": 4,
         "nb clusters on": 4,
