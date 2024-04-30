@@ -37,7 +37,8 @@ def ex_curve_clustering(label_meas, verbose=False, make_plots=False):
     dir_path_in = os.path.join(
         example_root_path_in, "KNN500n_2023-11-20-16h15m_out_dfrt",
         "best_nanoloops")
-    user_pars = {'label meas': label_meas,
+    user_pars = {'method': 'kmeans',
+                 'label meas': label_meas,
                  'nb clusters off': 5,
                  'nb clusters on': 2,
                  'nb clusters coupled': 4}
