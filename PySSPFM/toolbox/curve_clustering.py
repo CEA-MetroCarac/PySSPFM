@@ -583,7 +583,7 @@ def parameters():
     - method: str
         Name of the method used to perform the clustering
         This parameter determines the method used to perform the clustering.
-        Implemented mthods are K-Means or Gaussian Mixture Model.
+        Implemented methods are K-Means or Gaussian Mixture Model.
         (GMM).
         Choose from : "kmeans", "gmm"
     - label_meas: list of str
