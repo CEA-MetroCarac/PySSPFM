@@ -328,7 +328,7 @@ def parameters():
     - extension: str, optional
         Extension of files.
         This parameter determines the extension type of curve files.
-        Four possible values: 'csv' or 'txt' or 'csv' or 'xlsx'.
+        Four possible values: 'spm' or 'txt' or 'csv' or 'xlsx'.
     - mode: str
         Mode of measurement used (extraction of measurements).
         This parameter determines the method used for measurements,
