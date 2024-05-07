@@ -24,14 +24,15 @@ def ex_curve_clustering(label_meas, verbose=False, make_plots=False):
 
     Returns
     -------
-    cluster_labels : dict
-        Cluster indices for each data point for each mode.
-    cluster_info : dict
-        Information about each cluster for each mode.
-    inertia : dict
-        Inertia (within-cluster sum of squares) for each mode.
-    avg_curve : dict
-        Contain all list of average curve for each cluster in each mode.
+    cluster_labels : list
+        Cluster indices for each data point
+    cluster_info : list
+        Information about each cluster.
+    inertia : float
+        For K-Means : Inertia (within-cluster sum of squares).
+        For GMM : Bayesian Information Criterion.
+    avg_curve: numpy.ndarray
+        List of average curve.
     """
     example_root_path_in = get_setting("example_root_path_in")
     dir_path_in = os.path.join(example_root_path_in, "PZT100n")
@@ -39,7 +40,7 @@ def ex_curve_clustering(label_meas, verbose=False, make_plots=False):
                  "mode": "dfrt",
                  'method': 'kmeans',
                  'label meas': label_meas,
-                 'nb clusters': 4}
+                 'nb clusters': 3}
     dim_pix = {'x': 7, 'y': 3}
     dim_mic = {'x': 7, 'y': 3}
 
