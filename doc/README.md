@@ -105,7 +105,7 @@
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3b-extraction">VIII.3.b) Extraction</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3c-treatment">VIII.3.c) Treatment</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3d-figures">VIII.3.d) Figures</a></li>
-                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3d-figures">VIII.3.d) Figures</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3e-curve-clustering-k-means-or-gmm">VIII.3.e) Curve clustering (K-Means or GMM)</a></li>
                     </ul>
                 </li>
                 <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4-mean-hysteresis">VIII.4) Mean hysteresis</a>
