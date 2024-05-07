@@ -15,8 +15,9 @@ from PySSPFM.gui.spm_data_extractor import main as main_tool_1_e
 from PySSPFM.gui.phase_offset_analyzer import main as main_tool_2_a
 from PySSPFM.gui.map_correlation import main as main_tool_3_a
 from PySSPFM.gui.curve_clustering import main as main_tool_3_b
-from PySSPFM.gui.mean_hyst import main as main_tool_3_c
-from PySSPFM.gui.sort_plot_pixel import main as main_tool_3_d
+from PySSPFM.gui.loop_clustering import main as main_tool_3_c
+from PySSPFM.gui.mean_hyst import main as main_tool_3_d
+from PySSPFM.gui.sort_plot_pixel import main as main_tool_3_e
 from PySSPFM.gui.spm_converter import main as main_tool_4_a
 from PySSPFM.gui.meas_sheet_generator import main as main_tool_4_b
 from PySSPFM.gui.utils import \
@@ -90,10 +91,10 @@ def main():
                    strg_functions=strg_functions)
 
     # Toolbox - 3 - Map / multi-loop tools
-    labels = ["Map correlation", "Curve clustering", "Mean hysteresis",
-              "Sort and plot pixel"]
+    labels = ["Map correlation", "Curve clustering", "Loop clustering",
+              "Mean hysteresis", "Sort and plot pixel"]
     functions = [main_tool_3_a, main_tool_3_b, main_tool_3_c,
-                 main_tool_3_d]
+                 main_tool_3_d, main_tool_3_e]
     strg_title = "Map and multi-loop tools allow to go deeper into sspfm " \
                  "measurement analysis by trying to identify and separate " \
                  "phases, determining origins of contrast mapping ..."
@@ -102,12 +103,18 @@ def main():
         "- Generate cross correlation coefficient array between a selected "
         "set of sample properties in order to determine origins of contrast "
         "mapping",
-        "Clustering with machine learning approach (K-Means) of curve:\n"
-        "- Perform a clustering analysis (K-Means) for all best hysteresis "
+        "Clustering with machine learning approach of curve:\n"
+        "- Perform a clustering analysis for all curve (for each pixel) of a "
+        "sspfm measurement in order to separate phases and different physical "
+        "signal contributions.\n"
+        "Curves can be generated using one or more measurements, including "
+        "height, deflection ...",
+        "Clustering with machine learning approach of loop:\n"
+        "- Perform a clustering analysis for all best hysteresis "
         "(for each pixel, one hysteresis for each mode) of a sspfm measurement "
         "in order to separate phases and different physical signal "
         "contributions.\n"
-        "Curves can be generated using one or more measurements, including "
+        "Loop can be generated using one or more measurements, including "
         "piezoresponse, amplitude, phase, resonance frequency, or "
         "quality factor.",
         "Perform mean of hysteresis loops (on / off / coupled) by reading a "
