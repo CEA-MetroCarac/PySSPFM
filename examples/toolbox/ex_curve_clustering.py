@@ -34,14 +34,12 @@ def ex_curve_clustering(label_meas, verbose=False, make_plots=False):
         Contain all list of average curve for each cluster in each mode.
     """
     example_root_path_in = get_setting("example_root_path_in")
-    dir_path_in = os.path.join(
-        example_root_path_in, "KNN500n_2023-11-20-16h15m_out_dfrt",
-        "best_nanoloops")
-    user_pars = {'method': 'kmeans',
+    dir_path_in = os.path.join(example_root_path_in, "PZT100n")
+    user_pars = {"extension": "spm",
+                 "mode": "dfrt",
+                 'method': 'kmeans',
                  'label meas': label_meas,
-                 'nb clusters off': 5,
-                 'nb clusters on': 2,
-                 'nb clusters coupled': 4}
+                 'nb clusters': 4}
 
     # saving path management
     dir_path_out, save_plots = save_path_example(
@@ -58,7 +56,7 @@ def ex_curve_clustering(label_meas, verbose=False, make_plots=False):
 
 if __name__ == '__main__':
     figs = []
-    ex_curve_clustering(label_meas=['piezoresponse'], verbose=True,
+    ex_curve_clustering(label_meas=['deflection'], verbose=True,
                         make_plots=True)
-    ex_curve_clustering(label_meas=['amplitude', 'phase'], verbose=True,
+    ex_curve_clustering(label_meas=['deflection', 'height'], verbose=True,
                         make_plots=True)
