@@ -97,10 +97,10 @@ def extract_data(dir_path_in, tab_label, mode="classic", extension="spm"):
 
     Returns
     -------
-    curves_x : dict
-        Dictionary containing x-axis data for each mode.
-    curves_y : dict
-        Dictionary containing y-axis data for each mode.
+    curves_x : list
+        List containing x-axis data for each mode.
+    curves_y : list
+        List containing y-axis data for each mode.
     """
 
     filenames = get_filenames_with_conditions(dir_path_in, prefix=None,
@@ -169,14 +169,15 @@ def main_curve_clustering(
 
     Returns
     -------
-    cluster_labels : dict
-        Cluster indices for each data point for each mode.
-    cluster_info : dict
-        Information about each cluster for each mode.
-    inertia : dict
-        Inertia (within-cluster sum of squares) for each mode.
-    avg_curve : dict
-        List of average curve for each cluster in each mode.
+    cluster_labels : list
+        Cluster indices for each data point
+    cluster_info : list
+        Information about each cluster.
+    inertia : float
+        For K-Means : Inertia (within-cluster sum of squares).
+        For GMM : Bayesian Information Criterion.
+    avg_curve: numpy.ndarray
+        List of average curve.
     """
     method = user_pars["method"]
     assert method in ["kmeans", "gmm"], \
@@ -188,15 +189,18 @@ def main_curve_clustering(
                                       mode=user_pars['mode'],
                                       extension=user_pars['extension'])
 
-    # Extract extra analysis info (scan dim + vertical offset (off field))
-    if dir_path_in is not None:
-        if csv_path is None:
-            csv_path = dir_path_in
-        else:
-            csv_path, _ = os.path.split(csv_path)
-        csv_meas, _ = csv_meas_sheet_extract(csv_path, verbose=verbose)
-        dim_pix = {'x': csv_meas['Grid x [pix]'], 'y': csv_meas['Grid y [pix]']}
-        dim_mic = {'x': csv_meas['Grid x [um]'], 'y': csv_meas['Grid y [um]']}
+    # Extract extra analysis info (scan dim)
+    if dim_pix is None:
+        if dir_path_in is not None:
+            if csv_path is None:
+                csv_path = dir_path_in
+            else:
+                csv_path, _ = os.path.split(csv_path)
+            csv_meas, _ = csv_meas_sheet_extract(csv_path, verbose=verbose)
+            dim_pix = \
+                {'x': csv_meas['Grid x [pix]'], 'y': csv_meas['Grid y [pix]']}
+            dim_mic = \
+                {'x': csv_meas['Grid x [um]'], 'y': csv_meas['Grid y [um]']}
 
     numb_cluster = user_pars['nb clusters']
     if isinstance(curves_y, list):
