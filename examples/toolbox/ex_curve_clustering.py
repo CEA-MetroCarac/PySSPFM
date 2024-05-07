@@ -40,6 +40,8 @@ def ex_curve_clustering(label_meas, verbose=False, make_plots=False):
                  'method': 'kmeans',
                  'label meas': label_meas,
                  'nb clusters': 4}
+    dim_pix = {'x': 7, 'y': 3}
+    dim_mic = {'x': 7, 'y': 3}
 
     # saving path management
     dir_path_out, save_plots = save_path_example(
@@ -48,7 +50,8 @@ def ex_curve_clustering(label_meas, verbose=False, make_plots=False):
     # ex main_curve_clustering
     out = main_curve_clustering(
         user_pars, dir_path_in, verbose=verbose, show_plots=make_plots,
-        save_plots=save_plots, dir_path_out=dir_path_out)
+        save_plots=save_plots, dir_path_out=dir_path_out, dim_pix=dim_pix,
+        dim_mic=dim_mic)
     (cluster_labels, cluster_info, inertia, avg_curve) = out
 
     return cluster_labels, cluster_info, inertia, avg_curve
