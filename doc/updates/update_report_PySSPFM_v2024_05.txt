@@ -1,0 +1,49 @@
+Update Report PySSPFM v2024.05:
+
+# New file management
+Added a Python file in common.utils.core for file management.
+Adapted file management in datacube_to_nanoloop_s1.py, phase_offset_analyzer.py, meas_sheet_generator.py according to this modification (previously managed with get_file_names).
+Removed the get_file_names function from PySSPFM/utils/datacube_to_nanoloop/file.py (previously used for datacube_to_nanoloop_s1.py but obsolete with the new path management).
+Simplified the function generate_file_nanoloop_paths in PySSPFM/utils/nanoloop_to_hyst/file.py with the new file management.
+
+# Improve clustering
+Separate curve and loop clustering
+	--> curve clustering = clustering from raw SSPFM measurement (example with deflection or height ...)
+	--> loop clustering = clustering for nanoloops (example : amplitude, phase, piezoresponse, Q factor, resonance frequency ...) : create new file python + gui + json
+	--> separate core clustering functions in a new python file : PySSPFM/utils/core/clustering.py
+Add a plot of cluster in 2D graph with centroids
+Add Gaussian Mixture Model for clustering in addition of K-Means (method add in user pars : "kmeans" or "gmm")
+Print processing time
+
+# Other modifications
+In the multi_proc.py file (PySSPFM/utils/core/multi_proc.py), changed the run_multi_proc_s2 function to manage the order of filling results (notably tab_best_loops, tab_properties, tab_other_properties).
+Fixed a bug for handling None values when saving properties (PySSPFM/utils/nanoloop_to_hyst/file.py).
+New pyproject.toml version
+Adapt manifest
+
+# New file / functions
+New files: 
+	- PySSPFM/utils/core/path_management.py
+	- PySSPFM/toolbox/loop_clustering.py
+	- PySSPFM/toolbox/loop_clustering_params.json
+	- PySSPFM/gui/loop_clustering.py
+	- PySSPFM/utils/core/clustering.py
+
+New functions:
+	- get_filenames_with_conditions (PySSPFM/utils/core/path_management.py)
+	- gen_bruker_filenames (PySSPFM/utils/core/path_management.py)
+	- extract_unique_numbers (PySSPFM/utils/core/path_management.py)
+	- separate_numbers_from_filenames (PySSPFM/utils/core/path_management.py)
+	- find_order (PySSPFM/utils/core/path_management.py)
+	- extract_filename_root (PySSPFM/utils/core/path_management.py)
+	- sort_filenames (PySSPFM/utils/core/path_management.py)
+	- generate_filenames (PySSPFM/utils/core/path_management.py)
+	- create_file_nanoloop_paths (PySSPFM/utils/nanoloop_to_hyst/file.py)
+	- curve_clustering (PySSPFM/utils/core/clustering.py)
+	- cbar_map (PySSPFM/utils/core/clustering.py)
+
+# File / function removal
+Functions:
+	- get_file_names (PySSPFM/utils/datacube_to_nanoloop/file.py)
+
+# Update documentation, examples and tests
