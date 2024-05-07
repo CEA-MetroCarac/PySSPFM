@@ -99,11 +99,12 @@
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2c-figures">VIII.2.c) Figures</a></li>
                     </ul>
                 </li>
-                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3-curve-clustering-k-means">VIII.3) Curve clustering (K-Means)</a>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3-loop-clustering-k-means">VIII.3) Loop clustering (K-Means)</a>
                     <ul align="justify" width="100%">
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3a-parameters">VIII.3.a) Parameters</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3b-extraction">VIII.3.b) Extraction</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3c-treatment">VIII.3.c) Treatment</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3d-figures">VIII.3.d) Figures</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3d-figures">VIII.3.d) Figures</a></li>
                     </ul>
                 </li>
@@ -1581,10 +1582,10 @@ The measurement parameters are extracted from the SSPFM measurement sheet, and e
     <em>Graph showing the evolution of the phase offset determined by the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">toolbox/phase_offset_analyzer.py</a></code> as a function of the index of the raw SSPFM measurement files (figure generated with <code>generate_graph_offset</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">toolbox/phase_offset_analyzer.py</a></code> script).</em>
 </p>
 
-### VIII.3) Curve clustering (K-Means)
+### VIII.3) Loop clustering (K-Means or GMM)
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">toolbox/curve_clustering.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/curve_clustering.py">gui/curve_clustering.py</a></code>. It facilitates the classification of loops associated with each measurement point into clusters. This tool can enable phase separation or the separation of the influences of physically distinct phenomena, such as measurement artifacts.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_clustering.py">toolbox/loop_clustering.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/loop_clustering.py">gui/loop_clustering.py</a></code>. It facilitates the classification of loops associated with each measurement point into clusters. This tool can enable phase separation or the separation of the influences of physically distinct phenomena, such as measurement artifacts.
 </p>
 
 #### VIII.3.a) Parameters
@@ -1608,7 +1609,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 <p align="justify" width="100%">
 &#8226 File management: In the initial phase, the algorithm ingests the <code>best_nanoloops</code> directory along with the <code>properties</code> directory. <br>
 &#8226 Method: Method used to perform clusterin : K-Means or Gaussian Mixture Model (GMM). <br>
-&#8226 Label measure: One or more measure considered to determine the curve (from amplitude, phase, piezoresponse, resonance frequency or quality). <br>
+&#8226 Label measure: One or more measure considered to determine the loop (from amplitude, phase, piezoresponse, resonance frequency or quality). <br>
 &#8226 Clusters: For each measurement (on field, off field, and coupled), the user specifies the number of clusters. <br>
 &#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. <br>
 </p>
@@ -1621,8 +1622,8 @@ The script can be executed directly using the executable file: <code><a href="ht
 
 <p align="justify" width="100%">
 The entirety of data stemming from the best nanoloops, both in the on field and off field modes, is extracted from the files residing within the <code>best_nanoloops</code> directory (with the function <code>extract_data</code> of the script). <br>
-For piezoresponse curve analysis, vertical offset measurements in the off field mode and the dimensions of the mappings are drawn from the files within the <code>properties</code> directory (with <code>extract_properties</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file.py</a></code>). <br>
-For piezoresponse curve analysis, the coupled measurements are subsequently generated through the process of differential analysis of on field and off field measurements, with the flexibility to incorporate the vertical offset in the off field mode, a component influenced by the sample's surface contact potential (section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4d---differential-analysis-of-on-and-off-field-hysteresis">VI.4.d) - Differential analysis of on and off field hysteresis</a> in the documentation).
+For piezoresponse loop analysis, vertical offset measurements in the off field mode and the dimensions of the mappings are drawn from the files within the <code>properties</code> directory (with <code>extract_properties</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file.py</a></code>). <br>
+For piezoresponse loop analysis, the coupled measurements are subsequently generated through the process of differential analysis of on field and off field measurements, with the flexibility to incorporate the vertical offset in the off field mode, a component influenced by the sample's surface contact potential (section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4d---differential-analysis-of-on-and-off-field-hysteresis">VI.4.d) - Differential analysis of on and off field hysteresis</a> in the documentation).
 </p>
 
 <p align="justify" width="100%">
@@ -1633,7 +1634,7 @@ For a deeper understanding of the input file management, please refer to the rel
 #### VIII.3.c) Treatment
 
 <p align="justify" width="100%">
-Initially, following data extraction, a curve is constructed. If multiple measures are specified in the <code>label_meas</code> parameter, they are normalized between 0 and 1 and concatenated together in the <code>gen_curve_data</code> function of the script. To analyze ferroelectric as well as electrostatic effects, the quality of clusterization can be enhanced by composing amplitude with phase rather than simply relying on piezoresponse <a href="#ref28">[28]</a>. To study nanomechanical properties under in situ material polarization, resonance frequency and quality factor curves can be selected (for elastic and dissipative properties, respectively). This can be particularly relevant, for example, in the study of relaxor ferroelectric materials <a href="#ref7">[7]</a>. For each of the modes (on field, off field, and eventually coupled), and for each of the nanoloops associated with each data point, a cluster is assigned using the machine learning K-Means or GMM methodology. To accomplish this, we import the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">KMeans</a> and <a href="https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html">GMM</a> functions from <a href="https://scikit-learn.org/stable/modules/clustering.html#clustering">sklearn.cluster</a>. A reference cluster is established, identified as the one encompassing the maximum number of data points. The index assigned to the other clusters is then computed as the distance between their centroid and that of the reference cluster, respectively. In other words, the clustering indexing provides the user with information about the separation (determined with quantitative data) of each cluster relative to the reference cluster. Subsequently, an average curve for each cluster is computed.
+Initially, following data extraction, a loop is constructed. If multiple measures are specified in the <code>label_meas</code> parameter, they are normalized between 0 and 1 and concatenated together in the <code>gen_loop_data</code> function of the script. To analyze ferroelectric as well as electrostatic effects, the quality of clusterization can be enhanced by composing amplitude with phase rather than simply relying on piezoresponse <a href="#ref28">[28]</a>. To study nanomechanical properties under in situ material polarization, resonance frequency and quality factor loops can be selected (for elastic and dissipative properties, respectively). This can be particularly relevant, for example, in the study of relaxor ferroelectric materials <a href="#ref7">[7]</a>. For each of the modes (on field, off field, and eventually coupled), and for each of the nanoloops associated with each data point, a cluster is assigned using the machine learning K-Means or GMM methodology. To accomplish this, we import the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">KMeans</a> and <a href="https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html">GMM</a> functions from <a href="https://scikit-learn.org/stable/modules/clustering.html#clustering">sklearn.cluster</a>. A reference cluster is established, identified as the one encompassing the maximum number of data points. The index assigned to the other clusters is then computed as the distance between their centroid and that of the reference cluster, respectively. In other words, the clustering indexing provides the user with information about the separation (determined with quantitative data) of each cluster relative to the reference cluster. Subsequently, an average loop for each cluster is computed.
 </p>
 
 #### VIII.3.d) Figures
@@ -1643,15 +1644,51 @@ Initially, following data extraction, a curve is constructed. If multiple measur
     <img align="center" width="25%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_all_hyst.PNG>
     <img align="center" width="25%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_mean_hyst.PNG>
     <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_carto.PNG> <br>
-    <em>Result of curve_clustering (figure generated with <code>main_curve_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">toolbox/curve_clustering.py</a></code> script)</em>
+    <em>Result of loop_clustering (figure generated with <code>main_loop_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_clustering.py">toolbox/loop_clustering.py</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
 For each mode (on field, off field, and eventually coupled), three figures are generated, each containing: <br>
 &#8226 A complete representation of cluster points in 2D graph with their centroids, distinguished by colors assigned based on their cluster index. <br>
-&#8226 The complete array of curve from all datasets, distinguished by colors assigned based on their cluster index. <br>
-&#8226 The average curve for each cluster, distinguished by colors assigned according to their cluster index. <br>
+&#8226 The complete array of loop from all datasets, distinguished by colors assigned based on their cluster index. <br>
+&#8226 The average loop for each cluster, distinguished by colors assigned according to their cluster index. <br>
 &#8226 A spatial cartography displaying the assigned clusters. <br>
+</p>
+
+#### VIII.3.e) Curve clustering (K-Means or GMM)
+
+<p align="justify" width="100%">
+A similar version of this code also exists for SSPFM raw data, typically used for clustering measurements of deflection or height channels.
+</p>
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">toolbox/curve_clustering.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/curve_clustering.py">gui/curve_clustering.py</a></code>. It facilitates the classification of curves associated with each measurement point into clusters. This tool can enable phase separation or the separation of the influences of physically distinct phenomena, such as measurement artifacts.
+</p>
+
+```
+    default_user_parameters = {
+        'dir path in': '',
+        'csv path in': '',
+        'dir path out': '',
+        'extension': 'spm',
+        'mode': 'classic',
+        'method': "kmeans",
+        'label meas': ["deflection"],
+        'nb clusters': 4,
+        'verbose': True,
+        'show plots': True,
+        'save': False,
+    }
+```
+
+<p align="justify" width="100%">
+&#8226 File management: In the initial phase, the algorithm ingests the raw measurement directory. <br>
+&#8226 Extension: Extension of raw SSPFM measurement files (from spm, txt, csv or xlsx). <br>
+&#8226 Mode: Measurement mode of raw SSPFM measurement files (from classic (for Frequency Sweep in Resonance or Single Frequency) or dfrt). <br>
+&#8226 Method: Method used to perform clusterin : K-Means or Gaussian Mixture Model (GMM). <br>
+&#8226 Label measure: One or more measure considered to determine the loop (from height, deflection, ...). <br>
+&#8226 Clusters: For each measurement, the user specifies the number of clusters. <br>
+&#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. <br>
 </p>
 
 ### VIII.4) Mean hysteresis
