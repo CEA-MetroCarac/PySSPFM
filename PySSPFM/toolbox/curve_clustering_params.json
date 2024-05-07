@@ -1,15 +1,15 @@
 {
-    "dir_path_in": "path/to/your/directory/best_nanoloops",
+    "dir_path_in": "path/to/your/measurement/directory",
     "dir_path_out": null,
-    "dir_path_in_props": null,
+    "csv_dir_path": null,
     "verbose": true,
     "show_plots": true,
     "save": false,
     "user_pars": {
-        "method": "gmm",
-        "label meas": ["piezoresponse"],
-        "nb clusters off": 4,
-        "nb clusters on": 4,
-        "nb clusters coupled": 4
+        "extension": "spm",
+        "mode": "classic",
+        "method": "kmeans",
+        "label meas": ["deflection"],
+        "nb clusters": 4
     }
 }
