@@ -8,7 +8,7 @@ import tkinter.filedialog as tkf
 import matplotlib.pyplot as plt
 import numpy as np
 
-from PySSPFM.settings import get_setting
+from PySSPFM.settings import get_setting, copy_default_settings_if_not_exist
 from PySSPFM.utils.core.figure import plot_graph, print_plots
 from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
@@ -146,7 +146,7 @@ def main_spm_data_extractor(file_path_in, nb_hold_seg_start=1,
         return raw_dict, sspfm_pars, other_pars
 
 
-def parameters():
+def parameters(fname_json=None):
     """
     To complete by user of the script: return parameters for analysis
 
@@ -174,9 +174,13 @@ def parameters():
         matplotlib figures during the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        script_directory = os.path.realpath(__file__)
-        file_path_user_params = script_directory.split('.')[0] + \
-            f'_params.{get_setting("extract_parameters")}'
+        # if fname_json is provided, use it, else use the default one
+        if fname_json is not None:
+            file_path_user_params = fname_json
+        else:
+            file_path = os.path.realpath(__file__)
+            file_path_user_params = copy_default_settings_if_not_exist(file_path)
+
         # Load parameters from the specified configuration file
         print(f"user parameters from {os.path.split(file_path_user_params)[1]} "
               f"file")
@@ -202,13 +206,13 @@ def parameters():
     return file_path_in, nb_hold_seg_start, nb_hold_seg_end, verbose, show_plots
 
 
-def main():
+def main(fname_json=None):
     """ Main function for data analysis. """
 
+
     # Extract parameters
-    out = parameters()
     (file_path_in, nb_hold_seg_start, nb_hold_seg_end, verbose,
-     show_plots) = out
+     show_plots) = parameters(fname_json=fname_json)# Generate default path out
     # Main function
     res = main_spm_data_extractor(
         file_path_in, nb_hold_seg_start=nb_hold_seg_start,

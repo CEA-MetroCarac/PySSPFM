@@ -170,7 +170,8 @@ ELECTROSTATIC_OFFSET: bool
 """
 import sys
 import os
-import pathlib
+from pathlib import Path
+import shutil
 
 from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
@@ -180,7 +181,7 @@ def get_setting(key):
     """
     Get a setting value based on the specified key. This function allows you
     to check whether the initial code launch is a test or an example.
-    In such cases, default settings are used to align with example data and
+    In such cases, examples settings are used to align with example data and
     achieve the correct target values for tests. Otherwise, user-adjustable
     settings are extracted.
 
@@ -197,13 +198,26 @@ def get_setting(key):
     origin_path = sys.argv[0]
     sep_origin_path = origin_path.split(os.path.sep)
 
-    settings_dict = get_settings_dict("settings.json")
+    # Define the examples configuration file path and the user configuration file path
+    examples_config_path = Path(__file__).parent / 'examples_settings.json'
+    user_config_path = Path.home() / '.pysspfm' / 'pysspfm.json'
+
+    # If the ~/.pysspfm directory doesn't exist, create it
+    user_config_path.parent.mkdir(parents=True, exist_ok=True)
+
+    # If the user configuration file doesn't exist, copy the default configuration file
+    if not user_config_path.exists():
+        shutil.copy(Path(__file__).parent / 'default_settings.json', user_config_path)
+
+    settings_dict = get_settings_dict(user_config_path)
     # Update the settings dictionary with the path information.
     settings_dict = get_path_from_json(settings_dict)
+    
     # All default constants for PySSPFM examples and tests
-    # Default settings must not be modified
-    def_settings_dict = get_settings_dict("default_settings.json")
-    # Use the default settings if 'examples' or 'test' is in the script path
+    # examples settings must not be modified
+    def_settings_dict = get_settings_dict(examples_config_path)
+
+    # Use the examples settings if 'examples' or 'test' is in the script path
     if "PySSPFM" not in sep_origin_path:
         settings_to_use = def_settings_dict
     elif 'examples' in sep_origin_path or 'test' in sep_origin_path:
@@ -261,7 +275,7 @@ def get_path_from_json(settings_dict):
     if isinstance(root, list):
         for cont, elem in enumerate(root):
             if elem == "PARENT":
-                root[cont] = pathlib.Path(__file__).parent.parent
+                root[cont] = Path(__file__).parent.parent
         root = os.path.join(*root)
 
     # Update the EXAMPLES path.
@@ -288,3 +302,24 @@ def get_path_from_json(settings_dict):
             settings_dict[key] = os.path.join(*settings_dict[key])
 
     return settings_dict
+
+def copy_default_settings_if_not_exist(file_path):
+    """
+    Copy the default settings file to the user directory if it does not exist.
+    """
+    # Convert string to Path object if necessary
+    file_path = Path(file_path) if isinstance(file_path, str) else file_path
+    filename = file_path.name
+
+    # Get the path from the settings
+    user_params_file_path = get_setting(filename.replace('.py', '_params'))
+
+    # Expand the ~ to the home directory
+    user_params_file_path = Path(user_params_file_path).expanduser()
+    
+    # if json file in get_setting(filename_user_params) doesn't exists, copy default to ~/.pysspfm/
+    if not user_params_file_path.exists():
+        default_file_path = file_path.with_name(f"{file_path.stem}_params.{get_setting('extract_parameters')}")
+        shutil.copy(default_file_path, user_params_file_path)
+        
+    return user_params_file_path

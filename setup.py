@@ -4,7 +4,7 @@ setup(
     name="PySSPFM",
     version='2024.03',
     license='GPL v3',
-    include_package_data=False,
+    include_package_data=True,
     zip_safe=False,
     python_requires='>=3.7',
     install_requires=[

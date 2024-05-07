@@ -9,7 +9,7 @@ from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 
-from PySSPFM.settings import get_setting
+from PySSPFM.settings import get_setting, copy_default_settings_if_not_exist
 from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
 from PySSPFM.utils.raw_extraction import data_extraction, csv_meas_sheet_extract
@@ -393,7 +393,7 @@ def main_phase_offset_analyzer(user_pars, dir_path_in, range_file=None,
     return phase_offset_tab, map_dim, figures
 
 
-def parameters():
+def parameters(fname_json=None):
     """
     To complete by user of the script: return parameters for analysis
 
@@ -502,9 +502,13 @@ def parameters():
         generated after the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        script_directory = os.path.realpath(__file__)
-        file_path_user_params = script_directory.split('.')[0] + \
-            f'_params.{get_setting("extract_parameters")}'
+        # if fname_json is provided, use it, else use the default one
+        if fname_json is not None:
+            file_path_user_params = fname_json
+        else:
+            file_path = os.path.realpath(__file__)
+            file_path_user_params = copy_default_settings_if_not_exist(file_path)
+
         # Load parameters from the specified configuration file
         print(f"user parameters from {os.path.split(file_path_user_params)[1]} "
               f"file")
@@ -551,13 +555,12 @@ def parameters():
         verbose, show_plots, save
 
 
-def main():
+def main(fname_json=None):
     """ Main function for data analysis. """
 
     # Extract parameters
-    out = parameters()
     (user_pars, dir_path_in, dir_path_out, range_file, extension, verbose,
-     show_plots, save) = out
+     show_plots, save) = parameters(fname_json=fname_json)# Generate default path out
     # Generate default path out
     dir_path_out = save_path_management(
         dir_path_in, dir_path_out, save=save, dirname="phase_offset_analyzer",
