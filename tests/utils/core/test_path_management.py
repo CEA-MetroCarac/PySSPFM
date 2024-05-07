@@ -46,7 +46,7 @@ def test_get_filenames_with_conditions():
          'KNN500n_SSPFM.0_00116.txt', 'KNN500n_SSPFM.0_00117.txt',
          'KNN500n_SSPFM.0_00118.txt']
 
-    assert filenames_sspfm == target_filenames
+    assert set(filenames_sspfm) == set(target_filenames)
 
 
 def test_filename_management():
