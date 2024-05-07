@@ -10,7 +10,6 @@ from tkinter import ttk
 from tkinter import filedialog
 from datetime import datetime
 
-from PySSPFM.settings import get_setting
 from PySSPFM.toolbox.curve_clustering import \
     main_curve_clustering as main_script
 from PySSPFM.gui.utils import \
@@ -33,19 +32,19 @@ def main(parent=None):
     None
     """
     # Create the main or secondary window
-    title = "Curve clustering (k-means)"
+    title = "Curve clustering"
     app = init_secondary_wdw(parent=parent, wdw_title=title)
 
     # Set default parameter values
     default_user_parameters = {
         'dir path in': '',
-        'dir path in prop': '',
+        'csv path in': '',
         'dir path out': '',
+        'extension': 'spm',
+        'mode': 'classic',
         'method': "kmeans",
-        'label meas': ["piezoresponse"],
-        'nb clusters off': 4,
-        'nb clusters on': 4,
-        'nb clusters coupled': 4,
+        'label meas': ["deflection"],
+        'nb clusters': 4,
         'verbose': True,
         'show plots': True,
         'save': False,
@@ -55,13 +54,13 @@ def main(parent=None):
     def launch():
         # Update the user_parameters with the new values from the widgets
         user_parameters['dir path in'] = dir_path_in_var.get()
-        user_parameters['dir path in prop'] = extract_var(dir_path_prop_var)
+        user_parameters['csv path in'] = extract_var(csv_path_in_var)
         user_parameters['dir path out'] = extract_var(dir_path_out_var)
+        user_parameters['extension'] = extension_var.get()
+        user_parameters['mode'] = mode_var.get()
         user_parameters['method'] = method_var.get()
         user_parameters['label meas'] = extract_var(label_meas_var)
-        user_parameters['nb clusters off'] = clust_off_var.get()
-        user_parameters['nb clusters on'] = clust_on_var.get()
-        user_parameters['nb clusters coupled'] = clust_coupled_var.get()
+        user_parameters['nb clusters'] = clust_var.get()
         user_parameters['verbose'] = verbose_var.get()
         user_parameters['show plots'] = show_plots_var.get()
         user_parameters['save'] = save_var.get()
@@ -80,7 +79,7 @@ def main(parent=None):
                     show_plots=user_parameters['show plots'],
                     save_plots=user_parameters['save'],
                     dir_path_out=user_parameters['dir path out'],
-                    dir_path_in_props=user_parameters['dir path in prop'])
+                    csv_path=user_parameters['csv path in'])
 
         # Save parameters
         if user_parameters['save']:
@@ -92,9 +91,9 @@ def main(parent=None):
         dir_path_in = filedialog.askdirectory()
         dir_path_in_var.set(dir_path_in)
 
-    def browse_dir_prop():
-        dir_path_prop = filedialog.askdirectory()
-        dir_path_prop_var.set(dir_path_prop)
+    def browse_file_csv_in():
+        csv_path_in = filedialog.askdirectory()
+        csv_path_in_var.set(csv_path_in)
 
     def browse_dir_out():
         dir_path_out = filedialog.askdirectory()
@@ -139,15 +138,15 @@ def main(parent=None):
             output_dir = ""
         return output_dir
 
-    # Function to generate the default input properties directory path
-    def generate_default_input_props_dir(input_dir):
-        properties_folder_name = get_setting('default_properties_folder_name')
+    # Function to generate the default input csv measurement sheet file
+    # path
+    def generate_default_input_csv_file(input_dir):
         if input_dir != "":
-            root, _ = os.path.split(input_dir)
-            input_props_dir = os.path.join(root, properties_folder_name)
+            csv_name = "measurement sheet model SSPFM ZI DFRT.csv"
+            input_csv_file = os.path.join(input_dir, csv_name)
         else:
-            input_props_dir = ""
-        return input_props_dir
+            input_csv_file = ""
+        return input_csv_file
 
     # Function to update the default output dir path when input dir changes
     def update_default_output_dir():
@@ -155,41 +154,46 @@ def main(parent=None):
         def_output_dir = generate_default_output_dir(input_dir)
         dir_path_out_var.set(def_output_dir)
 
-    # Function to update the default input properties dir path when input
-    # dir changes
-    def update_default_input_props_dir():
+    # Function to update the default input csv file path when input directory
+    # changes
+    def update_default_input_csv_file():
         input_dir = dir_path_in_var.get()
-        def_input_props_dir = generate_default_input_props_dir(input_dir)
-        dir_path_prop_var.set(def_input_props_dir)
+        def_input_csv_file = generate_default_input_csv_file(input_dir)
+        csv_path_in_var.set(def_input_csv_file)
 
     # Bind the function (output dir) to the input directory widget
     dir_path_in_var.trace_add("write",
                               lambda *args: update_default_output_dir())
 
-    # Bind the function (input prop dir) to the input directory widget
+    # Bind the function (input csv file) to the input directory widget
     dir_path_in_var.trace_add("write",
-                              lambda *args: update_default_input_props_dir())
+                              lambda *args: update_default_input_csv_file())
 
-    # Directory properties (in)
+    # CSV file (in)
     default_input_dir = dir_path_in_var.get()
-    default_input_props_dir = generate_default_output_dir(default_input_dir)
-    label_prop = ttk.Label(app, text="Directory properties (in) (*):")
-    row = grid_item(label_prop, row, column=0, sticky="e", increment=False)
-    dir_path_prop_var = tk.StringVar()
-    dir_path_prop_var.set(default_input_props_dir)
-    entry_prop = ttk.Entry(app, textvariable=dir_path_prop_var)
-    row = grid_item(entry_prop, row, column=1, sticky="ew", increment=False)
-    strg = "- Name: dir_path_in_prop\n" \
-           "- Summary: Properties files directory " \
-           "(optional, default: properties)\n" \
-           "- Description: This parameter specifies the directory containing " \
-           "the properties text files generated after the 2nd step of the " \
-           "analysis.\n" \
-           "- Value: It should be a string representing a directory path."
-    entry_prop.bind("<Enter>",
-                    lambda event, mess=strg: show_tooltip(entry_prop, mess))
-    browse_button_prop = ttk.Button(app, text="Browse", command=browse_dir_prop)
-    row = grid_item(browse_button_prop, row, column=2)
+    default_input_csv_file = generate_default_input_csv_file(default_input_dir)
+    label_csv = ttk.Label(app,
+                          text="file path csv measurements (in) (*):")
+    row = grid_item(label_csv, row, column=0, sticky="e", increment=False)
+    csv_path_in_var = tk.StringVar()
+    csv_path_in_var.set(default_input_csv_file)
+    entry_csv = ttk.Entry(app, textvariable=csv_path_in_var)
+    row = grid_item(entry_csv, row, column=1, sticky="ew", increment=False)
+    strg = "- Name: csv_file_path\n" \
+           "- Summary: File path of the CSV measurement file " \
+           "(measurement sheet model).\n" \
+           "- Description: This parameter specifies the file path to " \
+           "the CSV file containing measurement parameters. It is used to " \
+           "indicate the location of the CSV file, which serves as the " \
+           "source of measurement data for processing.\n" \
+           "- Value: A string representing the file path.\n" \
+           "\t- If left empty, the system will automatically " \
+           "select the CSV file path."
+    entry_csv.bind("<Enter>",
+                   lambda event, mess=strg: show_tooltip(entry_csv, mess))
+    browse_button_csv = ttk.Button(app, text="Browse",
+                                   command=browse_file_csv_in)
+    row = grid_item(browse_button_csv, row, column=2)
 
     # Directory (out)
     default_input_dir = dir_path_in_var.get()
@@ -210,13 +214,48 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(entry_out, mess))
     browse_button_out = ttk.Button(app, text="Select", command=browse_dir_out)
     row = grid_item(browse_button_out, row, column=2)
+
+    # Extension
+    label_ext = ttk.Label(app, text="Extension:")
+    row = grid_item(label_ext, row, column=0, sticky="e", increment=False)
+    extension_var = ttk.Combobox(app, values=["spm", "txt", "csv", "xlsx"])
+    extension_var.set(user_parameters['extension'])
+    row = grid_item(extension_var, row, column=1, sticky="ew")
+    strg = "- Name: extension\n" \
+           "- Summary: Extension of curve files in input.\n" \
+           "- Description: This parameter determines the extension type of " \
+           "curve files.\n" \
+           "- Value: A string with four possible values:\n" \
+           "\t--> 'spm': for 'spm' curve file extension\n" \
+           "\t--> 'txt': for 'txt' curve file extension\n" \
+           "\t--> 'csv': for 'csv' curve file extension\n" \
+           "\t--> 'xlsx': for 'xlsx' curve file extension"
+    extension_var.bind(
+        "<Enter>", lambda event, mess=strg: show_tooltip(extension_var, mess))
+
+    # Mode
+    label_mode = ttk.Label(app, text="Mode:")
+    row = grid_item(label_mode, row, column=0, sticky="e", increment=False)
+    mode_var = ttk.Combobox(app, values=["classic", "dfrt"])
+    mode_var.set(user_parameters['mode'])
+    row = grid_item(mode_var, row, column=1, sticky="ew")
+    strg = "- Name: mode\n" \
+           "- Summary: Treatment used for segment data analysis " \
+           "(extraction of PFM measurements).\n" \
+           "- Description: This parameter determines the treatment method " \
+           "used for segment data analysis, specifically for the extraction " \
+           "of PFM measurements.\n" \
+           "- Value: A string with two possible values: " \
+           "'classic' (sweep or single_freq) or 'dfrt'"
+    mode_var.bind("<Enter>",
+                  lambda event, mess=strg: show_tooltip(mode_var, mess))
     row = add_grid_separator(app, row=row)
 
     # Section title: Method
     label_meth = ttk.Label(app, text="Method", font=("Helvetica", 14))
     row = grid_item(label_meth, row, column=0, sticky="ew", columnspan=3)
 
-    # Mode
+    # Method
     label_method = ttk.Label(app, text="Method:")
     row = grid_item(label_method, row, column=0, sticky="e", increment=False)
     method_var = ttk.Combobox(app, values=["kmeans", "gmm"])
@@ -232,6 +271,7 @@ def main(parent=None):
            "\t--> 'gmm': Gaussian Mixture Model clustering"
     method_var.bind("<Enter>",
                     lambda event, mess=strg: show_tooltip(method_var, mess))
+    row = add_grid_separator(app, row=row)
 
     # Section title: Measure
     label_meas = ttk.Label(app, text="Measure", font=("Helvetica", 14))
@@ -248,7 +288,7 @@ def main(parent=None):
            "- Summary: List of Measurement Name for Curves\n" \
            "- Description: This parameter contains a list of measurement " \
            "name in order to create the curve to be analyzed using a machine " \
-           "learning algorithm of clustering (K-Means).\n" \
+           "learning algorithm of clustering.\n" \
            "If several name are filled, the curve will be normalized and " \
            "concatenated.\n" \
            "Choose from : piezoresponse, amplitude, phase, res freq " \
@@ -265,80 +305,30 @@ def main(parent=None):
     row = grid_item(label_clust, row, column=0, sticky="ew", columnspan=3)
 
     # Function to update the label text when the slider is moved
-    def update_nb_clusters_off(_):
-        clust_off_label.config(text=str(clust_off_var.get()))
+    def update_nb_clusters(_):
+        clust_label.config(text=str(clust_var.get()))
 
-    # Function to update the label text when the slider is moved
-    def update_nb_clusters_on(_):
-        clust_on_label.config(text=str(clust_on_var.get()))
-
-    # Function to update the label text when the slider is moved
-    def update_nb_clusters_coupled(_):
-        clust_coupled_label.config(text=str(clust_coupled_var.get()))
-
-    # Nb clusters (off)
-    label_off = ttk.Label(app, text="Nb clusters (off):")
-    row = grid_item(label_off, row, column=0, sticky="e", increment=False)
-    clust_off_var = tk.IntVar(value=user_parameters['nb clusters off'])
-    scale_off = ttk.Scale(app, from_=1, to=30, variable=clust_off_var,
-                          orient="horizontal", length=30,
-                          command=update_nb_clusters_off)
-    row = grid_item(scale_off, row, column=1, sticky="ew", increment=False)
-    strg = "- Name: nb_clusters_off\n" \
-           "- Summary: Number of Clusters for Off Field Curve\n" \
+    # Nb clusters
+    label_cluster_nb = ttk.Label(app, text="Nb clusters:")
+    row = grid_item(label_cluster_nb, row, column=0, sticky="e",
+                    increment=False)
+    clust_var = tk.IntVar(value=user_parameters['nb clusters'])
+    scale_clust = ttk.Scale(app, from_=1, to=30, variable=clust_var,
+                            orient="horizontal", length=30,
+                            command=update_nb_clusters)
+    row = grid_item(scale_clust, row, column=1, sticky="ew", increment=False)
+    strg = "- Name: nb_clusters\n" \
+           "- Summary: Number of Clusters for Curve\n" \
            "- Description: This parameter determines the number of " \
-           "clusters for the off-field curve. " \
-           "Machine learning algorythm of clustering (K-Means)\n" \
+           "clusters for the curves. " \
+           "Machine learning algorythm of clustering\n" \
            "- Value: Integer representing the number of initial " \
-           "clusters for the off-field curve.\n" \
-           "- Active if: Used in the analysis of off-field curve."
-    scale_off.bind("<Enter>",
-                   lambda event, mess=strg: show_tooltip(scale_off, mess))
-    clust_off_label = ttk.Label(app, text=str(clust_off_var.get()))
-    row = grid_item(clust_off_label, row, column=2, sticky="w")
-
-    # Nb clusters (on)
-    label_on = ttk.Label(app, text="Nb clusters (on):")
-    row = grid_item(label_on, row, column=0, sticky="e", increment=False)
-    clust_on_var = tk.IntVar(value=user_parameters['nb clusters on'])
-    scale_on = ttk.Scale(app, from_=1, to=30, variable=clust_on_var,
-                         orient="horizontal", length=30,
-                         command=update_nb_clusters_on)
-    row = grid_item(scale_on, row, column=1, sticky="ew", increment=False)
-    strg = "- Name: nb_clusters_on\n" \
-           "- Summary: Number of Clusters for On Field Curve\n" \
-           "- Description: This parameter determines the number of " \
-           "clusters for the on-field curve. " \
-           "Machine learning algorythm of clustering (K-Means)\n" \
-           "- Value: Integer representing the number of initial " \
-           "clusters for the on-field curve.\n" \
-           "- Active if: Used in the analysis of on-field curve."
-    scale_on.bind("<Enter>",
-                  lambda event, mess=strg: show_tooltip(scale_on, mess))
-    clust_on_label = ttk.Label(app, text=str(clust_on_var.get()))
-    row = grid_item(clust_on_label, row, column=2, sticky="w")
-
-    # Nb clusters (coupled)
-    label_coupled = ttk.Label(app, text="Nb clusters (coupled):")
-    row = grid_item(label_coupled, row, column=0, sticky="e", increment=False)
-    clust_coupled_var = tk.IntVar(value=user_parameters['nb clusters coupled'])
-    scale_coupled = ttk.Scale(app, from_=1, to=30, variable=clust_coupled_var,
-                              orient="horizontal", length=30,
-                              command=update_nb_clusters_coupled)
-    row = grid_item(scale_coupled, row, column=1, sticky="ew", increment=False)
-    strg = "- Name: nb_clusters_coupled\n" \
-           "- Summary: Number of Clusters for Differential Component\n" \
-           "- Description: This parameter determines the number of " \
-           "clusters for the differential component. " \
-           "Machine learning algorythm of clustering (K-Means)\n" \
-           "- Value: Integer representing the number of initial " \
-           "clusters for the differential component.\n" \
-           "- Active if: Used in the analysis of differential component only " \
-           "for piezoresponse curve."
-    scale_coupled.bind(
-        "<Enter>", lambda event, mess=strg: show_tooltip(scale_coupled, mess))
-    clust_coupled_label = ttk.Label(app, text=str(clust_coupled_var.get()))
-    row = grid_item(clust_coupled_label, row, column=2, sticky="w")
+           "clusters for the curves.\n" \
+           "- Active if: Used in the analysis of curves."
+    scale_clust.bind("<Enter>",
+                     lambda event, mess=strg: show_tooltip(scale_clust, mess))
+    clust_label = ttk.Label(app, text=str(clust_var.get()))
+    row = grid_item(clust_label, row, column=2, sticky="w")
     row = add_grid_separator(app, row=row)
 
     # Section title: Save and plot
