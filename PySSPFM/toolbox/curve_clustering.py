@@ -1,80 +1,84 @@
 """
 --> Executable Script
 Module used to perform a clustering (K-Means or Gaussian Mixture Model) for all
-best curve (with a chosen measure, for example piezoresponse), for each pixel
+best curve (with a chosen measure, for example deflection), for each pixel
 (one curve for each mode) of a sspfm measurement.
 Curve can be a composition of several measure, which will be normalized
-between 0 and 1 and concatenated (for example amplitude and phase)
+between 0 and 1 and concatenated (for example height and deflection)
     - Generate a sspfm maps for each mode resulting of clustering analysis
     - Generate a graph of all curve with their cluster for each mode
     resulting of clustering analysis
 """
 
 import os
-import time
 import tkinter.filedialog as tkf
 from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
-import matplotlib.colors as mcolors
-from sklearn.cluster import KMeans
-from sklearn.mixture import GaussianMixture
-from sklearn.metrics import pairwise_distances
 
 from PySSPFM.settings import get_setting
+from PySSPFM.utils.core.clustering import curve_clustering, cbar_map
 from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots, plot_graph
-from PySSPFM.utils.nanoloop_to_hyst.file import extract_properties
+from PySSPFM.utils.core.path_management import \
+    get_filenames_with_conditions, sort_filenames
 from PySSPFM.utils.map.main import main_mapping
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.raw_extraction import \
+    data_identification, extr_data_table, csv_meas_sheet_extract, NanoscopeError
 
 
-def gen_curve_data(data):
+def data_extraction(file_path_in, extension="spm", mode_dfrt=False):
     """
-    Extract 2D curves data from a 3-row data array.
+    Extracts data from different types of files.
 
     Parameters
     ----------
-    data : numpy.ndarray
-        2+nb_y_meas-row data array where the first row contains indices,
-        the second row contains voltage values, and the other
-        row contains y_axis values.
+    file_path_in : str
+        Path to the input file.
+    extension : str, optional
+        File extension. Default is "spm".
+    mode_dfrt: bool, optional
+        If mode_dfrt is True, a dfrt measure is performed and vice versa
 
     Returns
     -------
-    curves_x : list of list
-        Polarization voltage data for each curve.
-    curves_y : list of list
-        y_axis data for each curve.
+    dict_meas : dict
+        Dictionary containing measurement data.
     """
+    if "spm" in extension:
 
-    data_x, data_y = [], []
+        try:
+            from PySSPFM.utils.datacube_reader import DataExtraction  # noqa
+        except (NotImplementedError, NameError) as error:
+            message = "To open DATACUBE spm file (Bruker), nanoscope module " \
+                      "is required and NanoScope Analysis software (Bruker) " \
+                      "should be installed on the computer"
+            raise NanoscopeError(message) from error
 
-    # Segmentation
-    index_changes = np.where(data[0][:-1] != data[0][1:])[0] + 1
-    for cont, teab_meas in enumerate(data[2]):
-        data_x.append([])
-        data_y.append([])
-        data_x[cont] = np.split(data[1], index_changes)
-        data_y[cont] = np.split(teab_meas, index_changes)
+        # DataExtraction object is used to extract info from .spm file
+        data_extract = DataExtraction(file_path_in)
 
-    # Normalize data_y if len > 2 (for multi data y)
-    if len(data_y) >= 2:
-        for cont, tab_data_y in enumerate(data_y):
-            min_val = np.min(tab_data_y)
-            max_val = np.max(tab_data_y)
-            data_y[cont] = (tab_data_y - min_val) / (max_val - min_val)
+        # .spm file basic info
+        data_extract.data_extraction()
 
-    # Concatenation for multi data y
-    curves_x = np.concatenate(data_x, axis=1)
-    curves_y = np.concatenate(data_y, axis=1)
+        # .spm file info: raw data
+        data_extract.data_extraction(raw_data=True)
+        raw_dict = data_extract.raw_dict
 
-    return curves_x, curves_y
+        # Data identification
+        dict_meas = data_identification(
+            raw_dict, type_file=extension, mode_dfrt=mode_dfrt)
+
+    else:
+        dict_meas, _ = extr_data_table(file_path_in, mode_dfrt=mode_dfrt)
+
+    return dict_meas
 
 
-def extract_data(dir_path_in, name_files, modes, tab_label):
+def extract_data(dir_path_in, tab_label, mode="classic", extension="spm"):
     """
     Extract data from files based on modes and cluster counts.
 
@@ -82,12 +86,14 @@ def extract_data(dir_path_in, name_files, modes, tab_label):
     ----------
     dir_path_in : str
         Directory path where the data files are located.
-    name_files : list of str
-        List of file names to process.
-    modes : list of str
-        List of modes to consider.
     tab_label: list of str
         List of measurement name for the curve
+    extension: str, optional
+        Extension of files.
+        Four possible values: 'spm' or 'txt' or 'csv' or 'xlsx'.
+    mode: str
+        Mode of measurement used (extraction of measurements).
+        Two possible values: 'classic' (sweep or single frequency) or 'dfrt'.
 
     Returns
     -------
@@ -97,272 +103,46 @@ def extract_data(dir_path_in, name_files, modes, tab_label):
         Dictionary containing y-axis data for each mode.
     """
 
-    curves_x, curves_y = {}, {}
+    filenames = get_filenames_with_conditions(dir_path_in, prefix=None,
+                                              extension=extension)
+    sorted_filenames, _, _ = sort_filenames(filenames)
 
-    for name_file in name_files:
-        mode_cluster = ""
-        for mode in modes:
-            if mode in name_file:
-                mode_cluster = mode
-                break
-        if mode_cluster:
-            if mode_cluster != "coupled":
-                path = os.path.join(dir_path_in, name_file)
-                with open(path, 'r', encoding="latin-1") as file:
-                    header = file.readlines()[1]
-                    header = header.replace('\n', '').replace('# ', '')
-                    tab_header = header.split('\t\t')
-                data = np.loadtxt(path, skiprows=2).T
-                data_dict = {}
-                for key, data_row in zip(tab_header, data):
-                    data_dict[key] = data_row
-                index = data_dict['index pix']
-                data_x = data_dict['voltage']
-                data_y = [data_dict[label] for label in tab_label]
-                curves_x[mode_cluster], curves_y[mode_cluster] = \
-                    gen_curve_data([index, data_x, data_y])
+    data_lab_x = {}
+    data_lab_y = {}
+    for label in tab_label:
+        data_lab_x[label] = []
+        data_lab_y[label] = []
 
-    return curves_x, curves_y
+    for filename in sorted_filenames:
+        file_path_in = os.path.join(dir_path_in, filename)
+        dict_meas = data_extraction(file_path_in, extension=extension,
+                                    mode_dfrt=bool(mode.lower() == 'dfrt'))
+        for label in tab_label:
+            data_lab_x[label].append(dict_meas["times"])
+            data_lab_y[label].append(dict_meas[label])
 
-
-def gen_coupled_data(curves_x, curves_y, offsets=None):
-    """
-    Generate coupled data by subtracting 'off' from 'on' field measurements:
-    only for piezoresponse curve
-
-    Parameters
-    ----------
-    curves_x : dict
-        Dictionary containing 'on' and 'off' field measurements for x-axis.
-    curves_y : dict
-        Dictionary containing 'on' and 'off' field measurements for y-axis.
-    offsets: list of float, optional
-        List with fit determined vertical offset for off field measurements
-        (default: None)
-
-    Returns
-    -------
-    curves_x : dict
-        Updated dictionary containing 'coupled' measurements for x-axis.
-    curves_y : dict
-        Updated dictionary containing 'coupled' measurements for y-axis.
-    """
-
-    if "on" in curves_x.keys() and "off" in curves_x.keys():
-
-        curves_x["coupled"] = curves_x["on"]
-        curves_y["coupled"] = [
-            [on - off for on, off in zip(curve_y_on, curve_y_off)]
-            for curve_y_on, curve_y_off in zip(curves_y["on"], curves_y["off"])]
-        if offsets is not None:
-            if len(offsets) == len(curves_y["coupled"]):
-                for i, curve_y_coupled in enumerate(curves_y["coupled"]):
-                    curves_y["coupled"][i] = [elem+offsets[i]
-                                              for elem in curve_y_coupled]
+    # Normalize curve_y if len > 2 (for multi data y)
+    if len(data_lab_y) >= 2:
+        curve_x = list(data_lab_x.values())
+        curve_y = list(data_lab_y.values())
+        for cont, (tab_data_x, tab_data_y) in enumerate(zip(curve_x, curve_y)):
+            min_val = np.min(tab_data_y)
+            max_val = np.max(tab_data_y)
+            curve_x[cont] = tab_data_x
+            curve_y[cont] = (tab_data_y - min_val) / (max_val - min_val)
+        curve_x = np.concatenate(curve_x, axis=1)
+        curve_y = np.concatenate(curve_y, axis=1)
     else:
-        print("For coupled analysis, both 'on' and 'off' field "
-              "measurements should be available.")
+        curve_x = data_lab_x[tab_label[0]]
+        curve_y = data_lab_y[tab_label[0]]
 
-    return curves_x, curves_y
-
-
-def cbar_map(colors, numb_cluster, method_str):
-    """
-    Generate a colormap and colorbar labels for clustering visualization.
-
-    Parameters
-    ----------
-    colors : list of tuple
-        List of RGB color tuples.
-    numb_cluster : int
-        Number of clusters.
-    method_str : str
-        String representation of the clustering method.
-
-    Returns
-    -------
-    cmap : matplotlib.colors.ListedColormap
-        Colormap.
-    cbar_lab : dict
-        Dictionary of colorbar labels.
-    """
-
-    # Create a ListedColormap using the provided colors
-    cmap = mcolors.ListedColormap(colors)
-
-    # Generate colorbar labels
-    lab_clust = list(range(numb_cluster))
-    x1 = min(lab_clust)
-    x2 = max(lab_clust)
-    y1 = x1 + (numb_cluster - 1) / (numb_cluster * 2)
-    y2 = x2 - (numb_cluster - 1) / (numb_cluster * 2)
-    slope = (y2 - y1) / (x2 - x1)
-    offset = y1 - x1 * slope
-    coordinate = [slope * elem + offset for elem in lab_clust]
-    cbar_lab = {f"Clustering ({method_str})": [[chr(65+i) for i in lab_clust],
-                                               coordinate]}
-
-    return cmap, cbar_lab
-
-
-def cluster_kmeans(curve_data, num_clusters=3, verbose=False):
-    """
-    Perform K-Means clustering on curve data.
-
-    Parameters
-    ----------
-    curve_data : numpy.ndarray
-        Curve data for clustering.
-    num_clusters : int, optional
-        Number of clusters to create. Default is 3.
-    verbose : bool, optional
-        Activation key for verbosity.
-
-    Returns
-    -------
-    cluster_labels : list
-        Cluster indices for each data point
-    cluster_info : list
-        Information about each cluster.
-    inertia : float
-        Inertia (within-cluster sum of squares).
-    cluster_centers: numpy.ndarray
-        Coordinates of cluster centers.
-    """
-
-    # Apply K-Means clustering
-    start_time = time.time()
-    kmeans = KMeans(
-        n_clusters=num_clusters, random_state=0, n_init=20).fit(curve_data)
-    execution_time = time.time() - start_time
-
-    if verbose:
-        print("\nExecution time:", execution_time, "seconds")
-
-    cluster_labels = kmeans.labels_
-
-    # Calculate intra-cluster inertia (within-cluster sum of squares)
-    inertia = kmeans.inertia_
-
-    # Count the number of points in each cluster
-    cluster_counts = np.bincount(cluster_labels)
-
-    # Calculate cluster centers
-    cluster_centers = kmeans.cluster_centers_
-
-    # Calculate pairwise distances between cluster centers
-    distances = pairwise_distances(cluster_centers, metric='euclidean')
-
-    # Reference cluster (position 0) = cluster with maximum of points
-    arg_ref = np.argmax(cluster_counts)
-    # Other cluster sorted with distance of the reference cluster
-    sorted_indices = [arg_ref] + list(np.argsort(distances[arg_ref]))[1:]
-
-    # Change of cluster_labels with sorted indexs
-    cluster_labels = [sorted_indices.index(i) for i in cluster_labels]
-
-    # All cluster info
-    cluster_info = []
-    for i in range(num_clusters):
-        target = np.sort(distances[i])[1]
-        near_clust_index = list(distances[i]).index(target)
-        near_clust_name = chr(65 + sorted_indices.index(near_clust_index))
-        # [0]: distance ref, [1]: distance near, [2]: name near,
-        # [3]: nb of points, [4]: clust name
-        tab = [distances[arg_ref][i],
-               distances[i][near_clust_index],
-               near_clust_name,
-               cluster_counts[i],
-               chr(65 + sorted_indices.index(i))]
-        cluster_info.append(tab)
-    # sort cluster_info with distance of the reference cluster
-    sort_tab = np.argsort([line[0] for line in cluster_info])
-    cluster_info = [cluster_info[arg] for arg in sort_tab]
-
-    return cluster_labels, cluster_info, inertia, cluster_centers
-
-
-def cluster_gmm(curve_data, num_clusters=3, verbose=False):
-    """
-    Perform Gaussian Mixture Model clustering on curve data.
-
-    Parameters
-    ----------
-    curve_data : numpy.ndarray
-        Curve data for clustering.
-    num_clusters : int, optional
-        Number of clusters to create. Default is 3.
-    verbose : bool, optional
-        Activation key for verbosity.
-
-    Returns
-    -------
-    cluster_labels : list
-        Cluster indices for each data point
-    cluster_info : list
-        Information about each cluster.
-    bic : float
-        Bayesian Information Criterion.
-    cluster_means: numpy.ndarray
-        Coordinates of cluster mean.
-    """
-
-    # Apply Gaussian Mixture Model clustering
-    start_time = time.time()
-    gmm = GaussianMixture(
-        n_components=num_clusters, random_state=0).fit(curve_data)
-    execution_time = time.time() - start_time
-
-    if verbose:
-        print("\nExecution time:", execution_time, "seconds")
-
-    cluster_labels = gmm.predict(curve_data)
-
-    # Calculate Bayesian Information Criterion
-    bic = gmm.bic(curve_data)
-
-    # Count the number of points in each cluster
-    cluster_counts = np.bincount(cluster_labels)
-
-    # Calculate cluster means
-    cluster_means = gmm.means_
-
-    # Calculate pairwise distances between cluster means
-    distances = pairwise_distances(cluster_means, metric='euclidean')
-
-    # Reference cluster (position 0) = cluster with maximum of points
-    arg_ref = np.argmax(cluster_counts)
-    # Other cluster sorted with distance of the reference cluster
-    sorted_indices = [arg_ref] + list(np.argsort(distances[arg_ref]))[1:]
-
-    # Change of cluster_labels with sorted indices
-    cluster_labels = [sorted_indices.index(i) for i in cluster_labels]
-
-    # All cluster info
-    cluster_info = []
-    for i in range(num_clusters):
-        target = np.sort(distances[i])[1]
-        near_clust_index = list(distances[i]).index(target)
-        near_clust_name = chr(65 + sorted_indices.index(near_clust_index))
-        # [0]: distance ref, [1]: distance near, [2]: name near,
-        # [3]: nb of points, [4]: clust name
-        tab = [distances[arg_ref][i],
-               distances[i][near_clust_index],
-               near_clust_name,
-               cluster_counts[i],
-               chr(65 + sorted_indices.index(i))]
-        cluster_info.append(tab)
-    # sort cluster_info with distance of the reference cluster
-    sort_tab = np.argsort([line[0] for line in cluster_info])
-    cluster_info = [cluster_info[arg] for arg in sort_tab]
-
-    return cluster_labels, cluster_info, bic, cluster_means
+    return curve_x, curve_y
 
 
 def main_curve_clustering(
         user_pars, dir_path_in, verbose=False, show_plots=True,
         save_plots=False, dir_path_out=None, dim_pix=None, dim_mic=None,
-        dir_path_in_props=None):
+        csv_path=None):
     """
     Perform curve clustering analysis.
 
@@ -371,7 +151,7 @@ def main_curve_clustering(
     user_pars : dict
         User parameters.
     dir_path_in : str
-        Path of best nanoloops measurements txt directory (in).
+        Path of curve measurement directory (in).
     verbose : bool, optional
         Activation key for verbosity.
     show_plots : bool, optional
@@ -384,8 +164,8 @@ def main_curve_clustering(
         Dictionary of pixel dimensions.
     dim_mic : dict, optional
         Dictionary of micron dimensions.
-    dir_path_in_props : str, optional
-        Directory path for input properties.
+    csv_path : str, optional
+        Path of csv params measurement directory (in).
 
     Returns
     -------
@@ -398,181 +178,146 @@ def main_curve_clustering(
     avg_curve : dict
         List of average curve for each cluster in each mode.
     """
-    name_files = os.listdir(dir_path_in)
     method = user_pars["method"]
     assert method in ["kmeans", "gmm"], \
         "Invalid clustering method. Method must be either 'kmeans' or 'gmm'."
-
-    modes = [key.split()[-1] for key, value in user_pars.items() if
-             'clusters' in key and value is not None]
-    if user_pars['label meas'] != ['piezoresponse']:
-        modes = [lab for lab in modes if lab != 'coupled']
-    lab_tab = [['on', 'off', 'coupled'], ['y', 'w', 'r'],
-               ['On Field', 'Off Field', 'Coupled']]
-    cluster_labels, cluster_info, inertia, centers, avg_curve = \
-        {}, {}, {}, {}, {}
-    offsets = []
     make_plots = bool(show_plots or save_plots)
 
     # Extract curve data
-    curves_x, curves_y = extract_data(dir_path_in, name_files, modes,
-                                      user_pars['label meas'])
+    curves_x, curves_y = extract_data(dir_path_in, user_pars['label meas'],
+                                      mode=user_pars['mode'],
+                                      extension=user_pars['extension'])
 
     # Extract extra analysis info (scan dim + vertical offset (off field))
     if dir_path_in is not None:
-        if dir_path_in_props is None:
-            root = os.path.split(dir_path_in)[0]
-            properties_folder_name = \
-                get_setting('default_properties_folder_name')
-            dir_path_in_props = os.path.join(root, properties_folder_name)
-        properties, dim_pix, dim_mic = extract_properties(dir_path_in_props)
-        elec_offset = get_setting('electrostatic_offset')
-        offsets = properties['off']['fit pars: offset'] \
-            if elec_offset else None
+        if csv_path is None:
+            csv_path = dir_path_in
 
-    # If "coupled" mode is present, calculate coupled curve
-    # (only for piezoresponse)
-    if "coupled" in modes:
-        curves_x, curves_y = gen_coupled_data(curves_x, curves_y,
-                                              offsets=offsets)
+        csv_meas, _ = csv_meas_sheet_extract(csv_path, verbose=verbose)
+        dim_pix = {'x': csv_meas['Grid x [pix]'], 'y': csv_meas['Grid y [pix]']}
+        dim_mic = {'x': csv_meas['Grid x [um]'], 'y': csv_meas['Grid y [um]']}
 
-    # Perform clustering for each mode
-    for mode in modes:
-        try:
-            numb_cluster = user_pars[f'nb clusters {mode}']
-            if isinstance(curves_y[mode], list):
-                curves_y[mode] = np.array(curves_y[mode])
-            # K-Means
-            if method == 'kmeans':
-                res = cluster_kmeans(
-                    curves_y[mode], numb_cluster, verbose=verbose)
-            # Gaussian Mixture Model (GMM)
-            else:
-                res = cluster_gmm(curves_y[mode], numb_cluster, verbose=verbose)
-            cluster_labels[mode], cluster_info[mode], inertia[mode], \
-                centers[mode] = res
+    numb_cluster = user_pars['nb clusters']
+    if isinstance(curves_y, list):
+        curves_y = np.array(curves_y)
 
-            # Calculate Average curve by Cluster
-            avg_curve[mode] = []
-            for cluster_idx in range(numb_cluster):
-                cluster_mask = np.array(cluster_labels[mode]) == cluster_idx
-                avg_curve[mode].append(
-                    np.mean(np.array(curves_y[mode])[cluster_mask], axis=0))
+    cluster_labels, cluster_info, inertia, centers = curve_clustering(
+        curves_y, num_clusters=numb_cluster, method=method, verbose=verbose)
 
-            # Clustering results in str
-            labels = []
-            for i in range(numb_cluster):
-                labels.append(f'Cluster {cluster_info[mode][i][4]}, '
-                              f'{cluster_info[mode][i][3]} points'
-                              ', near dist '
-                              f'({cluster_info[mode][i][2]}) : '
-                              f'{cluster_info[mode][i][1]:.2e}'
-                              ', ref (A) dist : '
-                              f'{cluster_info[mode][i][0]:.2e}')
+    # Calculate Average curve by Cluster
+    avg_curve = []
+    for cluster_idx in range(numb_cluster):
+        cluster_mask = np.array(cluster_labels) == cluster_idx
+        avg_curve.append(
+            np.mean(np.array(curves_y)[cluster_mask], axis=0))
 
-            if verbose:
-                print(f'{mode} :')
-                _ = [print(label) for label in labels]
+    # Clustering results in str
+    labels = []
+    for i in range(numb_cluster):
+        labels.append(f'Cluster {cluster_info[i][4]}, '
+                      f'{cluster_info[i][3]} points'
+                      ', near dist '
+                      f'({cluster_info[i][2]}) : '
+                      f'{cluster_info[i][1]:.2e}'
+                      ', ref (A) dist : '
+                      f'{cluster_info[i][0]:.2e}')
 
-            # Generate plots if specified
-            if make_plots:
+    if verbose:
+        _ = [print(label) for label in labels]
 
-                # Color of figures
-                color_curve_clustering = get_setting("color_curve_clustering")
-                cbar = plt.get_cmap(color_curve_clustering)
-                colors = [cbar((numb_cluster - i) / numb_cluster)
-                          for i in range(numb_cluster)]
-                method_str = "K-Means" if method == "kmeans" else "GMM"
-                cmap, cbar_lab = cbar_map(colors, numb_cluster, method_str)
+    # Generate plots if specified
+    if make_plots:
 
-                # Plot 1 : All Curve by Cluster
-                # Legend
-                legend_handles = []
-                for i in range(numb_cluster):
-                    legend_handles.append(
-                        Patch(color=colors[i], label=labels[i]))
+        # Color of figures
+        color_curve_clustering = get_setting("color_curve_clustering")
+        cbar = plt.get_cmap(color_curve_clustering)
+        colors = [cbar((numb_cluster - i) / numb_cluster)
+                  for i in range(numb_cluster)]
+        method_str = "K-Means" if method == "kmeans" else "GMM"
+        cmap, cbar_lab = cbar_map(colors, numb_cluster, method_str)
 
-                figs = []
+        # Plot 1 : All Curve by Cluster
+        # Legend
+        legend_handles = []
+        for i in range(numb_cluster):
+            legend_handles.append(
+                Patch(color=colors[i], label=labels[i]))
 
-                # Create graph
-                figsize = get_setting("figsize")
-                fig1, ax = plt.subplots(figsize=figsize)
-                fig1.sfn = f"clusters_centroids_{mode}"
-                plot_dict_1 = {
-                    'title': f'Clusters with Centroids ({mode})',
-                    'x lab': 'Feature 1', 'y lab': 'Feature 2',
-                    'fs': 15, 'edgew': 3, 'tickl': 5, 'gridw': 1}
-                plot_graph(ax, [], [], plot_dict=plot_dict_1)
+        figs = []
 
-                # Plot data points
-                for index in range(numb_cluster):
-                    tab_lab = np.array(cluster_labels[mode])
-                    cluster_data = curves_y[mode][tab_lab == index]
-                    cluster_data = np.array(cluster_data)
+        # Create graph
+        figsize = get_setting("figsize")
+        fig1, ax = plt.subplots(figsize=figsize)
+        fig1.sfn = "clusters_centroids"
+        plot_dict_1 = {
+            'title': 'Clusters with Centroids',
+            'x lab': 'Feature 1', 'y lab': 'Feature 2',
+            'fs': 15, 'edgew': 3, 'tickl': 5, 'gridw': 1}
+        plot_graph(ax, [], [], plot_dict=plot_dict_1)
 
-                    # Plot data points for the current cluster
-                    plt.scatter(cluster_data[:, 0], cluster_data[:, 1],
-                                c=[colors[index]],
-                                label=f'Cluster {cluster_info[mode][index][4]}')
-                # Plot centroids
-                plt.scatter(centers[mode][:, 0], centers[mode][:, 1],
-                            marker='x', color='black', label='Centroids')
-                ax.legend()
-                figs += [fig1]
+        # Plot data points
+        for index in range(numb_cluster):
+            tab_lab = np.array(cluster_labels)
+            cluster_data = curves_y[tab_lab == index]
+            cluster_data = np.array(cluster_data)
 
-                # Create graph
-                figsize = get_setting("figsize")
-                fig2, ax = plt.subplots(figsize=figsize)
-                fig2.sfn = f"clustering_best_loops_{mode}"
-                plot_dict_1 = {
-                    'title': f'Clustering ({method_str}): Best Loops ({mode})',
-                    'x lab': 'Voltage', 'y lab': 'Y Axis',
-                    'fs': 15, 'edgew': 3, 'tickl': 5, 'gridw': 1}
-                plot_graph(ax, [], [], plot_dict=plot_dict_1)
-                # Plot each curve
-                for i, (elem_x, elem_y) in enumerate(zip(
-                        curves_x[mode], curves_y[mode])):
-                    color = colors[cluster_labels[mode][i]]
-                    plt.plot(elem_x, elem_y, color=color)
-                ax.legend(handles=legend_handles)
-                figs += [fig2]
+            # Plot data points for the current cluster
+            plt.scatter(cluster_data[:, 0], cluster_data[:, 1],
+                        c=[colors[index]],
+                        label=f'Cluster {cluster_info[index][4]}')
+        # Plot centroids
+        plt.scatter(centers[:, 0], centers[:, 1],
+                    marker='x', color='black', label='Centroids')
+        ax.legend()
+        figs += [fig1]
 
-                # Plot 2 : Average Curve by Cluster
-                # Create graph
-                fig3, ax = plt.subplots(figsize=figsize)
-                fig3.sfn = f"clustering_average_loops_{mode}"
-                plot_dict_3 = {
-                    'title': f'Average Curve by Cluster ({mode})',
-                    'x lab': 'Voltage', 'y lab': 'Y Axis',
-                    'fs': 15, 'edgew': 3, 'tickl': 5, 'gridw': 1}
-                plot_graph(ax, [], [], plot_dict=plot_dict_3)
-                # Plot Average Curve by Cluster
-                for index in range(numb_cluster):
-                    color = colors[index]
-                    label = f'Cluster {cluster_info[mode][index][4]}'
-                    plt.plot(curves_x[mode][0], avg_curve[mode][index],
-                             label=label, color=color)
-                ax.legend()
-                figs += [fig3]
+        # Create graph
+        figsize = get_setting("figsize")
+        fig2, ax = plt.subplots(figsize=figsize)
+        fig2.sfn = "clustering_best_loops"
+        plot_dict_1 = {
+            'title': f'Clustering ({method_str}): Best Loops',
+            'x lab': 'Voltage', 'y lab': 'Y Axis',
+            'fs': 15, 'edgew': 3, 'tickl': 5, 'gridw': 1}
+        plot_graph(ax, [], [], plot_dict=plot_dict_1)
+        # Plot each curve
+        for i, (elem_x, elem_y) in enumerate(zip(
+                curves_x, curves_y)):
+            color = colors[cluster_labels[i]]
+            plt.plot(elem_x, elem_y, color=color)
+        ax.legend(handles=legend_handles)
+        figs += [fig2]
 
-                if save_plots is True:
-                    print_plots(figs, show_plots=False, save_plots=save_plots,
-                                dirname=dir_path_out)
+        # Plot 2 : Average Curve by Cluster
+        # Create graph
+        fig3, ax = plt.subplots(figsize=figsize)
+        fig3.sfn = "clustering_average_loops"
+        plot_dict_3 = {
+            'title': 'Average Curve by Cluster',
+            'x lab': 'Voltage', 'y lab': 'Y Axis',
+            'fs': 15, 'edgew': 3, 'tickl': 5, 'gridw': 1}
+        plot_graph(ax, [], [], plot_dict=plot_dict_3)
+        # Plot Average Curve by Cluster
+        for index in range(numb_cluster):
+            color = colors[index]
+            label = f'Cluster {cluster_info[index][4]}'
+            plt.plot(curves_x[0], avg_curve[index],
+                     label=label, color=color)
+        ax.legend()
+        figs += [fig3]
 
-                # Plot 3 : cluster mapping
-                properties = \
-                    {f"Clustering ({method_str})": cluster_labels[mode]}
-                colors_lab = {f"Clustering ({method_str})": cmap}
-                indx = lab_tab[0].index(mode)
-                dict_map = {'label': lab_tab[2][indx], 'col': lab_tab[1][indx]}
-                main_mapping(properties, dim_pix, dim_mic=dim_mic,
-                             colors=colors_lab, cbar_lab=cbar_lab,
-                             dict_map=dict_map, mask=[], show_plots=show_plots,
-                             save_plots=save_plots, dir_path_out=dir_path_out)
-        except KeyError:
-            print(f"KeyError management with except: no {mode} mode available "
-                  f"for analysis")
-            continue
+        if save_plots is True:
+            print_plots(figs, show_plots=False, save_plots=save_plots,
+                        dirname=dir_path_out)
+
+        # Plot 3 : cluster mapping
+        properties = \
+            {f"Clustering ({method_str})": cluster_labels}
+        colors_lab = {f"Clustering ({method_str})": cmap}
+        main_mapping(properties, dim_pix, dim_mic=dim_mic,
+                     colors=colors_lab, cbar_lab=cbar_lab,
+                     dict_map=None, mask=[], show_plots=show_plots,
+                     save_plots=save_plots, dir_path_out=dir_path_out)
 
     return cluster_labels, cluster_info, inertia, avg_curve
 
@@ -580,54 +325,45 @@ def main_curve_clustering(
 def parameters():
     """
     To complete by user of the script: return parameters for analysis
+    - extension: str, optional
+        Extension of files.
+        This parameter determines the extension type of curve files.
+        Four possible values: 'csv' or 'txt' or 'csv' or 'xlsx'.
+    - mode: str
+        Mode of measurement used (extraction of measurements).
+        This parameter determines the method used for measurements,
+        specifically for the extraction measurements.
+        Two possible values: 'classic' (sweep or single frequency) or 'dfrt'.
     - method: str
         Name of the method used to perform the clustering
         This parameter determines the method used to perform the clustering.
-        Implemented methods are K-Means or Gaussian Mixture Model.
-        (GMM).
+        Implemented methods are K-Means or Gaussian Mixture Model (GMM).
         Choose from : "kmeans", "gmm"
     - label_meas: list of str
         List of Measurement Name for Curves
         This parameter contains a list of measurement name in order to create
         the curve to be analyzed using a machine learning algorithm
-        of clustering (K-Means). If several name are filled, the curve will be
+        of clustering. If several name are filled, the curve will be
         normalized and concatenated.
-        Choose from : piezoresponse, amplitude, phase, res freq and q fact
-    - nb_clusters_off: int
-        Number of Clusters for Off-Field Curve.
+    - nb_clusters: int
+        Number of Clusters for Curve.
         This parameter determines the number of clusters for the
-        off-field curve using a machine learning algorithm
-        of clustering (K-Means).
-        Used in the analysis of off-field curve.
-    - nb_clusters_on: int
-        Number of Clusters for On-Field Curve.
-        This parameter determines the number of clusters for the
-        on-field curve using a machine learning algorithm
-        of clustering (K-Means).
-        Used in the analysis of on-field curve.
-    - nb_clusters_coupled: int
-        Number of Clusters for Differential Curve.
-        This parameter determines the number of clusters for the
-        differential curve using a machine learning algorithm
-        of clustering (K-Means).
-        Only valid only for a piezoresponse curve.
-        Used in the analysis of differential component only for piezoresponse
-        curve.
+        curve using a machine learning algorithm of clustering.
 
     - dir_path_in: str
-        Input Directory for Best Loop TXT Files (default: 'best_nanoloops').
-        This parameter specifies the directory path for the best loop .txt
-        files generated after the second step of the analysis.
+        Input Directory for Curves Files.
+        This parameter specifies the directory path for curve files.
     - dir_path_out: str
         Saving directory for analysis results figures
         (optional, default: toolbox directory in the same root)
         This parameter specifies the directory where the figures
         generated as a result of the analysis will be saved.
-    - dir_path_in_props: str
-        Properties files directory
-        (optional, default: properties).
-        This parameter specifies the directory containing the properties text
-        files generated after the 2nd step of the analysis.
+    - csv_dir_path: str
+        Directory path of the CSV measurement file (measurement sheet model).
+        This parameter specifies the directory path to the CSV file containing
+        measurement parameters. It is used to indicate the location of the
+        CSV file, which serves as the source of measurement data for processing.
+        If left empty, the system will automatically select the CSV file path.
     - verbose: bool
         Activation key for printing verbosity during analysis.
         This parameter serves as an activation key for printing verbose
@@ -651,36 +387,36 @@ def parameters():
         config_params = load_parameters_from_file(file_path_user_params)
         dir_path_in = config_params['dir_path_in']
         dir_path_out = config_params['dir_path_out']
-        dir_path_in_props = config_params['dir_path_in_props']
+        csv_dir_path = config_params['csv_dir_path']
         verbose = config_params['verbose']
         show_plots = config_params['show_plots']
         save = config_params['save']
         user_pars = config_params['user_pars']
     elif get_setting("extract_parameters") == 'python':
         print("user parameters from python file")
-        # Select txt best loops folder (.txt)
+        # Select txt curve folder
         dir_path_in = tkf.askdirectory()
-        # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\best_nanoloops
+        # dir_path_in = r'...\KNN500n
         dir_path_out = None
         # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
         # curve_clustering_2023-10-02-16h38m
-        dir_path_in_props = None
-        # dir_path_in_props = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
+        csv_dir_path = None
+        # csv_dir_path = r'...\KNN500n
         verbose = True
         show_plots = True
         save = False
 
-        user_pars = {'method': 'gmm',
-                     'label meas': ['piezoresponse'],
-                     'nb clusters off': 4,
-                     'nb clusters on': 4,
-                     'nb clusters coupled': 4}
+        user_pars = {'extension': 'spm',
+                     'mode': 'classic',
+                     'method': 'kmeans',
+                     'label meas': ['deflection'],
+                     'nb clusters': 4}
 
     else:
         raise NotImplementedError("setting 'extract_parameters' "
                                   "should be in ['json', 'toml', 'python']")
 
-    return user_pars, dir_path_in, dir_path_out, dir_path_in_props, verbose, \
+    return user_pars, dir_path_in, dir_path_out, csv_dir_path, verbose, \
         show_plots, save
 
 
@@ -688,7 +424,7 @@ def main():
     """ Main function for data analysis. """
     # Extract parameters
     out = parameters()
-    (user_pars, dir_path_in, dir_path_out, dir_path_in_props, verbose,
+    (user_pars, dir_path_in, dir_path_out, csv_dir_path, verbose,
      show_plots, save) = out
     # Generate default path out
     dir_path_out = save_path_management(
@@ -699,7 +435,7 @@ def main():
     main_curve_clustering(
         user_pars, dir_path_in, verbose=verbose, show_plots=show_plots,
         save_plots=save, dir_path_out=dir_path_out,
-        dir_path_in_props=dir_path_in_props)
+        csv_path=csv_dir_path)
     # Save parameters
     if save:
         save_user_pars(user_pars, dir_path_out, start_time=start_time,
