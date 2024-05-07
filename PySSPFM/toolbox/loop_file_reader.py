@@ -10,7 +10,7 @@ import tkinter.filedialog as tkf
 from datetime import datetime
 import numpy as np
 
-from PySSPFM.settings import get_setting
+from PySSPFM.settings import get_setting, copy_default_settings_if_not_exist
 from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots
@@ -90,7 +90,7 @@ def main_loop_file_reader(file_path, csv_path=None, dict_pha=None,
         return loop_tab
 
 
-def parameters():
+def parameters(fname_json=None):
     """
     To complete by user of the script: return parameters for analysis
 
@@ -182,9 +182,13 @@ def parameters():
         generated during the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        script_directory = os.path.realpath(__file__)
-        file_path_user_params = script_directory.split('.')[0] + \
-            f'_params.{get_setting("extract_parameters")}'
+        # if fname_json is provided, use it, else use the default one
+        if fname_json is not None:
+            file_path_user_params = fname_json
+        else:
+            file_path = os.path.realpath(__file__)
+            file_path_user_params = copy_default_settings_if_not_exist(file_path)
+
         # Load parameters from the specified configuration file
         print(f"user parameters from {os.path.split(file_path_user_params)[1]} "
               f"file")
@@ -232,13 +236,12 @@ def parameters():
         show_plots, save
 
 
-def main():
+def main(fname_json=None):
     """ Main function for data analysis. """
     figs = []
     # Extract parameters
-    out = parameters()
     (user_pars, file_path_in, dir_path_out, csv_file_path, verbose, show_plots,
-     save) = out
+     save) = parameters(fname_json=fname_json)# Generate default path out
     # Generate default path out
     dir_path_out = save_path_management(
         file_path_in, dir_path_out, save=save, dirname="loop_file_reader",

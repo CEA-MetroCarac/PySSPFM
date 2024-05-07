@@ -11,7 +11,7 @@ from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 
-from PySSPFM.settings import get_setting
+from PySSPFM.settings import get_setting, copy_default_settings_if_not_exist
 from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots
@@ -515,7 +515,7 @@ def main_script(user_pars, dir_path_in, verbose=False, show_plots=False,
         print('############################################\n')
 
 
-def parameters():
+def parameters(fname_json=None):
     """
     To complete by user of the script: return parameters for analysis
 
@@ -648,9 +648,14 @@ def parameters():
         generated after the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        script_directory = os.path.realpath(__file__)
-        file_path_user_params = script_directory.split('.')[0] + \
-            f'_params.{get_setting("extract_parameters")}'
+        # if fname_json is provided, use it, else use the default one
+        if fname_json is not None:
+            file_path_user_params = fname_json
+        else:
+            file_path = os.path.realpath(__file__)
+            file_path_user_params = copy_default_settings_if_not_exist(file_path)
+
+
         # Load parameters from the specified configuration file
         print(f"user parameters from {os.path.split(file_path_user_params)[1]} "
               f"file")
@@ -694,11 +699,17 @@ def parameters():
     return user_pars, dir_path_in, root_out, verbose, show_plots, save
 
 
-def main():
-    """ Main function for data analysis. """
+def main(fname_json=None):
+    """ Main function for data analysis.
+
+    Parameters
+    ----------
+    fname_json : str, optional
+        Name of the JSON file containing the parameters for the analysis.
+    """
     # Extract parameters
-    out = parameters()
-    (user_pars, dir_path_in, root_out, verbose, show_plots, save) = out
+    (user_pars, dir_path_in, root_out, verbose, show_plots, save) = parameters(fname_json=fname_json)
+
     # Main function
     main_script(user_pars, dir_path_in, verbose=verbose, show_plots=show_plots,
                 save=save, root_out=root_out)
