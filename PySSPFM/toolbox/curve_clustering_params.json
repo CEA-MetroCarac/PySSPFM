@@ -1,7 +1,7 @@
 {
     "dir_path_in": "path/to/your/measurement/directory",
     "dir_path_out": null,
-    "csv_dir_path": null,
+    "csv_file_path": null,
     "verbose": true,
     "show_plots": true,
     "save": false,

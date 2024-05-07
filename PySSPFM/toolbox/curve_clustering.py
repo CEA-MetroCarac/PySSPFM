@@ -165,7 +165,7 @@ def main_curve_clustering(
     dim_mic : dict, optional
         Dictionary of micron dimensions.
     csv_path : str, optional
-        Path of csv params measurement directory (in).
+        Path of csv params measurement file (in)
 
     Returns
     -------
@@ -192,7 +192,8 @@ def main_curve_clustering(
     if dir_path_in is not None:
         if csv_path is None:
             csv_path = dir_path_in
-
+        else:
+            csv_path, _ = os.path.split(csv_path)
         csv_meas, _ = csv_meas_sheet_extract(csv_path, verbose=verbose)
         dim_pix = {'x': csv_meas['Grid x [pix]'], 'y': csv_meas['Grid y [pix]']}
         dim_mic = {'x': csv_meas['Grid x [um]'], 'y': csv_meas['Grid y [um]']}
@@ -358,9 +359,9 @@ def parameters():
         (optional, default: toolbox directory in the same root)
         This parameter specifies the directory where the figures
         generated as a result of the analysis will be saved.
-    - csv_dir_path: str
-        Directory path of the CSV measurement file (measurement sheet model).
-        This parameter specifies the directory path to the CSV file containing
+    - csv_file_path: str
+        File path of the CSV measurement file (measurement sheet model).
+        This parameter specifies the file path to the CSV file containing
         measurement parameters. It is used to indicate the location of the
         CSV file, which serves as the source of measurement data for processing.
         If left empty, the system will automatically select the CSV file path.
@@ -387,7 +388,7 @@ def parameters():
         config_params = load_parameters_from_file(file_path_user_params)
         dir_path_in = config_params['dir_path_in']
         dir_path_out = config_params['dir_path_out']
-        csv_dir_path = config_params['csv_dir_path']
+        csv_file_path = config_params['csv_file_path']
         verbose = config_params['verbose']
         show_plots = config_params['show_plots']
         save = config_params['save']
@@ -400,8 +401,9 @@ def parameters():
         dir_path_out = None
         # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
         # curve_clustering_2023-10-02-16h38m
-        csv_dir_path = None
-        # csv_dir_path = r'...\KNN500n
+        csv_file_path = None
+        # csv_file_path =
+        # r'...\KNN500n\measurement sheet model SSPFM ZI DFRT.csv'
         verbose = True
         show_plots = True
         save = False
@@ -416,7 +418,7 @@ def parameters():
         raise NotImplementedError("setting 'extract_parameters' "
                                   "should be in ['json', 'toml', 'python']")
 
-    return user_pars, dir_path_in, dir_path_out, csv_dir_path, verbose, \
+    return user_pars, dir_path_in, dir_path_out, csv_file_path, verbose, \
         show_plots, save
 
 
@@ -424,7 +426,7 @@ def main():
     """ Main function for data analysis. """
     # Extract parameters
     out = parameters()
-    (user_pars, dir_path_in, dir_path_out, csv_dir_path, verbose,
+    (user_pars, dir_path_in, dir_path_out, csv_file_path, verbose,
      show_plots, save) = out
     # Generate default path out
     dir_path_out = save_path_management(
@@ -435,7 +437,7 @@ def main():
     main_curve_clustering(
         user_pars, dir_path_in, verbose=verbose, show_plots=show_plots,
         save_plots=save, dir_path_out=dir_path_out,
-        csv_path=csv_dir_path)
+        csv_path=csv_file_path)
     # Save parameters
     if save:
         save_user_pars(user_pars, dir_path_out, start_time=start_time,
