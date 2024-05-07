@@ -216,7 +216,7 @@ def main(parent=None):
     label_meth = ttk.Label(app, text="Method", font=("Helvetica", 14))
     row = grid_item(label_meth, row, column=0, sticky="ew", columnspan=3)
 
-    # Mode
+    # Method
     label_method = ttk.Label(app, text="Method:")
     row = grid_item(label_method, row, column=0, sticky="e", increment=False)
     method_var = ttk.Combobox(app, values=["kmeans", "gmm"])
