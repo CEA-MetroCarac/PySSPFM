@@ -21,6 +21,7 @@
         "sens peak detect": 1.5
     },
     "pha_params": {
+        "phase_file_path": null,
         "method": "static",
         "offset": 0
     }
