@@ -52,6 +52,8 @@ def main_loop_file_reader(file_path, csv_path=None, dict_pha=None,
         path, _ = os.path.split(path)
         tab_path = path.split('_')[:-3]
         csv_path = '_'.join(tab_path)
+    else:
+        csv_path = os.path.split(csv_path)[0]
     if verbose:
         if 'dfrt' in file_path:
             print('Mean DFRT treatment')
@@ -262,4 +264,6 @@ def main(fname_json=None):
 
 
 if __name__ == '__main__':
-    main()
+    fname_json = r"C:\Users\HV265662\PycharmProjects\PySSPFM\PySSPFM" \
+                 r"\toolbox\loop_file_reader_params.json"
+    main(fname_json=fname_json)
