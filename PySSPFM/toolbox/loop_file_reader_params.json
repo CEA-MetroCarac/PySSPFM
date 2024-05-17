@@ -7,7 +7,7 @@
     "save": false,
     "user_pars": {
         "del 1st loop": true,
-        "corr": "offset",
+        "corr": "raw",
         "pha fwd": 0,
         "pha rev": 180,
         "func": "np.cos",
