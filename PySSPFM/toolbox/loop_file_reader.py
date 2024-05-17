@@ -264,6 +264,4 @@ def main(fname_json=None):
 
 
 if __name__ == '__main__':
-    fname_json = r"C:\Users\HV265662\PycharmProjects\PySSPFM\PySSPFM" \
-                 r"\toolbox\loop_file_reader_params.json"
-    main(fname_json=fname_json)
+    main()
