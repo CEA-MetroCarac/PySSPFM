@@ -5,7 +5,7 @@
     "extension": "spm",
     "verbose": true,
     "show_plots": true,
-    "save": false,
+    "save": true,
     "seg_params": {
         "mode": "max",
         "cut seg [%]": {
