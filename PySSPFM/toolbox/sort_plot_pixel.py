@@ -562,6 +562,11 @@ def parameters(fname_json=None):
     """
     To complete by user of the script: return parameters for analysis
 
+    fname_json: str
+        Path to the JSON file containing user parameters. If None,
+        the file is created in a default path:
+        (your_user_disk_access/.pysspfm/script_name_params.json)
+
     - prop key: dict
         --> property key to ordered pixel
         - mode: str --> Mode of prop key ('on', 'off', 'coupled')
@@ -644,7 +649,8 @@ def parameters(fname_json=None):
             file_path_user_params = fname_json
         else:
             file_path = os.path.realpath(__file__)
-            file_path_user_params = copy_default_settings_if_not_exist(file_path)
+            file_path_user_params = \
+                copy_default_settings_if_not_exist(file_path)
 
         # Load parameters from the specified configuration file
         print(f"user parameters from {os.path.split(file_path_user_params)[1]} "
@@ -694,9 +700,17 @@ def parameters(fname_json=None):
 
 
 def main(fname_json=None):
-    """ Main function for data analysis. """
+    """
+    Main function for data analysis.
+
+    fname_json: str
+        Path to the JSON file containing user parameters. If None,
+        the file is created in a default path:
+        (your_user_disk_access/.pysspfm/script_name_params.json)
+    """
     # Extract parameters
-    (user_pars, dir_path_in, dir_path_out, verbose, show_plots, save) = parameters(fname_json=fname_json)# Generate default path out
+    res = parameters(fname_json=fname_json)
+    (user_pars, dir_path_in, dir_path_out, verbose, show_plots, save) = res
     # Generate default path out
     dir_path_out = save_path_management(
         dir_path_in, dir_path_out, save=save, dirname="plot_pix_extremum",
