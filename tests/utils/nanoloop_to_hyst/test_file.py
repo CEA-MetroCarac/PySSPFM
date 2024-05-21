@@ -16,7 +16,7 @@ def test_file():
     out = example_file()
     (file_paths_from_nanoloops, file_paths_from_raw, meas_pars, sign_pars,
      dict_analysis_1, nb_write_per_read, write_segment, properties,
-     dim_pix, dim_mic) = out
+     dim_pix, dim_mic, main_elec_tab) = out
     file_names_from_raw = [[os.path.split(path)[1] for path in paths]
                            for paths in file_paths_from_raw]
     file_names_from_nanoloops = [[os.path.split(path)[1] for path in paths]
@@ -99,3 +99,4 @@ def test_file():
     assert np.sum(list(properties['on'].values())) == 6269
     assert np.sum(list(properties['off'].values())) == 6408
     assert np.sum(list(properties['coupled'].values())) == 6565
+    assert np.sum(main_elec_tab) == 57.0

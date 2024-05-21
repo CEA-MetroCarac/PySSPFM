@@ -14,7 +14,8 @@ from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.nanoloop_to_hyst.file import \
     (create_file_nanoloop_paths, generate_file_nanoloop_paths,
-     print_parameters, complete_parameters, save_properties, extract_properties)
+     print_parameters, complete_parameters, save_properties,
+     extract_properties, extract_main_elec_tab)
 
 
 def example_file(make_plots=False, verbose=False):
@@ -57,6 +58,11 @@ def example_file(make_plots=False, verbose=False):
     dir_path_in = os.path.join(root_data, "nanoloops")
     dir_path_raw = os.path.join(get_setting("example_root_path_in"),
                                 "KNN500n")
+    file_path_in_inversion = \
+        os.path.join(get_setting("example_root_path_in"), "KNN500n_toolbox",
+                     "phase_inversion_analyzer_2024-05-21-18h13m",
+                     "phase_inversion.txt")
+
     if make_plots:
         root_out = os.path.join(
             get_setting("example_root_path_out"), "ex_nanoloop_to_hyst_file")
@@ -143,12 +149,15 @@ def example_file(make_plots=False, verbose=False):
         print(f'\t\tdim pix: {dim_pix}')
         print(f'\t\tdim mic: {dim_mic}')
 
+    # ex extract_main_elec_tab
+    main_elec_tab = extract_main_elec_tab(file_path_in_inversion)
+
     if make_plots:
         return [fig]
     else:
         return (file_paths_from_nanoloops, file_paths_from_raw, meas_pars,
                 sign_pars, dict_analysis_1, nb_write_per_read, write_segment,
-                properties, dim_pix, dim_mic)
+                properties, dim_pix, dim_mic, main_elec_tab)
 
 
 if __name__ == '__main__':
