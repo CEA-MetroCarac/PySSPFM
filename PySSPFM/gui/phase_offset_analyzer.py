@@ -55,7 +55,7 @@ def main(parent=None):
                                'fit pars': default_fit_params,
                                'verbose': True,
                                'show plots': True,
-                               'save': False}
+                               'save': True}
     user_parameters = default_user_parameters.copy()
 
     def launch():
