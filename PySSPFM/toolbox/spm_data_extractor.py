@@ -179,7 +179,8 @@ def parameters(fname_json=None):
             file_path_user_params = fname_json
         else:
             file_path = os.path.realpath(__file__)
-            file_path_user_params = copy_default_settings_if_not_exist(file_path)
+            file_path_user_params = \
+                copy_default_settings_if_not_exist(file_path)
 
         # Load parameters from the specified configuration file
         print(f"user parameters from {os.path.split(file_path_user_params)[1]} "
@@ -207,9 +208,14 @@ def parameters(fname_json=None):
 
 
 def main(fname_json=None):
-    """ Main function for data analysis. """
+    """
+    Main function for data analysis.
 
-
+    fname_json: str
+        Path to the JSON file containing user parameters. If None,
+        the file is created in a default path:
+        (your_user_disk_access/.pysspfm/script_name_params.json)
+    """
     # Extract parameters
     (file_path_in, nb_hold_seg_start, nb_hold_seg_end, verbose,
      show_plots) = parameters(fname_json=fname_json)# Generate default path out
