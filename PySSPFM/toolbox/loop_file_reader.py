@@ -96,6 +96,11 @@ def parameters(fname_json=None):
     """
     To complete by user of the script: return parameters for analysis
 
+    fname_json: str
+        Path to the JSON file containing user parameters. If None,
+        the file is created in a default path:
+        (your_user_disk_access/.pysspfm/script_name_params.json)
+
     - del_1st_loop: bool
         Delete First Loop
         If this parameter is set to True, it deletes the first nanoloop of the
@@ -189,7 +194,8 @@ def parameters(fname_json=None):
             file_path_user_params = fname_json
         else:
             file_path = os.path.realpath(__file__)
-            file_path_user_params = copy_default_settings_if_not_exist(file_path)
+            file_path_user_params = \
+                copy_default_settings_if_not_exist(file_path)
 
         # Load parameters from the specified configuration file
         print(f"user parameters from {os.path.split(file_path_user_params)[1]} "
@@ -239,7 +245,14 @@ def parameters(fname_json=None):
 
 
 def main(fname_json=None):
-    """ Main function for data analysis. """
+    """
+    Main function for data analysis.
+
+    fname_json: str
+        Path to the JSON file containing user parameters. If None,
+        the file is created in a default path:
+        (your_user_disk_access/.pysspfm/script_name_params.json)
+    """
     figs = []
     # Extract parameters
     (user_pars, file_path_in, dir_path_out, csv_file_path, verbose, show_plots,
