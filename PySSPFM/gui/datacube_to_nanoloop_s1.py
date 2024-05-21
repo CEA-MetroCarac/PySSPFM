@@ -98,6 +98,10 @@ def main(parent=None):
         file_path_in = filedialog.askopenfilename()
         file_path_in_var.set(file_path_in)
 
+    def browse_file_phase():
+        phase_file_path_in = filedialog.askopenfilename()
+        phase_file_path_var.set(phase_file_path_in)
+
     # Window title: SSPFM Data Analysis: Step 1 = seg to hyst
     wdw_main_title(app, title)
 
@@ -410,7 +414,7 @@ def main(parent=None):
         "<Enter>",
         lambda event, mess=strg: show_tooltip(entry_phase_file, mess))
     browse_button_phase_file = ttk.Button(app, text="Select",
-                                          command=browse_file)
+                                          command=browse_file_phase)
     row = grid_item(browse_button_phase_file, row, column=2)
 
     # Method
