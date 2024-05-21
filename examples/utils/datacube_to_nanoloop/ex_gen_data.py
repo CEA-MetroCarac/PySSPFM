@@ -63,7 +63,8 @@ def pars_segment():
     fit_pars = {'fit pha': True,
                 'detect peak': False,
                 'sens peak detect': 1.5}
-    pha_params = {'method': 'dynamic',
+    pha_params = {'phase_file_path': None,
+                  'method': 'dynamic',
                   'offset': 45}
     user_pars = {'file path in': 'gen data module',
                  'root out': 'gen data module out',
