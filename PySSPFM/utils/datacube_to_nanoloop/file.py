@@ -9,6 +9,7 @@ Module used for the scripts of sspfm 1st step data analysis
 import time
 import os
 from datetime import datetime
+import numpy as np
 
 from PySSPFM.settings import get_setting
 
@@ -155,3 +156,34 @@ def get_acquisition_time(folder_path, file_format='.spm'):
     time_diff_seconds = [(date - dates[0]).total_seconds() for date in dates]
 
     return time_diff_seconds[-1]
+
+
+def get_phase_tab_offset(phase_file_path):
+    """
+    Get phase tab offset from file.
+
+    Parameters
+    ----------
+    phase_file_path : str
+        Path to the phase file.
+
+    Returns
+    -------
+    phase_tab : numpy.ndarray
+        Phase offset data.
+    """
+
+    # Load data from the text file
+    data = np.genfromtxt(phase_file_path, delimiter='\t\t', skip_header=3)
+
+    # Extract the headers
+    with open(phase_file_path, 'r', encoding='latin-1') as file:
+        headers = file.readlines()[2][2:].strip().split('\t\t')
+
+    # Create a dictionary using the extracted headers
+    phase_dict = dict(zip(headers, data.T))
+
+    # Get phase offset
+    phase_tab = phase_dict.get("Mean", phase_dict[list(phase_dict.keys())[0]])
+
+    return phase_tab
