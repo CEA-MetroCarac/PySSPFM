@@ -41,7 +41,8 @@ def main(parent=None):
     default_fit_params = {'fit pha': False,
                           'detect peak': False,
                           'sens peak detect': 1.5}
-    default_pha_params = {'method': 'static',
+    default_pha_params = {'phase_file_path': '',
+                          'method': 'static',
                           'offset': 0}
     default_user_parameters = {'file path in': '',
                                'root out': '',
@@ -69,6 +70,7 @@ def main(parent=None):
             'sens peak detect': extract_var(sens_peak_detect_var)
         }
         pha_params = {
+            'phase_file_path': extract_var(phase_file_path_var),
             'method': pha_method_var.get(),
             'offset': pha_offset_var.get()
         }
@@ -386,6 +388,31 @@ def main(parent=None):
     label_phase.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(label_phase, mess))
 
+    # Phase offset file path (in)
+    label_phase_file = ttk.Label(app, text="Phase offset file path (in) (*):")
+    row = grid_item(label_phase_file, row, column=0, sticky="e",
+                    increment=False)
+    phase_file_path_var = tk.StringVar()
+    phase_file_path_var.set(user_parameters["pha pars"]["phase_file_path"])
+    entry_phase_file = ttk.Entry(app, textvariable=phase_file_path_var)
+    row = grid_item(entry_phase_file, row, column=1, sticky="ew",
+                    increment=False)
+    strg = "- Name: phase_file_path\n" \
+           "- Summary: Path of phase offset list file " \
+           "(optional, default: None)\n" \
+           "- Description: This parameter contains the path of phase offset " \
+           "list file (On Field / Off Field / Mean) associated to each " \
+           "datacube file, to be applied to each file.\n" \
+           "If None, phase offset value will be determined with 'static' or " \
+           "'dynamic' 'method' parameter.\n" \
+           "- Value: It should be a string representing a directory path."
+    entry_phase_file.bind(
+        "<Enter>",
+        lambda event, mess=strg: show_tooltip(entry_phase_file, mess))
+    browse_button_phase_file = ttk.Button(app, text="Select",
+                                          command=browse_file)
+    row = grid_item(browse_button_phase_file, row, column=2)
+
     # Method
     label_pha_method = ttk.Label(app, text="Method:")
     row = grid_item(label_pha_method, row, column=0, sticky="e",
@@ -427,10 +454,12 @@ def main(parent=None):
            "to all phase values.\n" \
            "- Value: A floating-point number representing the " \
            "phase offset.\n" \
-           "- Active if: This parameter is active for the analysis of the " \
-           "first raw measurement file in all cases, and for all raw " \
-           "measurement files when the selected 'method' for phase offset " \
-           "analysis is 'static'."
+           "- Active if: This parameter is active when 'phase_file_path' " \
+           "parameters is None.\n" \
+           "If it's the case, this parameter is active " \
+           "for the analysis of the first raw measurement file in all cases, " \
+           "and for all raw measurement files when the selected 'method' for " \
+           "phase offset analysis is 'static'."
     entry_fwd.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(entry_fwd, mess))
     row = add_grid_separator(app, row=row)

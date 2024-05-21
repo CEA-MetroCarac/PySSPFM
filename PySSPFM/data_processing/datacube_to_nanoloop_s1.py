@@ -32,7 +32,7 @@ from PySSPFM.utils.datacube_to_nanoloop.plot import \
     (plt_seg_max, plt_seg_fit, plt_seg_stable,  plt_signals, plt_amp, plt_bias,
      amp_pha_map)
 from PySSPFM.utils.datacube_to_nanoloop.file import \
-    save_parameters, print_params, get_acquisition_time
+    save_parameters, print_params, get_acquisition_time, get_phase_tab_offset
 from PySSPFM.utils.datacube_to_nanoloop.analysis import \
     (cut_function, external_calib, SegmentInfo, SegmentSweep,
      SegmentStable, SegmentStableDFRT, extract_other_properties)
@@ -491,6 +491,13 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='max',
     exp_meas_time = get_acquisition_time(dir_path_in, file_format=file_format)
     get_phase_offset = bool(user_pars["pha pars"]["method"] == "dynamic")
 
+    # Get phase offset list from phase file if filled by user
+    phase_file_path = user_pars["pha pars"]["phase_file_path"]
+    if phase_file_path is not None:
+        phase_tab = get_phase_tab_offset(phase_file_path)
+    else:
+        phase_tab = None
+
     # Start single script for each measurement file
     file_names = get_filenames_with_conditions(dir_path_in,
                                                extension=file_format)
@@ -511,7 +518,7 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='max',
             "user_pars": user_pars,
             "meas_pars": meas_pars,
             "sign_pars": sign_pars,
-            "phase_offset":phase_offset,
+            "phase_offset": phase_offset,
             "get_phase_offset": False,
             "mode": mode,
             "root_out": root_out,
@@ -523,15 +530,26 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='max',
             "save_plots": False,
             "txt_save": save,
             "index": 0}
-        run_multi_proc_s1(file_paths, common_args, processes=16)
+        if phase_file_path is not None:
+            common_args = {key: value for key, value in common_args.items()
+                           if not key == "phase_offset"}
+        run_multi_proc_s1(file_paths, phase_tab, common_args, processes=16)
 
     # Mono processing mode
     else:
         for i, elem in enumerate(file_names):
             if elem.endswith(file_format) and not \
                     elem.endswith('SS_PFM_bias.txt'):
-                if i == 0:
+
+                if phase_tab is not None:
+                    phase_offset = phase_tab[i]
+                elif i == 0:
                     phase_offset = user_pars["pha pars"]["offset"]
+                else:
+                    if user_pars["pha pars"]["method"] is None:
+                        phase_offset = 0
+                    elif user_pars["pha pars"]["method"] == "static":
+                        phase_offset = user_pars["pha pars"]["offset"]
                 file_path_in = os.path.join(dir_path_in, elem)
                 phase_offset_val = \
                     single_script(user_pars, file_path_in, meas_pars, sign_pars,
@@ -539,11 +557,7 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='max',
                                   get_phase_offset=get_phase_offset, mode=mode,
                                   root_out=root_out, verbose=verbose,
                                   txt_save=save, index=i+1)
-                if user_pars["pha pars"]["method"] is None:
-                    phase_offset = 0
-                elif user_pars["pha pars"]["method"] == "static":
-                    phase_offset = user_pars["pha pars"]["offset"]
-                elif user_pars["pha pars"]["method"] == "dynamic":
+                if user_pars["pha pars"]["method"] == "dynamic":
                     phase_offset = mean_phase_offset(phase_offset_val)
                 else:
                     raise NotImplementedError(
@@ -641,6 +655,11 @@ def parameters(fname_json=None):
     """
     To complete by user of the script: return parameters for analysis
 
+    fname_json: str
+        Path to the JSON file containing user parameters. If None,
+        the file is created in a default path:
+        (your_user_disk_access/.pysspfm/script_name_params.json)
+
     - mode: str
         Treatment Method for Extracting PFM Amplitude and Phase from Segments
         This parameter determines the treatment method used for data analysis.
@@ -711,6 +730,13 @@ def parameters(fname_json=None):
         meaning it will be harder to detect peaks.
         Active if: This parameter is active when the 'fit' mode is selected
         and peak detection is enabled.
+    - phase_file_path: str
+        Path of Phase Offset List File.
+        This parameter contains the path of phase offset list file (On
+        Field / Off Field / Mean) associated to each datacube file,
+        to be applied to each file.
+        If None, phase offset value will be determined with 'static' or
+        'dynamic' 'method' parameter.
     - method: str
         Treatment Method for Phase Offset Application on Measurements.
         This parameter determines the treatment method used for phase offset
@@ -730,9 +756,11 @@ def parameters(fname_json=None):
         for the analysis, which is applied to all phase values.
         It is used in conjunction with the 'static' treatment method for phase
         offset application on measurements.
-        Active if: This parameter is active for the analysis of the first
-        raw measurement file in all cases, and for all raw measurement files
-        when the selected 'method' for phase offset analysis is 'static'.
+        Active if: This parameter is active when "phase_file_path"
+        parameters is None. If it's the case, this parameter is active for
+        the analysis of the first raw measurement file in all cases, and for
+        all raw measurement files when the selected 'method' for phase offset
+        analysis is 'static'.
 
     file_path_in: str
         Path of datacube SSPFM raw file measurements.
@@ -762,7 +790,8 @@ def parameters(fname_json=None):
             file_path_user_params = fname_json
         else:
             file_path = os.path.realpath(__file__)
-            file_path_user_params = copy_default_settings_if_not_exist(file_path)
+            file_path_user_params = copy_default_settings_if_not_exist(
+                file_path)
 
         # Load parameters from the specified configuration file
         print(f"user parameters from {os.path.split(file_path_user_params)[1]} "
@@ -795,7 +824,8 @@ def parameters(fname_json=None):
         fit_params = {'fit pha': False,
                       'detect peak': False,
                       'sens peak detect': 1.5}
-        pha_params = {'method': 'static',
+        pha_params = {'phase_file_path': None,
+                      'method': 'static',
                       'offset': 0}
         user_pars = {'seg pars': seg_params,
                      'fit pars': fit_params,
@@ -808,9 +838,17 @@ def parameters(fname_json=None):
 
 
 def main(fname_json=None):
-    """ Main function for data analysis. """
+    """
+    Main function for data analysis.
+
+    fname_json: str
+        Path to the JSON file containing user parameters. If None,
+        the file is created in a default path:
+        (your_user_disk_access/.pysspfm/script_name_params.json)
+    """
     # Extract parameters
-    (user_pars, file_path_in, root_out, verbose, show_plots, save) = parameters(fname_json=fname_json)
+    res = parameters(fname_json=fname_json)
+    (user_pars, file_path_in, root_out, verbose, show_plots, save) = res
 
     # Main function
     main_script(user_pars, file_path_in, verbose=verbose, show_plots=show_plots,
