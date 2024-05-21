@@ -35,6 +35,7 @@ def main_pars():
                  'pha fwd': 0,
                  'pha rev': 180,
                  'pha func': np.cos,
+                 "main_elec_file_path": None,
                  'main elec': True,
                  'locked elec slope': None,
                  'diff mode': 'set',
