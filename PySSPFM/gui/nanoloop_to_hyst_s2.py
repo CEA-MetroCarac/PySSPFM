@@ -43,10 +43,11 @@ def main(parent=None):
         'inf thresh': 10,
         'sat thresh': 90,
         'del 1st loop': True,
-        'pha corr': 'offset',
+        'pha corr': 'raw',
         'pha fwd': 0,
         'pha rev': 180,
         'pha func': 'cosine',
+        'main_elec_file_path': '',
         'main elec': True,
         'locked elec slope': 'None',
         'diff mode': 'set',
@@ -74,6 +75,8 @@ def main(parent=None):
         user_parameters['pha rev'] = extract_var(pha_rev_var)
         user_parameters['pha func'] = np.cos \
             if func_pha_var.get() == 'cosine' else np.sin
+        user_parameters['main_elec_file_path'] = \
+            extract_var(main_elec_file_path_var)
         user_parameters['main elec'] = main_elec_var.get()
         user_parameters['locked elec slope'] = \
             extract_var(locked_elec_slope_var)
@@ -97,6 +100,10 @@ def main(parent=None):
     def browse_directory():
         dir_path_in = filedialog.askdirectory()
         dir_path_in_var.set(dir_path_in)
+
+    def browse_file():
+        file_path_in = filedialog.askopenfilename()
+        main_elec_file_path_var.set(file_path_in)
 
     # Window title: SSPFM Data Analysis: Step 2 = hyst to map
     wdw_main_title(app, title)
@@ -372,6 +379,36 @@ def main(parent=None):
     func_pha_var.bind("<Enter>",
                       lambda event, mess=strg: show_tooltip(func_pha_var, mess))
 
+    # Main electrostatic file path (in)
+    label_elec_file = ttk.Label(app,
+                                text="Main electrostatic file path (in) (*):")
+    row = grid_item(label_elec_file, row, column=0, sticky="e",
+                    increment=False)
+    main_elec_file_path_var = tk.StringVar()
+    main_elec_file_path_var.set(user_parameters['main_elec_file_path'])
+    entry_elec_file = ttk.Entry(app, textvariable=main_elec_file_path_var)
+    row = grid_item(entry_elec_file, row, column=1, sticky="ew",
+                    increment=False)
+    strg = "- Name: main_elec_file_path\n" \
+           "- Summary: Path of boolean values for dominant electrostatics in " \
+           "on field mode for each file (optional, default: None)\n" \
+           "- Description: This parameter contains the path of boolean value " \
+           "for dominant electrostatics in on field mode for each file. It " \
+           "determines whether the electrostatics are higher than " \
+           "ferroelectric effects.\n" \
+           "In other words, it indicates if the electrostatics are " \
+           "responsible for the phase loop's sense of rotation in the " \
+           "On Field mode.\n" \
+           "If None, the value will be determined with 'main_elec' " \
+           "parameter.\n" \
+           "- Value: It should be a string representing a directory path."
+    entry_elec_file.bind(
+        "<Enter>",
+        lambda event, mess=strg: show_tooltip(entry_elec_file, mess))
+    browse_button_elec_file = ttk.Button(app, text="Select",
+                                         command=browse_file)
+    row = grid_item(browse_button_elec_file, row, column=2)
+
     # Main Electrostatic
     label_elec = ttk.Label(app, text="Main Electrostatic:")
     row = grid_item(label_elec, row, column=0, sticky="e", increment=False)
@@ -386,7 +423,8 @@ def main(parent=None):
            "indicates if the electrostatics are responsible for the " \
            "phase loop's sense of rotation in the On Field mode.\n" \
            "- Value: Boolean\n" \
-           "- Active if: On Field mode is selected."
+           "- Active if: 'phase_file_path' parameters is None and if " \
+           "On Field mode is selected."
     chck_elec.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(chck_elec, mess))
 

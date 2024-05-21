@@ -21,7 +21,7 @@ from PySSPFM.utils.nanoloop.phase import gen_dict_pha
 from PySSPFM.utils.nanoloop.analysis import nanoloop_treatment, gen_ckpfm_meas
 from PySSPFM.utils.nanoloop_to_hyst.file import \
     (generate_file_nanoloop_paths, print_parameters, complete_parameters,
-     save_properties, save_best_nanoloops)
+     save_properties, save_best_nanoloops, extract_main_elec_tab)
 from PySSPFM.utils.nanoloop_to_hyst.plot import plot_nanoloop_on_off
 from PySSPFM.utils.nanoloop_to_hyst.electrostatic import differential_analysis
 from PySSPFM.utils.nanoloop_to_hyst.gen_data import gen_data_dict
@@ -399,6 +399,19 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
         all_properties['other'] = {key: [] for key in
                                    list(other_properties.values())[0].keys()}
 
+    if user_pars["main_elec_file_path"]:
+        main_elec_tab = extract_main_elec_tab(user_pars["main_elec_file_path"])
+        tab_user_pars = []
+        for revert_val in main_elec_tab:
+            user_pars_copy = {
+                key: (bool(int(revert_val) == 1))
+                if key == "main elec" else value
+                for key, value in user_pars.items()}
+            tab_user_pars.append(user_pars_copy)
+    else:
+        main_elec_tab = None
+        tab_user_pars = None
+
     # Multi processing mode
     multiproc = get_setting("multi_processing")
     if multiproc:
@@ -414,8 +427,13 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
             "make_plots": False,
             "verbose": verbose
         }
-        list_best_loops, list_properties, list_other_properties = \
-            run_multi_proc_s2(file_paths_in, common_args, processes=16)
+        if user_pars["main_elec_file_path"] is not None:
+            common_args = {
+                key: value for key, value in common_args.items()
+                if not key == "user_pars"}
+        res = run_multi_proc_s2(file_paths_in, tab_user_pars, common_args,
+                                processes=16)
+        (list_best_loops, list_properties, list_other_properties) = res
         for elem_best_loops, elem_properties, elem_other_properties in \
                 zip(list_best_loops, list_properties, list_other_properties):
             for key, value in elem_properties.items():
@@ -429,6 +447,8 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
     # Mono processing mode
     else:
         for cont, tab_path_in in enumerate(file_paths_in):
+            if user_pars["main_elec_file_path"] is not None:
+                user_pars["main elec"] = main_elec_tab[cont]
             best_loops, properties, other_properties, _ = single_script(
                 tab_path_in, user_pars, meas_pars, sign_pars, cont=cont,
                 test_dicts=test_dicts, verbose=verbose)
@@ -497,7 +517,8 @@ def main_script(user_pars, dir_path_in, verbose=False, show_plots=False,
     if root_out is None:
         root_out, _ = os.path.split(dir_path_in)
     parameters_file_name = get_setting('default_parameters_file_name')
-    file_path_out_txt_save = os.path.join(root_out, parameters_file_name)
+    root_parameters = os.path.split(dir_path_in)[0]
+    file_path_out_txt_save = os.path.join(root_parameters, parameters_file_name)
     meas_pars, sign_pars, _, _, _ = print_parameters(
         file_path_out_txt_save, verbose=verbose)
 
@@ -518,6 +539,11 @@ def main_script(user_pars, dir_path_in, verbose=False, show_plots=False,
 def parameters(fname_json=None):
     """
     To complete by user of the script: return parameters for analysis
+
+    fname_json: str
+        Path to the JSON file containing user parameters. If None,
+        the file is created in a default path:
+        (your_user_disk_access/.pysspfm/script_name_params.json)
 
     - func: algebraic func
         Function used for hysteresis fit.
@@ -577,13 +603,23 @@ def parameters(fname_json=None):
         The piezoresponse (PR) is calculated as PR = amp * func(pha),
         where 'amp' is the amplitude and 'pha' is the phase.
         Value: Algebraic function (np.cos or np.sin)
+    - main_elec_file_path: str
+        Path of Boolean Values for Dominant Electrostatics in On Field Mode
+        for Each File
+        This parameter contains the path of boolean value for dominant
+        electrostatics in on field mode for each file. It determines whether
+        the electrostatics are higher than ferroelectric effects. In other
+        words, it indicates if the electrostatics are responsible for the
+        phase loop's sense of rotation in the On Field mode.
+        If None, the value will be determined with 'main_elec' parameter.
     - main_elec: bool
         Dominant Electrostatics in On Field Mode
         It determines whether the electrostatics are higher than
         ferroelectric effects. In other words, it indicates if the
         electrostatics are responsible for the phase loop's sense of
         rotation in the On Field mode.
-        Active if On Field mode is selected.
+        Active if "phase_file_path" parameters is None and if On Field mode is
+        selected.
     - locked_elec_slope: str
         Locked Electrostatic Slope
         It specifies and locks the sign of the electrostatic slope in
@@ -653,8 +689,8 @@ def parameters(fname_json=None):
             file_path_user_params = fname_json
         else:
             file_path = os.path.realpath(__file__)
-            file_path_user_params = copy_default_settings_if_not_exist(file_path)
-
+            file_path_user_params = \
+                copy_default_settings_if_not_exist(file_path)
 
         # Load parameters from the specified configuration file
         print(f"user parameters from {os.path.split(file_path_user_params)[1]} "
@@ -682,10 +718,11 @@ def parameters(fname_json=None):
                      'inf thresh': 10,
                      'sat thresh': 90,
                      'del 1st loop': True,
-                     'pha corr': 'offset',
+                     'pha corr': 'raw',
                      'pha fwd': 0,
                      'pha rev': 180,
                      'pha func': np.cos,
+                     'main_elec_file_path': None,
                      'main elec': True,
                      'locked elec slope': None,
                      'diff mode': 'set',
@@ -700,15 +737,17 @@ def parameters(fname_json=None):
 
 
 def main(fname_json=None):
-    """ Main function for data analysis.
+    """
+    Main function for data analysis.
 
-    Parameters
-    ----------
-    fname_json : str, optional
-        Name of the JSON file containing the parameters for the analysis.
+    fname_json: str
+        Path to the JSON file containing user parameters. If None,
+        the file is created in a default path:
+        (your_user_disk_access/.pysspfm/script_name_params.json)
     """
     # Extract parameters
-    (user_pars, dir_path_in, root_out, verbose, show_plots, save) = parameters(fname_json=fname_json)
+    res = parameters(fname_json=fname_json)
+    (user_pars, dir_path_in, root_out, verbose, show_plots, save) = res
 
     # Main function
     main_script(user_pars, dir_path_in, verbose=verbose, show_plots=show_plots,
