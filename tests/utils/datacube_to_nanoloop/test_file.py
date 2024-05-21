@@ -1,6 +1,8 @@
 """
 Test file methods
 """
+import numpy as np
+from pytest import approx
 
 from examples.utils.datacube_to_nanoloop.ex_file import example_file
 
@@ -11,4 +13,6 @@ from examples.utils.datacube_to_nanoloop.ex_file import example_file
 def test_file():
     """ Test example_file """
 
-    _ = example_file()
+    _, phase_tab = example_file()
+
+    assert np.sum(phase_tab) == approx(2253.0115110174156)
