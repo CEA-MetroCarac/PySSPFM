@@ -52,7 +52,7 @@ def main_loop_file_reader(file_path, csv_path=None, dict_pha=None,
         path, _ = os.path.split(path)
         tab_path = path.split('_')[:-3]
         csv_path = '_'.join(tab_path)
-    else:
+    elif csv_path.endswith(".csv"):
         csv_path = os.path.split(csv_path)[0]
     if verbose:
         if 'dfrt' in file_path:
