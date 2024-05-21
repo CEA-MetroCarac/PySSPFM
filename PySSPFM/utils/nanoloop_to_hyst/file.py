@@ -469,3 +469,26 @@ def extract_properties(dir_path_in):
         dim_mic = None
 
     return properties, dim_pix, dim_mic
+
+
+def extract_main_elec_tab(revert_file_path):
+    """
+    Extracts main electronic table from revert file.
+
+    Parameters
+    ----------
+    revert_file_path : str
+        Path to the revert file.
+
+    Returns
+    -------
+    main_elec_tab : numpy.ndarray
+        Main electronic table extracted.
+    """
+    data = np.genfromtxt(revert_file_path, delimiter='\t\t', skip_header=3)
+    with open(revert_file_path, 'r', encoding='latin-1') as file:
+        headers = file.readlines()[2][2:].strip().split('\t\t')
+    phase_dict = dict(zip(headers, data.T))
+    main_elec_tab = np.array(phase_dict["Revert On Off"])
+
+    return main_elec_tab
