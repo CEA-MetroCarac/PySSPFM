@@ -123,6 +123,11 @@ def parameters(fname_json=None):
     """
     To complete by user of the script: return parameters for analysis
 
+    fname_json: str
+        Path to the JSON file containing user parameters. If None,
+        the file is created in a default path:
+        (your_user_disk_access/.pysspfm/script_name_params.json)
+
     - interp_fact: int
         Interpolation factor for sspfm maps interpolation.
         This parameter determines the level of interpolation to be applied to
