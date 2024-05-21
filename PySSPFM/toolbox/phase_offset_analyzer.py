@@ -152,6 +152,11 @@ def single_script(file_path_in, user_pars, meas_pars, sign_pars,
                              meas_pars=meas_pars)
         (dict_meas['amp'], dict_meas['pha']) = par
 
+    # If input phase in radians, convert it in degrees
+    rad_phase = get_setting('radians_input_phase')
+    if rad_phase:
+        dict_meas['pha'] = 360/(2*np.pi)*np.array(dict_meas['pha'])
+
     # Generate SS PFM signal segment values
     ss_pfm_bias = sspfm_generator(sign_pars)
 
@@ -244,6 +249,8 @@ def single_script(file_path_in, user_pars, meas_pars, sign_pars,
         # Generate hist figures and phase offset determination
         dict_str = {'label': tuple_dict[1]['title'],
                     'col': tuple_dict[1]['color']}
+
+        # Determine phase offset
         phase_offset_val[tuple_dict[0]], fig_hist = \
             phase_offset_determination([seg.pha for seg in seg_tab],
                                        dict_str=dict_str, make_plots=make_plots)
@@ -306,9 +313,10 @@ def multi_script(dir_path_in, file_names, user_pars, meas_pars, sign_pars,
         tab_phase_offset_val = \
             run_multi_phase_offset_analyzer(file_paths_in, common_args,
                                             processes=16)
+
+        # Append phase offset values
         for elem in tab_phase_offset_val:
             mean_phase_offset_val = mean_phase_offset(elem)
-            # Append phase offset values
             if len(list(phase_offset_tab.keys())) == 0:
                 for key, value in elem.items():
                     phase_offset_tab[key] = []
@@ -398,6 +406,11 @@ def main_phase_offset_analyzer(user_pars, dir_path_in, range_file=None,
 def parameters(fname_json=None):
     """
     To complete by user of the script: return parameters for analysis
+
+    fname_json: str
+        Path to the JSON file containing user parameters. If None,
+        the file is created in a default path:
+        (your_user_disk_access/.pysspfm/script_name_params.json)
 
     - mode: str
         Treatment Method for Extracting PFM Amplitude and Phase from Segments
@@ -509,7 +522,8 @@ def parameters(fname_json=None):
             file_path_user_params = fname_json
         else:
             file_path = os.path.realpath(__file__)
-            file_path_user_params = copy_default_settings_if_not_exist(file_path)
+            file_path_user_params = copy_default_settings_if_not_exist(
+                file_path)
 
         # Load parameters from the specified configuration file
         print(f"user parameters from {os.path.split(file_path_user_params)[1]} "
@@ -537,7 +551,7 @@ def parameters(fname_json=None):
         # extension = 'spm' or 'txt' or 'csv' or 'xlsx'
         verbose = True
         show_plots = True
-        save = False
+        save = True
         seg_params = {'mode': 'max',
                       'cut seg [%]': {'start': 5, 'end': 5},
                       'filter type': None,
@@ -558,11 +572,17 @@ def parameters(fname_json=None):
 
 
 def main(fname_json=None):
-    """ Main function for data analysis. """
+    """
+    Main function for data analysis.
 
+    fname_json: str
+        Path to the JSON file containing user parameters. If None,
+        the file is created in a default path:
+        (your_user_disk_access/.pysspfm/script_name_params.json)
+    """
     # Extract parameters
     (user_pars, dir_path_in, dir_path_out, range_file, extension, verbose,
-     show_plots, save) = parameters(fname_json=fname_json)# Generate default path out
+     show_plots, save) = parameters(fname_json=fname_json)
     # Generate default path out
     dir_path_out = save_path_management(
         dir_path_in, dir_path_out, save=save, dirname="phase_offset_analyzer",
@@ -579,7 +599,7 @@ def main(fname_json=None):
     if save:
         save_user_pars(user_pars, dir_path_out, start_time=start_time,
                        verbose=verbose)
-        file_path_out = os.path.join(dir_path_out, "phase.txt")
+        file_path_out = os.path.join(dir_path_out, "phase_offset.txt")
         save_dict_to_txt(phase_offset_tab, file_path=file_path_out,
                          map_dim=map_dim)
 
