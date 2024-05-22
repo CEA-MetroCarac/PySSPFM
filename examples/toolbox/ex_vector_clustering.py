@@ -5,7 +5,7 @@ import os
 
 from PySSPFM.settings import get_setting
 from PySSPFM.utils.path_for_runable import save_path_example
-from PySSPFM.toolbox.loop_clustering import main_vector_clustering
+from PySSPFM.toolbox.vector_clustering import main_vector_clustering
 
 
 def ex_vector_clustering(label_meas, object="loop", verbose=False,

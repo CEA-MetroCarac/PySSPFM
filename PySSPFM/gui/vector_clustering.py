@@ -11,7 +11,7 @@ from tkinter import filedialog
 from datetime import datetime
 
 from PySSPFM.settings import get_setting
-from PySSPFM.toolbox.loop_clustering import \
+from PySSPFM.toolbox.vector_clustering import \
     main_vector_clustering as main_script
 from PySSPFM.gui.utils import \
     (add_grid_separator, grid_item, show_tooltip, extract_var,

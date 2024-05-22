@@ -5,7 +5,7 @@ import os
 from pytest import approx, skip
 import numpy as np
 
-from examples.toolbox.ex_loop_clustering import ex_vector_clustering
+from examples.toolbox.ex_vector_clustering import ex_vector_clustering
 
 
 # class TestReaderAllMaps(unittest.TestCase):
