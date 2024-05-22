@@ -376,8 +376,8 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
             <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/KNN500n_toolbox">KNN500n_toolbox</a></code>: contains file analyses from the toolbox performed on the raw data (offset and inversion phase analysis). The following files are based on these data:</li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_list_map_reader.py">examples/toolbox/ex_list_map_reader.py</a></code>.</li>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/datacube_to_nanoloop/ex_file.py">/examples/utils/datacube_to_nanoloop/ex_file.py</a></code>.</li>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop_to_hyst/ex_file.py">/examples/utils/nanoloop_to_hyst/ex_file.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/datacube_to_nanoloop/ex_file.py">examples/utils/datacube_to_nanoloop/ex_file.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop_to_hyst/ex_file.py">examples/utils/nanoloop_to_hyst/ex_file.py</a></code>.</li>
             </ul>
         </ul>
     </ul>
@@ -638,6 +638,7 @@ Calibration is indispensable for obtaining quantitative measurements. In the mea
 
 <p align="justify" width="100%">
 The user must specify if input phase values are in radians or not with <code>radians_input_phase</code> setting. If it's the case, phase values are converted in degrees for the analysis. The user can also define a phase offset value to implement before processing the measurements. This offset is applied in the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script using the <code>apply_phase_offset</code> function, aiming to mitigate phase switching, which can pose challenges during analysis and nanoloop fitting. The user defines the phase offset value through the <code>offset</code> parameter. <br>
+&#8226 If the <code>phase_file_path</code> parameter is provided by the user, the phase offset value applied to each file is read from this file with <code>get_phase_tab_offset</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/file.py">utils/datacube_to_nanoloop/file.py</a></code>. <br>
 &#8226 If the <code>method</code> parameter is set to <code>'static'</code>, this value is applied to the phase signal for all SSPFM raw measurement files. <br>
 &#8226 When <code>method</code> is set to <code>'dynamic'</code>, the phase offset value is applied to the first SSPFM raw measurement file, and for each subsequent file, a new offset value is determined using the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script with the <code>phase_offset_determination</code> and <code>mean_phase_offset</code> functions. It is then applied to the next measurement file. For a deeper understanding of the phase offset determination, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2-phase-offset-analyzer">VIII.2) Phase offset analyzer</a>.<br>
 &#8226 If <code>method</code> is set to <code>None</code>, no phase offset is applied for analysis.
