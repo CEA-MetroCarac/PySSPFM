@@ -156,7 +156,7 @@ The PySSPFM application then proceeds with two stages of measurement processing.
 </p>
 
 <p align="justify" width="100%">
-&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">Machine learning (K-Means)</a> <br>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">Machine learning (K-Means, GMM, PCA)</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_hyst.py">Phase separation</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">Mapping cross-correlation</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">SPM file converter</a> <br>
@@ -335,7 +335,7 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
             <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/KNN500n_2023-11-20-16h15m_out_dfrt">KNN500n_2023-11-20-16h15m_out_dfrt</a></code>: embodying the measurement outcomes post the second phase of processing. This underpins the following endeavors:</li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_phase.py">examples/utils/nanoloop/ex_phase.py</a></code>.</li>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_curve_clustering.py">examples/toolbox/ex_curve_clustering.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_vector_clustering.py">examples/toolbox/ex_vector_clustering.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_global_map_reader.py">examples/toolbox/ex_global_map_reader.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_list_map_reader.py">examples/toolbox/ex_list_map_reader.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_map_correlation.py">examples/toolbox/ex_map_correlation.py</a></code>.</li>
@@ -372,6 +372,12 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/ex_raw_extraction.py">examples/utils/ex_raw_extraction.py</a></code>.</li>
             </ul>
         </ul>
+        <ul align="justify" width="100%">
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/KNN500n_toolbox">KNN500n_toolbox</a></code>: contains file analyses from the toolbox performed on the raw data (offset and inversion phase analysis). The following files are based on these data:</li>
+            <ul align="justify" width="100%">
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_list_map_reader.py">examples/toolbox/ex_list_map_reader.py</a></code>.</li>
+            </ul>
+        </ul>
     </ul>
     <ul align="justify" width="100%">
         <li>2. Authentic data stemming from SSPFM measurements conducted on a PZT (lead zirconate titanate) sample, which are located within the directory: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in">examples/data/PySSPFM_example_in</a></code>. This repository encompasses several subdirectories, specifically:</li>
@@ -379,7 +385,9 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
             <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/PZT100n">PZT100n</a></code>: housing an assemblage of SSPFM datacube measurement files with an spm extension (Bruker), alongside their corresponding measurement records. This serves the following purpose:</li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_phase.py">examples/utils/nanoloop/ex_phase.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_vector_clustering.py">examples/toolbox/ex_vector_clustering.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_phase_offset_analyzer.py">examples/toolbox/ex_phase_offset_analyzer.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_phase_inversion_analyzer.py">examples/toolbox/ex_phase_inversion_analyzer.py</a></code>.</li>
             </ul>
         </ul>
         <ul align="justify" width="100%">
