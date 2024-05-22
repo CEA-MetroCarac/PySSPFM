@@ -435,13 +435,26 @@ def extract_properties(dir_path_in):
     (properties, dim_pix, dim_mic) = ({}, {}, {})
     dim = ''
 
-    for file_name_in in os.listdir(dir_path_in):
+    # Extraction of property files
+    file_names = os.listdir(dir_path_in)
+    file_names = [file_name for file_name in file_names
+                  if ("properties" in file_name or
+                      "phase_offset" in file_name or
+                      "phase_inversion" in file_name) and
+                  file_name.endswith('.txt')]
+
+    for file_name_in in file_names:
         file_path_in = os.path.join(dir_path_in, file_name_in)
 
         # Header extraction
         with open(file_path_in, encoding="latin-1") as file:
             lines = file.readlines()
-        mode = lines[0][2:-1]
+
+        # Define mode
+        if "properties" in file_name_in:
+            mode = lines[0][2:-1]
+        else:
+            mode = os.path.splitext(file_name_in)[0]
         dim = lines[1][2:-3].split(', ')
 
         # Properties extraction
