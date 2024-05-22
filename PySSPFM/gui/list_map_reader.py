@@ -132,7 +132,9 @@ def main(parent=None):
            "(properties)\n" \
            "- Description: This parameter specifies the directory containing " \
            "the properties text files generated after the 2nd step of the " \
-           "analysis.\n" \
+           "analysis or 'phase_offset.txt' generated with " \
+           "'phase_offset_analyzer.py' or 'phase_inversion.txt' generated " \
+           "with 'phase_inversion_analyzer.py'.\n" \
            "- Value: It should be a string representing a directory path."
     entry_in.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(entry_in, mess))
