@@ -1665,13 +1665,8 @@ The measurement parameters are extracted from the SSPFM measurement sheet, and e
 #### VIII.2.c) Figures
 
 <p align="center" width="100%">
-    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_offset_analyzer_histo.PNG> <br>
-    <em>Histogram of phase values for On Field measurements, after applying the phase offset determined by the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">toolbox/phase_offset_analyzer.py</a></code> (figure generated with <code>refocused_phase_histo</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot_phase.py">utils/nanoloop/plot_phase.py</a></code> script). Both On and Off Field phase histogram figure are plotted.</em>
-</p>
-
-<p align="center" width="100%">
-    <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_offset_analyzer_graph.PNG> <br>
-    <em>Graph showing the evolution of the phase offset determined by the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">toolbox/phase_offset_analyzer.py</a></code> as a function of the index of the raw SSPFM measurement files (figure generated with <code>generate_graph_offset</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">toolbox/phase_offset_analyzer.py</a></code> script).</em>
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_variation_with_voltage.PNG> <br>
+    <em>Detection of phase inversion with phase variation with voltage (figure generated with <code>plot_phase_bias_grad</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot_phase.py">utils/nanoloop/plot_phase.py</a></code> script)</em>
 </p>
 
 ### VIII.3) Loop clustering (K-Means or GMM)
