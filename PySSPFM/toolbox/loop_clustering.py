@@ -1,12 +1,13 @@
 """
 --> Executable Script
-Module used to perform a clustering (K-Means or Gaussian Mixture Model) for all
-best loop (with a chosen measure, for example piezoresponse), for each pixel
-(one loop for each mode) of a sspfm measurement.
-Loops can be a composition of several measure, which will be normalized
+Module used to perform a clustering (K-Means or Gaussian Mixture Model) for a
+list of vector (loop (amplitude, phase, piezoresponse, q_factor, resonance
+frequency ...) or curve (deflection, height sensor ...), with a chosen
+measure), for each pixel of a sspfm measurement.
+Vectors can be a composition of several measure, which will be normalized
 between 0 and 1 and concatenated (for example amplitude and phase)
     - Generate a sspfm maps for each mode resulting of clustering analysis
-    - Generate a graph of all loop with their cluster for each mode
+    - Generate a graph of all vector with their cluster for each mode
     resulting of clustering analysis
 """
 
@@ -15,151 +16,128 @@ import tkinter.filedialog as tkf
 from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.patches import Patch
 
-from PySSPFM.settings import get_setting
-from PySSPFM.utils.core.clustering import curve_clustering, cbar_map
+from PySSPFM.settings import get_setting, copy_default_settings_if_not_exist
+from PySSPFM.utils.core.clustering import \
+    (data_clustering, cbar_map, plot_clustering_centroids,
+     plot_all_vector_clustering, plot_avg_vector_clustering, data_pca,
+     plot_pca_plane)
 from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
-from PySSPFM.utils.core.figure import print_plots, plot_graph
+from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.nanoloop_to_hyst.file import extract_properties
 from PySSPFM.utils.map.main import main_mapping
 from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.file_clustering import \
+    (extract_loop_data, gen_coupled_data, extract_map_dim_from_csv,
+     curve_extraction)
 
 
-def gen_loop_data(data):
+def perform_vector_clustering(data_x, data_y, numb_cluster=3,
+                              method="kmeans", pca_mode=False,
+                              relative_mode=False, verbose=False,
+                              make_plots=False):
     """
-    Extract 2D loops data from a 3-row data array.
+    Perform vector clustering.
 
     Parameters
     ----------
-    data : numpy.ndarray
-        2+nb_y_meas-row data array where the first row contains indices,
-        the second row contains voltage values, and the other
-        row contains y_axis values.
+    data_x : array_like
+        Input data for x-axis.
+    data_y : array_like
+        Input data for y-axis.
+    numb_cluster : int, optional
+        Number of clusters (default is 3).
+    method : str, optional
+        Clustering method (default is "kmeans").
+    pca_mode : bool, optional
+        Whether to perform PCA analysis (default is False).
+    relative_mode : bool, optional
+        Whether to perform relative (each vector (i.e data_y) vary between 0
+        and 1) analysis (default is False).
+    verbose : bool, optional
+        Whether to display verbose information (default is False).
+    make_plots : bool, optional
+        Whether to generate plots (default is False).
 
     Returns
     -------
-    loops_x : list of list
-        Polarization voltage data for each loop.
-    loops_y : list of list
-        y_axis data for each loop.
+    cluster_labels : list
+        List of cluster labels.
+    cluster_info : list
+        List of cluster information.
+    inertia : float
+        Inertia value.
+    avg_data : list
+        List of average data by cluster.
+    figures : list
+        List of generated figures.
     """
 
-    data_x, data_y = [], []
+    # Each vector vary between 0 and 1
+    if relative_mode:
+        data_y = [
+            [(sub_elem - np.min(elem)) / (np.max(elem) - np.min(elem))
+             for sub_elem in elem] for elem in data_y]
 
-    # Segmentation
-    index_changes = np.where(data[0][:-1] != data[0][1:])[0] + 1
-    for cont, teab_meas in enumerate(data[2]):
-        data_x.append([])
-        data_y.append([])
-        data_x[cont] = np.split(data[1], index_changes)
-        data_y[cont] = np.split(teab_meas, index_changes)
-
-    # Normalize data_y if len > 2 (for multi data y)
-    if len(data_y) >= 2:
-        for cont, tab_data_y in enumerate(data_y):
-            min_val = np.min(tab_data_y)
-            max_val = np.max(tab_data_y)
-            data_y[cont] = (tab_data_y - min_val) / (max_val - min_val)
-
-    # Concatenation for multi data y
-    loops_x = np.concatenate(data_x, axis=1)
-    loops_y = np.concatenate(data_y, axis=1)
-
-    return loops_x, loops_y
-
-
-def extract_data(dir_path_in, name_files, modes, tab_label):
-    """
-    Extract data from files based on modes and cluster counts.
-
-    Parameters
-    ----------
-    dir_path_in : str
-        Directory path where the data files are located.
-    name_files : list of str
-        List of file names to process.
-    modes : list of str
-        List of modes to consider.
-    tab_label: list of str
-        List of measurement name for the loop
-
-    Returns
-    -------
-    loops_x : dict
-        Dictionary containing x-axis data for each mode.
-    loops_y : dict
-        Dictionary containing y-axis data for each mode.
-    """
-
-    loops_x, loops_y = {}, {}
-
-    for name_file in name_files:
-        mode_cluster = ""
-        for mode in modes:
-            if mode in name_file:
-                mode_cluster = mode
-                break
-        if mode_cluster:
-            if mode_cluster != "coupled":
-                path = os.path.join(dir_path_in, name_file)
-                with open(path, 'r', encoding="latin-1") as file:
-                    header = file.readlines()[1]
-                    header = header.replace('\n', '').replace('# ', '')
-                    tab_header = header.split('\t\t')
-                data = np.loadtxt(path, skiprows=2).T
-                data_dict = {}
-                for key, data_row in zip(tab_header, data):
-                    data_dict[key] = data_row
-                index = data_dict['index pix']
-                data_x = data_dict['voltage']
-                data_y = [data_dict[label] for label in tab_label]
-                loops_x[mode_cluster], loops_y[mode_cluster] = \
-                    gen_loop_data([index, data_x, data_y])
-
-    return loops_x, loops_y
-
-
-def gen_coupled_data(loops_x, loops_y, offsets=None):
-    """
-    Generate coupled data by subtracting 'off' from 'on' field measurements:
-    only for piezoresponse loop
-
-    Parameters
-    ----------
-    loops_x : dict
-        Dictionary containing 'on' and 'off' field measurements for x-axis.
-    loops_y : dict
-        Dictionary containing 'on' and 'off' field measurements for y-axis.
-    offsets: list of float, optional
-        List with fit determined vertical offset for off field measurements
-        (default: None)
-
-    Returns
-    -------
-    loops_x : dict
-        Updated dictionary containing 'coupled' measurements for x-axis.
-    loops_y : dict
-        Updated dictionary containing 'coupled' measurements for y-axis.
-    """
-
-    if "on" in loops_x.keys() and "off" in loops_x.keys():
-
-        loops_x["coupled"] = loops_x["on"]
-        loops_y["coupled"] = [
-            [on - off for on, off in zip(loop_y_on, loop_y_off)]
-            for loop_y_on, loop_y_off in zip(loops_y["on"], loops_y["off"])]
-        if offsets is not None:
-            if len(offsets) == len(loops_y["coupled"]):
-                for i, loop_y_coupled in enumerate(loops_y["coupled"]):
-                    loops_y["coupled"][i] = [elem+offsets[i]
-                                             for elem in loop_y_coupled]
+    # Init the clustering with PCA analysis
+    if pca_mode is True:
+        processed_data = data_pca(data_y, dimension=2)
     else:
-        print("For coupled analysis, both 'on' and 'off' field "
-              "measurements should be available.")
+        processed_data = data_y
 
-    return loops_x, loops_y
+    # Data clustering
+    cluster_labels, cluster_info, inertia, centers = data_clustering(
+        processed_data, num_clusters=numb_cluster, method=method,
+        verbose=verbose)
+
+    # Calculate Average data by Cluster
+    avg_data = []
+    for cluster_idx in range(numb_cluster):
+        cluster_mask = np.array(cluster_labels) == cluster_idx
+        avg_data.append(
+            np.mean(np.array(data_y)[cluster_mask], axis=0))
+
+    # Clustering results in str
+    labels = []
+    for i in range(numb_cluster):
+        labels.append(f'Cluster {cluster_info[i][4]}, '
+                      f'{cluster_info[i][3]} points'
+                      ', near dist '
+                      f'({cluster_info[i][2]}) : '
+                      f'{cluster_info[i][1]:.2e}'
+                      ', ref (A) dist : '
+                      f'{cluster_info[i][0]:.2e}')
+
+    if verbose:
+        _ = [print(label) for label in labels]
+
+    # Generate plots if specified
+    figures = []
+    if make_plots:
+
+        # Color of figures
+        color_curve_clustering = get_setting("color_curve_clustering")
+        cbar = plt.get_cmap(color_curve_clustering)
+        colors = [cbar((numb_cluster - i) / numb_cluster)
+                  for i in range(numb_cluster)]
+
+        if pca_mode is True:
+            figures += plot_pca_plane(
+                processed_data, label_clust=cluster_labels,
+                colors=colors, centers=centers)
+        else:
+            figures += plot_clustering_centroids(
+                data_y, numb_cluster, cluster_labels,
+                cluster_info, centers, colors)
+        figures += plot_all_vector_clustering(
+            data_x, data_y, numb_cluster,
+            cluster_labels, cluster_info, colors)
+        figures += plot_avg_vector_clustering(
+            data_x[0], avg_data, numb_cluster,
+            cluster_info, colors)
+
+    return cluster_labels, cluster_info, inertia, avg_data, figures
 
 
 def main_loop_clustering(
@@ -201,10 +179,11 @@ def main_loop_clustering(
     avg_loop : dict
         List of average loop for each cluster in each mode.
     """
-    name_files = os.listdir(dir_path_in)
+
     method = user_pars["method"]
     assert method in ["kmeans", "gmm"], \
         "Invalid clustering method. Method must be either 'kmeans' or 'gmm'."
+    make_plots = bool(show_plots or save_plots)
 
     modes = [key.split()[-1] for key, value in user_pars.items() if
              'clusters' in key and value is not None]
@@ -212,14 +191,13 @@ def main_loop_clustering(
         modes = [lab for lab in modes if lab != 'coupled']
     lab_tab = [['on', 'off', 'coupled'], ['y', 'w', 'r'],
                ['On Field', 'Off Field', 'Coupled']]
-    cluster_labels, cluster_info, inertia, centers, avg_loop = \
-        {}, {}, {}, {}, {}
+    cluster_labels, cluster_info, inertia, avg_loop = \
+        {}, {}, {}, {}
     offsets = []
-    make_plots = bool(show_plots or save_plots)
 
     # Extract loop data
-    loops_x, loops_y = extract_data(dir_path_in, name_files, modes,
-                                    user_pars['label meas'])
+    loops_x, loops_y = extract_loop_data(
+        dir_path_in, modes, user_pars['label meas'])
 
     # Extract extra analysis info (scan dim + vertical offset (off field))
     if dir_path_in is not None:
@@ -242,41 +220,27 @@ def main_loop_clustering(
     # Perform clustering for each mode
     for mode in modes:
         try:
-            numb_cluster = user_pars[f'nb clusters {mode}']
-            if isinstance(loops_y[mode], list):
-                loops_y[mode] = np.array(loops_y[mode])
-
-            # Clustering
-            cluster_labels[mode], cluster_info[mode], inertia[mode], \
-                centers[mode] = curve_clustering(
-                loops_y[mode], num_clusters=numb_cluster, method=method,
-                verbose=verbose)
-
-            # Calculate Average loop by Cluster
-            avg_loop[mode] = []
-            for cluster_idx in range(numb_cluster):
-                cluster_mask = np.array(cluster_labels[mode]) == cluster_idx
-                avg_loop[mode].append(
-                    np.mean(np.array(loops_y[mode])[cluster_mask], axis=0))
-
-            # Clustering results in str
-            labels = []
-            for i in range(numb_cluster):
-                labels.append(f'Cluster {cluster_info[mode][i][4]}, '
-                              f'{cluster_info[mode][i][3]} points'
-                              ', near dist '
-                              f'({cluster_info[mode][i][2]}) : '
-                              f'{cluster_info[mode][i][1]:.2e}'
-                              ', ref (A) dist : '
-                              f'{cluster_info[mode][i][0]:.2e}')
-
             if verbose:
                 print(f'{mode} :')
-                _ = [print(label) for label in labels]
+            numb_cluster = user_pars[f'nb clusters {mode}']
+            if isinstance(loops_y[mode], list):
+                loops_y[mode] = np.array(loops_y[mode])\
 
-            # Generate plots if specified
+            res = perform_vector_clustering(
+                    loops_x[mode], loops_y[mode],
+                    numb_cluster=numb_cluster,
+                    method=method, pca_mode=user_pars['pca'],
+                    relative_mode=user_pars['relative'],
+                    verbose=verbose, make_plots=make_plots)
+            (cluster_labels[mode], cluster_info[mode], inertia[mode],
+             avg_loop[mode], figures) = res
+
             if make_plots:
+                if save_plots is True:
+                    print_plots(figures, show_plots=False,
+                                save_plots=save_plots, dirname=dir_path_out)
 
+                # Plot 3 : cluster mapping
                 # Color of figures
                 color_curve_clustering = get_setting("color_curve_clustering")
                 cbar = plt.get_cmap(color_curve_clustering)
@@ -284,82 +248,6 @@ def main_loop_clustering(
                           for i in range(numb_cluster)]
                 method_str = "K-Means" if method == "kmeans" else "GMM"
                 cmap, cbar_lab = cbar_map(colors, numb_cluster, method_str)
-
-                # Plot 1 : All Loop by Cluster
-                # Legend
-                legend_handles = []
-                for i in range(numb_cluster):
-                    legend_handles.append(
-                        Patch(color=colors[i], label=labels[i]))
-
-                figs = []
-
-                # Create graph
-                figsize = get_setting("figsize")
-                fig1, ax = plt.subplots(figsize=figsize)
-                fig1.sfn = f"clusters_centroids_{mode}"
-                plot_dict_1 = {
-                    'title': f'Clusters with Centroids ({mode})',
-                    'x lab': 'Feature 1', 'y lab': 'Feature 2',
-                    'fs': 15, 'edgew': 3, 'tickl': 5, 'gridw': 1}
-                plot_graph(ax, [], [], plot_dict=plot_dict_1)
-
-                # Plot data points
-                for index in range(numb_cluster):
-                    tab_lab = np.array(cluster_labels[mode])
-                    cluster_data = loops_y[mode][tab_lab == index]
-                    cluster_data = np.array(cluster_data)
-
-                    # Plot data points for the current cluster
-                    plt.scatter(cluster_data[:, 0], cluster_data[:, 1],
-                                c=[colors[index]],
-                                label=f'Cluster {cluster_info[mode][index][4]}')
-                # Plot centroids
-                plt.scatter(centers[mode][:, 0], centers[mode][:, 1],
-                            marker='x', color='black', label='Centroids')
-                ax.legend()
-                figs += [fig1]
-
-                # Create graph
-                figsize = get_setting("figsize")
-                fig2, ax = plt.subplots(figsize=figsize)
-                fig2.sfn = f"clustering_best_loops_{mode}"
-                plot_dict_1 = {
-                    'title': f'Clustering ({method_str}): Best Loops ({mode})',
-                    'x lab': 'Voltage', 'y lab': 'Y Axis',
-                    'fs': 15, 'edgew': 3, 'tickl': 5, 'gridw': 1}
-                plot_graph(ax, [], [], plot_dict=plot_dict_1)
-                # Plot each loop
-                for i, (elem_x, elem_y) in enumerate(zip(
-                        loops_x[mode], loops_y[mode])):
-                    color = colors[cluster_labels[mode][i]]
-                    plt.plot(elem_x, elem_y, color=color)
-                ax.legend(handles=legend_handles)
-                figs += [fig2]
-
-                # Plot 2 : Average Loop by Cluster
-                # Create graph
-                fig3, ax = plt.subplots(figsize=figsize)
-                fig3.sfn = f"clustering_average_loops_{mode}"
-                plot_dict_3 = {
-                    'title': f'Average Loop by Cluster ({mode})',
-                    'x lab': 'Voltage', 'y lab': 'Y Axis',
-                    'fs': 15, 'edgew': 3, 'tickl': 5, 'gridw': 1}
-                plot_graph(ax, [], [], plot_dict=plot_dict_3)
-                # Plot Average Loop by Cluster
-                for index in range(numb_cluster):
-                    color = colors[index]
-                    label = f'Cluster {cluster_info[mode][index][4]}'
-                    plt.plot(loops_x[mode][0], avg_loop[mode][index],
-                             label=label, color=color)
-                ax.legend()
-                figs += [fig3]
-
-                if save_plots is True:
-                    print_plots(figs, show_plots=False, save_plots=save_plots,
-                                dirname=dir_path_out)
-
-                # Plot 3 : cluster mapping
                 properties = \
                     {f"Clustering ({method_str})": cluster_labels[mode]}
                 colors_lab = {f"Clustering ({method_str})": cmap}
@@ -377,15 +265,201 @@ def main_loop_clustering(
     return cluster_labels, cluster_info, inertia, avg_loop
 
 
-def parameters():
+def main_curve_clustering(
+        user_pars, dir_path_in, verbose=False, show_plots=True,
+        save_plots=False, dir_path_out=None, dim_pix=None, dim_mic=None,
+        csv_path=None):
+    """
+    Perform curve clustering analysis.
+
+    Parameters
+    ----------
+    user_pars : dict
+        User parameters.
+    dir_path_in : str
+        Path of curve measurement directory (in).
+    verbose : bool, optional
+        Activation key for verbosity.
+    show_plots : bool, optional
+        Activation key for figure visualization.
+    save_plots : bool, optional
+        If True, save generated plots.
+    dir_path_out : str, optional
+        Output directory for saving plots.
+    dim_pix : dict, optional
+        Dictionary of pixel dimensions.
+    dim_mic : dict, optional
+        Dictionary of micron dimensions.
+    csv_path : str, optional
+        Path of csv params measurement file (in)
+
+    Returns
+    -------
+    cluster_labels : list
+        Cluster indices for each data point
+    cluster_info : list
+        Information about each cluster.
+    inertia : float
+        For K-Means : Inertia (within-cluster sum of squares).
+        For GMM : Bayesian Information Criterion.
+    avg_curve: numpy.ndarray
+        List of average curve.
+    """
+
+    method = user_pars["method"]
+    assert method in ["kmeans", "gmm"], \
+        "Invalid clustering method. Method must be either 'kmeans' or 'gmm'."
+    make_plots = bool(show_plots or save_plots)
+    numb_cluster = user_pars['nb clusters']
+    # Extract curve data
+    curves_x, curves_y = curve_extraction(
+        dir_path_in, user_pars['label meas'], mode=user_pars['mode'],
+        extension=user_pars['extension'])
+
+    # Extract extra analysis info (scan dim)
+    if dim_pix is None and dir_path_in is not None:
+        dim_pix, dim_mic = extract_map_dim_from_csv(
+            csv_path, dir_path_in=dir_path_in, verbose=verbose)
+
+    if isinstance(curves_y, list):
+        curves_y = np.array(curves_y)
+
+    res = perform_vector_clustering(
+        curves_x, curves_y, numb_cluster=numb_cluster,
+        method=method, pca_mode=user_pars['pca'], verbose=verbose,
+        make_plots=make_plots)
+
+    (cluster_labels, cluster_info, inertia, avg_curve, figures) = res
+
+    if make_plots:
+        if save_plots is True:
+            print_plots(figures, show_plots=False, save_plots=save_plots,
+                        dirname=dir_path_out)
+
+        # Plot 3 : cluster mapping
+        color_curve_clustering = get_setting("color_curve_clustering")
+        cbar = plt.get_cmap(color_curve_clustering)
+        colors = [cbar((numb_cluster - i) / numb_cluster)
+                  for i in range(numb_cluster)]
+        method_str = "K-Means" if method == "kmeans" else "GMM"
+        cmap, cbar_lab = cbar_map(colors, numb_cluster, method_str)
+        properties = \
+            {f"Clustering ({method_str})": cluster_labels}
+        colors_lab = {f"Clustering ({method_str})": cmap}
+        main_mapping(properties, dim_pix, dim_mic=dim_mic,
+                     colors=colors_lab, cbar_lab=cbar_lab,
+                     dict_map=None, mask=[], show_plots=show_plots,
+                     save_plots=save_plots, dir_path_out=dir_path_out)
+
+    return cluster_labels, cluster_info, inertia, avg_curve
+
+
+def main_vector_clustering(
+        user_pars, loop_pars, curve_pars, dir_path_in, verbose=False,
+        show_plots=True, save_plots=False, dir_path_out=None, dim_pix=None,
+        dim_mic=None, dir_path_in_props=None):
+    """
+    Perform vector clustering analysis.
+
+    Parameters
+    ----------
+    user_pars : dict
+        User parameters.
+    loop_pars : dict
+        User parameters for loop clustering analysis.
+    curve_pars : dict
+        User parameters for curve clustering analysis.
+    dir_path_in : str
+        Path of vector (loop or curve) txt directory (in).
+    verbose : bool, optional
+        Activation key for verbosity.
+    show_plots : bool, optional
+        Activation key for figure visualization.
+    save_plots : bool, optional
+        If True, save generated plots.
+    dir_path_out : str, optional
+        Output directory for saving plots.
+    dim_pix : dict, optional
+        Dictionary of pixel dimensions.
+    dim_mic : dict, optional
+        Dictionary of micron dimensions.
+    dir_path_in_props : str, optional
+        Directory path for input properties.
+
+    Returns
+    -------
+    cluster_labels : dict
+        Cluster indices for each data point for each mode.
+    cluster_info : dict
+        Information about each cluster for each mode.
+    inertia : dict
+        Inertia (within-cluster sum of squares) for each mode.
+    avg_vector : dict
+        List of average vector for each cluster in each mode.
+    """
+
+    user_pars_merged = user_pars.copy()
+
+    if user_pars["object"] == "curve":
+        user_pars_merged.update(curve_pars)
+        cluster_labels, cluster_info, inertia, avg_vector = \
+            main_curve_clustering(user_pars_merged, dir_path_in,
+                                  verbose=verbose,
+                                  show_plots=show_plots,
+                                  save_plots=save_plots,
+                                  dir_path_out=dir_path_out,
+                                  dim_pix=dim_pix, dim_mic=dim_mic,
+                                  csv_path=dir_path_in_props)
+
+    elif user_pars["object"] == "loop":
+        user_pars_merged.update(loop_pars)
+        cluster_labels, cluster_info, inertia, avg_vector = \
+            main_loop_clustering(user_pars_merged, dir_path_in, verbose=verbose,
+                                 show_plots=show_plots,
+                                 save_plots=save_plots,
+                                 dir_path_out=dir_path_out,
+                                 dim_pix=dim_pix, dim_mic=dim_mic,
+                                 dir_path_in_props=dir_path_in_props)
+
+    else:
+        raise IOError("object parameter should be in ['curve', 'loop']")
+
+    return cluster_labels, cluster_info, inertia, avg_vector
+
+
+def parameters(fname_json=None):
     """
     To complete by user of the script: return parameters for analysis
+
+    fname_json: str
+        Path to the JSON file containing user parameters. If None,
+        the file is created in a default path:
+        (your_user_disk_access/.pysspfm/script_name_params.json)
+
+    - object: str
+        Name of the Object Processed with Clustering Analysis
+        This parameter determines the name of the object used to perform the
+        clustering.
+        Implemented objects are Loops (best nanoloops associated with each
+        pixel) or Curves (raw SSPFM measurements associated with each
+        pixel).
+        Choose from: "loop", "curve"
+    - relative: bool
+        Activation key for relative clustering analysis.
+        This parameter serves as an activation key to perform clustering
+        analysis on relative vectors (all vectors vary between 0 and 1).
+        Always active for combined vectors of multiple measurements.
+    - pca: bool
+        Activation key for performing PCA before clustering analysis.
+        This parameter serves as an activation key to perform PCA (Principal
+        Component Analysis) before clustering analysis.
     - method: str
-        Name of the method used to perform the clustering
+        Name of the Method Used to Perform the Clustering
         This parameter determines the method used to perform the clustering.
         Implemented methods are K-Means or Gaussian Mixture Model.
         (GMM).
         Choose from : "kmeans", "gmm"
+
     - label_meas: list of str
         List of Measurement Name for Loops
         This parameter contains a list of measurement name in order to create
@@ -414,10 +488,30 @@ def parameters():
         Used in the analysis of differential component only for piezoresponse
         loop.
 
+    - extension: str, optional
+        Extension of files.
+        This parameter determines the extension type of curve files.
+        Four possible values: 'spm' or 'txt' or 'csv' or 'xlsx'.
+    - mode: str
+        Mode of measurement used (extraction of measurements).
+        This parameter determines the method used for measurements,
+        specifically for the extraction measurements.
+        Two possible values: 'classic' (sweep or single frequency) or 'dfrt'.
+    - label_meas: list of str
+        List of Measurement Name for Curves
+        This parameter contains a list of measurement name in order to create
+        the curve to be analyzed using a machine learning algorithm
+        of clustering. If several name are filled, the curve will be
+        normalized and concatenated.
+    - nb_clusters: int
+        Number of Clusters for Curve.
+        This parameter determines the number of clusters for the
+        curve using a machine learning algorithm of clustering.
+
     - dir_path_in: str
-        Input Directory for Best Loop TXT Files (default: 'best_nanoloops').
-        This parameter specifies the directory path for the best loop .txt
-        files generated after the second step of the analysis.
+        Input Directory for Vector Files (default: 'best_nanoloops').
+        This parameter specifies the directory path for the vector
+        files, to perform clustering analysis.
     - dir_path_out: str
         Saving directory for analysis results figures
         (optional, default: toolbox directory in the same root)
@@ -426,8 +520,11 @@ def parameters():
     - dir_path_in_props: str
         Properties files directory
         (optional, default: properties).
-        This parameter specifies the directory containing the properties text
-        files generated after the 2nd step of the analysis.
+        This parameter specifies the directory containing the properties
+        files.
+        For loop clustering : text file generated after the 2nd step
+        of the analysis.
+        For curve clustering : CSV measurement file (measurement sheet model).
     - verbose: bool
         Activation key for printing verbosity during analysis.
         This parameter serves as an activation key for printing verbose
@@ -442,9 +539,14 @@ def parameters():
         generated during the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        script_directory = os.path.realpath(__file__)
-        file_path_user_params = script_directory.split('.')[0] + \
-            f'_params.{get_setting("extract_parameters")}'
+        # if fname_json is provided, use it, else use the default one
+        if fname_json is not None:
+            file_path_user_params = fname_json
+        else:
+            file_path = os.path.realpath(__file__)
+            file_path_user_params = \
+                copy_default_settings_if_not_exist(file_path)
+
         # Load parameters from the specified configuration file
         print(f"user parameters from {os.path.split(file_path_user_params)[1]} "
               f"file")
@@ -456,49 +558,65 @@ def parameters():
         show_plots = config_params['show_plots']
         save = config_params['save']
         user_pars = config_params['user_pars']
+        loop_pars = config_params['loop_pars']
+        curve_pars = config_params['curve_pars']
     elif get_setting("extract_parameters") == 'python':
         print("user parameters from python file")
-        # Select txt best loops folder (.txt)
+        # Select vector folder
         dir_path_in = tkf.askdirectory()
         # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_dfrt\best_nanoloops
         dir_path_out = None
         # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
-        # loop_clustering_2023-10-02-16h38m
+        # vector_clustering_2023-10-02-16h38m
         dir_path_in_props = None
         # dir_path_in_props = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
         verbose = True
         show_plots = True
         save = False
 
-        user_pars = {'method': 'kmeans',
-                     'label meas': ['piezoresponse'],
+        user_pars = {'object': 'loop',
+                     'relative': False,
+                     'pca': True,
+                     'method': 'kmeans'}
+        loop_pars = {'label meas': ['piezoresponse'],
                      'nb clusters off': 4,
                      'nb clusters on': 4,
                      'nb clusters coupled': 4}
+        curve_pars = {'extension': 'spm',
+                      'mode': 'classic',
+                      'label meas': ['deflection'],
+                      'nb clusters': 4}
 
     else:
         raise NotImplementedError("setting 'extract_parameters' "
                                   "should be in ['json', 'toml', 'python']")
 
-    return user_pars, dir_path_in, dir_path_out, dir_path_in_props, verbose, \
-        show_plots, save
+    return user_pars, loop_pars, curve_pars, dir_path_in, dir_path_out, \
+        dir_path_in_props, verbose, show_plots, save
 
 
-def main():
-    """ Main function for data analysis. """
+def main(fname_json=None):
+    """
+    Main function for data analysis.
+
+    fname_json: str
+        Path to the JSON file containing user parameters. If None,
+        the file is created in a default path:
+        (your_user_disk_access/.pysspfm/script_name_params.json)
+    """
     # Extract parameters
-    out = parameters()
-    (user_pars, dir_path_in, dir_path_out, dir_path_in_props, verbose,
-     show_plots, save) = out
+    (user_pars, loop_pars, curve_pars, dir_path_in, dir_path_out,
+     dir_path_in_props, verbose, show_plots, save) = \
+        parameters(fname_json=fname_json)
     # Generate default path out
     dir_path_out = save_path_management(
-        dir_path_in, dir_path_out, save=save,  dirname="loop_clustering",
+        dir_path_in, dir_path_out, save=save,  dirname="vector_clustering",
         lvl=1, create_path=True, post_analysis=True)
     start_time = datetime.now()
     # Main function
-    main_loop_clustering(
-        user_pars, dir_path_in, verbose=verbose, show_plots=show_plots,
-        save_plots=save, dir_path_out=dir_path_out,
+    main_vector_clustering(
+        user_pars, loop_pars, curve_pars, dir_path_in, verbose=verbose,
+        show_plots=show_plots, save_plots=save, dir_path_out=dir_path_out,
         dir_path_in_props=dir_path_in_props)
     # Save parameters
     if save:

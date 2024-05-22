@@ -1,7 +1,7 @@
 """
 --> Executable Script
-Graphical interface for loop clustering
- (run loop_clustering.main_loop_clustering)
+Graphical interface for vector clustering
+ (run vector_clustering.main_vector_clustering)
 """
 
 import os
@@ -12,7 +12,7 @@ from datetime import datetime
 
 from PySSPFM.settings import get_setting
 from PySSPFM.toolbox.loop_clustering import \
-    main_loop_clustering as main_script
+    main_vector_clustering as main_script
 from PySSPFM.gui.utils import \
     (add_grid_separator, grid_item, show_tooltip, extract_var,
      init_secondary_wdw, wdw_main_title)
@@ -33,35 +33,62 @@ def main(parent=None):
     None
     """
     # Create the main or secondary window
-    title = "Loop clustering"
+    title = "Vector clustering"
     app = init_secondary_wdw(parent=parent, wdw_title=title)
 
+    default_user_pars = {'object': 'loop',
+                         'relative': False,
+                         'pca': True,
+                         'method': 'kmeans'}
+    default_loop_pars = {'label meas': ['piezoresponse'],
+                         'nb clusters off': 4,
+                         'nb clusters on': 4,
+                         'nb clusters coupled': 4}
+    default_curve_pars = {'extension': 'spm',
+                          'mode': 'classic',
+                          'label meas': ['deflection'],
+                          'nb clusters': 4}
+
     # Set default parameter values
-    default_user_parameters = {
+    default_parameters = {
         'dir path in': '',
         'dir path in prop': '',
         'dir path out': '',
-        'method': "kmeans",
-        'label meas': ["piezoresponse"],
-        'nb clusters off': 4,
-        'nb clusters on': 4,
-        'nb clusters coupled': 4,
+        'user_pars': default_user_pars,
+        'loop_pars': default_loop_pars,
+        'curve_pars': default_curve_pars,
         'verbose': True,
         'show plots': True,
         'save': False,
     }
-    user_parameters = default_user_parameters.copy()
+    user_parameters = default_parameters.copy()
 
     def launch():
         # Update the user_parameters with the new values from the widgets
+        user_params = {
+            'object': object_var.get(),
+            'relative': relative_var.get(),
+            'pca': pca_var.get(),
+            'method': method_var.get()
+        }
+        loop_params = {
+            'label meas': extract_var(label_meas_loop_var),
+            'nb clusters off': clust_off_var.get(),
+            'nb clusters on': clust_on_var.get(),
+            'nb clusters coupled': clust_coupled_var.get()
+        }
+        curve_params = {
+            'extension': extension_var.get(),
+            'mode': mode_var.get(),
+            'label meas': extract_var(label_meas_curve_var),
+            'nb clusters': clust_var.get()
+        }
         user_parameters['dir path in'] = dir_path_in_var.get()
         user_parameters['dir path in prop'] = extract_var(dir_path_prop_var)
         user_parameters['dir path out'] = extract_var(dir_path_out_var)
-        user_parameters['method'] = method_var.get()
-        user_parameters['label meas'] = extract_var(label_meas_var)
-        user_parameters['nb clusters off'] = clust_off_var.get()
-        user_parameters['nb clusters on'] = clust_on_var.get()
-        user_parameters['nb clusters coupled'] = clust_coupled_var.get()
+        user_parameters["user_pars"] = user_params
+        user_parameters["loop_pars"] = loop_params
+        user_parameters["curve_pars"] = curve_params
         user_parameters['verbose'] = verbose_var.get()
         user_parameters['show plots'] = show_plots_var.get()
         user_parameters['save'] = save_var.get()
@@ -75,7 +102,10 @@ def main(parent=None):
 
         # Data analysis
         start_time = datetime.now()
-        main_script(user_parameters, user_parameters['dir path in'],
+        main_script(user_parameters["user_pars"],
+                    user_parameters["loop_pars"],
+                    user_parameters["curve_pars"],
+                    user_parameters['dir path in'],
                     verbose=user_parameters['verbose'],
                     show_plots=user_parameters['show plots'],
                     save_plots=user_parameters['save'],
@@ -100,7 +130,7 @@ def main(parent=None):
         dir_path_out = filedialog.askdirectory()
         dir_path_out_var.set(dir_path_out)
 
-    # Window title: Loop clustering
+    # Window title: Vector clustering
     wdw_main_title(app, title)
 
     row = 3
@@ -117,11 +147,10 @@ def main(parent=None):
     entry_in = ttk.Entry(app, textvariable=dir_path_in_var)
     row = grid_item(entry_in, row, column=1, sticky="ew", increment=False)
     strg = "- Name: dir_path_in\n" \
-           "- Summary: Input Directory for Best Nanoloop TXT Files " \
+           "- Summary: Input Directory for Vector Files " \
            "(default: 'best_nanoloops')\n" \
            "- Description: This parameter specifies the directory path for " \
-           "the best nanoloop .txt files generated after the second step of " \
-           "the analysis.\n" \
+           "the vector files, to perform clustering analysis.\n" \
            "- Value: String representing the directory path."
     entry_in.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(entry_in, mess))
@@ -133,7 +162,7 @@ def main(parent=None):
         if input_dir != "":
             output_dir = save_path_management(
                 input_dir, dir_path_out=None, save=True,
-                dirname="loop_clustering", lvl=1, create_path=False,
+                dirname="vector_clustering", lvl=1, create_path=False,
                 post_analysis=True)
         else:
             output_dir = ""
@@ -183,8 +212,11 @@ def main(parent=None):
            "- Summary: Properties files directory " \
            "(optional, default: properties)\n" \
            "- Description: This parameter specifies the directory containing " \
-           "the properties text files generated after the 2nd step of the " \
-           "analysis.\n" \
+           "the properties files.\n" \
+           "For loop clustering : text file generated after the 2nd step of " \
+           "the analysis.\n" \
+           "For curve clustering : CSV measurement file " \
+           "(measurement sheet model).\n" \
            "- Value: It should be a string representing a directory path."
     entry_prop.bind("<Enter>",
                     lambda event, mess=strg: show_tooltip(entry_prop, mess))
@@ -212,15 +244,73 @@ def main(parent=None):
     row = grid_item(browse_button_out, row, column=2)
     row = add_grid_separator(app, row=row)
 
-    # Section title: Method
-    label_meth = ttk.Label(app, text="Method", font=("Helvetica", 14))
-    row = grid_item(label_meth, row, column=0, sticky="ew", columnspan=3)
+    # Section title: Common parameters
+    label_common = ttk.Label(app, text="Common parameters",
+                             font=("Helvetica", 14))
+    row = grid_item(label_common, row, column=0, sticky="ew", columnspan=3)
+    strg = "These parameters are always active and are common."
+    label_common.bind(
+        "<Enter>", lambda event, mess=strg: show_tooltip(label_common, mess))
+
+    # Object
+    label_object = ttk.Label(app, text="Object:")
+    row = grid_item(label_object, row, column=0, sticky="e", increment=False)
+    object_var = ttk.Combobox(app, values=["loop", "curve"])
+    object_var.set(user_parameters['user_pars']['object'])
+    row = grid_item(object_var, row, column=1, sticky="ew")
+    strg = "- Name: object\n" \
+           "- Summary: Name of the object processed with clustering " \
+           "analysis.\n" \
+           "- Description: This parameter determines the name of the object " \
+           "used to perform the clustering.\n" \
+           "Implemented objects are Loops (best nanoloops associated with " \
+           "each pixel) or Curves (raw SSPFM measurements associated with " \
+           "each pixel).\n" \
+           "- Value: A string with two possible values:\n" \
+           "\t--> 'loop': Loop clustering\n" \
+           "\t--> 'curve': Curve clustering"
+    object_var.bind("<Enter>",
+                    lambda event, mess=strg: show_tooltip(object_var, mess))
+
+    # Relative
+    label_relative = ttk.Label(app, text="Relative:")
+    row = grid_item(label_relative, row, column=0, sticky="e", increment=False)
+    relative_var = tk.BooleanVar()
+    relative_var.set(user_parameters['user_pars']['relative'])
+    chck_relative = ttk.Checkbutton(app, variable=relative_var)
+    row = grid_item(chck_relative, row, column=1, sticky="w")
+    strg = "- Name: relative\n" \
+           "- Summary: Activation key for relative clustering analysis.\n" \
+           "- Description: This parameter serves as an activation key to " \
+           "perform clustering analysis on relative vectors (all vectors " \
+           "vary between 0 and 1). Always active for combined vectors of " \
+           "multiple measurements.\n" \
+           "- Value: Boolean (True or False)."
+    chck_relative.bind(
+        "<Enter>", lambda event, mess=strg: show_tooltip(chck_relative, mess))
+
+    # PCA
+    label_pca = ttk.Label(app, text="PCA:")
+    row = grid_item(label_pca, row, column=0, sticky="e", increment=False)
+    pca_var = tk.BooleanVar()
+    pca_var.set(user_parameters['user_pars']['pca'])
+    chck_pca = ttk.Checkbutton(app, variable=pca_var)
+    row = grid_item(chck_pca, row, column=1, sticky="w")
+    strg = "- Name: pca\n" \
+           "- Summary: Activation key for performing PCA before clustering " \
+           "analysis.\n" \
+           "- Description: This parameter serves as an activation key to " \
+           "perform PCA (Principal Component Analysis) before clustering " \
+           "analysis.\n" \
+           "- Value: Boolean (True or False)."
+    chck_pca.bind("<Enter>",
+                  lambda event, mess=strg: show_tooltip(chck_pca, mess))
 
     # Method
     label_method = ttk.Label(app, text="Method:")
     row = grid_item(label_method, row, column=0, sticky="e", increment=False)
     method_var = ttk.Combobox(app, values=["kmeans", "gmm"])
-    method_var.set(user_parameters['method'])
+    method_var.set(user_parameters['user_pars']['method'])
     row = grid_item(method_var, row, column=1, sticky="ew")
     strg = "- Name: method\n" \
            "- Summary: Name of the method used to perform the clustering.\n" \
@@ -234,17 +324,22 @@ def main(parent=None):
                     lambda event, mess=strg: show_tooltip(method_var, mess))
     row = add_grid_separator(app, row=row)
 
-    # Section title: Measure
-    label_meas = ttk.Label(app, text="Measure", font=("Helvetica", 14))
-    row = grid_item(label_meas, row, column=0, sticky="ew", columnspan=3)
+    # Section title: Loop parameters
+    label_loop_meas = ttk.Label(app, text="Loop parameters",
+                                font=("Helvetica", 14))
+    row = grid_item(label_loop_meas, row, column=0, sticky="ew", columnspan=3)
+    strg = "These parameters are common to a loop object process.\n" \
+           "Active if: object is 'loop'"
+    label_loop_meas.bind(
+        "<Enter>", lambda event, mess=strg: show_tooltip(label_loop_meas, mess))
 
     # Measure
-    label_name = ttk.Label(app, text="Name(s):")
-    row = grid_item(label_name, row, column=0, sticky="e", increment=False)
-    label_meas_var = tk.StringVar()
-    label_meas_var.set(str(user_parameters['label meas']))
-    entry_label_meas = ttk.Entry(app, textvariable=label_meas_var)
-    row = grid_item(entry_label_meas, row, column=1, sticky="ew")
+    label_name_loop = ttk.Label(app, text="Name(s):")
+    row = grid_item(label_name_loop, row, column=0, sticky="e", increment=False)
+    label_meas_loop_var = tk.StringVar()
+    label_meas_loop_var.set(str(user_parameters['loop_pars']['label meas']))
+    entry_label_meas_loop = ttk.Entry(app, textvariable=label_meas_loop_var)
+    row = grid_item(entry_label_meas_loop, row, column=1, sticky="ew")
     strg = "- Name: label_meas\n" \
            "- Summary: List of Measurement Name for Loops\n" \
            "- Description: This parameter contains a list of measurement " \
@@ -256,14 +351,9 @@ def main(parent=None):
            "and q fact\n" \
            "- Value: A list containing strings.\n" \
            "\t- For example: ['piezoresponse'] or ['amplitude', 'phase']"
-    entry_label_meas.bind(
+    entry_label_meas_loop.bind(
         "<Enter>",
-        lambda event, mess=strg: show_tooltip(entry_label_meas, mess))
-    row = add_grid_separator(app, row=row)
-
-    # Section title: Cluster
-    label_clust = ttk.Label(app, text="Cluster", font=("Helvetica", 14))
-    row = grid_item(label_clust, row, column=0, sticky="ew", columnspan=3)
+        lambda event, mess=strg: show_tooltip(entry_label_meas_loop, mess))
 
     # Function to update the label text when the slider is moved
     def update_nb_clusters_off(_):
@@ -280,7 +370,8 @@ def main(parent=None):
     # Nb clusters (off)
     label_off = ttk.Label(app, text="Nb clusters (off):")
     row = grid_item(label_off, row, column=0, sticky="e", increment=False)
-    clust_off_var = tk.IntVar(value=user_parameters['nb clusters off'])
+    clust_off_var = \
+        tk.IntVar(value=user_parameters['loop_pars']['nb clusters off'])
     scale_off = ttk.Scale(app, from_=1, to=30, variable=clust_off_var,
                           orient="horizontal", length=30,
                           command=update_nb_clusters_off)
@@ -301,7 +392,8 @@ def main(parent=None):
     # Nb clusters (on)
     label_on = ttk.Label(app, text="Nb clusters (on):")
     row = grid_item(label_on, row, column=0, sticky="e", increment=False)
-    clust_on_var = tk.IntVar(value=user_parameters['nb clusters on'])
+    clust_on_var = \
+        tk.IntVar(value=user_parameters['loop_pars']['nb clusters on'])
     scale_on = ttk.Scale(app, from_=1, to=30, variable=clust_on_var,
                          orient="horizontal", length=30,
                          command=update_nb_clusters_on)
@@ -322,7 +414,8 @@ def main(parent=None):
     # Nb clusters (coupled)
     label_coupled = ttk.Label(app, text="Nb clusters (coupled):")
     row = grid_item(label_coupled, row, column=0, sticky="e", increment=False)
-    clust_coupled_var = tk.IntVar(value=user_parameters['nb clusters coupled'])
+    clust_coupled_var = \
+        tk.IntVar(value=user_parameters['loop_pars']['nb clusters coupled'])
     scale_coupled = ttk.Scale(app, from_=1, to=30, variable=clust_coupled_var,
                               orient="horizontal", length=30,
                               command=update_nb_clusters_coupled)
@@ -340,6 +433,100 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(scale_coupled, mess))
     clust_coupled_label = ttk.Label(app, text=str(clust_coupled_var.get()))
     row = grid_item(clust_coupled_label, row, column=2, sticky="w")
+    row = add_grid_separator(app, row=row)
+
+    # Section title: Curve parameters
+    label_meas_curve = ttk.Label(
+        app, text="Curve parameters", font=("Helvetica", 14))
+    row = grid_item(label_meas_curve, row, column=0, sticky="ew", columnspan=3)
+    strg = "These parameters are common to a curve object process.\n" \
+           "Active if: object is 'curve'"
+    label_meas_curve.bind(
+        "<Enter>",
+        lambda event, mess=strg: show_tooltip(label_meas_curve, mess))
+
+    # Extension
+    label_ext = ttk.Label(app, text="Extension:")
+    row = grid_item(label_ext, row, column=0, sticky="e", increment=False)
+    extension_var = ttk.Combobox(app, values=["spm", "txt", "csv", "xlsx"])
+    extension_var.set(user_parameters['curve_pars']['extension'])
+    row = grid_item(extension_var, row, column=1, sticky="ew")
+    strg = "- Name: extension\n" \
+           "- Summary: Extension of curve files in input.\n" \
+           "- Description: This parameter determines the extension type of " \
+           "curve files.\n" \
+           "- Value: A string with four possible values:\n" \
+           "\t--> 'spm': for 'spm' curve file extension\n" \
+           "\t--> 'txt': for 'txt' curve file extension\n" \
+           "\t--> 'csv': for 'csv' curve file extension\n" \
+           "\t--> 'xlsx': for 'xlsx' curve file extension"
+    extension_var.bind(
+        "<Enter>", lambda event, mess=strg: show_tooltip(extension_var, mess))
+
+    # Mode
+    label_mode = ttk.Label(app, text="Mode:")
+    row = grid_item(label_mode, row, column=0, sticky="e", increment=False)
+    mode_var = ttk.Combobox(app, values=["classic", "dfrt"])
+    mode_var.set(user_parameters['curve_pars']['mode'])
+    row = grid_item(mode_var, row, column=1, sticky="ew")
+    strg = "- Name: mode\n" \
+           "- Summary: Treatment used for segment data analysis " \
+           "(extraction of PFM measurements).\n" \
+           "- Description: This parameter determines the treatment method " \
+           "used for segment data analysis, specifically for the extraction " \
+           "of PFM measurements.\n" \
+           "- Value: A string with two possible values: " \
+           "'classic' (sweep or single_freq) or 'dfrt'"
+    mode_var.bind("<Enter>",
+                  lambda event, mess=strg: show_tooltip(mode_var, mess))
+
+    # Measure
+    label_name_curve = ttk.Label(app, text="Name(s):")
+    row = grid_item(label_name_curve, row, column=0, sticky="e",
+                    increment=False)
+    label_meas_curve_var = tk.StringVar()
+    label_meas_curve_var.set(str(user_parameters['curve_pars']['label meas']))
+    entry_label_meas_curve = ttk.Entry(app, textvariable=label_meas_curve_var)
+    row = grid_item(entry_label_meas_curve, row, column=1, sticky="ew")
+    strg = "- Name: label_meas\n" \
+           "- Summary: List of Measurement Name for Curves\n" \
+           "- Description: This parameter contains a list of measurement " \
+           "name in order to create the curve to be analyzed using a machine " \
+           "learning algorithm of clustering.\n" \
+           "If several name are filled, the curve will be normalized and " \
+           "concatenated.\n" \
+           "Choose from : deflection, height, amplitude, phase ...\n" \
+           "- Value: A list containing strings.\n" \
+           "\t- For example: ['deflection'] or ['deflection', 'height']"
+    entry_label_meas_curve.bind(
+        "<Enter>",
+        lambda event, mess=strg: show_tooltip(entry_label_meas_curve, mess))
+
+    # Function to update the label text when the slider is moved
+    def update_nb_clusters(_):
+        clust_label.config(text=str(clust_var.get()))
+
+    # Nb clusters
+    label_cluster_nb = ttk.Label(app, text="Nb clusters:")
+    row = grid_item(label_cluster_nb, row, column=0, sticky="e",
+                    increment=False)
+    clust_var = tk.IntVar(value=user_parameters['curve_pars']['nb clusters'])
+    scale_clust = ttk.Scale(app, from_=1, to=30, variable=clust_var,
+                            orient="horizontal", length=30,
+                            command=update_nb_clusters)
+    row = grid_item(scale_clust, row, column=1, sticky="ew", increment=False)
+    strg = "- Name: nb_clusters\n" \
+           "- Summary: Number of Clusters for Curve\n" \
+           "- Description: This parameter determines the number of " \
+           "clusters for the curves. " \
+           "Machine learning algorythm of clustering\n" \
+           "- Value: Integer representing the number of initial " \
+           "clusters for the curves.\n" \
+           "- Active if: Used in the analysis of curves."
+    scale_clust.bind("<Enter>",
+                     lambda event, mess=strg: show_tooltip(scale_clust, mess))
+    clust_label = ttk.Label(app, text=str(clust_var.get()))
+    row = grid_item(clust_label, row, column=2, sticky="w")
     row = add_grid_separator(app, row=row)
 
     # Section title: Save and plot

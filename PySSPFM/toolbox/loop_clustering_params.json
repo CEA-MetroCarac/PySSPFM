@@ -6,10 +6,20 @@
     "show_plots": true,
     "save": false,
     "user_pars": {
-        "method": "kmeans",
+        "object": "loop",
+        "relative": false,
+        "pca": true,
+        "method": "kmeans"},
+    "loop_pars": {
         "label meas": ["piezoresponse"],
         "nb clusters off": 4,
         "nb clusters on": 4,
         "nb clusters coupled": 4
+    },
+    "curve_pars": {
+        "extension": "spm",
+        "mode": "classic",
+        "label meas": ["deflection"],
+        "nb clusters": 4
     }
 }
