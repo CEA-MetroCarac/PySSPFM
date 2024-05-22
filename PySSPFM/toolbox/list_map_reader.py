@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from PySSPFM.settings import get_setting, copy_default_settings_if_not_exist
 from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
-from PySSPFM.utils.core.figure import print_plots, plot_graph
+from PySSPFM.utils.core.figure import print_plots, plot_graph, plot_hist
 from PySSPFM.utils.nanoloop.plot import subplots_dim
 from PySSPFM.utils.nanoloop_to_hyst.file import extract_properties
 from PySSPFM.utils.map.plot import disable_ax, final_map, intermediate_map
@@ -128,8 +128,13 @@ def main_list_map_reader(user_pars, dir_path_in, verbose=False):
     fig_graphs.sfn = "list_map_reader_graphs"
     axs_graphs = formatting_fig_graphs(fig_graphs, fig_maps_dim,
                                        nb_graph=nb_map)
+    # Plot multi_prop hist
+    fig_hists = plt.figure(figsize=figsize)
+    fig_hists.sfn = "list_map_reader_hists"
+    axs_hists = formatting_fig_graphs(fig_hists, fig_maps_dim,
+                                      nb_graph=nb_map)
 
-    # Generate a map and graph for each property
+    # Generate a map, graph and hist for each property
     plot_ind = len(axs_maps) <= 10
     for i, (lab_prop, prop) in enumerate(multi_prop.items()):
         if verbose:
@@ -145,10 +150,16 @@ def main_list_map_reader(user_pars, dir_path_in, verbose=False):
                              mask=applied_mask, prop_str=lab_prop,
                              meas_time=user_pars["meas time"])
 
+        # Treat and plot hist: property
+        treatment_plot_hist(axs_hists[i], prop, mask=applied_mask,
+                            prop_str=lab_prop)
+
     fig_maps.tight_layout()
     fig_graphs.tight_layout()
+    fig_hists.tight_layout()
     maps += [fig_maps]
     maps += [fig_graphs]
+    maps += [fig_hists]
     figures = corr_table + maps
 
     return figures
@@ -199,6 +210,33 @@ def treatment_plot_graph(ax_graph, prop, nb_line, mask=None, prop_str=None,
         ax2.plot(time_tab, prop, alpha=0)
         ax2.tick_params(axis='both', which='major', length=plot_dict['tickl'],
                         labelsize=plot_dict['fs'])
+
+
+def treatment_plot_hist(ax_hist, prop, mask=None, prop_str=None):
+    """
+    Plot histogram for treatment
+
+    Parameters
+    ----------
+    ax_hist: plt.Axes
+        Axis for plotting
+    prop: list
+        Property values
+    mask: list, optional
+        List of indexes to mask
+    prop_str: str, optional
+        Property string
+
+    Returns
+    -------
+    None
+    """
+    prop_str = "" if prop_str is None else prop_str
+    mask = [] if mask is None else mask
+    prop = [value for index, value in enumerate(prop) if index not in mask]
+    plot_dict = {'x lab': 'Line index', 'y lab': f'{prop_str}', 'fs': 15,
+                 'edgew': 1, 'tickl': 2, 'gridw': 1, 'bins': 40}
+    plot_hist(ax_hist, prop, plot_dict=plot_dict)
 
 
 def treatment_plot_map(fig, ax, propertie, dim_pix, dim_mic=None,
