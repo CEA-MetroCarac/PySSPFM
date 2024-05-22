@@ -156,7 +156,7 @@ The PySSPFM application then proceeds with two stages of measurement processing.
 </p>
 
 <p align="justify" width="100%">
-&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">Machine learning (K-Means)</a> <br>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">Machine learning (K-Means, GMM, PCA)</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_hyst.py">Phase separation</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">Mapping cross-correlation</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">SPM file converter</a> <br>
@@ -335,7 +335,7 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
             <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/KNN500n_2023-11-20-16h15m_out_dfrt">KNN500n_2023-11-20-16h15m_out_dfrt</a></code>: embodying the measurement outcomes post the second phase of processing. This underpins the following endeavors:</li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_phase.py">examples/utils/nanoloop/ex_phase.py</a></code>.</li>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_curve_clustering.py">examples/toolbox/ex_curve_clustering.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_vector_clustering.py">examples/toolbox/ex_vector_clustering.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_global_map_reader.py">examples/toolbox/ex_global_map_reader.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_list_map_reader.py">examples/toolbox/ex_list_map_reader.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_map_correlation.py">examples/toolbox/ex_map_correlation.py</a></code>.</li>
@@ -372,6 +372,14 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/ex_raw_extraction.py">examples/utils/ex_raw_extraction.py</a></code>.</li>
             </ul>
         </ul>
+        <ul align="justify" width="100%">
+            <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/KNN500n_toolbox">KNN500n_toolbox</a></code>: contains file analyses from the toolbox performed on the raw data (offset and inversion phase analysis). The following files are based on these data:</li>
+            <ul align="justify" width="100%">
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_list_map_reader.py">examples/toolbox/ex_list_map_reader.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/datacube_to_nanoloop/ex_file.py">examples/utils/datacube_to_nanoloop/ex_file.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop_to_hyst/ex_file.py">examples/utils/nanoloop_to_hyst/ex_file.py</a></code>.</li>
+            </ul>
+        </ul>
     </ul>
     <ul align="justify" width="100%">
         <li>2. Authentic data stemming from SSPFM measurements conducted on a PZT (lead zirconate titanate) sample, which are located within the directory: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in">examples/data/PySSPFM_example_in</a></code>. This repository encompasses several subdirectories, specifically:</li>
@@ -379,7 +387,9 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
             <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/PZT100n">PZT100n</a></code>: housing an assemblage of SSPFM datacube measurement files with an spm extension (Bruker), alongside their corresponding measurement records. This serves the following purpose:</li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_phase.py">examples/utils/nanoloop/ex_phase.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_vector_clustering.py">examples/toolbox/ex_vector_clustering.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_phase_offset_analyzer.py">examples/toolbox/ex_phase_offset_analyzer.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_phase_inversion_analyzer.py">examples/toolbox/ex_phase_inversion_analyzer.py</a></code>.</li>
             </ul>
         </ul>
         <ul align="justify" width="100%">
@@ -628,6 +638,7 @@ Calibration is indispensable for obtaining quantitative measurements. In the mea
 
 <p align="justify" width="100%">
 The user must specify if input phase values are in radians or not with <code>radians_input_phase</code> setting. If it's the case, phase values are converted in degrees for the analysis. The user can also define a phase offset value to implement before processing the measurements. This offset is applied in the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script using the <code>apply_phase_offset</code> function, aiming to mitigate phase switching, which can pose challenges during analysis and nanoloop fitting. The user defines the phase offset value through the <code>offset</code> parameter. <br>
+&#8226 If the <code>phase_file_path</code> parameter is provided by the user, the phase offset value applied to each file is read from this file with <code>get_phase_tab_offset</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/file.py">utils/datacube_to_nanoloop/file.py</a></code>. <br>
 &#8226 If the <code>method</code> parameter is set to <code>'static'</code>, this value is applied to the phase signal for all SSPFM raw measurement files. <br>
 &#8226 When <code>method</code> is set to <code>'dynamic'</code>, the phase offset value is applied to the first SSPFM raw measurement file, and for each subsequent file, a new offset value is determined using the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script with the <code>phase_offset_determination</code> and <code>mean_phase_offset</code> functions. It is then applied to the next measurement file. For a deeper understanding of the phase offset determination, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii2-phase-offset-analyzer">VIII.2) Phase offset analyzer</a>.<br>
 &#8226 If <code>method</code> is set to <code>None</code>, no phase offset is applied for analysis.
@@ -850,7 +861,7 @@ For the second part of the <code>phase_calibration</code> function, an in-depth 
 </p>
 
 <p align="justify" width="100%">
-In the PySSPFM application, users can concretely assign the desired phase values for both forward and reverse directions using the <code>pha_fwd</code> and <code>pha_rev</code> parameters. It is essential for the user to identify whether they are dealing with a predominant electrostatic component in the on field mode through the <code>main_electrostatic</code> parameter. Additionally, they can opt to specify the sign for the electrostatic component's slope with the parameter <code>locked_elec_slope</code>. The user should also provide information about the piezoelectric coefficient sign of the material in the measurement record. With these provided parameters and the calibration protocol, phase values can be attributed to the two peaks in the histogram.
+In the PySSPFM application, users can concretely assign the desired phase values for both forward and reverse directions using the <code>pha_fwd</code> and <code>pha_rev</code> parameters. It is essential for the user to identify whether they are dealing with a predominant electrostatic component in the on field mode through the <code>main_electrostatic</code> parameter. The value of this parameter can vary from one file to another and can therefore be read from a file that contains a list of these parameter values, across <code>main_elec_file_path</code>, read with <code>extract_main_elec_tab</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file.py</a></code> script. Additionally, they can opt to specify the sign for the electrostatic component's slope with the parameter <code>locked_elec_slope</code>. The user should also provide information about the piezoelectric coefficient sign of the material in the measurement record. With these provided parameters and the calibration protocol, phase values can be attributed to the two peaks in the histogram.
 </p>
 
 <p align="justify" width="100%">
@@ -1492,7 +1503,7 @@ User parameters:
 </p>
 
 <p align="justify" width="100%">
-The operating principle of this reader differs slightly from that of the global map reader (see Section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii1d-global-map-reader">VIII.1.d) - Global map reader</a> in the documentation). In this case, a single mask can be defined by the user, and a list of measures to be mapped is provided by the user. The concept behind this reader is to observe multiple maps of different properties simultaneously (rather than one by one). Therefore, the <code>main_mapping</code> function is not used. In the main function of the script, <code>main_list_map_reader</code>, the mask is constructed, and cross-correlative analysis is performed only between the mapped measures (for cross-correlative analysis, please refer to section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii5-2d-cross-correlation">VII.5) - 2D cross correlation</a> of the documentation.). Then, the figure containing all the different maps is formatted using the <code>formatting_fig</code> function. For each map, the <code>tratment_plot_map</code> function is used to carry out treatments (masking, interpolation, etc.) and generate the map of the corresponding property, making use of functions from the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">SSPFM mapping</a> scripts. Finally, all the graphs of the evolution of the different properties as a function of time and the index of the map row are detrmined in the same way with the <code>treatment_plot_graph</code> and <code>formatting_fig_graphs</code> functions.
+The operating principle of this reader differs slightly from that of the global map reader (see Section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii1d-global-map-reader">VIII.1.d) - Global map reader</a> in the documentation). In this case, a single mask can be defined by the user, and a list of measures to be mapped is provided by the user. The concept behind this reader is to observe multiple maps of different properties simultaneously (rather than one by one). Therefore, the <code>main_mapping</code> function is not used. In the main function of the script, <code>main_list_map_reader</code>, the mask is constructed, and cross-correlative analysis is performed only between the mapped measures (for cross-correlative analysis, please refer to section <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#viii5-2d-cross-correlation">VII.5) - 2D cross correlation</a> of the documentation.). Then, the figure containing all the different maps is formatted using the <code>formatting_fig</code> function. For each map, the <code>tratment_plot_map</code> function is used to carry out treatments (masking, interpolation, etc.) and generate the map of the corresponding property, making use of functions from the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/utils/map">SSPFM mapping</a> scripts. Finally, all the graphs of the evolution of the different properties as a function of time and the index of the map row are detrmined in the same way with the <code>treatment_plot_graph</code> and <code>formatting_fig_graphs</code> functions. Histograms are plotted too with the <code>treatment_plot_hist</code> and <code>formatting_fig_graphs</code> functions. 
 </p>
 
 <p align="center" width="100%">
@@ -1508,6 +1519,11 @@ The operating principle of this reader differs slightly from that of the global 
 <p align="center" width="100%">
     <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/graph_list_off_field.PNG> <br>
     <em>Result of list_map_reader (figure generated with <code>main_list_map_reader</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/list_map_reader.py">toolbox/list_map_reader.py</a></code> script)</em>
+</p>
+
+<p align="justify" width="100%">
+The files containing the phase offsets and inversions, <code>phase_offset.txt</code> and <code>phase_inversion.txt</code> generated by 
+<code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">toolbox/phase_offset_analyzer.py</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_inversion_analyzer.py">toolbox/phase_inversion_analyzer.py</a></code> scripts can be analyzed by the script.
 </p>
 
 ### VIII.2) Phase offset analyzer
@@ -1546,7 +1562,7 @@ User parameters:
 <p align="justify" width="100%">
 &#8226 File Management: The user specifies the input folder containing all the raw SSPFM measurement files, as well as the csv measurement sheet Additionally, the range of file indices to analyze, extension, and an output folder to save the analysis results can be provided. <br>
 &#8226 Segment parameters: Parameters used for segment processing. <br>
-&#8226 Fit parameteres: Parameters used for SHO fitting. <br>
+&#8226 Fit parameters: Parameters used for SHO fitting. <br>
 &#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. Phase offset values can be saved in a txt file. This file can be opened with map readers.<br>
 </p>
 
@@ -1563,7 +1579,7 @@ User parameters:
 </p>
 
 <p align="justify" width="100%">
-The measurement parameters are extracted from the SSPFM measurement sheet, and each of the raw SSPFM measurement files is subsequently analyzed within the <code>multi_script</code> function. The <code>single_script</code> function analyzes a single raw SSPFM data file by following these steps: measurements are extracted from the file and calibrated if necessary. They are then segmented and processed into PFM data for each segment. The PFM phase signal is analyzed using the <code>phase_offset_determination</code> function of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script, both in On Field and Off Field conditions. During this analysis, a phase offset is determined, and the two main peaks are identified and recentered within the phase measurement range. For instance, if the phase value range extends from -180 to 180°, and the two peaks are spaced by 180°, a phase offset will be calculated to position them at -90 and 90°, respectively. This minimizes phase switching across all measurements. Ideally, the phase offsets determined in On and Off Field conditions should be close. The average offset corresponding to the entire measurement file is determined using the <code>mean_phase_offset</code> function of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script. The phase evolution with respect to the measurement file is generated using the <code>generate_graph_offset</code> function. It should be noted that the case of unipolar phase data (a single peak on the phase histogram) can be handled by the script functions. Typically, this script is used before the first step of processing SSPFM measurements in order to enter a phase offset value to apply to measurement before the treatment processing.
+The measurement parameters are extracted from the SSPFM measurement sheet, and each of the raw SSPFM measurement files is subsequently analyzed within the <code>multi_script</code> function. The <code>single_script</code> function analyzes a single raw SSPFM data file by following these steps: measurements are extracted from the file and calibrated if necessary. They are then segmented and processed into PFM data for each segment. The PFM phase signal is analyzed using the <code>phase_offset_determination</code> function of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script, both in On Field and Off Field conditions. During this analysis, a phase offset is determined, and the two main peaks are identified and recentered within the phase measurement range. For instance, if the phase value range extends from -180 to 180°, and the two peaks are spaced by 180°, a phase offset will be calculated to position them at -90 and 90°, respectively. This minimizes phase switching across all measurements. Ideally, the phase offsets determined in On and Off Field conditions should be close. The average offset corresponding to the entire measurement file is determined using the <code>mean_phase_offset</code> function of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script. The phase evolution with respect to the measurement file is generated using the <code>generate_graph_offset</code> function. It should be noted that the case of unipolar phase data (a single peak on the phase histogram) can be handled by the script functions. Typically, this script is used before the first step of processing SSPFM measurements in order to generate the file containing the phase offset value to apply to measurement before the treatment processing.
 </p>
 
 <p align="justify" width="100%">
@@ -1580,6 +1596,77 @@ The measurement parameters are extracted from the SSPFM measurement sheet, and e
 <p align="center" width="100%">
     <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_offset_analyzer_graph.PNG> <br>
     <em>Graph showing the evolution of the phase offset determined by the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">toolbox/phase_offset_analyzer.py</a></code> as a function of the index of the raw SSPFM measurement files (figure generated with <code>generate_graph_offset</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">toolbox/phase_offset_analyzer.py</a></code> script).</em>
+</p>
+
+### VIII.2) Phase inversion analyzer
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_inversion_analyzer.py">toolbox/phase_inversion_analyzer.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/phase_inversion_analyzer.py">gui/phase_inversion_analyzer.py</a></code>. This script automatically finds if the sign of the phase gradient with the writing voltage for each mode (On and Off Field) and if a phase inversion occurs between the two modes. This can be useful for determining if the electrostatic component is predominant in the On Field mode.
+</p>
+
+#### VIII.2.a) Parameters
+
+<p align="justify" width="100%">
+User parameters:
+</p>
+
+```
+    default_seg_params = {'cut seg [%]': {'start': 5, 'end': 5},
+                          'mode': 'max',
+                          'filter type': 'None',
+                          'filter freq 1': 1e3,
+                          'filter freq 2': 3e3,
+                          'filter ord': 4}
+    default_fit_params = {'fit pha': False,
+                          'detect peak': False,
+                          'sens peak detect': 1.5}
+    default_pha_params = {'phase_file_path': '',
+                          'offset': 0}
+    default_user_parameters = {'dir path in': '',
+                               'dir path out': '',
+                               'range file': 'None',
+                               'extension': 'spm',
+                               'seg pars': default_seg_params,
+                               'fit pars': default_fit_params,
+                               'pha pars': default_pha_params,
+                               'verbose': True,
+                               'show plots': True,
+                               'save': True}
+```
+
+<p align="justify" width="100%">
+&#8226 File Management: The user specifies the input folder containing all the raw SSPFM measurement files, as well as the csv measurement sheet Additionally, the range of file indices to analyze, extension, and an output folder to save the analysis results can be provided. <br>
+&#8226 Segment parameters: Parameters used for segment processing. <br>
+&#8226 Fit parameters: Parameters used for SHO fitting. <br>
+&#8226 Pha parameters: Parameters used for pre-offset phase treatment. <br>
+&#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. Phase inversion values can be saved in a txt file. This file can be opened with map readers.<br>
+</p>
+
+<p align="justify" width="100%">
+&#8226 For a deeper understanding of the user parameters, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv---first-step-of-data-analysis">IV) - First step of data analysis</a>
+</p>
+
+#### VIII.2.b) Workflow
+
+<p align="center" width="100%">
+    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_phase_offset_analyzer.PNG>
+    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_phase_offset_analyzer_single_script.PNG> <br>
+    <em>Workflow: Phase offset analyzer (left: global, right: single script)</em>
+</p>
+
+<p align="justify" width="100%">
+The measurement parameters are extracted from the SSPFM measurement sheet, and each of the raw SSPFM measurement files is subsequently analyzed within the <code>multi_script</code> function. The <code>single_script</code> function analyzes a single raw SSPFM data file by following these steps: measurements are extracted from the file and phase offset is applied if necessary. A list of phase offsets for each file can be applied with the <code>phase_file_path</code> parameter, containing the path of a file generated with the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/phase_offset_analyzer.py">gui/phase_offset_analyzer.py</a></code> script, otherwise, a value can be specified with the <code>offset</code> parameter. They are then segmented and processed into PFM data for each segment. For each mode (On and Off Field), the sign of the phase signal gradient with the writing voltage is determined using the <code>phase_bias_grad</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script. The two values are compared to determine if a phase inversion has occurred between the On and Off Field modes. Typically, this script is used before the second step of processing SSPFM measurements in order to generate the file containing the boolean value of the main electrostatic parameter to apply to the measurement before the treatment processing.
+</p>
+
+<p align="justify" width="100%">
+&#8226 For a deeper understanding of script workflow, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv---first-step-of-data-analysis">IV) - First step of data analysis</a>
+</p>
+
+#### VIII.2.c) Figures
+
+<p align="center" width="100%">
+    <img align="center" width="100%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/phase_variation_with_voltage.PNG> <br>
+    <em>Detection of phase inversion with phase variation with voltage (figure generated with <code>plot_phase_bias_grad</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot_phase.py">utils/nanoloop/plot_phase.py</a></code> script)</em>
 </p>
 
 ### VIII.3) Loop clustering (K-Means or GMM)
