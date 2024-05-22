@@ -438,7 +438,9 @@ def main(parent=None):
            "through specific phase analysis and is applied to the subsequent " \
            "file (useful for long measurements with phase drift)." \
            "\t--> None: No phase offset processing is performed: raw phase " \
-           "values are used for analysis."
+           "values are used for analysis.\n" \
+           "Active if: This parameter is active when 'phase_file_path' " \
+           "parameters is None."
     pha_method_var.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(pha_method_var, mess))
 
