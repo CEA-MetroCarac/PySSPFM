@@ -143,7 +143,7 @@ pip install git+https://github.com/CEA-MetroCarac/PySSPFM.git
 
 <p align="justify" width="100%">
 In the case you use this library for your work, please think about citing it: <br>
-&#8226 DOI (to come) <br>
-&#8226 Hugo Valloire, Patrick Quemere, 2023, November 28, PySSPFM (Version 2023.10).
+&#8226 DOI: <a href="https://doi.org/10.1063/5.0197226">https://doi.org/10.1063/5.0197226</a> <br>
+&#8226 Hugo Valloire, Patrick Quemere, 2024, May 22, PySSPFM (Version 2024.06).
 </p>
 
