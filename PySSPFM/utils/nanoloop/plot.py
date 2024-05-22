@@ -4,6 +4,7 @@ Module used for nanoloop: - plot functions
 
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import colors
 from matplotlib import cm
 import matplotlib as mpl
 from mpl_toolkits.axes_grid1 import make_axes_locatable
@@ -56,7 +57,7 @@ def plot_ckpfm(loop_dict, dict_str=None):
     # Plot the colorbar
     divider = make_axes_locatable(ax)
     cax = divider.append_axes('right', size='3%', pad=0.4)
-    cmap = plt.get_cmap('jet')
+    cmap = colors.get_cmap('jet')
     norm = mpl.colors.Normalize(vmin=min(loop_dict['write volt']),
                                 vmax=max(loop_dict['write volt']))
     s_m = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
@@ -411,7 +412,7 @@ def plot_all_loop(loops_tab, pha_calib, dict_str=None, del_1st_loop=False):
                          'x lab': label_x, 'y lab': label_y,
                          'title': 'superposed loops'}
             plot_graph(ax_1, [], [], plot_dict=plot_dict)
-            cmap = cm.get_cmap('jet')
+            cmap = colors.get_cmap('jet')
 
             # Plot subplot 1 : multi loop
             for cont, (elem_x_left, elem_x_right, elem_y_left, elem_y_right) \
