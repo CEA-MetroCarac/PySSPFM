@@ -750,6 +750,8 @@ def parameters(fname_json=None):
             file (useful for long measurements with phase drift).
             - None: No phase offset processing is performed: raw phase values
             are used for analysis.
+        Active if: This parameter is active when "phase_file_path"
+        parameters is None.
     - offset: float
         Phase offset value applied to measurements.
         This parameter allows the user to specify a constant phase offset value
