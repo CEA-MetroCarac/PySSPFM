@@ -13,11 +13,11 @@ from PySSPFM.gui.loop_file_reader import main as main_tool_1_c
 from PySSPFM.gui.raw_file_reader import main as main_tool_1_d
 from PySSPFM.gui.spm_data_extractor import main as main_tool_1_e
 from PySSPFM.gui.phase_offset_analyzer import main as main_tool_2_a
+from PySSPFM.gui.phase_inversion_analyzer import main as main_tool_2_b
 from PySSPFM.gui.map_correlation import main as main_tool_3_a
-from PySSPFM.gui.curve_clustering import main as main_tool_3_b
-from PySSPFM.gui.loop_clustering import main as main_tool_3_c
-from PySSPFM.gui.mean_hyst import main as main_tool_3_d
-from PySSPFM.gui.sort_plot_pixel import main as main_tool_3_e
+from PySSPFM.gui.vector_clustering import main as main_tool_3_b
+from PySSPFM.gui.mean_hyst import main as main_tool_3_c
+from PySSPFM.gui.sort_plot_pixel import main as main_tool_3_d
 from PySSPFM.gui.spm_converter import main as main_tool_4_a
 from PySSPFM.gui.meas_sheet_generator import main as main_tool_4_b
 from PySSPFM.gui.utils import \
@@ -78,23 +78,23 @@ def main():
                    strg_title=strg_title, strg_functions=strg_functions)
 
     # Toolbox - 2 - Phase tools
-    labels = ["Phase offset analyzer"]
-    functions = [main_tool_2_a]
+    labels = ["Phase offset analyzer", "Phase inversion analyzer"]
+    functions = [main_tool_2_a, main_tool_2_b]
     strg_title = "Phase tools allow to perform phase analysis on sspfm " \
                  "measurement"
     strg_functions = [
         "Automatic determination of phase offset for a list of raw sspfm "
-        "measurement file"
-    ]
+        "measurement file",
+        "Automatic determination of phase inversion for a list of raw sspfm "
+        "measurement file"]
     create_section(root, "Toolbox - 2 - Phase tools", labels,
                    functions, strg_title=strg_title,
                    strg_functions=strg_functions)
 
     # Toolbox - 3 - Map / multi-loop tools
-    labels = ["Map correlation", "Curve clustering", "Loop clustering",
+    labels = ["Map correlation", "Vector clustering",
               "Mean hysteresis", "Sort and plot pixel"]
-    functions = [main_tool_3_a, main_tool_3_b, main_tool_3_c,
-                 main_tool_3_d, main_tool_3_e]
+    functions = [main_tool_3_a, main_tool_3_b, main_tool_3_c, main_tool_3_d]
     strg_title = "Map and multi-loop tools allow to go deeper into sspfm " \
                  "measurement analysis by trying to identify and separate " \
                  "phases, determining origins of contrast mapping ..."
@@ -103,20 +103,16 @@ def main():
         "- Generate cross correlation coefficient array between a selected "
         "set of sample properties in order to determine origins of contrast "
         "mapping",
-        "Clustering with machine learning approach of curve:\n"
-        "- Perform a clustering analysis for all curve (for each pixel) of a "
-        "sspfm measurement in order to separate phases and different physical "
-        "signal contributions.\n"
-        "Curves can be generated using one or more measurements, including "
-        "height, deflection ...",
-        "Clustering with machine learning approach of loop:\n"
-        "- Perform a clustering analysis for all best hysteresis "
-        "(for each pixel, one hysteresis for each mode) of a sspfm measurement "
+        "Clustering with machine learning approach of vector:\n"
+        "- Perform a clustering analysis for a list of vector (loop or curve) "
+        "(for each pixel, one or more vector) of a sspfm measurement "
         "in order to separate phases and different physical signal "
         "contributions.\n"
         "Loop can be generated using one or more measurements, including "
         "piezoresponse, amplitude, phase, resonance frequency, or "
-        "quality factor.",
+        "quality factor.\n"
+        "Curves can be generated using one or more measurements, including "
+        "height, deflection ...",
         "Perform mean of hysteresis loops (on / off / coupled) by reading a "
         "set of txt file nanoloops defined by the user",
         "Find extremum value of sspfm map of a property and "
