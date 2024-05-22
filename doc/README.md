@@ -1562,7 +1562,7 @@ User parameters:
 <p align="justify" width="100%">
 &#8226 File Management: The user specifies the input folder containing all the raw SSPFM measurement files, as well as the csv measurement sheet Additionally, the range of file indices to analyze, extension, and an output folder to save the analysis results can be provided. <br>
 &#8226 Segment parameters: Parameters used for segment processing. <br>
-&#8226 Fit parameteres: Parameters used for SHO fitting. <br>
+&#8226 Fit parameters: Parameters used for SHO fitting. <br>
 &#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. Phase offset values can be saved in a txt file. This file can be opened with map readers.<br>
 </p>
 
@@ -1637,9 +1637,9 @@ User parameters:
 <p align="justify" width="100%">
 &#8226 File Management: The user specifies the input folder containing all the raw SSPFM measurement files, as well as the csv measurement sheet Additionally, the range of file indices to analyze, extension, and an output folder to save the analysis results can be provided. <br>
 &#8226 Segment parameters: Parameters used for segment processing. <br>
-&#8226 Fit parameteres: Parameters used for SHO fitting. <br>
-&#8226 Pha parameteres: Parameters used for pre-offset phase treatment. <br>
-&#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. Phase offset values can be saved in a txt file. This file can be opened with map readers.<br>
+&#8226 Fit parameters: Parameters used for SHO fitting. <br>
+&#8226 Pha parameters: Parameters used for pre-offset phase treatment. <br>
+&#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. Phase inversion values can be saved in a txt file. This file can be opened with map readers.<br>
 </p>
 
 <p align="justify" width="100%">
@@ -1655,7 +1655,7 @@ User parameters:
 </p>
 
 <p align="justify" width="100%">
-The measurement parameters are extracted from the SSPFM measurement sheet, and each of the raw SSPFM measurement files is subsequently analyzed within the <code>multi_script</code> function. The <code>single_script</code> function analyzes a single raw SSPFM data file by following these steps: measurements are extracted from the file and phase offset is applied if necessary. A list of phase offsets for each file can be applied with the <code>phase_file_path</code> parameter, containing the path of a file generated with the phase offset generator script, otherwise, a value can be specified with the <code>offset</code> parameter. They are then segmented and processed into PFM data for each segment. For each mode (On and Off Field), the sign of the phase signal gradient with the writing voltage is determined using the <code>phase_bias_grad</code> function from the nanoloop/phase script. The two values are compared to determine if a phase inversion has occurred between the On and Off Field modes. Typically, this script is used before the second step of processing SSPFM measurements in order to generate the file containing the boolean value of the main electrostatic parameter to apply to the measurement before the treatment processing.
+The measurement parameters are extracted from the SSPFM measurement sheet, and each of the raw SSPFM measurement files is subsequently analyzed within the <code>multi_script</code> function. The <code>single_script</code> function analyzes a single raw SSPFM data file by following these steps: measurements are extracted from the file and phase offset is applied if necessary. A list of phase offsets for each file can be applied with the <code>phase_file_path</code> parameter, containing the path of a file generated with the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/phase_offset_analyzer.py">gui/phase_offset_analyzer.py</a></code> script, otherwise, a value can be specified with the <code>offset</code> parameter. They are then segmented and processed into PFM data for each segment. For each mode (On and Off Field), the sign of the phase signal gradient with the writing voltage is determined using the <code>phase_bias_grad</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/phase.py">utils/nanoloop/phase.py</a></code> script. The two values are compared to determine if a phase inversion has occurred between the On and Off Field modes. Typically, this script is used before the second step of processing SSPFM measurements in order to generate the file containing the boolean value of the main electrostatic parameter to apply to the measurement before the treatment processing.
 </p>
 
 <p align="justify" width="100%">
