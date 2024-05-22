@@ -1,6 +1,7 @@
 """
 Test sort_plot_pixel methods
 """
+from pytest import approx, skip
 import os
 
 from examples.toolbox.ex_sort_plot_pixel import example_sort_plot_pixel
