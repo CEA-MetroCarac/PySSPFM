@@ -483,8 +483,8 @@ def main_phase_inversion_analyzer(user_pars, dir_path_in, range_file=None,
     # Extract parameters from measurement sheet
     meas_pars, sign_pars = csv_meas_sheet_extract(dir_path_in)
     map_dim = {'x pix': meas_pars['Grid x [pix]'],
-               'y pix': meas_pars['Grid y [um]'],
-               'x mic': meas_pars['Grid x [pix]'],
+               'y pix': meas_pars['Grid y [pix]'],
+               'x mic': meas_pars['Grid x [um]'],
                'y mic': meas_pars['Grid y [um]']}
     # Multi script
     phase_grad_tab, figures = multi_script(
