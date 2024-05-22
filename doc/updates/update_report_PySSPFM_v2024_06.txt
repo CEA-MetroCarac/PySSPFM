@@ -1,0 +1,95 @@
+Update Report PySSPFM v2024.06:
+
+# Improve clustering
+- Merge all clustering file into one file : vector_clustering.py (PySSPFM/toolbox/vector_clustering.py)
+- Delete loop_clustering.py (PySSPFM/toolbox/loop_clustering.py) and curve_clustering.py (PySSPFM/toolbox/curve_clustering.py)
+- Introduce PCA algorithm for clustering: data_pca (PySSPFM/utils/core/clustering.py) transforms a vector into a point in a plane (facilitates clustering representation and increases its speed)
+- Add PCA analysis before clustering: facilitates and accelerates clustering of dense vectors by transforming them into a single point (x, y) beforehand.
+- Add relative mode in parameters --> all vector vary between 0 and 1 --> clustering separation is more a function of the vector shape
+- All plotting functions associated with clustering have been relocated to PySSPFM/utils/core/clustering.py:
+	- plot_clustering_centroids (PySSPFM/utils/core/clustering.py)
+	- plot_all_vector_clustering (PySSPFM/utils/core/clustering.py)
+	- plot_avg_vector_clustering (PySSPFM/utils/core/clustering.py)
+	- plot_pca_plane (PySSPFM/utils/core/clustering.py)
+- GUI and docstring updated 
+- New python file for file and directory path management for clustering script file_clustering.py (PySSPFM/utils/file_clustering.py)
+
+
+# Step 1 of the SSPFM analysis: datacube_to_nanoloop_s1.py
+- Phase offset: issue, the phase offset can vary from one point to another:
+	- Addition of a parameter: name of a file containing all the phase offsets (generated after running PySSPFM/toolbox/phase_offset_analyzer.py on the raw data).
+	- If this parameter is provided: the pre-calculated phase offset is applied to the respective pixel.
+	- Implementation of the method in multi-processing
+	- Addition of a function to read the file containing the phase offsets: function get_phase_tab_offset in PySSPFM/utils/datacube_to_nanoloop/file.py
+- Adapt the phase offset determination between each single script
+- GUI and docstring updated
+
+# Step 2 of the SSPFM analysis: nanoloop_to_hyst_s2.py
+- "main elec" parameter: issue, the major component (between ferroelectric and electrostatic) can vary from one file to another
+	- Addition of a parameter: name of a file containing all the main elec values based on the phase revert analysis (generated after running PySSPFM/toolbox/phase_offset_analyzer.py on the raw data).
+	- If this parameter is provided: the pre-calculated main elec value is applied to the respective pixel.
+	- Implementation of the method in multi-processing
+	- Addition of a function to read the file containing the main elec values: function extract_main_elec_tab in PySSPFM/utils/nanoloop_to_hyst/file.py
+- GUI and docstring updated
+
+# New file : phase_inversion_analyzer.py
+- Generates the phase gradient as a function of the bias for each mode (On/Off Field) and each file
+- Detects phase inversions between On and Off Field for each file
+- Allows finding an adjustable main elec parameter for the second step of the analysis
+- GUI and docstring updated
+
+# Other modifications
+- Added phase unit option (° or radians) for the file: PySSPFM/toolbox/phase_offset_analyzer.py
+- Added option to convert phase values between degrees and radians for the runnable file: PySSPFM/toolbox/phase_offset_analyzer.py
+- Added the ability to extract and map new properties such as:
+	- The phase offset from the phase_offset.txt file generated after running phase_offset_analyzer.py (PySSPFM/toolbox/phase_offset_analyzer.py)
+	- The phase inversion from the phase_inversion.txt file generated after running phase_inversion_analyzer.py (PySSPFM/toolbox/phase_inversion_analyzer.py)
+	- For this: adaptation of the extract_properties function in PySSPFM/utils/nanoloop_to_hyst/file.py
+- Added a histogram plot for the executable file PySSPFM/toolbox/list_map_reader.py
+
+# New file / functions
+New files: 
+	- phase_inversion_analyzer.py (PySSPFM/toolbox/phase_inversion_analyzer.py)
+	- vector_clustering.py (PySSPFM/toolbox/vector_clustering.py)
+	- file_clustering.py (PySSPFM/utils/file_clustering.py)
+New functions:
+	- perform_vector_clustering (PySSPFM/toolbox/vector_clustering.py)
+	- main_loop_clustering (PySSPFM/toolbox/vector_clustering.py)
+	- main_curve_clustering (PySSPFM/toolbox/vector_clustering.py)
+	- main_vector_clustering (PySSPFM/toolbox/vector_clustering.py)
+	- data_clustering (PySSPFM/utils/core/clustering.py)
+	- plot_clustering_centroids (PySSPFM/utils/core/clustering.py)
+	- plot_all_vector_clustering (PySSPFM/utils/core/clustering.py)
+	- plot_avg_vector_clustering (PySSPFM/utils/core/clustering.py)
+	- data_pca (PySSPFM/utils/core/clustering.py)
+	- plot_pca_plane (PySSPFM/utils/core/clustering.py)
+	- raw_data_extraction (PySSPFM/utils/file_clustering.py)
+	- curve_extraction (PySSPFM/utils/file_clustering.py)
+	- extract_map_dim_from_csv (PySSPFM/utils/file_clustering.py)
+	- gen_loop_data (PySSPFM/utils/file_clustering.py)
+	- extract_loop_data (PySSPFM/utils/file_clustering.py)
+	- gen_coupled_data (PySSPFM/utils/file_clustering.py)
+	- revert_on_off (PySSPFM/toolbox/phase_inversion_analyzer.py)
+	- apply_phase_offset (PySSPFM/toolbox/phase_inversion_analyzer.py)
+	- save_dict_to_txt (PySSPFM/toolbox/phase_inversion_analyzer.py)
+	- single_script (PySSPFM/toolbox/phase_inversion_analyzer.py)
+	- multi_script (PySSPFM/toolbox/phase_inversion_analyzer.py)
+	- main_phase_inversion_analyzer (PySSPFM/toolbox/phase_inversion_analyzer.py)
+	- get_phase_tab_offset (PySSPFM/utils/datacube_to_nanoloop/file.py)
+	- extract_main_elec_tab (PySSPFM/utils/nanoloop_to_hyst/file.py)
+	- treatment_plot_hist (PySSPFM/toolbox/list_map_reader.py)
+	- process_single_file_s1_classic (PySSPFM/utils/core/multi_proc.py)
+	- process_single_file_s1_phase (PySSPFM/utils/core/multi_proc.py)
+	- process_single_file_s2_classic (PySSPFM/utils/core/multi_proc.py)
+	- process_single_file_s2_revert (PySSPFM/utils/core/multi_proc.py)
+	- process_phase_inversion_analyzer_classic (PySSPFM/utils/core/multi_proc.py)
+	- process_phase_inversion_analyzer_phase (PySSPFM/utils/core/multi_proc.py)
+	- run_multi_phase_inversion_analyzer (PySSPFM/utils/core/multi_proc.py)
+
+# File / function removal
+Files:
+	- loop_clustering.py (PySSPFM/toolbox/loop_clustering.py)
+	- curve_clustering.py (PySSPFM/toolbox/curve_clustering.py)
+Functions:
+
+# Update documentation, examples and tests
