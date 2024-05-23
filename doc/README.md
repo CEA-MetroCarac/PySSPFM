@@ -1707,43 +1707,12 @@ The script can be executed directly using the executable file: <code><a href="ht
         'save': False,
     }
 ```
-<p align="justify" width="100%">
-    <ul align="justify" width="100%">
-        <li>File management: In the initial phase, the algorithm ingests the <code>best_nanoloops</code> directory along with the <code>properties</code> directory.</li>
-        <li>Common (user) parameters : tous les paramètres communs à l'ensemble de l'analyse du clustering.</li>
-            <ul align="justify" width="100%">
-                <li><code>object</code>: </li>
-                <li><code>relative</code>: </li>
-                <li><code>pca</code>: </li>
-                <li><code>method</code>: </li>
-            </ul> <br>
-        <li>Common (user) parameters : tous les paramètres communs à l'ensemble de l'analyse du clustering.</li>
-            <ul align="justify" width="100%">
-                <li><code>label meas</code>: </li>
-                <li><code>nb clusters off</code>: </li>
-                <li><code>nb clusters on</code>: </li>
-                <li><code>nb clusters coupled</code>: </li>
-            </ul> <br>
-        <li>Common (user) parameters : tous les paramètres communs à l'ensemble de l'analyse du clustering.</li>
-            <ul align="justify" width="100%">
-                <li><code>extension</code>: </li>
-                <li><code>mode</code>: </li>
-                <li><code>label meas</code>: </li>
-                <li><code>nb clusters</code>: </li>
-            </ul> <br>
-        <li>Save and plot parameters: Pertaining to the management of display and the preservation of outcomes.</li>
-            <ul align="justify" width="100%">
-                <li>No hysteresis is displayed or any other specific treatment is performed.</li>
-            </ul> <br>
-    </ul>
-</p>
 
 <p align="justify" width="100%">
 &#8226 File management: In the initial phase, the algorithm ingests the <code>best_nanoloops</code> directory along with the <code>properties</code> directory. <br>
-&#8226 Common (user) parameters : tous les paramètres communs à l'ensemble de l'analyse du clustering.
-&#8226 Method: Method used to perform clusterin : K-Means or Gaussian Mixture Model (GMM). <br>
-&#8226 Label measure: One or more measure considered to determine the loop (from amplitude, phase, piezoresponse, resonance frequency or quality). <br>
-&#8226 Clusters: For each measurement (on field, off field, and coupled), the user specifies the number of clusters. <br>
+&#8226 Common (user) parameters: all parameters common to the entire (loop or curve) clustering analysis.
+&#8226 Loop parameters: all parameters common to the analysis of a clustering associated with a loop (best nanoloops generated after the second processing step).
+&#8226 Curve parameters: all parameters common to the analysis of a clustering associated with a curve (raw SSPFM measurement channel).
 &#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. <br>
 </p>
 
@@ -1754,14 +1723,15 @@ The script can be executed directly using the executable file: <code><a href="ht
 #### VIII.3.b) Extraction 
 
 <p align="justify" width="100%">
-The entirety of data stemming from the best nanoloops, both in the on field and off field modes, is extracted from the files residing within the <code>best_nanoloops</code> directory (with the function <code>extract_data</code> of the script). <br>
+&#8226 Loop: The entirety of data stemming from the best nanoloops, both in the on field and off field modes, is extracted from the files residing within the <code>best_nanoloops</code> directory (with the function <code>extract_loop_data</code> of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/file_clustering.py">utils/file_clustering.py</a></code> script). <br>
 For piezoresponse loop analysis, vertical offset measurements in the off field mode and the dimensions of the mappings are drawn from the files within the <code>properties</code> directory (with <code>extract_properties</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file.py</a></code>). <br>
 For piezoresponse loop analysis, the coupled measurements are subsequently generated through the process of differential analysis of on field and off field measurements, with the flexibility to incorporate the vertical offset in the off field mode, a component influenced by the sample's surface contact potential (section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4d---differential-analysis-of-on-and-off-field-hysteresis">VI.4.d) - Differential analysis of on and off field hysteresis</a> in the documentation).
+For a deeper understanding of the input file management, please refer to the relevant section in the documentation:<br>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii2b---second-step-of-data-analysis">III.2.b) - Second Step of Data Analysis</a>
 </p>
 
 <p align="justify" width="100%">
-For a deeper understanding of the input file management, please refer to the relevant section in the documentation:<br>
-&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii2b---second-step-of-data-analysis">III.2.b) - Second Step of Data Analysis</a>
+&#8226 Curve: The entirety of data stemming from the raw SSPFM measurements. The data are extracted using the <code>raw_data_extraction</code> function from the  <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/file_clustering.py">utils/file_clustering.py</a></code> script.<br> The dimensions of the mappings are extracted using the <code>extract_map_dim_from_csv</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/file_clustering.py">utils/file_clustering.py</a></code> script.
 </p>
 
 #### VIII.3.c) Treatment
