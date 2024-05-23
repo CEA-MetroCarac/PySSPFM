@@ -4,6 +4,12 @@
     <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/pysspfm_white_logo.PNG> <br>
 </p>
 
+<p align="justify" width="100%">
+In the case you use this library for your work, please think about citing it: <br>
+&#8226 H. Valloire, P. Quéméré, N. Vaxelaire, H. Kuentz, G. Le Rhun, Ł. Borowik, "Enhancing ferroelectric characterization at nanoscale: A comprehensive approach for data processing in spectroscopic piezoresponse force microscopy", J. Appl. Phys, 21 May 2024, 135 (19): 194101, DOI: <a href="https://doi.org/10.1063/5.0197226">https://doi.org/10.1063/5.0197226</a> <br>
+&#8226 Hugo Valloire, Patrick Quemere, 2024, May 22, PySSPFM (Version 2024.06).
+</p>
+
 <div id="table-of-contents" style="text-align: justify;">
     <h2>Table of Contents</h2>
     <ul align="justify" width="100%">
@@ -114,7 +120,7 @@
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4d-figures">VIII.4.d) Figures</a></li>
                     </ul>
                 </li>
-                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii5-mean-hysteresis">VIII.4) Mean hysteresis</a>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii5-mean-hysteresis">VIII.5) Mean hysteresis</a>
                     <ul align="justify" width="100%">
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii5a-parameters">VIII.5.a) Parameters</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii5b-extraction">VIII.5.b) Extraction</a></li>
