@@ -1655,8 +1655,8 @@ User parameters:
 
 <p align="center" width="100%">
     <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_phase_offset_analyzer.PNG>
-    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_phase_offset_analyzer_single_script.PNG> <br>
-    <em>Workflow: Phase offset analyzer (left: global, right: single script)</em>
+    <img align="center" width="49%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/workflow_phase_inversion_analyzer_single_script.PNG> <br>
+    <em>Workflow: Phase inversion analyzer (left: global, right: single script)</em>
 </p>
 
 <p align="justify" width="100%">
