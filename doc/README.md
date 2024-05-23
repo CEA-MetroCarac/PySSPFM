@@ -1725,7 +1725,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 ```
 
 <p align="justify" width="100%">
-&#8226 File management: For loop procedure, in the initial phase, the algorithm ingests the <code>best_nanoloops</code> directory along with the <code>properties</code> directory. For curve procedure, the algorithm extract raw SSPFM file measurements.<br>
+&#8226 File management: For loop procedure, in the initial phase, the algorithm ingests the <code>best_nanoloops</code> directory along with the <code>properties</code> directory, and the property folder contains the <code>parameters.txt</code> file generated after steps 1 and 2 of the analysis. For curve procedure, the algorithm extract raw SSPFM file measurements and the property folder contains the measurement sheet <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM.csv">model SSPFM</a> file <code>measurement_sheet_parameters.csv</code>.<br>
 &#8226 Common (user) parameters: all parameters common to the entire (both loop or curve) clustering analysis. Two distinct clustering algorithms exist: one for loops and the other for curves, specified with the <code>object</code> parameter.<br>
 &#8226 Loop parameters: all parameters common to the analysis of a clustering associated with a loop (best nanoloops generated after the second processing step). <br>
 &#8226 Curve parameters: all parameters common to the analysis of a clustering associated with a curve (raw SSPFM measurement channels). <br>
