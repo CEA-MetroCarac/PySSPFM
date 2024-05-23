@@ -1674,32 +1674,73 @@ The measurement parameters are extracted from the SSPFM measurement sheet, and e
     <em>Detection of phase inversion with phase variation with voltage (figure generated with <code>plot_phase_bias_grad</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot_phase.py">utils/nanoloop/plot_phase.py</a></code> script)</em>
 </p>
 
-### VIII.3) Loop clustering (K-Means or GMM)
+### VIII.3) Vector clustering (K-Means or GMM)
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/loop_clustering.py">toolbox/loop_clustering.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/loop_clustering.py">gui/loop_clustering.py</a></code>. It facilitates the classification of loops associated with each measurement point into clusters. This tool can enable phase separation or the separation of the influences of physically distinct phenomena, such as measurement artifacts.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">toolbox/vector_clustering.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/vector_clustering.py">gui/vector_clustering.py</a></code>. It facilitates the classification of vectors (loops or curves) associated with each measurement point into clusters. This tool can enable phase separation or the separation of the influences of physically distinct phenomena, such as measurement artifacts.
 </p>
 
 #### VIII.3.a) Parameters
 
 ```
-    default_user_parameters = {
+    default_user_pars = {'object': 'loop',
+                         'relative': False,
+                         'pca': True,
+                         'method': 'kmeans'}
+    default_loop_pars = {'label meas': ['piezoresponse'],
+                         'nb clusters off': 4,
+                         'nb clusters on': 4,
+                         'nb clusters coupled': 4}
+    default_curve_pars = {'extension': 'spm',
+                          'mode': 'classic',
+                          'label meas': ['deflection'],
+                          'nb clusters': 4}
+    default_parameters = {
         'dir path in': '',
         'dir path in prop': '',
         'dir path out': '',
-        'method': 'kmeans',
-        'label meas': ["piezoresponse"],
-        'nb clusters off': 4,
-        'nb clusters on': 4,
-        'nb clusters coupled': 4,
+        'user_pars': default_user_pars,
+        'loop_pars': default_loop_pars,
+        'curve_pars': default_curve_pars,
         'verbose': True,
         'show plots': True,
         'save': False,
     }
 ```
+<p align="justify" width="100%">
+    <ul align="justify" width="100%">
+        <li>File management: In the initial phase, the algorithm ingests the <code>best_nanoloops</code> directory along with the <code>properties</code> directory.</li>
+        <li>Common (user) parameters : tous les paramètres communs à l'ensemble de l'analyse du clustering.</li>
+            <ul align="justify" width="100%">
+                <li><code>object</code>: </li>
+                <li><code>relative</code>: </li>
+                <li><code>pca</code>: </li>
+                <li><code>method</code>: </li>
+            </ul> <br>
+        <li>Common (user) parameters : tous les paramètres communs à l'ensemble de l'analyse du clustering.</li>
+            <ul align="justify" width="100%">
+                <li><code>label meas</code>: </li>
+                <li><code>nb clusters off</code>: </li>
+                <li><code>nb clusters on</code>: </li>
+                <li><code>nb clusters coupled</code>: </li>
+            </ul> <br>
+        <li>Common (user) parameters : tous les paramètres communs à l'ensemble de l'analyse du clustering.</li>
+            <ul align="justify" width="100%">
+                <li><code>extension</code>: </li>
+                <li><code>mode</code>: </li>
+                <li><code>label meas</code>: </li>
+                <li><code>nb clusters</code>: </li>
+            </ul> <br>
+        <li>Save and plot parameters: Pertaining to the management of display and the preservation of outcomes.</li>
+            <ul align="justify" width="100%">
+                <li>No hysteresis is displayed or any other specific treatment is performed.</li>
+            </ul> <br>
+    </ul>
+</p>
 
 <p align="justify" width="100%">
 &#8226 File management: In the initial phase, the algorithm ingests the <code>best_nanoloops</code> directory along with the <code>properties</code> directory. <br>
+&#8226 Common (user) parameters : tous les paramètres communs à l'ensemble de l'analyse du clustering.
 &#8226 Method: Method used to perform clusterin : K-Means or Gaussian Mixture Model (GMM). <br>
 &#8226 Label measure: One or more measure considered to determine the loop (from amplitude, phase, piezoresponse, resonance frequency or quality). <br>
 &#8226 Clusters: For each measurement (on field, off field, and coupled), the user specifies the number of clusters. <br>
