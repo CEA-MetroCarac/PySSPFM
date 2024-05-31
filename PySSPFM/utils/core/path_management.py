@@ -223,7 +223,8 @@ def sort_filenames(filenames):
 
         # Sort filenames and indices
         indexed_filenames = list(zip(indexs, filenames))
-        sorted_indexed_filenames = sorted(indexed_filenames, key=lambda x: x[0])
+        sorted_indexed_filenames = sorted(indexed_filenames,
+                                          key=lambda x: int(x[0]))
         sorted_filenames = [filename
                             for _, filename in sorted_indexed_filenames]
         sorted_indexs = [int(index) for index, _ in sorted_indexed_filenames]
