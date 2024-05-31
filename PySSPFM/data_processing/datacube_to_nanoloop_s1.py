@@ -540,16 +540,19 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='max',
         for i, elem in enumerate(file_names):
             if elem.endswith(file_format) and not \
                     elem.endswith('SS_PFM_bias.txt'):
-
+                # FInd phase offset value
                 if phase_tab is not None:
                     phase_offset = phase_tab[i]
-                elif i == 0:
+                elif user_pars["pha pars"]["method"] is None:
+                    phase_offset = 0
+                elif i == 0 or user_pars["pha pars"]["method"] == "static":
                     phase_offset = user_pars["pha pars"]["offset"]
+                elif user_pars["pha pars"]["method"] == "dynamic":
+                    phase_offset = mean_phase_offset(phase_offset_val)
                 else:
-                    if user_pars["pha pars"]["method"] is None:
-                        phase_offset = 0
-                    elif user_pars["pha pars"]["method"] == "static":
-                        phase_offset = user_pars["pha pars"]["offset"]
+                    raise NotImplementedError(
+                        "setting 'pha_params' / 'method' should be in "
+                        "['static', 'dynamic', None]")
                 file_path_in = os.path.join(dir_path_in, elem)
                 phase_offset_val = \
                     single_script(user_pars, file_path_in, meas_pars, sign_pars,
@@ -557,12 +560,6 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='max',
                                   get_phase_offset=get_phase_offset, mode=mode,
                                   root_out=root_out, verbose=verbose,
                                   txt_save=save, index=i+1)
-                if user_pars["pha pars"]["method"] == "dynamic":
-                    phase_offset = mean_phase_offset(phase_offset_val)
-                else:
-                    raise NotImplementedError(
-                        "setting 'pha_params' / 'method' should be in "
-                        "['static', 'dynamic', None]")
 
     if save:
         if verbose:
