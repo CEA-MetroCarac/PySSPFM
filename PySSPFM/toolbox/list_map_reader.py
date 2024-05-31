@@ -234,9 +234,12 @@ def treatment_plot_hist(ax_hist, prop, mask=None, prop_str=None):
     prop_str = "" if prop_str is None else prop_str
     mask = [] if mask is None else mask
     prop = [value for index, value in enumerate(prop) if index not in mask]
-    plot_dict = {'x lab': 'Line index', 'y lab': f'{prop_str}', 'fs': 15,
+    prop_array = np.array(prop)
+    prop_array_filtered = prop_array[~np.isnan(prop_array)]
+    prop_filtered = prop_array_filtered.tolist()
+    plot_dict = {'x lab': f'{prop_str}', 'y lab': 'Count', 'fs': 15,
                  'edgew': 1, 'tickl': 2, 'gridw': 1, 'bins': 40}
-    plot_hist(ax_hist, prop, plot_dict=plot_dict)
+    plot_hist(ax_hist, prop_filtered, plot_dict=plot_dict)
 
 
 def treatment_plot_map(fig, ax, propertie, dim_pix, dim_mic=None,
