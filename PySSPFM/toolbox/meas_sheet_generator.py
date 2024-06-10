@@ -11,7 +11,7 @@ import datetime
 import numpy as np
 import openpyxl
 
-from PySSPFM.settings import get_setting, copy_default_settings_if_not_exist
+from PySSPFM.settings import get_setting, copy_default_settings_if_not_exist, get_config
 from PySSPFM.utils.core.extract_params_from_file import \
     load_parameters_from_file
 from PySSPFM.utils.core.path_management import \
@@ -225,18 +225,7 @@ def parameters(fname_json=None):
         matplotlib figures during the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        # if fname_json is provided, use it, else use the default one
-        if fname_json is not None:
-            file_path_user_params = fname_json
-        else:
-            file_path = os.path.realpath(__file__)
-            file_path_user_params = \
-                copy_default_settings_if_not_exist(file_path)
-
-        # Load parameters from the specified configuration file
-        print(f"user parameters from {os.path.split(file_path_user_params)[1]} "
-              f"file")
-        config_params = load_parameters_from_file(file_path_user_params)
+        config_params = get_config(__file__, fname_json)
         file_path_in = config_params['file_path_in']
         dir_path_out = config_params['dir_path_out']
         nb_hold_seg_start = config_params['nb_hold_seg_start']

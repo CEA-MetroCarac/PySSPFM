@@ -323,3 +323,19 @@ def copy_default_settings_if_not_exist(file_path):
         shutil.copy(default_file_path, user_params_file_path)
         
     return user_params_file_path
+
+def get_config(current_file, fname_json):
+    # if fname_json is provided, use it, else use the default one
+    if fname_json is not None:
+        file_path_user_params = fname_json
+    else:
+        file_path = os.path.realpath(current_file)
+        file_path_user_params = \
+            copy_default_settings_if_not_exist(file_path)
+
+    # Load parameters from the specified configuration file
+    print(f"user parameters from {os.path.split(file_path_user_params)[1]} "
+          f"file")
+    config_params = load_parameters_from_file(file_path_user_params)
+
+    return config_params
