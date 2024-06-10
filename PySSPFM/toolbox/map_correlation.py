@@ -9,9 +9,7 @@ from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 
-from PySSPFM.settings import get_setting, copy_default_settings_if_not_exist, get_config
-from PySSPFM.utils.core.extract_params_from_file import \
-    load_parameters_from_file
+from PySSPFM.settings import get_setting, get_config
 from PySSPFM.utils.core.figure import print_plots, plot_map
 from PySSPFM.utils.nanoloop_to_hyst.file import extract_properties
 from PySSPFM.utils.map.interpolate import remove_val

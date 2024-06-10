@@ -17,13 +17,11 @@ from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 
-from PySSPFM.settings import get_setting, copy_default_settings_if_not_exist, get_config
+from PySSPFM.settings import get_setting, get_config
 from PySSPFM.utils.core.clustering import \
     (data_clustering, cbar_map, plot_clustering_centroids,
      plot_all_vector_clustering, plot_avg_vector_clustering, data_pca,
      plot_pca_plane)
-from PySSPFM.utils.core.extract_params_from_file import \
-    load_parameters_from_file
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.nanoloop_to_hyst.file import extract_properties
 from PySSPFM.utils.map.main import main_mapping

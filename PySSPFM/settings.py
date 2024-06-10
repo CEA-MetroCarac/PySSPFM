@@ -303,7 +303,7 @@ def get_path_from_json(settings_dict):
 
     return settings_dict
 
-def copy_default_settings_if_not_exist(file_path):
+def copy_default_settings(file_path):
     """
     Copy the default settings file to the user directory if it does not exist.
     """
@@ -331,7 +331,7 @@ def get_config(current_file, fname_json):
     else:
         file_path = os.path.realpath(current_file)
         file_path_user_params = \
-            copy_default_settings_if_not_exist(file_path)
+            copy_default_settings(file_path)
 
     # Load parameters from the specified configuration file
     print(f"user parameters from {os.path.split(file_path_user_params)[1]} "

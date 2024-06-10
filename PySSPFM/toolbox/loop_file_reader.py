@@ -10,9 +10,7 @@ import tkinter.filedialog as tkf
 from datetime import datetime
 import numpy as np
 
-from PySSPFM.settings import get_setting, copy_default_settings_if_not_exist, get_config
-from PySSPFM.utils.core.extract_params_from_file import \
-    load_parameters_from_file
+from PySSPFM.settings import get_setting, get_config
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.raw_extraction import csv_meas_sheet_extract
 from PySSPFM.utils.nanoloop.plot import main_plot

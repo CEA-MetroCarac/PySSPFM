@@ -11,9 +11,7 @@ import datetime
 import numpy as np
 import openpyxl
 
-from PySSPFM.settings import get_setting, copy_default_settings_if_not_exist, get_config
-from PySSPFM.utils.core.extract_params_from_file import \
-    load_parameters_from_file
+from PySSPFM.settings import get_setting, get_config
 from PySSPFM.utils.core.path_management import \
     get_filenames_with_conditions, sort_filenames
 from PySSPFM.utils.raw_extraction import NanoscopeError
