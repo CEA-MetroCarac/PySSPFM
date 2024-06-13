@@ -22,6 +22,7 @@ def test_phase_inversion_analyzer():
     # print(phase_grad_tab['Grad On field'])
     # print(phase_grad_tab['Grad Off field'])
     # print(phase_grad_tab['Revert On Off'])
+    # print(map_dim)
 
     target_on_field = [False, False, False, False, False, False, False, False,
                        False, False, False, False, False, False, False, False,
@@ -36,4 +37,4 @@ def test_phase_inversion_analyzer():
     assert phase_grad_tab['Grad On field'] == target_on_field
     assert phase_grad_tab['Grad Off field'] == target_off_field
     assert phase_grad_tab['Revert On Off'] == target_revert_on_off
-    assert map_dim == {'x mic': 50, 'x pix': 50, 'y mic': 3, 'y pix': 3}
+    assert map_dim == {'x pix': 50, 'y pix': 50, 'x mic': 3, 'y mic': 3}
