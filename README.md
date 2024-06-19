@@ -16,10 +16,6 @@ This library is provided in its current state and remains under active developme
 </p>
 
 <p align="justify" width="100%">
-&#8226; The original code we used (developped by Bruker) proved to be incompatible with the measurement files (.spm from Bruker) of the library's developer.
-</p>
-
-<p align="justify" width="100%">
 &#8226; There was a desire to offer the scientific community in the PFM domain an open-source solution that is easily comprehensible, adaptable, and customizable according to individual requirements. All developments adhere to the PEP-8 development standard and are accompanied by comprehensive, internal script documentation.
 </p>
 
