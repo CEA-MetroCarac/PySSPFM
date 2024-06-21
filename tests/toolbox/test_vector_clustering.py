@@ -16,7 +16,7 @@ def test_vector_clustering_piezoresponse():
     if os.getenv('GITHUB_ACTIONS') == 'true':
         skip("Test skipped for Github source")
 
-    out = ex_vector_clustering(['piezoresponse'], object="loop")
+    out = ex_vector_clustering(['piezoresponse'], obj="loop")
     (cluster_indexs, cluster_info, inertia, avg_loop) = out
 
     # print(np.sum(avg_loop["off"][0]))
@@ -99,7 +99,7 @@ def test_vector_clustering_amp_pha():
     if os.getenv('GITHUB_ACTIONS') == 'true':
         skip("Test skipped for Github source")
 
-    out = ex_vector_clustering(['amplitude', 'phase'], object="loop")
+    out = ex_vector_clustering(['amplitude', 'phase'], obj="loop")
     (cluster_indexs, cluster_info, inertia, avg_loop) = out
 
     # print(np.sum(avg_loop["off"][0]))
@@ -153,7 +153,7 @@ def test_vector_clustering_deflection():
     if os.getenv('GITHUB_ACTIONS') == 'true':
         skip("Test skipped for Github source")
 
-    out = ex_vector_clustering(['deflection'], object="curve")
+    out = ex_vector_clustering(['deflection'], obj="curve")
     (cluster_indexs, cluster_info, inertia, avg_curve) = out
 
     # print(np.sum(avg_curve[0]))
@@ -203,7 +203,7 @@ def test_vector_clustering_height_deflection():
     if os.getenv('GITHUB_ACTIONS') == 'true':
         skip("Test skipped for Github source")
 
-    out = ex_vector_clustering(['deflection', 'height'], object="curve")
+    out = ex_vector_clustering(['deflection', 'height'], obj="curve")
     (cluster_indexs, cluster_info, inertia, avg_curve) = out
 
     # print(np.sum(avg_curve[0]))
