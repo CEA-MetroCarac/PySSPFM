@@ -6,7 +6,6 @@ of associated files
 
 import os
 import tkinter.filedialog as tkf
-from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -20,7 +19,7 @@ from PySSPFM.utils.nanoloop.analysis import nanoloop_treatment, gen_ckpfm_meas
 from PySSPFM.utils.map.main import plot_and_save_maps
 from PySSPFM.utils.map.interpolate import remove_val
 from PySSPFM.utils.nanoloop_to_hyst.file import \
-    create_file_nanoloop_paths, extract_properties, print_parameters
+    create_file_nanoloop_paths, extract_properties
 from PySSPFM.utils.nanoloop_to_hyst.gen_data import gen_data_dict
 from PySSPFM.utils.nanoloop_to_hyst.electrostatic import differential_analysis
 from PySSPFM.utils.nanoloop_to_hyst.analysis import \
@@ -28,7 +27,9 @@ from PySSPFM.utils.nanoloop_to_hyst.analysis import \
 from PySSPFM.toolbox.mean_hyst import main_mean_hyst
 from PySSPFM.toolbox.mean_hyst import single_script
 from PySSPFM.toolbox.loop_file_reader import main_loop_file_reader
-from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.path_for_runable import \
+    save_path_management, copy_json_res, create_json_res
+from PySSPFM.utils.raw_extraction import csv_meas_sheet_extract
 
 DEFAULT_LIMIT = {'min': -8., 'max': 8.}
 
@@ -389,13 +390,16 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
 
     # Extract and init parameters
     make_plots = bool(show_plots or save_plots)
-    meas_pars, sign_pars, treat_pars = extract_params(
-        user_pars['file path in pars'])
+    meas_pars, sign_pars = csv_meas_sheet_extract(user_pars['dir path in pars'])
+    fname_json = os.path.join(user_pars['dir path in pars'],
+                              "nanoloop_to_hyst_s2_params.json")
+    config_params, _ = get_config(__file__, fname_json)
+    treat_pars = config_params['user_pars']
     treat_pars.update({
         'mode': user_pars['prop key']['mode'],
         'dir path in prop': user_pars['dir path in prop'],
         'dir path in loop': user_pars['dir path in loop'],
-        'file path in pars': user_pars['file path in pars'],
+        'dir path in pars': user_pars['dir path in pars'],
         'mask': {'man mask': [],
                  'revert mask': False}
     })
@@ -498,8 +502,8 @@ def main_sort_plot_pixel(user_pars, dir_path_in, verbose=False,
             # Coupled mode
             elif user_pars['prop key']['mode'] == 'coupled':
                 best_loop, figs_nanoloop = {}, {}
-                res = print_parameters(treat_pars['file path in pars'])
-                meas_pars, sign_pars, _, _, _ = res
+                meas_pars, sign_pars = csv_meas_sheet_extract(
+                    user_pars['dir path in pars'])
                 for mode in ['off', 'on']:
                     loop_file_name = mode + '_f_' + \
                                      os.path.split(file)[1][:-4] + '.txt'
@@ -618,16 +622,17 @@ def parameters(fname_json=None):
         This parameter specifies the directory containing the loop text files
         generated after the 1st step of the analysis.
         Optional, Default: 'nanoloops'
-    - file_path_in_pars: str
-        Measurement and analysis parameters txt file.
-        This parameter specifies the file containing measurement and analysis
-        parameters generated after the 2nd step of the analysis.
-        Optional, Default: 'parameters.txt'
+    - dir_path_in_pars: str
+        Path of the CSV measurement sheet directory.
+        This parameter specifies the directory containing path of the CSV
+        measurement sheet.
+        Optional, Default: 'title_meas_out_mode'
     - dir_path_out: str
         Saving directory for analysis results figures
         (optional, default: toolbox directory in the same root)
         This parameter specifies the directory where the figures
         generated as a result of the analysis will be saved.
+
     - verbose: bool
         Activation key for printing verbosity during analysis.
         This parameter serves as an activation key for printing verbose
@@ -642,13 +647,8 @@ def parameters(fname_json=None):
         generated during the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        config_params = get_config(__file__, fname_json)
+        config_params, fname_json = get_config(__file__, fname_json)
         dir_path_in = config_params['dir_path_in']
-        dir_path_out = config_params['dir_path_out']
-        verbose = config_params['verbose']
-        show_plots = config_params['show_plots']
-        save = config_params['save']
-        user_pars = config_params['user_pars']
     elif get_setting("extract_parameters") == 'python':
         print("user parameters from python file")
         dir_path_in = tkf.askdirectory()
@@ -656,16 +656,23 @@ def parameters(fname_json=None):
         dir_path_out = None
         # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
         # plot_pix_extrem_2023-10-02-16h38m
-        verbose = True
-        show_plots = True
-        save = False
-        user_pars = {'prop key': {'mode': 'off',
-                                  'prop': 'charac tot fit: area'},
-                     'list pixels': None,
-                     'reverse': False,
-                     'del 1st loop': True,
-                     'interp fact': 4,
-                     'interp func': 'linear'}
+        config_params = {
+            "dir_path_in": dir_path_in,
+            "dir_path_out": dir_path_out,
+            "verbose": True,
+            "show_plots": True,
+            "save": False,
+            "user_pars": {
+                "prop key": {
+                    "mode": "off",
+                    "prop": "charac tot fit: area"},
+                "list pixels": None,
+                "reverse": False,
+                "del 1st loop": True,
+                "interp fact": 4,
+                "interp func": "linear"
+            }
+        }
     else:
         raise NotImplementedError("setting 'extract_parameters' "
                                   "should be in ['json', 'toml', 'python']")
@@ -676,14 +683,15 @@ def parameters(fname_json=None):
     nanoloops_folder_name = get_setting('default_nanoloops_folder_name')
     dir_path_in_loop = os.path.join(dir_path_in, nanoloops_folder_name)
     # dir_path_in_loop = r'...\KNN500n_15h18m02-10-2023_out_dfrt\nanoloops
-    parameters_file_name = get_setting('default_parameters_file_name')
-    file_path_in_pars = os.path.join(dir_path_in, parameters_file_name)
-    # file_path_in_pars = r'...\KNN500n_15h18m02-10-2023_out_dfrt\parameters.txt
+    user_pars = config_params['user_pars']
     user_pars['dir path in prop'] = dir_path_in_prop
     user_pars['dir path in loop'] = dir_path_in_loop
-    user_pars['file path in pars'] = file_path_in_pars
+    user_pars['dir path in pars'] = dir_path_in
 
-    return user_pars, dir_path_in, dir_path_out, verbose, show_plots, save
+    return user_pars, config_params['dir_path_in'], \
+        config_params['dir_path_out'], config_params['verbose'], \
+        config_params['show_plots'], config_params['save'], fname_json, \
+        config_params
 
 
 def main(fname_json=None):
@@ -697,20 +705,24 @@ def main(fname_json=None):
     """
     # Extract parameters
     res = parameters(fname_json=fname_json)
-    (user_pars, dir_path_in, dir_path_out, verbose, show_plots, save) = res
+    (user_pars, dir_path_in, dir_path_out, verbose, show_plots, save,
+     fname_json, config_params) = res
     # Generate default path out
     dir_path_out = save_path_management(
         dir_path_in, dir_path_out, save=save, dirname="plot_pix_extremum",
         lvl=0, create_path=True, post_analysis=True)
-    start_time = datetime.now()
     # Main function
     main_sort_plot_pixel(
         user_pars, dir_path_in, verbose=verbose, show_plots=show_plots,
         save_plots=save, dirname=dir_path_out)
     # Save parameters
     if save:
-        save_user_pars(user_pars, dir_path_out, start_time=start_time,
-                       verbose=True)
+        if get_setting("extract_parameters") in ['json', 'toml']:
+            copy_json_res(fname_json, dir_path_out, verbose=verbose)
+        else:
+            create_json_res(config_params, dir_path_out,
+                            fname="sort_plot_pixel_params.json",
+                            verbose=verbose)
 
 
 if __name__ == '__main__':
