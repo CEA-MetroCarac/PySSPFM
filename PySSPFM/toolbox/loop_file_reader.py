@@ -7,8 +7,6 @@ Inspired by SS_PFM script, Nanoscope, Bruker
 
 import os
 import tkinter.filedialog as tkf
-from datetime import datetime
-import numpy as np
 
 from PySSPFM.settings import get_setting, get_config
 from PySSPFM.utils.core.figure import print_plots
@@ -16,7 +14,8 @@ from PySSPFM.utils.raw_extraction import csv_meas_sheet_extract
 from PySSPFM.utils.nanoloop.plot import main_plot
 from PySSPFM.utils.nanoloop.file import extract_nanoloop_data
 from PySSPFM.utils.nanoloop.analysis import nanoloop_treatment
-from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.path_for_runable import \
+    save_path_management, copy_json_res, create_json_res
 
 
 def main_loop_file_reader(file_path, csv_path=None, dict_pha=None,
@@ -187,14 +186,7 @@ def parameters(fname_json=None):
         generated during the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        config_params = get_config(__file__, fname_json)
-        file_path_in = config_params['file_path_in']
-        dir_path_out = config_params['dir_path_out']
-        csv_file_path = config_params['csv_file_path']
-        verbose = config_params['verbose']
-        show_plots = config_params['show_plots']
-        save = config_params['save']
-        user_pars = config_params['user_pars']
+        config_params, fname_json = get_config(__file__, fname_json)
     elif get_setting("extract_parameters") == 'python':
         print("user parameters from python file")
         # Get file path
@@ -207,28 +199,33 @@ def parameters(fname_json=None):
         csv_file_path = None
         # csv_file_path =
         # r'...\KNN500n\measurement sheet model SSPFM ZI DFRT.csv'
-        verbose = True
-        show_plots = True
-        save = False
-
-        user_pars = {
-            'del 1st loop': True,
-            'corr': 'offset',
-            'pha fwd': 0,
-            'pha rev': 180,
-            'func': np.cos,
-            'main elec': True,
-            'grounded tip': True,
-            'positive d33': True,
-            'locked elec slope': None,
+        config_params = {
+            "file_path_in": file_path_in,
+            "dir_path_out": dir_path_out,
+            "csv_file_path": csv_file_path,
+            "verbose": True,
+            "show_plots": True,
+            "save": False,
+            "user_pars": {
+                "del 1st loop": True,
+                "corr": "raw",
+                "pha fwd": 0,
+                "pha rev": 180,
+                "func": "np.cos",
+                "main elec": True,
+                "grounded tip": False,
+                "positive d33": True,
+                "locked elec slope": None
+            }
         }
-
     else:
         raise NotImplementedError("setting 'extract_parameters' "
                                   "should be in ['json', 'toml', 'python']")
 
-    return user_pars, file_path_in, dir_path_out, csv_file_path, verbose, \
-        show_plots, save
+    return config_params['user_pars'], config_params['file_path_in'], \
+        config_params['dir_path_out'], config_params['csv_file_path'], \
+        config_params['verbose'], config_params['show_plots'], \
+        config_params['save'], fname_json, config_params
 
 
 def main(fname_json=None):
@@ -243,12 +240,11 @@ def main(fname_json=None):
     figs = []
     # Extract parameters
     (user_pars, file_path_in, dir_path_out, csv_file_path, verbose, show_plots,
-     save) = parameters(fname_json=fname_json)# Generate default path out
+     save, fname_json, config_params) = parameters(fname_json=fname_json)
     # Generate default path out
     dir_path_out = save_path_management(
         file_path_in, dir_path_out, save=save, dirname="loop_file_reader",
         lvl=2, create_path=True, post_analysis=True)
-    start_time = datetime.now()
     # Main function
     figs += main_loop_file_reader(
         file_path_in, csv_path=csv_file_path, dict_pha=user_pars,
@@ -259,8 +255,12 @@ def main(fname_json=None):
                 dirname=dir_path_out, transparent=False)
     # Save parameters
     if save:
-        save_user_pars(user_pars, dir_path_out, start_time=start_time,
-                       verbose=verbose)
+        if get_setting("extract_parameters") in ['json', 'toml']:
+            copy_json_res(fname_json, dir_path_out, verbose=verbose)
+        else:
+            create_json_res(config_params, dir_path_out,
+                            fname="loop_file_reader_params.json",
+                            verbose=verbose)
 
 
 if __name__ == '__main__':
