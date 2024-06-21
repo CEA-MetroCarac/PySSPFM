@@ -6,16 +6,14 @@ properties in text files.
 
 import os
 import tkinter.filedialog as tkf
-from datetime import datetime
-from pathlib import Path
-import shutil
 
 from PySSPFM.settings import get_setting, get_config
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.map.main import main_mapping
 from PySSPFM.utils.nanoloop_to_hyst.file import extract_properties
 from PySSPFM.toolbox.map_correlation import correlation_analysis_all_maps
-from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.path_for_runable import \
+    save_path_management, copy_json_res, create_json_res
 
 
 def main_global_map_reader(
@@ -183,13 +181,7 @@ def parameters(fname_json=None):
         generated during the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        config_params = get_config(__file__, fname_json)
-        dir_path_in = config_params['dir_path_in']
-        dir_path_out = config_params['dir_path_out']
-        verbose = config_params['verbose']
-        show_plots = config_params['show_plots']
-        save = config_params['save']
-        user_pars = config_params['user_pars']
+        config_params, fname_json = get_config(__file__, fname_json)
     elif get_setting("extract_parameters") == 'python':
         print("user parameters from python file")
         dir_path_in = tkf.askdirectory()
@@ -197,45 +189,66 @@ def parameters(fname_json=None):
         dir_path_out = None
         # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
         # global_map_reader_2023-10-02-16h38m
-        verbose = True
-        show_plots = True
-        save = False
-        user_pars = {'interp fact': 4,
-                     'interp func': 'linear',
-                     'revert mask': {'on': False,
-                                     'off': False,
-                                     'coupled': False,
-                                     'other': False},
-                     'man mask': {'on': [],
-                                  'off': [],
-                                  'coupled': [],
-                                  'other': []},
-                     'ref': {'on': {'prop': 'charac tot fit: area',
-                                    'fmt': '.5f',
-                                    'min val': None,
-                                    'max val': 0.005,
-                                    'interactive': False},
-                             'off': {'prop': 'charac tot fit: area',
-                                     'fmt': '.5f',
-                                     'min val': None,
-                                     'max val': 0.005,
-                                     'interactive': False},
-                             'coupled': {'prop': 'r_2',
-                                         'fmt': '.5f',
-                                         'min val': 0.95,
-                                         'max val': None,
-                                         'interactive': False},
-                             'other': {
-                                 'prop': 'deflection error',
-                                 'fmt': '.2f',
-                                 'min val': None,
-                                 'max val': 5,
-                                 'interactive': False}}}
+        config_params = {
+            "dir_path_in": dir_path_in,
+            "dir_path_out": dir_path_out,
+            "verbose": True,
+            "show_plots": True,
+            "save": False,
+            "user_pars": {
+                "interp fact": 4,
+                "interp func": "linear",
+                "revert mask": {
+                    "on": False,
+                    "off": False,
+                    "coupled": False,
+                    "other": False
+                },
+                "man mask": {
+                    "on": [],
+                    "off": [],
+                    "coupled": [],
+                    "other": []
+                },
+                "ref": {
+                    "on": {
+                        "prop": "charac tot fit: area",
+                        "fmt": ".5f",
+                        "min val": None,
+                        "max val": 0.005,
+                        "interactive": False
+                    },
+                    "off": {
+                        "prop": "charac tot fit: area",
+                        "fmt": ".5f",
+                        "min val": None,
+                        "max val": 0.005,
+                        "interactive": False
+                    },
+                    "coupled": {
+                        "prop": "r_2",
+                        "fmt": ".5f",
+                        "min val": 0.95,
+                        "max val": None,
+                        "interactive": False,
+                        "other": {
+                            "prop": "deflection error",
+                            "fmt": ".2f",
+                            "min val": None,
+                            "max val": 5,
+                            "interactive": False}
+                    }
+                }
+            }
+        }
     else:
         raise NotImplementedError("setting 'extract_parameters' "
                                   "should be in ['json', 'toml', 'python']")
 
-    return user_pars, dir_path_in, dir_path_out, verbose, show_plots, save
+    return config_params['user_pars'], config_params['dir_path_in'], \
+        config_params['dir_path_out'], config_params['verbose'], \
+        config_params['show_plots'], config_params['save'], fname_json, \
+        config_params
 
 
 def main(fname_json=None):
@@ -249,19 +262,23 @@ def main(fname_json=None):
     """
     # Extract parameters
     res = parameters(fname_json=fname_json)
-    (user_pars, dir_path_in, dir_path_out, verbose, show_plots, save) = res
+    (user_pars, dir_path_in, dir_path_out, verbose, show_plots, save,
+     fname_json, config_params) = res
     dir_path_out = save_path_management(
         dir_path_in, dir_path_out, save=save, dirname="global_map_reader",
         lvl=1, create_path=True, post_analysis=True)
-    start_time = datetime.now()
     # Main function
     main_global_map_reader(
         user_pars, verbose=verbose, show_plots=show_plots, save_plots=save,
         dir_path_in=dir_path_in, dir_path_out=dir_path_out)
     # Save parameters
     if save:
-        save_user_pars(user_pars, dir_path_out, start_time=start_time,
-                       verbose=verbose)
+        if get_setting("extract_parameters") in ['json', 'toml']:
+            copy_json_res(fname_json, dir_path_out, verbose=verbose)
+        else:
+            create_json_res(config_params, dir_path_out,
+                            fname="global_map_reader_params.json",
+                            verbose=verbose)
 
 
 if __name__ == '__main__':
