@@ -314,14 +314,18 @@ def csv_meas_sheet_extract(dir_path_in_csv, verbose=False):
     file_path_in_csv = ''
     meas_pars_sheet = 'measure parameters'
     bias_pars_sheet = 'sspfm bias parameters'
+    meas_sheet_name = get_setting("default_parameters_file_name")
+    if meas_sheet_name in dir_path_in_csv:
+        file_path_in_csv = dir_path_in_csv
+    else:
+        for elem in os.listdir(dir_path_in_csv):
+            if meas_sheet_name in elem.replace("~$", ""):
+                file_path_in_csv = os.path.join(dir_path_in_csv,
+                                                elem.replace("~$", ""))
 
-    for elem in os.listdir(dir_path_in_csv):
-        if elem.endswith('.csv') and 'measurement sheet' in elem:
-            file_path_in_csv = os.path.join(dir_path_in_csv, elem)
-            file_path_in_csv = file_path_in_csv.replace("~$", "")
-            if verbose:
-                name = os.path.split(file_path_in_csv)[1]
-                print(f'- meas sheet name: "{name}"\n')
+    if verbose:
+        name = os.path.split(file_path_in_csv)[1]
+        print(f'- meas sheet name: "{name}"\n')
 
     excel_meas = pd.read_excel(file_path_in_csv, sheet_name=meas_pars_sheet)
     csv_meas = dict(zip(excel_meas['Parameter'].tolist(),
