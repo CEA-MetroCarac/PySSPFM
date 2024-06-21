@@ -7,6 +7,7 @@ Inspired by the SS_PFM script from Nanoscope, Bruker.
 
 import tkinter.filedialog as tkf
 import os
+import shutil
 import time
 from datetime import datetime
 import numpy as np
@@ -25,12 +26,13 @@ from PySSPFM.utils.nanoloop.phase import \
     (phase_calibration, gen_dict_pha, phase_offset_determination,
      apply_phase_offset, mean_phase_offset)
 from PySSPFM.utils.nanoloop.analysis import AllMultiLoop
+from PySSPFM.utils.path_for_runable import create_json_res, copy_json_res
 from PySSPFM.utils.datacube_to_nanoloop.gen_data import gen_segments
 from PySSPFM.utils.datacube_to_nanoloop.plot import \
     (plt_seg_max, plt_seg_fit, plt_seg_stable,  plt_signals, plt_amp, plt_bias,
      amp_pha_map)
 from PySSPFM.utils.datacube_to_nanoloop.file import \
-    save_parameters, print_params, get_acquisition_time, get_phase_tab_offset
+    print_params, get_phase_tab_offset
 from PySSPFM.utils.datacube_to_nanoloop.analysis import \
     (cut_function, external_calib, SegmentInfo, SegmentSweep,
      SegmentStable, SegmentStableDFRT, extract_other_properties)
@@ -484,9 +486,6 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='max',
     assert root_out
 
     # Create the saving folder, init date, starting time and measurement time
-    t0, raw_date = time.time(), datetime.now()
-    date = raw_date.strftime('%Y-%m-%d %H;%M')
-    exp_meas_time = get_acquisition_time(dir_path_in, file_format=file_format)
     get_phase_offset = bool(user_pars["pha pars"]["method"] == "dynamic")
 
     # Get phase offset list from phase file if filled by user
@@ -567,10 +566,6 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='max',
         _, nb_seg_tot = cut_function(sign_pars)
         meas_pars['nb seg'] = nb_seg_tot
 
-        # Save all the parameters in a text file
-        save_parameters(root_out, t0, date, exp_meas_time, user_pars,
-                        meas_pars, sign_pars, i)
-
 
 def main_script(user_pars, file_path_in, verbose=False, show_plots=False,
                 save=False, root_out=None):
@@ -594,7 +589,8 @@ def main_script(user_pars, file_path_in, verbose=False, show_plots=False,
 
     Returns
     -------
-    None
+    str
+        The output directory used for the analysis.
     """
     # Single Script
     seg_pars = user_pars['seg pars']
@@ -614,6 +610,16 @@ def main_script(user_pars, file_path_in, verbose=False, show_plots=False,
             f'_{date_str}_out_{user_pars["seg pars"]["mode"]}'
     if not os.path.isdir(root_out) and save is True:
         os.makedirs(root_out)
+
+    # Copy csv file in result directory
+    meas_sheet_name = get_setting("default_parameters_file_name")
+    for elem in os.listdir(dir_path_in):
+        if meas_sheet_name in elem.replace("~$", ""):
+            file_path_in_csv = os.path.join(dir_path_in, elem.replace("~$", ""))
+
+    if save:
+        shutil.copy(file_path_in_csv, root_out)
+
     phase_offset = user_pars["pha pars"]["offset"]
     _ = single_script(user_pars, file_path_in, meas_pars, sign_pars,
                       phase_offset=phase_offset, get_phase_offset=False,
@@ -644,6 +650,8 @@ def main_script(user_pars, file_path_in, verbose=False, show_plots=False,
             time.sleep(1)
         print('\n\nData analysis end with success !')
         print('############################################\n')
+
+    return root_out
 
 
 def parameters(fname_json=None):
@@ -782,15 +790,7 @@ def parameters(fname_json=None):
         generated after the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        config_params = get_config(__file__, fname_json)
-        file_path_in = config_params['file_path_in']
-        root_out = config_params['root_out']
-        verbose = config_params['verbose']
-        show_plots = config_params['show_plots']
-        save = config_params['save']
-        user_pars = {'seg pars': config_params['seg_params'],
-                     'fit pars': config_params['fit_params'],
-                     'pha pars': config_params['pha_params']}
+        config_params, fname_json = get_config(__file__, fname_json)
     elif get_setting("extract_parameters") == 'python':
         print("user parameters from python file")
         # Get file path for single script
@@ -798,29 +798,46 @@ def parameters(fname_json=None):
         # file_path_in = r'...\KNN500n\KNN500n.0_00001.spm
         root_out = None
         # root_out = r'...\KNN500n_15h18m02-10-2023_out_max
-        verbose = True
-        show_plots = True
-        save = True
-        seg_params = {'mode': 'max',
-                      'cut seg [%]': {'start': 5, 'end': 5},
-                      'filter type': None,
-                      'filter freq 1': 1e3,
-                      'filter freq 2': 3e3,
-                      'filter ord': 4}
-        fit_params = {'fit pha': False,
-                      'detect peak': False,
-                      'sens peak detect': 1.5}
-        pha_params = {'phase_file_path': None,
-                      'method': 'static',
-                      'offset': 0}
-        user_pars = {'seg pars': seg_params,
-                     'fit pars': fit_params,
-                     'pha pars': pha_params}
+        config_params = {
+            "file_path_in": file_path_in,
+            "root_out": root_out,
+            "verbose": True,
+            "show_plots": True,
+            "save": True,
+            "seg_params": {
+                "mode": "max",
+                "cut seg [%]": {
+                    "start": 5,
+                    "end": 5
+                },
+                "filter type": None,
+                "filter freq 1": 1e3,
+                "filter freq 2": 3e3,
+                "filter ord": 4
+            },
+            "fit_params": {
+                "fit pha": False,
+                "detect peak": False,
+                "sens peak detect": 1.5
+            },
+            "pha_params": {
+                "phase_file_path": None,
+                "method": "static",
+                "offset": 0
+            }
+        }
     else:
         raise NotImplementedError("setting 'extract_parameters' "
                                   "should be in ['json', 'toml', 'python']")
 
-    return user_pars, file_path_in, root_out, verbose, show_plots, save
+    user_pars = {'seg pars': config_params["seg_params"],
+                 'fit pars': config_params["fit_params"],
+                 'pha pars': config_params["pha_params"]}
+
+    return user_pars, config_params['file_path_in'], \
+        config_params['root_out'], config_params['verbose'], \
+        config_params['show_plots'], config_params['save'], fname_json, \
+        config_params
 
 
 def main(fname_json=None):
@@ -834,11 +851,21 @@ def main(fname_json=None):
     """
     # Extract parameters
     res = parameters(fname_json=fname_json)
-    (user_pars, file_path_in, root_out, verbose, show_plots, save) = res
+    (user_pars, file_path_in, root_out, verbose, show_plots, save, fname_json,
+     config_params) = res
 
     # Main function
-    main_script(user_pars, file_path_in, verbose=verbose, show_plots=show_plots,
-                save=save, root_out=root_out)
+    root_out = main_script(user_pars, file_path_in, verbose=verbose,
+                           show_plots=show_plots, save=save, root_out=root_out)
+
+    # Save parameters
+    if save:
+        if get_setting("extract_parameters") in ['json', 'toml']:
+            copy_json_res(fname_json, root_out, verbose=verbose)
+        else:
+            create_json_res(config_params, root_out,
+                            fname="datacube_to_nanoloop_s1_params.json",
+                            verbose=verbose)
 
 
 if __name__ == '__main__':
