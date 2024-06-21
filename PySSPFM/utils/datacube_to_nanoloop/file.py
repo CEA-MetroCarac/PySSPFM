@@ -6,12 +6,7 @@ Module used for the scripts of sspfm 1st step data analysis
     - Save measurements and parameters
 """
 
-import time
-import os
-from datetime import datetime
 import numpy as np
-
-from PySSPFM.settings import get_setting
 
 
 def print_params(meas_pars, sign_pars, user_pars, verbose=False):
