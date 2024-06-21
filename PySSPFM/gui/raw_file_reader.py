@@ -32,7 +32,7 @@ def main(parent=None):
     """
     # Create the main or secondary window
     title = "Raw file reader"
-    app = init_secondary_wdw(parent=parent, wdw_title=title)
+    app, scrollable_frame = init_secondary_wdw(parent=parent, wdw_title=title)
 
     # Set default parameter values
     default_user_parameters = {
@@ -80,20 +80,21 @@ def main(parent=None):
         dir_path_out_var.set(dir_path_out)
 
     # Window title: Raw file reader
-    wdw_main_title(app, title)
+    wdw_main_title(scrollable_frame, title)
 
     row = 3
 
     # Section title: File management
-    label_file = ttk.Label(app, text="File management", font=("Helvetica", 14))
+    label_file = ttk.Label(scrollable_frame, text="File management",
+                           font=("Helvetica", 14))
     row = grid_item(label_file, row, column=0, sticky="ew", columnspan=3)
 
     # File (in)
-    label_in = ttk.Label(app, text="File (in):")
+    label_in = ttk.Label(scrollable_frame, text="File (in):")
     row = grid_item(label_in, row, column=0, sticky="e", increment=False)
     file_path_in_var = tk.StringVar()
     file_path_in_var.set(user_parameters['file path in'])
-    entry_in = ttk.Entry(app, textvariable=file_path_in_var)
+    entry_in = ttk.Entry(scrollable_frame, textvariable=file_path_in_var)
     row = grid_item(entry_in, row, column=1, sticky="ew", increment=False)
     strg = "- Name: file_path_in\n" \
            "- Summary: Path of datacube SSPFM raw file measurements.\n" \
@@ -104,7 +105,8 @@ def main(parent=None):
            "- Value: A string representing the file path."
     entry_in.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(entry_in, mess))
-    browse_button_in = ttk.Button(app, text="Browse", command=browse_file_in)
+    browse_button_in = ttk.Button(scrollable_frame, text="Browse",
+                                  command=browse_file_in)
     row = grid_item(browse_button_in, row, column=2)
 
     # Function to generate the default output directory path
@@ -129,13 +131,13 @@ def main(parent=None):
                                lambda *args: update_default_output_dir())
 
     # Directory (out)
-    label_out = ttk.Label(app, text="\tDirectory (out) (*):")
+    label_out = ttk.Label(scrollable_frame, text="\tDirectory (out) (*):")
     row = grid_item(label_out, row, column=0, sticky="e", increment=False)
     dir_path_out_var = tk.StringVar()
     default_input_file = file_path_in_var.get()
     default_output_dir = generate_default_output_dir(default_input_file)
     dir_path_out_var.set(default_output_dir)
-    entry_out = ttk.Entry(app, textvariable=dir_path_out_var)
+    entry_out = ttk.Entry(scrollable_frame, textvariable=dir_path_out_var)
     row = grid_item(entry_out, row, column=1, sticky="ew", increment=False)
     strg = "- Name: dir_path_out\n" \
            "- Summary: Saving directory for analysis results figures " \
@@ -146,19 +148,20 @@ def main(parent=None):
            "- Value: It should be a string representing a directory path."
     entry_out.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(entry_out, mess))
-    browse_button_out = ttk.Button(app, text="Select", command=browse_dir_out)
+    browse_button_out = ttk.Button(scrollable_frame, text="Select",
+                                   command=browse_dir_out)
     row = grid_item(browse_button_out, row, column=2)
-    row = add_grid_separator(app, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Analysis mode
-    label_analysis = ttk.Label(app, text="Analysis mode",
+    label_analysis = ttk.Label(scrollable_frame, text="Analysis mode",
                                font=("Helvetica", 14))
     row = grid_item(label_analysis, row, column=0, sticky="ew", columnspan=3)
 
     # Mode
-    label_mode = ttk.Label(app, text="Mode:")
+    label_mode = ttk.Label(scrollable_frame, text="Mode:")
     row = grid_item(label_mode, row, column=0, sticky="e", increment=False)
-    mode_var = ttk.Combobox(app, values=["classic", "dfrt"])
+    mode_var = ttk.Combobox(scrollable_frame, values=["classic", "dfrt"])
     mode_var.set(user_parameters['mode'])
     row = grid_item(mode_var, row, column=1, sticky="ew")
     strg = "- Name: mode\n" \
@@ -171,18 +174,19 @@ def main(parent=None):
            "'classic' (sweep or single_freq) or 'dfrt'"
     mode_var.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(mode_var, mess))
-    row = add_grid_separator(app, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Save and plot
-    label_chck = ttk.Label(app, text="Save and plot", font=("Helvetica", 14))
+    label_chck = ttk.Label(scrollable_frame, text="Save and plot",
+                           font=("Helvetica", 14))
     row = grid_item(label_chck, row, column=0, sticky="ew", columnspan=3)
 
     # Verbose
-    label_verb = ttk.Label(app, text="Verbose:")
+    label_verb = ttk.Label(scrollable_frame, text="Verbose:")
     row = grid_item(label_verb, row, column=0, sticky="e", increment=False)
     verbose_var = tk.BooleanVar()
     verbose_var.set(user_parameters['verbose'])
-    chck_verb = ttk.Checkbutton(app, variable=verbose_var)
+    chck_verb = ttk.Checkbutton(scrollable_frame, variable=verbose_var)
     row = grid_item(chck_verb, row, column=1, sticky="w")
     strg = "- Name: verbose\n" \
            "- Summary: Activation key for printing verbosity during " \
@@ -194,11 +198,11 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(chck_verb, mess))
 
     # Show plots
-    label_show = ttk.Label(app, text="Show plots:")
+    label_show = ttk.Label(scrollable_frame, text="Show plots:")
     row = grid_item(label_show, row, column=0, sticky="e", increment=False)
     show_plots_var = tk.BooleanVar()
     show_plots_var.set(user_parameters['show plots'])
-    chck_show = ttk.Checkbutton(app, variable=show_plots_var)
+    chck_show = ttk.Checkbutton(scrollable_frame, variable=show_plots_var)
     row = grid_item(chck_show, row, column=1, sticky="w")
     strg = "- Name: show_plots\n" \
            "- Summary: Activation key for generating matplotlib figures " \
@@ -210,11 +214,11 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(chck_show, mess))
 
     # Save plots
-    label_save = ttk.Label(app, text="Save plots:")
+    label_save = ttk.Label(scrollable_frame, text="Save plots:")
     row = grid_item(label_save, row, column=0, sticky="e", increment=False)
     save_plots_var = tk.BooleanVar()
     save_plots_var.set(user_parameters['save plots'])
-    chck_save = ttk.Checkbutton(app, variable=save_plots_var)
+    chck_save = ttk.Checkbutton(scrollable_frame, variable=save_plots_var)
     row = grid_item(chck_save, row, column=1, sticky="w")
     strg = "- Name: save_plots\n" \
            "- Summary: Activation key for saving figures during analysis.\n" \
@@ -223,17 +227,18 @@ def main(parent=None):
            "- Value: Boolean (True or False)."
     chck_save.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(chck_save, mess))
-    row = add_grid_separator(app, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Submit button
-    submit_button = ttk.Button(app, text="Start", command=launch)
+    submit_button = ttk.Button(scrollable_frame, text="Start", command=launch)
     row = grid_item(submit_button, row, column=0, sticky="e", increment=False)
 
     def quit_application():
         app.destroy()
 
     # Exit button
-    quit_button = ttk.Button(app, text="Exit", command=quit_application)
+    quit_button = ttk.Button(scrollable_frame, text="Exit",
+                             command=quit_application)
     grid_item(quit_button, row, column=1, sticky="ew", increment=False)
 
     app.mainloop()
