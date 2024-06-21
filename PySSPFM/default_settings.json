@@ -6,7 +6,7 @@
 "default_data_path_out": ["ROOT", "PySSPFM_data_out"],
 "default_logo_path": ["ROOT", "PySSPFM", "logo_icon", "logoPySSPFM.png"],
 "default_icon_path": ["ROOT", "PySSPFM", "logo_icon", "iconPySSPFM.png"],
-"default_parameters_file_name": "parameters.txt",
+"default_parameters_file_name": "measurement sheet model SSPFM.csv",
 "default_figures_folder_name": "figs",
 "default_nanoloops_folder_name": "nanoloops",
 "default_best_nanoloop_folder_name": "best_nanoloops",
