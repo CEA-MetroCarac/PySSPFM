@@ -14,8 +14,7 @@ def test_file():
     """ Test example_file """
 
     out = example_file()
-    (file_paths_from_nanoloops, file_paths_from_raw, meas_pars, sign_pars,
-     dict_analysis_1, nb_write_per_read, write_segment, properties,
+    (file_paths_from_nanoloops, file_paths_from_raw, properties,
      dim_pix, dim_mic, main_elec_tab) = out
     file_names_from_raw = [[os.path.split(path)[1] for path in paths]
                            for paths in file_paths_from_raw]
@@ -87,11 +86,6 @@ def test_file():
          ['off_f_KNN500n_SSPFM.0_00117.txt', 'on_f_KNN500n_SSPFM.0_00117.txt'],
          ['off_f_KNN500n_SSPFM.0_00118.txt', 'on_f_KNN500n_SSPFM.0_00118.txt']]
 
-    assert nb_write_per_read == 100
-    assert len(list(write_segment)) == 100
-    assert len(dict_analysis_1) == 3
-    assert len(meas_pars) == 31
-    assert len(sign_pars) == 16
     assert np.sum(list(dim_pix.values())) == 16
     assert np.sum(list(dim_mic.values())) == 7
     assert np.sum(list(properties['on'].values())) == 6269
