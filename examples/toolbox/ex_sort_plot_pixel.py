@@ -29,11 +29,10 @@ def example_sort_plot_pixel(verbose=False, make_plots=False):
         example_root_path_in, "KNN500n_2023-11-20-16h15m_out_dfrt")
     dir_path_in_props = os.path.join(dir_path_in, "properties")
     dir_path_in_loop = os.path.join(dir_path_in, "nanoloops")
-    file_path_in_pars = os.path.join(dir_path_in, "parameters.txt")
     user_pars = {'dir path in': dir_path_in,
                  'dir path in prop': dir_path_in_props,
                  'dir path in loop': dir_path_in_loop,
-                 'file path in pars': file_path_in_pars,
+                 'dir path in pars': dir_path_in,
                  'prop key': {'mode': 'off',
                               'prop': 'fit pars: ampli_0'},
                  'list pixels': None,
