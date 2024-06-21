@@ -1,0 +1,28 @@
+{
+    "file_path_in": "C:\\Users\\HV265662\\PycharmProjects\\PySSPFM\\examples\\data\\PySSPFM_example_in\\PZT100n_reduced\\PIT_SSPFM_DFRT_T2ms_map.0_00000.spm",
+    "root_out": null,
+    "verbose": true,
+    "show_plots": true,
+    "save": true,
+    "seg_params": {
+        "mode": "dfrt",
+        "cut seg [%]": {
+            "start": 40,
+            "end": 0
+        },
+        "filter type": null,
+        "filter freq 1": 1e3,
+        "filter freq 2": 3e3,
+        "filter ord": 4
+    },
+    "fit_params": {
+        "fit pha": false,
+        "detect peak": false,
+        "sens peak detect": 1.5
+    },
+    "pha_params": {
+        "phase_file_path": null,
+        "method": "static",
+        "offset": 90
+    }
+}
