@@ -97,10 +97,10 @@ def example_mean_hyst(phase='1', mode='off', verbose=False, make_plots=False):
         example_root_path_in, "KNN500n_2023-11-20-16h15m_out_dfrt")
     dir_path_in_props = os.path.join(dir_path_in, "properties")
     dir_path_in_loop = os.path.join(dir_path_in, "nanoloops")
-    file_path_in_pars = os.path.join(dir_path_in, "parameters.txt")
+
     user_pars['dir path in prop'] = dir_path_in_props
     user_pars['dir path in loop'] = dir_path_in_loop
-    user_pars['file path in pars'] = file_path_in_pars
+    user_pars['dir path in pars'] = dir_path_in
 
     # ex main_mean_hyst
     if make_plots:
