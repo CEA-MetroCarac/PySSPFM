@@ -3,7 +3,7 @@ Util functions for interface graphique exe files
 """
 
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, Canvas, Scrollbar
 from PIL import Image, ImageTk
 
 from PySSPFM.settings import get_setting
@@ -23,24 +23,19 @@ def apply_style(root):
     None
     """
 
-    # Create a blue-colored frame for the background
-    background_frame = tk.Frame(root, bg="lightblue")
+    # Create a frame for the background
+    background_frame = tk.Frame(root)
     background_frame.place(relwidth=1, relheight=1)
 
     # Apply a ttk style for a more pleasant interface
     style = ttk.Style()
-    style.configure('TLabel', font=('Arial', 12), anchor='center',
-                    background='lightblue')
+    style.configure('TLabel', font=('Arial', 12), anchor='center')
     style.configure('TButton', font=('Arial', 12), anchor='center',
-                    borderwidth=4, relief="ridge", background='lightblue')
-    style.configure('TCheckbutton', font=('Arial', 12), anchor='center',
-                    background='lightblue')
-    style.configure('TEntry', font=('Arial', 12), background='lightblue')
-    style.configure('Horizontal.TScale', background='lightblue',
-                    troughcolor='lightgray')
-    style.configure('TMenubutton', font=('Arial', 12), anchor='center',
-                    background='lightblue')
-    style.configure('bluelight.TFrame', background='lightblue')
+                    borderwidth=4, relief="ridge")
+    style.configure('TCheckbutton', font=('Arial', 12), anchor='center')
+    style.configure('TEntry', font=('Arial', 12))
+    style.configure('Horizontal.TScale', troughcolor='lightgray')
+    style.configure('TMenubutton', font=('Arial', 12), anchor='center')
 
 
 def hide_tooltip(tooltip_wdw):
@@ -182,7 +177,7 @@ def create_frame(root, title=None, row=1, column=1):
     ttk.Frame
         The created frame.
     """
-    frame = ttk.Frame(root, style="bluelight.TFrame")
+    frame = ttk.Frame(root)
     frame.grid(row=row, column=column, sticky='e')
 
     if title:
@@ -220,45 +215,78 @@ def extract_var(string_var):
 
 def init_main_wdw(wdw_title, logo_path=None, icon_path=None):
     """
-    Initialize the main window.
+    Initialize the main window with a scrollbar and ensure images are displayed
+    correctly, positioning the window at the top-right corner of the screen.
 
     Parameters
     ----------
     wdw_title : str
         Title for the main window.
     logo_path : str, optional
-        Path to the logo image file (default is None).
+        Path to the logo image file. Uses default setting if None.
     icon_path : str, optional
-        Path to the icon image file (default is None).
+        Path to the icon image file. Uses default setting if None.
 
     Returns
     -------
-    tk.Tk
-        The initialized main window.
+    tuple
+        A tuple containing the main window (tk.Tk) and the scrollable frame
+        (ttk.Frame).
     """
     logo_path = logo_path or get_setting("default_logo_path")
     icon_path = icon_path or get_setting("default_icon_path")
 
+    # Set root
     root = tk.Tk()
     root.title(wdw_title)
     apply_style(root)
 
-    # Logo and icon PySSPFM
-    logo_image = Image.open(logo_path)
-    logo_photo = ImageTk.PhotoImage(logo_image)
-    logo_label = ttk.Label(root, image=logo_photo)
-    logo_label.photo = logo_photo
-    logo_label.pack()
-    icon_image = Image.open(icon_path)
-    icon_photo = ImageTk.PhotoImage(icon_image)
-    root.iconphoto(True, icon_photo)
+    # Configure the canvas and scrollbar
+    canvas = Canvas(root)
+    scrollbar = Scrollbar(root, orient="vertical", command=canvas.yview)
+    canvas.configure(yscrollcommand=scrollbar.set)
+    scrollbar.pack(side='right', fill='y')
+    canvas.pack(side='left', fill='both', expand=True)
 
-    return root
+    # Create a frame on the canvas for content, positioned at the top-right
+    scrollable_frame = ttk.Frame(canvas)
+    scrollable_frame.bind(
+        '<Configure>',
+        lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+
+    # Set icon if provided
+    if icon_path:
+        icon_image = Image.open(icon_path)
+        icon_photo = ImageTk.PhotoImage(icon_image)
+        root.iconphoto(True, icon_photo)
+
+    # Set logo if provided and place it at the top-right
+    if logo_path:
+        logo_image = Image.open(logo_path)
+        logo_photo = ImageTk.PhotoImage(logo_image)
+        logo_label = ttk.Label(scrollable_frame, image=logo_photo)
+        logo_label.image = logo_photo  # Keep a reference to the image
+        logo_label.pack(side='top', anchor='ne', pady=10)
+
+    # Use a window creation on the canvas to keep the frame top-right aligned
+    canvas.create_window((0, 0), window=scrollable_frame, anchor='nw',
+                         width=canvas.cget('width'))
+
+    # Update the canvas's window item when the canvas size changes
+    canvas.bind('<Configure>', lambda e: canvas.itemconfig('window',
+                                                           width=e.width))
+
+    # Adjust window size based on content
+    adjust_size_wdw(root)
+
+    return root, scrollable_frame
 
 
 def init_secondary_wdw(parent, wdw_title, icon_path=None):
     """
-    Initialize a secondary window.
+    Initialize a secondary window with a scrollbar and ensures images are
+    displayed correctly, positioning the window to fit its content width,
+    centered horizontally, full height, and top aligned.
 
     Parameters
     ----------
@@ -267,15 +295,17 @@ def init_secondary_wdw(parent, wdw_title, icon_path=None):
     wdw_title : str
         Title for the secondary window.
     icon_path : str, optional
-        Path to the icon image file (default is None).
+        Path to the icon image file. Uses default setting if None.
 
     Returns
     -------
-    tk.Tk
-        The initialized secondary window.
+    tuple
+        A tuple containing the secondary window (tk.Toplevel) and the
+        scrollable frame (ttk.Frame).
     """
     icon_path = icon_path or get_setting("default_icon_path")
 
+    # Set root
     if parent is None:
         root = tk.Tk()
         root.title(f"{wdw_title}")
@@ -284,12 +314,62 @@ def init_secondary_wdw(parent, wdw_title, icon_path=None):
         root.title(f"{wdw_title} (Secondary Window)")
     apply_style(root)
 
-    # Icon PySSPFM
-    icon_image = Image.open(icon_path)
-    icon_photo = ImageTk.PhotoImage(icon_image)
-    root.iconphoto(True, icon_photo)
+    # Configure the canvas and scrollbar for content scrolling
+    canvas = Canvas(root)
+    scrollbar = Scrollbar(root, orient="vertical", command=canvas.yview)
+    canvas.configure(yscrollcommand=scrollbar.set)
+    scrollbar.grid(row=0, column=1, sticky='ns')
+    canvas.grid(row=0, column=0, sticky='nsew')
 
-    return root
+    # Configure grid weights for resizing
+    root.grid_rowconfigure(0, weight=1)
+    root.grid_columnconfigure(0, weight=1)
+
+    # Create a frame on the canvas for content, centered dynamically
+    scrollable_frame = ttk.Frame(canvas)
+    canvas_window = canvas.create_window((0, 0), window=scrollable_frame,
+                                         anchor='nw')
+
+    # Adjust the position of scrollable_frame dynamically on canvas resize
+    def configure_scrollable_frame(event):
+        canvas_width = event.width
+        canvas.itemconfig(canvas_window, width=canvas_width)
+        canvas.configure(scrollregion=canvas.bbox("all"))
+
+    canvas.bind('<Configure>', configure_scrollable_frame)
+
+    # Set the window icon if an icon path is provided
+    if icon_path:
+        icon_image = Image.open(icon_path)
+        icon_photo = ImageTk.PhotoImage(icon_image)
+        root.iconphoto(True, icon_photo)
+
+    # Adjust window size based on content
+    adjust_size_wdw(root)
+
+    return root, scrollable_frame
+
+
+def adjust_size_wdw(root):
+    """
+    Adjusts the size of the tkinter window to 1.5 times its required width and
+    full screen height, centering it horizontally at the top of the screen.
+
+    Parameters
+    ----------
+    root : Tk
+        The main window whose size and position need to be adjusted.
+
+    Returns
+    -------
+    None
+    """
+    root.update_idletasks()
+    width = root.winfo_reqwidth()
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+    x = screen_width / 2 - width / 2
+    root.geometry(f"{int(width*1.5)}x{screen_height}+{int(x)}+0")
 
 
 def wdw_main_title(root, label, logo_path=None):
@@ -391,7 +471,7 @@ def buttons_section(names, functions, root, title=None, strg_functions=None):
         if btn in tooltips:
             hide_tooltip(tooltips[btn])
 
-    frame = ttk.Frame(root, style="bluelight.TFrame")
+    frame = ttk.Frame(root)
     frame.pack(pady=10)
 
     buttons = {}
