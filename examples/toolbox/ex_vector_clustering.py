@@ -8,7 +8,7 @@ from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.toolbox.vector_clustering import main_vector_clustering
 
 
-def ex_vector_clustering(label_meas, object="loop", verbose=False,
+def ex_vector_clustering(label_meas, obj="loop", verbose=False,
                          make_plots=False):
     """
     Example of loop_clustering functions.
@@ -19,7 +19,7 @@ def ex_vector_clustering(label_meas, object="loop", verbose=False,
         List of measurement name for vectors (in deflection,
         height sensor, piezoresponse, amplitude,
         phase, res freq and q fact)
-    object: str, optional
+    obj: str, optional
         Object on which the clustering analysis will be performed
         (in loop or vector) (default is loop).
     verbose: bool, optional
@@ -40,7 +40,7 @@ def ex_vector_clustering(label_meas, object="loop", verbose=False,
     """
     example_root_path_in = get_setting("example_root_path_in")
 
-    if object == "loop":
+    if obj == "loop":
         dir_path_in = os.path.join(
             example_root_path_in, "KNN500n_2023-11-20-16h15m_out_dfrt",
             "best_nanoloops")
@@ -51,7 +51,7 @@ def ex_vector_clustering(label_meas, object="loop", verbose=False,
         dim_pix = {'x': 7, 'y': 3}
         dim_mic = {'x': 7, 'y': 3}
 
-    user_pars = {'object': object,
+    user_pars = {'object': obj,
                  'relative': False,
                  'pca': True,
                  'method': 'kmeans'}
@@ -80,11 +80,11 @@ def ex_vector_clustering(label_meas, object="loop", verbose=False,
 
 if __name__ == '__main__':
     figs = []
-    ex_vector_clustering(label_meas=['deflection'], object="curve",
+    ex_vector_clustering(label_meas=['deflection'], obj="curve",
                          verbose=True, make_plots=True)
-    ex_vector_clustering(label_meas=['deflection', 'height'], object="curve",
+    ex_vector_clustering(label_meas=['deflection', 'height'], obj="curve",
                          verbose=True, make_plots=True)
-    ex_vector_clustering(label_meas=['piezoresponse'], object="loop",
+    ex_vector_clustering(label_meas=['piezoresponse'], obj="loop",
                          verbose=True, make_plots=True)
-    ex_vector_clustering(label_meas=['amplitude', 'phase'], object="loop",
+    ex_vector_clustering(label_meas=['amplitude', 'phase'], obj="loop",
                          verbose=True, make_plots=True)
