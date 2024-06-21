@@ -7,7 +7,6 @@ Inspired by SS_PFM script, Nanoscope, Bruker
 import os
 import tkinter.filedialog as tkf
 import time
-from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -18,13 +17,15 @@ from PySSPFM.utils.nanoloop.plot import plot_ckpfm
 from PySSPFM.utils.nanoloop.phase import gen_dict_pha
 from PySSPFM.utils.nanoloop.analysis import nanoloop_treatment, gen_ckpfm_meas
 from PySSPFM.utils.nanoloop_to_hyst.file import \
-    (generate_file_nanoloop_paths, print_parameters, complete_parameters,
-     save_properties, save_best_nanoloops, extract_main_elec_tab)
+    (generate_file_nanoloop_paths, save_properties, save_best_nanoloops,
+     extract_main_elec_tab)
 from PySSPFM.utils.nanoloop_to_hyst.plot import plot_nanoloop_on_off
 from PySSPFM.utils.nanoloop_to_hyst.electrostatic import differential_analysis
 from PySSPFM.utils.nanoloop_to_hyst.gen_data import gen_data_dict
 from PySSPFM.utils.nanoloop_to_hyst.analysis import \
     gen_analysis_mode, find_best_nanoloop, hyst_analysis, electrostatic_analysis
+from PySSPFM.utils.path_for_runable import create_json_res, copy_json_res
+from PySSPFM.utils.raw_extraction import csv_meas_sheet_extract
 
 DEFAULT_LIMIT = {'min': -5., 'max': 5.}
 DEFAULT_FRACTION_LIMIT = 4
@@ -302,11 +303,10 @@ def single_script(tab_path_in, user_pars, meas_pars, sign_pars, cont=1,
     return best_loops, properties, other_properies, figs
 
 
-def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
+def multi_script(user_pars, dir_path_in, meas_pars, sign_pars,
                  test_dicts=None, verbose=False, show_plots=False, save=False,
                  root_out=None, dir_path_out_fig=None,
-                 dir_path_out_props=None, dir_path_out_best_loops=None,
-                 file_path_out_txt_save=None):
+                 dir_path_out_props=None, dir_path_out_best_loops=None):
     """
     Data analysis of txt files list in a directory by using single script
     for each file.
@@ -321,11 +321,6 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
         Dictionary of measurement parameters.
     sign_pars: dict
         Dictionary of sspfm bias signal parameters.
-    t0: float
-        Time passed (in nb of second since 01/01/1970), at the moment of
-        generation of saving folder paths.
-    date: str
-        Current date (Year-Month-Day Hour:Minute).
     test_dicts: list(n), optional
         List of dictionaries used for testing the function with corresponding
         parameters.
@@ -343,8 +338,6 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
         Path of the saving directory for txt properties.
     dir_path_out_best_loops: str, optional
         Path of the saving directory for best loops.
-    file_path_out_txt_save: str, optional
-        Path of the txt saving file for measurement parameters.
     """
     if root_out is None:
         root_out, _ = os.path.split(dir_path_in)
@@ -476,15 +469,6 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
         save_properties(all_properties, dir_path_out_props, dim_pix=dim_pix,
                         dim_mic=dim_mic)
 
-    if save and test_dicts is None:
-        root_in = os.path.split(dir_path_in)[0]
-        parameters_file_name = get_setting('default_parameters_file_name')
-        file_path_in_txt = os.path.join(root_in, parameters_file_name)
-        file_path_out_txt_save = file_path_out_txt_save or os.path.join(
-            root_out, parameters_file_name)
-        complete_parameters(file_path_in_txt, user_pars, t0, date,
-                            file_path_out=file_path_out_txt_save)
-
 
 def main_script(user_pars, dir_path_in, verbose=False, show_plots=False,
                 save=False, root_out=None):
@@ -505,24 +489,24 @@ def main_script(user_pars, dir_path_in, verbose=False, show_plots=False,
         Activate saving of text measurements.
     root_out : str, optional
         Path of the directory for saving sspfm analysis results.
+
+    Returns
+    -------
+    str
+        The output directory used for the analysis.
     """
     # Multi Script
     if verbose:
         print('\n############################################')
         print('\nanalysis in progress ...\n')
 
-    t0, date = time.time(), datetime.now().strftime('%Y-%m-%d %H;%M')
     if root_out is None:
         root_out, _ = os.path.split(dir_path_in)
-    parameters_file_name = get_setting('default_parameters_file_name')
-    root_parameters = os.path.split(dir_path_in)[0]
-    file_path_out_txt_save = os.path.join(root_parameters, parameters_file_name)
-    meas_pars, sign_pars, _, _, _ = print_parameters(
-        file_path_out_txt_save, verbose=verbose)
 
-    multi_script(user_pars, dir_path_in, meas_pars, sign_pars, t0, date,
-                 verbose=verbose, show_plots=show_plots, save=save,
-                 file_path_out_txt_save=file_path_out_txt_save)
+    meas_pars, sign_pars = csv_meas_sheet_extract(root_out)
+
+    multi_script(user_pars, dir_path_in, meas_pars, sign_pars,
+                 verbose=verbose, show_plots=show_plots, save=save)
 
     # Ending
     if verbose:
@@ -532,6 +516,8 @@ def main_script(user_pars, dir_path_in, verbose=False, show_plots=False,
             time.sleep(1)
         print('\n\nData analysis completed successfully!')
         print('############################################\n')
+
+    return root_out
 
 
 def parameters(fname_json=None):
@@ -682,45 +668,53 @@ def parameters(fname_json=None):
         generated after the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        config_params = get_config(__file__, fname_json)
-        dir_path_in = config_params['dir_path_in']
-        root_out = config_params['root_out']
-        verbose = config_params['verbose']
-        show_plots = config_params['show_plots']
-        save = config_params['save']
-        user_pars = config_params['user_pars']
+        config_params, fname_json = get_config(__file__, fname_json)
     elif get_setting("extract_parameters") == 'python':
         print("user parameters from python file")
         dir_path_in = tkf.askdirectory()
         # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_max\nanoloops
         root_out = None
         # dir_path_in = r'...\KNN500n_15h18m02-10-2023_out_max
-        verbose = True
-        show_plots = True
-        save = True
-        # interactive, auto, set
-        user_pars = {'func': 'sigmoid',
-                     'method': 'least_square',
-                     'asymmetric': False,
-                     'inf thresh': 10,
-                     'sat thresh': 90,
-                     'del 1st loop': True,
-                     'pha corr': 'raw',
-                     'pha fwd': 0,
-                     'pha rev': 180,
-                     'pha func': np.cos,
-                     'main_elec_file_path': None,
-                     'main elec': True,
-                     'locked elec slope': None,
-                     'diff mode': 'set',
-                     'diff domain': {'min': -5., 'max': 5.},
-                     'sat mode': 'set',
-                     'sat domain': {'min': -9., 'max': 9.}}
+        config_params = {
+            "dir_path_in": dir_path_in,
+            "root_out": root_out,
+            "verbose": True,
+            "show_plots": True,
+            "save": True,
+            "user_pars": {
+                "func": "sigmoid",
+                "method": "least_square",
+                "asymmetric": False,
+                "inf thresh": 10,
+                "sat thresh": 90,
+                "del 1st loop": True,
+                "pha corr": "raw",
+                "pha fwd": 0,
+                "pha rev": 180,
+                "pha func": "np.cos",
+                "main_elec_file_path": None,
+                "main elec": True,
+                "locked elec slope": None,
+                "diff mode": "set",
+                "diff domain": {
+                    "min": -5.0,
+                    "max": 5.0
+                },
+                "sat mode": "set",
+                "sat domain": {
+                    "min": -9.0,
+                    "max": 9.0
+                }
+            }
+        }
     else:
         raise NotImplementedError("setting 'extract_parameters' "
                                   "should be in ['json', 'toml', 'python']")
 
-    return user_pars, dir_path_in, root_out, verbose, show_plots, save
+    return config_params['user_pars'], config_params['dir_path_in'], \
+        config_params['root_out'], config_params['verbose'], \
+        config_params['show_plots'], config_params['save'], fname_json, \
+        config_params
 
 
 def main(fname_json=None):
@@ -734,11 +728,19 @@ def main(fname_json=None):
     """
     # Extract parameters
     res = parameters(fname_json=fname_json)
-    (user_pars, dir_path_in, root_out, verbose, show_plots, save) = res
-
+    (user_pars, dir_path_in, root_out, verbose, show_plots, save, fname_json,
+     config_params) = res
     # Main function
-    main_script(user_pars, dir_path_in, verbose=verbose, show_plots=show_plots,
-                save=save, root_out=root_out)
+    root_out = main_script(user_pars, dir_path_in, verbose=verbose,
+                           show_plots=show_plots, save=save, root_out=root_out)
+    # Save parameters
+    if save:
+        if get_setting("extract_parameters") in ['json', 'toml']:
+            copy_json_res(fname_json, root_out, verbose=verbose)
+        else:
+            create_json_res(config_params, root_out,
+                            fname="nanoloop_to_hyst_s2_params.json",
+                            verbose=verbose)
 
 
 if __name__ == '__main__':
