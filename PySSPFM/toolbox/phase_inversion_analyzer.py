@@ -6,7 +6,6 @@ file
 
 import os
 import tkinter.filedialog as tkf
-from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -22,7 +21,8 @@ from PySSPFM.utils.datacube_to_nanoloop.file import get_phase_tab_offset
 from PySSPFM.utils.datacube_to_nanoloop.plot import plt_signals
 from PySSPFM.utils.nanoloop.phase import phase_bias_grad
 from PySSPFM.utils.core.figure import print_plots
-from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.path_for_runable import \
+    save_path_management, copy_json_res, create_json_res
 
 
 def revert_on_off(positive_pha_grad):
@@ -620,17 +620,7 @@ def parameters(fname_json=None):
         generated after the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        config_params = get_config(__file__, fname_json)
-        dir_path_in = config_params['dir_path_in']
-        dir_path_out = config_params['dir_path_out']
-        range_file = config_params['range_file']
-        extension = config_params['extension']
-        verbose = config_params['verbose']
-        show_plots = config_params['show_plots']
-        save = config_params['save']
-        user_pars = {'seg pars': config_params['seg_params'],
-                     'fit pars': config_params['fit_params'],
-                     'pha pars': config_params['pha_params']}
+        config_params, fname_json = get_config(__file__, fname_json)
     elif get_setting("extract_parameters") == 'python':
         print("user parameters from python file")
         # Get file path for single script
@@ -639,32 +629,48 @@ def parameters(fname_json=None):
         dir_path_out = None
         # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
         # phase_inversion_analyzer_2023-10-02-16h38m
-        range_file = None
-        extension = "spm"
-        # extension = 'spm' or 'txt' or 'csv' or 'xlsx'
-        verbose = True
-        show_plots = True
-        save = True
-        seg_params = {'mode': 'max',
-                      'cut seg [%]': {'start': 5, 'end': 5},
-                      'filter type': None,
-                      'filter freq 1': 1e3,
-                      'filter freq 2': 3e3,
-                      'filter ord': 4}
-        fit_params = {'fit pha': False,
-                      'detect peak': False,
-                      'sens peak detect': 1.5}
-        pha_params = {'phase_file_path': None,
-                      'offset': 0}
-        user_pars = {'seg pars': seg_params,
-                     'fit pars': fit_params,
-                     'pha pars': pha_params}
+        config_params = {
+            "dir_path_in": dir_path_in,
+            "dir_path_out": dir_path_out,
+            "range_file": None,
+            "extension": "spm",
+            "verbose": True,
+            "show_plots": True,
+            "save": True,
+            "seg_params": {
+                "mode": "max",
+                "cut seg [%]": {
+                    "start": 5,
+                    "end": 5
+                },
+                "filter type": None,
+                "filter freq 1": 1e3,
+                "filter freq 2": 3e3,
+                "filter ord": 4
+            },
+            "fit_params": {
+                "fit pha": False,
+                "detect peak": False,
+                "sens peak detect": 1.5
+            },
+            "pha_params": {
+                "phase_file_path": None,
+                "offset": 0
+            }
+        }
     else:
         raise NotImplementedError("setting 'extract_parameters' "
                                   "should be in ['json', 'toml', 'python']")
 
-    return user_pars, dir_path_in, dir_path_out, range_file, extension, \
-        verbose, show_plots, save
+    user_pars = {'seg pars': config_params["seg_params"],
+                 'fit pars': config_params["fit_params"],
+                 'pha pars': config_params["pha_params"]}
+
+    return user_pars, config_params['dir_path_in'], \
+        config_params['dir_path_out'], config_params['range_file'], \
+        config_params['extension'], config_params['verbose'], \
+        config_params['show_plots'], config_params['save'], fname_json, \
+        config_params
 
 
 def main(fname_json=None):
@@ -678,13 +684,13 @@ def main(fname_json=None):
     """
     # Extract parameters
     (user_pars, dir_path_in, dir_path_out, range_file, extension, verbose,
-     show_plots, save) = parameters(fname_json=fname_json)
+     show_plots, save, fname_json, config_params) = \
+        parameters(fname_json=fname_json)
     # Generate default path out
     dir_path_out = save_path_management(
         dir_path_in, dir_path_out, save=save,
         dirname="phase_inversion_analyzer",
         lvl=0, create_path=True, post_analysis=False)
-    start_time = datetime.now()
     # Main function
     res = main_phase_inversion_analyzer(
         user_pars, dir_path_in, range_file=range_file, extension=extension,
@@ -695,8 +701,12 @@ def main(fname_json=None):
                 dirname=dir_path_out, transparent=False)
     # Save parameters
     if save:
-        save_user_pars(user_pars, dir_path_out, start_time=start_time,
-                       verbose=verbose)
+        if get_setting("extract_parameters") in ['json', 'toml']:
+            copy_json_res(fname_json, dir_path_out, verbose=verbose)
+        else:
+            create_json_res(config_params, dir_path_out,
+                            fname="phase_inversion_analyzer_params.json",
+                            verbose=verbose)
         file_path_out = os.path.join(dir_path_out, "phase_inversion.txt")
         save_dict_to_txt(phase_grad_tab, file_path=file_path_out,
                          map_dim=map_dim)
