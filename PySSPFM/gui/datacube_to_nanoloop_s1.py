@@ -29,7 +29,7 @@ def main(parent=None):
     """
     # Create the main or secondary window
     title = "SSPFM Data Analysis: Step 1 = datacube to nanoloop"
-    app = init_secondary_wdw(parent=parent, wdw_title=title)
+    app, scrollable_frame = init_secondary_wdw(parent=parent, wdw_title=title)
 
     # Set default parameter values
     default_seg_params = {'cut seg [%]': {'start': 5, 'end': 5},
@@ -103,20 +103,21 @@ def main(parent=None):
         phase_file_path_var.set(phase_file_path_in)
 
     # Window title: SSPFM Data Analysis: Step 1 = seg to hyst
-    wdw_main_title(app, title)
+    wdw_main_title(scrollable_frame, title)
 
     row = 3
 
     # Section title: File management
-    label_file = ttk.Label(app, text="File management", font=("Helvetica", 14))
+    label_file = ttk.Label(scrollable_frame, text="File management",
+                           font=("Helvetica", 14))
     row = grid_item(label_file, row, column=0, sticky="ew", columnspan=3)
 
     # File (in)
-    label_in = ttk.Label(app, text="File (in):")
+    label_in = ttk.Label(scrollable_frame, text="File (in):")
     row = grid_item(label_in, row, column=0, sticky="e", increment=False)
     file_path_in_var = tk.StringVar()
     file_path_in_var.set(user_parameters['file path in'])
-    entry_in = ttk.Entry(app, textvariable=file_path_in_var)
+    entry_in = ttk.Entry(scrollable_frame, textvariable=file_path_in_var)
     row = grid_item(entry_in, row, column=1, sticky="ew", increment=False)
     strg = "- Name: file_path_in\n" \
            "- Summary: Path of datacube SSPFM raw file measurements.\n" \
@@ -127,15 +128,16 @@ def main(parent=None):
            "- Value: A string representing the file path."
     entry_in.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(entry_in, mess))
-    browse_button_in = ttk.Button(app, text="Browse", command=browse_file)
+    browse_button_in = ttk.Button(scrollable_frame, text="Browse",
+                                  command=browse_file)
     row = grid_item(browse_button_in, row, column=2)
 
     # Directory (out)
-    label_out = ttk.Label(app, text="Directory (out) (*):")
+    label_out = ttk.Label(scrollable_frame, text="Directory (out) (*):")
     row = grid_item(label_out, row, column=0, sticky="e", increment=False)
     root_out_var = tk.StringVar()
     root_out_var.set(user_parameters['root out'])
-    entry_out = ttk.Entry(app, textvariable=root_out_var)
+    entry_out = ttk.Entry(scrollable_frame, textvariable=root_out_var)
     row = grid_item(entry_out, row, column=1, sticky="ew", increment=False)
     strg = "- Name: root_out\n" \
            "- Summary: Saving directory for the result of the analysis " \
@@ -146,12 +148,14 @@ def main(parent=None):
            "- Value: It should be a string representing a directory path."
     entry_out.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(entry_out, mess))
-    browse_button_out = ttk.Button(app, text="Select", command=browse_directory)
+    browse_button_out = ttk.Button(scrollable_frame, text="Select",
+                                   command=browse_directory)
     row = grid_item(browse_button_out, row, column=2)
-    row = add_grid_separator(app, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Segments
-    label_seg = ttk.Label(app, text="Segments", font=("Helvetica", 14))
+    label_seg = ttk.Label(scrollable_frame, text="Segments",
+                          font=("Helvetica", 14))
     row = grid_item(label_seg, row, column=0, sticky="ew", columnspan=3)
     strg = "Extraction of PFM amplitude and phase from segment " \
            "and signal treatment of the segment"
@@ -159,9 +163,10 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(label_seg, mess))
 
     # Mode
-    label_mode = ttk.Label(app, text="Mode:")
+    label_mode = ttk.Label(scrollable_frame, text="Mode:")
     row = grid_item(label_mode, row, column=0, sticky="e", increment=False)
-    mode_var = ttk.Combobox(app, values=["max", "fit", "single_freq", "dfrt"])
+    mode_var = ttk.Combobox(scrollable_frame,
+                            values=["max", "fit", "single_freq", "dfrt"])
     mode_var.set(user_parameters['seg pars']['mode'])
     row = grid_item(mode_var, row, column=1, sticky="ew")
     strg = "- Name: mode\n" \
@@ -187,11 +192,13 @@ def main(parent=None):
         label_value_start.config(text=str(start_var.get()))
 
     # Cut segment (start)
-    label_seg_start = ttk.Label(app, text="Cut segment (start) [%]:")
+    label_seg_start = ttk.Label(scrollable_frame,
+                                text="Cut segment (start) [%]:")
     row = grid_item(label_seg_start, row, column=0, sticky="e", increment=False)
     start_var = tk.IntVar(
         value=user_parameters['seg pars']['cut seg [%]']['start'])
-    scale_seg_start = ttk.Scale(app, from_=1, to=100, variable=start_var,
+    scale_seg_start = ttk.Scale(scrollable_frame, from_=1, to=100,
+                                variable=start_var,
                                 orient="horizontal", length=100,
                                 command=update_start_label)
     row = grid_item(scale_seg_start, row, column=1, sticky="ew",
@@ -205,7 +212,7 @@ def main(parent=None):
            "- Value: Integer value (in term of %)"
     scale_seg_start.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(scale_seg_start, mess))
-    label_value_start = ttk.Label(app, text=str(start_var.get()))
+    label_value_start = ttk.Label(scrollable_frame, text=str(start_var.get()))
     row = grid_item(label_value_start, row, column=2, sticky="w")
 
     # Function to update the label text when the slider is moved
@@ -213,11 +220,12 @@ def main(parent=None):
         label_value_end.config(text=str(end_var.get()))
 
     # Cut segment (end)
-    label_seg_end = ttk.Label(app, text="Cut segment (end) [%]:")
+    label_seg_end = ttk.Label(scrollable_frame, text="Cut segment (end) [%]:")
     row = grid_item(label_seg_end, row, column=0, sticky="e", increment=False)
     end_var = tk.IntVar(
         value=user_parameters['seg pars']['cut seg [%]']['end'])
-    scale_seg_end = ttk.Scale(app, from_=1, to=100, variable=end_var,
+    scale_seg_end = ttk.Scale(scrollable_frame, from_=1, to=100,
+                              variable=end_var,
                               orient="horizontal", length=100,
                               command=update_end_label)
     row = grid_item(scale_seg_end, row, column=1, sticky="ew", increment=False)
@@ -230,13 +238,13 @@ def main(parent=None):
            "- Value: Integer value (in term of %)"
     scale_seg_end.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(scale_seg_end, mess))
-    label_value_end = ttk.Label(app, text=str(end_var.get()))
+    label_value_end = ttk.Label(scrollable_frame, text=str(end_var.get()))
     row = grid_item(label_value_end, row, column=2, sticky="w")
 
     # Filter type
-    label_filter = ttk.Label(app, text="Filter type:")
+    label_filter = ttk.Label(scrollable_frame, text="Filter type:")
     row = grid_item(label_filter, row, column=0, sticky="e", increment=False)
-    filter_type_var = ttk.Combobox(app, values=[
+    filter_type_var = ttk.Combobox(scrollable_frame, values=[
         "mean", "low", "high", "bandpass", "bandstop", "None"])
     filter_type_var.set(user_parameters['seg pars']['filter type'])
     row = grid_item(filter_type_var, row, column=1, sticky="ew")
@@ -255,11 +263,12 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(filter_type_var, mess))
 
     # Filter first cutoff frequency
-    label_freq = ttk.Label(app, text="Filter first cutoff frequency:")
+    label_freq = ttk.Label(scrollable_frame,
+                           text="Filter first cutoff frequency:")
     row = grid_item(label_freq, row, column=0, sticky="e", increment=False)
     filter_freq_1_var = tk.StringVar()
     filter_freq_1_var.set(user_parameters['seg pars']['filter freq 1'])
-    entry_freq = ttk.Entry(app, textvariable=filter_freq_1_var)
+    entry_freq = ttk.Entry(scrollable_frame, textvariable=filter_freq_1_var)
     entry_freq.grid(row=9, column=1, sticky="ew")
     row = grid_item(entry_freq, row, column=1, sticky="ew")
     strg = "- Name: filter_freq_1\n" \
@@ -275,11 +284,12 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(entry_freq, mess))
 
     # Filter second cutoff frequency
-    label_freq = ttk.Label(app, text="Filter second cutoff frequency:")
+    label_freq = ttk.Label(scrollable_frame,
+                           text="Filter second cutoff frequency:")
     row = grid_item(label_freq, row, column=0, sticky="e", increment=False)
     filter_freq_2_var = tk.StringVar()
     filter_freq_2_var.set(user_parameters['seg pars']['filter freq 2'])
-    entry_freq = ttk.Entry(app, textvariable=filter_freq_2_var)
+    entry_freq = ttk.Entry(scrollable_frame, textvariable=filter_freq_2_var)
     entry_freq.grid(row=9, column=1, sticky="ew")
     row = grid_item(entry_freq, row, column=1, sticky="ew")
     strg = "- Name: filter_freq_2\n" \
@@ -298,10 +308,11 @@ def main(parent=None):
         filter_ord_label.config(text=str(filter_ord_var.get()))
 
     # Filter older
-    label_order = ttk.Label(app, text="Filter order:")
+    label_order = ttk.Label(scrollable_frame, text="Filter order:")
     row = grid_item(label_order, row, column=0, sticky="e", increment=False)
     filter_ord_var = tk.IntVar(value=user_parameters['seg pars']['filter ord'])
-    scale_order = ttk.Scale(app, from_=1, to=100, variable=filter_ord_var,
+    scale_order = ttk.Scale(scrollable_frame, from_=1, to=100,
+                            variable=filter_ord_var,
                             orient="horizontal", length=100,
                             command=update_filter_ord_label)
     row = grid_item(scale_order, row, column=1, sticky="ew", increment=False)
@@ -315,23 +326,24 @@ def main(parent=None):
            "option is not None."
     scale_order.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(scale_order, mess))
-    filter_ord_label = ttk.Label(app, text=str(filter_ord_var.get()))
+    filter_ord_label = ttk.Label(scrollable_frame,
+                                 text=str(filter_ord_var.get()))
     row = grid_item(filter_ord_label, row, column=2, sticky="w")
-    row = add_grid_separator(app, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Fit
-    label_fit = ttk.Label(app, text="Fit", font=("Helvetica", 14))
+    label_fit = ttk.Label(scrollable_frame, text="Fit", font=("Helvetica", 14))
     row = grid_item(label_fit, row, column=0, sticky="ew", columnspan=3)
     strg = "Fit of each segment (amplitude and phase)"
     label_fit.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(label_fit, mess))
 
     # Fit phase
-    label_fit_pha = ttk.Label(app, text="Fit phase (*):")
+    label_fit_pha = ttk.Label(scrollable_frame, text="Fit phase (*):")
     row = grid_item(label_fit_pha, row, column=0, sticky="e", increment=False)
     fit_pha_var = tk.BooleanVar()
     fit_pha_var.set(user_parameters['fit pars']['fit pha'])
-    chck_fit_pha = ttk.Checkbutton(app, variable=fit_pha_var)
+    chck_fit_pha = ttk.Checkbutton(scrollable_frame, variable=fit_pha_var)
     row = grid_item(chck_fit_pha, row, column=1, sticky="w")
     strg = "- Name: fit_pha\n" \
            "- Summary: Phase measurement fitting indicator.\n" \
@@ -344,11 +356,11 @@ def main(parent=None):
                       lambda event, mess=strg: show_tooltip(chck_fit_pha, mess))
 
     # Detect peak
-    label_detect = ttk.Label(app, text="Detect peak (*):")
+    label_detect = ttk.Label(scrollable_frame, text="Detect peak (*):")
     row = grid_item(label_detect, row, column=0, sticky="e", increment=False)
     detect_peak_var = tk.BooleanVar()
     detect_peak_var.set(user_parameters['fit pars']['detect peak'])
-    chck_detect = ttk.Checkbutton(app, variable=detect_peak_var)
+    chck_detect = ttk.Checkbutton(scrollable_frame, variable=detect_peak_var)
     row = grid_item(chck_detect, row, column=1, sticky="w")
     strg = "- Name: detect_peak\n" \
            "- Summary: Peak detection for peak fitting.\n" \
@@ -364,11 +376,12 @@ def main(parent=None):
                      lambda event, mess=strg: show_tooltip(chck_detect, mess))
 
     # Sensibility for peak detection
-    label_fwd = ttk.Label(app, text="Sensibility for peak detection (*):")
+    label_fwd = ttk.Label(scrollable_frame,
+                          text="Sensibility for peak detection (*):")
     row = grid_item(label_fwd, row, column=0, sticky="e", increment=False)
     sens_peak_detect_var = tk.StringVar()
     sens_peak_detect_var.set(user_parameters['fit pars']['sens peak detect'])
-    entry_fwd = ttk.Entry(app, textvariable=sens_peak_detect_var)
+    entry_fwd = ttk.Entry(scrollable_frame, textvariable=sens_peak_detect_var)
     entry_fwd.grid(row=9, column=1, sticky="ew")
     row = grid_item(entry_fwd, row, column=1, sticky="ew")
     strg = "- Name: sens_peak_detect\n" \
@@ -383,22 +396,25 @@ def main(parent=None):
            "selected and peak detection is enabled."
     entry_fwd.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(entry_fwd, mess))
-    row = add_grid_separator(app, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Phase offset
-    label_phase = ttk.Label(app, text="Phase offset", font=("Helvetica", 14))
+    label_phase = ttk.Label(scrollable_frame, text="Phase offset",
+                            font=("Helvetica", 14))
     row = grid_item(label_phase, row, column=0, sticky="ew", columnspan=3)
     strg = "Phase offset analysis"
     label_phase.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(label_phase, mess))
 
     # Phase offset file path (in)
-    label_phase_file = ttk.Label(app, text="Phase offset file path (in) (*):")
+    label_phase_file = ttk.Label(scrollable_frame,
+                                 text="Phase offset file path (in) (*):")
     row = grid_item(label_phase_file, row, column=0, sticky="e",
                     increment=False)
     phase_file_path_var = tk.StringVar()
     phase_file_path_var.set(user_parameters["pha pars"]["phase_file_path"])
-    entry_phase_file = ttk.Entry(app, textvariable=phase_file_path_var)
+    entry_phase_file = ttk.Entry(scrollable_frame,
+                                 textvariable=phase_file_path_var)
     row = grid_item(entry_phase_file, row, column=1, sticky="ew",
                     increment=False)
     strg = "- Name: phase_file_path\n" \
@@ -413,15 +429,16 @@ def main(parent=None):
     entry_phase_file.bind(
         "<Enter>",
         lambda event, mess=strg: show_tooltip(entry_phase_file, mess))
-    browse_button_phase_file = ttk.Button(app, text="Select",
+    browse_button_phase_file = ttk.Button(scrollable_frame, text="Select",
                                           command=browse_file_phase)
     row = grid_item(browse_button_phase_file, row, column=2)
 
     # Method
-    label_pha_method = ttk.Label(app, text="Method:")
+    label_pha_method = ttk.Label(scrollable_frame, text="Method:")
     row = grid_item(label_pha_method, row, column=0, sticky="e",
                     increment=False)
-    pha_method_var = ttk.Combobox(app, values=["static", "dynamic"])
+    pha_method_var = ttk.Combobox(scrollable_frame,
+                                  values=["static", "dynamic"])
     pha_method_var.set(user_parameters["pha pars"]["method"])
     row = grid_item(pha_method_var, row, column=1, sticky="ew")
     strg = "- Name: method\n" \
@@ -445,12 +462,12 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(pha_method_var, mess))
 
     # Value
-    label_value_offset = ttk.Label(app, text="Offset:")
+    label_value_offset = ttk.Label(scrollable_frame, text="Offset:")
     row = grid_item(label_value_offset, row, column=0, sticky="e",
                     increment=False)
     pha_offset_var = tk.StringVar()
     pha_offset_var.set(user_parameters['pha pars']['offset'])
-    entry_fwd = ttk.Entry(app, textvariable=pha_offset_var)
+    entry_fwd = ttk.Entry(scrollable_frame, textvariable=pha_offset_var)
     entry_fwd.grid(row=9, column=1, sticky="ew")
     row = grid_item(entry_fwd, row, column=1, sticky="ew")
     strg = "- Name: offset\n" \
@@ -468,18 +485,19 @@ def main(parent=None):
            "phase offset analysis is 'static'."
     entry_fwd.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(entry_fwd, mess))
-    row = add_grid_separator(app, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Save and plot
-    label_chck = ttk.Label(app, text="Plot and save", font=("Helvetica", 14))
+    label_chck = ttk.Label(scrollable_frame, text="Plot and save",
+                           font=("Helvetica", 14))
     row = grid_item(label_chck, row, column=0, sticky="ew", columnspan=3)
 
     # Verbose
-    label_verb = ttk.Label(app, text="Verbose:")
+    label_verb = ttk.Label(scrollable_frame, text="Verbose:")
     row = grid_item(label_verb, row, column=0, sticky="e", increment=False)
     verbose_var = tk.BooleanVar()
     verbose_var.set(user_parameters['verbose'])
-    chck_verb = ttk.Checkbutton(app, variable=verbose_var)
+    chck_verb = ttk.Checkbutton(scrollable_frame, variable=verbose_var)
     row = grid_item(chck_verb, row, column=1, sticky="w")
     strg = "- Name: verbose\n" \
            "- Summary: Activation key for printing verbosity during " \
@@ -491,11 +509,11 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(chck_verb, mess))
 
     # Show plots
-    label_show = ttk.Label(app, text="Show plots:")
+    label_show = ttk.Label(scrollable_frame, text="Show plots:")
     row = grid_item(label_show, row, column=0, sticky="e", increment=False)
     show_plots_var = tk.BooleanVar()
     show_plots_var.set(user_parameters['show plots'])
-    chck_show = ttk.Checkbutton(app, variable=show_plots_var)
+    chck_show = ttk.Checkbutton(scrollable_frame, variable=show_plots_var)
     row = grid_item(chck_show, row, column=1, sticky="w")
     strg = "- Name: show_plots\n" \
            "- Summary: Activation key for generating matplotlib figures " \
@@ -507,11 +525,11 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(chck_show, mess))
 
     # Save analysis
-    label_save = ttk.Label(app, text="Save analysis:")
+    label_save = ttk.Label(scrollable_frame, text="Save analysis:")
     row = grid_item(label_save, row, column=0, sticky="e", increment=False)
     save_var = tk.BooleanVar()
     save_var.set(user_parameters['save'])
-    chck_save = ttk.Checkbutton(app, variable=save_var)
+    chck_save = ttk.Checkbutton(scrollable_frame, variable=save_var)
     row = grid_item(chck_save, row, column=1, sticky="w")
     strg = "- Name: save\n" \
            "- Summary: Activation key for saving results of the analysis.\n" \
@@ -520,17 +538,18 @@ def main(parent=None):
            "- Value: Boolean (True or False)."
     chck_save.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(chck_save, mess))
-    row = add_grid_separator(app, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Submit button
-    submit_button = ttk.Button(app, text="Start", command=launch)
+    submit_button = ttk.Button(scrollable_frame, text="Start", command=launch)
     row = grid_item(submit_button, row, column=0, sticky="e", increment=False)
 
     def quit_application():
         app.destroy()
 
     # Exit button
-    quit_button = ttk.Button(app, text="Exit", command=quit_application)
+    quit_button = ttk.Button(scrollable_frame, text="Exit",
+                             command=quit_application)
     grid_item(quit_button, row, column=1, sticky="ew", increment=False)
 
     app.mainloop()
