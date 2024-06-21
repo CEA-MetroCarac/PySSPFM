@@ -7,7 +7,6 @@ import os
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
-from datetime import datetime
 import numpy as np
 
 from PySSPFM.settings import get_setting
@@ -16,7 +15,7 @@ from PySSPFM.toolbox.mean_hyst import main_mean_hyst as main_script
 from PySSPFM.gui.utils import \
     (add_grid_separator, grid_item, show_tooltip, apply_style, extract_var,
      init_secondary_wdw, wdw_main_title)
-from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.path_for_runable import save_path_management, create_json_res
 
 
 def main(parent=None):
@@ -34,7 +33,7 @@ def main(parent=None):
     """
     # Create the main or secondary window
     title = "Mean hysteresis"
-    app = init_secondary_wdw(parent=parent, wdw_title=title)
+    app, scrollable_frame = init_secondary_wdw(parent=parent, wdw_title=title)
 
     # Set default parameter values
     default_user_parameters = {
@@ -42,7 +41,7 @@ def main(parent=None):
         'dir path out': '',
         'dir path in prop': '',
         'dir path in loop': '',
-        'file path in pars': '',
+        'dir path in pars': '',
         'mode': 'off',
         'mask': {'revert mask': False,
                  'man mask': None,
@@ -81,8 +80,8 @@ def main(parent=None):
         user_parameters['dir path out'] = extract_var(dir_path_out_var)
         user_parameters['dir path in prop'] = extract_var(dir_path_in_prop_var)
         user_parameters['dir path in loop'] = extract_var(dir_path_in_loop_var)
-        user_parameters['file path in pars'] = \
-            extract_var(file_path_in_pars_var)
+        user_parameters['dir path in pars'] = \
+            extract_var(dir_path_in_pars_var)
         user_parameters['mode'] = mode_var.get()
         user_parameters['mask']['revert mask'] = revert_mask_var.get()
         user_parameters['mask']['man mask'] = extract_var(man_mask_var)
@@ -129,7 +128,6 @@ def main(parent=None):
                           user_parameters['save'])
 
         # Data analysis
-        start_time = datetime.now()
         figs = main_script(user_parameters, verbose=user_parameters["verbose"],
                            make_plots=make_plots)
         # Plot figures
@@ -139,9 +137,9 @@ def main(parent=None):
 
         # Save parameters
         if user_parameters['save']:
-            save_user_pars(
-                user_parameters, user_parameters['dir path out'],
-                start_time=start_time, verbose=user_parameters['verbose'])
+            create_json_res(user_parameters, user_parameters['dir path out'],
+                            fname="mean_hyst_params.json",
+                            verbose=user_parameters['verbose'])
 
     def browse_dir_in():
         dir_path_in = filedialog.askdirectory()
@@ -155,16 +153,16 @@ def main(parent=None):
         dir_path_loop = filedialog.askdirectory()
         dir_path_in_loop_var.set(dir_path_loop)
 
-    def browse_file_pars():
-        file_path_pars = filedialog.askopenfilename()
-        file_path_in_pars_var.set(file_path_pars)
+    def browse_dir_pars():
+        dir_path_pars = filedialog.askdirectory()
+        dir_path_in_pars_var.set(dir_path_pars)
 
     def browse_dir_out():
         dir_path_out = filedialog.askdirectory()
         dir_path_out_var.set(dir_path_out)
 
     # Create top frame
-    top_frame = ttk.Frame(app)
+    top_frame = ttk.Frame(scrollable_frame)
     top_frame.grid(row=0, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
     apply_style(top_frame)
     top_frame.columnconfigure(0, weight=1)
@@ -175,7 +173,7 @@ def main(parent=None):
     row = 3
 
     # Create left frame
-    left_frame = ttk.Frame(app)
+    left_frame = ttk.Frame(scrollable_frame)
     left_frame.grid(row=1, column=0, padx=10, pady=10, sticky="ns")
     apply_style(left_frame)
 
@@ -232,15 +230,13 @@ def main(parent=None):
             input_loop_dir = ""
         return input_loop_dir
 
-    # Function to generate the default input pars file path
-    def generate_default_input_pars_file(input_dir):
-        parameters_file_name = get_setting('default_parameters_file_name')
-        input_pars_file = os.path.join(input_dir, parameters_file_name)
+    # Function to generate the default input pars dir path
+    def generate_default_input_pars_dir(input_dir):
         if input_dir != "":
-            input_pars_file = os.path.join(input_dir, input_pars_file)
+            input_pars_dir = input_dir
         else:
-            input_pars_file = ""
-        return input_pars_file
+            input_pars_dir = ""
+        return input_pars_dir
 
     # Update the default output dir path when input dir changes
     def update_default_output_dir():
@@ -260,11 +256,11 @@ def main(parent=None):
         def_input_loop_dir = generate_default_input_loop_dir(input_dir)
         dir_path_in_loop_var.set(def_input_loop_dir)
 
-    # Update the default input pars file path when input dir changes
-    def update_default_input_pars_file():
+    # Update the default input pars dir path when input dir changes
+    def update_default_input_pars_dir():
         input_dir = dir_path_in_var.get()
-        def_input_pars_file = generate_default_input_pars_file(input_dir)
-        file_path_in_pars_var.set(def_input_pars_file)
+        def_input_pars_dir = generate_default_input_pars_dir(input_dir)
+        dir_path_in_pars_var.set(def_input_pars_dir)
 
     # Bind function (output dir) to input directory widget
     dir_path_in_var.trace_add("write",
@@ -278,9 +274,9 @@ def main(parent=None):
     dir_path_in_var.trace_add("write",
                               lambda *args: update_default_input_loop_dir())
 
-    # Bind function (input pars file) to input directory widget
+    # Bind function (input pars dir) to input directory widget
     dir_path_in_var.trace_add(
-        "write", lambda *args: update_default_input_pars_file())
+        "write", lambda *args: update_default_input_pars_dir())
 
     # Directory properties (in)
     default_input_dir = dir_path_in_var.get()
@@ -327,27 +323,27 @@ def main(parent=None):
                                     command=browse_dir_loop)
     row = grid_item(browse_button_loop, row, column=2)
 
-    # File pars (in)
+    # Dir pars (in)
     default_input_dir = dir_path_in_var.get()
-    default_input_pars_file = \
-        generate_default_input_pars_file(default_input_dir)
-    label_pars = ttk.Label(left_frame, text="File txt parameters (in) (*):")
+    default_input_pars_dir = \
+        generate_default_input_pars_dir(default_input_dir)
+    label_pars = ttk.Label(left_frame,
+                           text="Directory csv meas sheet (in) (*):")
     row = grid_item(label_pars, row, column=0, sticky="e", increment=False)
-    file_path_in_pars_var = tk.StringVar()
-    file_path_in_pars_var.set(default_input_pars_file)
-    entry_pars = ttk.Entry(left_frame, textvariable=file_path_in_pars_var)
+    dir_path_in_pars_var = tk.StringVar()
+    dir_path_in_pars_var.set(default_input_pars_dir)
+    entry_pars = ttk.Entry(left_frame, textvariable=dir_path_in_pars_var)
     row = grid_item(entry_pars, row, column=1, sticky="ew", increment=False)
-    strg = "- Name: file_path_in_pars\n" \
-           "- Summary: Measurement and analysis parameters txt file " \
-           "(optional, default: parameters.txt)\n" \
-           "- Description: This parameter specifies the file containing " \
-           "measurement and analysis parameters generated after the " \
-           "2nd step of the analysis.\n" \
-           "- Value: It should be a string representing a file path."
+    strg = "- Name: dir_path_in_pars\n" \
+           "- Summary: Path of the CSV measurement sheet directory " \
+           "(optional, default: 'title_meas_out_mode')\n" \
+           "- Description: This parameter specifies the directory containing " \
+           "path of the CSV measurement sheet.\n" \
+           "- Value: It should be a string representing a directory path."
     entry_pars.bind("<Enter>",
                     lambda event, mess=strg: show_tooltip(entry_pars, mess))
     browse_button_pars = ttk.Button(left_frame, text="Browse",
-                                    command=browse_file_pars)
+                                    command=browse_dir_pars)
     row = grid_item(browse_button_pars, row, column=2)
 
     # Directory (out)
@@ -608,7 +604,7 @@ def main(parent=None):
     row = add_grid_separator(left_frame, row=row)
 
     # Create right frame
-    right_frame = ttk.Frame(app)
+    right_frame = ttk.Frame(scrollable_frame)
     right_frame.grid(row=1, column=1, padx=10, pady=10, sticky="ns")
     apply_style(right_frame)
 
@@ -1037,7 +1033,7 @@ def main(parent=None):
     row = add_grid_separator(right_frame, row=row)
 
     # Create bottom frame
-    bottom_frame = ttk.Frame(app)
+    bottom_frame = ttk.Frame(scrollable_frame)
     bottom_frame.grid(row=row, column=0, padx=10, pady=10, sticky="ew")
     apply_style(bottom_frame)
     bottom_frame.columnconfigure(0, weight=1)
