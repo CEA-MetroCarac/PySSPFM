@@ -3,29 +3,21 @@ Example of file methods
 """
 import os
 import shutil
-import time
-from datetime import datetime
-import numpy as np
-import matplotlib.pyplot as plt
 
 from examples.utils.nanoloop_to_hyst.ex_analysis import ex_sort_prop
 from PySSPFM.settings import get_setting
 from PySSPFM.utils.path_for_runable import save_path_example
-from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.nanoloop_to_hyst.file import \
     (create_file_nanoloop_paths, generate_file_nanoloop_paths,
-     print_parameters, complete_parameters, save_properties,
-     extract_properties, extract_main_elec_tab)
+     save_properties, extract_properties, extract_main_elec_tab)
 
 
-def example_file(make_plots=False, verbose=False):
+def example_file(verbose=False):
     """
     Example of file methods.
 
     Parameters
     ----------
-    make_plots: bool, optional
-        Whether to generate plots, defaults to False.
     verbose: bool, optional
         Whether to print verbose output, defaults to False.
 
@@ -63,7 +55,7 @@ def example_file(make_plots=False, verbose=False):
                      "phase_inversion_analyzer_2024-05-21-18h13m",
                      "phase_inversion.txt")
 
-    if make_plots:
+    if verbose:
         root_out = os.path.join(
             get_setting("example_root_path_out"), "ex_nanoloop_to_hyst_file")
     else:
@@ -75,27 +67,6 @@ def example_file(make_plots=False, verbose=False):
         shutil.rmtree(root_out)
     shutil.copytree(root_data, root_out)
 
-    user_pars = {'dir path in': dir_path_in,
-                 'func': 'sigmoid',
-                 'method': 'leastsq',
-                 'asymmetric': False,
-                 'inf thresh': 10,
-                 'sat thresh': 90,
-                 'del 1st loop': True,
-                 'pha corr': 'offset',
-                 'pha fwd': 0,
-                 'pha rev': 180,
-                 'pha func': np.cos,
-                 'main elec': True,
-                 'locked elec slope': None,
-                 'diff mode': 'set',
-                 'diff domain': {'min': -5., 'max': 5.},
-                 'sat mode': 'set',
-                 'sat domain': {'min': -9., 'max': 9.}}
-
-    t0, date = time.time(), datetime.now()
-    date = date.strftime('%Y-%m-%d %H;%M')
-
     # Generate file paths from nanoloops and raw measurement files
     file_paths_from_nanoloops = generate_file_nanoloop_paths(dir_path_in)
     file_paths_from_raw = create_file_nanoloop_paths(dir_path_raw)
@@ -104,29 +75,6 @@ def example_file(make_plots=False, verbose=False):
         for cont, elem in enumerate(file_paths_from_nanoloops):
             print(f'\t\tpath n°{cont + 1}: {elem}')
         print('\n')
-
-    # ex print_parameters
-    file_path_in_txt_save = os.path.join(root_data, 'parameters.txt')
-    out = print_parameters(file_path_in_txt_save, verbose=verbose)
-    (meas_pars, sign_pars, dict_analysis_1, nb_write_per_read,
-     write_segment) = out
-    if verbose:
-        print('\n\t- ex print_parameters')
-        print(f'\t\tnb write per read: {nb_write_per_read}')
-
-    # ex complete_parameters
-    file_path_out_txt_save = os.path.join(root_data, 'parameters.txt')
-    complete_parameters(file_path_out_txt_save, user_pars, t0, date)
-
-    fig = []
-    if make_plots:
-        figsize = get_setting("figsize")
-        fig, ax = plt.subplots(figsize=figsize)
-        fig.sfn = 'example_file'
-        plot_dict = {'title': 'Write segment',
-                     'x lab': 'Index', 'y lab': 'Voltage [V]'}
-        plot_graph(ax, range(len(np.array(write_segment))), write_segment,
-                   plot_dict=plot_dict)
 
     dir_path_out_prop = os.path.join(root_out, "properties")
 
@@ -152,19 +100,12 @@ def example_file(make_plots=False, verbose=False):
     # ex extract_main_elec_tab
     main_elec_tab = extract_main_elec_tab(file_path_in_inversion)
 
-    if make_plots:
-        return [fig]
-    else:
-        return (file_paths_from_nanoloops, file_paths_from_raw, meas_pars,
-                sign_pars, dict_analysis_1, nb_write_per_read, write_segment,
-                properties, dim_pix, dim_mic, main_elec_tab)
+    return (file_paths_from_nanoloops, file_paths_from_raw,
+            properties, dim_pix, dim_mic, main_elec_tab)
 
 
 if __name__ == '__main__':
     # saving path management
     dir_path_out, save_plots = save_path_example(
         "nanoloop_to_hyst_file", save_example_exe=True, save_test_exe=False)
-    figs = []
-    figs += example_file(make_plots=True, verbose=True)
-    print_plots(figs, save_plots=save_plots, show_plots=True,
-                dirname=dir_path_out, transparent=False)
+    example_file(verbose=True)
