@@ -9,13 +9,31 @@ import matplotlib.pyplot as plt
 from PySSPFM.settings import get_setting
 from PySSPFM.data_processing.nanoloop_to_hyst_s2 import \
     single_script, parameters
-from PySSPFM.utils.nanoloop_to_hyst.electrostatic import differential_analysis
-from PySSPFM.utils.nanoloop_to_hyst.file import print_parameters
 from PySSPFM.utils.core.figure import plot_graph, print_plots
+from PySSPFM.utils.nanoloop_to_hyst.electrostatic import differential_analysis
+from PySSPFM.utils.raw_extraction import csv_meas_sheet_extract
 
 
 def plot_diff_loops(dict_diff_loops, legends):
+    """
+    Generates a plot for different loop data stored in a dictionary, using a
+    specific color map and style for each loop.
 
+    Parameters
+    ----------
+    dict_diff_loops : dict
+        A dictionary containing arrays of 'write' voltages and 'piezorep'
+        responses.
+        Keys should include 'write' for write voltage values and 'piezorep' for
+        piezoresponse values.
+    legends : list of str
+        List of legend labels corresponding to each loop dataset.
+
+    Returns
+    -------
+    matplotlib.figure.Figure
+        The figure object containing the plotted graph.
+    """
     figsize = get_setting("figsize")
     fig, ax = plt.subplots(figsize=figsize)
     fig.sfn = 'plot_diff_loops'
@@ -39,7 +57,23 @@ def plot_diff_loops(dict_diff_loops, legends):
 
 
 def plot_best_loops(tab_best_loops, modes, legends):
+    """
+    Plots the best loop data for different modes with custom legends and styles.
 
+    Parameters
+    ----------
+    tab_best_loops : list of dicts
+        List of dictionaries containing loop data for each mode.
+    modes : list of str
+        List of modes for which to plot the loop data.
+    legends : list of str
+        List of legend labels for the plots.
+
+    Returns
+    -------
+    list
+        A list of matplotlib.figure.Figure objects for each mode plotted.
+    """
     best_loops_write = {}
     best_loops_piezorep = {}
     figs_best_loops = []
@@ -75,7 +109,26 @@ def plot_best_loops(tab_best_loops, modes, legends):
 
 
 def plot_lists_in_dict(dictionary, x_axis):
+    """
+    Plots data from a dictionary where each key-value pair represents a
+    different data series.
 
+    Parameters
+    ----------
+    dictionary : dict
+        A dictionary where the keys are labels and the values are lists of
+        properties to plot.
+    x_axis : dict
+        A dictionary with one key-value pair where the key is the label of
+        the x-axis and
+        the value is a list of x-axis values to be used for all series in
+        `dictionary`.
+
+    Returns
+    -------
+    matplotlib.figure.Figure
+        The figure object containing the plotted graph.
+    """
     figsize = get_setting("figsize")
     fig, ax = plt.subplots(figsize=figsize)
     fig.sfn = 'plot_properties'
@@ -95,6 +148,21 @@ def plot_lists_in_dict(dictionary, x_axis):
 
 
 def get_files_by_modification_date(dir_path):
+    """
+    Retrieves a list of files in the specified directory, sorted by their
+    modification time.
+
+    Parameters
+    ----------
+    dir_path : str
+        The path to the directory from which to retrieve file names.
+
+    Returns
+    -------
+    list
+        A list of filenames sorted by the time they were last modified,
+        from oldest to newest.
+    """
     all_files = os.listdir(dir_path)
     file_modification_times = [
         (file, os.path.getmtime(os.path.join(dir_path, file))) for file in
@@ -106,13 +174,50 @@ def get_files_by_modification_date(dir_path):
 
 
 def get_files_sorted_alphabetically(dir_path):
+    """ Sorts files in alphabetical order """
     sorted_files = sorted(os.listdir(dir_path))
     return sorted_files
 
 
 def single_script_free(file_name, dir_path_in, user_pars, meas_pars, sign_pars,
                        modes, cont, limit, verbose):
+    """
+    Executes scripts for specified modes and performs differential analysis
+    if applicable.
 
+    Parameters
+    ----------
+    file_name : str
+        The base name of the file to be processed.
+    dir_path_in : str
+        Directory path where the input files are located.
+    user_pars : dict
+        User-specified parameters for script execution.
+    meas_pars : dict
+        Measurement-specific parameters.
+    sign_pars : dict
+        Signal processing parameters.
+    modes : list of str
+        Modes to process, each corresponding to a specific file.
+    cont : int
+        Continuation index for processing multiple files.
+    limit : dict
+        Dictionary containing limits such as 'min' and 'max' for bias.
+    verbose : bool
+        If True, enables detailed logging of the function's operation.
+
+    Returns
+    -------
+    tuple
+        A tuple containing:
+        - best_loops: dict of best loop data for each mode.
+        - properties: dict of properties extracted during processing.
+        - mean_voltage: float or None, mean voltage from differential analysis,
+        if applicable.
+        - diff_piezorep_mean: float or None, difference in piezoresponse mean,
+        if modes length is 2.
+
+    """
     tab_path_in = []
     for mode in modes:
         file_path = os.path.join(dir_path_in, f"{mode}_f_" + file_name)
@@ -137,6 +242,36 @@ def single_script_free(file_name, dir_path_in, user_pars, meas_pars, sign_pars,
 def main_free(dir_path_in, user_pars, modes, key_properties,
               file_names=None, x_axis=None, sorted_by="modification time",
               verbose=False):
+
+    """
+    Main function to process measurement data, extract properties, and
+    generate plots.
+
+    Parameters
+    ----------
+    dir_path_in : str
+        The directory containing the data files.
+    user_pars : dict
+        User-defined parameters for the analysis.
+    modes : list of str
+        Different modes of operation to analyze.
+    key_properties : list of tuples
+        Properties of interest for extraction and plotting.
+    file_names : list of str, optional
+        Names of the files to be processed. If None, files are sorted by
+        `sorted_by`.
+    x_axis : dict, optional
+        Dictionary to define x-axis for plots. If None, defaults to file index.
+    sorted_by : str, optional
+        Criteria for sorting files ('alphabetically' or 'modification time').
+    verbose : bool, optional
+        Flag to enable detailed logging.
+
+    Returns
+    -------
+    list
+        A list of matplotlib.figure.Figure objects from the generated plots.
+    """
     assert sorted_by in ["alphabetically", "modification time"]
 
     # Get file names
@@ -152,11 +287,9 @@ def main_free(dir_path_in, user_pars, modes, key_properties,
             file_names.append(file_name)
         file_names = list(set(file_names))
         file_names = file_names[::10]
-    # Extract parameters from parameters.txt
-    file_path_out_txt_save = os.path.join(os.path.split(dir_path_in)[0],
-                                          "parameters.txt")
-    meas_pars, sign_pars, _, _, _ = print_parameters(
-        file_path_out_txt_save, verbose=verbose)
+
+    # Extract parameters from csv measurement sheet
+    meas_pars, sign_pars = csv_meas_sheet_extract(os.path.split(dir_path_in)[0])
     limit = user_pars['diff domain']
 
     properties_extracted = {}
@@ -212,8 +345,9 @@ def main_free(dir_path_in, user_pars, modes, key_properties,
                    for value in list(x_axis.values())[0]]
     else:
         legends = file_names
-    x_axis = {"File index": [i for i in range(1, len(file_names) + 1)]} \
-        if x_axis is None else x_axis
+    x_axis = {"File index": list(
+        range(1, len(file_names) + 1))} if x_axis is None else x_axis
+
     fig_props = plot_lists_in_dict(properties_extracted, x_axis=x_axis)
     fig_piezorep_loops = plot_best_loops(tab_best_loops, modes, legends)
     if len(modes) == 2:
@@ -246,7 +380,7 @@ if __name__ == '__main__':
     X_AXIS = None
     # X_AXIS = {"Res": [500e3, 10e6, 500e3, 10e6, 500e3, 500e3]}
     # Extract user pars for second step analysis
-    USER_PARS, _, _, _, _, _ = parameters()
+    USER_PARS, _, _, _, _, _, _, _ = parameters()
 
     figs = main_free(DIR_PATH_IN, USER_PARS, MODES, KEY_PROPERTIES,
                      file_names=FILE_NAMES, x_axis=X_AXIS, sorted_by=SORTED_BY,
