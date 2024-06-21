@@ -2,6 +2,7 @@
 File and directory path management in order to save results from runnable script
 """
 import os
+import json
 import shutil
 from datetime import datetime
 
@@ -64,18 +65,18 @@ def save_path_management(dir_path_in, dir_path_out=None, save=False,
     return dir_path_out
 
 
-def save_user_pars(user_pars, dir_path_out, start_time=None, verbose=False):
+def copy_json_res(fname_json, dir_path_out, verbose=False):
     """
-    Save user parameters to a text file.
+    Copies the user configuration JSON file to the output directory for
+    record-keeping.
 
     Parameters
     ----------
-    user_pars : dict
-        Dictionary containing user parameters.
+    fname_json : str
+        Path to the JSON file containing user-defined input parameters.
     dir_path_out : str
-        Directory path for the output file.
-    start_time : datetime.datetime, optional
-        Start time of the analysis (default is None).
+        Path to the directory where the results are stored and where the JSON
+        file will be copied.
     verbose: bool, optional
         Activation key to verbosity (default is False).
 
@@ -83,18 +84,47 @@ def save_user_pars(user_pars, dir_path_out, start_time=None, verbose=False):
     -------
     None
     """
-    saving_file = os.path.join(dir_path_out, "user_params.txt")
+    # Construct the path to the destination file
+    destination = os.path.join(dir_path_out, os.path.split(fname_json)[1])
 
-    with open(saving_file, 'w', encoding='utf-8') as file:
-        if start_time is not None:
-            file.write(f"start of analysis: {start_time}\n")
-            file.write(f"analysis duration: {datetime.now() - start_time}\n\n")
-        file.write("User Parameters:\n")
-        for key, value in user_pars.items():
-            file.write(f"{key}: {value}\n")
+    # Copy the file
+    shutil.copy(fname_json, destination)
 
     if verbose:
-        print(f"Analysis parameters saved in '{saving_file}' file.")
+        print(f"Analysis parameters saved in '{os.path.split(destination)[1]}' "
+              f"file.")
+
+
+def create_json_res(config_params, dir_path_out, fname, verbose=False):
+    """
+    Copies the user configuration JSON file to the output directory for
+    record-keeping.
+
+    Parameters
+    ----------
+    config_params : str
+        Path to the JSON file containing user-defined input parameters.
+    dir_path_out : str
+        Path to the directory where the results are stored and where the JSON
+        file will be copied.
+    fname : str
+        The filename under which the JSON file will be saved.
+    verbose: bool, optional
+        Activation key to verbosity (default is False).
+
+    Returns
+    -------
+    None
+    """
+
+    # Construct the path to the destination file
+    file_path = os.path.join(dir_path_out, fname)
+
+    with open(file_path, 'w', encoding='utf-8') as f_path:
+        json.dump(config_params, f_path, indent=4)
+
+    if verbose:
+        print(f"Analysis parameters saved in '{fname}' file.")
 
 
 def save_path_example(folder_name, save_example_exe, save_test_exe=False):
