@@ -223,7 +223,7 @@ def parameters(fname_json=None):
         matplotlib figures during the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        config_params = get_config(__file__, fname_json)
+        config_params, _ = get_config(__file__, fname_json)
         file_path_in = config_params['file_path_in']
         dir_path_out = config_params['dir_path_out']
         nb_hold_seg_start = config_params['nb_hold_seg_start']
