@@ -31,8 +31,8 @@ DEFAULT_ICON_PATH: str
     Default is r".../PySSPFM/logo_icon/iconPySSPFM.png"
 
 DEFAULT_PARAMETERS_FILE_NAME: str
-    The default name of txt file saving parameters (processing and measure)
-    Default is r'parameters.txt'
+    The default name of csv measurement sheet parameters
+    Default is r'measurement sheet model SSPFM.csv'
 
 DEFAULT_FIGURES_FOLDER_NAME: str
     The default name of saving folder figures
@@ -198,21 +198,24 @@ def get_setting(key):
     origin_path = sys.argv[0]
     sep_origin_path = origin_path.split(os.path.sep)
 
-    # Define the examples configuration file path and the user configuration file path
+    # Define the examples configuration file path and the user configuration
+    # file path
     examples_config_path = Path(__file__).parent / 'examples_settings.json'
     user_config_path = Path.home() / '.pysspfm' / 'pysspfm.json'
 
     # If the ~/.pysspfm directory doesn't exist, create it
     user_config_path.parent.mkdir(parents=True, exist_ok=True)
 
-    # If the user configuration file doesn't exist, copy the default configuration file
+    # If the user configuration file doesn't exist, copy the default
+    # configuration file
     if not user_config_path.exists():
-        shutil.copy(Path(__file__).parent / 'default_settings.json', user_config_path)
+        shutil.copy(Path(__file__).parent / 'default_settings.json',
+                    user_config_path)
 
     settings_dict = get_settings_dict(user_config_path)
     # Update the settings dictionary with the path information.
     settings_dict = get_path_from_json(settings_dict)
-    
+
     # All default constants for PySSPFM examples and tests
     # examples settings must not be modified
     def_settings_dict = get_settings_dict(examples_config_path)
@@ -303,28 +306,65 @@ def get_path_from_json(settings_dict):
 
     return settings_dict
 
+
 def copy_default_settings(file_path):
     """
-    Copy the default settings file to the user directory if it does not exist.
+    Ensures that a user parameter file exists by copying a default parameter
+    file if necessary.
+
+    Parameters
+    ----------
+    file_path : str or pathlib.Path
+        The path to the current Python script, used to derive the default
+        settings file name.
+
+    Returns
+    -------
+    pathlib.Path
+        The path to the user parameters file, ensuring it exists after the
+        function completes.
     """
     # Convert string to Path object if necessary
     file_path = Path(file_path) if isinstance(file_path, str) else file_path
     filename = file_path.name
 
     # Get the path from the settings
-    user_params_file_path = get_setting(filename.replace('.py', '_params'))
-
+    ext = get_setting("extract_parameters")
+    user_params_file_path = filename.replace('.py', f'_params.{ext}')
     # Expand the ~ to the home directory
     user_params_file_path = Path(user_params_file_path).expanduser()
-    
-    # if json file in get_setting(filename_user_params) doesn't exists, copy default to ~/.pysspfm/
+
+    # if json file in get_setting(filename_user_params) doesn't exists,
+    # copy default to ~/.pysspfm/
     if not user_params_file_path.exists():
-        default_file_path = file_path.with_name(f"{file_path.stem}_params.{get_setting('extract_parameters')}")
+        default_file_path = file_path.with_name(
+            f"{file_path.stem}_params.{get_setting('extract_parameters')}")
         shutil.copy(default_file_path, user_params_file_path)
-        
+
     return user_params_file_path
 
+
 def get_config(current_file, fname_json):
+    """
+    Retrieves user-defined configuration parameters either from a specified
+    file or a default settings file.
+
+    Parameters
+    ----------
+    current_file : str
+        The path of the current Python script file, used to determine the path
+        of the default settings.
+    fname_json : str, optional
+        The filename of the user-defined JSON configuration file.
+        If not provided, a default settings file is used.
+
+    Returns
+    -------
+    config_params : dict
+        The configuration parameters loaded from the JSON file.
+    file_path_user_params : str
+        The file path from which the parameters were loaded.
+    """
     # if fname_json is provided, use it, else use the default one
     if fname_json is not None:
         file_path_user_params = fname_json
@@ -338,4 +378,4 @@ def get_config(current_file, fname_json):
           f"file")
     config_params = load_parameters_from_file(file_path_user_params)
 
-    return config_params
+    return config_params, file_path_user_params
