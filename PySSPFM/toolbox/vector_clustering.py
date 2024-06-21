@@ -13,7 +13,6 @@ between 0 and 1 and concatenated (for example amplitude and phase)
 
 import os
 import tkinter.filedialog as tkf
-from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -25,7 +24,8 @@ from PySSPFM.utils.core.clustering import \
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.nanoloop_to_hyst.file import extract_properties
 from PySSPFM.utils.map.main import main_mapping
-from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.path_for_runable import save_path_management, \
+    copy_json_res, create_json_res
 from PySSPFM.utils.file_clustering import \
     (extract_loop_data, gen_coupled_data, extract_map_dim_from_csv,
      curve_extraction)
@@ -33,7 +33,7 @@ from PySSPFM.utils.file_clustering import \
 
 def perform_vector_clustering(data_x, data_y, numb_cluster=3,
                               method="kmeans", pca_mode=False,
-                              relative_mode=False, verbose=False,
+                              relative_mode=False, mode=None, verbose=False,
                               make_plots=False):
     """
     Perform vector clustering.
@@ -53,6 +53,8 @@ def perform_vector_clustering(data_x, data_y, numb_cluster=3,
     relative_mode : bool, optional
         Whether to perform relative (each vector (i.e data_y) vary between 0
         and 1) analysis (default is False).
+    mode: str, optional
+        Mode of processing (off, on coupled ...) (default is None).
     verbose : bool, optional
         Whether to display verbose information (default is False).
     make_plots : bool, optional
@@ -71,7 +73,7 @@ def perform_vector_clustering(data_x, data_y, numb_cluster=3,
     figures : list
         List of generated figures.
     """
-
+    mode = "" if mode is None else mode
     # Each vector vary between 0 and 1
     if relative_mode:
         data_y = [
@@ -109,6 +111,7 @@ def perform_vector_clustering(data_x, data_y, numb_cluster=3,
 
     if verbose:
         _ = [print(label) for label in labels]
+        print('\n')
 
     # Generate plots if specified
     figures = []
@@ -123,17 +126,20 @@ def perform_vector_clustering(data_x, data_y, numb_cluster=3,
         if pca_mode is True:
             figures += plot_pca_plane(
                 processed_data, label_clust=cluster_labels,
-                colors=colors, centers=centers)
+                colors=colors, centers=centers,
+                figname=f"clusters_centroids_{mode}")
         else:
             figures += plot_clustering_centroids(
                 data_y, numb_cluster, cluster_labels,
-                cluster_info, centers, colors)
+                cluster_info, centers, colors,
+                figname=f"clusters_centroids_{mode}")
         figures += plot_all_vector_clustering(
             data_x, data_y, numb_cluster,
-            cluster_labels, cluster_info, colors)
+            cluster_labels, cluster_info, colors,
+            figname=f"clustering_best_vectors_{mode}")
         figures += plot_avg_vector_clustering(
             data_x[0], avg_data, numb_cluster,
-            cluster_info, colors)
+            cluster_info, colors, figname=f"clustering_average_vectors_{mode}")
 
     return cluster_labels, cluster_info, inertia, avg_data, figures
 
@@ -228,7 +234,7 @@ def main_loop_clustering(
                     loops_x[mode], loops_y[mode],
                     numb_cluster=numb_cluster,
                     method=method, pca_mode=user_pars['pca'],
-                    relative_mode=user_pars['relative'],
+                    relative_mode=user_pars['relative'], mode=mode,
                     verbose=verbose, make_plots=make_plots)
             (cluster_labels[mode], cluster_info[mode], inertia[mode],
              avg_loop[mode], figures) = res
@@ -537,16 +543,7 @@ def parameters(fname_json=None):
         generated during the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        config_params = get_config(__file__, fname_json)
-        dir_path_in = config_params['dir_path_in']
-        dir_path_out = config_params['dir_path_out']
-        dir_path_in_props = config_params['dir_path_in_props']
-        verbose = config_params['verbose']
-        show_plots = config_params['show_plots']
-        save = config_params['save']
-        user_pars = config_params['user_pars']
-        loop_pars = config_params['loop_pars']
-        curve_pars = config_params['curve_pars']
+        config_params, fname_json = get_config(__file__, fname_json)
     elif get_setting("extract_parameters") == 'python':
         print("user parameters from python file")
         # Select vector folder
@@ -557,29 +554,35 @@ def parameters(fname_json=None):
         # vector_clustering_2023-10-02-16h38m
         dir_path_in_props = None
         # dir_path_in_props = r'...\KNN500n_15h18m02-10-2023_out_dfrt\properties
-        verbose = True
-        show_plots = True
-        save = False
-
-        user_pars = {'object': 'loop',
-                     'relative': False,
-                     'pca': True,
-                     'method': 'kmeans'}
-        loop_pars = {'label meas': ['piezoresponse'],
-                     'nb clusters off': 4,
-                     'nb clusters on': 4,
-                     'nb clusters coupled': 4}
-        curve_pars = {'extension': 'spm',
-                      'mode': 'classic',
-                      'label meas': ['deflection'],
-                      'nb clusters': 4}
-
+        config_params = {
+            "dir_path_in": dir_path_in,
+            "dir_path_out": dir_path_out,
+            "dir_path_in_props": dir_path_in_props,
+            "verbose": True,
+            "show_plots": False,
+            "save": True,
+            'user_pars': {'object': 'loop',
+                          'relative': False,
+                          'pca': True,
+                          'method': 'kmeans'},
+            'loop_pars': {'label meas': ['piezoresponse'],
+                          'nb clusters off': 4,
+                          'nb clusters on': 4,
+                          'nb clusters coupled': 4},
+            'curve_pars': {'extension': 'spm',
+                           'mode': 'classic',
+                           'label meas': ['deflection'],
+                           'nb clusters': 4}
+        }
     else:
         raise NotImplementedError("setting 'extract_parameters' "
                                   "should be in ['json', 'toml', 'python']")
 
-    return user_pars, loop_pars, curve_pars, dir_path_in, dir_path_out, \
-        dir_path_in_props, verbose, show_plots, save
+    return config_params['user_pars'], config_params['loop_pars'], \
+        config_params['curve_pars'], config_params['dir_path_in'], \
+        config_params['dir_path_out'], config_params['dir_path_in_props'], \
+        config_params['verbose'], config_params['show_plots'], \
+        config_params['save'], fname_json, config_params
 
 
 def main(fname_json=None):
@@ -593,13 +596,12 @@ def main(fname_json=None):
     """
     # Extract parameters
     (user_pars, loop_pars, curve_pars, dir_path_in, dir_path_out,
-     dir_path_in_props, verbose, show_plots, save) = \
-        parameters(fname_json=fname_json)
+     dir_path_in_props, verbose, show_plots, save, fname_json,
+     config_params) = parameters(fname_json=fname_json)
     # Generate default path out
     dir_path_out = save_path_management(
         dir_path_in, dir_path_out, save=save,  dirname="vector_clustering",
         lvl=1, create_path=True, post_analysis=True)
-    start_time = datetime.now()
     # Main function
     main_vector_clustering(
         user_pars, loop_pars, curve_pars, dir_path_in, verbose=verbose,
@@ -607,8 +609,12 @@ def main(fname_json=None):
         dir_path_in_props=dir_path_in_props)
     # Save parameters
     if save:
-        save_user_pars(user_pars, dir_path_out, start_time=start_time,
-                       verbose=verbose)
+        if get_setting("extract_parameters") in ['json', 'toml']:
+            copy_json_res(fname_json, dir_path_out, verbose=verbose)
+        else:
+            create_json_res(config_params, dir_path_out,
+                            fname="vector_clustering_params.json",
+                            verbose=verbose)
 
 
 if __name__ == '__main__':
