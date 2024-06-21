@@ -6,7 +6,6 @@ Module used to generate sspfm maps of selected sample properties
 
 import os
 import tkinter.filedialog as tkf
-from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -19,7 +18,8 @@ from PySSPFM.utils.map.main import gen_mask_ref
 from PySSPFM.utils.map.matrix_processing import formatting_measure
 from PySSPFM.toolbox.map_correlation import \
     gen_correlation_array, plot_correlation_table
-from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.path_for_runable import \
+    save_path_management, copy_json_res, create_json_res
 
 
 def main_list_map_reader(user_pars, dir_path_in, verbose=False):
@@ -476,13 +476,7 @@ def parameters(fname_json=None):
         generated during the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        config_params = get_config(__file__, fname_json)
-        dir_path_in = config_params['dir_path_in']
-        dir_path_out = config_params['dir_path_out']
-        verbose = config_params['verbose']
-        show_plots = config_params['show_plots']
-        save = config_params['save']
-        user_pars = config_params['user_pars']
+        config_params, fname_json = get_config(__file__, fname_json)
     elif get_setting("extract_parameters") == 'python':
         print("user parameters from python file")
         dir_path_in = tkf.askdirectory()
@@ -490,32 +484,42 @@ def parameters(fname_json=None):
         dir_path_out = None
         # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
         # list_map_reader_2023-10-02-16h38m
-        verbose = True
-        show_plots = True
-        save = False
-
-        ind_maps = [['off', 'charac tot fit: area'],
-                    ['off', 'fit pars: ampli_0'],
-                    ['on', 'charac tot fit: area'],
-                    ['on', 'fit pars: ampli_0']]
-
-        user_pars = {'ind maps': ind_maps,
-                     'interp fact': 3,
-                     'interp func': 'linear',
-                     'meas time': None,
-                     'revert mask': False,
-                     'man mask': [],
-                     'ref': {'mode': 'off',
-                             'prop': 'charac tot fit: R_2 hyst',
-                             'fmt': '.5f',
-                             'min val': 0.95,
-                             'max val': None,
-                             'interactive': False}}
+        config_params = {
+            "dir_path_in": dir_path_in,
+            "dir_path_out": dir_path_out,
+            "verbose": True,
+            "show_plots": True,
+            "save": False,
+            "user_pars": {
+                "interp fact": 3,
+                "interp func": "linear",
+                "meas time": None,
+                "revert mask": False,
+                "man mask": [],
+                "ref": {
+                    "mode": "off",
+                    "prop": "charac tot fit: R_2 hyst",
+                    "fmt": ".5f",
+                    "min val": 0.99,
+                    "max val": None,
+                    "interactive": False
+                },
+                "ind maps": [
+                    ["off", "charac tot fit: area"],
+                    ["off", "fit pars: ampli_0"],
+                    ["on", "charac tot fit: area"],
+                    ["on", "fit pars: ampli_0"]
+                ]
+            }
+        }
     else:
         raise NotImplementedError("setting 'extract_parameters' "
                                   "should be in ['json', 'toml', 'python']")
 
-    return user_pars, dir_path_in, dir_path_out, verbose, show_plots, save
+    return config_params['user_pars'], config_params['dir_path_in'], \
+        config_params['dir_path_out'], config_params['verbose'], \
+        config_params['show_plots'], config_params['save'], fname_json, \
+        config_params
 
 
 def main(fname_json=None):
@@ -530,12 +534,12 @@ def main(fname_json=None):
     figs = []
     # Extract parameters
     res = parameters(fname_json=fname_json)
-    (user_pars, dir_path_in, dir_path_out, verbose, show_plots, save) = res
+    (user_pars, dir_path_in, dir_path_out, verbose, show_plots, save,
+     fname_json, config_params) = res
     # Generate default path out
     dir_path_out = save_path_management(
         dir_path_in, dir_path_out, save=save, dirname="list_map_reader", lvl=1,
         create_path=True, post_analysis=True)
-    start_time = datetime.now()
     # Main function
     figs += main_list_map_reader(user_pars, dir_path_in, verbose=verbose)
     # Plot figures
@@ -543,8 +547,12 @@ def main(fname_json=None):
                 dirname=dir_path_out, transparent=False)
     # Save parameters
     if save:
-        save_user_pars(user_pars, dir_path_out, start_time=start_time,
-                       verbose=verbose)
+        if get_setting("extract_parameters") in ['json', 'toml']:
+            copy_json_res(fname_json, dir_path_out, verbose=verbose)
+        else:
+            create_json_res(config_params, dir_path_out,
+                            fname="list_map_reader_params.json",
+                            verbose=verbose)
 
 
 if __name__ == '__main__':
