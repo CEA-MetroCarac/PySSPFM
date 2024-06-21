@@ -16,8 +16,9 @@ from PySSPFM.gui.phase_offset_analyzer import main as main_tool_2_a
 from PySSPFM.gui.phase_inversion_analyzer import main as main_tool_2_b
 from PySSPFM.gui.map_correlation import main as main_tool_3_a
 from PySSPFM.gui.vector_clustering import main as main_tool_3_b
-from PySSPFM.gui.mean_hyst import main as main_tool_3_c
-from PySSPFM.gui.sort_plot_pixel import main as main_tool_3_d
+from PySSPFM.gui.clustering_inertia import main as main_tool_3_c
+from PySSPFM.gui.mean_hyst import main as main_tool_3_d
+from PySSPFM.gui.sort_plot_pixel import main as main_tool_3_e
 from PySSPFM.gui.spm_converter import main as main_tool_4_a
 from PySSPFM.gui.meas_sheet_generator import main as main_tool_4_b
 from PySSPFM.gui.utils import \
@@ -33,13 +34,13 @@ def main():
     None
     """
 
-    root = init_main_wdw(wdw_title="Main Interface")
+    root, scrollable_frame = init_main_wdw(wdw_title="Main Interface")
 
     # Main title
-    title_label = ttk.Label(root, text="PySSPFM: Main Interface",
+    title_label = ttk.Label(scrollable_frame, text="PySSPFM: Main Interface",
                             font=("Helvetica", 16))
     title_label.pack(pady=10)
-    add_section_separator(root)
+    add_section_separator(scrollable_frame)
 
     # Data processing section
     labels = ["Processing Step 1", "Processing Step 2"]
@@ -53,7 +54,7 @@ def main():
         "piezoresponse nanoloops are extracted to construct hysteresis which "
         "are fitted to extract sample properties",
     ]
-    create_section(root, "Data processing", labels, functions,
+    create_section(scrollable_frame, "Data processing", labels, functions,
                    strg_title=strg_title, strg_functions=strg_functions)
 
     # Toolbox - 1 - Readers
@@ -74,7 +75,7 @@ def main():
         "Viewing of raw signal of a sspfm file in a graphic",
         "Extract all the data contained in an SPM file",
     ]
-    create_section(root, "Toolbox - 1 - Readers", labels, functions,
+    create_section(scrollable_frame, "Toolbox - 1 - Readers", labels, functions,
                    strg_title=strg_title, strg_functions=strg_functions)
 
     # Toolbox - 2 - Phase tools
@@ -87,14 +88,15 @@ def main():
         "measurement file",
         "Automatic determination of phase inversion for a list of raw sspfm "
         "measurement file"]
-    create_section(root, "Toolbox - 2 - Phase tools", labels,
+    create_section(scrollable_frame, "Toolbox - 2 - Phase tools", labels,
                    functions, strg_title=strg_title,
                    strg_functions=strg_functions)
 
     # Toolbox - 3 - Map / multi-loop tools
-    labels = ["Map correlation", "Vector clustering",
+    labels = ["Map correlation", "Vector clustering", "Clustering inertia",
               "Mean hysteresis", "Sort and plot pixel"]
-    functions = [main_tool_3_a, main_tool_3_b, main_tool_3_c, main_tool_3_d]
+    functions = [main_tool_3_a, main_tool_3_b, main_tool_3_c,
+                 main_tool_3_d, main_tool_3_e]
     strg_title = "Map and multi-loop tools allow to go deeper into sspfm " \
                  "measurement analysis by trying to identify and separate " \
                  "phases, determining origins of contrast mapping ..."
@@ -107,7 +109,10 @@ def main():
         "- Perform a clustering analysis for a list of vector (loop or curve) "
         "(for each pixel, one or more vector) of a sspfm measurement "
         "in order to separate phases and different physical signal "
-        "contributions.\n"
+        "contributions.",
+        "Clustering with machine learning approach of vector:\n"
+        " - Determines the inertia based on the number of clusters in order to "
+        "find the optimal number of clusters for performing clustering.",
         "Loop can be generated using one or more measurements, including "
         "piezoresponse, amplitude, phase, resonance frequency, or "
         "quality factor.\n"
@@ -118,8 +123,8 @@ def main():
         "Find extremum value of sspfm map of a property and "
         "plot hysteresis of associated files"
     ]
-    create_section(root, "Toolbox - 3 - Map / multi-loop tools", labels,
-                   functions, strg_title=strg_title,
+    create_section(scrollable_frame, "Toolbox - 3 - Map / multi-loop tools",
+                   labels, functions, strg_title=strg_title,
                    strg_functions=strg_functions)
 
     # Toolbox - 4 - File management
@@ -130,7 +135,7 @@ def main():
         "Generate a CSV measurement sheet from a model and SSPFM raw file "
         "data extraction",
     ]
-    create_section(root, "Toolbox - 4 - File management",
+    create_section(scrollable_frame, "Toolbox - 4 - File management",
                    ["SPM converter", "Measurement sheet generator"],
                    [main_tool_4_a, main_tool_4_b], strg_title=strg_title,
                    strg_functions=strg_functions)
@@ -139,7 +144,8 @@ def main():
         root.quit()
 
     # Exit button
-    quit_button = ttk.Button(root, text="Exit", command=quit_application)
+    quit_button = ttk.Button(scrollable_frame, text="Exit",
+                             command=quit_application)
     quit_button.pack(pady=20)
 
     root.mainloop()
