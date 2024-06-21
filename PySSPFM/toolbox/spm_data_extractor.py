@@ -3,7 +3,6 @@
 Extract all data from a spm file (SSPFM script and raw measurements)
 """
 
-import os
 import tkinter.filedialog as tkf
 import matplotlib.pyplot as plt
 import numpy as np
@@ -172,7 +171,7 @@ def parameters(fname_json=None):
         matplotlib figures during the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        config_params = get_config(__file__, fname_json)
+        config_params, _ = get_config(__file__, fname_json)
         file_path_in = config_params['file_path_in']
         nb_hold_seg_start = config_params['nb_hold_seg_start']
         nb_hold_seg_end = config_params['nb_hold_seg_end']
