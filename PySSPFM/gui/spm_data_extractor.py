@@ -32,7 +32,7 @@ def main(parent=None):
     """
     # Create the main or secondary window
     title = "SPM data extractor"
-    app = init_secondary_wdw(parent=parent, wdw_title=title)
+    app, scrollable_frame = init_secondary_wdw(parent=parent, wdw_title=title)
 
     # Set default parameter values
     default_user_parameters = {
@@ -69,20 +69,21 @@ def main(parent=None):
         file_path_in_var.set(file_path_in)
 
     # Window title: Phase offset analyzer
-    wdw_main_title(app, title)
+    wdw_main_title(scrollable_frame, title)
 
     row = 3
 
     # Section title: File management
-    label_file = ttk.Label(app, text="File management", font=("Helvetica", 14))
+    label_file = ttk.Label(scrollable_frame, text="File management",
+                           font=("Helvetica", 14))
     row = grid_item(label_file, row, column=0, sticky="ew", columnspan=3)
 
     # File (in)
-    label_in = ttk.Label(app, text="File (in):")
+    label_in = ttk.Label(scrollable_frame, text="File (in):")
     row = grid_item(label_in, row, column=0, sticky="e", increment=False)
     file_path_in_var = tk.StringVar()
     file_path_in_var.set(user_parameters['file path in'])
-    entry_in = ttk.Entry(app, textvariable=file_path_in_var)
+    entry_in = ttk.Entry(scrollable_frame, textvariable=file_path_in_var)
     row = grid_item(entry_in, row, column=1, sticky="ew", increment=False)
     strg = "- Name: file_path_in\n" \
            "- Summary: Path of datacube SSPFM (.spm) raw file measurements.\n" \
@@ -93,21 +94,25 @@ def main(parent=None):
            "- Value: A string representing the file path."
     entry_in.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(entry_in, mess))
-    browse_button_in = ttk.Button(app, text="Browse", command=browse_file_in)
+    browse_button_in = ttk.Button(scrollable_frame, text="Browse",
+                                  command=browse_file_in)
     row = grid_item(browse_button_in, row, column=2)
-    row = add_grid_separator(app, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Hold segments
-    label_file = ttk.Label(app, text="Hold segments", font=("Helvetica", 14))
+    label_file = ttk.Label(scrollable_frame, text="Hold segments",
+                           font=("Helvetica", 14))
     row = grid_item(label_file, row, column=0, sticky="ew", columnspan=3)
 
     # Number of hold segments (start)
-    label_hold_start = ttk.Label(app, text="Number of hold segments (start):")
+    label_hold_start = ttk.Label(scrollable_frame,
+                                 text="Number of hold segments (start):")
     row = grid_item(label_hold_start, row, column=0, sticky="e",
                     increment=False)
     nb_hold_seg_start_var = tk.IntVar()
     nb_hold_seg_start_var.set(user_parameters['nb hold seg start'])
-    entry_hold_start = ttk.Entry(app, textvariable=nb_hold_seg_start_var)
+    entry_hold_start = ttk.Entry(scrollable_frame,
+                                 textvariable=nb_hold_seg_start_var)
     row = grid_item(entry_hold_start, row, column=1, sticky="ew")
     strg = "- Name: nb_hold_seg_start\n" \
            "- Summary: Number of hold segments at the start of measurement.\n" \
@@ -119,11 +124,13 @@ def main(parent=None):
         lambda event, mess=strg: show_tooltip(entry_hold_start, mess))
 
     # Number of hold segments (end)
-    label_hold_end = ttk.Label(app, text="Number of hold segments (end):")
+    label_hold_end = ttk.Label(scrollable_frame,
+                               text="Number of hold segments (end):")
     row = grid_item(label_hold_end, row, column=0, sticky="e", increment=False)
     nb_hold_seg_end_var = tk.IntVar()
     nb_hold_seg_end_var.set(user_parameters['nb hold seg end'])
-    entry_hold_end = ttk.Entry(app, textvariable=nb_hold_seg_end_var)
+    entry_hold_end = ttk.Entry(scrollable_frame,
+                               textvariable=nb_hold_seg_end_var)
     row = grid_item(entry_hold_end, row, column=1, sticky="ew")
     strg = "- Name: nb_hold_seg_end\n" \
            "- Summary: Number of hold segments at the end of measurement.\n" \
@@ -133,18 +140,19 @@ def main(parent=None):
     entry_hold_end.bind(
         "<Enter>",
         lambda event, mess=strg: show_tooltip(entry_hold_end, mess))
-    row = add_grid_separator(app, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Plot
-    label_chck = ttk.Label(app, text="Plot", font=("Helvetica", 14))
+    label_chck = ttk.Label(scrollable_frame, text="Plot",
+                           font=("Helvetica", 14))
     row = grid_item(label_chck, row, column=0, sticky="ew", columnspan=3)
 
     # Verbose
-    label_verb = ttk.Label(app, text="Verbose:")
+    label_verb = ttk.Label(scrollable_frame, text="Verbose:")
     row = grid_item(label_verb, row, column=0, sticky="e", increment=False)
     verbose_var = tk.BooleanVar()
     verbose_var.set(user_parameters['verbose'])
-    chck_verb = ttk.Checkbutton(app, variable=verbose_var)
+    chck_verb = ttk.Checkbutton(scrollable_frame, variable=verbose_var)
     row = grid_item(chck_verb, row, column=1, sticky="w")
     strg = "- Name: verbose\n" \
            "- Summary: Activation key for printing verbosity during " \
@@ -156,11 +164,11 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(chck_verb, mess))
 
     # Show plots
-    label_show = ttk.Label(app, text="Show plots:")
+    label_show = ttk.Label(scrollable_frame, text="Show plots:")
     row = grid_item(label_show, row, column=0, sticky="e", increment=False)
     show_plots_var = tk.BooleanVar()
     show_plots_var.set(user_parameters['show plots'])
-    chck_show = ttk.Checkbutton(app, variable=show_plots_var)
+    chck_show = ttk.Checkbutton(scrollable_frame, variable=show_plots_var)
     row = grid_item(chck_show, row, column=1, sticky="w")
     strg = "- Name: show_plots\n" \
            "- Summary: Activation key for generating matplotlib figures " \
@@ -170,17 +178,18 @@ def main(parent=None):
            "- Value: Boolean (True or False)."
     chck_show.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(chck_show, mess))
-    row = add_grid_separator(app, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Submit button
-    submit_button = ttk.Button(app, text="Start", command=launch)
+    submit_button = ttk.Button(scrollable_frame, text="Start", command=launch)
     row = grid_item(submit_button, row, column=0, sticky="e", increment=False)
 
     def quit_application():
         app.destroy()
 
     # Exit button
-    quit_button = ttk.Button(app, text="Exit", command=quit_application)
+    quit_button = ttk.Button(scrollable_frame, text="Exit",
+                             command=quit_application)
     grid_item(quit_button, row, column=1, sticky="ew", increment=False)
 
     app.mainloop()
