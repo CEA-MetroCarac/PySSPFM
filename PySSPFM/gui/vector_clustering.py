@@ -8,7 +8,6 @@ import os
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
-from datetime import datetime
 
 from PySSPFM.settings import get_setting
 from PySSPFM.toolbox.vector_clustering import \
@@ -16,7 +15,7 @@ from PySSPFM.toolbox.vector_clustering import \
 from PySSPFM.gui.utils import \
     (add_grid_separator, grid_item, show_tooltip, extract_var,
      init_secondary_wdw, wdw_main_title)
-from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.path_for_runable import save_path_management, create_json_res
 
 
 def main(parent=None):
@@ -34,7 +33,7 @@ def main(parent=None):
     """
     # Create the main or secondary window
     title = "Vector clustering"
-    app = init_secondary_wdw(parent=parent, wdw_title=title)
+    app, scrollable_frame = init_secondary_wdw(parent=parent, wdw_title=title)
 
     default_user_pars = {'object': 'loop',
                          'relative': False,
@@ -101,7 +100,6 @@ def main(parent=None):
                     print(f"path created : {user_parameters['dir path out']}")
 
         # Data analysis
-        start_time = datetime.now()
         main_script(user_parameters["user_pars"],
                     user_parameters["loop_pars"],
                     user_parameters["curve_pars"],
@@ -114,9 +112,9 @@ def main(parent=None):
 
         # Save parameters
         if user_parameters['save']:
-            save_user_pars(
-                user_parameters, user_parameters['dir path out'],
-                start_time=start_time, verbose=user_parameters['verbose'])
+            create_json_res(user_parameters, user_parameters['dir path out'],
+                            fname="vector_clustering_params.json",
+                            verbose=user_parameters['verbose'])
 
     def browse_dir_in():
         dir_path_in = filedialog.askdirectory()
@@ -131,20 +129,21 @@ def main(parent=None):
         dir_path_out_var.set(dir_path_out)
 
     # Window title: Vector clustering
-    wdw_main_title(app, title)
+    wdw_main_title(scrollable_frame, title)
 
     row = 3
 
     # Section title: File management
-    label_file = ttk.Label(app, text="File management", font=("Helvetica", 14))
+    label_file = ttk.Label(scrollable_frame, text="File management",
+                           font=("Helvetica", 14))
     row = grid_item(label_file, row, column=0, sticky="ew", columnspan=3)
 
     # Directory (in)
-    label_in = ttk.Label(app, text="Directory (in):")
+    label_in = ttk.Label(scrollable_frame, text="Directory (in):")
     row = grid_item(label_in, row, column=0, sticky="e", increment=False)
     dir_path_in_var = tk.StringVar()
     dir_path_in_var.set(user_parameters['dir path in'])
-    entry_in = ttk.Entry(app, textvariable=dir_path_in_var)
+    entry_in = ttk.Entry(scrollable_frame, textvariable=dir_path_in_var)
     row = grid_item(entry_in, row, column=1, sticky="ew", increment=False)
     strg = "- Name: dir_path_in\n" \
            "- Summary: Input Directory for Vector Files " \
@@ -154,7 +153,8 @@ def main(parent=None):
            "- Value: String representing the directory path."
     entry_in.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(entry_in, mess))
-    browse_button_in = ttk.Button(app, text="Browse", command=browse_dir_in)
+    browse_button_in = ttk.Button(scrollable_frame, text="Browse",
+                                  command=browse_dir_in)
     row = grid_item(browse_button_in, row, column=2)
 
     # Function to generate the default output directory path
@@ -202,11 +202,12 @@ def main(parent=None):
     # Directory properties (in)
     default_input_dir = dir_path_in_var.get()
     default_input_props_dir = generate_default_output_dir(default_input_dir)
-    label_prop = ttk.Label(app, text="Directory properties (in) (*):")
+    label_prop = ttk.Label(scrollable_frame,
+                           text="Directory properties (in) (*):")
     row = grid_item(label_prop, row, column=0, sticky="e", increment=False)
     dir_path_prop_var = tk.StringVar()
     dir_path_prop_var.set(default_input_props_dir)
-    entry_prop = ttk.Entry(app, textvariable=dir_path_prop_var)
+    entry_prop = ttk.Entry(scrollable_frame, textvariable=dir_path_prop_var)
     row = grid_item(entry_prop, row, column=1, sticky="ew", increment=False)
     strg = "- Name: dir_path_in_prop\n" \
            "- Summary: Properties files directory " \
@@ -220,17 +221,18 @@ def main(parent=None):
            "- Value: It should be a string representing a directory path."
     entry_prop.bind("<Enter>",
                     lambda event, mess=strg: show_tooltip(entry_prop, mess))
-    browse_button_prop = ttk.Button(app, text="Browse", command=browse_dir_prop)
+    browse_button_prop = ttk.Button(scrollable_frame, text="Browse",
+                                    command=browse_dir_prop)
     row = grid_item(browse_button_prop, row, column=2)
 
     # Directory (out)
     default_input_dir = dir_path_in_var.get()
     default_output_dir = generate_default_output_dir(default_input_dir)
-    label_out = ttk.Label(app, text="Directory (out) (*):")
+    label_out = ttk.Label(scrollable_frame, text="Directory (out) (*):")
     row = grid_item(label_out, row, column=0, sticky="e", increment=False)
     dir_path_out_var = tk.StringVar()
     dir_path_out_var.set(default_output_dir)
-    entry_out = ttk.Entry(app, textvariable=dir_path_out_var)
+    entry_out = ttk.Entry(scrollable_frame, textvariable=dir_path_out_var)
     row = grid_item(entry_out, row, column=1, sticky="ew", increment=False)
     strg = "- Name: dir_path_out\n" \
            "- Summary: Saving directory for analysis results figures " \
@@ -240,12 +242,13 @@ def main(parent=None):
            "- Value: It should be a string representing a directory path."
     entry_out.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(entry_out, mess))
-    browse_button_out = ttk.Button(app, text="Select", command=browse_dir_out)
+    browse_button_out = ttk.Button(scrollable_frame, text="Select",
+                                   command=browse_dir_out)
     row = grid_item(browse_button_out, row, column=2)
-    row = add_grid_separator(app, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Common parameters
-    label_common = ttk.Label(app, text="Common parameters",
+    label_common = ttk.Label(scrollable_frame, text="Common parameters",
                              font=("Helvetica", 14))
     row = grid_item(label_common, row, column=0, sticky="ew", columnspan=3)
     strg = "These parameters are always active and are common."
@@ -253,9 +256,9 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(label_common, mess))
 
     # Object
-    label_object = ttk.Label(app, text="Object:")
+    label_object = ttk.Label(scrollable_frame, text="Object:")
     row = grid_item(label_object, row, column=0, sticky="e", increment=False)
-    object_var = ttk.Combobox(app, values=["loop", "curve"])
+    object_var = ttk.Combobox(scrollable_frame, values=["loop", "curve"])
     object_var.set(user_parameters['user_pars']['object'])
     row = grid_item(object_var, row, column=1, sticky="ew")
     strg = "- Name: object\n" \
@@ -273,11 +276,11 @@ def main(parent=None):
                     lambda event, mess=strg: show_tooltip(object_var, mess))
 
     # Relative
-    label_relative = ttk.Label(app, text="Relative:")
+    label_relative = ttk.Label(scrollable_frame, text="Relative:")
     row = grid_item(label_relative, row, column=0, sticky="e", increment=False)
     relative_var = tk.BooleanVar()
     relative_var.set(user_parameters['user_pars']['relative'])
-    chck_relative = ttk.Checkbutton(app, variable=relative_var)
+    chck_relative = ttk.Checkbutton(scrollable_frame, variable=relative_var)
     row = grid_item(chck_relative, row, column=1, sticky="w")
     strg = "- Name: relative\n" \
            "- Summary: Activation key for relative clustering analysis.\n" \
@@ -290,11 +293,11 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(chck_relative, mess))
 
     # PCA
-    label_pca = ttk.Label(app, text="PCA:")
+    label_pca = ttk.Label(scrollable_frame, text="PCA:")
     row = grid_item(label_pca, row, column=0, sticky="e", increment=False)
     pca_var = tk.BooleanVar()
     pca_var.set(user_parameters['user_pars']['pca'])
-    chck_pca = ttk.Checkbutton(app, variable=pca_var)
+    chck_pca = ttk.Checkbutton(scrollable_frame, variable=pca_var)
     row = grid_item(chck_pca, row, column=1, sticky="w")
     strg = "- Name: pca\n" \
            "- Summary: Activation key for performing PCA before clustering " \
@@ -307,9 +310,9 @@ def main(parent=None):
                   lambda event, mess=strg: show_tooltip(chck_pca, mess))
 
     # Method
-    label_method = ttk.Label(app, text="Method:")
+    label_method = ttk.Label(scrollable_frame, text="Method:")
     row = grid_item(label_method, row, column=0, sticky="e", increment=False)
-    method_var = ttk.Combobox(app, values=["kmeans", "gmm"])
+    method_var = ttk.Combobox(scrollable_frame, values=["kmeans", "gmm"])
     method_var.set(user_parameters['user_pars']['method'])
     row = grid_item(method_var, row, column=1, sticky="ew")
     strg = "- Name: method\n" \
@@ -322,10 +325,10 @@ def main(parent=None):
            "\t--> 'gmm': Gaussian Mixture Model clustering"
     method_var.bind("<Enter>",
                     lambda event, mess=strg: show_tooltip(method_var, mess))
-    row = add_grid_separator(app, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Loop parameters
-    label_loop_meas = ttk.Label(app, text="Loop parameters",
+    label_loop_meas = ttk.Label(scrollable_frame, text="Loop parameters",
                                 font=("Helvetica", 14))
     row = grid_item(label_loop_meas, row, column=0, sticky="ew", columnspan=3)
     strg = "These parameters are common to a loop object process.\n" \
@@ -334,11 +337,12 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(label_loop_meas, mess))
 
     # Measure
-    label_name_loop = ttk.Label(app, text="Name(s):")
+    label_name_loop = ttk.Label(scrollable_frame, text="Name(s):")
     row = grid_item(label_name_loop, row, column=0, sticky="e", increment=False)
     label_meas_loop_var = tk.StringVar()
     label_meas_loop_var.set(str(user_parameters['loop_pars']['label meas']))
-    entry_label_meas_loop = ttk.Entry(app, textvariable=label_meas_loop_var)
+    entry_label_meas_loop = ttk.Entry(scrollable_frame,
+                                      textvariable=label_meas_loop_var)
     row = grid_item(entry_label_meas_loop, row, column=1, sticky="ew")
     strg = "- Name: label_meas\n" \
            "- Summary: List of Measurement Name for Loops\n" \
@@ -368,11 +372,12 @@ def main(parent=None):
         clust_coupled_label.config(text=str(clust_coupled_var.get()))
 
     # Nb clusters (off)
-    label_off = ttk.Label(app, text="Nb clusters (off):")
+    label_off = ttk.Label(scrollable_frame, text="Nb clusters (off):")
     row = grid_item(label_off, row, column=0, sticky="e", increment=False)
     clust_off_var = \
         tk.IntVar(value=user_parameters['loop_pars']['nb clusters off'])
-    scale_off = ttk.Scale(app, from_=1, to=30, variable=clust_off_var,
+    scale_off = ttk.Scale(scrollable_frame, from_=1, to=30,
+                          variable=clust_off_var,
                           orient="horizontal", length=30,
                           command=update_nb_clusters_off)
     row = grid_item(scale_off, row, column=1, sticky="ew", increment=False)
@@ -386,15 +391,16 @@ def main(parent=None):
            "- Active if: Used in the analysis of off-field loop."
     scale_off.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(scale_off, mess))
-    clust_off_label = ttk.Label(app, text=str(clust_off_var.get()))
+    clust_off_label = ttk.Label(scrollable_frame, text=str(clust_off_var.get()))
     row = grid_item(clust_off_label, row, column=2, sticky="w")
 
     # Nb clusters (on)
-    label_on = ttk.Label(app, text="Nb clusters (on):")
+    label_on = ttk.Label(scrollable_frame, text="Nb clusters (on):")
     row = grid_item(label_on, row, column=0, sticky="e", increment=False)
     clust_on_var = \
         tk.IntVar(value=user_parameters['loop_pars']['nb clusters on'])
-    scale_on = ttk.Scale(app, from_=1, to=30, variable=clust_on_var,
+    scale_on = ttk.Scale(scrollable_frame, from_=1, to=30,
+                         variable=clust_on_var,
                          orient="horizontal", length=30,
                          command=update_nb_clusters_on)
     row = grid_item(scale_on, row, column=1, sticky="ew", increment=False)
@@ -408,15 +414,16 @@ def main(parent=None):
            "- Active if: Used in the analysis of on-field loop."
     scale_on.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(scale_on, mess))
-    clust_on_label = ttk.Label(app, text=str(clust_on_var.get()))
+    clust_on_label = ttk.Label(scrollable_frame, text=str(clust_on_var.get()))
     row = grid_item(clust_on_label, row, column=2, sticky="w")
 
     # Nb clusters (coupled)
-    label_coupled = ttk.Label(app, text="Nb clusters (coupled):")
+    label_coupled = ttk.Label(scrollable_frame, text="Nb clusters (coupled):")
     row = grid_item(label_coupled, row, column=0, sticky="e", increment=False)
     clust_coupled_var = \
         tk.IntVar(value=user_parameters['loop_pars']['nb clusters coupled'])
-    scale_coupled = ttk.Scale(app, from_=1, to=30, variable=clust_coupled_var,
+    scale_coupled = ttk.Scale(scrollable_frame, from_=1, to=30,
+                              variable=clust_coupled_var,
                               orient="horizontal", length=30,
                               command=update_nb_clusters_coupled)
     row = grid_item(scale_coupled, row, column=1, sticky="ew", increment=False)
@@ -431,13 +438,14 @@ def main(parent=None):
            "for piezoresponse loop."
     scale_coupled.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(scale_coupled, mess))
-    clust_coupled_label = ttk.Label(app, text=str(clust_coupled_var.get()))
+    clust_coupled_label = ttk.Label(scrollable_frame,
+                                    text=str(clust_coupled_var.get()))
     row = grid_item(clust_coupled_label, row, column=2, sticky="w")
-    row = add_grid_separator(app, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Curve parameters
     label_meas_curve = ttk.Label(
-        app, text="Curve parameters", font=("Helvetica", 14))
+        scrollable_frame, text="Curve parameters", font=("Helvetica", 14))
     row = grid_item(label_meas_curve, row, column=0, sticky="ew", columnspan=3)
     strg = "These parameters are common to a curve object process.\n" \
            "Active if: object is 'curve'"
@@ -446,9 +454,10 @@ def main(parent=None):
         lambda event, mess=strg: show_tooltip(label_meas_curve, mess))
 
     # Extension
-    label_ext = ttk.Label(app, text="Extension:")
+    label_ext = ttk.Label(scrollable_frame, text="Extension:")
     row = grid_item(label_ext, row, column=0, sticky="e", increment=False)
-    extension_var = ttk.Combobox(app, values=["spm", "txt", "csv", "xlsx"])
+    extension_var = ttk.Combobox(scrollable_frame,
+                                 values=["spm", "txt", "csv", "xlsx"])
     extension_var.set(user_parameters['curve_pars']['extension'])
     row = grid_item(extension_var, row, column=1, sticky="ew")
     strg = "- Name: extension\n" \
@@ -464,9 +473,9 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(extension_var, mess))
 
     # Mode
-    label_mode = ttk.Label(app, text="Mode:")
+    label_mode = ttk.Label(scrollable_frame, text="Mode:")
     row = grid_item(label_mode, row, column=0, sticky="e", increment=False)
-    mode_var = ttk.Combobox(app, values=["classic", "dfrt"])
+    mode_var = ttk.Combobox(scrollable_frame, values=["classic", "dfrt"])
     mode_var.set(user_parameters['curve_pars']['mode'])
     row = grid_item(mode_var, row, column=1, sticky="ew")
     strg = "- Name: mode\n" \
@@ -481,12 +490,13 @@ def main(parent=None):
                   lambda event, mess=strg: show_tooltip(mode_var, mess))
 
     # Measure
-    label_name_curve = ttk.Label(app, text="Name(s):")
+    label_name_curve = ttk.Label(scrollable_frame, text="Name(s):")
     row = grid_item(label_name_curve, row, column=0, sticky="e",
                     increment=False)
     label_meas_curve_var = tk.StringVar()
     label_meas_curve_var.set(str(user_parameters['curve_pars']['label meas']))
-    entry_label_meas_curve = ttk.Entry(app, textvariable=label_meas_curve_var)
+    entry_label_meas_curve = ttk.Entry(scrollable_frame,
+                                       textvariable=label_meas_curve_var)
     row = grid_item(entry_label_meas_curve, row, column=1, sticky="ew")
     strg = "- Name: label_meas\n" \
            "- Summary: List of Measurement Name for Curves\n" \
@@ -507,11 +517,12 @@ def main(parent=None):
         clust_label.config(text=str(clust_var.get()))
 
     # Nb clusters
-    label_cluster_nb = ttk.Label(app, text="Nb clusters:")
+    label_cluster_nb = ttk.Label(scrollable_frame, text="Nb clusters:")
     row = grid_item(label_cluster_nb, row, column=0, sticky="e",
                     increment=False)
     clust_var = tk.IntVar(value=user_parameters['curve_pars']['nb clusters'])
-    scale_clust = ttk.Scale(app, from_=1, to=30, variable=clust_var,
+    scale_clust = ttk.Scale(scrollable_frame, from_=1, to=30,
+                            variable=clust_var,
                             orient="horizontal", length=30,
                             command=update_nb_clusters)
     row = grid_item(scale_clust, row, column=1, sticky="ew", increment=False)
@@ -525,20 +536,21 @@ def main(parent=None):
            "- Active if: Used in the analysis of curves."
     scale_clust.bind("<Enter>",
                      lambda event, mess=strg: show_tooltip(scale_clust, mess))
-    clust_label = ttk.Label(app, text=str(clust_var.get()))
+    clust_label = ttk.Label(scrollable_frame, text=str(clust_var.get()))
     row = grid_item(clust_label, row, column=2, sticky="w")
-    row = add_grid_separator(app, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Save and plot
-    label_chck = ttk.Label(app, text="Save and plot", font=("Helvetica", 14))
+    label_chck = ttk.Label(scrollable_frame, text="Save and plot",
+                           font=("Helvetica", 14))
     row = grid_item(label_chck, row, column=0, sticky="ew", columnspan=3)
 
     # Verbose
-    label_verb = ttk.Label(app, text="Verbose:")
+    label_verb = ttk.Label(scrollable_frame, text="Verbose:")
     row = grid_item(label_verb, row, column=0, sticky="e", increment=False)
     verbose_var = tk.BooleanVar()
     verbose_var.set(user_parameters['verbose'])
-    chck_verb = ttk.Checkbutton(app, variable=verbose_var)
+    chck_verb = ttk.Checkbutton(scrollable_frame, variable=verbose_var)
     row = grid_item(chck_verb, row, column=1, sticky="w")
     strg = "- Name: verbose\n" \
            "- Summary: Activation key for printing verbosity during " \
@@ -550,11 +562,11 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(chck_verb, mess))
 
     # Show plots
-    label_show = ttk.Label(app, text="Show plots:")
+    label_show = ttk.Label(scrollable_frame, text="Show plots:")
     row = grid_item(label_show, row, column=0, sticky="e", increment=False)
     show_plots_var = tk.BooleanVar()
     show_plots_var.set(user_parameters['show plots'])
-    chck_show = ttk.Checkbutton(app, variable=show_plots_var)
+    chck_show = ttk.Checkbutton(scrollable_frame, variable=show_plots_var)
     row = grid_item(chck_show, row, column=1, sticky="w")
     strg = "- Name: show_plots\n" \
            "- Summary: Activation key for generating matplotlib figures " \
@@ -566,11 +578,11 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(chck_show, mess))
 
     # Save
-    label_save = ttk.Label(app, text="Save:")
+    label_save = ttk.Label(scrollable_frame, text="Save:")
     row = grid_item(label_save, row, column=0, sticky="e", increment=False)
     save_var = tk.BooleanVar()
     save_var.set(user_parameters['save'])
-    chck_save = ttk.Checkbutton(app, variable=save_var)
+    chck_save = ttk.Checkbutton(scrollable_frame, variable=save_var)
     row = grid_item(chck_save, row, column=1, sticky="w")
     strg = "- Name: save\n" \
            "- Summary: Activation key for saving results during analysis.\n" \
@@ -579,17 +591,18 @@ def main(parent=None):
            "- Value: Boolean (True or False)."
     chck_save.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(chck_save, mess))
-    row = add_grid_separator(app, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Submit button
-    submit_button = ttk.Button(app, text="Start", command=launch)
+    submit_button = ttk.Button(scrollable_frame, text="Start", command=launch)
     row = grid_item(submit_button, row, column=0, sticky="e", increment=False)
 
     def quit_application():
         app.destroy()
 
     # Exit button
-    quit_button = ttk.Button(app, text="Exit", command=quit_application)
+    quit_button = ttk.Button(scrollable_frame, text="Exit",
+                             command=quit_application)
     grid_item(quit_button, row, column=1, sticky="ew", increment=False)
 
     app.mainloop()
