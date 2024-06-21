@@ -186,7 +186,7 @@ def ex_multi_script(make_plots=False, verbose=False):
         "nanoloop_to_hyst_s2", save_example_exe=make_plots,
         save_test_exe=not make_plots)
     # ex multi_script
-    multi_script(user_pars, '', meas_pars, sign_pars, 0, '',
+    multi_script(user_pars, '', meas_pars, sign_pars,
                  test_dicts=loop_dicts, verbose=verbose, show_plots=make_plots,
                  save=save, root_out=dir_path_out)
 
