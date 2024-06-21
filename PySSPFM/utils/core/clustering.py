@@ -106,7 +106,7 @@ def data_clustering(data, num_clusters=3, method='kmeans', verbose=False):
 
 
 def plot_clustering_centroids(data_y, numb_cluster, cluster_labels,
-                              cluster_info, centers, colors):
+                              cluster_info, centers, colors, figname=None):
     """
     Plot clustering centroids
 
@@ -124,6 +124,8 @@ def plot_clustering_centroids(data_y, numb_cluster, cluster_labels,
         Centroids of the clusters
     colors: list
         List of colors for each cluster
+    figname: str, optional
+        Name of the saved figure (default is None)
 
     Returns
     -------
@@ -132,7 +134,7 @@ def plot_clustering_centroids(data_y, numb_cluster, cluster_labels,
     """
     # Create fig and graph
     fig, ax = plt.subplots(figsize=get_setting("figsize"))
-    fig.sfn = "clusters_centroids"
+    fig.sfn = "clusters_centroids" if figname is None else figname
     plot_dict_1 = {
         'title': 'Clusters with Centroids',
         'x lab': 'Feature 1', 'y lab': 'Feature 2',
@@ -155,7 +157,8 @@ def plot_clustering_centroids(data_y, numb_cluster, cluster_labels,
 
 
 def plot_all_vector_clustering(x_vectors, y_vectors, numb_cluster,
-                               cluster_labels, cluster_info, colors):
+                               cluster_labels, cluster_info, colors,
+                               figname=None):
     """
     Plot all vectors with clustering information
 
@@ -173,6 +176,8 @@ def plot_all_vector_clustering(x_vectors, y_vectors, numb_cluster,
         Information about each cluster
     colors: list
         List of colors for each cluster
+    figname: str, optional
+        Name of the saved figure (default is None)
 
     Returns
     -------
@@ -191,7 +196,7 @@ def plot_all_vector_clustering(x_vectors, y_vectors, numb_cluster,
     # Create graph
     figsize = get_setting("figsize")
     fig, ax = plt.subplots(figsize=figsize)
-    fig.sfn = "clustering_best_vectors"
+    fig.sfn = "clustering_best_vectors" if figname is None else figname
     plot_dict_1 = {
         'title': 'Clustering: Best Vectors',
         'x lab': 'Voltage', 'y lab': 'Y Axis',
@@ -208,7 +213,7 @@ def plot_all_vector_clustering(x_vectors, y_vectors, numb_cluster,
 
 
 def plot_avg_vector_clustering(x_avg_vector, y_avg_vectors, numb_cluster,
-                               cluster_info, colors):
+                               cluster_info, colors, figname=None):
     """
     Plot average vectors by cluster
 
@@ -224,6 +229,8 @@ def plot_avg_vector_clustering(x_avg_vector, y_avg_vectors, numb_cluster,
         Information about each cluster
     colors: list
         List of colors for each cluster
+    figname: str, optional
+        Name of the saved figure (default is None)
 
     Returns
     -------
@@ -233,7 +240,7 @@ def plot_avg_vector_clustering(x_avg_vector, y_avg_vectors, numb_cluster,
     # Create graph
     figsize = get_setting("figsize")
     fig, ax = plt.subplots(figsize=figsize)
-    fig.sfn = "clustering_average_vectors"
+    fig.sfn = "clustering_average_vectors" if figname is None else figname
     plot_dict_3 = {
         'title': 'Average Vector by Cluster',
         'x lab': 'Voltage', 'y lab': 'Y Axis',
@@ -315,7 +322,7 @@ def data_pca(data, dimension=2):
 
 
 def plot_pca_plane(processed_data, label_clust=None, colors=None,
-                   centers=None):
+                   centers=None, figname=None):
     """
     Plot PCA plane, for 2D PCA analysis, with possible clustering results
     performed after PCA analysis
@@ -327,9 +334,11 @@ def plot_pca_plane(processed_data, label_clust=None, colors=None,
     label_clust: numpy.ndarray or None, optional
         Cluster labels for each data point (default is None)
     colors: list or None, optional
-        List of colors associated to cluster indice(default is None)
+        List of colors associated to cluster indice (default is None)
     centers: numpy.ndarray or None, optional
         Centers of the clusters (default is None)
+    figname: str, optional
+        Name of the saved figure (default is None)
 
     Returns
     -------
@@ -339,7 +348,7 @@ def plot_pca_plane(processed_data, label_clust=None, colors=None,
 
     # Create fig and graph
     fig, ax = plt.subplots(figsize=get_setting("figsize"))
-    fig.sfn = "clusters_centroids"
+    fig.sfn = "clusters_centroids" if figname is None else figname
     plot_dict_1 = {
         'title': 'Representation of Transformed Data after PCA',
         'x lab': 'Principal Component 1', 'y lab': 'Principal Component 2',
