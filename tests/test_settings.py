@@ -15,7 +15,7 @@ def test_get_settings_dict_classic():
     settings_dict = ex_get_settings_dict(mode='classic')
 
     target_settings_dict = {
-        "default_parameters_file_name": "parameters.txt",
+        "default_parameters_file_name": "measurement sheet model SSPFM.csv",
         "default_figures_folder_name": "figs",
         "default_nanoloops_folder_name": "nanoloops",
         "default_best_nanoloop_folder_name": "best_nanoloops",
@@ -90,7 +90,7 @@ def test_get_settings_dict_default():
     def_settings_dict = ex_get_settings_dict(mode='default')
 
     target_def_settings_dict = {
-        "default_parameters_file_name": "parameters.txt",
+        "default_parameters_file_name": "measurement sheet model SSPFM.csv",
         "default_figures_folder_name": "figs",
         "default_nanoloops_folder_name": "nanoloops",
         "default_best_nanoloop_folder_name": "best_nanoloops",
