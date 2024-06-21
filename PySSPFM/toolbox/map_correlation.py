@@ -3,9 +3,7 @@
 Cross correlation coefficient analysis for sspfm maps
 """
 
-import os
 import tkinter.filedialog as tkf
-from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -13,7 +11,8 @@ from PySSPFM.settings import get_setting, get_config
 from PySSPFM.utils.core.figure import print_plots, plot_map
 from PySSPFM.utils.nanoloop_to_hyst.file import extract_properties
 from PySSPFM.utils.map.interpolate import remove_val
-from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.path_for_runable import \
+    save_path_management, copy_json_res, create_json_res
 
 
 def plot_correlation_table(arr, map_label=None, add_txt=''):
@@ -253,12 +252,7 @@ def parameters(fname_json=None):
         generated during the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        config_params = get_config(__file__, fname_json)
-        dir_path_in = config_params['dir_path_in']
-        dir_path_out = config_params['dir_path_out']
-        show_plots = config_params['show_plots']
-        save = config_params['save']
-        user_pars = config_params['user_pars']
+        config_params, fname_json = get_config(__file__, fname_json)
     elif get_setting("extract_parameters") == 'python':
         print("user parameters from python file")
         dir_path_in = tkf.askdirectory()
@@ -266,22 +260,29 @@ def parameters(fname_json=None):
         dir_path_out = None
         # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
         # map_correlation_2023-10-02-16h38m
-        show_plots = True
-        save = False
-
-        ind_maps = [['off', 'charac tot fit: area'],
-                    ['off', 'fit pars: ampli_0'],
-                    ['on', 'charac tot fit: area'],
-                    ['on', 'fit pars: ampli_0']]
-
-        user_pars = {'ind maps': ind_maps,
-                     'mask': None,
-                     'revert mask': False}
+        config_params = {
+            "dir_path_in": dir_path_in,
+            "dir_path_out": dir_path_out,
+            "show_plots": True,
+            "save": False,
+            "user_pars": {
+                "mask": None,
+                "revert mask": False,
+                "ind maps": [
+                    ["off", "charac tot fit: area"],
+                    ["off", "fit pars: ampli_0"],
+                    ["on", "charac tot fit: area"],
+                    ["on", "fit pars: ampli_0"]
+                ]
+            }
+        }
     else:
         raise NotImplementedError("setting 'extract_parameters' "
                                   "should be in ['json', 'toml', 'python']")
 
-    return user_pars, dir_path_in, dir_path_out, show_plots, save
+    return config_params['user_pars'], config_params['dir_path_in'], \
+        *config_params['dir_path_out'], config_params['show_plots'], \
+        config_params['save'], fname_json, config_params
 
 
 def main(fname_json=None):
@@ -295,12 +296,12 @@ def main(fname_json=None):
     """
     # Extract parameters
     res = parameters(fname_json=fname_json)
-    (user_pars, dir_path_in, dir_path_out, show_plots, save) = res
+    (user_pars, dir_path_in, dir_path_out, show_plots, save, fname_json,
+     config_params) = res
     # Generate default path out
     dir_path_out = save_path_management(
         dir_path_in, dir_path_out, save=save,
         dirname="map_correlation", lvl=1, create_path=True, post_analysis=True)
-    start_time = datetime.now()
     # Main function
     _, figs = main_map_correlation(user_pars, dir_path_in)
     # Plot figures
@@ -308,8 +309,12 @@ def main(fname_json=None):
                 dirname=dir_path_out, transparent=False)
     # Save parameters
     if save:
-        save_user_pars(user_pars, dir_path_out, start_time=start_time,
-                       verbose=True)
+        if get_setting("extract_parameters") in ['json', 'toml']:
+            copy_json_res(fname_json, dir_path_out, verbose=False)
+        else:
+            create_json_res(config_params, dir_path_out,
+                            fname="map_correlation_params.json",
+                            verbose=False)
 
 
 if __name__ == '__main__':
