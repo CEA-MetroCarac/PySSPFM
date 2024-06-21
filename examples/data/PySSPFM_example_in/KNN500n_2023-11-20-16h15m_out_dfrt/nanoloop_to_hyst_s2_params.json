@@ -1,0 +1,32 @@
+{
+    "dir_path_in": "C:\\Users\\HV265662\\PycharmProjects\\PySSPFM\\examples\\data\\PySSPFM_example_in\\KNN500n_2024-06-21-14h08m_out_dfrt\\nanoloops",
+    "root_out": null,
+    "verbose": true,
+    "show_plots": true,
+    "save": true,
+    "user_pars": {
+        "func": "sigmoid",
+        "method": "least_square",
+        "asymmetric": false,
+        "inf thresh": 10,
+        "sat thresh": 90,
+        "del 1st loop": true,
+        "pha corr": "offset",
+        "pha fwd": 0,
+        "pha rev": 180,
+        "pha func": "np.cos",
+        "main_elec_file_path": null,
+        "main elec": true,
+        "locked elec slope": null,
+        "diff mode": "set",
+        "diff domain": {
+            "min": -5.0,
+            "max": 5.0
+        },
+        "sat mode": "set",
+        "sat domain": {
+            "min": -9.0,
+            "max": 9.0
+        }
+    }
+}

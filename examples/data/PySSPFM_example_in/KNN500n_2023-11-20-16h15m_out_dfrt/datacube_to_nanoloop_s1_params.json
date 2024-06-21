@@ -1,0 +1,28 @@
+{
+    "file_path_in": "C:\\Users\\HV265662\\PycharmProjects\\PySSPFM\\examples\\data\\PySSPFM_example_in\\KNN500n\\KNN500n_SSPFM.0_00056.txt",
+    "root_out": null,
+    "verbose": true,
+    "show_plots": true,
+    "save": true,
+    "seg_params": {
+        "mode": "dfrt",
+        "cut seg [%]": {
+            "start": 10,
+            "end": 0
+        },
+        "filter type": null,
+        "filter freq 1": 1e3,
+        "filter freq 2": 3e3,
+        "filter ord": 4
+    },
+    "fit_params": {
+        "fit pha": false,
+        "detect peak": false,
+        "sens peak detect": 1.5
+    },
+    "pha_params": {
+        "phase_file_path": null,
+        "method": "static",
+        "offset": 0
+    }
+}
