@@ -10,7 +10,6 @@ Electrochemical State". 10.48550/arXiv.2207.12525
 
 import os
 import tkinter.filedialog as tkf
-from datetime import datetime
 import numpy as np
 
 from PySSPFM.settings import get_setting, get_config
@@ -20,14 +19,16 @@ from PySSPFM.utils.nanoloop.analysis import nanoloop_treatment, AllMeanLoop
 from PySSPFM.utils.nanoloop.phase import gen_dict_pha
 from PySSPFM.utils.map.main import gen_mask_ref, plot_and_save_maps
 from PySSPFM.utils.nanoloop_to_hyst.file import \
-    generate_file_nanoloop_paths, print_parameters, extract_properties
+    generate_file_nanoloop_paths, extract_properties
 from PySSPFM.utils.nanoloop_to_hyst.plot import plot_differential_analysis
 from PySSPFM.utils.nanoloop_to_hyst.analysis import gen_analysis_mode
 from PySSPFM.utils.nanoloop_to_hyst.electrostatic import \
     gen_differential_loop, linreg_differential
 from PySSPFM.utils.nanoloop_to_hyst.analysis import \
     find_best_nanoloop, hyst_analysis, electrostatic_analysis
-from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.path_for_runable import \
+    save_path_management, copy_json_res, create_json_res
+from PySSPFM.utils.raw_extraction import csv_meas_sheet_extract
 
 
 def single_script(file, user_pars, meas_pars, sign_pars,
@@ -113,8 +114,7 @@ def find_best_nanoloops(user_pars, mask, mode='off', verbose=False):
     dict_str: dict
         Used for figure annotation
     """
-    res = print_parameters(user_pars['file path in pars'])
-    meas_pars, sign_pars, _, _, _ = res
+    meas_pars, sign_pars = csv_meas_sheet_extract(user_pars['dir path in pars'])
 
     file_paths_in = generate_file_nanoloop_paths(
         user_pars['dir path in loop'], mode=f'{mode}_f')
@@ -179,9 +179,7 @@ def mean_analysis_on_off(user_pars, best_loops, analysis_mode='mean_loop',
               np.array(mean_best_loop.piezorep.write_volt_left)]
     y_hyst = [np.array(mean_best_loop.piezorep.y_meas_right),
               np.array(mean_best_loop.piezorep.y_meas_left)]
-
-    res = print_parameters(user_pars['file path in pars'])
-    meas_pars, _, _, _, _ = res
+    meas_pars, _ = csv_meas_sheet_extract(user_pars['dir path in pars'])
     dict_pha = gen_dict_pha(meas_pars, user_pars['pha corr'],
                             pha_fwd=user_pars['pha fwd'],
                             pha_rev=user_pars['pha rev'],
@@ -327,8 +325,8 @@ def main_mean_hyst(user_pars, verbose=False, make_plots=False):
         f"{user_pars['dir path in prop']} doesn't exist"
     assert os.path.exists(user_pars['dir path in loop']), \
         f"{user_pars['dir path in loop']} doesn't exist"
-    assert os.path.exists(user_pars['file path in pars']), \
-        f"{user_pars['file path in pars']} doesn't exist"
+    assert os.path.exists(user_pars['dir path in pars']), \
+        f"{user_pars['dir path in pars']} doesn't exist"
     figures = []
     mode = user_pars['mode']
     mask, mask_pars = user_pars['mask']['man mask'], user_pars['mask']
@@ -579,11 +577,11 @@ def parameters(fname_json=None):
         This parameter specifies the directory containing the loop text files
         generated after the 1st step of the analysis.
         Optional, Default: 'nanoloops'
-    - file_path_in_pars: str
-        Measurement and analysis parameters txt file.
-        This parameter specifies the file containing measurement and analysis
-        parameters generated after the 2nd step of the analysis.
-        Optional, Default: 'parameters.txt'
+    - dir_path_in_pars: str
+        Path of the CSV measurement sheet directory.
+        This parameter specifies the directory containing path of the CSV
+        measurement sheet.
+        Optional, Default: 'title_meas_out_mode'
 
     - verbose: bool
         Activation key for printing verbosity during analysis.
@@ -599,13 +597,8 @@ def parameters(fname_json=None):
         generated during the analysis process.
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        config_params = get_config(__file__, fname_json)
+        config_params, fname_json = get_config(__file__, fname_json)
         dir_path_in = config_params['dir_path_in']
-        dir_path_out = config_params['dir_path_out']
-        verbose = config_params['verbose']
-        show_plots = config_params['show_plots']
-        save = config_params['save']
-        user_pars = config_params['user_pars']
     elif get_setting("extract_parameters") == 'python':
         print("user parameters from python file")
         dir_path_in = tkf.askdirectory()
@@ -613,35 +606,51 @@ def parameters(fname_json=None):
         dir_path_out = None
         # dir_path_out = r'...\KNN500n_15h18m02-10-2023_out_dfrt\toolbox\
         # mean_loop_2023-10-02-16h38m
-        verbose = True
-        show_plots = True
-        save = False
-        user_pars = {'mode': 'off',
-                     'mask': {'revert mask': False,
-                              'man mask': None,
-                              'ref': {'prop': 'charac tot fit: area',
-                                      'mode': 'off',
-                                      'min val': 0.005,
-                                      'max val': None,
-                                      'fmt': '.2f',
-                                      'interactive': False}},
-                     'func': 'sigmoid',
-                     'method': 'least_square',
-                     'asymmetric': False,
-                     'inf thresh': 10,
-                     'sat thresh': 90,
-                     'del 1st loop': True,
-                     'pha corr': 'offset',
-                     'pha fwd': 0,
-                     'pha rev': 180,
-                     'pha func': np.cos,
-                     'main elec': True,
-                     'locked elec slope': None,
-                     'diff domain': {'min': -5., 'max': 5.},
-                     'sat mode': 'set',
-                     'sat domain': {'min': -9., 'max': 9.},
-                     'interp fact': 4,
-                     'interp func': 'linear'}
+        config_params = {
+            "dir_path_in": dir_path_in,
+            "dir_path_out": dir_path_out,
+            "verbose": True,
+            "show_plots": True,
+            "save": False,
+            "user_pars": {
+                "mode": "off",
+                "mask": {
+                    "revert mask": False,
+                    "man mask": None,
+                    "ref": {
+                        "prop": "charac tot fit: area",
+                        "mode": "off",
+                        "min val": 0.005,
+                        "max val": None,
+                        "fmt": ".2f",
+                        "interactive": False
+                    }
+                },
+                "func": "sigmoid",
+                "method": "least_square",
+                "asymmetric": False,
+                "inf thresh": 10,
+                "sat thresh": 90,
+                "del 1st loop": True,
+                "pha corr": "offset",
+                "pha fwd": 0,
+                "pha rev": 180,
+                "pha func": "np.cos",
+                "main elec": True,
+                "locked elec slope": None,
+                "diff domain": {
+                    "min": -5.0,
+                    "max": 5.0
+                },
+                "sat mode": "set",
+                "sat domain": {
+                    "min": -9.0,
+                    "max": 9.0
+                },
+                "interp fact": 4,
+                "interp func": "linear"
+            }
+        }
     else:
         raise NotImplementedError("setting 'extract_parameters' "
                                   "should be in ['json', 'toml', 'python']")
@@ -652,15 +661,15 @@ def parameters(fname_json=None):
     nanoloops_folder_name = get_setting('default_nanoloops_folder_name')
     dir_path_in_loop = os.path.join(dir_path_in, nanoloops_folder_name)
     # dir_path_in_loop = r'...\KNN500n_15h18m02-10-2023_out_dfrt\nanoloops
-    parameters_file_name = get_setting('default_parameters_file_name')
-    file_path_in_pars = os.path.join(dir_path_in, parameters_file_name)
-    # file_path_in_pars = r'...\KNN500n_15h18m02-10-2023_out_dfrt\results\
-    # saving_parameters.txt
+    user_pars = config_params['user_pars']
     user_pars['dir path in prop'] = dir_path_in_prop
     user_pars['dir path in loop'] = dir_path_in_loop
-    user_pars['file path in pars'] = file_path_in_pars
+    user_pars['dir path in pars'] = dir_path_in
 
-    return user_pars, dir_path_in, dir_path_out, verbose, show_plots, save
+    return user_pars, config_params['dir_path_in'], \
+        config_params['dir_path_out'], config_params['verbose'], \
+        config_params['show_plots'], config_params['save'], fname_json, \
+        config_params
 
 
 def main(fname_json=None):
@@ -675,12 +684,12 @@ def main(fname_json=None):
     figs = []
     # Extract parameters
     res = parameters(fname_json=fname_json)
-    (user_pars, dir_path_in, dir_path_out, verbose, show_plots, save) = res
+    (user_pars, dir_path_in, dir_path_out, verbose, show_plots, save,
+     fname_json, config_params) = res
     # Generate default path out
     dir_path_out = save_path_management(
         dir_path_in, dir_path_out, save=save, dirname="mean_loop", lvl=0,
         create_path=True, post_analysis=True)
-    start_time = datetime.now()
     # Main function
     figs += main_mean_hyst(
         user_pars, verbose=verbose, make_plots=bool(show_plots or save))
@@ -689,8 +698,12 @@ def main(fname_json=None):
                 dirname=dir_path_out, transparent=False)
     # Save parameters
     if save:
-        save_user_pars(user_pars, dir_path_out, start_time=start_time,
-                       verbose=True)
+        if get_setting("extract_parameters") in ['json', 'toml']:
+            copy_json_res(fname_json, dir_path_out, verbose=verbose)
+        else:
+            create_json_res(config_params, dir_path_out,
+                            fname="mean_hyst_params.json",
+                            verbose=verbose)
 
 
 if __name__ == '__main__':
