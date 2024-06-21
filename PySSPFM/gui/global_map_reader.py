@@ -8,14 +8,13 @@ import os
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
-from datetime import datetime
 
 from PySSPFM.toolbox.global_map_reader import \
     main_global_map_reader as main_script
 from PySSPFM.gui.utils import \
     (add_grid_separator, grid_item, show_tooltip, apply_style, extract_var,
      init_secondary_wdw, wdw_main_title)
-from PySSPFM.utils.path_for_runable import save_path_management, save_user_pars
+from PySSPFM.utils.path_for_runable import save_path_management, create_json_res
 
 
 def main(parent=None):
@@ -33,7 +32,7 @@ def main(parent=None):
     """
     # Create the main or secondary window
     title = "Global map reader"
-    app = init_secondary_wdw(parent=parent, wdw_title=title)
+    app, scrollable_frame = init_secondary_wdw(parent=parent, wdw_title=title)
 
     # Set default parameter values
     default_user_parameters = {
@@ -133,7 +132,6 @@ def main(parent=None):
                     print(f"path created : {user_parameters['dir path out']}")
 
         # Data analysis
-        start_time = datetime.now()
         main_script(user_parameters,
                     verbose=user_parameters['verbose'],
                     show_plots=user_parameters['show plots'],
@@ -143,9 +141,9 @@ def main(parent=None):
 
         # Save parameters
         if user_parameters['save']:
-            save_user_pars(
-                user_parameters, user_parameters['dir path out'],
-                start_time=start_time, verbose=user_parameters['verbose'])
+            create_json_res(user_parameters, user_parameters['dir path out'],
+                            fname="global_map_reader_params.json",
+                            verbose=user_parameters['verbose'])
 
     def browse_dir_in():
         dir_path_in = filedialog.askdirectory()
@@ -156,7 +154,7 @@ def main(parent=None):
         dir_path_out_var.set(dir_path_out)
 
     # Create top frame
-    top_frame = ttk.Frame(app)
+    top_frame = ttk.Frame(scrollable_frame)
     top_frame.grid(row=0, column=0, padx=10, pady=10, sticky="ns")
     apply_style(top_frame)
 
@@ -271,7 +269,7 @@ def main(parent=None):
     row = add_grid_separator(top_frame, row=row)
 
     # Create off field frame
-    frame_off = ttk.Frame(app)
+    frame_off = ttk.Frame(scrollable_frame)
     frame_off.grid(row=1, column=0, padx=10, pady=10, sticky="ns")
     apply_style(frame_off)
 
@@ -440,7 +438,7 @@ def main(parent=None):
     row = add_grid_separator(frame_off, row=row)
 
     # Create on field frame
-    on_frame = ttk.Frame(app)
+    on_frame = ttk.Frame(scrollable_frame)
     on_frame.grid(row=1, column=1, padx=10, pady=10, sticky="ns")
     apply_style(on_frame)
 
@@ -609,7 +607,7 @@ def main(parent=None):
     row = add_grid_separator(on_frame, row=row)
 
     # Create coupled frame
-    coupled_frame = ttk.Frame(app)
+    coupled_frame = ttk.Frame(scrollable_frame)
     coupled_frame.grid(row=1, column=2, padx=10, pady=10, sticky="ns")
     apply_style(coupled_frame)
 
@@ -788,7 +786,7 @@ def main(parent=None):
     row = add_grid_separator(coupled_frame, row=row)
 
     # Create other frame
-    other_frame = ttk.Frame(app)
+    other_frame = ttk.Frame(scrollable_frame)
     other_frame.grid(row=1, column=3, padx=10, pady=10, sticky="ns")
     apply_style(other_frame)
 
@@ -966,7 +964,7 @@ def main(parent=None):
     row = add_grid_separator(other_frame, row=row)
 
     # Create bottom frame
-    bottom_frame = ttk.Frame(app)
+    bottom_frame = ttk.Frame(scrollable_frame)
     bottom_frame.grid(row=2, column=0, padx=10, pady=10, sticky="ns")
     apply_style(bottom_frame)
 
