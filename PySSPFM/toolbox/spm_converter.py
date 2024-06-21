@@ -208,7 +208,7 @@ def main(fname_json=None):
         (your_user_disk_access/.pysspfm/script_name_params.json)
     """
     if get_setting("extract_parameters") in ['json', 'toml']:
-        config_params = get_config(__file__, fname_json)
+        config_params, _ = get_config(__file__, fname_json)
         dir_path_in = config_params['dir_path_in']
         dir_path_out = config_params['dir_path_out']
         verbose = config_params['verbose']
