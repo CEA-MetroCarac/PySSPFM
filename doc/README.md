@@ -497,7 +497,7 @@ A default data processing path management is provided, but the user has the opti
 #### III.2.a) - First step of data analysis
 
 <p align="center" width="100%">
-    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/file_management_first_step.PNG> <br>
+    <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/file_management_first_step.PNG> <br>
     <em>File management after first step of data analysis</em>
 </p>
 
@@ -514,7 +514,7 @@ Following the first processing step (see section <a href="https://github.com/CEA
 #### III.2.b) - Second step of data analysis
 
 <p align="center" width="100%">
-    <img align="center" width="60%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/file_management_second_step.PNG> <br>
+    <img align="center" width="70%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/file_management_second_step.PNG> <br>
     <em>File management after second step of data analysis</em>
 </p>
 
