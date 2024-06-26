@@ -127,7 +127,7 @@ def sat_analysis(write, amp, pha, piezorep, sat_domain=None, make_plots=False,
     elec_fit = line_reg(write['right'], y_fit['mean'])
     a_elec = elec_fit['coefs'][0]
     y_0 = elec_fit['coefs'][1]
-    x_0 = -y_0 / a_elec if a_elec != 0 else np.NaN
+    x_0 = -y_0 / a_elec if a_elec != 0 else np.nan
     r_square = np.mean([sat['right']['r**2'], sat['left']['r**2']])
 
     figs_sat = plot_sat_analysis(write, amp, piezorep, a_elec, y_0, x_0,
@@ -175,7 +175,7 @@ def offset_analysis(read_volt, offset, make_plots=False, dict_str=None):
     """
     elec_fit = line_reg(read_volt, offset)
     a_elec, y_0 = elec_fit['coefs'][0], elec_fit['coefs'][1]
-    x_0 = -y_0 / a_elec if a_elec != 0 else np.NaN
+    x_0 = -y_0 / a_elec if a_elec != 0 else np.nan
     r_square = elec_fit['r**2']
     offset_res = {
         'a_elec': a_elec,
@@ -305,7 +305,7 @@ def linreg_differential(write_volt, piezorep_diff, bias_min=-5., bias_max=5.):
             red_piezorep_diff.append(piezorep_diff[cont])
     diff_fit = line_reg(red_write_volt, red_piezorep_diff)
     a_diff, y_0_diff = diff_fit['coefs']
-    x_0_diff = -y_0_diff / a_diff if a_diff != 0 else np.NaN
+    x_0_diff = -y_0_diff / a_diff if a_diff != 0 else np.nan
     r_square = diff_fit['r**2']
     fit_res = (a_diff, y_0_diff, x_0_diff, r_square, diff_fit)
 

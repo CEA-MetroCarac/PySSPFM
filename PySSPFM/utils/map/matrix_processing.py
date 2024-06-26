@@ -143,7 +143,7 @@ def init_formatting_measure(measure, dim_pix, dim_mic=None):
     # with the scan size
     sorted_matrix = np.resize(measure, new_shape=(dim_pix['x'], dim_pix['y']))
     try:
-        sorted_matrix[-1, -(1 + np.arange(nb_bug))] = np.NaN
+        sorted_matrix[-1, -(1 + np.arange(nb_bug))] = np.nan
     except IndexError:
         pass
     sorted_matrix = rearrange_matrix(sorted_matrix)
@@ -245,7 +245,7 @@ def cleared_measure(measure, dim_pix, nb_bug=0, mask=None):
 
     # Clear the missing pixel at the end of the matrix (nb_bug)
     for i in range(nb_bug):
-        cleared_matrix[-1][-(1 + i)] = np.NaN
+        cleared_matrix[-1][-(1 + i)] = np.nan
 
     # Organize and sort the matrix in agreement with scan
     cleared_matrix = rearrange_matrix(cleared_matrix)
