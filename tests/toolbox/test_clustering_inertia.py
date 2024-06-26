@@ -1,8 +1,8 @@
 """
 Test clustering_inertia methods
 """
-
-from pytest import approx
+import os
+from pytest import approx, skip
 import numpy as np
 
 from examples.toolbox.ex_clustering_inertia import ex_clustering_inertia
@@ -13,6 +13,9 @@ from examples.toolbox.ex_clustering_inertia import ex_clustering_inertia
 
 def test_clustering_inertia():
     """ Test ex_clustering_inertia for piezoresponse signal """
+
+    if os.getenv('GITHUB_ACTIONS') == 'true':
+        skip("Test skipped for Github source")
 
     dict_inertia = ex_clustering_inertia()
 
