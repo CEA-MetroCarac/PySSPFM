@@ -281,7 +281,7 @@ def parameters(fname_json=None):
                                   "should be in ['json', 'toml', 'python']")
 
     return config_params['user_pars'], config_params['dir_path_in'], \
-        *config_params['dir_path_out'], config_params['show_plots'], \
+        config_params['dir_path_out'], config_params['show_plots'], \
         config_params['save'], fname_json, config_params
 
 
