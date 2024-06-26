@@ -124,7 +124,7 @@ def find_main_peaks(x, y, nb_peak=2, dist_min=None, width_min=None,
     # Compute the peak integrals
     integs = []
     for peak, elem_left, elem_right in zip(peaks, left_limit, right_limit):
-        integ = simpson(y[elem_left:elem_right], x[elem_left:elem_right])
+        integ = simpson(y[elem_left:elem_right], x=x[elem_left:elem_right])
         integs.append(integ)
         if make_plots:
             ax.plot(x[peak], y[peak], 'rx', ms=10)
