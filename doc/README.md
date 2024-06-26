@@ -531,7 +531,7 @@ Following the second stage of processing (see section <a href="https://github.co
 #### III.2.c) - Toolbox
 
 <p align="center" width="100%">
-    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/file_management_toolbox.PNG> <br>
+    <img align="center" width="70%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/file_management_toolbox.PNG> <br>
     <em>File management for toolbox scripts</em>
 </p>
 
