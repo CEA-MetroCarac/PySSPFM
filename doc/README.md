@@ -116,7 +116,7 @@ In the case you use this library for your work, please think about citing it: <b
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3c-figures">VIII.3.c) Figures</a></li>
                     </ul>
                 </li>
-                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4-vector-clustering-pca-with-k-means-or-gmm">VIII.4) VIII.4) Vector clustering and Clustering inertia (PCA with K-Means or GMM)</a>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4-vector-clustering-and-clustering-inertia-pca-with-k-means-or-gmm">VIII.4) Vector clustering and Clustering inertia (PCA with K-Means or GMM)</a>
                     <ul align="justify" width="100%">
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4a-parameters">VIII.4.a) Parameters</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4b-extraction">VIII.4.b) Extraction</a></li>
@@ -2213,7 +2213,7 @@ The entire assemblage of scripts under the <code><a href="https://github.com/CEA
 <div id="references" align="justify" width="100%">
     <h2>References</h2>
     <span id="ref1">&#8226 [1] Jesse, Stephen, Arthur P. Baddorf, and Sergei V. Kalinin. “Switching Spectroscopy Piezoresponse Force Microscopy of Ferroelectric Materials.” Applied Physics Letters 88, no. 6 (February 6, 2006): 062908. https://doi.org/10.1063/1.2172216.</span><br>
-    <span id="ref2">&#8226 [2] Olivier Scholder. (2019). scholi/pySPM v0.2.20 (v0.2.20). Zenodo. https://doi.org/10.5281/zenodo.2650457.</span>
+    <span id="ref2">&#8226 [2] Olivier Scholder. (2019). scholi/pySPM v0.2.20 (v0.2.20). Zenodo. https://doi.org/10.5281/zenodo.2650457.</span><br>
     <span id="ref3">&#8226 [3] Suhas Somnath, CompPhysChris, ramav87, Numan Laanait, Rajiv Giridharagopal, Maxim Ziatdinov, Mani, str-eat, Gerd Duscher, Carlo, anugrah-saxena, Ondrej Dyck, Jessica Kong, Liambcollins, Enrique A. Lopez-Guerra, Ajinkya Kulkarni, Kavin Teenakul, Magnus Nord, & zhangxinqiao314. (2023). pycroscopy/pycroscopy: 0.63.2 (v0.63.2). Zenodo. https://doi.org/10.5281/zenodo.8229615.</span><br>
     <span id="ref4">&#8226 [4] : Huang, Boyuan, Ehsan Nasr Esfahani, and Jiangyu Li. “Mapping Intrinsic Electromechanical Responses at the Nanoscale via Sequential Excitation Scanning Probe Microscopy Empowered by Deep Data.” National Science Review 6, no. 1 (January 1, 2019): 55–63. https://doi.org/10.1093/nsr/nwy096.</span><br>
     <span id="ref5">&#8226 [5] : Rodriguez, Brian J, Clint Callahan, Sergei V Kalinin, and Roger Proksch. “Dual-Frequency Resonance-Tracking Atomic Force Microscopy.” Nanotechnology 18, no. 47 (November 28, 2007): 475504. https://doi.org/10.1088/0957-4484/18/47/475504.</span><br>
