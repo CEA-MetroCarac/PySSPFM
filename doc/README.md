@@ -116,12 +116,13 @@ In the case you use this library for your work, please think about citing it: <b
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3c-figures">VIII.3.c) Figures</a></li>
                     </ul>
                 </li>
-                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4-vector-clustering-pca-with-k-means-or-gmm">VIII.4) Vector clustering (PCA with K-Means or GMM)</a>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4-vector-clustering-pca-with-k-means-or-gmm">VIII.4) VIII.4) Vector clustering and Clustering inertia (PCA with K-Means or GMM)</a>
                     <ul align="justify" width="100%">
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4a-parameters">VIII.4.a) Parameters</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4b-extraction">VIII.4.b) Extraction</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4c-treatment">VIII.4.c) Treatment</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4d-figures">VIII.4.d) Figures</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4e-clustering-inertia">VIII.4.e) Clustering inertia</a></li>
                     </ul>
                 </li>
                 <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii5-mean-hysteresis">VIII.5) Mean hysteresis</a>
@@ -1692,7 +1693,7 @@ The measurement parameters are extracted from the SSPFM measurement sheet, and e
     <em>Detection of phase inversion with phase variation with voltage (figure generated with <code>plot_phase_bias_grad</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot_phase.py">utils/nanoloop/plot_phase.py</a></code> script)</em>
 </p>
 
-### VIII.4) Vector clustering (PCA with K-Means or GMM)
+### VIII.4) Vector clustering and Clustering inertia (PCA with K-Means or GMM)
 
 <p align="justify" width="100%">
 The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">toolbox/vector_clustering.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/vector_clustering.py">gui/vector_clustering.py</a></code>. It facilitates the classification of vectors (loops or curves) associated with each measurement points into clusters. This tool can enable phase separation or the separation of the influences of physically distinct phenomena, such as measurement artifacts.
@@ -1785,6 +1786,48 @@ For curve procedure, or each mode associated with loop procedure (on field, off 
 &#8226 The complete array of vectors from all datasets, distinguished by colors assigned based on their cluster index, generated with <code>plot_all_vector_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/clustering.py">utils/core/clustering.py</a></code> script. <br>
 &#8226 The average vector for each cluster, distinguished by colors assigned according to their cluster index, generated with <code>plot_avg_vector_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/clustering.py">utils/core/clustering.py</a></code> script. <br>
 &#8226 A spatial cartography displaying the assigned clusters, generated with <code>main_mapping</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> script. <br>
+</p>
+
+#### VIII.4.e) Clustering inertia
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/clustering_inertia.py">toolbox/clustering_inertia.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/clustering_inertia.py">gui/clustering_inertia.py</a></code>. It determines the inertia based on the number of clusters used in order to determine the optimal number of clusters.
+</p>
+
+```
+    default_user_pars = {'object': 'loop',
+                         'relative': False,
+                         'pca': True,
+                         'method': 'kmeans',
+                         'lim cluster': 10}
+    default_loop_pars = {'label meas': ['piezoresponse']}
+    default_curve_pars = {'extension': 'spm',
+                          'mode': 'classic',
+                          'label meas': ['deflection']}
+    default_parameters = {
+        'dir path in': '',
+        'dir path in prop': '',
+        'dir path out': '',
+        'user_pars': default_user_pars,
+        'loop_pars': default_loop_pars,
+        'curve_pars': default_curve_pars,
+        'verbose': True,
+        'show plots': True,
+        'save': False,
+    }
+```
+
+<p align="justify" width="100%">
+Pour la description des paramètres, voir celle de vector clustering car les paramètres sont globalement identiques. Cependant, le paramètres <code>lim cluster</code> sets the maximum number of clusters for which inertia values are calculated and associated. Le script fait ensuite tourner le script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">toolbox/vector_clustering.py</a></code> en incrémentant le nombre de cluster de 2 au nombre maximum rensigné par l'utilisateur, pour déterminer l'intertie de chaques configuration. L'inertie est alors tracé en fonction du nombre de cluster de la configuration. Le nombre de cluster optimal à choisir se situe au niveau du coude de la courbe.
+</p>
+
+<p align="justify" width="100%">
+For the description of the parameters, see that of vector clustering as the parameters are generally the same. However, the parameter <code>lim cluster</code> sets the maximum number of clusters for which inertia values are calculated and associated. The script then runs the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">toolbox/vector_clustering.py</a></code> by incrementing the number of clusters from 2 to the maximum number specified by the user, to determine the inertia of each configuration. The inertia is then plotted against the number of clusters in the configuration. The optimal number of clusters to choose is located at the elbow of the curve.
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="25%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_clusters_centroids.PNG>
+    <em>Result of clustering_inertia (figure generated with <code>main_clustering_inertia</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/clustering_inertia.py">toolbox/clustering_inertia.py</a></code> script)</em>
 </p>
 
 ### VIII.5) Mean hysteresis
