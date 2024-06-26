@@ -1822,7 +1822,7 @@ For the description of the parameters, see that of vector clustering as the para
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/inertia_vs_cluster.PNG>
+    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/inertia_vs_cluster.PNG> <br>
     <em>Result of clustering_inertia (figure generated with <code>main_clustering_inertia</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/clustering_inertia.py">toolbox/clustering_inertia.py</a></code> script)</em>
 </p>
 
