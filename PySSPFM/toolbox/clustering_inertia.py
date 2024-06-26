@@ -38,7 +38,7 @@ def plot_inertia(tab_index_cluster, dict_inertia):
     fig.sfn = 'clustering_inertia'
     plot_dict = {'x lab': 'Number of cluster', 'y lab': 'Inertia [a.u]',
                  'fs': 15, 'edgew': 1, 'tickl': 2, 'gridw': 1}
-    tab_dict = [{'label': key} for key in dict_inertia.keys()]
+    tab_dict = [{'legend': key} for key in dict_inertia.keys()]
     plot_graph(ax_graph, tab_index_cluster, list(dict_inertia.values()),
                plot_dict=plot_dict, tabs_dict=tab_dict, plot_leg=True)
 
