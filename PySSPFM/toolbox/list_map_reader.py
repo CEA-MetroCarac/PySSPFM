@@ -22,6 +22,29 @@ from PySSPFM.utils.path_for_runable import \
     save_path_management, copy_json_res, create_json_res
 
 
+def calculate_masked_average(prop, applied_mask):
+    """
+    Calculate the mean of pixel values after excluding specified indices.
+
+    Parameters
+    ----------
+    prop : list or np.ndarray
+        Pixel values of the image; if a list, it is converted to a NumPy array.
+    applied_mask : list of int
+        Indices to exclude in the mean calculation.
+
+    Returns
+    -------
+    average_value : float
+        Mean of the remaining pixels after applying the mask.
+    """
+    # Convert to NumPy array if input is a list
+    prop = np.array(prop) if isinstance(prop, list) else prop
+
+    # Apply mask and compute mean of unmasked pixels
+    return np.mean(prop.flatten()[~np.isin(np.arange(prop.size), applied_mask)])
+
+
 def main_list_map_reader(user_pars, dir_path_in, verbose=False):
     """
     Generate multi sspfm maps from extraction of properties in txt files
@@ -136,7 +159,8 @@ def main_list_map_reader(user_pars, dir_path_in, verbose=False):
     plot_ind = len(axs_maps) <= 10
     for i, (lab_prop, prop) in enumerate(multi_prop.items()):
         if verbose:
-            print(f'\t- {lab_prop}')
+            average_prop = calculate_masked_average(prop, applied_mask)
+            print(f'\t- {lab_prop}: mean = {average_prop}')
         # Treat and plot map: property
         treatment_plot_map(
             fig_maps, axs_maps[i], prop, dim_pix, dim_mic=dim_mic,
