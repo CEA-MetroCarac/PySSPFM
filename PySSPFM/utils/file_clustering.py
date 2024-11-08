@@ -7,56 +7,8 @@ import numpy as np
 
 from PySSPFM.utils.core.path_management import \
     get_filenames_with_conditions, sort_filenames
-from PySSPFM.utils.raw_extraction import csv_meas_sheet_extract, \
-    NanoscopeError, data_identification, extr_data_table
-
-
-def raw_data_extraction(file_path_in, extension="spm", mode_dfrt=False):
-    """
-    Extracts data from different types of files.
-
-    Parameters
-    ----------
-    file_path_in : str
-        Path to the input file.
-    extension : str, optional
-        File extension. Default is "spm".
-    mode_dfrt: bool, optional
-        If mode_dfrt is True, a dfrt measure is performed and vice versa
-
-    Returns
-    -------
-    dict_meas : dict
-        Dictionary containing measurement data.
-    """
-    if "spm" in extension:
-
-        try:
-            from PySSPFM.utils.datacube_reader import DataExtraction  # noqa
-        except (NotImplementedError, NameError) as error:
-            message = "To open DATACUBE spm file (Bruker), nanoscope module " \
-                      "is required and NanoScope Analysis software (Bruker) " \
-                      "should be installed on the computer"
-            raise NanoscopeError(message) from error
-
-        # DataExtraction object is used to extract info from .spm file
-        data_extract = DataExtraction(file_path_in)
-
-        # .spm file basic info
-        data_extract.data_extraction()
-
-        # .spm file info: raw data
-        data_extract.data_extraction(raw_data=True)
-        raw_dict = data_extract.raw_dict
-
-        # Data identification
-        dict_meas = data_identification(
-            raw_dict, type_file=extension, mode_dfrt=mode_dfrt)
-
-    else:
-        dict_meas, _ = extr_data_table(file_path_in, mode_dfrt=mode_dfrt)
-
-    return dict_meas
+from PySSPFM.utils.raw_extraction import \
+    csv_meas_sheet_extract, raw_data_extraction_without_script
 
 
 def curve_extraction(dir_path_in, tab_label, mode="classic", extension="spm"):
@@ -96,7 +48,7 @@ def curve_extraction(dir_path_in, tab_label, mode="classic", extension="spm"):
 
     for filename in sorted_filenames:
         file_path_in = os.path.join(dir_path_in, filename)
-        dict_meas = raw_data_extraction(
+        dict_meas = raw_data_extraction_without_script(
             file_path_in, extension=extension,
             mode_dfrt=bool(mode.lower() == 'dfrt'))
         for label in tab_label:
@@ -174,26 +126,15 @@ def gen_loop_data(data):
         y_axis data for each loop.
     """
 
-    data_x, data_y = [], []
+    loops_x, loops_y = [], []
 
     # Segmentation
     index_changes = np.where(data[0][:-1] != data[0][1:])[0] + 1
     for cont, teab_meas in enumerate(data[2]):
-        data_x.append([])
-        data_y.append([])
-        data_x[cont] = np.split(data[1], index_changes)
-        data_y[cont] = np.split(teab_meas, index_changes)
-
-    # Normalize data_y if len > 2 (for multi data y)
-    if len(data_y) >= 2:
-        for cont, tab_data_y in enumerate(data_y):
-            min_val = np.min(tab_data_y)
-            max_val = np.max(tab_data_y)
-            data_y[cont] = (tab_data_y - min_val) / (max_val - min_val)
-
-    # Concatenation for multi data y
-    loops_x = np.concatenate(data_x, axis=1)
-    loops_y = np.concatenate(data_y, axis=1)
+        loops_x.append([])
+        loops_y.append([])
+        loops_x[cont] = np.split(data[1], index_changes)
+        loops_y[cont] = np.split(teab_meas, index_changes)
 
     return loops_x, loops_y
 
