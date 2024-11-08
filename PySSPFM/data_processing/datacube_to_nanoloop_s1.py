@@ -30,7 +30,7 @@ from PySSPFM.utils.path_for_runable import create_json_res, copy_json_res
 from PySSPFM.utils.datacube_to_nanoloop.gen_data import gen_segments
 from PySSPFM.utils.datacube_to_nanoloop.plot import \
     (plt_seg_max, plt_seg_fit, plt_seg_stable,  plt_signals, plt_amp, plt_bias,
-     amp_pha_map)
+     amp_pha_map, plt_force_curve)
 from PySSPFM.utils.datacube_to_nanoloop.file import \
     print_params, get_phase_tab_offset
 from PySSPFM.utils.datacube_to_nanoloop.analysis import \
@@ -44,6 +44,9 @@ PHA_FUNC = np.cos
 MAIN_ELEC = True
 LOCKED_ELEC_SLOPE = None
 DEL_1ST_LOOP = True
+# Debug mode: Debugging section for performing automatic segmentation
+# of the raw data (activable with the DEBUG key)
+DEBUG = False
 
 
 def single_script(user_pars, file_path_in, meas_pars, sign_pars, phase_offset=0,
@@ -133,7 +136,25 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, phase_offset=0,
     # Init and cut measurements
     if sign_pars['Min volt (R) [V]'] == sign_pars['Max volt (R) [V]']:
         sign_pars['Mode (R)'] = 'Single Read Step'
-    cut_dict, _ = cut_function(sign_pars)
+
+    # Debug mode: Debugging section for performing automatic segmentation
+    # of the raw data (activable with the DEBUG key)
+    if DEBUG is True:
+        from PySSPFM.utils.raw_extraction import data_structure
+        data_spm = data_structure(file_path_in)
+        segmentation_tab = data_spm.info_dict['samps']
+        cut_dict = {'on f': [], 'off f': []}
+        sum_elem = 0
+        for cont, elem in enumerate(segmentation_tab):
+            sum_elem += elem
+            if cont % 2 == 0:
+                cut_dict['on f'].append(sum_elem)
+            else:
+                cut_dict['off f'].append(sum_elem)
+        cut_dict['on f'] = cut_dict['on f'][:-1]
+        cut_dict['off f'] = cut_dict['off f'][:-1]
+    else:
+        cut_dict, _ = cut_function(sign_pars)
 
     # Print SS PFM bias info
     print_params(meas_pars, sign_pars, user_pars, verbose=verbose)
@@ -178,7 +199,8 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, phase_offset=0,
         dict_meas['pha'] = apply_phase_offset(
             dict_meas['pha'], phase_offset, phase_min=-180, phase_max=180)
 
-    if make_plots:
+    # For debug mode only
+    if make_plots and DEBUG is False:
         fig = plt_bias(ss_pfm_bias_calc, ss_pfm_bias, dict_meas)
         figs.append(fig)
 
@@ -186,7 +208,7 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, phase_offset=0,
         dict_meas['tip_bias'] = ss_pfm_bias_calc
 
     # Plot SS PFM and amplitude signal
-    if make_plots:
+    if make_plots and DEBUG is False:
         fig = plt_amp(dict_meas, unit=unit)
         figs.append(fig)
 
@@ -196,10 +218,16 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, phase_offset=0,
         figs.append(fig)
 
     # Extract other properties in terms of height and deflection
-    other_properties = extract_other_properties(
+    other_properties,  height_tab, deflection_tab = extract_other_properties(
         dict_meas, sign_pars['Hold sample (start)'],
-        sign_pars['Hold sample (end)'])
+        sign_pars['Hold sample (end)'], percent_baseline=30)
     other_properties["phase offset"] = phase_offset
+
+    # Plot the force curve if requested
+    if make_plots and "height" in dict_meas and "deflection" in dict_meas \
+            and len(height_tab) > 0 and len(deflection_tab) > 0:
+        fig = plt_force_curve(height_tab, deflection_tab, other_properties)
+        figs.append(fig)
 
     # Init parameters
     cut_seg = user_pars['seg pars']['cut seg [%]']
@@ -305,7 +333,7 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, phase_offset=0,
             phase_offset_val = None
 
         # Plot segment maps
-        if make_plots:
+        if make_plots and DEBUG is False:
             fig = amp_pha_map(
                 seg_tab, dict_meas,
                 sign_pars['Hold sample (start)'],
@@ -501,7 +529,6 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars, mode='max',
     file_names, _, _ = sort_filenames(file_names)
     if 'SS_PFM_bias.txt' in file_names:
         file_names.remove('SS_PFM_bias.txt')
-    i = 0
 
     # Multi processing mode
     multiproc = get_setting("multi_processing")
