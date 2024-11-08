@@ -5,6 +5,7 @@ visualisation
 Inspired by SS_PFM script, Nanoscope, Bruker
 """
 
+import numpy as np
 import os
 import tkinter.filedialog as tkf
 
@@ -198,7 +199,7 @@ def parameters(fname_json=None):
         # loop_file_reader_2023-10-02-16h38m
         csv_file_path = None
         # csv_file_path =
-        # r'...\KNN500n\measurement sheet model SSPFM ZI DFRT.csv'
+        # r'...\KNN500n\measurement sheet model SSPFM.csv'
         config_params = {
             "file_path_in": file_path_in,
             "dir_path_out": dir_path_out,
