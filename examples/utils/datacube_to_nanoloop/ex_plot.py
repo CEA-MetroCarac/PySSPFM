@@ -5,7 +5,7 @@ Example of plot methods
 from examples.utils.datacube_to_nanoloop.ex_gen_data import \
     ex_gen_segments, pars_segment
 from examples.utils.datacube_to_nanoloop.ex_analysis import \
-    ex_segments, list_segs
+    ex_segments, list_segs, ex_extract_other_properties
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.utils.datacube_to_nanoloop.plot import \
@@ -94,5 +94,6 @@ if __name__ == '__main__':
     figs += ex_segments('max', 'off f', make_plots=True)
     figs += ex_segments('fit', 'off f', make_plots=True)
     figs += ex_segments('dfrt', 'off f', make_plots=True)
+    figs += ex_extract_other_properties(make_plots=True)
     print_plots(figs, save_plots=save_plots, show_plots=True,
                 dirname=dir_path_out, transparent=False)
