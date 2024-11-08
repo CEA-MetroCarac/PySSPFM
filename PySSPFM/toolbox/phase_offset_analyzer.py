@@ -23,6 +23,10 @@ from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.path_for_runable import \
     save_path_management, copy_json_res, create_json_res
 
+# Debug mode: Debugging section for performing automatic segmentation
+# of the raw data (activable with the DEBUG key)
+DEBUG = False
+
 
 def save_dict_to_txt(data_dict, file_path, map_dim=None):
     """
@@ -125,7 +129,25 @@ def single_script(file_path_in, user_pars, meas_pars, sign_pars,
     # Init and cut measurements
     if sign_pars['Min volt (R) [V]'] == sign_pars['Max volt (R) [V]']:
         sign_pars['Mode (R)'] = 'Single Read Step'
-    cut_dict, _ = cut_function(sign_pars)
+
+    # Debug mode: Debugging section for performing automatic segmentation
+    # of the raw data (activable with the DEBUG key)
+    if DEBUG is True:
+        from PySSPFM.utils.raw_extraction import data_structure
+        data_spm = data_structure(file_path_in)
+        segmentation_tab = data_spm.info_dict['samps']
+        cut_dict = {'on f': [], 'off f': []}
+        sum_elem = 0
+        for cont, elem in enumerate(segmentation_tab):
+            sum_elem += elem
+            if cont % 2 == 0:
+                cut_dict['on f'].append(sum_elem)
+            else:
+                cut_dict['off f'].append(sum_elem)
+        cut_dict['on f'] = cut_dict['on f'][:-1]
+        cut_dict['off f'] = cut_dict['off f'][:-1]
+    else:
+        cut_dict, _ = cut_function(sign_pars)
 
     # Find unit and calculate new amplitude value if a calibration is performed
     calibration = bool(meas_pars['Calibration'].lower == 'yes')
