@@ -401,19 +401,19 @@ class Hysteresis:
                       'y infl r': y_infl_r,
                       'x0 l': x0_l,
                       'x0 r': x0_r,
-                      'x0 wid': x0_wid,
+                      'x0 wid': abs(x0_wid),
                       'x shift': x_shift,
                       'y shift': offset,
                       'y0 l': y0_l,
                       'y0 r': y0_r,
                       'x inter l': x_inters_l,
                       'x inter r': x_inters_r,
-                      'x wdw': x_window,
+                      'x wdw': abs(x_window),
                       'y inter l': y_inters_l,
                       'y inter r': y_inters_r,
-                      'y wdw': y_window,
-                      'area': area,
-                      'diff coef': diff_coef}
+                      'y wdw': abs(y_window),
+                      'area': abs(area),
+                      'diff coef': abs(diff_coef)}
 
     def r_square(self, x, y):
         """
