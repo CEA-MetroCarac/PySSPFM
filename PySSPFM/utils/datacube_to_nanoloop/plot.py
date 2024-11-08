@@ -583,3 +583,55 @@ def plt_seg(dict_meas, hold_dict, index, sign_pars):
     fig.legend(fontsize=12, loc='upper left')
 
     return fig
+
+
+def plt_force_curve(height_tab, deflection_tab, other_properties):
+    """
+    Plot the force curve with extracted properties highlighted.
+
+    Parameters
+    ----------
+    height_tab : list or np.ndarray
+        Height data in nanometers.
+    deflection_tab : list or np.ndarray
+        Deflection data in nanometers.
+    other_properties : dict
+        Dictionary containing extracted properties, including:
+            - "height": Mean height
+            - "deflection": Mean deflection
+            - "adhesion approach": Minimum deflection during approach
+            - "adhesion retract": Minimum deflection during retraction
+
+    Returns
+    -------
+    fig : matplotlib.figure.Figure
+        The generated plot figure of the force curve.
+    """
+    figsize = get_setting("figsize")
+    fig, ax = plt.subplots(figsize=figsize)
+    fig.sfn = 'force_curve'
+
+    plot_dict = {'title': 'Force curve with properties',
+                 'x lab': 'Height [nm]', 'y lab': 'Deflection [nm]',
+                 'lw': 1, 'fs': 15, 'edgew': 2, 'tickl': 3, 'gridw': 1}
+    tabs_dict = {'form': 'm-', 'legend': "Force Curve"}
+    plot_graph(ax, height_tab, deflection_tab,
+               plot_dict=plot_dict, tabs_dict=tabs_dict, plot_leg=False)
+
+    # Highlight mean deflection and adhesion points
+    mean_height = other_properties["height"]
+    mean_deflection = other_properties["deflection"]
+    adhesion_approach = other_properties["adhesion approach"]
+    adhesion_retract = other_properties["adhesion retract"]
+
+    plt.axvline(mean_height, color="black", linestyle="--",
+                label=f"Mean Height = {mean_height:.2f}")
+    plt.axhline(mean_deflection, color="green", linestyle="--",
+                label=f"Mean Deflection = {mean_deflection:.2f}")
+    plt.axhline(-adhesion_approach, color="red", linestyle=":",
+                label=f"Adhesion Approach = {-adhesion_approach:.2f}")
+    plt.axhline(-adhesion_retract, color="blue", linestyle=":",
+                label=f"Adhesion Retract = {-adhesion_retract:.2f}")
+    fig.legend(fontsize=12, loc='upper left')
+
+    return fig
