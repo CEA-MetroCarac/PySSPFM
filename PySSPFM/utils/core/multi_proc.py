@@ -14,6 +14,8 @@ from PySSPFM.toolbox.phase_offset_analyzer import \
 from PySSPFM.toolbox.phase_inversion_analyzer import \
     single_script as single_script_grad
 from PySSPFM.free_1 import single_script_free
+from PySSPFM.toolbox.force_curve_clustering import \
+    single_script as single_script_forcecurve
 
 
 def process_single_file_s1_classic(file_path, common_args):
@@ -149,3 +151,23 @@ def run_multi_phase_inversion_analyzer(file_paths_in, phase_tab, common_args,
             phase_grad_val, _ = result.get()
             tab_phase_grad_val.append(phase_grad_val)
     return tab_phase_grad_val
+
+
+def process_single_forcecurve(file_path_in, common_args):
+    result = single_script_forcecurve(file_path_in=file_path_in, **common_args)
+    return result
+
+
+def run_multi_proc_forcecurve(file_paths_in, common_args, processes=16):
+    height_tab, force_tab, tab_other_properties = [], [], []
+    with multiprocessing.Pool(processes=processes) as pool:
+        results = [pool.apply_async(process_single_forcecurve,
+                                    (file_path_in, common_args))
+                   for file_path_in in file_paths_in]
+        for result in results:
+            out = result.get()
+            height, force, other_properties = out
+            height_tab.append(height)
+            force_tab.append(force)
+            tab_other_properties.append(other_properties)
+    return height_tab, force_tab, tab_other_properties
