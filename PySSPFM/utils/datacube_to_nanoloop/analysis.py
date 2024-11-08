@@ -779,51 +779,98 @@ def cut_function(sign_pars):
     return {'off f': index_off_f, 'on f': index_on_f}, nb_seg_tot
 
 
-def extract_other_properties(dict_meas, start_ind, end_ind):
+def extract_other_properties(dict_meas, start_ind, end_ind,
+                             percent_baseline=30):
     """
-    Extract other properties from measurement dictionary
+    Extract key properties from measurement data.
 
     Parameters
     ----------
-    dict_meas: dict
-        Dictionary containing measurement data
-    start_ind: int
-        Starting index for data extraction
-    end_ind: int
-        Ending index for data extraction
+    dict_meas : dict
+        Dictionary containing measurement data with "height" and "deflection"
+        keys.
+    start_ind : int
+        Starting index for data extraction.
+    end_ind : int
+        Ending index for data extraction.
+    percent_baseline : float, optional
+        Percentage of the smallest height values corresponding to baseline of
+        force curve,
+        used to compute the force offset. Default is 30.
 
     Returns
     -------
-    other_properties: dict
-        Dictionary containing extracted properties
+    other_properties : dict
+        Dictionary containing calculated properties: mean height, mean
+        deflection,
+        deflection error, adhesion approach, and adhesion retract.
+    height_tab : np.ndarray
+        Height data array with applied offset correction.
+    deflection_tab : np.ndarray
+        Deflection data array with applied offset correction.
     """
-    mean_height, diff_height, mean_deflection, deflection_error, adhesion = \
-        None, None, None, None, None
+    mean_height, mean_deflection, deflection_error, adhesion_approach, \
+        adhesion_retract = None, None, None, None, None
 
-    if "height" in list(dict_meas.keys()):
-        if len(dict_meas["height"]) > 0:
-            mean_height = np.mean(dict_meas["height"][start_ind:-end_ind])
-            diff_height = abs(np.mean(
-                [dict_meas["height"][0],
-                 dict_meas["height"][-1]]) - mean_height)
-    if "deflection" in list(dict_meas.keys()):
-        if len(dict_meas["deflection"]) > 0:
-            mean_deflection = abs(np.mean(
-                [dict_meas["deflection"][0],
-                 dict_meas["deflection"][-1]]) -
-                                  np.mean(dict_meas["deflection"][
-                                          start_ind:-end_ind]))
-            deflection_error = np.sqrt(np.var(dict_meas["deflection"][
-                                              start_ind:-end_ind]))
-            adhesion = np.mean(dict_meas["deflection"][-(int(end_ind/2)):]) - \
-                min(dict_meas["deflection"][-end_ind:])
+    height_tab = list(dict_meas["height"])
+    deflection_tab = list(dict_meas["deflection"])
+
+    if "height" in dict_meas and "deflection" in dict_meas and len(
+            height_tab) > 0 and len(deflection_tab) > 0:
+
+        height_tab, deflection_tab = correct_force_offset(
+            height_tab, deflection_tab, percent_baseline=percent_baseline)
+
+        mean_height = np.mean(height_tab[start_ind:-end_ind])
+        mean_deflection = np.mean(
+            deflection_tab[start_ind:-end_ind])
+        deflection_error = np.sqrt(np.var(
+            deflection_tab[start_ind:-end_ind]))
+        adhesion_approach = abs(min(deflection_tab[:start_ind]))
+        adhesion_retract = abs(min(deflection_tab[-end_ind:]))
 
     other_properties = {
         "height": mean_height,
-        "diff height": diff_height,
         "deflection": mean_deflection,
         "deflection error": deflection_error,
-        "adhesion": adhesion,
+        "adhesion approach": adhesion_approach,
+        "adhesion retract": adhesion_retract,
     }
 
-    return other_properties
+    return other_properties, height_tab, deflection_tab
+
+
+def correct_force_offset(heights, forces, percent_baseline=30):
+    """
+    Corrects the force and height values by removing the offset calculated as
+    the mean of the X% of the smallest height values, corresponding to baseline
+    of force curve, and adjusts heights to start at zero.
+
+    Parameters
+    ----------
+    heights : array-like
+        Array of height values.
+    forces : list of array-like
+        List of force arrays corresponding to the heights.
+    percent_baseline : float, optional
+        Percentage of the smallest height values corresponding to baseline
+        of force curve, used to compute the force offset.
+        Default = 30
+
+    Returns
+    -------
+    corrected_heights : array-like
+        Array of height values corrected to start at zero.
+    corrected_forces : array-like or list of array-like
+        Corrected force array(s) with the offset removed.
+    """
+    height_range = np.max(heights) - np.min(heights)
+    height_threshold = height_range * percent_baseline / 100 + np.min(
+        heights)
+    n_points_left = np.argmax(heights > height_threshold)
+    offset_force = np.mean(forces[:n_points_left])
+    corrected_forces = forces - offset_force
+
+    corrected_heights = heights - np.min(heights)
+
+    return corrected_heights, corrected_forces
