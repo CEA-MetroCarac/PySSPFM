@@ -72,6 +72,8 @@ def single_script(file, user_pars, meas_pars, sign_pars,
                             main_elec=user_pars['main elec'],
                             locked_elec_slope=user_pars['locked elec slope'])
 
+    # Don't apply Q factor divisor
+    meas_pars['Q factor'] = 1
     loop_tab, _, _ = nanoloop_treatment(
         data_dict, sign_pars, dict_pha=dict_pha, dict_str=dict_str,
         q_fact_scalar=meas_pars['Q factor'])
@@ -206,7 +208,7 @@ def mean_analysis_on_off(user_pars, best_loops, analysis_mode='mean_loop',
     for key, value in zip(
             ['offset', 'slope', 'ampli_0', 'ampli_1', 'coef_0', 'coef_1',
              'x0_0', 'x0_1'], mean_best_hyst.params):
-        props[f'fit pars: {key}'] = value
+        props[f'fit pars: {key}'] = mean_best_hyst.params[value].value
     for key, value in props_tot.items():
         props[f'charac tot fit: {key}'] = value
     for key, value in props_no_bckgnd.items():
