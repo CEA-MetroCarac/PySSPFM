@@ -11,7 +11,7 @@ from PySSPFM.settings import get_setting
 from PySSPFM.utils.path_for_runable import save_path_example
 from PySSPFM.utils.core.figure import print_plots, plot_graph
 from PySSPFM.utils.datacube_to_nanoloop.plot import \
-    plt_seg_max, plt_seg_fit, plt_seg_stable
+    plt_seg_max, plt_seg_fit, plt_seg_stable, plt_force_curve
 from PySSPFM.utils.datacube_to_nanoloop.analysis import \
     (SegmentInfo, SegmentSweep, SegmentStable, external_calib, cut_function,
      extract_other_properties)
@@ -252,57 +252,24 @@ def ex_extract_other_properties(make_plots=False):
         properties.
     """
     # In and out file management + data extraction
-    dir_path_in = os.path.join(get_setting("example_root_path_in"), "KNN500n")
-    files = [file for file in os.listdir(dir_path_in)
-             if file.endswith(".txt")]
+    dir_path_in = os.path.join(get_setting("example_root_path_in"), "PZT100n")
+    file_name = "PIT_SSPFM_DFRT_T2ms_map.0_00000.spm"
     _, sign_pars = csv_meas_sheet_extract(dir_path_in)
-    tab_other_properties = {}
 
-    for cont, file in enumerate(files):
-        file_path_in = os.path.join(dir_path_in, file)
-        dict_meas, _ = data_extraction(file_path_in, mode_dfrt=True,
-                                       verbose=False)
+    file_path_in = os.path.join(dir_path_in, file_name)
+    dict_meas, _ = data_extraction(file_path_in, mode_dfrt=True,
+                                   verbose=False)
 
-        # ex extract_other_properties
-        other_properties = extract_other_properties(
-            dict_meas, sign_pars['Hold sample (start)'],
-            sign_pars['Hold sample (end)'])
-
-        # append other_properties
-        if cont == 0:
-            tab_other_properties = {key: [] for key in other_properties.keys()}
-        for key, value in other_properties.items():
-            tab_other_properties[key].append(value)
+    # ex extract_other_properties
+    other_properties, height_tab, deflection_tab = extract_other_properties(
+        dict_meas, sign_pars['Hold sample (start)'],
+        sign_pars['Hold sample (end)'], percent_baseline=30)
 
     if make_plots:
-        x_list = range(len(tab_other_properties['height']))
-        figsize = get_setting("figsize")
-        fig, ax = plt.subplots(3, 2, figsize=figsize, sharex='all')
-        fig.sfn = "ex_extract_other_properties"
-        plot_dict = {'title': '', 'x lab': 'file index',
-                     'y lab': 'height', 'fs': 13, 'edgew': 3,
-                     'tickl': 5, 'gridw': 1, 'lw': 1}
-        tab_dict = {'form': 'r-'}
-        plot_graph(ax[0, 0], x_list, tab_other_properties['height'],
-                   plot_dict=plot_dict, tabs_dict=tab_dict)
-        tab_dict, plot_dict['y lab'] = {'form': 'g-'}, 'diff height'
-        plot_graph(ax[0, 1], x_list, tab_other_properties['diff height'],
-                   plot_dict=plot_dict, tabs_dict=tab_dict)
-        tab_dict, plot_dict['y lab'] = {'form': 'b-'}, 'deflection'
-        plot_graph(ax[1, 0], x_list, tab_other_properties['deflection'],
-                   plot_dict=plot_dict, tabs_dict=tab_dict)
-        tab_dict, plot_dict['y lab'] = {'form': 'm-'}, 'deflection error'
-        plot_graph(ax[1, 1], x_list, tab_other_properties['deflection error'],
-                   plot_dict=plot_dict, tabs_dict=tab_dict)
-        tab_dict, plot_dict['y lab'] = {'form': 'c-'}, 'adhesion'
-        plot_graph(ax[2, 0], x_list, tab_other_properties['adhesion'],
-                   plot_dict=plot_dict, tabs_dict=tab_dict)
-        ax[2, 1].set_visible(False)
-        plt.tight_layout()
-
+        fig = plt_force_curve(height_tab, deflection_tab, other_properties)
         return [fig]
     else:
-        return tab_other_properties
+        return other_properties, height_tab, deflection_tab
 
 
 if __name__ == '__main__':
@@ -319,5 +286,6 @@ if __name__ == '__main__':
     figs += ex_segments('fit', 'on f', make_plots=True)
     figs += ex_segments('dfrt', 'off f', make_plots=True)
     figs += ex_segments('dfrt', 'on f', make_plots=True)
+    figs += ex_extract_other_properties(make_plots=True)
     print_plots(figs, save_plots=save_plots, show_plots=True,
                 dirname=dir_path_out, transparent=False)
