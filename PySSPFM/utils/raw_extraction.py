@@ -209,6 +209,74 @@ def extr_data_table(file_path_in, mode_dfrt=False):
     return dict_meas, script_dict
 
 
+def raw_data_extraction_without_script(file_path_in, extension="spm",
+                                       mode_dfrt=False):
+    """
+    Extracts data from different types of files.
+
+    Parameters
+    ----------
+    file_path_in : str
+        Path to the input file.
+    extension : str, optional
+        File extension. Default is "spm".
+    mode_dfrt: bool, optional
+        If mode_dfrt is True, a dfrt measure is performed and vice versa
+
+    Returns
+    -------
+    dict_meas : dict
+        Dictionary containing measurement data.
+    """
+    if "spm" in extension:
+
+        data_extract = data_structure(file_path_in)
+        raw_dict = data_extract.raw_dict
+        # Data identification
+        dict_meas = data_identification(
+            raw_dict, type_file=extension, mode_dfrt=mode_dfrt)
+
+    else:
+        dict_meas, _ = extr_data_table(file_path_in, mode_dfrt=mode_dfrt)
+
+    return dict_meas
+
+
+def data_structure(file_path_in):
+    """
+    Extracts and processes data from a .spm file using DataExtraction object.
+
+    Parameters
+    ----------
+    file_path_in : str
+        Path to the input file.
+
+    Returns
+    -------
+    data_extract : DataExtraction
+        Object containing extracted measurement data.
+    """
+
+    try:
+        from PySSPFM.utils.datacube_reader import DataExtraction  # noqa
+    except (NotImplementedError, NameError) as error:
+        message = "To open DATACUBE spm file (Bruker), nanoscope module " \
+                  "is required and NanoScope Analysis software (Bruker) " \
+                  "should be installed on the computer"
+        raise NanoscopeError(message) from error
+
+    # DataExtraction object is used to extract info from .spm file
+    data_extract = DataExtraction(file_path_in)
+
+    # .spm file basic info
+    data_extract.data_extraction()
+
+    # .spm file info: raw data
+    data_extract.data_extraction(raw_data=True)
+
+    return data_extract
+
+
 def data_extraction(file_path_in, mode_dfrt=False, verbose=False):
     """
     Data extraction from measurement file and identification
