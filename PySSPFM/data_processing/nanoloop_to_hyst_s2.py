@@ -156,7 +156,10 @@ def single_analysis(file_path_in, user_pars, meas_pars, sign_pars,
 
     for key in ['offset', 'slope', 'ampli_0', 'ampli_1', 'coef_0', 'coef_1',
                 'x0_0', 'x0_1']:
-        properties[f'fit pars: {key}'] = best_hyst.params[key].value
+        value = best_hyst.params[key].value
+        if key in ['ampli_0', 'ampli_1']:
+            value = abs(value)
+        properties[f'fit pars: {key}'] = value
     for key, value in props_tot.items():
         properties[f'charac tot fit: {key}'] = value
     for key, value in props_no_bckgnd.items():
