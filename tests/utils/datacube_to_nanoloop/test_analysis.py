@@ -269,21 +269,20 @@ def test_segments_dfrt_off():
 def test_extract_other_properties():
     """ Test ex_extract_other_properties """
 
-    tab_other_properties = ex_extract_other_properties()
+    other_properties, height_tab, deflection_tab = ex_extract_other_properties()
 
-    # print(np.sum(tab_other_properties['height']))
-    # print(np.sum(tab_other_properties['diff height']))
-    # print(np.sum(tab_other_properties['deflection']))
-    # print(np.sum(tab_other_properties['deflection error']))
-    # print(np.sum(tab_other_properties['adhesion']))
+    # print(other_properties['height'])
+    # print(other_properties['deflection'])
+    # print(other_properties['deflection error'])
+    # print(other_properties['adhesion approach'])
+    # print(other_properties['adhesion retract'])
+    # print(np.sum(height_tab))
+    # print(np.sum(deflection_tab))
 
-    assert np.sum(tab_other_properties['height']) == \
-           approx(-3433.0601149671857)
-    assert np.sum(tab_other_properties['diff height']) == \
-           approx(25817.959373755926)
-    assert np.sum(tab_other_properties['deflection']) == \
-           approx(2169.527382639743)
-    assert np.sum(tab_other_properties['deflection error']) == \
-           approx(210.01148994019235)
-    assert np.sum(tab_other_properties['adhesion']) == \
-           approx(2324.4693974670386)
+    assert other_properties['height'] == approx(521.1579825588465)
+    assert other_properties['deflection'] == approx(19.673814725026293)
+    assert other_properties['deflection error'] == approx(0.27821102040834866)
+    assert other_properties['adhesion approach'] == approx(12.350508256155033)
+    assert other_properties['adhesion retract'] == approx(59.93650761460044)
+    assert np.sum(height_tab) == approx(103293189.1668825)
+    assert np.sum(deflection_tab) == approx(3850966.2500644387)
