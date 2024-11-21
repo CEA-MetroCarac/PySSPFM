@@ -14,9 +14,6 @@ from examples.toolbox.ex_clustering_inertia import ex_clustering_inertia
 def test_clustering_inertia():
     """ Test ex_clustering_inertia for piezoresponse signal """
 
-    if os.getenv('GITHUB_ACTIONS') == 'true':
-        skip("Test skipped for Github source")
-
     dict_inertia = ex_clustering_inertia()
 
     # print(np.sum(dict_inertia["off"]))
