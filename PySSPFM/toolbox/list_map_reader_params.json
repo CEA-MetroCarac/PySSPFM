@@ -5,7 +5,7 @@
     "show_plots": true,
     "save": false,
     "user_pars": {
-        "interp fact": 3,
+        "interp fact": 4,
         "interp func": "linear",
         "meas time": null,
         "revert mask": false,
@@ -14,7 +14,7 @@
             "mode": "off",
             "prop": "charac tot fit: R_2 hyst",
             "fmt": ".5f",
-            "min val": 0.99,
+            "min val": 0.95,
             "max val": null,
             "interactive": false
         },
