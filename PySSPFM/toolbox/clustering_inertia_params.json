@@ -6,18 +6,9 @@
     "show_plots": true,
     "save": false,
     "user_pars": {
-        "object": "loop",
         "relative": false,
-        "pca": true,
         "method": "kmeans",
-        "lim cluster": 10
-    },
-    "loop_pars": {
+        "lim cluster": 10,
         "label meas": ["piezoresponse"]
-    },
-    "curve_pars": {
-        "extension": "spm",
-        "mode": "classic",
-        "label meas": ["deflection"]
     }
 }
