@@ -77,7 +77,7 @@ def main(parent=None):
         }
         pha_params = {
             'phase_file_path': extract_var(phase_file_path_var),
-            'offset': pha_offset_var.get()
+            'offset': extract_var(pha_offset_var)
         }
         user_parameters["dir path in"] = dir_path_in_var.get()
         user_parameters['dir path out'] = extract_var(dir_path_out_var)
