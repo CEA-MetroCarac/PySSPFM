@@ -11,7 +11,7 @@ from PySSPFM.toolbox.clustering_inertia import main_clustering_inertia
 
 def ex_clustering_inertia(verbose=False, make_plots=False):
     """
-    Example of loop_clustering functions.
+    Example of clustering_inertia functions.
 
     Parameters
     ----------
@@ -22,14 +22,8 @@ def ex_clustering_inertia(verbose=False, make_plots=False):
 
     Returns
     -------
-    cluster_labels : dict
-        Cluster indices for each data point for each mode.
-    cluster_info : dict
-        Information about each cluster for each mode.
-    inertia : dict
+    dict_inertia : dict
         Inertia (within-cluster sum of squares) for each mode.
-    avg_vector : dict
-        Contain all list of average vector for each cluster in each mode.
     """
     example_root_path_in = get_setting("example_root_path_in")
 
@@ -37,23 +31,19 @@ def ex_clustering_inertia(verbose=False, make_plots=False):
         example_root_path_in, "KNN500n_2023-11-20-16h15m_out_dfrt",
         "best_nanoloops")
 
-    user_pars = {'object': "loop",
-                 'relative': False,
-                 'pca': True,
+    user_pars = {'relative': False,
                  'method': 'kmeans',
-                 'lim cluster': 10}
-    loop_pars = {'label meas': ['piezoresponse']}
-    curve_pars = {"extension": "spm",
-                  "mode": "dfrt",
-                  "label meas": ['deflection']}
+                 'lim cluster': 10,
+                 'label meas': ['piezoresponse']}
 
     # saving path management
     dir_path_out, save_plots = save_path_example(
-        "vector_clustering", save_example_exe=make_plots,
+        "clustering_inertia", save_example_exe=make_plots,
         save_test_exe=False)
-    # ex main_vector_clustering
+
+    # ex main_clustering_inertia
     dict_inertia = main_clustering_inertia(
-        user_pars, loop_pars, curve_pars, dir_path_in, verbose=verbose,
+        user_pars, dir_path_in, verbose=verbose,
         show_plots=make_plots, save_plots=save_plots,
         dir_path_out=dir_path_out)
 
