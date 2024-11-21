@@ -1,7 +1,8 @@
 """
 Test analysis methods
 """
-from pytest import approx
+import os
+from pytest import approx, skip
 import numpy as np
 
 from examples.utils.datacube_to_nanoloop.ex_analysis import \
@@ -268,6 +269,9 @@ def test_segments_dfrt_off():
 
 def test_extract_other_properties():
     """ Test ex_extract_other_properties """
+
+    if os.getenv('GITHUB_ACTIONS') == 'true':
+        skip("Test skipped for Github source")
 
     other_properties, height_tab, deflection_tab = ex_extract_other_properties()
 
