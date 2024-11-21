@@ -1,0 +1,49 @@
+Update Report PySSPFM v2024.07:
+
+# Modification of the method for saving processing parameters
+- Saving the processing parameters in the results folders with a json file: for all executables.
+- Removal of the parameters.txt file associated with steps 1 and 2 of measurement processing.
+	- Significant adaptations of the files mean_hyst and sort_plot_pixel (toolbox and gui files).
+- Adapt csv_meas_sheet_extract and datacube_to_nanoloop_s1.py script (PySSPFM/data_processing/datacube_to_nanoloop_s1.py) with csv name set in settings
+- Add create_json_res and copy_json_res and remove save_user_pars function (PySSPFM/utils/path_for_runable.py)
+- Remove save_parameters and get_acquisition_time functions (PySSPFM/utils/datacube_to_nanoloop/file.py)
+- Remove print_parameters and complete_parameters functions (PySSPFM/utils/nanoloop_to_hyst/file.py)
+
+# Addition of executable code for clustering inertia (PySSPFM/toolbox/clustering_inertia.py)
+- Determines the inertia based on the number of clusters used in order to determine the optimal number of clusters.
+- GUI files, examples, and associated tests
+
+# GUI (Concerns all the GUI scripts)
+- Remove the blue background
+- Add a scrollbar
+- Minor adjustments to window positions and sizes
+
+# Other modifications
+- Step 1 of the SSPFM analysis: datacube_to_nanoloop_s1.py: Fixing an issue with the iterative calculation of the phase offset for each new single script: PySSPFM/data_processing/datacube_to_nanoloop_s1.py
+- List map reader: Adapting the code to avoid errors during histogram generation, caused by NAN values: PySSPFM/toolbox/list_map_reader.py
+- Path management: When sorting file names based on indices, sorting of indices is now performed considering them as integers rather than strings: PySSPFM/utils/path_for_runable.py
+- Minor corrections in examples/toolbox/ex_vector_clustering.py (variable name change from 'object' to 'obj')
+- Minor corrections in PySSPFM/utils/core/clustering.py and PySSPFM/toolbox/vector_clustering.py to adjust the names of the figures according to the modes and avoid overwriting the saved figures.
+- Correct a bug for copy_default_settings : Ensures that a user parameter file exists by copying a default parameter file if necessary.
+
+# New file / functions
+Files:
+	- clustering_inertia.py (PySSPFM/gui/clustering_inertia.py)
+	- clustering_inertia_params.json (PySSPFM/toolbox/clustering_inertia_params.json)
+	- ex_clustering_inertia.py (examples/toolbox/ex_clustering_inertia.py)
+	- test_clustering_inertia.py (tests/toolbox/test_clustering_inertia.py)
+Functions:
+	- adjust_size_wdw (PySSPFM/gui/utils.py)
+	- create_json_res (PySSPFM/utils/path_for_runable.py)
+	- copy_json_res (PySSPFM/utils/path_for_runable.py)
+
+# File / function removal
+Files:
+Functions:
+	- save_user_pars (PySSPFM/utils/path_for_runable.py)
+	- save_parameters (PySSPFM/utils/datacube_to_nanoloop/file.py)
+	- get_acquisition_time (PySSPFM/utils/datacube_to_nanoloop/file.py)
+	- print_parameters (PySSPFM/utils/nanoloop_to_hyst/file.py)
+	- complete_parameters (PySSPFM/utils/nanoloop_to_hyst/file.py)
+
+# Update documentation, examples (script and data) and tests
