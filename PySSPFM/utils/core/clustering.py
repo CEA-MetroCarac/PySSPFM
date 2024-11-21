@@ -50,7 +50,7 @@ def data_clustering(data, num_clusters=3, method='kmeans', verbose=False):
     if method == 'kmeans':
         # Apply K-Means clustering
         clusters = KMeans(
-            n_clusters=num_clusters, random_state=0, n_init=20).fit(data)
+            n_clusters=num_clusters, random_state=42, n_init=20).fit(data)
         cluster_labels = clusters.labels_
         # Calculate intra-cluster inertia (within-cluster sum of squares)
         inertia = clusters.inertia_
@@ -59,7 +59,7 @@ def data_clustering(data, num_clusters=3, method='kmeans', verbose=False):
     else:
         # Apply GMM clustering
         clusters = GaussianMixture(
-            n_components=num_clusters, random_state=0).fit(data)
+            n_components=num_clusters, random_state=42).fit(data)
         cluster_labels = clusters.predict(data)
         # Calculate Bayesian Information Criterion called inertia
         inertia = clusters.bic(data)
@@ -156,11 +156,11 @@ def plot_clustering_centroids(data_y, numb_cluster, cluster_labels,
     return [fig]
 
 
-def plot_all_vector_clustering(x_vectors, y_vectors, numb_cluster,
-                               cluster_labels, cluster_info, colors,
-                               figname=None):
+def plot_all_curve_clustering(x_vectors, y_vectors, numb_cluster,
+                              cluster_labels, cluster_info, colors,
+                              figname=None):
     """
-    Plot all vectors with clustering information
+    Plot all curves with clustering information
 
     Parameters
     ----------
@@ -196,14 +196,14 @@ def plot_all_vector_clustering(x_vectors, y_vectors, numb_cluster,
     # Create graph
     figsize = get_setting("figsize")
     fig, ax = plt.subplots(figsize=figsize)
-    fig.sfn = "clustering_best_vectors" if figname is None else figname
+    fig.sfn = "clustering_best_curves" if figname is None else figname
     plot_dict_1 = {
-        'title': 'Clustering: Best Vectors',
-        'x lab': 'Voltage', 'y lab': 'Y Axis',
+        'title': 'Clustering: Best Curves',
+        'x lab': 'X Axis', 'y lab': 'Y Axis',
         'fs': 15, 'edgew': 3, 'tickl': 5, 'gridw': 1}
     plot_graph(ax, [], [], plot_dict=plot_dict_1)
 
-    # Plot all vectors
+    # Plot all curves
     for i, (elem_x, elem_y) in enumerate(zip(x_vectors, y_vectors)):
         plt.plot(elem_x, elem_y, color=colors[cluster_labels[i]])
 
@@ -212,10 +212,10 @@ def plot_all_vector_clustering(x_vectors, y_vectors, numb_cluster,
     return [fig]
 
 
-def plot_avg_vector_clustering(x_avg_vector, y_avg_vectors, numb_cluster,
-                               cluster_info, colors, figname=None):
+def plot_avg_curve_clustering(x_avg_vector, y_avg_vectors, numb_cluster,
+                              cluster_info, colors, figname=None):
     """
-    Plot average vectors by cluster
+    Plot average curves by cluster
 
     Parameters
     ----------
@@ -240,17 +240,17 @@ def plot_avg_vector_clustering(x_avg_vector, y_avg_vectors, numb_cluster,
     # Create graph
     figsize = get_setting("figsize")
     fig, ax = plt.subplots(figsize=figsize)
-    fig.sfn = "clustering_average_vectors" if figname is None else figname
+    fig.sfn = "clustering_average_curves" if figname is None else figname
     plot_dict_3 = {
-        'title': 'Average Vector by Cluster',
-        'x lab': 'Voltage', 'y lab': 'Y Axis',
+        'title': 'Average Curve by Cluster',
+        'x lab': 'X Axis', 'y lab': 'Y Axis',
         'fs': 15, 'edgew': 3, 'tickl': 5, 'gridw': 1}
     plot_graph(ax, [], [], plot_dict=plot_dict_3)
 
-    # Plot average vectors
+    # Plot average curves
     for index in range(numb_cluster):
         label = f'Cluster {cluster_info[index][4]}'
-        plt.plot(x_avg_vector, y_avg_vectors[index],
+        plt.plot(x_avg_vector[index], y_avg_vectors[index],
                  label=label, color=colors[index])
     ax.legend()
 
