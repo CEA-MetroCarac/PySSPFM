@@ -72,7 +72,7 @@ def main(parent=None):
         pha_params = {
             'phase_file_path': extract_var(phase_file_path_var),
             'method': pha_method_var.get(),
-            'offset': pha_offset_var.get()
+            'offset': extract_var(pha_offset_var)
         }
         user_parameters["file path in"] = file_path_in_var.get()
         user_parameters['root out'] = extract_var(root_out_var)
