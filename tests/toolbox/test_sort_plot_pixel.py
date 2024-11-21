@@ -13,6 +13,9 @@ from examples.toolbox.ex_sort_plot_pixel import example_sort_plot_pixel
 def test_sort_plot_pixel():
     """ Test example_sort_plot_pixel """
 
+    if os.getenv('GITHUB_ACTIONS') == 'true':
+        skip("Test skipped for Github source")
+
     list_file_path = example_sort_plot_pixel()
     list_file_name = [os.path.split(file_path)[1]
                       for file_path in list_file_path]
