@@ -1,8 +1,7 @@
 """
 Test curve_clustering methods
 """
-import os
-from pytest import approx, skip
+from pytest import approx
 import numpy as np
 
 from examples.toolbox.ex_curve_clustering import ex_curve_clustering
