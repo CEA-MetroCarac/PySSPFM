@@ -35,15 +35,10 @@ def main(parent=None):
     title = "Clustering inertia"
     app, scrollable_frame = init_secondary_wdw(parent=parent, wdw_title=title)
 
-    default_user_pars = {'object': 'loop',
-                         'relative': False,
-                         'pca': True,
+    default_user_pars = {'relative': False,
                          'method': 'kmeans',
-                         'lim cluster': 10}
-    default_loop_pars = {'label meas': ['piezoresponse']}
-    default_curve_pars = {'extension': 'spm',
-                          'mode': 'classic',
-                          'label meas': ['deflection']}
+                         'lim cluster': 10,
+                         'label meas': ['piezoresponse']}
 
     # Set default parameter values
     default_parameters = {
@@ -51,8 +46,6 @@ def main(parent=None):
         'dir path in prop': '',
         'dir path out': '',
         'user_pars': default_user_pars,
-        'loop_pars': default_loop_pars,
-        'curve_pars': default_curve_pars,
         'verbose': True,
         'show plots': True,
         'save': False,
@@ -62,26 +55,15 @@ def main(parent=None):
     def launch():
         # Update the user_parameters with the new values from the widgets
         user_params = {
-            'object': object_var.get(),
             'relative': relative_var.get(),
-            'pca': pca_var.get(),
             'method': method_var.get(),
-            'lim cluster': lim_cluster_var.get()
-        }
-        loop_params = {
+            'lim cluster': lim_cluster_var.get(),
             'label meas': extract_var(label_meas_loop_var)
-        }
-        curve_params = {
-            'extension': extension_var.get(),
-            'mode': mode_var.get(),
-            'label meas': extract_var(label_meas_curve_var)
         }
         user_parameters['dir path in'] = dir_path_in_var.get()
         user_parameters['dir path in prop'] = extract_var(dir_path_prop_var)
         user_parameters['dir path out'] = extract_var(dir_path_out_var)
         user_parameters["user_pars"] = user_params
-        user_parameters["loop_pars"] = loop_params
-        user_parameters["curve_pars"] = curve_params
         user_parameters['verbose'] = verbose_var.get()
         user_parameters['show plots'] = show_plots_var.get()
         user_parameters['save'] = save_var.get()
@@ -95,8 +77,6 @@ def main(parent=None):
 
         # Data analysis
         main_script(user_parameters["user_pars"],
-                    user_parameters["loop_pars"],
-                    user_parameters["curve_pars"],
                     user_parameters['dir path in'],
                     verbose=user_parameters['verbose'],
                     show_plots=user_parameters['show plots'],
@@ -122,7 +102,7 @@ def main(parent=None):
         dir_path_out = filedialog.askdirectory()
         dir_path_out_var.set(dir_path_out)
 
-    # Window title: Vector clustering
+    # Window title: Clustering inertia
     wdw_main_title(scrollable_frame, title)
 
     row = 3
@@ -140,10 +120,10 @@ def main(parent=None):
     entry_in = ttk.Entry(scrollable_frame, textvariable=dir_path_in_var)
     row = grid_item(entry_in, row, column=1, sticky="ew", increment=False)
     strg = "- Name: dir_path_in\n" \
-           "- Summary: Input Directory for Vector Files " \
+           "- Summary: Input Directory for Curves Files " \
            "(default: 'best_nanoloops')\n" \
            "- Description: This parameter specifies the directory path for " \
-           "the vector files, to perform clustering analysis.\n" \
+           "the curve files, to perform clustering analysis.\n" \
            "- Value: String representing the directory path."
     entry_in.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(entry_in, mess))
@@ -156,7 +136,7 @@ def main(parent=None):
         if input_dir != "":
             output_dir = save_path_management(
                 input_dir, dir_path_out=None, save=True,
-                dirname="vector_clustering", lvl=1, create_path=False,
+                dirname="curve_clustering", lvl=1, create_path=False,
                 post_analysis=True)
         else:
             output_dir = ""
@@ -249,26 +229,6 @@ def main(parent=None):
     label_common.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(label_common, mess))
 
-    # Object
-    label_object = ttk.Label(scrollable_frame, text="Object:")
-    row = grid_item(label_object, row, column=0, sticky="e", increment=False)
-    object_var = ttk.Combobox(scrollable_frame, values=["loop", "curve"])
-    object_var.set(user_parameters['user_pars']['object'])
-    row = grid_item(object_var, row, column=1, sticky="ew")
-    strg = "- Name: object\n" \
-           "- Summary: Name of the object processed with clustering " \
-           "analysis.\n" \
-           "- Description: This parameter determines the name of the object " \
-           "used to perform the clustering.\n" \
-           "Implemented objects are Loops (best nanoloops associated with " \
-           "each pixel) or Curves (raw SSPFM measurements associated with " \
-           "each pixel).\n" \
-           "- Value: A string with two possible values:\n" \
-           "\t--> 'loop': Loop clustering\n" \
-           "\t--> 'curve': Curve clustering"
-    object_var.bind("<Enter>",
-                    lambda event, mess=strg: show_tooltip(object_var, mess))
-
     # Relative
     label_relative = ttk.Label(scrollable_frame, text="Relative:")
     row = grid_item(label_relative, row, column=0, sticky="e", increment=False)
@@ -279,29 +239,12 @@ def main(parent=None):
     strg = "- Name: relative\n" \
            "- Summary: Activation key for relative clustering analysis.\n" \
            "- Description: This parameter serves as an activation key to " \
-           "perform clustering analysis on relative vectors (all vectors " \
-           "vary between 0 and 1). Always active for combined vectors of " \
+           "perform clustering analysis on relative curves (all curves " \
+           "vary between 0 and 1). Always active for combined curves of " \
            "multiple measurements.\n" \
            "- Value: Boolean (True or False)."
     chck_relative.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(chck_relative, mess))
-
-    # PCA
-    label_pca = ttk.Label(scrollable_frame, text="PCA:")
-    row = grid_item(label_pca, row, column=0, sticky="e", increment=False)
-    pca_var = tk.BooleanVar()
-    pca_var.set(user_parameters['user_pars']['pca'])
-    chck_pca = ttk.Checkbutton(scrollable_frame, variable=pca_var)
-    row = grid_item(chck_pca, row, column=1, sticky="w")
-    strg = "- Name: pca\n" \
-           "- Summary: Activation key for performing PCA before clustering " \
-           "analysis.\n" \
-           "- Description: This parameter serves as an activation key to " \
-           "perform PCA (Principal Component Analysis) before clustering " \
-           "analysis.\n" \
-           "- Value: Boolean (True or False)."
-    chck_pca.bind("<Enter>",
-                  lambda event, mess=strg: show_tooltip(chck_pca, mess))
 
     # Method
     label_method = ttk.Label(scrollable_frame, text="Method:")
@@ -347,22 +290,12 @@ def main(parent=None):
     lim_cluster_label = ttk.Label(scrollable_frame,
                                   text=str(lim_cluster_var.get()))
     row = grid_item(lim_cluster_label, row, column=2, sticky="w")
-    row = add_grid_separator(scrollable_frame, row=row)
-
-    # Section title: Loop parameters
-    label_loop_meas = ttk.Label(scrollable_frame, text="Loop parameters",
-                                font=("Helvetica", 14))
-    row = grid_item(label_loop_meas, row, column=0, sticky="ew", columnspan=3)
-    strg = "These parameters are common to a loop object process.\n" \
-           "Active if: object is 'loop'"
-    label_loop_meas.bind(
-        "<Enter>", lambda event, mess=strg: show_tooltip(label_loop_meas, mess))
 
     # Measure
     label_name_loop = ttk.Label(scrollable_frame, text="Name(s):")
     row = grid_item(label_name_loop, row, column=0, sticky="e", increment=False)
     label_meas_loop_var = tk.StringVar()
-    label_meas_loop_var.set(str(user_parameters['loop_pars']['label meas']))
+    label_meas_loop_var.set(str(user_parameters['user_pars']['label meas']))
     entry_label_meas_loop = ttk.Entry(scrollable_frame,
                                       textvariable=label_meas_loop_var)
     row = grid_item(entry_label_meas_loop, row, column=1, sticky="ew")
@@ -380,75 +313,7 @@ def main(parent=None):
     entry_label_meas_loop.bind(
         "<Enter>",
         lambda event, mess=strg: show_tooltip(entry_label_meas_loop, mess))
-
-    # Section title: Curve parameters
-    label_meas_curve = ttk.Label(
-        scrollable_frame, text="Curve parameters", font=("Helvetica", 14))
-    row = grid_item(label_meas_curve, row, column=0, sticky="ew", columnspan=3)
-    strg = "These parameters are common to a curve object process.\n" \
-           "Active if: object is 'curve'"
-    label_meas_curve.bind(
-        "<Enter>",
-        lambda event, mess=strg: show_tooltip(label_meas_curve, mess))
-
-    # Extension
-    label_ext = ttk.Label(scrollable_frame, text="Extension:")
-    row = grid_item(label_ext, row, column=0, sticky="e", increment=False)
-    extension_var = ttk.Combobox(scrollable_frame,
-                                 values=["spm", "txt", "csv", "xlsx"])
-    extension_var.set(user_parameters['curve_pars']['extension'])
-    row = grid_item(extension_var, row, column=1, sticky="ew")
-    strg = "- Name: extension\n" \
-           "- Summary: Extension of curve files in input.\n" \
-           "- Description: This parameter determines the extension type of " \
-           "curve files.\n" \
-           "- Value: A string with four possible values:\n" \
-           "\t--> 'spm': for 'spm' curve file extension\n" \
-           "\t--> 'txt': for 'txt' curve file extension\n" \
-           "\t--> 'csv': for 'csv' curve file extension\n" \
-           "\t--> 'xlsx': for 'xlsx' curve file extension"
-    extension_var.bind(
-        "<Enter>", lambda event, mess=strg: show_tooltip(extension_var, mess))
-
-    # Mode
-    label_mode = ttk.Label(scrollable_frame, text="Mode:")
-    row = grid_item(label_mode, row, column=0, sticky="e", increment=False)
-    mode_var = ttk.Combobox(scrollable_frame, values=["classic", "dfrt"])
-    mode_var.set(user_parameters['curve_pars']['mode'])
-    row = grid_item(mode_var, row, column=1, sticky="ew")
-    strg = "- Name: mode\n" \
-           "- Summary: Treatment used for segment data analysis " \
-           "(extraction of PFM measurements).\n" \
-           "- Description: This parameter determines the treatment method " \
-           "used for segment data analysis, specifically for the extraction " \
-           "of PFM measurements.\n" \
-           "- Value: A string with two possible values: " \
-           "'classic' (sweep or single_freq) or 'dfrt'"
-    mode_var.bind("<Enter>",
-                  lambda event, mess=strg: show_tooltip(mode_var, mess))
-
-    # Measure
-    label_name_curve = ttk.Label(scrollable_frame, text="Name(s):")
-    row = grid_item(label_name_curve, row, column=0, sticky="e",
-                    increment=False)
-    label_meas_curve_var = tk.StringVar()
-    label_meas_curve_var.set(str(user_parameters['curve_pars']['label meas']))
-    entry_label_meas_curve = ttk.Entry(scrollable_frame,
-                                       textvariable=label_meas_curve_var)
-    row = grid_item(entry_label_meas_curve, row, column=1, sticky="ew")
-    strg = "- Name: label_meas\n" \
-           "- Summary: List of Measurement Name for Curves\n" \
-           "- Description: This parameter contains a list of measurement " \
-           "name in order to create the curve to be analyzed using a machine " \
-           "learning algorithm of clustering.\n" \
-           "If several name are filled, the curve will be normalized and " \
-           "concatenated.\n" \
-           "Choose from : deflection, height, amplitude, phase ...\n" \
-           "- Value: A list containing strings.\n" \
-           "\t- For example: ['deflection'] or ['deflection', 'height']"
-    entry_label_meas_curve.bind(
-        "<Enter>",
-        lambda event, mess=strg: show_tooltip(entry_label_meas_curve, mess))
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Save and plot
     label_chck = ttk.Label(scrollable_frame, text="Save and plot",
