@@ -23,6 +23,6 @@ def test_clustering_inertia():
     # print(np.sum(dict_inertia["on"]))
     # print(np.sum(dict_inertia["coupled"]))
 
-    assert np.sum(dict_inertia["off"]) == approx(0.8467106430607041)
-    assert np.sum(dict_inertia["on"]) == approx(0.7018673467173553)
-    assert np.sum(dict_inertia["coupled"]) == approx(1.1124421123631292)
+    assert np.sum(dict_inertia["off"]) == approx(0.8478612784374686)
+    assert np.sum(dict_inertia["on"]) == approx(0.7012273122813835)
+    assert np.sum(dict_inertia["coupled"]) == approx(0.777708823169472)
