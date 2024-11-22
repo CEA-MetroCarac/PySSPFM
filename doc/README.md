@@ -764,6 +764,10 @@ $$ f_0 = \sqrt{f_1 * f_2 * {f_2 * X_1 - f_1 * X_2 \over f_1 * X_1 - f_2 * X_2}} 
 $$ Q = {\sqrt{f_1 * f_2 * (f_2 * X_1 - f_1 * X_2) * (f_1 * X_1 - f_2 * X_2) \over f_2^2 - f_1^2}} $$
 
 <p align="justify" width="100%">
+Note that if the DFRT is used without acquiring the sideband signals or if an error occurs during the sideband processing procedure (particularly for the calculation of the resonance frequency and quality factor), it is recommended to use the <code>single_freq</code> mode.
+</p>
+
+<p align="justify" width="100%">
 &#8226 <code>single_freq</code> : The measurements are performed at a fixed frequency, either at resonance or not. The amplitude and phase values are then maintained at relatively stable values, in most cases. The extraction of quantities is the same as in DFRT: respectively for amplitude and phase, the mean as well as the uncertainty determined from the variance are extracted for each segment. This process is performed with <code>SegmentStable</code> objetc of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code> script.
 </p>
 
