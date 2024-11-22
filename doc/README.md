@@ -1809,11 +1809,12 @@ Force curves are "zeroed" by applying height / deflection offset corrections wit
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="25%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_clusters_centroids.PNG>
-    <img align="center" width="25%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_all_hyst.PNG>
-    <img align="center" width="25%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_mean_hyst.PNG>
-    <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_carto.PNG> <br>
-    <em>Result of curve_clustering (figure generated with <code>main_loop_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">toolbox/curve_clustering.py</a></code> script)</em>
+    <img align="center" width="18%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_other_properties.PNG>
+    <img align="center" width="18%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_clusters_centroids_force_curve.PNG>
+    <img align="center" width="18%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_all_force_curve.PNG>
+    <img align="center" width="18%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_mean_force_curve.PNG>
+    <img align="center" width="18%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_carto_force_curve.PNG> <br>
+    <em>Result of force_curve_clustering (figure generated with <code>main_force_curve_analysis</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/force_curve_clustering.py">toolbox/force_curve_clustering.py</a></code> script)</em>
 </p>
 
 #### VIII.4.f) Clustering inertia
