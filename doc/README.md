@@ -1791,21 +1791,21 @@ The script can be executed directly using the executable file: <code><a href="ht
 ```
 
 <p align="justify" width="100%">
-For the description of the parameters, see that of curve clustering as the parameters are the same. Additionally, the corresponding csv measurement sheet is accessed to extract measurement parameters. The parameter <code>extension</code> sets the extension of the raw data measurement files. The selection of the measurement mode is facilitated through the <code>'mode'</code> parameter, with options including: <br>
+For the description of the parameters, see that of curve clustering as the parameters are almost the same. Additionally, the corresponding csv measurement sheet is accessed with <code>'csv file path'</code>, to extract measurement parameters. The parameter <code>'extension'</code> sets the extension of the raw data measurement files. The selection of the measurement mode is facilitated through the <code>'mode'</code> parameter, with options including: <br>
 &#8226 <code>'classic'</code> (Frequency Sweep in Resonance or Single Frequency) <br>
 &#8226 <code>'dfrt'</code> <br>
 </p>
 
 <p align="justify" width="100%">
-The script then runs the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">toolbox/vector_clustering.py</a></code> by incrementing the number of clusters from 2 to the maximum number specified by the user, to determine the inertia of each configuration. The inertia is then plotted against the number of clusters in the configuration. The optimal number of clusters to choose is located at the elbow of the curve.
-</p>
-
-<p align="justify" width="100%">
-&#8226 Curve: The entirety of data stemming from the raw SSPFM measurements. The data are extracted using the <code>raw_data_extraction_without_script</code> function from the  <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/file_clustering.py">utils/file_clustering.py</a></code> script, with the file extension and the chosen mode respectively via the <code>extension</code> and <code>mode</code> parameters.<br> 
+The entirety of data stemming from the raw SSPFM measurements. The data are extracted using the <code>raw_data_extraction_without_script</code> function from the  <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/file_clustering.py">utils/file_clustering.py</a></code> script, with the file extension and the chosen mode respectively via the <code>extension</code> and <code>mode</code> parameters.<br> 
 The dimensions of the mappings are extracted using the <code>extract_map_dim_from_csv</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/file_clustering.py">utils/file_clustering.py</a></code> script.<br>
 For a deeper understanding of the input file management, please refer to the relevant sections in the documentation:<br>
 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1) - Input files</a><br>
 <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv1---parameters">IV.1) - Parameters</a>
+</p>
+
+<p align="justify" width="100%">
+Force curves are "zeroed" by applying height / deflection offset corrections with <code>correct_force_offset</code> of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">utils/datacube_to_nanoloop/analysis.py</a></code> script. Then, force curve properties are extracted ("other properties") after zeroing force curves with <code>extract_other_properties</code> function of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">utils/datacube_to_nanoloop/analysis.py</a></code> script. The clustering is then performed on the force curve, which corresponds to a combination of the force and distance vectors, using the <code>perform_curve_clustering</code> function from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/force_curve_clustering.py">toolbox/force_curve_clustering.py</a></code>.
 </p>
 
 <p align="center" width="100%">
