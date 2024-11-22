@@ -694,7 +694,7 @@ To obtain the total duration (or total sample count) of the measurement, it suff
 </p>
 
 <p align="justify" width="100%">
-The segmentation process is performed with <code>cut_function</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code>, and each segment is generated. A segment is initialized with the class <code>SegmentInfo</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code>, in which some of these associated attributes are defined. Subsequently, a second object is created to perform the processing associated with the segment. It generates some of its attributes, including arrays of time values, PFM amplitude and phase measurements, as well as optional additionnal quantities measured. These arrays are optionally trimmed at the beginning and end based on the <code>cut_seg</code> parameter. Noise in the amplitude and phase measurements is potentially reduced by a mean filter or butterworth filter, which can be enabled (<code>filter_type</code>) and is defined by its order (<code>filter_ord</code>) and cuttoff frequency (<code>filter_freq</code>). Butterworth filters can be used when noise is periodic, what may be the case when using the DFRT. The segment is then processed according to the <code>mode</code> chosen by the user:
+The segmentation process is performed with <code>cut_function</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code>, and each segment is generated. In the case of a ".spm" file with segments of unequal lengths, a debugging mode controlled by the global variable <code>DEBUG</code> at the beginning of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/datacube_to_nanoloop_s1.py">data_processing/datacube_to_nanoloop_s1.py</a></code> allows for automatic segmentation of the raw data file. A segment is initialized with the class <code>SegmentInfo</code> in the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code>, in which some of these associated attributes are defined. Subsequently, a second object is created to perform the processing associated with the segment. It generates some of its attributes, including arrays of time values, PFM amplitude and phase measurements, as well as optional additionnal quantities measured. These arrays are optionally trimmed at the beginning and end based on the <code>cut_seg</code> parameter. Noise in the amplitude and phase measurements is potentially reduced by a mean filter or butterworth filter, which can be enabled (<code>filter_type</code>) and is defined by its order (<code>filter_ord</code>) and cuttoff frequency (<code>filter_freq</code>). Butterworth filters can be used when noise is periodic, what may be the case when using the DFRT. The segment is then processed according to the <code>mode</code> chosen by the user:
 </p>
 
 <p align="justify" width="100%">
@@ -1372,12 +1372,12 @@ User parameters:
         'csv file path': '',
         'dir path out': '',
         'del 1st loop': True,
-        'corr': 'offset',
+        'corr': 'raw',
         'pha fwd': 0,
         'pha rev': 180,
         'func': 'cosine',
         'main elec': True,
-        'grounded tip': True,
+        'grounded tip': False,
         'positive d33': True,
         'locked elec slope': 'None',
         'verbose': True,
@@ -1583,7 +1583,7 @@ User parameters:
                                'fit pars': default_fit_params,
                                'verbose': True,
                                'show plots': True,
-                               'save': False}
+                               'save': True}
 ```
 
 <p align="justify" width="100%">
@@ -1696,34 +1696,26 @@ The measurement parameters are extracted from the SSPFM measurement sheet, and e
     <em>Detection of phase inversion with phase variation with voltage (figure generated with <code>plot_phase_bias_grad</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop/plot_phase.py">utils/nanoloop/plot_phase.py</a></code> script)</em>
 </p>
 
-### VIII.4) Vector clustering and Clustering inertia (PCA with K-Means or GMM)
+### VIII.4) Curve clustering, Force curve clustering, and Clustering inertia (PCA with K-Means or GMM)
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">toolbox/vector_clustering.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/vector_clustering.py">gui/vector_clustering.py</a></code>. It facilitates the classification of vectors (loops or curves) associated with each measurement points into clusters. This tool can enable phase separation or the separation of the influences of physically distinct phenomena, such as measurement artifacts.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">toolbox/curve_clustering.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/curve_clustering.py">gui/curve_clustering.py</a></code>. It facilitates the classification of curves (loops) associated with each measurement points into clusters. This tool can enable phase separation or the separation of the influences of physically distinct phenomena, such as measurement artifacts.
 </p>
 
 #### VIII.4.a) Parameters
 
 ```
-    default_user_pars = {'object': 'loop',
-                         'relative': False,
-                         'pca': True,
-                         'method': 'kmeans'}
-    default_loop_pars = {'label meas': ['piezoresponse'],
+    default_user_pars = {'relative': False,
+                         'method': 'kmeans',
+                         'label meas': ['piezoresponse'],
                          'nb clusters off': 4,
                          'nb clusters on': 4,
                          'nb clusters coupled': 4}
-    default_curve_pars = {'extension': 'spm',
-                          'mode': 'classic',
-                          'label meas': ['deflection'],
-                          'nb clusters': 4}
     default_parameters = {
         'dir path in': '',
         'dir path in prop': '',
         'dir path out': '',
         'user_pars': default_user_pars,
-        'loop_pars': default_loop_pars,
-        'curve_pars': default_curve_pars,
         'verbose': True,
         'show plots': True,
         'save': False,
@@ -1731,10 +1723,8 @@ The script can be executed directly using the executable file: <code><a href="ht
 ```
 
 <p align="justify" width="100%">
-&#8226 File management: For loop procedure, in the initial phase, the algorithm ingests the <code>best_nanoloops</code> directory along with the <code>properties</code> directory, and the property folder contains the parameters of json file of 2nd step of analysis. For curve procedure, the algorithm extract raw SSPFM file measurements and the property folder contains the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/resources/measurement%20sheet%20model%20SSPFM.csv">measurement sheet model SSPFM</a> file <code>measurement_sheet_parameters.csv</code>.<br>
-&#8226 Common (user) parameters: all parameters common to the entire (both loop or curve) clustering analysis. Two distinct clustering algorithms exist: one for loops and the other for curves, specified with the <code>object</code> parameter.<br>
-&#8226 Loop parameters: all parameters common to the analysis of a clustering associated with a loop (best nanoloops generated after the second processing step). <br>
-&#8226 Curve parameters: all parameters common to the analysis of a clustering associated with a curve (raw SSPFM measurement channels). <br>
+&#8226 File management: In the initial phase, the algorithm ingests the <code>best_nanoloops</code> directory along with the <code>properties</code> directory, and the property folder contains the parameters of json file of 2nd step of analysis.<br>
+&#8226 Common (user) parameters: all parameters common to the entire curve clustering analysis.<br>
 &#8226 Save and plot parameters: Pertaining to the management of display and the preservation of outcomes. <br>
 </p>
 
@@ -1742,35 +1732,22 @@ The script can be executed directly using the executable file: <code><a href="ht
 &#8226 For a deeper understanding of the output file management, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iii2c---toolbox">III.2.c) - Toolbox</a>
 </p>
 
-<p align="justify" width="100%">
-&#8226 The entire clustering for loops is ensured by the <code>main_loop_clustering</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">toolbox/vector_clustering.py</a></code> script. <br>
-&#8226 The entire clustering for curves is ensured by the <code>main_curve_clustering</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">toolbox/vector_clustering.py</a></code> script.
-</p>
-
 #### VIII.4.b) Extraction 
 
 <p align="justify" width="100%">
-&#8226 Loop: The entirety of data stemming from the best nanoloops, both in the on field and off field modes, is extracted from the files residing within the <code>best_nanoloops</code> directory (with the function <code>extract_loop_data</code> of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/file_clustering.py">utils/file_clustering.py</a></code> script). <br>
+&#8226 The entirety of data stemming from the best nanoloops, both in the on field and off field modes, is extracted from the files residing within the <code>best_nanoloops</code> directory (with the function <code>extract_loop_data</code> of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/file_clustering.py">utils/file_clustering.py</a></code> script). <br>
 For piezoresponse loop analysis, vertical offset measurements in the off field mode and the dimensions of the mappings are drawn from the files within the <code>properties</code> directory (with <code>extract_properties</code> function of the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/nanoloop_to_hyst/file.py">utils/nanoloop_to_hyst/file.py</a></code>). <br>
 For piezoresponse loop analysis, the coupled measurements are subsequently generated through the process of differential analysis of on field and off field measurements, using the <code>gen_coupled_data</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/file_clustering.py">utils/file_clustering.py</a></code> script, with the flexibility to incorporate the vertical offset in the off field mode, a component influenced by the sample's surface contact potential (section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#vi4d---differential-analysis-of-on-and-off-field-hysteresis">VI.4.d) - Differential analysis of on and off field hysteresis</a> in the documentation).<br>
 For a deeper understanding of the input file management, please refer to the relevant section in the documentation: <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii2b---second-step-of-data-analysis">III.2.b) - Second Step of Data Analysis</a>
 </p>
 
-<p align="justify" width="100%">
-&#8226 Curve: The entirety of data stemming from the raw SSPFM measurements. The data are extracted using the <code>raw_data_extraction</code> function from the  <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/file_clustering.py">utils/file_clustering.py</a></code> script, with the file extension and the chosen mode respectively via the <code>extension</code> and <code>mode</code> parameters.<br> 
-The dimensions of the mappings are extracted using the <code>extract_map_dim_from_csv</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/file_clustering.py">utils/file_clustering.py</a></code> script.<br>
-For a deeper understanding of the input file management, please refer to the relevant sections in the documentation:<br>
-<a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1) - Input files</a><br>
-<a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv1---parameters">IV.1) - Parameters</a>
-</p>
-
 #### VIII.4.c) Treatment
 
 <p align="justify" width="100%">
-&#8226 Initially, following data extraction, loops and curves are constructed using the <code>gen_loop_data</code> and <code>curve_extraction</code> functions from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/file_clustering.py">utils/file_clustering.py</a></code> script. The user can choose to normalize the vectors between 0 and 1 with the <code>relative</code> parameter. The clustering then depends more on the shape of the vectors than on their intensity. If multiple measures are specified in the <code>label_meas</code> parameter, they are normalized between 0 and 1 and concatenated together. For the curve procedure, <code>label_meas</code> can be chosen from height or deflection channels etc., while for the loop procedure, it can be selected between amplitude, phase, piezoresponse, resonance frequency, or quality factor. <br>
-&#8226 Specifically for the loop procedure, to analyze ferroelectric as well as electrostatic effects, the quality of clusterization can be enhanced by composing amplitude with phase rather than simply relying on piezoresponse <a href="#ref28">[28]</a>. To study nanomechanical properties under in situ material polarization, resonance frequency and quality factor loops can be selected (for elastic and dissipative properties, respectively). This can be particularly relevant, for example, in the study of relaxor ferroelectric materials <a href="#ref7">[7]</a>. For each of the modes (on field, off field, and eventually coupled), and for each of the nanoloops associated with each data point, the clustering procedure is performed. <br>
-&#8226 For both loop and curve procedures, if the <code>pca</code> parameter is selected by the user, an initial 2-dimensional Principal Component Analysis (PCA) can be performed on the set of vectors. To accomplish this, we import the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html#sklearn.decomposition.PCA">PCA</a> function from <a href="https://scikit-learn.org/stable/api/sklearn.decomposition.html">sklearn.decomposition</a>. The procedure is performed with <code>data_pca</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/clustering.py">utils/core/clustering.py</a></code> script. This allows each vector to be represented as a point with coordinates in a plane, thereby facilitating the visualization of multiple data points and the subsequent clustering step. <br>
-&#8226 Next, for both loop and curve procedures, a cluster is assigned using the machine learning K-Means or Gaussian Mixture Model (GMM) methodology with the <code>method</code> parameter. To accomplish this, we import the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">KMeans</a> and <a href="https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html">GMM</a> functions from <a href="https://scikit-learn.org/stable/modules/clustering.html#clustering">sklearn.cluster</a>. The number of clusters is specified by the user in the input parameters. A reference cluster is established, identified as the one encompassing the maximum number of data points. The index assigned to the other clusters is then computed as the distance between their centroid and that of the reference cluster, respectively. In other words, the clustering indexing provides the user with information about the separation (determined with quantitative data) of each cluster relative to the reference cluster. Subsequently, an average vector for each cluster is computed. The entire vector clustering procedure, from PCA analysis to the separation of data into clusters, is ensured by the <code>perform_vector_clustering</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">toolbox/vector_clustering.py</a></code> script, which relies on the <code>data_clustering</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/clustering.py">utils/core/clustering.py</a></code> script.
+&#8226 Initially, following data extraction, loops are constructed using the <code>gen_loop_data</code> and <code>curve_extraction</code> functions from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/file_clustering.py">utils/file_clustering.py</a></code> script. The user can choose to normalize the curves between 0 and 1 with the <code>relative</code> parameter. The clustering then depends more on the shape of the curves than on their intensity. If multiple measures are specified in the <code>label_meas</code> parameter, they are normalized and concatenated together. <code>label_meas</code> can be selected between amplitude, phase, piezoresponse, resonance frequency, or quality factor. <br>
+&#8226 To analyze ferroelectric as well as electrostatic effects, the quality of clusterization can be enhanced by composing amplitude with phase rather than simply relying on piezoresponse <a href="#ref28">[28]</a>. To study nanomechanical properties under in situ material polarization, resonance frequency and quality factor loops can be selected (for elastic and dissipative properties, respectively). This can be particularly relevant, for example, in the study of relaxor ferroelectric materials <a href="#ref7">[7]</a>. For each of the modes (on field, off field, and eventually coupled), and for each of the nanoloops associated with each data point, the clustering procedure is performed. <br>
+&#8226 In all cases, an initial 2-dimensional Principal Component Analysis (PCA) is performed on the set of curves. To accomplish this, we import the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html#sklearn.decomposition.PCA">PCA</a> function from <a href="https://scikit-learn.org/stable/api/sklearn.decomposition.html">sklearn.decomposition</a>. The procedure is performed with <code>data_pca</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/clustering.py">utils/core/clustering.py</a></code> script. This allows each curve to be represented as a point with coordinates in a plane, thereby facilitating the visualization of multiple data points and the subsequent clustering step. <br>
+&#8226 Next, a cluster is assigned using the machine learning K-Means or Gaussian Mixture Model (GMM) methodology with the <code>method</code> parameter. To accomplish this, we import the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">KMeans</a> and <a href="https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html">GMM</a> functions from <a href="https://scikit-learn.org/stable/modules/clustering.html#clustering">sklearn.cluster</a>. The number of clusters is specified by the user in the input parameters. A reference cluster is established, identified as the one encompassing the maximum number of data points. The index assigned to the other clusters is then computed as the distance between their centroid and that of the reference cluster, respectively. In other words, the clustering indexing provides the user with information about the separation (determined with quantitative data) of each cluster relative to the reference cluster. Subsequently, an average curve for each cluster is computed. The entire curve clustering procedure, from PCA analysis to the separation of data into clusters, is ensured by the <code>perform_curve_clustering</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">toolbox/curve_clustering.py</a></code> script, which relies on the <code>data_clustering</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/clustering.py">utils/core/clustering.py</a></code> script.
 </p>
 
 #### VIII.4.d) Figures
@@ -1780,40 +1757,33 @@ For a deeper understanding of the input file management, please refer to the rel
     <img align="center" width="25%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_all_hyst.PNG>
     <img align="center" width="25%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_mean_hyst.PNG>
     <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_carto.PNG> <br>
-    <em>Result of vector_clustering (figure generated with <code>main_vector_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">toolbox/vector_clustering.py</a></code> script)</em>
+    <em>Result of curve_clustering (figure generated with <code>main_loop_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">toolbox/curve_clustering.py</a></code> script)</em>
 </p>
 
 <p align="justify" width="100%">
-For curve procedure, or each mode associated with loop procedure (on field, off field, and eventually coupled), four figures are generated, each containing: <br>
+For each mode associated with loop procedure (on field, off field, and eventually coupled), four figures are generated, each containing: <br>
 &#8226 A complete representation of cluster points (here performed with PCA procedure) in 2D graph with their centroids, distinguished by colors assigned based on their cluster index, generated with <code>plot_pca_plane</code> (or <code>plot_clustering_centroids</code>) function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/clustering.py">utils/core/clustering.py</a></code> script. <br>
-&#8226 The complete array of vectors from all datasets, distinguished by colors assigned based on their cluster index, generated with <code>plot_all_vector_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/clustering.py">utils/core/clustering.py</a></code> script. <br>
-&#8226 The average vector for each cluster, distinguished by colors assigned according to their cluster index, generated with <code>plot_avg_vector_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/clustering.py">utils/core/clustering.py</a></code> script. <br>
+&#8226 The complete array of curves from all datasets, distinguished by colors assigned based on their cluster index, generated with <code>plot_all_curve_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/clustering.py">utils/core/clustering.py</a></code> script. <br>
+&#8226 The average curve for each cluster, distinguished by colors assigned according to their cluster index, generated with <code>plot_avg_curve_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/clustering.py">utils/core/clustering.py</a></code> script. <br>
 &#8226 A spatial cartography displaying the assigned clusters, generated with <code>main_mapping</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/map/main.py">utils/map/main.py</a></code> script. <br>
 </p>
 
-#### VIII.4.e) Clustering inertia
+#### VIII.4.e) Force curve clustering
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/clustering_inertia.py">toolbox/clustering_inertia.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/clustering_inertia.py">gui/clustering_inertia.py</a></code>. It determines the inertia based on the number of clusters used in order to determine the optimal number of clusters.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/force_curve_clustering.py">toolbox/force_curve_clustering.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/force_curve_clustering.py">gui/force_curve_clustering.py</a></code>. The script performs clustering on a series of force curves (force vs. distance).
 </p>
 
 ```
-    default_user_pars = {'object': 'loop',
-                         'relative': False,
-                         'pca': True,
-                         'method': 'kmeans',
-                         'lim cluster': 10}
-    default_loop_pars = {'label meas': ['piezoresponse']}
-    default_curve_pars = {'extension': 'spm',
-                          'mode': 'classic',
-                          'label meas': ['deflection']}
+    default_cluster_pars = {'nb clusters': 4,
+                            'method': 'kmeans'}
     default_parameters = {
         'dir path in': '',
-        'dir path in prop': '',
+        'csv file path': '',
         'dir path out': '',
-        'user_pars': default_user_pars,
-        'loop_pars': default_loop_pars,
-        'curve_pars': default_curve_pars,
+        'extension': 'spm',
+        'mode': 'classic',
+        'cluster_pars': default_cluster_pars,
         'verbose': True,
         'show plots': True,
         'save': False,
@@ -1821,7 +1791,55 @@ The script can be executed directly using the executable file: <code><a href="ht
 ```
 
 <p align="justify" width="100%">
-For the description of the parameters, see that of vector clustering as the parameters are the same. However, the parameter <code>lim cluster</code> sets the maximum number of clusters for which inertia values are calculated and associated. The script then runs the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">toolbox/vector_clustering.py</a></code> by incrementing the number of clusters from 2 to the maximum number specified by the user, to determine the inertia of each configuration. The inertia is then plotted against the number of clusters in the configuration. The optimal number of clusters to choose is located at the elbow of the curve.
+For the description of the parameters, see that of curve clustering as the parameters are almost the same. Additionally, the corresponding csv measurement sheet is accessed with <code>'csv file path'</code>, to extract measurement parameters. The parameter <code>'extension'</code> sets the extension of the raw data measurement files. The selection of the measurement mode is facilitated through the <code>'mode'</code> parameter, with options including: <br>
+&#8226 <code>'classic'</code> (Frequency Sweep in Resonance or Single Frequency) <br>
+&#8226 <code>'dfrt'</code> <br>
+</p>
+
+<p align="justify" width="100%">
+The entirety of data stemming from the raw SSPFM measurements. The data are extracted using the <code>raw_data_extraction_without_script</code> function from the  <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/file_clustering.py">utils/file_clustering.py</a></code> script, with the file extension and the chosen mode respectively via the <code>extension</code> and <code>mode</code> parameters.<br> 
+The dimensions of the mappings are extracted using the <code>extract_map_dim_from_csv</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/file_clustering.py">utils/file_clustering.py</a></code> script.<br>
+For a deeper understanding of the input file management, please refer to the relevant sections in the documentation:<br>
+<a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1) - Input files</a><br>
+<a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv1---parameters">IV.1) - Parameters</a>
+</p>
+
+<p align="justify" width="100%">
+Force curves are "zeroed" by applying height / deflection offset corrections with <code>correct_force_offset</code> of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">utils/datacube_to_nanoloop/analysis.py</a></code> script. Then, force curve properties are extracted ("other properties") after zeroing force curves with <code>extract_other_properties</code> function of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">utils/datacube_to_nanoloop/analysis.py</a></code> script. The clustering is then performed on the force curve, which corresponds to a combination of the force and distance vectors, using the <code>perform_curve_clustering</code> function from the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/force_curve_clustering.py">toolbox/force_curve_clustering.py</a></code>.
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="25%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_clusters_centroids.PNG>
+    <img align="center" width="25%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_all_hyst.PNG>
+    <img align="center" width="25%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_mean_hyst.PNG>
+    <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_carto.PNG> <br>
+    <em>Result of curve_clustering (figure generated with <code>main_loop_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">toolbox/curve_clustering.py</a></code> script)</em>
+</p>
+
+#### VIII.4.f) Clustering inertia
+
+<p align="justify" width="100%">
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/clustering_inertia.py">toolbox/clustering_inertia.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/clustering_inertia.py">gui/clustering_inertia.py</a></code>. It determines the inertia based on the number of clusters used in order to determine the optimal number of clusters.
+</p>
+
+```
+    default_user_pars = {'relative': False,
+                         'method': 'kmeans',
+                         'lim cluster': 10,
+                         'label meas': ['piezoresponse']}
+    default_parameters = {
+        'dir path in': '',
+        'dir path in prop': '',
+        'dir path out': '',
+        'user_pars': default_user_pars,
+        'verbose': True,
+        'show plots': True,
+        'save': False,
+    }
+```
+
+<p align="justify" width="100%">
+For the description of the parameters, see that of curve clustering as the parameters are almost the same. However, the parameter <code>lim cluster</code> sets the maximum number of clusters for which inertia values are calculated and associated. The script then runs the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">toolbox/curve_clustering.py</a></code> by incrementing the number of clusters from 2 to the maximum number specified by the user, to determine the inertia of each configuration. The inertia is then plotted against the number of clusters in the configuration. The optimal number of clusters to choose is located at the elbow of the curve.
 </p>
 
 <p align="center" width="100%">
@@ -2202,7 +2220,7 @@ The entire assemblage of scripts under the <code><a href="https://github.com/CEA
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/figure.py">figure.py</a></code>, which facilitates the generation of visual representations in a consistent style. This encompasses the creation of graphs, histograms, and mappings through the functions <code>plot_graph</code>, <code>plot_hist</code>, and <code>plot_map</code>. The <code>print_plots</code> function offers advanced control over the display and storage of visual representations. <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/fitting.py">fitting.py</a></code>, which is responsible for executing all fits (excluding hysteresis fitting) based on the <a href="https://lmfit.github.io/lmfit-py/fitting.html">minimize</a> function of <a href="https://pypi.org/project/lmfit/">lmfit</a> library. Fit methods like <code>least_sq</code>, <code>least_square</code> (prioritizing speed), or <code>nelder</code> (prioritizing convergence) can be selected with the <code>fit_method</code> setting. <a href="https://lmfit.github.io/lmfit-py/model.html#lmfit.model.Model">Model</a> and <a href="https://lmfit.github.io/lmfit-py/parameters.html#the-parameters-class">Parameters</a> objects of <a href="https://pypi.org/project/lmfit/">lmfit</a> are likewise employed, respectively, for the amalgamation of model functions (e.g., adding an affine or constant component that may correspond to noise) and for the management of parameter initialization prior to the fitting process (initial value, range of variation, etc.). It includes a parent class <code>CurveFit</code> and three subclasses, namely <code>GaussianPeakFit</code>, <code>ShoPeakFit</code>, and <code>ShoPhaseFit</code>, each built upon the parent class to execute Gaussian, Sho, and Sho phase (arctangent) fitting, respectively. The parent class incorporates a set of methods shared by the subclasses, including <code>eval</code> for evaluating the fitted peak at specified x-values, <code>fit</code>, <code>plot</code>, and more. The subclasses invoke the parent class during initialization and enable parameter initialization for fitting, with model-specific initial guesses. <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/iterable.py">iterable.py</a></code> for handling iterables. <br>
-&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/multi_proc.py">multi_proc.py</a></code> for multi processing functions. If <code>multi_processing</code> setting is active, multi processing is used for <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/datacube_to_nanoloop_s1.py">datacube_to_nanoloop_s1.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/nanoloop_to_hyst_s2.py">nanoloop_to_hyst_s2.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">phase_offset_analyzer.py</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_inversion_analyzer.py">phase_inversion_analyzer.py</a></code>. <br>
+&#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/multi_proc.py">multi_proc.py</a></code> for multi processing functions. If <code>multi_processing</code> setting is active, multi processing is used for <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/datacube_to_nanoloop_s1.py">datacube_to_nanoloop_s1.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/data_processing/nanoloop_to_hyst_s2.py">nanoloop_to_hyst_s2.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/force_curve_clustering.py">force_curve_clustering.py</a></code>, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_offset_analyzer.py">phase_offset_analyzer.py</a></code> and <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/phase_inversion_analyzer.py">phase_inversion_analyzer.py</a></code>. <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/noise.py">noise.py</a></code> for noise management. The <code>filter_mean</code> function serves as a filtering mechanism for averaging, offering a choice of filter order to reduce measurement noise. The <code>noise</code> function is used to generate noise of a specific amplitude (widely employed for examples and tests to recreate the most realistic data) using three possible distribution models: <code>uniform</code>, <code>normal</code>, and <code>laplace</code>. Finally, the <code>butter_filter</code> function filters an input signal with a Butterworth filter type ('low', 'high', 'bandpass', or 'bandstop'), along with its associated cutoff frequency or frequencies, and its order.<br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/path_management.py">path_management.py</a></code> for path management. The function <code>get_filenames_with_conditions</code> allows for the extraction of a list of file names from a directory, with the possibility of adding conditions on a prefix or a suffix. The function <code>gen_bruker_filenames</code> enables the generation of file names in the format used by Bruker, such as string.0_00000.ext. Finally, the function <code>sort_filenames</code> sorts a list of file names by automatically extracting any index included in the file name. <br>
 &#8226 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/peak.py">peak.py</a></code> contains a set of functions for peak handling. <code>detect_peak</code> and <code>find_main_peaks</code> automatically identify peaks in an array of values, relying on the <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.find_peaks.html#scipy.signal.find_peaks">find_peaks</a> function from the scipy.signal library. The function <code>plot_main_peaks</code> allow to plot an array of peaks. It also includes functions for guessing noise components (linear component with <code>guess_affine</code> and constant with <code>guess_bckgnd</code>) and determining peak width with <code>width_peak</code>. <br>
