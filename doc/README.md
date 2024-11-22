@@ -736,7 +736,7 @@ This entire process enhances the precision of the measured values. The robustnes
 </p>
 
 <p align="justify" width="100%">
-Voici la procédure à suivre, définie dans la méthode process_sidebands de <code>SegmentStableDFRT</code>. On défini, les grandeurs $\Phi$ et $\Omega$ à partir des mesures extraites du segment, respectivement en amplitude $A$, phase $\phi$ et fréquences $f$ des sidebandes de part et d'autre, à gauche et droite (d'indice $1$ et $2$ respectivement) de la résonance :
+Here is the procedure to follow, defined in the <code>process_sidebands</code> method of <code>SegmentStableDFRT</code>. The quantities $\Phi$ and $\Omega$ are defined based on the measurements extracted from the segment, specifically the amplitude $A$, phase $\phi$, and frequencies $f$ of the sidebands on either side, left and right (indexed as $1$ and $2$ respectively) of the resonance:
 </p>
 
 <p align="justify" width="100%">
