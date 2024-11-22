@@ -44,9 +44,9 @@ Files:
 	- force_curve_clustering_params.json (PySSPFM/toolbox/force_curve_clustering_params.json)
 	- force_curve_clustering.py (PySSPFM/toolbox/force_curve_clustering.py)
 Functions:
-	- normalize_and_concatenate_curves (PySSPFM/toolbox/vector_clustering.py)
-	- save_avg_loop (PySSPFM/toolbox/vector_clustering.py)
-	- save_labels (PySSPFM/toolbox/vector_clustering.py)
+	- normalize_and_concatenate_curves (PySSPFM/toolbox/curve_clustering.py)
+	- save_avg_loop (PySSPFM/toolbox/curve_clustering.py)
+	- save_labels (PySSPFM/toolbox/curve_clustering.py)
 	- raw_data_extraction_without_script (PySSPFM/utils/raw_extraction.py)
 	- process_single_forcecurve (PySSPFM/utils/core/multi_proc.py)
 	- run_multi_proc_forcecurve (PySSPFM/utils/core/multi_proc.py)
