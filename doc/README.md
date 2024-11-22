@@ -1809,8 +1809,11 @@ Force curves are "zeroed" by applying height / deflection offset corrections wit
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/inertia_vs_cluster.PNG> <br>
-    <em>Result of clustering_inertia (figure generated with <code>main_clustering_inertia</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/clustering_inertia.py">toolbox/clustering_inertia.py</a></code> script)</em>
+    <img align="center" width="25%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_clusters_centroids.PNG>
+    <img align="center" width="25%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_all_hyst.PNG>
+    <img align="center" width="25%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_mean_hyst.PNG>
+    <img align="center" width="20%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_carto.PNG> <br>
+    <em>Result of curve_clustering (figure generated with <code>main_loop_clustering</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">toolbox/curve_clustering.py</a></code> script)</em>
 </p>
 
 #### VIII.4.f) Clustering inertia
@@ -1820,22 +1823,15 @@ The script can be executed directly using the executable file: <code><a href="ht
 </p>
 
 ```
-    default_user_pars = {'object': 'loop',
-                         'relative': False,
-                         'pca': True,
+    default_user_pars = {'relative': False,
                          'method': 'kmeans',
-                         'lim cluster': 10}
-    default_loop_pars = {'label meas': ['piezoresponse']}
-    default_curve_pars = {'extension': 'spm',
-                          'mode': 'classic',
-                          'label meas': ['deflection']}
+                         'lim cluster': 10,
+                         'label meas': ['piezoresponse']}
     default_parameters = {
         'dir path in': '',
         'dir path in prop': '',
         'dir path out': '',
         'user_pars': default_user_pars,
-        'loop_pars': default_loop_pars,
-        'curve_pars': default_curve_pars,
         'verbose': True,
         'show plots': True,
         'save': False,
@@ -1843,7 +1839,7 @@ The script can be executed directly using the executable file: <code><a href="ht
 ```
 
 <p align="justify" width="100%">
-For the description of the parameters, see that of vector clustering as the parameters are the same. However, the parameter <code>lim cluster</code> sets the maximum number of clusters for which inertia values are calculated and associated. The script then runs the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">toolbox/vector_clustering.py</a></code> by incrementing the number of clusters from 2 to the maximum number specified by the user, to determine the inertia of each configuration. The inertia is then plotted against the number of clusters in the configuration. The optimal number of clusters to choose is located at the elbow of the curve.
+For the description of the parameters, see that of curve clustering as the parameters are almost the same. However, the parameter <code>lim cluster</code> sets the maximum number of clusters for which inertia values are calculated and associated. The script then runs the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">toolbox/curve_clustering.py</a></code> by incrementing the number of clusters from 2 to the maximum number specified by the user, to determine the inertia of each configuration. The inertia is then plotted against the number of clusters in the configuration. The optimal number of clusters to choose is located at the elbow of the curve.
 </p>
 
 <p align="center" width="100%">
