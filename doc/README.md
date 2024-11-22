@@ -1771,26 +1771,19 @@ For each mode associated with loop procedure (on field, off field, and eventuall
 #### VIII.4.e) Force curve clustering
 
 <p align="justify" width="100%">
-The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/clustering_inertia.py">toolbox/clustering_inertia.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/clustering_inertia.py">gui/clustering_inertia.py</a></code>. It determines the inertia based on the number of clusters used in order to determine the optimal number of clusters.
+The script can be executed directly using the executable file: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/force_curve_clustering.py">toolbox/force_curve_clustering.py</a></code> or through the graphical user interface: <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/gui/force_curve_clustering.py">gui/force_curve_clustering.py</a></code>. The script performs clustering on a series of force curves (force vs. distance).
 </p>
 
 ```
-    default_user_pars = {'object': 'loop',
-                         'relative': False,
-                         'pca': True,
-                         'method': 'kmeans',
-                         'lim cluster': 10}
-    default_loop_pars = {'label meas': ['piezoresponse']}
-    default_curve_pars = {'extension': 'spm',
-                          'mode': 'classic',
-                          'label meas': ['deflection']}
+    default_cluster_pars = {'nb clusters': 4,
+                            'method': 'kmeans'}
     default_parameters = {
         'dir path in': '',
-        'dir path in prop': '',
+        'csv file path': '',
         'dir path out': '',
-        'user_pars': default_user_pars,
-        'loop_pars': default_loop_pars,
-        'curve_pars': default_curve_pars,
+        'extension': 'spm',
+        'mode': 'classic',
+        'cluster_pars': default_cluster_pars,
         'verbose': True,
         'show plots': True,
         'save': False,
@@ -1798,12 +1791,13 @@ The script can be executed directly using the executable file: <code><a href="ht
 ```
 
 <p align="justify" width="100%">
-For the description of the parameters, see that of vector clustering as the parameters are the same. However, the parameter <code>lim cluster</code> sets the maximum number of clusters for which inertia values are calculated and associated. The script then runs the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">toolbox/vector_clustering.py</a></code> by incrementing the number of clusters from 2 to the maximum number specified by the user, to determine the inertia of each configuration. The inertia is then plotted against the number of clusters in the configuration. The optimal number of clusters to choose is located at the elbow of the curve.
+For the description of the parameters, see that of curve clustering as the parameters are the same. Additionally, the corresponding csv measurement sheet is accessed to extract measurement parameters. The parameter <code>extension</code> sets the extension of the raw data measurement files. The selection of the measurement mode is facilitated through the <code>'mode'</code> parameter, with options including: <br>
+&#8226 <code>'classic'</code> (Frequency Sweep in Resonance or Single Frequency) <br>
+&#8226 <code>'dfrt'</code> <br>
 </p>
 
-<p align="center" width="100%">
-    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/inertia_vs_cluster.PNG> <br>
-    <em>Result of clustering_inertia (figure generated with <code>main_clustering_inertia</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/clustering_inertia.py">toolbox/clustering_inertia.py</a></code> script)</em>
+<p align="justify" width="100%">
+The script then runs the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">toolbox/vector_clustering.py</a></code> by incrementing the number of clusters from 2 to the maximum number specified by the user, to determine the inertia of each configuration. The inertia is then plotted against the number of clusters in the configuration. The optimal number of clusters to choose is located at the elbow of the curve.
 </p>
 
 <p align="justify" width="100%">
@@ -1812,6 +1806,11 @@ The dimensions of the mappings are extracted using the <code>extract_map_dim_fro
 For a deeper understanding of the input file management, please refer to the relevant sections in the documentation:<br>
 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1) - Input files</a><br>
 <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#iv1---parameters">IV.1) - Parameters</a>
+</p>
+
+<p align="center" width="100%">
+    <img align="center" width="50%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/inertia_vs_cluster.PNG> <br>
+    <em>Result of clustering_inertia (figure generated with <code>main_clustering_inertia</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/clustering_inertia.py">toolbox/clustering_inertia.py</a></code> script)</em>
 </p>
 
 #### VIII.4.f) Clustering inertia
