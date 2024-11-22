@@ -1372,12 +1372,12 @@ User parameters:
         'csv file path': '',
         'dir path out': '',
         'del 1st loop': True,
-        'corr': 'offset',
+        'corr': 'raw',
         'pha fwd': 0,
         'pha rev': 180,
         'func': 'cosine',
         'main elec': True,
-        'grounded tip': True,
+        'grounded tip': False,
         'positive d33': True,
         'locked elec slope': 'None',
         'verbose': True,
@@ -1583,7 +1583,7 @@ User parameters:
                                'fit pars': default_fit_params,
                                'verbose': True,
                                'show plots': True,
-                               'save': False}
+                               'save': True}
 ```
 
 <p align="justify" width="100%">
@@ -1757,7 +1757,7 @@ For a deeper understanding of the input file management, please refer to the rel
 </p>
 
 <p align="justify" width="100%">
-&#8226 Curve: The entirety of data stemming from the raw SSPFM measurements. The data are extracted using the <code>raw_data_extraction</code> function from the  <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/file_clustering.py">utils/file_clustering.py</a></code> script, with the file extension and the chosen mode respectively via the <code>extension</code> and <code>mode</code> parameters.<br> 
+&#8226 Curve: The entirety of data stemming from the raw SSPFM measurements. The data are extracted using the <code>raw_data_extraction_without_script</code> function from the  <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/file_clustering.py">utils/file_clustering.py</a></code> script, with the file extension and the chosen mode respectively via the <code>extension</code> and <code>mode</code> parameters.<br> 
 The dimensions of the mappings are extracted using the <code>extract_map_dim_from_csv</code> function from the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/file_clustering.py">utils/file_clustering.py</a></code> script.<br>
 For a deeper understanding of the input file management, please refer to the relevant sections in the documentation:<br>
 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/README.md#iii1---input-files">III.1) - Input files</a><br>
