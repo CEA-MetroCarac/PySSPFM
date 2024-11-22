@@ -116,13 +116,14 @@ In the case you use this library for your work, please think about citing it: <b
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3c-figures">VIII.3.c) Figures</a></li>
                     </ul>
                 </li>
-                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4-vector-clustering-and-clustering-inertia-pca-with-k-means-or-gmm">VIII.4) Vector clustering and Clustering inertia (PCA with K-Means or GMM)</a>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4-curve-clustering-force-curve-clustering-and-clustering-inertia-pca-with-k-means-or-gmm">VIII.4) Curve clustering, Force curve clustering, and Clustering inertia (PCA with K-Means or GMM)</a>
                     <ul align="justify" width="100%">
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4a-parameters">VIII.4.a) Parameters</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4b-extraction">VIII.4.b) Extraction</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4c-treatment">VIII.4.c) Treatment</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4d-figures">VIII.4.d) Figures</a></li>
-                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4e-clustering-inertia">VIII.4.e) Clustering inertia</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4e-force-curve-clustering">VIII.4.e) Force curve clustering</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4f-clustering-inertia">VIII.4.f) Clustering inertia</a></li>
                     </ul>
                 </li>
                 <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii5-mean-hysteresis">VIII.5) Mean hysteresis</a>
