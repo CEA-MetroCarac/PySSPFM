@@ -52,8 +52,8 @@ PySSPFM facilitates the processing of a set of SSPFM measurement data points by 
 For each of the SSPFM measurement files, amplitude and phase are extracted for each segment using a user-selected method: <br>
 &#8226 <code>max</code>: extract maximum or resonance peak (for frequency sweep mode) <br>
 &#8226 <code>fit</code>: perform a fit of the resonance peak based on SHO (Simple Harmonic Oscillator) model (for frequency sweep mode) <br>
-&#8226 <code>single_freq</code>: mean of the segment (for single frequency mode, in or out of resonance) <br>
-&#8226 <code>dfrt</code>: mean of the segment (for DFRT mode) <br>
+&#8226 <code>single_freq</code>: mean of the segment (for single frequency mode, in or out of resonance, and for DFRT mode without sidebands processing) <br>
+&#8226 <code>dfrt</code>: mean of the segment (for DFRT mode with sidebands processing: if errors occur, use the <code>single_freq</code> mode) <br>
 </p>
 
 ### 2) Second step of data analysis
@@ -73,7 +73,7 @@ includes algorithms of:
 </p>
 
 <p align="justify" width="100%">
-&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">Machine learning (K-Means, GMM, PCA)</a> <br>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">Machine learning (K-Means, GMM, PCA)</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_hyst.py">Phase separation</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">Mapping cross-correlation</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">SPM file converter</a> <br>
@@ -140,6 +140,6 @@ pip install git+https://github.com/CEA-MetroCarac/PySSPFM.git
 <p align="justify" width="100%">
 In the case you use this library for your work, please think about citing it: <br>
 &#8226 H. Valloire, P. Quéméré, N. Vaxelaire, H. Kuentz, G. Le Rhun, Ł. Borowik, "Enhancing ferroelectric characterization at nanoscale: A comprehensive approach for data processing in spectroscopic piezoresponse force microscopy", J. Appl. Phys, 21 May 2024, 135 (19): 194101, DOI: <a href="https://doi.org/10.1063/5.0197226">https://doi.org/10.1063/5.0197226</a> <br>
-&#8226 Hugo Valloire, Patrick Quemere, 2024, May 22, PySSPFM (Version 2024.06).
+&#8226 Hugo Valloire, Patrick Quemere, 2024, November 22, PySSPFM (Version 2024.11).
 </p>
 

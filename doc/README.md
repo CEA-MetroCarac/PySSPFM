@@ -11,7 +11,7 @@
 <p align="justify" width="100%">
 In the case you use this library for your work, please think about citing it: <br>
 &#8226 H. Valloire, P. Quéméré, N. Vaxelaire, H. Kuentz, G. Le Rhun, Ł. Borowik, "Enhancing ferroelectric characterization at nanoscale: A comprehensive approach for data processing in spectroscopic piezoresponse force microscopy", J. Appl. Phys, 21 May 2024, 135 (19): 194101, DOI: <a href="https://doi.org/10.1063/5.0197226">https://doi.org/10.1063/5.0197226</a> <br>
-&#8226 Hugo Valloire, Patrick Quemere, 2024, May 22, PySSPFM (Version 2024.07).
+&#8226 Hugo Valloire, Patrick Quemere, 2024, November 22, PySSPFM (Version 2024.11).
 </p>
 
 <div id="table-of-contents" style="text-align: justify;">
@@ -173,7 +173,7 @@ The PySSPFM application then proceeds with two stages of measurement processing.
 </p>
 
 <p align="justify" width="100%">
-&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">Machine learning (K-Means, GMM, PCA)</a> <br>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">Machine learning (K-Means, GMM, PCA)</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_hyst.py">Phase separation</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">Mapping cross-correlation</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">SPM file converter</a> <br>
@@ -352,7 +352,7 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
             <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/KNN500n_2023-11-20-16h15m_out_dfrt">KNN500n_2023-11-20-16h15m_out_dfrt</a></code>: embodying the measurement outcomes post the second phase of processing. This underpins the following endeavors:</li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_phase.py">examples/utils/nanoloop/ex_phase.py</a></code>.</li>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_vector_clustering.py">examples/toolbox/ex_vector_clustering.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_curve_clustering.py">examples/toolbox/ex_curve_clustering.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_clustering_inertia.py">examples/toolbox/ex_clustering_inertia.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_global_map_reader.py">examples/toolbox/ex_global_map_reader.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_list_map_reader.py">examples/toolbox/ex_list_map_reader.py</a></code>.</li>
@@ -405,7 +405,7 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
             <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/PZT100n">PZT100n</a></code>: housing an assemblage of SSPFM datacube measurement files with an spm extension (Bruker), alongside their corresponding measurement records. This serves the following purpose:</li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_phase.py">examples/utils/nanoloop/ex_phase.py</a></code>.</li>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_vector_clustering.py">examples/toolbox/ex_vector_clustering.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_force_curve_clustering.py">examples/toolbox/ex_force_curve_clustering.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_phase_offset_analyzer.py">examples/toolbox/ex_phase_offset_analyzer.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_phase_inversion_analyzer.py">examples/toolbox/ex_phase_inversion_analyzer.py</a></code>.</li>
             </ul>
@@ -672,11 +672,10 @@ The user must specify if input phase values are in radians or not with <code>rad
 
 <p align="justify" width="100%">
 Other scalar properties associated with the entire SSPFM measurement file are extracted from the deflection and height signals using the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code> with the <code>extract_other_properties</code> function: <br>
-&#8226 The average height, determined once the approach is performed, during the measurement (thus excluding hold segments). <br>
-&#8226 The height difference between the average of the first and last measured points (at the beginning of approach and at the end of retraction), with the average height during the measurement. <br>
+&#8226 The height corresponding to the average of the first and last measured points (at the beginning of approach and at the end of retraction), after the height curve is zeroed (the first approach point set as zero height). <br>
 &#8226 The average deflection, determined once the approach is performed, during the measurement (thus excluding hold segments). <br>
 &#8226 The deflection error, determined once the approach is performed, during the measurement (thus excluding hold segments), defined as the square root of the variance of the deflection signal. <br>
-&#8226 The adhesion, determined as the difference between the average deflection of the tip out of contact during retraction with the minimum deflection during retraction. <br>
+&#8226 The adhesion for both approach and retract of the tip, determined as the difference between the average deflection of the tip out of contact during retraction with the minimum deflection respectively during approach and retraction. <br>
 The phase offset applied to the raw phase signal before analysis is also added to these properties.
 </p>
 
@@ -737,7 +736,7 @@ This entire process enhances the precision of the measured values. The robustnes
 </p>
 
 <p align="justify" width="100%">
-Voici la procédure à suivre, définie dans la méthode process_sidebands de <code>SegmentStableDFRT</code>. On défini, les grandeurs $\Phi$ et $\Omega$ à partir des mesures extraites du segment, respectivement en amplitude $A$, phase $\phi$ et fréquences $f$ des sidebandes de part et d'autre, à gauche et droite (d'indice $1$ et $2$ respectivement) de la résonance :
+Here is the procedure to follow, defined in the <code>process_sidebands</code> method of <code>SegmentStableDFRT</code>. The quantities $\Phi$ and $\Omega$ are defined based on the measurements extracted from the segment, specifically the amplitude $A$, phase $\phi$, and frequencies $f$ of the sidebands on either side, left and right (indexed as $1$ and $2$ respectively) of the resonance:
 </p>
 
 <p align="justify" width="100%">
@@ -763,6 +762,10 @@ The resonance frequency $f_0$ and the quality factor $Q$ can then be determined 
 $$ f_0 = \sqrt{f_1 * f_2 * {f_2 * X_1 - f_1 * X_2 \over f_1 * X_1 - f_2 * X_2}} $$
 
 $$ Q = {\sqrt{f_1 * f_2 * (f_2 * X_1 - f_1 * X_2) * (f_1 * X_1 - f_2 * X_2) \over f_2^2 - f_1^2}} $$
+
+<p align="justify" width="100%">
+Note that if the DFRT is used without acquiring the sideband signals or if an error occurs during the sideband processing procedure (particularly for the calculation of the resonance frequency and quality factor), it is recommended to use the <code>single_freq</code> mode.
+</p>
 
 <p align="justify" width="100%">
 &#8226 <code>single_freq</code> : The measurements are performed at a fixed frequency, either at resonance or not. The amplitude and phase values are then maintained at relatively stable values, in most cases. The extraction of quantities is the same as in DFRT: respectively for amplitude and phase, the mean as well as the uncertainty determined from the variance are extracted for each segment. This process is performed with <code>SegmentStable</code> objetc of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code> script.

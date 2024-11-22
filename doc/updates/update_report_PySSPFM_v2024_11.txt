@@ -1,0 +1,79 @@
+Update Report PySSPFM v2024.11:
+
+# Clustering vector / curve :
+- Changes mainly affect the following scripts: PySSPFM/toolbox/curve_clustering.py and PySSPFM/toolbox/clustering_inertia.py.
+- Renaming: PySSPFM/toolbox/vector_clustering.py → PySSPFM/toolbox/curve_clustering.py.
+- Removal of differentiation between curves and loops: clustering now applies to a curve, which is a loop (obtained after the first stage of data processing). Force curve clustering is handled in another script. Functions, input parameters, etc., have been adapted or removed accordingly.
+- PCA is no longer optional and is always active.
+- Cluster labels are saved as properties (maps) along with average loops per cluster (x and y axes) in PySSPFM/toolbox/vector_clustering.py.
+- New plot_axis_y option for the perform_curve_clustering function to plot desired y-axis values (added for use in force curve clustering).
+- Bug fixes in the clustering executable script related to case differentiation.
+- Redefinition of the x-axis for averaged curves by cluster → previous determination of the x-axis was inaccurate in certain cases (e.g., force curves).
+
+# Updated normalization method for clustering curves with multiple magnitudes:
+- All curves are normalized using an affine relationship based on the normalization (0 to 1) of the average curve for each magnitude.
+- Plots have been updated accordingly.
+
+# Force curve clustering (PySSPFM/toolbox/force_curve_clustering.py):
+- New toolbox script: PySSPFM/toolbox/force_curve_clustering.py.
+- Multiprocessing support: PySSPFM/utils/core/multi_proc.py.
+
+# Processing force curves (deflection or force vs. height = tip-sample distance):
+- Force curves are "zeroed" by applying height/deflection offset corrections (correct_force_offset → PySSPFM/utils/datacube_to_nanoloop/analysis.py).
+- Property calculations ("other properties") are performed after zeroing force curves (extract_other_properties → PySSPFM/utils/datacube_to_nanoloop/analysis.py).
+- Removal of the "diff height" property (now represented as "mean height" after zeroing force curves).
+- Addition of an adhesion property: distinction between deflection during the first (approach) and last (retract) tip-sample contact (extract_other_properties → PySSPFM/utils/datacube_to_nanoloop/analysis.py).
+- Force curve plotting during step 1 of analysis, with extracted properties (e.g., adhesion) (PySSPFM/data_processing/datacube_to_nanoloop_s1.py).
+
+# Adjustments to certain ferroelectric property calculations:
+- Changes primarily affect: PySSPFM/utils/core/curve_hysteresis.py and PySSPFM/data_processing/nanoloop_to_hyst_s2.py.
+- Hysteresis amplitude (saturated piezoresponse window), y window (remanent piezoresponse window), x window (coercive voltage window), diff coef (relative difference between hysteresis branch slopes), and hysteresis area can only take positive values.
+
+# Debug mode for raw data segmentation (for SPM files with segment sample number bugs):
+- Sample number is determined individually for each segment during file reading, and data segmentation is adjusted accordingly.
+- This mode can be activated via a boolean key in the code (manually by the developer).
+- Affects the following scripts: PySSPFM/data_processing/datacube_to_nanoloop_s1.py, PySSPFM/toolbox/phase_inversion_analyzer.py, and PySSPFM/toolbox/phase_offset_analyzer.py.
+
+# Other modifications
+- Display of average property values across the entire map (PySSPFM/toolbox/list_map_reader.py).
+- Generic axis titles for clustering plots (PySSPFM/utils/core/clustering.py).
+- Quality factor is no longer considered in piezoresponse calculations in the executable script (PySSPFM/toolbox/mean_hyst.py).
+
+# New file / functions
+Files:
+	- force_curve_clustering_params.json (PySSPFM/toolbox/force_curve_clustering_params.json)
+	- force_curve_clustering.py (PySSPFM/toolbox/force_curve_clustering.py)
+Functions:
+	- normalize_and_concatenate_curves (PySSPFM/toolbox/vector_clustering.py)
+	- save_avg_loop (PySSPFM/toolbox/vector_clustering.py)
+	- save_labels (PySSPFM/toolbox/vector_clustering.py)
+	- raw_data_extraction_without_script (PySSPFM/utils/raw_extraction.py)
+	- process_single_forcecurve (PySSPFM/utils/core/multi_proc.py)
+	- run_multi_proc_forcecurve (PySSPFM/utils/core/multi_proc.py)
+	- calculate_masked_average (PySSPFM/toolbox/list_map_reader.py)
+	- plt_force_curve (PySSPFM/utils/datacube_to_nanoloop/plot.py)
+	- correct_force_offset (PySSPFM/utils/datacube_to_nanoloop/analysis.py)
+	- data_structure (PySSPFM/utils/raw_extraction.py)
+
+# File / function removal
+Files:
+Functions:
+	- raw_data_extraction (PySSPFM/utils/file_clustering.py)
+	- main_curve_clustering (PySSPFM/utils/file_clustering.py)
+	- main_vector_clustering (PySSPFM/utils/file_clustering.py)
+
+# File / function renamed or moved
+Files:
+	- PySSPFM/toolbox/vector_clustering.py -> PySSPFM/toolbox/curve_clustering.py
+	- examples/toolbox/ex_vector_clustering.py -> examples/toolbox/ex_curve_clustering.py
+	- tests/toolbox/test_vector_clustering.py -> tests/toolbox/test_curve_clustering.py
+Functions:
+	- plot_all_vector_clustering -> plot_all_curve_clustering (PySSPFM/utils/core/clustering.py)
+	- plot_avg_vector_clustering -> plot_avg_curve_clustering (PySSPFM/utils/core/clustering.py)
+	- perform_vector_clustering -> perform_curve_clustering (PySSPFM/toolbox/curve_clustering.py)
+	- Déplacement et changement de nom de la fonction raw_data_extraction (PySSPFM/utils/file_clustering.py) --> raw_data_extraction_without_script (PySSPFM/utils/raw_extraction.py)
+	- ex_vector_clustering (examples/toolbox/ex_vector_clustering.py) -> ex_curve_clustering (examples/toolbox/ex_curve_clustering.py)
+	- test_vector_clustering_piezoresponse (tests/toolbox/test_vector_clustering.py) -> test_curve_clustering_piezoresponse (tests/toolbox/test_curve_clustering.py)
+	- test_vector_clustering_amp_pha (tests/toolbox/test_vector_clustering.py) -> test_curve_clustering_amp_pha (tests/toolbox/test_curve_clustering.py)
+
+# Update documentation, examples (script and data) and tests
