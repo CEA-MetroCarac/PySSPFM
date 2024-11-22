@@ -11,7 +11,7 @@
 <p align="justify" width="100%">
 In the case you use this library for your work, please think about citing it: <br>
 &#8226 H. Valloire, P. Quéméré, N. Vaxelaire, H. Kuentz, G. Le Rhun, Ł. Borowik, "Enhancing ferroelectric characterization at nanoscale: A comprehensive approach for data processing in spectroscopic piezoresponse force microscopy", J. Appl. Phys, 21 May 2024, 135 (19): 194101, DOI: <a href="https://doi.org/10.1063/5.0197226">https://doi.org/10.1063/5.0197226</a> <br>
-&#8226 Hugo Valloire, Patrick Quemere, 2024, May 22, PySSPFM (Version 2024.07).
+&#8226 Hugo Valloire, Patrick Quemere, 2024, November 22, PySSPFM (Version 2024.11).
 </p>
 
 <div id="table-of-contents" style="text-align: justify;">
@@ -173,7 +173,7 @@ The PySSPFM application then proceeds with two stages of measurement processing.
 </p>
 
 <p align="justify" width="100%">
-&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">Machine learning (K-Means, GMM, PCA)</a> <br>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">Machine learning (K-Means, GMM, PCA)</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_hyst.py">Phase separation</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">Mapping cross-correlation</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">SPM file converter</a> <br>
@@ -352,7 +352,7 @@ The <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples"
             <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/examples/data/PySSPFM_example_in/KNN500n_2023-11-20-16h15m_out_dfrt">KNN500n_2023-11-20-16h15m_out_dfrt</a></code>: embodying the measurement outcomes post the second phase of processing. This underpins the following endeavors:</li>
             <ul align="justify" width="100%">
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/utils/nanoloop/ex_phase.py">examples/utils/nanoloop/ex_phase.py</a></code>.</li>
-                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_vector_clustering.py">examples/toolbox/ex_vector_clustering.py</a></code>.</li>
+                <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_curve_clustering.py">examples/toolbox/ex_curve_clustering.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_clustering_inertia.py">examples/toolbox/ex_clustering_inertia.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_global_map_reader.py">examples/toolbox/ex_global_map_reader.py</a></code>.</li>
                 <li><code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/examples/toolbox/ex_list_map_reader.py">examples/toolbox/ex_list_map_reader.py</a></code>.</li>
