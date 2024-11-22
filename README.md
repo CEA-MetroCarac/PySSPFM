@@ -52,8 +52,8 @@ PySSPFM facilitates the processing of a set of SSPFM measurement data points by 
 For each of the SSPFM measurement files, amplitude and phase are extracted for each segment using a user-selected method: <br>
 &#8226 <code>max</code>: extract maximum or resonance peak (for frequency sweep mode) <br>
 &#8226 <code>fit</code>: perform a fit of the resonance peak based on SHO (Simple Harmonic Oscillator) model (for frequency sweep mode) <br>
-&#8226 <code>single_freq</code>: mean of the segment (for single frequency mode, in or out of resonance) <br>
-&#8226 <code>dfrt</code>: mean of the segment (for DFRT mode) <br>
+&#8226 <code>single_freq</code>: mean of the segment (for single frequency mode, in or out of resonance, and for DFRT mode without sidebands processing) <br>
+&#8226 <code>dfrt</code>: mean of the segment (for DFRT mode with sidebands processing: if errors occur, use the <code>single_freq</code> mode) <br>
 </p>
 
 ### 2) Second step of data analysis
