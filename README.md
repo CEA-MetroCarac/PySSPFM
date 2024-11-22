@@ -73,7 +73,7 @@ includes algorithms of:
 </p>
 
 <p align="justify" width="100%">
-&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/vector_clustering.py">Machine learning (K-Means, GMM, PCA)</a> <br>
+&#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/curve_clustering.py">Machine learning (K-Means, GMM, PCA)</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/mean_hyst.py">Phase separation</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/map_correlation.py">Mapping cross-correlation</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/spm_converter.py">SPM file converter</a> <br>
