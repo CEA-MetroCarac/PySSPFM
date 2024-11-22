@@ -672,11 +672,10 @@ The user must specify if input phase values are in radians or not with <code>rad
 
 <p align="justify" width="100%">
 Other scalar properties associated with the entire SSPFM measurement file are extracted from the deflection and height signals using the script <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/datacube_to_nanoloop/analysis.py">datacube_to_nanoloop/analysis.py</a></code> with the <code>extract_other_properties</code> function: <br>
-&#8226 The average height, determined once the approach is performed, during the measurement (thus excluding hold segments). <br>
-&#8226 The height difference between the average of the first and last measured points (at the beginning of approach and at the end of retraction), with the average height during the measurement. <br>
+&#8226 The height corresponding to the average of the first and last measured points (at the beginning of approach and at the end of retraction), after the height curve is zeroed (the first approach point set as zero height). <br>
 &#8226 The average deflection, determined once the approach is performed, during the measurement (thus excluding hold segments). <br>
 &#8226 The deflection error, determined once the approach is performed, during the measurement (thus excluding hold segments), defined as the square root of the variance of the deflection signal. <br>
-&#8226 The adhesion, determined as the difference between the average deflection of the tip out of contact during retraction with the minimum deflection during retraction. <br>
+&#8226 The adhesion for both approach and retract of the tip, determined as the difference between the average deflection of the tip out of contact during retraction with the minimum deflection respectively during approach and retraction. <br>
 The phase offset applied to the raw phase signal before analysis is also added to these properties.
 </p>
 
