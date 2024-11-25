@@ -1,0 +1,12 @@
+dir_path_in = "path/to/your/directory/best_nanoloops"
+verbose = true
+show_plots = true
+save = false
+
+[user_pars]
+relative = false
+method = "kmeans"
+"label meas" = [ "piezoresponse",]
+"nb clusters off" = 4
+"nb clusters on" = 4
+"nb clusters coupled" = 4

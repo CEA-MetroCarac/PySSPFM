@@ -1,0 +1,10 @@
+dir_path_in = "path/to/your/directory/in"
+extension = "spm"
+mode = "classic"
+verbose = true
+show_plots = true
+save = false
+
+[cluster_pars]
+"nb clusters" = 4
+method = "kmeans"

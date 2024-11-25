@@ -1,0 +1,4 @@
+dir_path_in = "path/to/your/directory"
+verbose = true
+mode = "classic"
+extension = "txt"

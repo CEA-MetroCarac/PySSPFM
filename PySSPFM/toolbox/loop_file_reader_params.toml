@@ -1,0 +1,14 @@
+file_path_in = "path/to/your/loop_file.txt"
+verbose = true
+show_plots = true
+save = false
+
+[user_pars]
+"del 1st loop" = true
+corr = "raw"
+"pha fwd" = 0
+"pha rev" = 180
+func = "np.cos"
+"main elec" = true
+"grounded tip" = false
+"positive d33" = true

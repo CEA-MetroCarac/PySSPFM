@@ -1,0 +1,7 @@
+dir_path_in = "path/to/your/directory/properties"
+show_plots = true
+save = false
+
+[user_pars]
+"revert mask" = false
+"ind maps" = [ [ "off", "charac tot fit: area",], [ "off", "fit pars: ampli_0",], [ "on", "charac tot fit: area",], [ "on", "fit pars: ampli_0",],]

@@ -1,0 +1,27 @@
+dir_path_in = "path/to/your/directory"
+verbose = true
+show_plots = true
+save = true
+
+[user_pars]
+func = "sigmoid"
+method = "least_square"
+asymmetric = false
+"inf thresh" = 10
+"sat thresh" = 90
+"del 1st loop" = true
+"pha corr" = "raw"
+"pha fwd" = 0
+"pha rev" = 180
+"pha func" = "np.cos"
+"main elec" = true
+"diff mode" = "set"
+"sat mode" = "set"
+
+[user_pars."diff domain"]
+min = -5.0
+max = 5.0
+
+[user_pars."sat domain"]
+min = -9.0
+max = 9.0

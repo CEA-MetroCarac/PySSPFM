@@ -1,0 +1,10 @@
+dir_path_in = "path/to/your/directory/best_nanoloops"
+verbose = true
+show_plots = true
+save = false
+
+[user_pars]
+relative = false
+method = "kmeans"
+"lim cluster" = 10
+"label meas" = [ "piezoresponse",]

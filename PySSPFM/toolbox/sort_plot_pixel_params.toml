@@ -1,0 +1,14 @@
+dir_path_in = "path/to/your/directory"
+verbose = true
+show_plots = true
+save = false
+
+[user_pars]
+reverse = false
+"del 1st loop" = true
+"interp fact" = 4
+"interp func" = "linear"
+
+[user_pars."prop key"]
+mode = "off"
+prop = "charac tot fit: area"

@@ -1,0 +1,5 @@
+file_path_in = "path/to/your/file.spm"
+verbose = true
+show_plots = true
+save_plots = false
+mode = "classic"
