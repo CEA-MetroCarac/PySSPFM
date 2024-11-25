@@ -40,7 +40,8 @@ def load_parameters_from_file(file_path):
 
     def replace_null_with_none(data):
         """
-        Recursively replace 'null' with None in a dictionary or list.
+        Recursively replace 'null' with None in a dictionary or list,
+        convert strings to raw strings, and handle paths.
 
         Parameters
         ----------
@@ -50,16 +51,25 @@ def load_parameters_from_file(file_path):
         Returns
         -------
         any
-            The processed data with 'null' replaced by None.
+            The processed data with 'null' replaced by None,
+            strings converted to raw strings, and paths processed.
         """
         if isinstance(data, dict):
             for key, value in data.items():
-                data[key] = replace_null_with_none(value)
+                if "path" in key.lower() or "root" in key.lower():
+                    if isinstance(value, str):
+                        # Replace backslashes with double backslashes
+                        data[key] = value.replace(r"\\", r"\\\\")
+                else:
+                    data[key] = replace_null_with_none(value)
         elif isinstance(data, list):
             for i, item in enumerate(data):
                 data[i] = replace_null_with_none(item)
-        elif data == "null":
-            data = None
+        elif isinstance(data, str):
+            if data == "null":
+                data = None
+            else:
+                data = fr"{data}"
         return data
 
     _, file_extension = os.path.splitext(file_path)
@@ -75,7 +85,9 @@ def load_parameters_from_file(file_path):
             return dict_pars
     elif file_extension == '.json':
         with open(file_path, 'r', encoding='utf-8') as json_file:
-            return json.load(json_file)
+            dict_pars = json.load(json_file)
+            dict_pars = replace_null_with_none(dict_pars)
+            return dict_pars
     else:
         raise ValueError(
             "Invalid file format. Supported formats are .toml and .json.")

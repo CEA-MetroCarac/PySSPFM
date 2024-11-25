@@ -1,4 +1,5 @@
-dir_path_in = "path/to/your/directory"
+dir_path_in = "path\\to\\your\\directory"
+dir_path_out = "null"
 verbose = true
 mode = "classic"
 extension = "txt"

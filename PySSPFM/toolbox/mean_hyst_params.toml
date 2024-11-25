@@ -1,4 +1,5 @@
-dir_path_in = "path/to/your/directory"
+dir_path_in = "path\\to\\your\\directory"
+dir_path_out = "null"
 verbose = true
 show_plots = true
 save = false
@@ -16,12 +17,14 @@ asymmetric = false
 "pha rev" = 180
 "pha func" = "np.cos"
 "main elec" = true
+"locked elec slope" = "null"
 "sat mode" = "set"
 "interp fact" = 4
 "interp func" = "linear"
 
 [user_pars.mask]
 "revert mask" = false
+"man mask" = "null"
 
 [user_pars."diff domain"]
 min = -5.0
@@ -35,5 +38,6 @@ max = 9.0
 prop = "charac tot fit: area"
 mode = "off"
 "min val" = 0.005
+"max val" = "null"
 fmt = ".2f"
 interactive = false

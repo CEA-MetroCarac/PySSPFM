@@ -1,4 +1,32 @@
 from setuptools import setup, find_packages
+from setuptools.command.install import install
+from pathlib import Path
+
+
+class CustomInstallCommand(install):
+    """Custom installation to copy user configuration files."""
+
+    def run(self):
+        # Appeler l'installation standard
+        install.run(self)
+
+        # Définir le répertoire utilisateur
+        user_home = Path.home() / ".pysspfm"
+        user_home.mkdir(exist_ok=True)  # Créer le répertoire s'il n'existe pas
+
+        # Copier les fichiers .json et .toml vers le répertoire utilisateur
+        package_dir = Path(
+            __file__).parent / "resources"  # Chemin où sont stockés les fichiers
+        for file in package_dir.glob("*.json"):
+            self.copy_file(file, user_home / file.name)
+        for file in package_dir.glob("*.toml"):
+            self.copy_file(file, user_home / file.name)
+
+    def copy_file(self, src, dst):
+        """Copie un fichier depuis src vers dst."""
+        self.announce(f"Copying {src} to {dst}", level=2)
+        dst.write_bytes(src.read_bytes())
+
 
 setup(
     name="PySSPFM",
@@ -48,6 +76,8 @@ setup(
         'gui_scripts': [
             'PySSPFM = PySSPFM.gui.main:main',
         ]
-    }
+    },
 
+    cmdclass={"install": CustomInstallCommand},
+    # Associe la commande personnalisée
 )

@@ -1,5 +1,5 @@
 {
-    "dir_path_in": "path/to/your/directory",
+    "dir_path_in": "path\\to\\your\\directory",
     "root_out": null,
     "verbose": true,
     "show_plots": true,

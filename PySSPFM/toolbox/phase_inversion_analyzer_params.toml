@@ -1,4 +1,6 @@
-dir_path_in = "path/to/your/directory/in"
+dir_path_in = "path\\to\\your\\directory\\in"
+dir_path_out = "null"
+range_file = "null"
 extension = "spm"
 verbose = true
 show_plots = true
@@ -6,6 +8,7 @@ save = true
 
 [seg_params]
 mode = "max"
+"filter type" = "null"
 "filter freq 1" = 1000.0
 "filter freq 2" = 3000.0
 "filter ord" = 4
@@ -16,6 +19,7 @@ mode = "max"
 "sens peak detect" = 1.5
 
 [pha_params]
+phase_file_path = "null"
 offset = 0
 
 [seg_params."cut seg [%]"]

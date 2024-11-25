@@ -1,4 +1,6 @@
-file_path_in = "path/to/your/loop_file.txt"
+file_path_in = "path\\to\\your\\loop_file.txt"
+dir_path_out = "null"
+csv_file_path = "null"
 verbose = true
 show_plots = true
 save = false
@@ -12,3 +14,4 @@ func = "np.cos"
 "main elec" = true
 "grounded tip" = false
 "positive d33" = true
+"locked elec slope" = "null"

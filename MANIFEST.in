@@ -3,5 +3,8 @@ graft doc
 graft tests
 include PySSPFM/*_settings.json
 include PySSPFM/data_processing/*.json
+include PySSPFM/data_processing/*.toml
+include PySSPFM/toolbox/*.json
+include PySSPFM/toolbox/*.toml
 include PySSPFM/logo_icon/*.png
 global-exclude *.pyc __pycache__

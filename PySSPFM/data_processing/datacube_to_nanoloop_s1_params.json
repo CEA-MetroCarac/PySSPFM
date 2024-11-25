@@ -1,5 +1,5 @@
 {
-    "file_path_in": "path/to/your/file.spm",
+    "file_path_in": "path\\to\\your\\file.spm",
     "root_out": null,
     "verbose": true,
     "show_plots": true,

@@ -61,3 +61,6 @@ Documentation = "https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc"
 
 [tool.build]
 include = ["PySSPFM/*json", "PySSPFM/*/*json", "PySSPFM/*toml", "PySSPFM/*/*toml", "PySSPFM/*/*png"]
+
+[tool.setuptools.finalize]
+hooks = ["python post_install.py"]

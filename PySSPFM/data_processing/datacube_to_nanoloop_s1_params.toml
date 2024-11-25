@@ -1,10 +1,12 @@
-file_path_in = "path/to/your/file.spm"
+file_path_in = "path\\to\\your\\file.spm"
+root_out = "null"
 verbose = true
 show_plots = true
 save = true
 
 [seg_params]
 mode = "max"
+"filter type" = "null"
 "filter freq 1" = 1000.0
 "filter freq 2" = 3000.0
 "filter ord" = 4
@@ -15,6 +17,7 @@ mode = "max"
 "sens peak detect" = 1.5
 
 [pha_params]
+phase_file_path = "null"
 method = "static"
 offset = 0
 

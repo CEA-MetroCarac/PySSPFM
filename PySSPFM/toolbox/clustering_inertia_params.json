@@ -1,5 +1,5 @@
 {
-    "dir_path_in": "path/to/your/directory/best_nanoloops",
+    "dir_path_in": "path\\to\\your\\directory\\best_nanoloops",
     "dir_path_out": null,
     "dir_path_in_props": null,
     "verbose": true,
