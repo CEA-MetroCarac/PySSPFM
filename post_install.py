@@ -1,31 +1,36 @@
 """
-module description
+Create settings and parameters folder
 """
 
-import os
 from pathlib import Path
 
 
 def post_install():
-    """Copie les fichiers JSON et TOML dans le répertoire utilisateur
-    après installation."""
+    """Copy JSON and TOML files to the user directory after installation."""
     user_home = Path.home() / ".pysspfm"
-    user_home.mkdir(exist_ok=True)  # Créer le répertoire s'il n'existe pas
+    # Create the directory if it doesn't exist
+    user_home.mkdir(exist_ok=True)
 
-    # Chemin vers le répertoire des fichiers à copier
-    package_dir = Path(__file__).parent / "resources"
-    if not package_dir.exists():
-        return
+    # Path to the directory containing the files to copy
+    for folder in ["PySSPFM", r"PySSPFM/data_processing", r"PySSPFM/toolbox"]:
+        package_dir = Path(__file__).parent / folder
+        if not package_dir.exists():
+            return
 
-    # Copier les fichiers JSON et TOML
-    for file in package_dir.glob("*.json"):
-        copy_file(file, user_home / file.name)
-    for file in package_dir.glob("*.toml"):
-        copy_file(file, user_home / file.name)
+        # Copy JSON and TOML files
+        for file in package_dir.glob("*.json"):
+            if file.name == "examples_settings.json":
+                pass
+            elif file.name == "default_settings.json":
+                copy_file(file, user_home / "pysspfm.json")
+            else:
+                copy_file(file, user_home / file.name)
+        for file in package_dir.glob("*.toml"):
+            copy_file(file, user_home / file.name)
 
 
 def copy_file(src, dst):
-    """Copie un fichier du chemin source (src) au chemin destination (dst)."""
+    """Copy a file from the source path (src) to the destination path (dst)."""
     print(f"Copying {src} to {dst}")
     dst.write_bytes(src.read_bytes())
 
