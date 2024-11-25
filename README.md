@@ -130,7 +130,7 @@ pip install git+https://github.com/CEA-MetroCarac/PySSPFM.git
 ### Create the Settings and Parameters Folder
 
 <p align="justify" width="100%">
-To create the settings and parameters folder (containing files with .json and .toml extensions), run the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/post_install.py">post_install.py</a> script (via a terminal, console, etc.).
+To create the settings and parameters folder (containing files with .json and .toml extensions), run the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/post_install.py">post_install.py</a> script (via a terminal, console, etc.).
 </p>
 
 ### Optional dependencies
