@@ -330,7 +330,7 @@ def copy_default_settings(file_path):
 
     # Get the path from the settings
     ext = get_setting("extract_parameters")
-    user_params_file_path = filename.replace('.py', f'_params.{ext}')
+    user_params_file_path = f"{get_setting(filename.replace('.py', '_params'))}.{ext}"
     # Expand the ~ to the home directory
     user_params_file_path = Path(user_params_file_path).expanduser()
 

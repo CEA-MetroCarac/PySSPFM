@@ -116,13 +116,14 @@ In the case you use this library for your work, please think about citing it: <b
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii3c-figures">VIII.3.c) Figures</a></li>
                     </ul>
                 </li>
-                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4-vector-clustering-and-clustering-inertia-pca-with-k-means-or-gmm">VIII.4) Vector clustering and Clustering inertia (PCA with K-Means or GMM)</a>
+                <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4-curve-clustering-force-curve-clustering-and-clustering-inertia-pca-with-k-means-or-gmm">VIII.4) Curve clustering, Force curve clustering, and Clustering inertia (PCA with K-Means or GMM)</a>
                     <ul align="justify" width="100%">
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4a-parameters">VIII.4.a) Parameters</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4b-extraction">VIII.4.b) Extraction</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4c-treatment">VIII.4.c) Treatment</a></li>
                         <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4d-figures">VIII.4.d) Figures</a></li>
-                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4e-clustering-inertia">VIII.4.e) Clustering inertia</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4e-force-curve-clustering">VIII.4.e) Force curve clustering</a></li>
+                        <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii4f-clustering-inertia">VIII.4.f) Clustering inertia</a></li>
                     </ul>
                 </li>
                 <li><a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#viii5-mean-hysteresis">VIII.5) Mean hysteresis</a>
@@ -1809,11 +1810,11 @@ Force curves are "zeroed" by applying height / deflection offset corrections wit
 </p>
 
 <p align="center" width="100%">
-    <img align="center" width="18%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_other_properties.PNG>
-    <img align="center" width="18%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_clusters_centroids_force_curve.PNG>
-    <img align="center" width="18%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_all_force_curve.PNG>
-    <img align="center" width="18%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_mean_force_curve.PNG>
-    <img align="center" width="18%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_carto_force_curve.PNG> <br>
+    <img align="center" width="45%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_other_properties.PNG>
+        <img align="center" width="30%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_carto_force_curve.PNG> <br>
+    <img align="center" width="33%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_clusters_centroids_force_curve.PNG>
+    <img align="center" width="33%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_all_force_curve.PNG>
+    <img align="center" width="33%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/clustering_mean_force_curve.PNG><br>
     <em>Result of force_curve_clustering (figure generated with <code>main_force_curve_analysis</code> function of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/toolbox/force_curve_clustering.py">toolbox/force_curve_clustering.py</a></code> script)</em>
 </p>
 
@@ -2193,21 +2194,21 @@ The analysis begins with the selection of a pre-existing CSV measurement sheet, 
 ## IX) Overall settings
 
 <p align="justify" width="100%">
-General settings are linked to the entire PySSPFM application. They are user-modifiable and can be accessed directly in the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/settings.json">settings.json</a></code> file. A comprehensive description is provided for each setting, along with its default value in the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/settings.py">settings.py</a></code> script. A collection of settings facilitates the default path management for saved result files as well as for tests and examples (input and output data). For json settings file, paths can be: <br>
+General settings are linked to the entire PySSPFM application. They are user-modifiable and can be accessed directly in the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/default_settings.json">default_settings.json</a></code> file. A comprehensive description is provided for each setting, along with its default value in the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/settings.py">settings.py</a></code> script. A collection of settings facilitates the default path management for saved result files as well as for tests and examples (input and output data). For json settings file, paths can be: <br>
 &#8226 A list of path (string) that will be joined <br>
 &#8226 An absolute string corresponding to the path <br>
-<code>"ROOT"</code> or <code>"PARENT"</code> corresponds to the parent directory of the analyzed measurement folder, and <code>"EXAMPLES"</code> corresponds to the data root for examples and tests (see the corresponding settings at the top of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/settings.json">settings.json</a></code> file). Settings are also provided for the extraction of data in measurement file with the setting <code>key_measurement_extraction</code>. The keys of this dictionary can be adapted to the input measurement file but the corresponding string variables must remain unchanged, as these will be utilized in the SSPFM measurement processing code. Settings are also provided for writing of data from SSPFM files. Some settings are linked to the visualization of figures, while others pertain to various processing stages (fitting methods associated with the <code>minimize</code> function of <a href="https://pypi.org/project/lmfit/">lmfit</a> library, etc.).
+<code>"ROOT"</code> or <code>"PARENT"</code> corresponds to the parent directory of the analyzed measurement folder, and <code>"EXAMPLES"</code> corresponds to the data root for examples and tests (see the corresponding settings at the top of <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/settings.py">settings.py</a></code> file). Settings are also provided for the extraction of data in measurement file with the setting <code>key_measurement_extraction</code>. The keys of this dictionary can be adapted to the input measurement file but the corresponding string variables must remain unchanged, as these will be utilized in the SSPFM measurement processing code. Settings are also provided for writing of data from SSPFM files. Some settings are linked to the visualization of figures, while others pertain to various processing stages (fitting methods associated with the <code>minimize</code> function of <a href="https://pypi.org/project/lmfit/">lmfit</a> library, etc.).
 </p>
 
 <p align="justify" width="100%">
-A second json file, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/default_settings.json">default_settings.json</a></code>, contains the default values for some of the settings found in the initial <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/settings.json">settings.json</a></code> file. Only when an example or test is executed will these default settings take precedence over those from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/settings.json">settings.json</a></code> file, as they are tailored to the input files (path and data) and treatment on which the examples and tests rely. It's crucial not to modify the default values in the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/default_settings.json">default_settings.json</a></code> file, as this could lead to the failure of PySSPFM's example and test executions.
+A second json file, <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/examples_settings.json">examples_settings.json</a></code>, contains the default values for some of the settings found in the initial <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/default_settings.json">default_settings.json</a></code> file. Only when an example or test is executed will these default settings take precedence over those from <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/default_settings.json">default_settings.json</a></code> file, as they are tailored to the input files (path and data) and treatment on which the examples and tests rely. It's crucial not to modify the default values in the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/example_settings.json">example_settings.json</a></code> file, as this could lead to the failure of PySSPFM's example and test executions.
 </p>
 
 <p align="justify" width="100%">
 <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/settings.py">settings.py</a></code> script provide functions to: <br>
 &#8226 Extract settings from json files, with function <code>get_settings_dict</code>, based on function <code>load_parameters_from_file</code> of the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/utils/core/extract_params_from_file.py">utils/core/extract_params_from_file.py</a></code> script (refer to section <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc#x-core-scripts">X) Core scripts</a> in the documentation).<br>
 &#8226 Adapt the settings associated with path management, with <code>get_path_from_json</code> function, in order to convert it in a real path that can be used in the python code.<br>
-&#8226 Determine either to choose between settings or default settings, with the <code>get_setting</code> function. It will determines whether the execution is from an example or test, or not. Accordingly, it selects the corresponding setting from one of the two dictionaries: the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/settings.json">settings.json</a></code> or the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/default_settings.json">default_settings.json</a></code>. 
+&#8226 Determine either to choose between settings or default settings, with the <code>get_setting</code> function. It will determines whether the execution is from an example or test, or not. Accordingly, it selects the corresponding setting from one of the two dictionaries: the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/default_settings.json">default_settings.json</a></code> or the <code><a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/PySSPFM/example_settings.json">example_settings.json</a></code>. 
 </p>
 
 ## X) Core scripts

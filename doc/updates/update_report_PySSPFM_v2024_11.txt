@@ -1,6 +1,6 @@
 Update Report PySSPFM v2024.11:
 
-# Clustering vector / curve :
+# Clustering vector / curve:
 - Changes mainly affect the following scripts: PySSPFM/toolbox/curve_clustering.py and PySSPFM/toolbox/clustering_inertia.py.
 - Renaming: PySSPFM/toolbox/vector_clustering.py → PySSPFM/toolbox/curve_clustering.py.
 - Removal of differentiation between curves and loops: clustering now applies to a curve, which is a loop (obtained after the first stage of data processing). Force curve clustering is handled in another script. Functions, input parameters, etc., have been adapted or removed accordingly.
@@ -44,9 +44,9 @@ Files:
 	- force_curve_clustering_params.json (PySSPFM/toolbox/force_curve_clustering_params.json)
 	- force_curve_clustering.py (PySSPFM/toolbox/force_curve_clustering.py)
 Functions:
-	- normalize_and_concatenate_curves (PySSPFM/toolbox/vector_clustering.py)
-	- save_avg_loop (PySSPFM/toolbox/vector_clustering.py)
-	- save_labels (PySSPFM/toolbox/vector_clustering.py)
+	- normalize_and_concatenate_curves (PySSPFM/toolbox/curve_clustering.py)
+	- save_avg_loop (PySSPFM/toolbox/curve_clustering.py)
+	- save_labels (PySSPFM/toolbox/curve_clustering.py)
 	- raw_data_extraction_without_script (PySSPFM/utils/raw_extraction.py)
 	- process_single_forcecurve (PySSPFM/utils/core/multi_proc.py)
 	- run_multi_proc_forcecurve (PySSPFM/utils/core/multi_proc.py)
@@ -71,7 +71,7 @@ Functions:
 	- plot_all_vector_clustering -> plot_all_curve_clustering (PySSPFM/utils/core/clustering.py)
 	- plot_avg_vector_clustering -> plot_avg_curve_clustering (PySSPFM/utils/core/clustering.py)
 	- perform_vector_clustering -> perform_curve_clustering (PySSPFM/toolbox/curve_clustering.py)
-	- Déplacement et changement de nom de la fonction raw_data_extraction (PySSPFM/utils/file_clustering.py) --> raw_data_extraction_without_script (PySSPFM/utils/raw_extraction.py)
+	- Moving and renaming the function raw_data_extraction (PySSPFM/utils/file_clustering.py) --> raw_data_extraction_without_script (PySSPFM/utils/raw_extraction.py)
 	- ex_vector_clustering (examples/toolbox/ex_vector_clustering.py) -> ex_curve_clustering (examples/toolbox/ex_curve_clustering.py)
 	- test_vector_clustering_piezoresponse (tests/toolbox/test_vector_clustering.py) -> test_curve_clustering_piezoresponse (tests/toolbox/test_curve_clustering.py)
 	- test_vector_clustering_amp_pha (tests/toolbox/test_vector_clustering.py) -> test_curve_clustering_amp_pha (tests/toolbox/test_curve_clustering.py)
