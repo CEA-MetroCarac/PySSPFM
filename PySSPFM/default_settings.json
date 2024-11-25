@@ -74,6 +74,7 @@
     "datacube_to_nanoloop_s1_params": "~/.pysspfm/datacube_to_nanoloop_s1_params",
     "nanoloop_to_hyst_s2_params": "~/.pysspfm/nanoloop_to_hyst_s2_params",
     "curve_clustering_params": "~/.pysspfm/curve_clustering_params",
+    "force_curve_clustering_params": "~/.pysspfm/force_curve_clustering_params",
     "global_map_reader_params": "~/.pysspfm/global_map_reader_params",
     "list_map_reader_params": "~/.pysspfm/list_map_reader_params",
     "loop_file_reader_params": "~/.pysspfm/loop_file_reader_params",
