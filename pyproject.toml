@@ -45,7 +45,7 @@ dependencies = [
 PySSPFM = "PySSPFM.gui.main:main"
 
 [project.entry-points.console_scripts]
-post_install = "PySSPFM.post_install:main"
+post_install = "post_install:main"
 
 [tool.setuptools]
 include-package-data = true
