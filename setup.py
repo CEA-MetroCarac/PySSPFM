@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from setuptools import setup, find_packages
 from setuptools.command.install import install
+from distutils.cmd import Command
 
 
 class CustomInstallCommand(install):
@@ -34,6 +35,26 @@ class CustomInstallCommand(install):
         path (dst)."""
         self.announce(f"Copying {src} to {dst}", level=2)
         dst.write_bytes(src.read_bytes())
+
+
+class RunPostInstallScript(Command):
+    """Custom command to execute the post_install.py script."""
+    description = "Run the post_install.py script."
+    user_options = []  # Add options if necessary
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        post_install_script = Path(__file__).parent / "post_install.py"
+        if post_install_script.exists():
+            self.announce(f"Executing {post_install_script}...", level=2)
+            os.system(f"{os.sys.executable} {post_install_script}")
+        else:
+            self.announce(f"Script {post_install_script} not found.", level=2)
 
 
 setup(
@@ -87,5 +108,8 @@ setup(
         ]
     },
 
-    cmdclass={"install": CustomInstallCommand},
+    cmdclass={
+        "install": CustomInstallCommand,
+        "run_post_install": RunPostInstallScript,
+    },
 )
