@@ -1,0 +1,21 @@
+dir_path_in = "path\\to\\your\\directory\\properties"
+dir_path_out = "null"
+verbose = true
+show_plots = true
+save = false
+
+[user_pars]
+"interp fact" = 4
+"interp func" = "linear"
+"meas time" = "null"
+"revert mask" = false
+"man mask" = []
+"ind maps" = [ [ "off", "charac tot fit: area",], [ "off", "fit pars: ampli_0",], [ "on", "charac tot fit: area",], [ "on", "fit pars: ampli_0",],]
+
+[user_pars.ref]
+mode = "off"
+prop = "charac tot fit: R_2 hyst"
+fmt = ".5f"
+"min val" = 0.95
+"max val" = "null"
+interactive = false
