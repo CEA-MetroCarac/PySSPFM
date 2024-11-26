@@ -108,11 +108,6 @@ See the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc">docume
 
 ## Installation
 
-### From PyPI
-
-```bash
-pip install PySSPFM
-```
 ### From GitHub
 
 #### With poetry
