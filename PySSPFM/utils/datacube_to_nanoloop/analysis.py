@@ -812,8 +812,14 @@ def extract_other_properties(dict_meas, start_ind, end_ind,
     mean_height, mean_deflection, deflection_error, adhesion_approach, \
         adhesion_retract = None, None, None, None, None
 
-    height_tab = list(dict_meas["height"])
-    deflection_tab = list(dict_meas["deflection"])
+    try:
+        height_tab = list(dict_meas["height"])
+    except KeyError:
+        height_tab = []
+    try:
+        deflection_tab = list(dict_meas["deflection"])
+    except KeyError:
+        deflection_tab = []
 
     if "height" in dict_meas and "deflection" in dict_meas and len(
             height_tab) > 0 and len(deflection_tab) > 0:
