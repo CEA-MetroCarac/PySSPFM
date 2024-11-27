@@ -1,7 +1,7 @@
 # PySSPFM
 
 <p align="center" width="100%">
-    <img align="center" width="70%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/circular_diagram.png> <br>
+    <img align="center" width="70%" src=https://github.com/CEA-MetroCarac/CEA-MetroCarac.github.io/blob/main/pysspfm/circular_diagram.png> <br>
 </p>
 
 <p align="justify" width="100%"> 
@@ -34,7 +34,7 @@ If you encounter any bugs or issues, you can kindly bring them to the developer'
 ## Overview
 
 <p align="center" width="100%">
-    <img align="center" width=80%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/scheme_workflow_pysspfm.PNG> <br>
+    <img align="center" width=80%" src=https://github.com/CEA-MetroCarac/CEA-MetroCarac.github.io/blob/main/pysspfm/scheme_workflow_pysspfm.PNG> <br>
     <em>PySSPFM workflow</em>
 </p>
 
@@ -87,7 +87,7 @@ See the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc">docume
 ## Usage
 
 <p align="center" width="100%">
-    <img align="center" width="15%" src=https://github.com/CEA-MetroCarac/PySSPFM/blob/main/doc/_static/gui_main.PNG> <br>
+    <img align="center" width="15%" src=https://github.com/CEA-MetroCarac/CEA-MetroCarac.github.io/blob/main/pysspfm/gui_main.PNG> <br>
     <em>PySSPFM GUI main window</em>
 </p>
 
@@ -95,7 +95,7 @@ See the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc">docume
 All code executed and parameter adjustments made through the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/gui">GUI</a> can be replicated in executable scripts: <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/data_processing">Data Processing</a> <br>
 &#8226 <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/PySSPFM/toolbox">Toolbox</a> <br>
-Then, the user can adjust parameters directly either in a pre-filled JSON file, in a TOML file, or in the executable Python code. The JSON and TOML files, which manage the global settings of PySSPFM as well as the parameters specific to each executable script, are stored in a <code>.pysspfm</code> folder located in the user's C drive (e.g., <code>C:\Users\HV265662.pysspfm</code>). This folder is created during the PySSPFM installation process, detailed in the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main?tab=readme-ov-file#installation">PySSPFM Overview</a> file. It is essential to run the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/post_install.py">post_install.py</a> script once (via a terminal, console, etc.) after the installation.
+Then, the user can adjust parameters directly either in a pre-filled JSON file, in a TOML file, or in the executable Python code. The JSON and TOML files, which manage the global settings of PySSPFM as well as the parameters specific to each executable script, are stored in a <code>.pysspfm</code> folder located in the user's C drive (e.g., <code>C:\Users\HV265662.pysspfm</code>). This folder is created during the PySSPFM installation process, detailed in the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main?tab=readme-ov-file#installation">PySSPFM Overview</a> file. It is possible to run the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/post_install.py">post_install.py</a> script (via a terminal, console, etc.) to regenerate it. These files are also available in the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/resources">resources</a> folder, distributed across the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/resources/data_processing">resources/data_processing</a> and <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/resources/toolbox">resources/toolbox</a> directories.
 </p>
 
 <p align="justify" width="100%">
@@ -108,11 +108,6 @@ See the <a href="https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc">docume
 
 ## Installation
 
-### From PyPI
-
-```bash
-pip install PySSPFM
-```
 ### From GitHub
 
 #### With poetry
@@ -130,7 +125,7 @@ pip install git+https://github.com/CEA-MetroCarac/PySSPFM.git
 ### Create the Settings and Parameters Folder
 
 <p align="justify" width="100%">
-To create the settings and parameters folder (containing files with .json and .toml extensions), run the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/post_install.py">post_install.py</a> script (via a terminal, console, etc.) after installation.
+The settings and parameters folder (containing files with .json and .toml extensions) is automatically created during installation. To regenerate it, run the <a href="https://github.com/CEA-MetroCarac/PySSPFM/blob/main/post_install.py">post_install.py</a> script (via a terminal, console, etc.) after installation.
 </p>
 
 ### Optional dependencies

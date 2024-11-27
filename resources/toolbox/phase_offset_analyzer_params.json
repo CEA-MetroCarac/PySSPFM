@@ -1,0 +1,25 @@
+{
+    "dir_path_in": "path\\to\\your\\directory\\in",
+    "dir_path_out": null,
+    "range_file": null,
+    "extension": "spm",
+    "verbose": true,
+    "show_plots": true,
+    "save": true,
+    "seg_params": {
+        "mode": "max",
+        "cut seg [%]": {
+            "start": 5,
+            "end": 5
+        },
+        "filter type": null,
+        "filter freq 1": 1e3,
+        "filter freq 2": 3e3,
+        "filter ord": 4
+    },
+    "fit_params": {
+        "fit pha": false,
+        "detect peak": false,
+        "sens peak detect": 1.5
+    }
+}

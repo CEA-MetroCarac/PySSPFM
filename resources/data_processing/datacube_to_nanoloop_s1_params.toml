@@ -1,0 +1,26 @@
+file_path_in = "path\\to\\your\\file.spm"
+root_out = "null"
+verbose = true
+show_plots = true
+save = true
+
+[seg_params]
+mode = "max"
+"filter type" = "null"
+"filter freq 1" = 1000.0
+"filter freq 2" = 3000.0
+"filter ord" = 4
+
+[fit_params]
+"fit pha" = false
+"detect peak" = false
+"sens peak detect" = 1.5
+
+[pha_params]
+phase_file_path = "null"
+method = "static"
+offset = 0
+
+[seg_params."cut seg [%]"]
+start = 5
+end = 5

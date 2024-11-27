@@ -1,0 +1,49 @@
+dir_path_in = "path\\to\\your\\directory"
+dir_path_out = "null"
+verbose = true
+show_plots = true
+save = false
+
+[user_pars]
+"interp fact" = 4
+"interp func" = "linear"
+
+[user_pars."revert mask"]
+on = false
+off = false
+coupled = false
+other = false
+
+[user_pars."man mask"]
+on = []
+off = []
+coupled = []
+other = []
+
+[user_pars.ref.on]
+prop = "charac tot fit: area"
+fmt = ".5f"
+"min val" = "null"
+"max val" = 0.005
+interactive = false
+
+[user_pars.ref.off]
+prop = "charac tot fit: area"
+fmt = ".5f"
+"min val" = "null"
+"max val" = 0.005
+interactive = false
+
+[user_pars.ref.coupled]
+prop = "r_2"
+fmt = ".5f"
+"min val" = 0.95
+"max val" = "null"
+interactive = false
+
+[user_pars.ref.other]
+prop = "deflection error"
+fmt = ".2f"
+"min val" = "null"
+"max val" = 5
+interactive = false
