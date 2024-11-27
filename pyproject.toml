@@ -5,7 +5,7 @@ build-backend = 'setuptools.build_meta'
 
 [project]
 name = "PySSPFM"
-version = "2024.11b"
+version = "2024.11c"
 authors = [{ name = "Hugo Valloire, Patrick Quemere", email = "hugovalloire@gmail.com" }]
 description = "PySSPFM: A specialized tool for Switching Spectroscopy Piezoresponse Force Microscopy (SSPFM) data processing"
 readme = "README.md"
