@@ -13,8 +13,8 @@ from PySSPFM.settings import get_setting
 from PySSPFM.utils.core.figure import print_plots
 from PySSPFM.toolbox.mean_hyst import main_mean_hyst as main_script
 from PySSPFM.gui.utils import \
-    (add_grid_separator, grid_item, show_tooltip, apply_style, extract_var,
-     init_secondary_wdw, wdw_main_title)
+    (add_grid_separator, grid_item, show_tooltip, extract_var,
+     init_secondary_wdw, wdw_main_title, create_useful_links_button)
 from PySSPFM.utils.path_for_runable import save_path_management, create_json_res
 
 
@@ -161,33 +161,22 @@ def main(parent=None):
         dir_path_out = filedialog.askdirectory()
         dir_path_out_var.set(dir_path_out)
 
-    # Create top frame
-    top_frame = ttk.Frame(scrollable_frame)
-    top_frame.grid(row=0, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
-    apply_style(top_frame)
-    top_frame.columnconfigure(0, weight=1)
-
     # Window title: Mean loop
-    wdw_main_title(top_frame, title)
+    wdw_main_title(scrollable_frame, title)
 
     row = 3
 
-    # Create left frame
-    left_frame = ttk.Frame(scrollable_frame)
-    left_frame.grid(row=1, column=0, padx=10, pady=10, sticky="ns")
-    apply_style(left_frame)
-
     # Section title: File management
-    label_file = ttk.Label(left_frame, text="File management",
+    label_file = ttk.Label(scrollable_frame, text="File management",
                            font=("Helvetica", 14))
     row = grid_item(label_file, row, column=0, sticky="ew", columnspan=3)
 
     # Directory (in)
-    label_in = ttk.Label(left_frame, text="Directory (in):")
+    label_in = ttk.Label(scrollable_frame, text="Directory (in):")
     row = grid_item(label_in, row, column=0, sticky="e", increment=False)
     dir_path_in_var = tk.StringVar()
     dir_path_in_var.set(user_parameters['dir path in'])
-    entry_in = ttk.Entry(left_frame, textvariable=dir_path_in_var)
+    entry_in = ttk.Entry(scrollable_frame, textvariable=dir_path_in_var)
     row = grid_item(entry_in, row, column=1, sticky="ew", increment=False)
     strg = "- Name: dir_path_in\n" \
            "- Summary: Results of analysis directory " \
@@ -198,7 +187,7 @@ def main(parent=None):
            "- Value: It should be a string representing a directory path."
     entry_in.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(entry_in, mess))
-    browse_button_in = ttk.Button(left_frame, text="Browse",
+    browse_button_in = ttk.Button(scrollable_frame, text="Browse",
                                   command=browse_dir_in)
     row = grid_item(browse_button_in, row, column=2)
 
@@ -282,11 +271,11 @@ def main(parent=None):
     default_input_dir = dir_path_in_var.get()
     default_input_props_dir = \
         generate_default_input_props_dir(default_input_dir)
-    label_prop = ttk.Label(left_frame, text="Directory properties (in) (*):")
+    label_prop = ttk.Label(scrollable_frame, text="Directory properties (in) (*):")
     row = grid_item(label_prop, row, column=0, sticky="e", increment=False)
     dir_path_in_prop_var = tk.StringVar()
     dir_path_in_prop_var.set(default_input_props_dir)
-    entry_prop = ttk.Entry(left_frame, textvariable=dir_path_in_prop_var)
+    entry_prop = ttk.Entry(scrollable_frame, textvariable=dir_path_in_prop_var)
     row = grid_item(entry_prop, row, column=1, sticky="ew", increment=False)
     strg = "- Name: dir_path_in_prop\n" \
            "- Summary: Properties files directory " \
@@ -297,18 +286,18 @@ def main(parent=None):
            "- Value: It should be a string representing a directory path."
     entry_prop.bind("<Enter>",
                     lambda event, mess=strg: show_tooltip(entry_prop, mess))
-    browse_button_prop = ttk.Button(left_frame, text="Browse",
+    browse_button_prop = ttk.Button(scrollable_frame, text="Browse",
                                     command=browse_dir_prop)
     row = grid_item(browse_button_prop, row, column=2)
 
     # Directory txt loop (in)
     default_input_dir = dir_path_in_var.get()
     default_input_loop_dir = generate_default_input_loop_dir(default_input_dir)
-    label_loop = ttk.Label(left_frame, text="Directory txt nanoloops (in) (*):")
+    label_loop = ttk.Label(scrollable_frame, text="Directory txt nanoloops (in) (*):")
     row = grid_item(label_loop, row, column=0, sticky="e", increment=False)
     dir_path_in_loop_var = tk.StringVar()
     dir_path_in_loop_var.set(default_input_loop_dir)
-    entry_loop = ttk.Entry(left_frame, textvariable=dir_path_in_loop_var)
+    entry_loop = ttk.Entry(scrollable_frame, textvariable=dir_path_in_loop_var)
     row = grid_item(entry_loop, row, column=1, sticky="ew", increment=False)
     strg = "- Name: dir_path_in_loop\n" \
            "- Summary: Txt nanoloop files directory " \
@@ -319,7 +308,7 @@ def main(parent=None):
            "- Value: It should be a string representing a directory path."
     entry_loop.bind("<Enter>",
                     lambda event, mess=strg: show_tooltip(entry_loop, mess))
-    browse_button_loop = ttk.Button(left_frame, text="Browse",
+    browse_button_loop = ttk.Button(scrollable_frame, text="Browse",
                                     command=browse_dir_loop)
     row = grid_item(browse_button_loop, row, column=2)
 
@@ -327,12 +316,12 @@ def main(parent=None):
     default_input_dir = dir_path_in_var.get()
     default_input_pars_dir = \
         generate_default_input_pars_dir(default_input_dir)
-    label_pars = ttk.Label(left_frame,
+    label_pars = ttk.Label(scrollable_frame,
                            text="Directory csv meas sheet (in) (*):")
     row = grid_item(label_pars, row, column=0, sticky="e", increment=False)
     dir_path_in_pars_var = tk.StringVar()
     dir_path_in_pars_var.set(default_input_pars_dir)
-    entry_pars = ttk.Entry(left_frame, textvariable=dir_path_in_pars_var)
+    entry_pars = ttk.Entry(scrollable_frame, textvariable=dir_path_in_pars_var)
     row = grid_item(entry_pars, row, column=1, sticky="ew", increment=False)
     strg = "- Name: dir_path_in_pars\n" \
            "- Summary: Path of the CSV measurement sheet directory " \
@@ -342,18 +331,18 @@ def main(parent=None):
            "- Value: It should be a string representing a directory path."
     entry_pars.bind("<Enter>",
                     lambda event, mess=strg: show_tooltip(entry_pars, mess))
-    browse_button_pars = ttk.Button(left_frame, text="Browse",
+    browse_button_pars = ttk.Button(scrollable_frame, text="Browse",
                                     command=browse_dir_pars)
     row = grid_item(browse_button_pars, row, column=2)
 
     # Directory (out)
     default_input_dir = dir_path_in_var.get()
     default_output_dir = generate_default_output_dir(default_input_dir)
-    label_out = ttk.Label(left_frame, text="Directory (out) (*):")
+    label_out = ttk.Label(scrollable_frame, text="Directory (out) (*):")
     row = grid_item(label_out, row, column=0, sticky="e", increment=False)
     dir_path_out_var = tk.StringVar()
     dir_path_out_var.set(default_output_dir)
-    entry_out = ttk.Entry(left_frame, textvariable=dir_path_out_var)
+    entry_out = ttk.Entry(scrollable_frame, textvariable=dir_path_out_var)
     row = grid_item(entry_out, row, column=1, sticky="ew", increment=False)
     strg = "- Name: dir_path_out\n" \
            "- Summary: Saving directory for analysis results figures " \
@@ -363,19 +352,19 @@ def main(parent=None):
            "- Value: It should be a string representing a directory path."
     entry_out.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(entry_out, mess))
-    browse_button_out = ttk.Button(left_frame, text="Select",
+    browse_button_out = ttk.Button(scrollable_frame, text="Select",
                                    command=browse_dir_out)
     row = grid_item(browse_button_out, row, column=2)
-    row = add_grid_separator(left_frame, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Mode
-    label_mode = ttk.Label(left_frame, text="Mode", font=("Helvetica", 14))
+    label_mode = ttk.Label(scrollable_frame, text="Mode", font=("Helvetica", 14))
     row = grid_item(label_mode, row, column=0, sticky="ew", columnspan=3)
 
     # Mode
-    label_mode = ttk.Label(left_frame, text="Mode:")
+    label_mode = ttk.Label(scrollable_frame, text="Mode:")
     row = grid_item(label_mode, row, column=0, sticky="e", increment=False)
-    mode_var = ttk.Combobox(left_frame, values=["off", "on", "coupled"])
+    mode_var = ttk.Combobox(scrollable_frame, values=["off", "on", "coupled"])
     mode_var.set(user_parameters['mode'])
     row = grid_item(mode_var, row, column=1, sticky="ew")
     strg = "- Name: mode\n" \
@@ -386,15 +375,15 @@ def main(parent=None):
            "'coupled.'"
     mode_var.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(mode_var, mess))
-    row = add_grid_separator(left_frame, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Mask
-    label_mask = ttk.Label(left_frame, text="Mask:", font=("Helvetica", 14))
+    label_mask = ttk.Label(scrollable_frame, text="Mask:", font=("Helvetica", 14))
     row = grid_item(label_mask, row, column=0, sticky="ew", columnspan=3)
-    row = add_grid_separator(left_frame, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Subsection title: Mode manual
-    label_man = ttk.Label(left_frame, text="Mode manual",
+    label_man = ttk.Label(scrollable_frame, text="Mode manual",
                           font=("Helvetica", 12))
     strg = "Mask is chosen manually"
     label_man.bind(
@@ -402,11 +391,11 @@ def main(parent=None):
     row = grid_item(label_man, row, column=0, sticky="ew", columnspan=3)
 
     # Manual Mask
-    label_pix = ttk.Label(left_frame, text="List of pixels:")
+    label_pix = ttk.Label(scrollable_frame, text="List of pixels:")
     row = grid_item(label_pix, row, column=0, sticky="e", increment=False)
     man_mask_var = tk.StringVar()
     man_mask_var.set(str(user_parameters['mask']['man mask']))
-    entry_man_mask = ttk.Entry(left_frame, textvariable=man_mask_var)
+    entry_man_mask = ttk.Entry(scrollable_frame, textvariable=man_mask_var)
     row = grid_item(entry_man_mask, row, column=1, sticky="ew")
     strg = "- Name: man_mask\n" \
            "- Summary: Manual mask for selecting specific files\n" \
@@ -420,15 +409,15 @@ def main(parent=None):
            "a, b, c [...] are not selected"
     entry_man_mask.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(entry_man_mask, mess))
-    row = add_grid_separator(left_frame, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Annotation
-    label_annot = ttk.Label(left_frame, text="OR", font=("Helvetica", 12))
+    label_annot = ttk.Label(scrollable_frame, text="OR", font=("Helvetica", 12))
     row = grid_item(label_annot, row, column=0, sticky="ew", columnspan=3)
-    row = add_grid_separator(left_frame, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Subsection title: Mode reference property
-    label_ref = ttk.Label(left_frame, text="Mode reference property (*)",
+    label_ref = ttk.Label(scrollable_frame, text="Mode reference property (*)",
                           font=("Helvetica", 12))
     strg = "Construct a mask with a criterion selection on ref values.\n" \
            "Active only if list of pixels is None"
@@ -437,9 +426,9 @@ def main(parent=None):
     row = grid_item(label_ref, row, column=0, sticky="ew", columnspan=3)
 
     # Mode
-    label_mode = ttk.Label(left_frame, text="Mode:")
+    label_mode = ttk.Label(scrollable_frame, text="Mode:")
     row = grid_item(label_mode, row, column=0, sticky="e", increment=False)
-    ref_mode_var = ttk.Combobox(left_frame, values=["off", "on", "coupled"])
+    ref_mode_var = ttk.Combobox(scrollable_frame, values=["off", "on", "coupled"])
     ref_mode_var.set(user_parameters['mask']['ref']['mode'])
     row = grid_item(ref_mode_var, row, column=1, sticky="ew")
     strg = "- Name: mode\n" \
@@ -452,11 +441,11 @@ def main(parent=None):
                       lambda event, mess=strg: show_tooltip(ref_mode_var, mess))
 
     # Reference Property
-    label_prop = ttk.Label(left_frame, text="Property:")
+    label_prop = ttk.Label(scrollable_frame, text="Property:")
     row = grid_item(label_prop, row, column=0, sticky="e", increment=False)
     ref_prop_var = tk.StringVar()
     ref_prop_var.set(user_parameters['mask']['ref']['prop'])
-    entry_ref_prop = ttk.Entry(left_frame, textvariable=ref_prop_var)
+    entry_ref_prop = ttk.Entry(scrollable_frame, textvariable=ref_prop_var)
     row = grid_item(entry_ref_prop, row, column=1, sticky="ew")
     strg = "- Name: prop\n" \
            "- Summary: Reference propurement for mask determination\n" \
@@ -467,11 +456,11 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(entry_ref_prop, mess))
 
     # Min Value
-    label_min = ttk.Label(left_frame, text="Min Value (*):")
+    label_min = ttk.Label(scrollable_frame, text="Min Value (*):")
     row = grid_item(label_min, row, column=0, sticky="e", increment=False)
     ref_min_var = tk.StringVar()
     ref_min_var.set(user_parameters['mask']['ref']['min val'])
-    entry_ref_min = ttk.Entry(left_frame, textvariable=ref_min_var)
+    entry_ref_min = ttk.Entry(scrollable_frame, textvariable=ref_min_var)
     row = grid_item(entry_ref_min, row, column=1, sticky="ew")
     strg = "- Name: min val\n" \
            "- Summary: Minimum value for reference mask\n" \
@@ -487,11 +476,11 @@ def main(parent=None):
         lambda event, mess=strg: show_tooltip(entry_ref_min, mess))
 
     # Max Value
-    label_max = ttk.Label(left_frame, text="Max Value (*):")
+    label_max = ttk.Label(scrollable_frame, text="Max Value (*):")
     row = grid_item(label_max, row, column=0, sticky="e", increment=False)
     ref_max_var = tk.StringVar()
     ref_max_var.set(user_parameters['mask']['ref']['max val'])
-    entry_ref_max = ttk.Entry(left_frame, textvariable=ref_max_var)
+    entry_ref_max = ttk.Entry(scrollable_frame, textvariable=ref_max_var)
     row = grid_item(entry_ref_max, row, column=1, sticky="ew")
     strg = "- Name: max val\n" \
            "- Summary: Maximum value for reference mask\n" \
@@ -506,11 +495,11 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(entry_ref_max, mess))
 
     # Format
-    label_fmt = ttk.Label(left_frame, text="Format:")
+    label_fmt = ttk.Label(scrollable_frame, text="Format:")
     row = grid_item(label_fmt, row, column=0, sticky="e", increment=False)
     ref_fmt_var = tk.StringVar()
     ref_fmt_var.set(user_parameters['mask']['ref']['fmt'])
-    entry_ref_fmt = ttk.Entry(left_frame, textvariable=ref_fmt_var)
+    entry_ref_fmt = ttk.Entry(scrollable_frame, textvariable=ref_fmt_var)
     row = grid_item(entry_ref_fmt, row, column=1, sticky="ew")
     strg = "- Name: fmt\n" \
            "- Summary: Format for property reference (number of decimal)\n" \
@@ -523,11 +512,11 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(entry_ref_fmt, mess))
 
     # Reference interactive
-    label_interact = ttk.Label(left_frame, text="Interactive:")
+    label_interact = ttk.Label(scrollable_frame, text="Interactive:")
     row = grid_item(label_interact, row, column=0, sticky="e", increment=False)
     ref_interact_var = tk.BooleanVar()
     ref_interact_var.set(user_parameters['mask']['ref']['interactive'])
-    chck_ref_interact = ttk.Checkbutton(left_frame, variable=ref_interact_var)
+    chck_ref_interact = ttk.Checkbutton(scrollable_frame, variable=ref_interact_var)
     row = grid_item(chck_ref_interact, row, column=1, sticky="w")
     strg = "- Name: interactive\n" \
            "- Summary: Interactive mode for constructing a mask from " \
@@ -539,14 +528,14 @@ def main(parent=None):
     chck_ref_interact.bind(
         "<Enter>",
         lambda event, mess=strg: show_tooltip(chck_ref_interact, mess))
-    row = add_grid_separator(left_frame, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Revert Mask
-    label_rev = ttk.Label(left_frame, text="Revert:")
+    label_rev = ttk.Label(scrollable_frame, text="Revert:")
     row = grid_item(label_rev, row, column=0, sticky="e", increment=False)
     revert_mask_var = tk.BooleanVar()
     revert_mask_var.set(user_parameters['mask']['revert mask'])
-    chck_revert_mask = ttk.Checkbutton(left_frame, variable=revert_mask_var)
+    chck_revert_mask = ttk.Checkbutton(scrollable_frame, variable=revert_mask_var)
     row = grid_item(chck_revert_mask, row, column=1, sticky="w")
     strg = "- Name: revert_mask\n" \
            "- Summary: Revert option of the mask for selecting specific " \
@@ -557,10 +546,10 @@ def main(parent=None):
     chck_revert_mask.bind(
         "<Enter>",
         lambda event, mess=strg: show_tooltip(chck_revert_mask, mess))
-    row = add_grid_separator(left_frame, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Map
-    label_map = ttk.Label(left_frame, text="Map", font=("Helvetica", 14))
+    label_map = ttk.Label(scrollable_frame, text="Map", font=("Helvetica", 14))
     strg = "Map parameters are active only if mask is built on ref " \
            "property (i.e. list of pixels is None)."
     label_map.bind(
@@ -568,11 +557,11 @@ def main(parent=None):
     row = grid_item(label_map, row, column=0, sticky="ew", columnspan=3)
 
     # Interpolation Factor
-    label_fact = ttk.Label(left_frame, text="Interpolation Factor:")
+    label_fact = ttk.Label(scrollable_frame, text="Interpolation Factor:")
     row = grid_item(label_fact, row, column=0, sticky="e", increment=False)
     interp_fact_var = tk.IntVar()
     interp_fact_var.set(user_parameters['interp fact'])
-    entry_interp_fact = ttk.Entry(left_frame, textvariable=interp_fact_var)
+    entry_interp_fact = ttk.Entry(scrollable_frame, textvariable=interp_fact_var)
     row = grid_item(entry_interp_fact, row, column=1, sticky="ew")
     strg = "- Name: interp_fact\n" \
            "- Summary: Interpolation factor for sspfm maps interpolation.\n" \
@@ -585,9 +574,9 @@ def main(parent=None):
         entry_interp_fact, mess))
 
     # Interpolation Function
-    label_func = ttk.Label(left_frame, text="Interpolation Function:")
+    label_func = ttk.Label(scrollable_frame, text="Interpolation Function:")
     row = grid_item(label_func, row, column=0, sticky="e", increment=False)
-    interp_func_var = ttk.Combobox(left_frame,
+    interp_func_var = ttk.Combobox(scrollable_frame,
                                    values=['linear', 'cubic'])
     interp_func_var.set(user_parameters['interp func'])
     row = grid_item(interp_func_var, row, column=1, sticky="ew")
@@ -601,15 +590,10 @@ def main(parent=None):
            "pixels is None)."
     interp_func_var.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(interp_func_var, mess))
-    row = add_grid_separator(left_frame, row=row)
-
-    # Create right frame
-    right_frame = ttk.Frame(scrollable_frame)
-    right_frame.grid(row=1, column=1, padx=10, pady=10, sticky="ns")
-    apply_style(right_frame)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Hysteresis treatment
-    label_hyst = ttk.Label(right_frame, text="Hysteresis treatment",
+    label_hyst = ttk.Label(scrollable_frame, text="Hysteresis treatment",
                            font=("Helvetica", 14))
     row = grid_item(label_hyst, row, column=0, sticky="ew", columnspan=3)
     strg = "Parameters for hysteresis fit and properties extraction"
@@ -617,9 +601,9 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(label_hyst, mess))
 
     # Fit function
-    label_func = ttk.Label(right_frame, text="Function:")
+    label_func = ttk.Label(scrollable_frame, text="Function:")
     row = grid_item(label_func, row, column=0, sticky="e", increment=False)
-    func_var = ttk.Combobox(right_frame, values=["sigmoid", "arctan"])
+    func_var = ttk.Combobox(scrollable_frame, values=["sigmoid", "arctan"])
     func_var.set(user_parameters['func'])
     row = grid_item(func_var, row, column=1, sticky="ew")
     strg = "- Name: func\n" \
@@ -631,10 +615,10 @@ def main(parent=None):
                   lambda event, mess=strg: show_tooltip(func_var, mess))
 
     # Fit method
-    label_method = ttk.Label(right_frame, text="Method:")
+    label_method = ttk.Label(scrollable_frame, text="Method:")
     row = grid_item(label_method, row, column=0, sticky="e", increment=False)
     method_var = ttk.Combobox(
-        right_frame, values=["leastsq", "least_square", "nelder"])
+        scrollable_frame, values=["leastsq", "least_square", "nelder"])
     method_var.set(user_parameters['method'])
     row = grid_item(method_var, row, column=1, sticky="ew")
     strg = "- Name: method\n" \
@@ -647,11 +631,11 @@ def main(parent=None):
                     lambda event, mess=strg: show_tooltip(method_var, mess))
 
     # Asymmetric fit
-    label_asym = ttk.Label(right_frame, text="Asymmetric:")
+    label_asym = ttk.Label(scrollable_frame, text="Asymmetric:")
     row = grid_item(label_asym, row, column=0, sticky="e", increment=False)
     asymmetric_var = tk.BooleanVar()
     asymmetric_var.set(user_parameters['asymmetric'])
-    chck_asym = ttk.Checkbutton(right_frame, variable=asymmetric_var)
+    chck_asym = ttk.Checkbutton(scrollable_frame, variable=asymmetric_var)
     row = grid_item(chck_asym, row, column=1, sticky="w")
     strg = "- Name: asymmetric\n" \
            "- Summary: Asymmetric Hysteresis Fit\n" \
@@ -668,11 +652,11 @@ def main(parent=None):
         inf_thresh_label.config(text=str(inf_thresh_var.get()))
 
     # Inflection Threshold
-    label_thresh_inf = ttk.Label(right_frame, text="Inflection threshold [%]:")
+    label_thresh_inf = ttk.Label(scrollable_frame, text="Inflection threshold [%]:")
     row = grid_item(label_thresh_inf, row, column=0, sticky="e",
                     increment=False)
     inf_thresh_var = tk.IntVar(value=user_parameters['inf thresh'])
-    scale_thresh_inf = ttk.Scale(right_frame, from_=1, to=100,
+    scale_thresh_inf = ttk.Scale(scrollable_frame, from_=1, to=100,
                                  variable=inf_thresh_var, orient="horizontal",
                                  length=100, command=update_inf_thresh_label)
     row = grid_item(scale_thresh_inf, row, column=1, sticky="ew",
@@ -687,7 +671,7 @@ def main(parent=None):
     scale_thresh_inf.bind(
         "<Enter>",
         lambda event, mess=strg: show_tooltip(scale_thresh_inf, mess))
-    inf_thresh_label = ttk.Label(right_frame, text=str(inf_thresh_var.get()))
+    inf_thresh_label = ttk.Label(scrollable_frame, text=str(inf_thresh_var.get()))
     row = grid_item(inf_thresh_label, row, column=2, sticky="w")
 
     # Function to update the label text when the slider is moved
@@ -695,11 +679,11 @@ def main(parent=None):
         sat_thresh_label.config(text=str(sat_thresh_var.get()))
 
     # Saturation Threshold
-    label_thresh_sat = ttk.Label(right_frame, text="Saturation threshold [%]:")
+    label_thresh_sat = ttk.Label(scrollable_frame, text="Saturation threshold [%]:")
     row = grid_item(label_thresh_sat, row, column=0, sticky="e",
                     increment=False)
     sat_thresh_var = tk.IntVar(value=user_parameters['sat thresh'])
-    scale_thresh_sat = ttk.Scale(right_frame, from_=1, to=100,
+    scale_thresh_sat = ttk.Scale(scrollable_frame, from_=1, to=100,
                                  variable=sat_thresh_var, orient="horizontal",
                                  length=100, command=update_sat_thresh_label)
     row = grid_item(scale_thresh_sat, row, column=1, sticky="ew",
@@ -714,15 +698,15 @@ def main(parent=None):
     scale_thresh_sat.bind(
         "<Enter>",
         lambda event, mess=strg: show_tooltip(scale_thresh_sat, mess))
-    sat_thresh_label = ttk.Label(right_frame, text=str(sat_thresh_var.get()))
+    sat_thresh_label = ttk.Label(scrollable_frame, text=str(sat_thresh_var.get()))
     row = grid_item(sat_thresh_label, row, column=2, sticky="w")
 
     # Del First Loop
-    label_del = ttk.Label(right_frame, text="Delete First Loop:")
+    label_del = ttk.Label(scrollable_frame, text="Delete First Loop:")
     row = grid_item(label_del, row, column=0, sticky="e", increment=False)
     del_1st_loop_var = tk.BooleanVar()
     del_1st_loop_var.set(user_parameters['del 1st loop'])
-    chck_del = ttk.Checkbutton(right_frame, variable=del_1st_loop_var)
+    chck_del = ttk.Checkbutton(scrollable_frame, variable=del_1st_loop_var)
     row = grid_item(chck_del, row, column=1, sticky="w")
     strg = "- Name: del_1st_loop\n" \
            "- Summary: Delete First Loop\n" \
@@ -737,10 +721,10 @@ def main(parent=None):
            "- Value: Boolean (True or False)"
     chck_del.bind("<Enter>",
                   lambda event, mess=strg: show_tooltip(chck_del, mess))
-    row = add_grid_separator(right_frame, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Phase treatment
-    label_pha = ttk.Label(right_frame, text="Phase treatment",
+    label_pha = ttk.Label(scrollable_frame, text="Phase treatment",
                           font=("Helvetica", 14))
     row = grid_item(label_pha, row, column=0, sticky="ew", columnspan=3)
     strg = "Parameters for phase calibration"
@@ -748,9 +732,9 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(label_pha, mess))
 
     # Phase Mode
-    label_mode = ttk.Label(right_frame, text="Correction Method:")
+    label_mode = ttk.Label(scrollable_frame, text="Correction Method:")
     row = grid_item(label_mode, row, column=0, sticky="e", increment=False)
-    phase_mode_var = ttk.Combobox(right_frame,
+    phase_mode_var = ttk.Combobox(scrollable_frame,
                                   values=["raw", "offset", "affine", "up_down"])
     phase_mode_var.set(user_parameters['pha corr'])
     row = grid_item(phase_mode_var, row, column=1, sticky="ew")
@@ -768,11 +752,11 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(phase_mode_var, mess))
 
     # Phase Forward Value
-    label_fwd = ttk.Label(right_frame, text="Phase Forward Value:")
+    label_fwd = ttk.Label(scrollable_frame, text="Phase Forward Value:")
     row = grid_item(label_fwd, row, column=0, sticky="e", increment=False)
     pha_fwd_var = tk.StringVar()
     pha_fwd_var.set(user_parameters['pha fwd'])
-    entry_pha_fwd = ttk.Entry(right_frame, textvariable=pha_fwd_var)
+    entry_pha_fwd = ttk.Entry(scrollable_frame, textvariable=pha_fwd_var)
     row = grid_item(entry_pha_fwd, row, column=1, sticky="ew")
     strg = "- Name: pha_fwd\n" \
            "- Summary: Phase Forward Target Value\n" \
@@ -785,11 +769,11 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(entry_pha_fwd, mess))
 
     # Phase Reverse Value
-    label_rev = ttk.Label(right_frame, text="Phase Reverse Value:")
+    label_rev = ttk.Label(scrollable_frame, text="Phase Reverse Value:")
     row = grid_item(label_rev, row, column=0, sticky="e", increment=False)
     pha_rev_var = tk.StringVar()
     pha_rev_var.set(user_parameters['pha rev'])
-    entry_pha_rev = ttk.Entry(right_frame, textvariable=pha_rev_var)
+    entry_pha_rev = ttk.Entry(scrollable_frame, textvariable=pha_rev_var)
     row = grid_item(entry_pha_rev, row, column=1, sticky="ew")
     strg = "- Name: pha_rev\n" \
            "- Summary: Phase Reverse Target Value\n" \
@@ -802,9 +786,9 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(entry_pha_rev, mess))
 
     # Function for Piezoresponse
-    label_func = ttk.Label(right_frame, text="Function for Piezoresponse:")
+    label_func = ttk.Label(scrollable_frame, text="Function for Piezoresponse:")
     row = grid_item(label_func, row, column=0, sticky="e", increment=False)
-    func_pha_var = ttk.Combobox(right_frame, values=["cosine", "sine"])
+    func_pha_var = ttk.Combobox(scrollable_frame, values=["cosine", "sine"])
     func_pha_var.set(user_parameters['pha func'])
     row = grid_item(func_pha_var, row, column=1, sticky="ew")
     strg = "- Name: pha_func\n" \
@@ -818,11 +802,11 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(func_pha_var, mess))
 
     # Main Electrostatic
-    label_elec = ttk.Label(right_frame, text="Main Electrostatic:")
+    label_elec = ttk.Label(scrollable_frame, text="Main Electrostatic:")
     row = grid_item(label_elec, row, column=0, sticky="e", increment=False)
     main_elec_var = tk.BooleanVar()
     main_elec_var.set(user_parameters['main elec'])
-    chck_elec = ttk.Checkbutton(right_frame, variable=main_elec_var)
+    chck_elec = ttk.Checkbutton(scrollable_frame, variable=main_elec_var)
     row = grid_item(chck_elec, row, column=1, sticky="w")
     strg = "- Name: main_elec\n" \
            "- Summary: Dominant Electrostatics in On Field Mode\n" \
@@ -836,10 +820,10 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(chck_elec, mess))
 
     # Locked Electrostatic Slope
-    label_slope = ttk.Label(right_frame, text="Locked Electrostatic Slope:")
+    label_slope = ttk.Label(scrollable_frame, text="Locked Electrostatic Slope:")
     row = grid_item(label_slope, row, column=0, sticky="e", increment=False)
     locked_elec_slope_var = ttk.Combobox(
-        right_frame, values=["None", "negative", "positive"])
+        scrollable_frame, values=["None", "negative", "positive"])
     locked_elec_slope_var.set(user_parameters['locked elec slope'])
     row = grid_item(locked_elec_slope_var, row, column=1, sticky="ew")
     strg = "- Name: locked_elec_slope\n" \
@@ -852,10 +836,10 @@ def main(parent=None):
     locked_elec_slope_var.bind(
         "<Enter>",
         lambda event, mess=strg: show_tooltip(locked_elec_slope_var, mess))
-    row = add_grid_separator(right_frame, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Differential treatment
-    label_diff = ttk.Label(right_frame, text="Differential treatment",
+    label_diff = ttk.Label(scrollable_frame, text="Differential treatment",
                            font=("Helvetica", 14))
     row = grid_item(label_diff, row, column=0, sticky="ew", columnspan=3)
     strg = "Parameters to determine linear part for differential loop.\n" \
@@ -864,11 +848,11 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(label_diff, mess))
 
     # Differential Domain Min
-    label_min = ttk.Label(right_frame, text="Min limit (*):")
+    label_min = ttk.Label(scrollable_frame, text="Min limit (*):")
     row = grid_item(label_min, row, column=0, sticky="e", increment=False)
     diff_domain_min_var = tk.StringVar()
     diff_domain_min_var.set(user_parameters['diff domain']['min'])
-    entry_min = ttk.Entry(right_frame, textvariable=diff_domain_min_var)
+    entry_min = ttk.Entry(scrollable_frame, textvariable=diff_domain_min_var)
     row = grid_item(entry_min, row, column=1, sticky="ew")
     strg = "- Name: diff_domain (min)\n" \
            "- Summary: Voltage Range for Linear Differential Component " \
@@ -884,11 +868,11 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(entry_min, mess))
 
     # Differential Domain Max
-    label_max = ttk.Label(right_frame, text="Max limit (*):")
+    label_max = ttk.Label(scrollable_frame, text="Max limit (*):")
     row = grid_item(label_max, row, column=0, sticky="e", increment=False)
     diff_domain_max_var = tk.StringVar()
     diff_domain_max_var.set(user_parameters['diff domain']['max'])
-    entry_max = ttk.Entry(right_frame, textvariable=diff_domain_max_var)
+    entry_max = ttk.Entry(scrollable_frame, textvariable=diff_domain_max_var)
     row = grid_item(entry_max, row, column=1, sticky="ew")
     strg = "- Name: diff_domain (max)\n" \
            "- Summary: Voltage Range for Linear Differential Component " \
@@ -902,10 +886,10 @@ def main(parent=None):
            "- Active if: coupled mode is selected."
     entry_max.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(entry_max, mess))
-    row = add_grid_separator(right_frame, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Electrostatic decoupling saturation treatment
-    label_sat = ttk.Label(right_frame,
+    label_sat = ttk.Label(scrollable_frame,
                           text="Electrostatic decoupling (saturation)",
                           font=("Helvetica", 14))
     row = grid_item(label_sat, row, column=0, sticky="ew", columnspan=3)
@@ -916,9 +900,9 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(label_sat, mess))
 
     # Saturation mode
-    label_sat_mode = ttk.Label(right_frame, text="Mode:")
+    label_sat_mode = ttk.Label(scrollable_frame, text="Mode:")
     row = grid_item(label_sat_mode, row, column=0, sticky="e", increment=False)
-    sat_mode_var = ttk.Combobox(right_frame,
+    sat_mode_var = ttk.Combobox(scrollable_frame,
                                 values=["set", "auto"])
     sat_mode_var.set(user_parameters['sat mode'])
     row = grid_item(sat_mode_var, row, column=1, sticky="ew")
@@ -937,11 +921,11 @@ def main(parent=None):
                       lambda event, mess=strg: show_tooltip(sat_mode_var, mess))
 
     # Saturation Domain Min
-    label_sat_min = ttk.Label(right_frame, text="Min limit (*):")
+    label_sat_min = ttk.Label(scrollable_frame, text="Min limit (*):")
     row = grid_item(label_sat_min, row, column=0, sticky="e", increment=False)
     sat_domain_min_var = tk.StringVar()
     sat_domain_min_var.set(user_parameters['sat domain']['min'])
-    entry_sat_min = ttk.Entry(right_frame, textvariable=sat_domain_min_var)
+    entry_sat_min = ttk.Entry(scrollable_frame, textvariable=sat_domain_min_var)
     row = grid_item(entry_sat_min, row, column=1, sticky="ew")
     strg = "- Name: sat_domain\n" \
            "- Summary: Min Voltage Range for Saturation Electrostatic " \
@@ -958,11 +942,11 @@ def main(parent=None):
         "<Enter>", lambda event, mess=strg: show_tooltip(entry_sat_min, mess))
 
     # Saturation Domain Max
-    label_sat_max = ttk.Label(right_frame, text="Max limit (*):")
+    label_sat_max = ttk.Label(scrollable_frame, text="Max limit (*):")
     row = grid_item(label_sat_max, row, column=0, sticky="e", increment=False)
     sat_domain_max_var = tk.StringVar()
     sat_domain_max_var.set(user_parameters['sat domain']['max'])
-    entry_sat_max = ttk.Entry(right_frame, textvariable=sat_domain_max_var)
+    entry_sat_max = ttk.Entry(scrollable_frame, textvariable=sat_domain_max_var)
     row = grid_item(entry_sat_max, row, column=1, sticky="ew")
     strg = "- Name: sat_domain\n" \
            "- Summary: Max Voltage Range for Saturation Electrostatic " \
@@ -977,19 +961,19 @@ def main(parent=None):
            "set to 'set'."
     entry_sat_max.bind(
         "<Enter>", lambda event, mess=strg: show_tooltip(entry_sat_max, mess))
-    row = add_grid_separator(right_frame, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Section title: Save and plot
-    label_chck = ttk.Label(right_frame, text="Save and plot",
+    label_chck = ttk.Label(scrollable_frame, text="Save and plot",
                            font=("Helvetica", 14))
     row = grid_item(label_chck, row, column=0, sticky="ew", columnspan=3)
 
     # Verbose
-    label_verb = ttk.Label(right_frame, text="Verbose:")
+    label_verb = ttk.Label(scrollable_frame, text="Verbose:")
     row = grid_item(label_verb, row, column=0, sticky="e", increment=False)
     verbose_var = tk.BooleanVar()
     verbose_var.set(user_parameters['verbose'])
-    chck_verb = ttk.Checkbutton(right_frame, variable=verbose_var)
+    chck_verb = ttk.Checkbutton(scrollable_frame, variable=verbose_var)
     row = grid_item(chck_verb, row, column=1, sticky="w")
     strg = "- Name: verbose\n" \
            "- Summary: Activation key for printing verbosity during " \
@@ -1001,11 +985,11 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(chck_verb, mess))
 
     # Show plots
-    label_show = ttk.Label(right_frame, text="Show plots:")
+    label_show = ttk.Label(scrollable_frame, text="Show plots:")
     row = grid_item(label_show, row, column=0, sticky="e", increment=False)
     show_plots_var = tk.BooleanVar()
     show_plots_var.set(user_parameters['show plots'])
-    chck_show = ttk.Checkbutton(right_frame, variable=show_plots_var)
+    chck_show = ttk.Checkbutton(scrollable_frame, variable=show_plots_var)
     row = grid_item(chck_show, row, column=1, sticky="w")
     strg = "- Name: show_plots\n" \
            "- Summary: Activation key for generating matplotlib figures " \
@@ -1017,11 +1001,11 @@ def main(parent=None):
                    lambda event, mess=strg: show_tooltip(chck_show, mess))
 
     # Save
-    label_save = ttk.Label(right_frame, text="Save:")
+    label_save = ttk.Label(scrollable_frame, text="Save:")
     row = grid_item(label_save, row, column=0, sticky="e", increment=False)
     save_var = tk.BooleanVar()
     save_var.set(user_parameters['save'])
-    chck_save = ttk.Checkbutton(right_frame, variable=save_var)
+    chck_save = ttk.Checkbutton(scrollable_frame, variable=save_var)
     row = grid_item(chck_save, row, column=1, sticky="w")
     strg = "- Name: save\n" \
            "- Summary: Activation key for saving results during analysis.\n" \
@@ -1030,25 +1014,27 @@ def main(parent=None):
            "- Value: Boolean (True or False)."
     chck_save.bind("<Enter>",
                    lambda event, mess=strg: show_tooltip(chck_save, mess))
-    row = add_grid_separator(right_frame, row=row)
-
-    # Create bottom frame
-    bottom_frame = ttk.Frame(scrollable_frame)
-    bottom_frame.grid(row=row, column=0, padx=10, pady=10, sticky="ew")
-    apply_style(bottom_frame)
-    bottom_frame.columnconfigure(0, weight=1)
+    row = add_grid_separator(scrollable_frame, row=row)
 
     # Submit button
-    start_button = ttk.Button(bottom_frame, text="Start", command=launch)
-    row = grid_item(start_button, row, column=0, sticky="e", columnspan=2)
+    submit_button = ttk.Button(scrollable_frame, text="Start", command=launch)
+    row = grid_item(submit_button, row, column=0, sticky="e", increment=False)
 
-    def exit_application():
+    def quit_application():
         app.destroy()
 
     # Exit button
-    exit_button = ttk.Button(bottom_frame, text="Exit",
-                             command=exit_application)
-    grid_item(exit_button, row, column=0, sticky="e", columnspan=2)
+    quit_button = ttk.Button(scrollable_frame, text="Exit",
+                             command=quit_application)
+    row = grid_item(quit_button, row, column=1, sticky="ew", increment=False)
+    row = add_grid_separator(scrollable_frame, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
+
+    links_frame = ttk.Frame(scrollable_frame)
+    label_links = ttk.Label(scrollable_frame, text="Useful Links", font=("Helvetica", 14))
+    row = grid_item(label_links, row, column=0, sticky="ew", columnspan=3)
+    grid_item(links_frame, row, column=0, columnspan=3)
+    create_useful_links_button(links_frame)
 
     app.mainloop()
 

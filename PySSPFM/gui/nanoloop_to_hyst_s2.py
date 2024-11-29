@@ -13,7 +13,7 @@ import numpy as np
 from PySSPFM.data_processing.nanoloop_to_hyst_s2 import main_script
 from PySSPFM.gui.utils import \
     (grid_item, add_grid_separator, show_tooltip, extract_var,
-     init_secondary_wdw, wdw_main_title)
+     init_secondary_wdw, wdw_main_title, create_useful_links_button)
 
 
 def main(parent=None):
@@ -673,7 +673,15 @@ def main(parent=None):
     # Exit button
     quit_button = ttk.Button(scrollable_frame, text="Exit",
                              command=quit_application)
-    grid_item(quit_button, row, column=1, sticky="ew", increment=False)
+    row = grid_item(quit_button, row, column=1, sticky="ew", increment=False)
+    row = add_grid_separator(scrollable_frame, row=row)
+    row = add_grid_separator(scrollable_frame, row=row)
+
+    links_frame = ttk.Frame(scrollable_frame)
+    label_links = ttk.Label(scrollable_frame, text="Useful Links", font=("Helvetica", 14))
+    row = grid_item(label_links, row, column=0, sticky="ew", columnspan=3)
+    grid_item(links_frame, row, column=0, columnspan=3)
+    create_useful_links_button(links_frame)
 
     app.mainloop()
 

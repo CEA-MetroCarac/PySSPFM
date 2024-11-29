@@ -2,6 +2,9 @@
 Util functions for interface graphique exe files
 """
 
+import os
+from pathlib import Path
+import webbrowser
 import tkinter as tk
 from tkinter import ttk, Canvas, Scrollbar
 from PIL import Image, ImageTk
@@ -215,8 +218,8 @@ def extract_var(string_var):
 
 def init_main_wdw(wdw_title, logo_path=None, icon_path=None):
     """
-    Initialize the main window with a scrollbar and ensure images are displayed
-    correctly, positioning the window at the top-right corner of the screen.
+    Initialize the main window in fullscreen mode with a scrollbar and ensure
+    images are displayed correctly.
 
     Parameters
     ----------
@@ -233,8 +236,8 @@ def init_main_wdw(wdw_title, logo_path=None, icon_path=None):
         A tuple containing the main window (tk.Tk) and the scrollable frame
         (ttk.Frame).
     """
-    logo_path = logo_path or get_setting("default_logo_path")
-    icon_path = icon_path or get_setting("default_icon_path")
+    logo_path = logo_path or os.path.join(get_setting("default_logo_icon_path"), "logoPySSPFM.png")
+    icon_path = icon_path or os.path.join(get_setting("default_logo_icon_path"), "iconPySSPFM.png")
 
     # Set root
     root = tk.Tk()
@@ -242,41 +245,59 @@ def init_main_wdw(wdw_title, logo_path=None, icon_path=None):
     apply_style(root)
 
     # Configure the canvas and scrollbar
-    canvas = Canvas(root)
-    scrollbar = Scrollbar(root, orient="vertical", command=canvas.yview)
+    container = ttk.Frame(root)
+    container.grid(row=0, column=0, sticky="nsew")
+
+    canvas = Canvas(container)
+    scrollbar = Scrollbar(container, orient="vertical", command=canvas.yview)
     canvas.configure(yscrollcommand=scrollbar.set)
-    scrollbar.pack(side='right', fill='y')
-    canvas.pack(side='left', fill='both', expand=True)
 
-    # Create a frame on the canvas for content, positioned at the top-right
+    scrollbar.pack(side="right", fill="y")
+    canvas.pack(side="left", fill="both", expand=True)
+
+    # Configure grid weights for resizing
+    root.grid_rowconfigure(0, weight=1)
+    root.grid_columnconfigure(0, weight=1)
+
+    # Create a frame on the canvas for content
     scrollable_frame = ttk.Frame(canvas)
-    scrollable_frame.bind(
-        '<Configure>',
-        lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+    canvas_window = canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
 
-    # Set icon if provided
+    # Dynamically adjust the size of the scrollable frame
+    def configure_scrollable_frame(event):
+        canvas_width = event.width
+        canvas.itemconfig(canvas_window, width=canvas_width)
+        canvas.configure(scrollregion=canvas.bbox("all"))
+
+    scrollable_frame.bind("<Configure>", configure_scrollable_frame)
+
+    # Allow scrolling with the mouse wheel
+    def _on_mousewheel(event):
+        canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
+    canvas.bind_all("<MouseWheel>", _on_mousewheel)
+
+    # Set the window icon if an icon path is provided
     if icon_path:
-        icon_image = Image.open(icon_path)
-        icon_photo = ImageTk.PhotoImage(icon_image)
-        root.iconphoto(True, icon_photo)
+        try:
+            icon_image = Image.open(icon_path)
+            icon_photo = ImageTk.PhotoImage(icon_image)
+            root.iconphoto(True, icon_photo)
+        except Exception as e:
+            print(f"Failed to load icon: {e}")
 
-    # Set logo if provided and place it at the top-right
+    # Add a logo to the top of the scrollable frame if a logo path is provided
     if logo_path:
-        logo_image = Image.open(logo_path)
-        logo_photo = ImageTk.PhotoImage(logo_image)
-        logo_label = ttk.Label(scrollable_frame, image=logo_photo)
-        logo_label.image = logo_photo  # Keep a reference to the image
-        logo_label.pack(side='top', anchor='ne', pady=10)
+        try:
+            logo_image = Image.open(logo_path)
+            logo_photo = ImageTk.PhotoImage(logo_image)
+            logo_label = ttk.Label(scrollable_frame, image=logo_photo)
+            logo_label.image = logo_photo  # Keep a reference to avoid garbage collection
+            logo_label.pack(side="top", anchor="center", pady=10)
+        except Exception as e:
+            print(f"Failed to load logo: {e}")
 
-    # Use a window creation on the canvas to keep the frame top-right aligned
-    canvas.create_window((0, 0), window=scrollable_frame, anchor='nw',
-                         width=canvas.cget('width'))
-
-    # Update the canvas's window item when the canvas size changes
-    canvas.bind('<Configure>', lambda e: canvas.itemconfig('window',
-                                                           width=e.width))
-
-    # Adjust window size based on content
+    # Adjust window size and configure fullscreen mode
     adjust_size_wdw(root)
 
     return root, scrollable_frame
@@ -303,7 +324,8 @@ def init_secondary_wdw(parent, wdw_title, icon_path=None):
         A tuple containing the secondary window (tk.Toplevel) and the
         scrollable frame (ttk.Frame).
     """
-    icon_path = icon_path or get_setting("default_icon_path")
+
+    icon_path = icon_path or os.path.join(get_setting("default_logo_icon_path"), "iconPySSPFM.png")
 
     # Set root
     if parent is None:
@@ -315,11 +337,15 @@ def init_secondary_wdw(parent, wdw_title, icon_path=None):
     apply_style(root)
 
     # Configure the canvas and scrollbar for content scrolling
-    canvas = Canvas(root)
-    scrollbar = Scrollbar(root, orient="vertical", command=canvas.yview)
+    container = ttk.Frame(root)
+    container.grid(row=0, column=0, sticky="nsew")
+
+    canvas = Canvas(container)
+    scrollbar = Scrollbar(container, orient="vertical", command=canvas.yview)
     canvas.configure(yscrollcommand=scrollbar.set)
-    scrollbar.grid(row=0, column=1, sticky='ns')
-    canvas.grid(row=0, column=0, sticky='nsew')
+
+    scrollbar.pack(side="right", fill="y")
+    canvas.pack(side="left", fill="both", expand=True)
 
     # Configure grid weights for resizing
     root.grid_rowconfigure(0, weight=1)
@@ -327,8 +353,7 @@ def init_secondary_wdw(parent, wdw_title, icon_path=None):
 
     # Create a frame on the canvas for content, centered dynamically
     scrollable_frame = ttk.Frame(canvas)
-    canvas_window = canvas.create_window((0, 0), window=scrollable_frame,
-                                         anchor='nw')
+    canvas_window = canvas.create_window((0, 0), window=scrollable_frame, anchor='nw')
 
     # Adjust the position of scrollable_frame dynamically on canvas resize
     def configure_scrollable_frame(event):
@@ -336,13 +361,22 @@ def init_secondary_wdw(parent, wdw_title, icon_path=None):
         canvas.itemconfig(canvas_window, width=canvas_width)
         canvas.configure(scrollregion=canvas.bbox("all"))
 
-    canvas.bind('<Configure>', configure_scrollable_frame)
+    scrollable_frame.bind("<Configure>", configure_scrollable_frame)
+
+    # Allow scrolling with the mouse wheel
+    def _on_mousewheel(event):
+        canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
+    canvas.bind_all("<MouseWheel>", _on_mousewheel)
 
     # Set the window icon if an icon path is provided
     if icon_path:
-        icon_image = Image.open(icon_path)
-        icon_photo = ImageTk.PhotoImage(icon_image)
-        root.iconphoto(True, icon_photo)
+        try:
+            icon_image = Image.open(icon_path)
+            icon_photo = ImageTk.PhotoImage(icon_image)
+            root.iconphoto(True, icon_photo)
+        except Exception as e:
+            print(f"Failed to load icon: {e}")
 
     # Adjust window size based on content
     adjust_size_wdw(root)
@@ -368,8 +402,12 @@ def adjust_size_wdw(root):
     width = root.winfo_reqwidth()
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
+    root.update_idletasks()
+    taskbar_height = root.winfo_rooty()
+    usable_height = screen_height - taskbar_height
+
     x = screen_width / 2 - width / 2
-    root.geometry(f"{int(width*1.5)}x{screen_height}+{int(x)}+0")
+    root.geometry(f"{int(width*1.5)}x{usable_height}+{int(x)}+0")
 
 
 def wdw_main_title(root, label, logo_path=None):
@@ -389,7 +427,7 @@ def wdw_main_title(root, label, logo_path=None):
     -------
     None
     """
-    logo_path = logo_path or get_setting("default_logo_path")
+    logo_path = logo_path or os.path.join(get_setting("default_logo_icon_path"), "logoPySSPFM.png")
 
     logo_image = Image.open(logo_path)
     logo_image.thumbnail((128, 128))
@@ -496,3 +534,76 @@ def buttons_section(names, functions, root, title=None, strg_functions=None):
             button.bind(
                 "<Leave>",
                 lambda event, btn=f"{cont}": hide_tooltip_button(event, btn))
+
+def create_useful_links_button(frame):
+    """
+    Creates a set of useful links buttons in a specified frame.
+
+    Parameters
+    ----------
+    frame : ttk.Frame or similar
+        Parent container where the buttons will be added.
+
+    Returns
+    -------
+    None
+    """
+
+    def create_button(parent, text, image_path, image_size, command, pady=5):
+        """
+        Creates a button with an image and a command in a specified parent frame.
+
+        Parameters
+        ----------
+        parent : ttk.Frame or similar
+            Parent container where the button will be added.
+        text : str
+            Label text for the button.
+        image_path : str
+            Path to the image file for the button.
+        image_size : tuple of int
+            Size of the image (width, height) to resize.
+        command : callable
+            Function to execute when the button is clicked.
+        pady : int, optional
+            Padding on the y-axis for the button (default is 5).
+
+        Returns
+        -------
+        button : ttk.Button
+            The created button instance.
+        """
+        image = Image.open(image_path).resize(image_size)
+        tk_image = ImageTk.PhotoImage(image)
+        button = ttk.Button(parent, text=text, image=tk_image, compound="right", command=command)
+        button.image = tk_image  # Retient la référence pour éviter le garbage collection
+        button.pack(pady=pady)
+        return button
+
+    logo_icon_path = get_setting("default_logo_icon_path")
+
+    buttons_data = [
+        ("Github", os.path.join(logo_icon_path, "github.PNG"), (32, 32),
+         lambda: webbrowser.open("https://github.com/CEA-MetroCarac/PySSPFM")),
+        ("Documentation", os.path.join(logo_icon_path, "github.PNG"), (32, 32),
+         lambda: webbrowser.open("https://github.com/CEA-MetroCarac/PySSPFM/tree/main/doc")),
+        ("Measurement Sheet", os.path.join(logo_icon_path, "github.PNG"), (32, 32),
+         lambda: webbrowser.open("https://github.com/CEA-MetroCarac/PySSPFM/tree/main/resources")),
+        ("Report an issue ?", os.path.join(logo_icon_path, "github.PNG"), (32, 32),
+         lambda: webbrowser.open("https://github.com/CEA-MetroCarac/PySSPFM/issues")),
+        ("Open Settings", os.path.join(logo_icon_path, "logoPySSPFM.png"), (64, 32),
+         lambda: os.startfile(Path.home() / ".pysspfm" / "pysspfm.json") if os.path.exists(
+             Path.home() / ".pysspfm" / "pysspfm.json") else print("File not found")),
+        ("YouTube tutorials", os.path.join(logo_icon_path, "youtube.PNG"), (32, 32),
+         lambda: webbrowser.open("https://github.com/CEA-MetroCarac/PySSPFM")),
+        ("Our paper (JAP)", os.path.join(logo_icon_path, "aip.PNG"), (64, 32),
+         lambda: webbrowser.open(
+             "https://pubs.aip.org/aip/jap/article/135/19/194101/3294052/Enhancing-ferroelectric-characterization-at")),
+        ("Zenodo", os.path.join(logo_icon_path, "zenodo.PNG"), (64, 32),
+         lambda: webbrowser.open("https://zenodo.org/records/14236355")),
+        ("PyPI", os.path.join(logo_icon_path, "pypi.PNG"), (32, 32),
+         lambda: webbrowser.open("https://pypi.org/project/PySSPFM/")),
+    ]
+
+    for text, image_path, image_size, command in buttons_data:
+        create_button(frame, text, image_path, image_size, command)

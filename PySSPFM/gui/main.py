@@ -3,6 +3,7 @@
 Main graphical interface (window) of PySSPFM: call all other exe of PySSPFM
 """
 
+
 from tkinter import ttk
 
 from PySSPFM.gui.datacube_to_nanoloop_s1 import main as main_data_proc_1
@@ -23,7 +24,7 @@ from PySSPFM.gui.sort_plot_pixel import main as main_tool_3_f
 from PySSPFM.gui.spm_converter import main as main_tool_4_a
 from PySSPFM.gui.meas_sheet_generator import main as main_tool_4_b
 from PySSPFM.gui.utils import \
-    add_section_separator, init_main_wdw, create_section
+    add_section_separator, init_main_wdw, create_section, create_useful_links_button
 
 
 def main():
@@ -143,6 +144,11 @@ def main():
                    ["SPM converter", "Measurement sheet generator"],
                    [main_tool_4_a, main_tool_4_b], strg_title=strg_title,
                    strg_functions=strg_functions)
+
+    # Section title
+    label_links = ttk.Label(scrollable_frame, text="Useful links:", font=("Helvetica", 14))
+    label_links.pack()
+    create_useful_links_button(scrollable_frame)
 
     def quit_application():
         root.quit()
