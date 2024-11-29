@@ -562,7 +562,7 @@ def main(fname_json=None):
     _, _, _, _, _, tab_other_properties, map_dim = \
         main_force_curve_analysis(
             dir_path_in, cluster_pars=cluster_pars, extension=extension,
-            mode=mode,  dim_pix={"x": 7, "y": 3}, dim_mic={"x": 7, "y": 3},
+            mode=mode,  dim_pix=None, dim_mic=None,
             verbose=verbose, show_plots=show_plots, save=save,
             dir_path_out=dir_path_out, csv_file_path=csv_file_path)
 
