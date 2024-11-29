@@ -22,13 +22,9 @@ DEFAULT_DATA_PATH_OUT: str
     The default root path for saved output data (figures ...).
     Default is r".../PySSPFM_data_out"
 
-DEFAULT_LOGO_PATH: str
-    The default path of the logo PySSPFM for GUI.
-    Default is r".../PySSPFM/logo_icon/logoPySSPFM.png"
-
-DEFAULT_ICON_PATH: str
-    The default path of the icon PySSPFM for GUI.
-    Default is r".../PySSPFM/logo_icon/iconPySSPFM.png"
+DEFAULT_LOGO_ICON_PATH: str
+    The default path of the all logos and icons for GUI.
+    Default is r".../PySSPFM/logo_icon"
 
 DEFAULT_PARAMETERS_FILE_NAME: str
     The default name of csv measurement sheet parameters
