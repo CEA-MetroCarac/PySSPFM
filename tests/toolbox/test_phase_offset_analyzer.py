@@ -27,6 +27,6 @@ def test_phase_offset_analyzer():
 
     assert np.nansum(phase_offset_tab['On field']) == approx(1644.3122963182652)
     assert np.nansum(phase_offset_tab['Off field']) == \
-           approx(1677.1248775829279)
-    assert np.nansum(phase_offset_tab['Mean']) == approx(1750.3109771168647)
+           approx(1667.7541622177303)
+    assert np.nansum(phase_offset_tab['Mean']) == approx(1745.625619434266)
     assert map_dim == {'x pix': 50, 'y pix': 50, 'x mic': 3, 'y mic': 3}

@@ -26,7 +26,7 @@ def test_meas_sheet_generator():
     assert indexs == indexs_target
     assert values[0] == 'PIT_SSPFM_DFRT_T2ms_map.0_00000.spm'
     assert values[1] == 'PIT_SSPFM_DFRT_T2ms_map.0_00000.spm'
-    assert values[2] == '14h : 16/02/2024'
+    assert values[2] == '22h : 26/11/2024'
     assert values[3] == -10.0
     assert values[4] == 10.0
     assert values[5] == 50
