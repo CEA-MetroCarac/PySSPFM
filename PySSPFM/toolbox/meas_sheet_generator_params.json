@@ -1,5 +1,5 @@
 {
-    "file_path_in": "path\\to\\your\\directory\\in",
+    "file_path_in": "path\\to\\your\\measurement\\sheet\\.csv",
     "dir_path_out": "path\\to\\your\\directory\\out",
     "nb_hold_seg_start": 1,
     "nb_hold_seg_end": 1,
