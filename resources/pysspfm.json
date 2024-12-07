@@ -72,6 +72,7 @@
     
     "datacube_to_nanoloop_s1_params": "~/.pysspfm/datacube_to_nanoloop_s1_params",
     "nanoloop_to_hyst_s2_params": "~/.pysspfm/nanoloop_to_hyst_s2_params",
+    "clustering_inertia_params": "~/.pysspfm/clustering_inertia_params",
     "curve_clustering_params": "~/.pysspfm/curve_clustering_params",
     "force_curve_clustering_params": "~/.pysspfm/force_curve_clustering_params",
     "global_map_reader_params": "~/.pysspfm/global_map_reader_params",
@@ -80,6 +81,7 @@
     "map_correlation_params": "~/.pysspfm/map_correlation_params",
     "mean_hyst_params": "~/.pysspfm/mean_hyst_params",
     "meas_sheet_generator_params": "~/.pysspfm/meas_sheet_generator_params",
+    "phase_inversion_analyzer_params": "~/.pysspfm/phase_inversion_analyzer_params",
     "phase_offset_analyzer_params": "~/.pysspfm/phase_offset_analyzer_params",
     "raw_file_reader_params": "~/.pysspfm/raw_file_reader_params",
     "sort_plot_pixel_params": "~/.pysspfm/sort_plot_pixel_params",
