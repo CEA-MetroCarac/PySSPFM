@@ -359,7 +359,8 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, phase_offset=0,
     # Generate nanoloops array
     label, col = ['Off field', 'On field'], ['w', 'y']
     loop_tab, pha_calib = [], {}
-    for cont_list, seg_tab in enumerate([seg_tab_off_f, seg_tab_on_f]):
+    for cont_list, (seg_tab, mode) in enumerate(zip([seg_tab_off_f, seg_tab_on_f],
+                                                    [off_field_mode, on_field_mode])):
         if method_segment in ['sweep', 'stable_dfrt']:
             dict_res = {'Amplitude': [elem.amp for elem in seg_tab],
                         'Phase': [elem.pha for elem in seg_tab],
@@ -378,7 +379,7 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, phase_offset=0,
             dict_res, unit=unit)
         (nanoloops, fmt, header) = par
 
-        if make_plots:
+        if make_plots is True and mode is True:
             # Phase treatment
             dict_str = {'label': label[cont_list],
                         'col': col[cont_list]}
@@ -441,7 +442,7 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, phase_offset=0,
                     q_fact_sigma=None))
 
         # Save nanoloop data in txt file
-        if txt_save:
+        if txt_save is True and mode is True:
             save_dict = {'label': label[cont_list],
                          'unit': unit,
                          'mode': mode}
@@ -454,7 +455,7 @@ def single_script(user_pars, file_path_in, meas_pars, sign_pars, phase_offset=0,
                 dir_path_out_nanoloops, file_name_in[:-4], nanoloops, fmt,
                 header, other_properties, mode=save_dict['label'])
         # Plot loops
-        if make_plots:
+        if make_plots is True and mode is True:
             plot_dict = {'label': label[cont_list], 'col': col[cont_list],
                          'unit': unit}
             figs_2 = main_plot(loop_tab, pha_calib, dict_str=plot_dict,

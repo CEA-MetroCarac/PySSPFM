@@ -365,7 +365,41 @@ def multi_script(user_pars, dir_path_in, meas_pars, sign_pars,
                 file_path_in.append(f'{mode}_f_file{i + 1}.txt')
 
     else:
-        file_paths_in = generate_file_nanoloop_paths(dir_path_in)
+        def determine_mode(file_paths):
+            """
+            Determine the mode based on file name prefixes in a list of file paths.
+
+            This function analyzes a list of file paths and determines a mode based
+            on the presence of specific filename patterns. It raises an error if
+            neither pattern is found.
+
+            Parameters
+            ----------
+            file_paths : list of str
+                List of file paths to be analyzed.
+
+            Returns
+            -------
+            str
+                Returns the mode as one of the following:
+                    - '' : If file names with both 'off_f_' and 'on_f_' prefixes are found.
+                    - 'off_f' : If at least one file name starts with 'off_f_'.
+                    - 'on_f' : If at least one file name starts with 'on_f_'.
+            """
+            has_off_f = any(file_name.startswith('off_f_') for file_name in file_paths)
+            has_on_f = any(file_name.startswith('on_f_') for file_name in file_paths)
+
+            if has_off_f and has_on_f:
+                return ''
+            elif has_off_f:
+                return 'off_f'
+            elif has_on_f:
+                return 'on_f'
+            else:
+                raise ValueError("Aucun fichier ne commence par 'off_f_' ou 'on_f_'.")
+        mode = determine_mode([file for file in os.listdir(dir_path_in)
+                               if file.endswith('.txt')])
+        file_paths_in = generate_file_nanoloop_paths(dir_path_in, mode=mode)
 
     if verbose:
         print('\nSingle script analysis in progress ...')

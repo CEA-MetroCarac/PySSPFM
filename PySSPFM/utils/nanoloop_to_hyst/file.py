@@ -131,20 +131,21 @@ def save_properties(properties, dir_path_out, dim_pix=None, dim_mic=None,
         header_lab_add = ''.join(header_lab_tab)
 
     for key, values in properties.items():
-        file_path_out = os.path.join(dir_path_out,
-                                     file_prefix_out + key + '.txt')
-        header = f'{key}\n{header_lab_add}\n'
-        # fmt = '%.5e'
-        tab_props = []
+        if len(values) != 0:
+            file_path_out = os.path.join(dir_path_out,
+                                         file_prefix_out + key + '.txt')
+            header = f'{key}\n{header_lab_add}\n'
+            # fmt = '%.5e'
+            tab_props = []
 
-        for sub_key, sub_values in values.items():
-            header += f'{sub_key}\t\t'
-            list_sub_values = \
-                [elem if elem != 'None' else np.nan for elem in sub_values]
-            tab_props.append(np.array(list_sub_values, dtype=float).ravel())
-        tab_props = np.where(np.isnan(tab_props), 'nan', tab_props)
-        np.savetxt(file_path_out, np.array(tab_props).T, delimiter='\t\t',
-                   newline='\n', header=header, fmt='%s')
+            for sub_key, sub_values in values.items():
+                header += f'{sub_key}\t\t'
+                list_sub_values = \
+                    [elem if elem != 'None' else np.nan for elem in sub_values]
+                tab_props.append(np.array(list_sub_values, dtype=float).ravel())
+            tab_props = np.where(np.isnan(tab_props), 'nan', tab_props)
+            np.savetxt(file_path_out, np.array(tab_props).T, delimiter='\t\t',
+                       newline='\n', header=header, fmt='%s')
 
 
 def save_best_nanoloops(tab_best_loops, dir_path_out,
@@ -173,34 +174,36 @@ def save_best_nanoloops(tab_best_loops, dir_path_out,
 
     header_lab_add = 'index pix\t\tvoltage\t\t' + '\t\t'.join(tab_data)
     for key, value in tab_best_loops.items():
-        header = f"{key}\n{header_lab_add}"
-        file_path_out = os.path.join(dir_path_out,
-                                     f"{file_prefix_out}{key}.txt")
-        tab_index = []
-        data_saved = []
-        for _ in range(len(tab_data)+1):
-            data_saved.append([])
-        for cont, loop in enumerate(value):
-            tab_index.append([])
-            dict_best_loop = {'voltage': loop.amp.write_volt,
-                              'piezoresponse': loop.piezorep.y_meas,
-                              'amp': loop.amp.y_meas,
-                              'pha': loop.pha.y_meas}
-            if 'res freq' in tab_data:
-                dict_best_loop['res freq'] = loop.res_freq.y_meas
-            if 'q factor' in tab_data:
-                dict_best_loop['q factor'] = loop.q_fact.y_meas
+        only_empty_lists = all(isinstance(sublist, list) and not sublist for sublist in value)
+        if only_empty_lists is False :
+            header = f"{key}\n{header_lab_add}"
+            file_path_out = os.path.join(dir_path_out,
+                                         f"{file_prefix_out}{key}.txt")
+            tab_index = []
+            data_saved = []
+            for _ in range(len(tab_data)+1):
+                data_saved.append([])
+            for cont, loop in enumerate(value):
+                tab_index.append([])
+                dict_best_loop = {'voltage': loop.amp.write_volt,
+                                  'piezoresponse': loop.piezorep.y_meas,
+                                  'amp': loop.amp.y_meas,
+                                  'pha': loop.pha.y_meas}
+                if 'res freq' in tab_data:
+                    dict_best_loop['res freq'] = loop.res_freq.y_meas
+                if 'q factor' in tab_data:
+                    dict_best_loop['q factor'] = loop.q_fact.y_meas
 
-            for sub_cont, key_name in enumerate(dict_best_loop.keys()):
-                data_saved[sub_cont].append(dict_best_loop[key_name])
-                if sub_cont == 0:
-                    tab_index[cont] = [cont+1 for _ in dict_best_loop[key_name]]
-        for cont, elem in enumerate(data_saved):
-            data_saved[cont] = np.ravel(elem)
-        data_saved.insert(0, np.ravel(tab_index))
-        data_saved = np.array(data_saved).T
-        np.savetxt(file_path_out, data_saved,
-                   delimiter='\t\t', newline='\n', header=header, fmt=fmt)
+                for sub_cont, key_name in enumerate(dict_best_loop.keys()):
+                    data_saved[sub_cont].append(dict_best_loop[key_name])
+                    if sub_cont == 0:
+                        tab_index[cont] = [cont+1 for _ in dict_best_loop[key_name]]
+            for cont, elem in enumerate(data_saved):
+                data_saved[cont] = np.ravel(elem)
+            data_saved.insert(0, np.ravel(tab_index))
+            data_saved = np.array(data_saved).T
+            np.savetxt(file_path_out, data_saved,
+                       delimiter='\t\t', newline='\n', header=header, fmt=fmt)
 
 
 def add_header_labels(tab_best_loops, tab_data=None, fmt=None):
