@@ -129,6 +129,12 @@ poetry add git+https://github.com/CEA-MetroCarac/PySSPFM.git
 pip install git+https://github.com/CEA-MetroCarac/PySSPFM.git
 ```
 
+### Launch the GUI
+
+```bash
+PySSPFM
+```
+
 ### Create the Settings and Parameters Folder
 
 <p align="justify" width="100%">
