@@ -1,0 +1,28 @@
+Update Report PySSPFM v2024.12:
+
+# GUI
+- Added a "Useful Links" section to all GUI windows
+- Fixed a scrollbar bug
+- Fixed a window resizing bug
+
+# Other modifications
+- Fixed a bug that set the dimensions of the mapping in the script (PySSPFM/toolbox/force_curve_clustering.py)
+- Fixed an issue with the execution of the scripts `clustering_inertia.py` (PySSPFM/toolbox/clustering_inertia.py) and `phase_inversion_analyzer.py` (PySSPFM/toolbox/phase_inversion_analyzer.py) when extracting user parameters via JSON or TOML files. The filenames in question were not listed in the settings within the `pysspfm.json` file
+- Fixed a bug related to the handling of 'Off Field' or 'On Field' modes, depending on whether they were activated or not, for saving processed measurement files as well as for displaying and saving figures generated during measurement processing. The modifications apply to both processing steps: `datacube_to_nanoloop_s1.py` and `nanoloop_to_hyst_s2.py`
+- Corrected the default value of the user parameter in JSON and TOML files: "path\\to\\your\\directory\\in" -> "path\\to\\your\\measurement\\sheet\\.csv"
+
+# New file / functions
+Files:
+Functions:
+	- create_useful_links_button (PySSPFM/gui/utils.py)
+	- create_button (PySSPFM/gui/utils.py)
+
+# File / function removal
+Files:
+Functions:
+
+# File / function renamed or moved
+Files:
+Functions:
+
+# Update documentation, examples (script and data) and tests
