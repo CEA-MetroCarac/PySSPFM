@@ -59,7 +59,7 @@ class RunPostInstallScript(Command):
 
 setup(
     name="PySSPFM",
-    version='2024.11',
+    version='2024.12',
     license='GPL v3',
     include_package_data=True,
     zip_safe=False,
